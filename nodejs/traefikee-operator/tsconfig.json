@@ -1,0 +1,23 @@
+{
+    "compilerOptions": {
+        "outDir": "bin",
+        "target": "es2016",
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "declaration": true,
+        "sourceMap": true,
+        "stripInternal": true,
+        "experimentalDecorators": true,
+        "noFallthroughCasesInSwitch": true,
+        "forceConsistentCasingInFileNames": true,
+        "strict": true
+    },
+    "files": [
+        "containo/index.ts",
+        "containo/v1alpha1/index.ts",
+        "containo/v1alpha1/traefikee.ts",
+        "index.ts",
+        "provider.ts",
+        "utilities.ts"
+    ]
+}
