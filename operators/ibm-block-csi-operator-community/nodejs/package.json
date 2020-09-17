@@ -1,0 +1,13 @@
+{
+    "name": "@pulumi/@pulumi/kubernetes-crds-operators-ibm-block-csi-operator-community",
+    "version": "",
+    "scripts": {
+        "build": "tsc"
+    },
+    "peerDependencies": {
+        "@pulumi/pulumi": "latest"
+    },
+    "pulumi": {
+        "resource": true
+    }
+}

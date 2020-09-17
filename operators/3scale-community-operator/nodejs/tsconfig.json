@@ -1,0 +1,35 @@
+{
+    "compilerOptions": {
+        "outDir": "bin",
+        "target": "es2016",
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "declaration": true,
+        "sourceMap": true,
+        "stripInternal": true,
+        "experimentalDecorators": true,
+        "noFallthroughCasesInSwitch": true,
+        "forceConsistentCasingInFileNames": true,
+        "strict": true
+    },
+    "files": [
+        "apps/index.ts",
+        "apps/v1alpha1/apimanager.ts",
+        "apps/v1alpha1/index.ts",
+        "capabilities/index.ts",
+        "capabilities/v1alpha1/api.ts",
+        "capabilities/v1alpha1/binding.ts",
+        "capabilities/v1alpha1/index.ts",
+        "capabilities/v1alpha1/limit.ts",
+        "capabilities/v1alpha1/mappingRule.ts",
+        "capabilities/v1alpha1/metric.ts",
+        "capabilities/v1alpha1/plan.ts",
+        "capabilities/v1alpha1/tenant.ts",
+        "index.ts",
+        "provider.ts",
+        "types/index.ts",
+        "types/input.ts",
+        "types/output.ts",
+        "utilities.ts"
+    ]
+}

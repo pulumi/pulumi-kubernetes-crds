@@ -1,0 +1,31 @@
+{
+    "compilerOptions": {
+        "outDir": "bin",
+        "target": "es2016",
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "declaration": true,
+        "sourceMap": true,
+        "stripInternal": true,
+        "experimentalDecorators": true,
+        "noFallthroughCasesInSwitch": true,
+        "forceConsistentCasingInFileNames": true,
+        "strict": true
+    },
+    "files": [
+        "index.ts",
+        "operator/index.ts",
+        "operator/v1alpha1/aquaCsp.ts",
+        "operator/v1alpha1/aquaDatabase.ts",
+        "operator/v1alpha1/aquaEnforcer.ts",
+        "operator/v1alpha1/aquaGateway.ts",
+        "operator/v1alpha1/aquaScanner.ts",
+        "operator/v1alpha1/aquaServer.ts",
+        "operator/v1alpha1/index.ts",
+        "provider.ts",
+        "types/index.ts",
+        "types/input.ts",
+        "types/output.ts",
+        "utilities.ts"
+    ]
+}

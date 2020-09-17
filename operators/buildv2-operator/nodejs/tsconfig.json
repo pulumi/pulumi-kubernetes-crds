@@ -1,0 +1,29 @@
+{
+    "compilerOptions": {
+        "outDir": "bin",
+        "target": "es2016",
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "declaration": true,
+        "sourceMap": true,
+        "stripInternal": true,
+        "experimentalDecorators": true,
+        "noFallthroughCasesInSwitch": true,
+        "forceConsistentCasingInFileNames": true,
+        "strict": true
+    },
+    "files": [
+        "build/index.ts",
+        "build/v1alpha1/build.ts",
+        "build/v1alpha1/buildRun.ts",
+        "build/v1alpha1/buildStrategy.ts",
+        "build/v1alpha1/clusterBuildStrategy.ts",
+        "build/v1alpha1/index.ts",
+        "index.ts",
+        "provider.ts",
+        "types/index.ts",
+        "types/input.ts",
+        "types/output.ts",
+        "utilities.ts"
+    ]
+}

@@ -1,0 +1,30 @@
+{
+    "compilerOptions": {
+        "outDir": "bin",
+        "target": "es2016",
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "declaration": true,
+        "sourceMap": true,
+        "stripInternal": true,
+        "experimentalDecorators": true,
+        "noFallthroughCasesInSwitch": true,
+        "forceConsistentCasingInFileNames": true,
+        "strict": true
+    },
+    "files": [
+        "camel/index.ts",
+        "camel/v1/build.ts",
+        "camel/v1/camelCatalog.ts",
+        "camel/v1/index.ts",
+        "camel/v1/integration.ts",
+        "camel/v1/integrationKit.ts",
+        "camel/v1/integrationPlatform.ts",
+        "index.ts",
+        "provider.ts",
+        "types/index.ts",
+        "types/input.ts",
+        "types/output.ts",
+        "utilities.ts"
+    ]
+}

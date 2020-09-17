@@ -1,0 +1,38 @@
+{
+    "compilerOptions": {
+        "outDir": "bin",
+        "target": "es2016",
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "declaration": true,
+        "sourceMap": true,
+        "stripInternal": true,
+        "experimentalDecorators": true,
+        "noFallthroughCasesInSwitch": true,
+        "forceConsistentCasingInFileNames": true,
+        "strict": true
+    },
+    "files": [
+        "apm/index.ts",
+        "apm/v1/apmServer.ts",
+        "apm/v1/index.ts",
+        "beat/index.ts",
+        "beat/v1beta1/beat.ts",
+        "beat/v1beta1/index.ts",
+        "elasticsearch/index.ts",
+        "elasticsearch/v1/elasticsearch.ts",
+        "elasticsearch/v1/index.ts",
+        "enterprisesearch/index.ts",
+        "enterprisesearch/v1beta1/enterpriseSearch.ts",
+        "enterprisesearch/v1beta1/index.ts",
+        "index.ts",
+        "kibana/index.ts",
+        "kibana/v1/index.ts",
+        "kibana/v1/kibana.ts",
+        "provider.ts",
+        "types/index.ts",
+        "types/input.ts",
+        "types/output.ts",
+        "utilities.ts"
+    ]
+}

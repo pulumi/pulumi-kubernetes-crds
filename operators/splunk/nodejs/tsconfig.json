@@ -1,0 +1,30 @@
+{
+    "compilerOptions": {
+        "outDir": "bin",
+        "target": "es2016",
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "declaration": true,
+        "sourceMap": true,
+        "stripInternal": true,
+        "experimentalDecorators": true,
+        "noFallthroughCasesInSwitch": true,
+        "forceConsistentCasingInFileNames": true,
+        "strict": true
+    },
+    "files": [
+        "enterprise/index.ts",
+        "enterprise/v1alpha2/index.ts",
+        "enterprise/v1alpha2/indexerCluster.ts",
+        "enterprise/v1alpha2/licenseMaster.ts",
+        "enterprise/v1alpha2/searchHeadCluster.ts",
+        "enterprise/v1alpha2/spark.ts",
+        "enterprise/v1alpha2/standalone.ts",
+        "index.ts",
+        "provider.ts",
+        "types/index.ts",
+        "types/input.ts",
+        "types/output.ts",
+        "utilities.ts"
+    ]
+}
