@@ -9,5 +9,3 @@ require (
 	github.com/pulumi/pulumi/sdk/v2 v2.9.2
 	gopkg.in/yaml.v2 v2.3.0
 )
-
-replace github.com/pulumi/crd2pulumi => ../../../crd2pulumi
