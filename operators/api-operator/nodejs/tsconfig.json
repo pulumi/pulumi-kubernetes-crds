@@ -1,0 +1,29 @@
+{
+    "compilerOptions": {
+        "outDir": "bin",
+        "target": "es2016",
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "declaration": true,
+        "sourceMap": true,
+        "stripInternal": true,
+        "experimentalDecorators": true,
+        "noFallthroughCasesInSwitch": true,
+        "forceConsistentCasingInFileNames": true,
+        "strict": true
+    },
+    "files": [
+        "index.ts",
+        "provider.ts",
+        "types/index.ts",
+        "types/input.ts",
+        "types/output.ts",
+        "utilities.ts",
+        "wso2/index.ts",
+        "wso2/v1alpha1/api.ts",
+        "wso2/v1alpha1/index.ts",
+        "wso2/v1alpha1/rateLimiting.ts",
+        "wso2/v1alpha1/security.ts",
+        "wso2/v1alpha1/targetEndpoint.ts"
+    ]
+}

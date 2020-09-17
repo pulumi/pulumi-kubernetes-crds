@@ -1,0 +1,13 @@
+{
+    "name": "@pulumi/@pulumi/kubernetes-crds-operators-ibm-spectrum-scale-csi-operator",
+    "version": "",
+    "scripts": {
+        "build": "tsc"
+    },
+    "peerDependencies": {
+        "@pulumi/pulumi": "latest"
+    },
+    "pulumi": {
+        "resource": true
+    }
+}

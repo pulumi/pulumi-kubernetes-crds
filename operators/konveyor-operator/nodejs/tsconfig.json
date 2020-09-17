@@ -1,0 +1,43 @@
+{
+    "compilerOptions": {
+        "outDir": "bin",
+        "target": "es2016",
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "declaration": true,
+        "sourceMap": true,
+        "stripInternal": true,
+        "experimentalDecorators": true,
+        "noFallthroughCasesInSwitch": true,
+        "forceConsistentCasingInFileNames": true,
+        "strict": true
+    },
+    "files": [
+        "index.ts",
+        "migration/index.ts",
+        "migration/v1alpha1/index.ts",
+        "migration/v1alpha1/migCluster.ts",
+        "migration/v1alpha1/migHook.ts",
+        "migration/v1alpha1/migMigration.ts",
+        "migration/v1alpha1/migPlan.ts",
+        "migration/v1alpha1/migStorage.ts",
+        "provider.ts",
+        "types/index.ts",
+        "types/input.ts",
+        "types/output.ts",
+        "utilities.ts",
+        "velero/index.ts",
+        "velero/v1/backup.ts",
+        "velero/v1/backupStorageLocation.ts",
+        "velero/v1/deleteBackupRequest.ts",
+        "velero/v1/downloadRequest.ts",
+        "velero/v1/index.ts",
+        "velero/v1/podVolumeBackup.ts",
+        "velero/v1/podVolumeRestore.ts",
+        "velero/v1/resticRepository.ts",
+        "velero/v1/restore.ts",
+        "velero/v1/schedule.ts",
+        "velero/v1/serverStatusRequest.ts",
+        "velero/v1/volumeSnapshotLocation.ts"
+    ]
+}

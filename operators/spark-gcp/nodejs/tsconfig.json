@@ -1,0 +1,27 @@
+{
+    "compilerOptions": {
+        "outDir": "bin",
+        "target": "es2016",
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "declaration": true,
+        "sourceMap": true,
+        "stripInternal": true,
+        "experimentalDecorators": true,
+        "noFallthroughCasesInSwitch": true,
+        "forceConsistentCasingInFileNames": true,
+        "strict": true
+    },
+    "files": [
+        "index.ts",
+        "provider.ts",
+        "sparkoperator/index.ts",
+        "sparkoperator/v1beta1/index.ts",
+        "sparkoperator/v1beta1/scheduledSparkApplication.ts",
+        "sparkoperator/v1beta1/sparkApplication.ts",
+        "types/index.ts",
+        "types/input.ts",
+        "types/output.ts",
+        "utilities.ts"
+    ]
+}

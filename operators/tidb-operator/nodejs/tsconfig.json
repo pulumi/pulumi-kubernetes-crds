@@ -1,0 +1,32 @@
+{
+    "compilerOptions": {
+        "outDir": "bin",
+        "target": "es2016",
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "declaration": true,
+        "sourceMap": true,
+        "stripInternal": true,
+        "experimentalDecorators": true,
+        "noFallthroughCasesInSwitch": true,
+        "forceConsistentCasingInFileNames": true,
+        "strict": true
+    },
+    "files": [
+        "index.ts",
+        "pingcap/index.ts",
+        "pingcap/v1alpha1/backup.ts",
+        "pingcap/v1alpha1/backupSchedule.ts",
+        "pingcap/v1alpha1/index.ts",
+        "pingcap/v1alpha1/restore.ts",
+        "pingcap/v1alpha1/tidbCluster.ts",
+        "pingcap/v1alpha1/tidbClusterAutoScaler.ts",
+        "pingcap/v1alpha1/tidbInitializer.ts",
+        "pingcap/v1alpha1/tidbMonitor.ts",
+        "provider.ts",
+        "types/index.ts",
+        "types/input.ts",
+        "types/output.ts",
+        "utilities.ts"
+    ]
+}

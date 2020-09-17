@@ -1,0 +1,36 @@
+{
+    "compilerOptions": {
+        "outDir": "bin",
+        "target": "es2016",
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "declaration": true,
+        "sourceMap": true,
+        "stripInternal": true,
+        "experimentalDecorators": true,
+        "noFallthroughCasesInSwitch": true,
+        "forceConsistentCasingInFileNames": true,
+        "strict": true
+    },
+    "files": [
+        "index.ts",
+        "kafka/index.ts",
+        "kafka/v1alpha1/index.ts",
+        "kafka/v1alpha1/kafkaBridge.ts",
+        "kafka/v1alpha1/kafkaConnector.ts",
+        "kafka/v1alpha1/kafkaMirrorMaker2.ts",
+        "kafka/v1alpha1/kafkaRebalance.ts",
+        "kafka/v1beta1/index.ts",
+        "kafka/v1beta1/kafka.ts",
+        "kafka/v1beta1/kafkaConnect.ts",
+        "kafka/v1beta1/kafkaConnectS2I.ts",
+        "kafka/v1beta1/kafkaMirrorMaker.ts",
+        "kafka/v1beta1/kafkaTopic.ts",
+        "kafka/v1beta1/kafkaUser.ts",
+        "provider.ts",
+        "types/index.ts",
+        "types/input.ts",
+        "types/output.ts",
+        "utilities.ts"
+    ]
+}

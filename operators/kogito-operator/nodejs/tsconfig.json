@@ -1,0 +1,32 @@
+{
+    "compilerOptions": {
+        "outDir": "bin",
+        "target": "es2016",
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "declaration": true,
+        "sourceMap": true,
+        "stripInternal": true,
+        "experimentalDecorators": true,
+        "noFallthroughCasesInSwitch": true,
+        "forceConsistentCasingInFileNames": true,
+        "strict": true
+    },
+    "files": [
+        "app/index.ts",
+        "app/v1alpha1/index.ts",
+        "app/v1alpha1/kogitoBuild.ts",
+        "app/v1alpha1/kogitoDataIndex.ts",
+        "app/v1alpha1/kogitoInfra.ts",
+        "app/v1alpha1/kogitoJobsService.ts",
+        "app/v1alpha1/kogitoMgmtConsole.ts",
+        "app/v1alpha1/kogitoRuntime.ts",
+        "app/v1alpha1/kogitoTrusty.ts",
+        "index.ts",
+        "provider.ts",
+        "types/index.ts",
+        "types/input.ts",
+        "types/output.ts",
+        "utilities.ts"
+    ]
+}

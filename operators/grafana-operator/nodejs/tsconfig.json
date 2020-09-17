@@ -1,0 +1,28 @@
+{
+    "compilerOptions": {
+        "outDir": "bin",
+        "target": "es2016",
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "declaration": true,
+        "sourceMap": true,
+        "stripInternal": true,
+        "experimentalDecorators": true,
+        "noFallthroughCasesInSwitch": true,
+        "forceConsistentCasingInFileNames": true,
+        "strict": true
+    },
+    "files": [
+        "index.ts",
+        "integreatly/index.ts",
+        "integreatly/v1alpha1/grafana.ts",
+        "integreatly/v1alpha1/grafanaDashboard.ts",
+        "integreatly/v1alpha1/grafanaDataSource.ts",
+        "integreatly/v1alpha1/index.ts",
+        "provider.ts",
+        "types/index.ts",
+        "types/input.ts",
+        "types/output.ts",
+        "utilities.ts"
+    ]
+}

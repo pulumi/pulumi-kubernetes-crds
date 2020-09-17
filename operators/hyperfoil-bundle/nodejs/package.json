@@ -1,0 +1,13 @@
+{
+    "name": "@pulumi/@pulumi/kubernetes-crds-operators-hyperfoil-bundle",
+    "version": "",
+    "scripts": {
+        "build": "tsc"
+    },
+    "peerDependencies": {
+        "@pulumi/pulumi": "latest"
+    },
+    "pulumi": {
+        "resource": true
+    }
+}

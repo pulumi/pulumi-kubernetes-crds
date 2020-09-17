@@ -1,0 +1,33 @@
+{
+    "compilerOptions": {
+        "outDir": "bin",
+        "target": "es2016",
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "declaration": true,
+        "sourceMap": true,
+        "stripInternal": true,
+        "experimentalDecorators": true,
+        "noFallthroughCasesInSwitch": true,
+        "forceConsistentCasingInFileNames": true,
+        "strict": true
+    },
+    "files": [
+        "app/index.ts",
+        "app/v1beta1/application.ts",
+        "app/v1beta1/index.ts",
+        "apps/index.ts",
+        "apps/v1/channel.ts",
+        "apps/v1/deployable.ts",
+        "apps/v1/helmRelease.ts",
+        "apps/v1/index.ts",
+        "apps/v1/placementRule.ts",
+        "apps/v1/subscription.ts",
+        "index.ts",
+        "provider.ts",
+        "types/index.ts",
+        "types/input.ts",
+        "types/output.ts",
+        "utilities.ts"
+    ]
+}

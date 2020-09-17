@@ -1,0 +1,32 @@
+{
+    "compilerOptions": {
+        "outDir": "bin",
+        "target": "es2016",
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "declaration": true,
+        "sourceMap": true,
+        "stripInternal": true,
+        "experimentalDecorators": true,
+        "noFallthroughCasesInSwitch": true,
+        "forceConsistentCasingInFileNames": true,
+        "strict": true
+    },
+    "files": [
+        "index.ts",
+        "perf/index.ts",
+        "perf/v1alpha1/drill.ts",
+        "perf/v1alpha1/fio.ts",
+        "perf/v1alpha1/index.ts",
+        "perf/v1alpha1/ioping.ts",
+        "perf/v1alpha1/iperf3.ts",
+        "perf/v1alpha1/pgbench.ts",
+        "perf/v1alpha1/qperf.ts",
+        "perf/v1alpha1/sysbench.ts",
+        "provider.ts",
+        "types/index.ts",
+        "types/input.ts",
+        "types/output.ts",
+        "utilities.ts"
+    ]
+}
