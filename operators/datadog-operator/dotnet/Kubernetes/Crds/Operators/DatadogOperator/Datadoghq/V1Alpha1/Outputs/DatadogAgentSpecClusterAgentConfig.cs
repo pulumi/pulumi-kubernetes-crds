@@ -22,6 +22,10 @@ namespace Pulumi.Kubernetes.Types.Outputs.Datadoghq.V1Alpha1
         /// </summary>
         public readonly bool ClusterChecksEnabled;
         /// <summary>
+        /// Enables this to start event collection from the kubernetes API ref: https://docs.datadoghq.com/agent/cluster_agent/event_collection/
+        /// </summary>
+        public readonly bool CollectEvents;
+        /// <summary>
         /// Confd Provide additional cluster check configurations. Each key will become a file in /conf.d see https://docs.datadoghq.com/agent/autodiscovery/ for more details.
         /// </summary>
         public readonly Pulumi.Kubernetes.Types.Outputs.Datadoghq.V1Alpha1.DatadogAgentSpecClusterAgentConfigConfd Confd;
@@ -56,6 +60,8 @@ namespace Pulumi.Kubernetes.Types.Outputs.Datadoghq.V1Alpha1
 
             bool clusterChecksEnabled,
 
+            bool collectEvents,
+
             Pulumi.Kubernetes.Types.Outputs.Datadoghq.V1Alpha1.DatadogAgentSpecClusterAgentConfigConfd confd,
 
             ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Datadoghq.V1Alpha1.DatadogAgentSpecClusterAgentConfigEnv> env,
@@ -72,6 +78,7 @@ namespace Pulumi.Kubernetes.Types.Outputs.Datadoghq.V1Alpha1
         {
             AdmissionController = admissionController;
             ClusterChecksEnabled = clusterChecksEnabled;
+            CollectEvents = collectEvents;
             Confd = confd;
             Env = env;
             ExternalMetrics = externalMetrics;

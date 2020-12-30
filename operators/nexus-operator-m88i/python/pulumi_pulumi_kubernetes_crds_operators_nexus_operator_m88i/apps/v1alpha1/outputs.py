@@ -11,15 +11,20 @@ from . import outputs
 
 __all__ = [
     'NexusSpec',
+    'NexusSpecAutomaticUpdate',
+    'NexusSpecLivenessProbe',
     'NexusSpecNetworking',
     'NexusSpecNetworkingTls',
     'NexusSpecPersistence',
+    'NexusSpecReadinessProbe',
     'NexusSpecResources',
     'NexusSpecResourcesLimits',
     'NexusSpecResourcesRequests',
+    'NexusSpecServerOperations',
     'NexusStatus',
     'NexusStatusDeploymentStatus',
     'NexusStatusDeploymentStatusConditions',
+    'NexusStatusServerOperationsStatus',
 ]
 
 @pulumi.output_type
@@ -31,29 +36,53 @@ class NexusSpec(dict):
                  persistence: 'outputs.NexusSpecPersistence',
                  replicas: int,
                  use_red_hat_image: bool,
+                 automatic_update: Optional['outputs.NexusSpecAutomaticUpdate'] = None,
+                 generate_random_admin_password: Optional[bool] = None,
                  image: Optional[str] = None,
+                 image_pull_policy: Optional[str] = None,
+                 liveness_probe: Optional['outputs.NexusSpecLivenessProbe'] = None,
                  networking: Optional['outputs.NexusSpecNetworking'] = None,
+                 readiness_probe: Optional['outputs.NexusSpecReadinessProbe'] = None,
                  resources: Optional['outputs.NexusSpecResources'] = None,
+                 server_operations: Optional['outputs.NexusSpecServerOperations'] = None,
                  service_account_name: Optional[str] = None):
         """
         NexusSpec defines the desired state of Nexus
         :param 'NexusSpecPersistenceArgs' persistence: Persistence definition
-        :param int replicas: Number of pods replicas desired Default: 1
-        :param bool use_red_hat_image: If you have access to Red Hat Container Catalog, turn this to true to use the certified image provided by Sonatype Default: false
-        :param str image: Full image tag name for this specific deployment Default: docker.io/sonatype/nexus3:latest
+        :param int replicas: Number of pod replicas desired. Defaults to 0.
+        :param bool use_red_hat_image: If you have access to Red Hat Container Catalog, set this to `true` to use the certified image provided by Sonatype Defaults to `false`
+        :param 'NexusSpecAutomaticUpdateArgs' automatic_update: Automatic updates configuration
+        :param bool generate_random_admin_password: GenerateRandomAdminPassword enables the random password generation. Defaults to `false`: the default password for a newly created instance is 'admin123', which should be changed in the first login. If set to `true`, you must use the automatically generated 'admin' password, stored in the container's file system at `/nexus-data/admin.password`. The operator uses the default credentials to create a user for itself to create default repositories. If set to `true`, the repositories won't be created since the operator won't fetch for the random password.
+        :param str image: Full image tag name for this specific deployment. Will be ignored if `spec.useRedHatImage` is set to `true`. Default: docker.io/sonatype/nexus3:latest
+        :param str image_pull_policy: The image pull policy for the Nexus image. If left blank behavior will be determined by the image tag (`Always` if "latest" and `IfNotPresent` otherwise). Possible values: `Always`, `IfNotPresent` or `Never`.
+        :param 'NexusSpecLivenessProbeArgs' liveness_probe: LivenessProbe describes how the Nexus container liveness probe should work
         :param 'NexusSpecNetworkingArgs' networking: Networking definition
+        :param 'NexusSpecReadinessProbeArgs' readiness_probe: ReadinessProbe describes how the Nexus container readiness probe should work
         :param 'NexusSpecResourcesArgs' resources: Defined Resources for the Nexus instance
-        :param str service_account_name: ServiceAccountName is the name of the ServiceAccount used to run the Pods. If left blank, a default ServiceAccount is created with the same name as the Nexus CR.
+        :param 'NexusSpecServerOperationsArgs' server_operations: ServerOperations describes the options for the operations performed on the deployed server instance
+        :param str service_account_name: ServiceAccountName is the name of the ServiceAccount used to run the Pods. If left blank, a default ServiceAccount is created with the same name as the Nexus CR (`metadata.name`).
         """
         pulumi.set(__self__, "persistence", persistence)
         pulumi.set(__self__, "replicas", replicas)
         pulumi.set(__self__, "use_red_hat_image", use_red_hat_image)
+        if automatic_update is not None:
+            pulumi.set(__self__, "automatic_update", automatic_update)
+        if generate_random_admin_password is not None:
+            pulumi.set(__self__, "generate_random_admin_password", generate_random_admin_password)
         if image is not None:
             pulumi.set(__self__, "image", image)
+        if image_pull_policy is not None:
+            pulumi.set(__self__, "image_pull_policy", image_pull_policy)
+        if liveness_probe is not None:
+            pulumi.set(__self__, "liveness_probe", liveness_probe)
         if networking is not None:
             pulumi.set(__self__, "networking", networking)
+        if readiness_probe is not None:
+            pulumi.set(__self__, "readiness_probe", readiness_probe)
         if resources is not None:
             pulumi.set(__self__, "resources", resources)
+        if server_operations is not None:
+            pulumi.set(__self__, "server_operations", server_operations)
         if service_account_name is not None:
             pulumi.set(__self__, "service_account_name", service_account_name)
 
@@ -69,7 +98,7 @@ class NexusSpec(dict):
     @pulumi.getter
     def replicas(self) -> int:
         """
-        Number of pods replicas desired Default: 1
+        Number of pod replicas desired. Defaults to 0.
         """
         return pulumi.get(self, "replicas")
 
@@ -77,17 +106,49 @@ class NexusSpec(dict):
     @pulumi.getter(name="useRedHatImage")
     def use_red_hat_image(self) -> bool:
         """
-        If you have access to Red Hat Container Catalog, turn this to true to use the certified image provided by Sonatype Default: false
+        If you have access to Red Hat Container Catalog, set this to `true` to use the certified image provided by Sonatype Defaults to `false`
         """
         return pulumi.get(self, "use_red_hat_image")
+
+    @property
+    @pulumi.getter(name="automaticUpdate")
+    def automatic_update(self) -> Optional['outputs.NexusSpecAutomaticUpdate']:
+        """
+        Automatic updates configuration
+        """
+        return pulumi.get(self, "automatic_update")
+
+    @property
+    @pulumi.getter(name="generateRandomAdminPassword")
+    def generate_random_admin_password(self) -> Optional[bool]:
+        """
+        GenerateRandomAdminPassword enables the random password generation. Defaults to `false`: the default password for a newly created instance is 'admin123', which should be changed in the first login. If set to `true`, you must use the automatically generated 'admin' password, stored in the container's file system at `/nexus-data/admin.password`. The operator uses the default credentials to create a user for itself to create default repositories. If set to `true`, the repositories won't be created since the operator won't fetch for the random password.
+        """
+        return pulumi.get(self, "generate_random_admin_password")
 
     @property
     @pulumi.getter
     def image(self) -> Optional[str]:
         """
-        Full image tag name for this specific deployment Default: docker.io/sonatype/nexus3:latest
+        Full image tag name for this specific deployment. Will be ignored if `spec.useRedHatImage` is set to `true`. Default: docker.io/sonatype/nexus3:latest
         """
         return pulumi.get(self, "image")
+
+    @property
+    @pulumi.getter(name="imagePullPolicy")
+    def image_pull_policy(self) -> Optional[str]:
+        """
+        The image pull policy for the Nexus image. If left blank behavior will be determined by the image tag (`Always` if "latest" and `IfNotPresent` otherwise). Possible values: `Always`, `IfNotPresent` or `Never`.
+        """
+        return pulumi.get(self, "image_pull_policy")
+
+    @property
+    @pulumi.getter(name="livenessProbe")
+    def liveness_probe(self) -> Optional['outputs.NexusSpecLivenessProbe']:
+        """
+        LivenessProbe describes how the Nexus container liveness probe should work
+        """
+        return pulumi.get(self, "liveness_probe")
 
     @property
     @pulumi.getter
@@ -98,6 +159,14 @@ class NexusSpec(dict):
         return pulumi.get(self, "networking")
 
     @property
+    @pulumi.getter(name="readinessProbe")
+    def readiness_probe(self) -> Optional['outputs.NexusSpecReadinessProbe']:
+        """
+        ReadinessProbe describes how the Nexus container readiness probe should work
+        """
+        return pulumi.get(self, "readiness_probe")
+
+    @property
     @pulumi.getter
     def resources(self) -> Optional['outputs.NexusSpecResources']:
         """
@@ -106,12 +175,132 @@ class NexusSpec(dict):
         return pulumi.get(self, "resources")
 
     @property
+    @pulumi.getter(name="serverOperations")
+    def server_operations(self) -> Optional['outputs.NexusSpecServerOperations']:
+        """
+        ServerOperations describes the options for the operations performed on the deployed server instance
+        """
+        return pulumi.get(self, "server_operations")
+
+    @property
     @pulumi.getter(name="serviceAccountName")
     def service_account_name(self) -> Optional[str]:
         """
-        ServiceAccountName is the name of the ServiceAccount used to run the Pods. If left blank, a default ServiceAccount is created with the same name as the Nexus CR.
+        ServiceAccountName is the name of the ServiceAccount used to run the Pods. If left blank, a default ServiceAccount is created with the same name as the Nexus CR (`metadata.name`).
         """
         return pulumi.get(self, "service_account_name")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class NexusSpecAutomaticUpdate(dict):
+    """
+    Automatic updates configuration
+    """
+    def __init__(__self__, *,
+                 disabled: Optional[bool] = None,
+                 minor_version: Optional[int] = None):
+        """
+        Automatic updates configuration
+        :param bool disabled: Whether or not the Operator should perform automatic updates. Defaults to `false` (auto updates are enabled). Is set to `false` if `spec.image` is not empty and is different from the default community image.
+        :param int minor_version: The Nexus image minor version the deployment should stay in. If left blank and automatic updates are enabled the latest minor is set.
+        """
+        if disabled is not None:
+            pulumi.set(__self__, "disabled", disabled)
+        if minor_version is not None:
+            pulumi.set(__self__, "minor_version", minor_version)
+
+    @property
+    @pulumi.getter
+    def disabled(self) -> Optional[bool]:
+        """
+        Whether or not the Operator should perform automatic updates. Defaults to `false` (auto updates are enabled). Is set to `false` if `spec.image` is not empty and is different from the default community image.
+        """
+        return pulumi.get(self, "disabled")
+
+    @property
+    @pulumi.getter(name="minorVersion")
+    def minor_version(self) -> Optional[int]:
+        """
+        The Nexus image minor version the deployment should stay in. If left blank and automatic updates are enabled the latest minor is set.
+        """
+        return pulumi.get(self, "minor_version")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class NexusSpecLivenessProbe(dict):
+    """
+    LivenessProbe describes how the Nexus container liveness probe should work
+    """
+    def __init__(__self__, *,
+                 failure_threshold: Optional[int] = None,
+                 initial_delay_seconds: Optional[int] = None,
+                 period_seconds: Optional[int] = None,
+                 success_threshold: Optional[int] = None,
+                 timeout_seconds: Optional[int] = None):
+        """
+        LivenessProbe describes how the Nexus container liveness probe should work
+        :param int failure_threshold: Minimum consecutive failures for the probe to be considered failed after having succeeded. Defaults to 3. Minimum value is 1.
+        :param int initial_delay_seconds: Number of seconds after the container has started before probes are initiated. Defaults to 240 seconds. Minimum value is 0.
+        :param int period_seconds: How often (in seconds) to perform the probe. Defaults to 10 seconds. Minimum value is 1.
+        :param int success_threshold: Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1. Must be 1 for liveness and startup. Minimum value is 1.
+        :param int timeout_seconds: Number of seconds after which the probe times out. Defaults to 15 seconds. Minimum value is 1.
+        """
+        if failure_threshold is not None:
+            pulumi.set(__self__, "failure_threshold", failure_threshold)
+        if initial_delay_seconds is not None:
+            pulumi.set(__self__, "initial_delay_seconds", initial_delay_seconds)
+        if period_seconds is not None:
+            pulumi.set(__self__, "period_seconds", period_seconds)
+        if success_threshold is not None:
+            pulumi.set(__self__, "success_threshold", success_threshold)
+        if timeout_seconds is not None:
+            pulumi.set(__self__, "timeout_seconds", timeout_seconds)
+
+    @property
+    @pulumi.getter(name="failureThreshold")
+    def failure_threshold(self) -> Optional[int]:
+        """
+        Minimum consecutive failures for the probe to be considered failed after having succeeded. Defaults to 3. Minimum value is 1.
+        """
+        return pulumi.get(self, "failure_threshold")
+
+    @property
+    @pulumi.getter(name="initialDelaySeconds")
+    def initial_delay_seconds(self) -> Optional[int]:
+        """
+        Number of seconds after the container has started before probes are initiated. Defaults to 240 seconds. Minimum value is 0.
+        """
+        return pulumi.get(self, "initial_delay_seconds")
+
+    @property
+    @pulumi.getter(name="periodSeconds")
+    def period_seconds(self) -> Optional[int]:
+        """
+        How often (in seconds) to perform the probe. Defaults to 10 seconds. Minimum value is 1.
+        """
+        return pulumi.get(self, "period_seconds")
+
+    @property
+    @pulumi.getter(name="successThreshold")
+    def success_threshold(self) -> Optional[int]:
+        """
+        Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1. Must be 1 for liveness and startup. Minimum value is 1.
+        """
+        return pulumi.get(self, "success_threshold")
+
+    @property
+    @pulumi.getter(name="timeoutSeconds")
+    def timeout_seconds(self) -> Optional[int]:
+        """
+        Number of seconds after which the probe times out. Defaults to 15 seconds. Minimum value is 1.
+        """
+        return pulumi.get(self, "timeout_seconds")
 
     def _translate_property(self, prop):
         return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
@@ -130,8 +319,8 @@ class NexusSpecNetworking(dict):
                  tls: Optional['outputs.NexusSpecNetworkingTls'] = None):
         """
         Networking definition
-        :param bool expose: Set to `true` to expose the Nexus application. Default to false.
-        :param str expose_as: Type of networking exposure: NodePort, Route or Ingress. Default to Route on OpenShift and Ingress on Kubernetes.
+        :param bool expose: Set to `true` to expose the Nexus application. Defaults to `false`.
+        :param str expose_as: Type of networking exposure: NodePort, Route or Ingress. Defaults to Route on OpenShift and Ingress on Kubernetes. Routes are only available on Openshift and Ingresses are only available on Kubernetes.
         :param str host: Host where the Nexus service is exposed. This attribute is required if the service is exposed via Ingress.
         :param int node_port: NodePort defined in the exposed service. Required if exposed via NodePort.
         :param 'NexusSpecNetworkingTlsArgs' tls: TLS/SSL-related configuration
@@ -151,7 +340,7 @@ class NexusSpecNetworking(dict):
     @pulumi.getter
     def expose(self) -> Optional[bool]:
         """
-        Set to `true` to expose the Nexus application. Default to false.
+        Set to `true` to expose the Nexus application. Defaults to `false`.
         """
         return pulumi.get(self, "expose")
 
@@ -159,7 +348,7 @@ class NexusSpecNetworking(dict):
     @pulumi.getter(name="exposeAs")
     def expose_as(self) -> Optional[str]:
         """
-        Type of networking exposure: NodePort, Route or Ingress. Default to Route on OpenShift and Ingress on Kubernetes.
+        Type of networking exposure: NodePort, Route or Ingress. Defaults to Route on OpenShift and Ingress on Kubernetes. Routes are only available on Openshift and Ingresses are only available on Kubernetes.
         """
         return pulumi.get(self, "expose_as")
 
@@ -201,7 +390,7 @@ class NexusSpecNetworkingTls(dict):
                  secret_name: Optional[str] = None):
         """
         TLS/SSL-related configuration
-        :param bool mandatory: When exposing via Route, set to `true` to only allow encrypted traffic using TLS (disables HTTP in favor of HTTPS). Defaults to false.
+        :param bool mandatory: When exposing via Route, set to `true` to only allow encrypted traffic using TLS (disables HTTP in favor of HTTPS). Defaults to `false`.
         :param str secret_name: When exposing via Ingress, inform the name of the TLS secret containing certificate and private key for TLS encryption. It must be present in the same namespace as the Operator.
         """
         if mandatory is not None:
@@ -213,7 +402,7 @@ class NexusSpecNetworkingTls(dict):
     @pulumi.getter
     def mandatory(self) -> Optional[bool]:
         """
-        When exposing via Route, set to `true` to only allow encrypted traffic using TLS (disables HTTP in favor of HTTPS). Defaults to false.
+        When exposing via Route, set to `true` to only allow encrypted traffic using TLS (disables HTTP in favor of HTTPS). Defaults to `false`.
         """
         return pulumi.get(self, "mandatory")
 
@@ -279,6 +468,80 @@ class NexusSpecPersistence(dict):
 
 
 @pulumi.output_type
+class NexusSpecReadinessProbe(dict):
+    """
+    ReadinessProbe describes how the Nexus container readiness probe should work
+    """
+    def __init__(__self__, *,
+                 failure_threshold: Optional[int] = None,
+                 initial_delay_seconds: Optional[int] = None,
+                 period_seconds: Optional[int] = None,
+                 success_threshold: Optional[int] = None,
+                 timeout_seconds: Optional[int] = None):
+        """
+        ReadinessProbe describes how the Nexus container readiness probe should work
+        :param int failure_threshold: Minimum consecutive failures for the probe to be considered failed after having succeeded. Defaults to 3. Minimum value is 1.
+        :param int initial_delay_seconds: Number of seconds after the container has started before probes are initiated. Defaults to 240 seconds. Minimum value is 0.
+        :param int period_seconds: How often (in seconds) to perform the probe. Defaults to 10 seconds. Minimum value is 1.
+        :param int success_threshold: Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1. Must be 1 for liveness and startup. Minimum value is 1.
+        :param int timeout_seconds: Number of seconds after which the probe times out. Defaults to 15 seconds. Minimum value is 1.
+        """
+        if failure_threshold is not None:
+            pulumi.set(__self__, "failure_threshold", failure_threshold)
+        if initial_delay_seconds is not None:
+            pulumi.set(__self__, "initial_delay_seconds", initial_delay_seconds)
+        if period_seconds is not None:
+            pulumi.set(__self__, "period_seconds", period_seconds)
+        if success_threshold is not None:
+            pulumi.set(__self__, "success_threshold", success_threshold)
+        if timeout_seconds is not None:
+            pulumi.set(__self__, "timeout_seconds", timeout_seconds)
+
+    @property
+    @pulumi.getter(name="failureThreshold")
+    def failure_threshold(self) -> Optional[int]:
+        """
+        Minimum consecutive failures for the probe to be considered failed after having succeeded. Defaults to 3. Minimum value is 1.
+        """
+        return pulumi.get(self, "failure_threshold")
+
+    @property
+    @pulumi.getter(name="initialDelaySeconds")
+    def initial_delay_seconds(self) -> Optional[int]:
+        """
+        Number of seconds after the container has started before probes are initiated. Defaults to 240 seconds. Minimum value is 0.
+        """
+        return pulumi.get(self, "initial_delay_seconds")
+
+    @property
+    @pulumi.getter(name="periodSeconds")
+    def period_seconds(self) -> Optional[int]:
+        """
+        How often (in seconds) to perform the probe. Defaults to 10 seconds. Minimum value is 1.
+        """
+        return pulumi.get(self, "period_seconds")
+
+    @property
+    @pulumi.getter(name="successThreshold")
+    def success_threshold(self) -> Optional[int]:
+        """
+        Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1. Must be 1 for liveness and startup. Minimum value is 1.
+        """
+        return pulumi.get(self, "success_threshold")
+
+    @property
+    @pulumi.getter(name="timeoutSeconds")
+    def timeout_seconds(self) -> Optional[int]:
+        """
+        Number of seconds after which the probe times out. Defaults to 15 seconds. Minimum value is 1.
+        """
+        return pulumi.get(self, "timeout_seconds")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
 class NexusSpecResources(dict):
     """
     Defined Resources for the Nexus instance
@@ -335,6 +598,44 @@ class NexusSpecResourcesRequests(dict):
 
 
 @pulumi.output_type
+class NexusSpecServerOperations(dict):
+    """
+    ServerOperations describes the options for the operations performed on the deployed server instance
+    """
+    def __init__(__self__, *,
+                 disable_operator_user_creation: Optional[bool] = None,
+                 disable_repository_creation: Optional[bool] = None):
+        """
+        ServerOperations describes the options for the operations performed on the deployed server instance
+        :param bool disable_operator_user_creation: DisableOperatorUserCreation disables the auto-creation of the `nexus-operator` user on the deployed server. This user performs all the operations on the server (such as creating the community repos). If disabled, the Operator will use the default `admin` user. Defaults to `false` (always create the user). Setting this to `true` is not recommended as it grants the Operator more privileges than it needs and it would not be possible to tell apart operations performed by the `admin` and the Operator.
+        :param bool disable_repository_creation: DisableRepositoryCreation disables the auto-creation of Apache, JBoss and Red Hat repositories and their addition to the Maven Public group in this Nexus instance. Defaults to `false` (always try to create the repos). Set this to `true` to not create them. Only works if `spec.generateRandomAdminPassword` is `false`.
+        """
+        if disable_operator_user_creation is not None:
+            pulumi.set(__self__, "disable_operator_user_creation", disable_operator_user_creation)
+        if disable_repository_creation is not None:
+            pulumi.set(__self__, "disable_repository_creation", disable_repository_creation)
+
+    @property
+    @pulumi.getter(name="disableOperatorUserCreation")
+    def disable_operator_user_creation(self) -> Optional[bool]:
+        """
+        DisableOperatorUserCreation disables the auto-creation of the `nexus-operator` user on the deployed server. This user performs all the operations on the server (such as creating the community repos). If disabled, the Operator will use the default `admin` user. Defaults to `false` (always create the user). Setting this to `true` is not recommended as it grants the Operator more privileges than it needs and it would not be possible to tell apart operations performed by the `admin` and the Operator.
+        """
+        return pulumi.get(self, "disable_operator_user_creation")
+
+    @property
+    @pulumi.getter(name="disableRepositoryCreation")
+    def disable_repository_creation(self) -> Optional[bool]:
+        """
+        DisableRepositoryCreation disables the auto-creation of Apache, JBoss and Red Hat repositories and their addition to the Maven Public group in this Nexus instance. Defaults to `false` (always try to create the repos). Set this to `true` to not create them. Only works if `spec.generateRandomAdminPassword` is `false`.
+        """
+        return pulumi.get(self, "disable_repository_creation")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
 class NexusStatus(dict):
     """
     NexusStatus defines the observed state of Nexus
@@ -342,12 +643,18 @@ class NexusStatus(dict):
     def __init__(__self__, *,
                  deployment_status: Optional['outputs.NexusStatusDeploymentStatus'] = None,
                  nexus_route: Optional[str] = None,
-                 nexus_status: Optional[str] = None):
+                 nexus_status: Optional[str] = None,
+                 reason: Optional[str] = None,
+                 server_operations_status: Optional['outputs.NexusStatusServerOperationsStatus'] = None,
+                 update_conditions: Optional[Sequence[str]] = None):
         """
         NexusStatus defines the observed state of Nexus
         :param 'NexusStatusDeploymentStatusArgs' deployment_status: Condition status for the Nexus deployment
         :param str nexus_route: Route for external service access
-        :param str nexus_status: Will be "OK" when all objects are created successfully
+        :param str nexus_status: Will be "OK" when this Nexus instance is up
+        :param str reason: Gives more information about a failure status
+        :param 'NexusStatusServerOperationsStatusArgs' server_operations_status: ServerOperationsStatus describes the general status for the operations performed in the Nexus server instance
+        :param Sequence[str] update_conditions: Conditions reached during an update
         """
         if deployment_status is not None:
             pulumi.set(__self__, "deployment_status", deployment_status)
@@ -355,6 +662,12 @@ class NexusStatus(dict):
             pulumi.set(__self__, "nexus_route", nexus_route)
         if nexus_status is not None:
             pulumi.set(__self__, "nexus_status", nexus_status)
+        if reason is not None:
+            pulumi.set(__self__, "reason", reason)
+        if server_operations_status is not None:
+            pulumi.set(__self__, "server_operations_status", server_operations_status)
+        if update_conditions is not None:
+            pulumi.set(__self__, "update_conditions", update_conditions)
 
     @property
     @pulumi.getter(name="deploymentStatus")
@@ -376,9 +689,33 @@ class NexusStatus(dict):
     @pulumi.getter(name="nexusStatus")
     def nexus_status(self) -> Optional[str]:
         """
-        Will be "OK" when all objects are created successfully
+        Will be "OK" when this Nexus instance is up
         """
         return pulumi.get(self, "nexus_status")
+
+    @property
+    @pulumi.getter
+    def reason(self) -> Optional[str]:
+        """
+        Gives more information about a failure status
+        """
+        return pulumi.get(self, "reason")
+
+    @property
+    @pulumi.getter(name="serverOperationsStatus")
+    def server_operations_status(self) -> Optional['outputs.NexusStatusServerOperationsStatus']:
+        """
+        ServerOperationsStatus describes the general status for the operations performed in the Nexus server instance
+        """
+        return pulumi.get(self, "server_operations_status")
+
+    @property
+    @pulumi.getter(name="updateConditions")
+    def update_conditions(self) -> Optional[Sequence[str]]:
+        """
+        Conditions reached during an update
+        """
+        return pulumi.get(self, "update_conditions")
 
     def _translate_property(self, prop):
         return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
@@ -573,6 +910,68 @@ class NexusStatusDeploymentStatusConditions(dict):
         The reason for the condition's last transition.
         """
         return pulumi.get(self, "reason")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class NexusStatusServerOperationsStatus(dict):
+    """
+    ServerOperationsStatus describes the general status for the operations performed in the Nexus server instance
+    """
+    def __init__(__self__, *,
+                 community_repositories_created: Optional[bool] = None,
+                 maven_central_updated: Optional[bool] = None,
+                 maven_public_url: Optional[str] = None,
+                 operator_user_created: Optional[bool] = None,
+                 reason: Optional[str] = None,
+                 server_ready: Optional[bool] = None):
+        """
+        ServerOperationsStatus describes the general status for the operations performed in the Nexus server instance
+        """
+        if community_repositories_created is not None:
+            pulumi.set(__self__, "community_repositories_created", community_repositories_created)
+        if maven_central_updated is not None:
+            pulumi.set(__self__, "maven_central_updated", maven_central_updated)
+        if maven_public_url is not None:
+            pulumi.set(__self__, "maven_public_url", maven_public_url)
+        if operator_user_created is not None:
+            pulumi.set(__self__, "operator_user_created", operator_user_created)
+        if reason is not None:
+            pulumi.set(__self__, "reason", reason)
+        if server_ready is not None:
+            pulumi.set(__self__, "server_ready", server_ready)
+
+    @property
+    @pulumi.getter(name="communityRepositoriesCreated")
+    def community_repositories_created(self) -> Optional[bool]:
+        return pulumi.get(self, "community_repositories_created")
+
+    @property
+    @pulumi.getter(name="mavenCentralUpdated")
+    def maven_central_updated(self) -> Optional[bool]:
+        return pulumi.get(self, "maven_central_updated")
+
+    @property
+    @pulumi.getter(name="mavenPublicURL")
+    def maven_public_url(self) -> Optional[str]:
+        return pulumi.get(self, "maven_public_url")
+
+    @property
+    @pulumi.getter(name="operatorUserCreated")
+    def operator_user_created(self) -> Optional[bool]:
+        return pulumi.get(self, "operator_user_created")
+
+    @property
+    @pulumi.getter
+    def reason(self) -> Optional[str]:
+        return pulumi.get(self, "reason")
+
+    @property
+    @pulumi.getter(name="serverReady")
+    def server_ready(self) -> Optional[bool]:
+        return pulumi.get(self, "server_ready")
 
     def _translate_property(self, prop):
         return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop

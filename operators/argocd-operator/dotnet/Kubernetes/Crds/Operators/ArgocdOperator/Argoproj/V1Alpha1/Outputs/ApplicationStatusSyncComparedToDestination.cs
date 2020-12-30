@@ -14,6 +14,10 @@ namespace Pulumi.Kubernetes.Types.Outputs.Argoproj.V1Alpha1
     public sealed class ApplicationStatusSyncComparedToDestination
     {
         /// <summary>
+        /// Name of the destination cluster which can be used instead of server (url) field
+        /// </summary>
+        public readonly string Name;
+        /// <summary>
         /// Namespace overrides the environment namespace value in the ksonnet app.yaml
         /// </summary>
         public readonly string Namespace;
@@ -24,10 +28,13 @@ namespace Pulumi.Kubernetes.Types.Outputs.Argoproj.V1Alpha1
 
         [OutputConstructor]
         private ApplicationStatusSyncComparedToDestination(
+            string name,
+
             string @namespace,
 
             string server)
         {
+            Name = name;
             Namespace = @namespace;
             Server = server;
         }

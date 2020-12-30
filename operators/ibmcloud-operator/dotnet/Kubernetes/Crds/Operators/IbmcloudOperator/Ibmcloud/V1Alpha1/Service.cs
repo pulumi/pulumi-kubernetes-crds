@@ -9,6 +9,9 @@ using Pulumi.Serialization;
 
 namespace Pulumi.Pulumi.Kubernetes.Crds.Operators.IbmcloudOperator.Ibmcloud.V1Alpha1
 {
+    /// <summary>
+    /// Service is the Schema for the services API
+    /// </summary>
     public partial class Service : KubernetesResource
     {
         [Output("apiVersion")]
@@ -20,9 +23,15 @@ namespace Pulumi.Pulumi.Kubernetes.Crds.Operators.IbmcloudOperator.Ibmcloud.V1Al
         [Output("metadata")]
         public Output<Pulumi.Kubernetes.Types.Outputs.Meta.V1.ObjectMeta> Metadata { get; private set; } = null!;
 
+        /// <summary>
+        /// ServiceSpec defines the desired state of Service
+        /// </summary>
         [Output("spec")]
         public Output<Pulumi.Kubernetes.Types.Outputs.Ibmcloud.V1Alpha1.ServiceSpec> Spec { get; private set; } = null!;
 
+        /// <summary>
+        /// ServiceStatus defines the observed state of Service
+        /// </summary>
         [Output("status")]
         public Output<Pulumi.Kubernetes.Types.Outputs.Ibmcloud.V1Alpha1.ServiceStatus> Status { get; private set; } = null!;
 
@@ -95,9 +104,15 @@ namespace Pulumi.Kubernetes.Types.Inputs.Ibmcloud.V1Alpha1
         [Input("metadata")]
         public Input<Pulumi.Kubernetes.Types.Inputs.Meta.V1.ObjectMetaArgs>? Metadata { get; set; }
 
+        /// <summary>
+        /// ServiceSpec defines the desired state of Service
+        /// </summary>
         [Input("spec")]
         public Input<Pulumi.Kubernetes.Types.Inputs.Ibmcloud.V1Alpha1.ServiceSpecArgs>? Spec { get; set; }
 
+        /// <summary>
+        /// ServiceStatus defines the observed state of Service
+        /// </summary>
         [Input("status")]
         public Input<Pulumi.Kubernetes.Types.Inputs.Ibmcloud.V1Alpha1.ServiceStatusArgs>? Status { get; set; }
 

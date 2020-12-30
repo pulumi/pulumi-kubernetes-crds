@@ -15,12 +15,27 @@ namespace Pulumi.Kubernetes.Types.Inputs.Argoproj.V1Alpha1
     /// </summary>
     public class ApplicationStatusHistoryArgs : Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// DeployStartedAt holds the time the deployment started
+        /// </summary>
+        [Input("deployStartedAt")]
+        public Input<string>? DeployStartedAt { get; set; }
+
+        /// <summary>
+        /// DeployedAt holds the time the deployment completed
+        /// </summary>
         [Input("deployedAt", required: true)]
         public Input<string> DeployedAt { get; set; } = null!;
 
+        /// <summary>
+        /// ID is an auto incrementing identifier of the RevisionHistory
+        /// </summary>
         [Input("id", required: true)]
         public Input<int> Id { get; set; } = null!;
 
+        /// <summary>
+        /// Revision holds the revision of the sync
+        /// </summary>
         [Input("revision", required: true)]
         public Input<string> Revision { get; set; } = null!;
 

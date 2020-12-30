@@ -19,7 +19,7 @@ namespace Pulumi.Kubernetes.Types.Inputs.Apps.V1
         private InputList<string>? _daysofweek;
 
         /// <summary>
-        /// Defines the day of the week for the subscription timewindow window https://golang.org/pkg/time/#Weekday
+        /// weekdays defined the day of the week for this time window https://golang.org/pkg/time/#Weekday
         /// </summary>
         public InputList<string> Daysofweek
         {

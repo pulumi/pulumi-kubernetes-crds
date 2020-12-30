@@ -10,14 +10,15 @@ import (
 	"github.com/pulumi/pulumi/sdk/v2/go/pulumi"
 )
 
+// RateLimiting is the Schema for the ratelimitings API
 type RateLimiting struct {
 	pulumi.CustomResourceState
 
 	ApiVersion pulumi.StringPtrOutput     `pulumi:"apiVersion"`
 	Kind       pulumi.StringPtrOutput     `pulumi:"kind"`
 	Metadata   metav1.ObjectMetaPtrOutput `pulumi:"metadata"`
-	Spec       RateLimitingSpecPtrOutput  `pulumi:"spec"`
-	Status     pulumi.MapOutput           `pulumi:"status"`
+	// RateLimitingSpec defines the desired state of RateLimiting
+	Spec RateLimitingSpecPtrOutput `pulumi:"spec"`
 }
 
 // NewRateLimiting registers a new resource with the given unique name, arguments, and options.
@@ -50,19 +51,19 @@ func GetRateLimiting(ctx *pulumi.Context,
 
 // Input properties used for looking up and filtering RateLimiting resources.
 type rateLimitingState struct {
-	ApiVersion *string                `pulumi:"apiVersion"`
-	Kind       *string                `pulumi:"kind"`
-	Metadata   *metav1.ObjectMeta     `pulumi:"metadata"`
-	Spec       *RateLimitingSpec      `pulumi:"spec"`
-	Status     map[string]interface{} `pulumi:"status"`
+	ApiVersion *string            `pulumi:"apiVersion"`
+	Kind       *string            `pulumi:"kind"`
+	Metadata   *metav1.ObjectMeta `pulumi:"metadata"`
+	// RateLimitingSpec defines the desired state of RateLimiting
+	Spec *RateLimitingSpec `pulumi:"spec"`
 }
 
 type RateLimitingState struct {
 	ApiVersion pulumi.StringPtrInput
 	Kind       pulumi.StringPtrInput
 	Metadata   metav1.ObjectMetaPtrInput
-	Spec       RateLimitingSpecPtrInput
-	Status     pulumi.MapInput
+	// RateLimitingSpec defines the desired state of RateLimiting
+	Spec RateLimitingSpecPtrInput
 }
 
 func (RateLimitingState) ElementType() reflect.Type {
@@ -70,11 +71,11 @@ func (RateLimitingState) ElementType() reflect.Type {
 }
 
 type rateLimitingArgs struct {
-	ApiVersion *string                `pulumi:"apiVersion"`
-	Kind       *string                `pulumi:"kind"`
-	Metadata   *metav1.ObjectMeta     `pulumi:"metadata"`
-	Spec       *RateLimitingSpec      `pulumi:"spec"`
-	Status     map[string]interface{} `pulumi:"status"`
+	ApiVersion *string            `pulumi:"apiVersion"`
+	Kind       *string            `pulumi:"kind"`
+	Metadata   *metav1.ObjectMeta `pulumi:"metadata"`
+	// RateLimitingSpec defines the desired state of RateLimiting
+	Spec *RateLimitingSpec `pulumi:"spec"`
 }
 
 // The set of arguments for constructing a RateLimiting resource.
@@ -82,8 +83,8 @@ type RateLimitingArgs struct {
 	ApiVersion pulumi.StringPtrInput
 	Kind       pulumi.StringPtrInput
 	Metadata   metav1.ObjectMetaPtrInput
-	Spec       RateLimitingSpecPtrInput
-	Status     pulumi.MapInput
+	// RateLimitingSpec defines the desired state of RateLimiting
+	Spec RateLimitingSpecPtrInput
 }
 
 func (RateLimitingArgs) ElementType() reflect.Type {

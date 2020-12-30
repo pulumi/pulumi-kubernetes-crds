@@ -51,6 +51,18 @@ namespace Pulumi.Kubernetes.Types.Inputs.Kafka.V1Alpha1
             set => _goals = value;
         }
 
+        [Input("replicaMovementStrategies")]
+        private InputList<string>? _replicaMovementStrategies;
+
+        /// <summary>
+        /// A list of strategy class names used to determine the execution order for the replica movements in the generated optimization proposal. By default BaseReplicaMovementStrategy is used, which will execute the replica movements in the order that they were generated.
+        /// </summary>
+        public InputList<string> ReplicaMovementStrategies
+        {
+            get => _replicaMovementStrategies ?? (_replicaMovementStrategies = new InputList<string>());
+            set => _replicaMovementStrategies = value;
+        }
+
         /// <summary>
         /// The upper bound, in bytes per second, on the bandwidth used to move replicas. There is no limit by default.
         /// </summary>

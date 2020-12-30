@@ -17,9 +17,21 @@ namespace Pulumi.Kubernetes.Types.Outputs.Apps.V1Alpha1
         public readonly Pulumi.Kubernetes.Types.Outputs.Apps.V1Alpha1.APIManagerSpecSystemDatabase Database;
         public readonly Pulumi.Kubernetes.Types.Outputs.Apps.V1Alpha1.APIManagerSpecSystemFileStorage FileStorage;
         public readonly string Image;
+        /// <summary>
+        /// Affinity is a group of affinity scheduling rules.
+        /// </summary>
+        public readonly Pulumi.Kubernetes.Types.Outputs.Apps.V1Alpha1.APIManagerSpecSystemMemcachedAffinity MemcachedAffinity;
         public readonly string MemcachedImage;
+        public readonly ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Apps.V1Alpha1.APIManagerSpecSystemMemcachedTolerations> MemcachedTolerations;
+        /// <summary>
+        /// Affinity is a group of affinity scheduling rules.
+        /// </summary>
+        public readonly Pulumi.Kubernetes.Types.Outputs.Apps.V1Alpha1.APIManagerSpecSystemRedisAffinity RedisAffinity;
         public readonly string RedisImage;
+        public readonly Pulumi.Kubernetes.Types.Outputs.Apps.V1Alpha1.APIManagerSpecSystemRedisPersistentVolumeClaim RedisPersistentVolumeClaim;
+        public readonly ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Apps.V1Alpha1.APIManagerSpecSystemRedisTolerations> RedisTolerations;
         public readonly Pulumi.Kubernetes.Types.Outputs.Apps.V1Alpha1.APIManagerSpecSystemSidekiqSpec SidekiqSpec;
+        public readonly Pulumi.Kubernetes.Types.Outputs.Apps.V1Alpha1.APIManagerSpecSystemSphinxSpec SphinxSpec;
 
         [OutputConstructor]
         private APIManagerSpecSystem(
@@ -31,19 +43,37 @@ namespace Pulumi.Kubernetes.Types.Outputs.Apps.V1Alpha1
 
             string image,
 
+            Pulumi.Kubernetes.Types.Outputs.Apps.V1Alpha1.APIManagerSpecSystemMemcachedAffinity memcachedAffinity,
+
             string memcachedImage,
+
+            ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Apps.V1Alpha1.APIManagerSpecSystemMemcachedTolerations> memcachedTolerations,
+
+            Pulumi.Kubernetes.Types.Outputs.Apps.V1Alpha1.APIManagerSpecSystemRedisAffinity redisAffinity,
 
             string redisImage,
 
-            Pulumi.Kubernetes.Types.Outputs.Apps.V1Alpha1.APIManagerSpecSystemSidekiqSpec sidekiqSpec)
+            Pulumi.Kubernetes.Types.Outputs.Apps.V1Alpha1.APIManagerSpecSystemRedisPersistentVolumeClaim redisPersistentVolumeClaim,
+
+            ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Apps.V1Alpha1.APIManagerSpecSystemRedisTolerations> redisTolerations,
+
+            Pulumi.Kubernetes.Types.Outputs.Apps.V1Alpha1.APIManagerSpecSystemSidekiqSpec sidekiqSpec,
+
+            Pulumi.Kubernetes.Types.Outputs.Apps.V1Alpha1.APIManagerSpecSystemSphinxSpec sphinxSpec)
         {
             AppSpec = appSpec;
             Database = database;
             FileStorage = fileStorage;
             Image = image;
+            MemcachedAffinity = memcachedAffinity;
             MemcachedImage = memcachedImage;
+            MemcachedTolerations = memcachedTolerations;
+            RedisAffinity = redisAffinity;
             RedisImage = redisImage;
+            RedisPersistentVolumeClaim = redisPersistentVolumeClaim;
+            RedisTolerations = redisTolerations;
             SidekiqSpec = sidekiqSpec;
+            SphinxSpec = sphinxSpec;
         }
     }
 }

@@ -14,19 +14,26 @@ namespace Pulumi.Kubernetes.Types.Outputs.Datadoghq.V1Alpha1
     public sealed class DatadogAgentSpecAgentDeploymentStrategyCanary
     {
         public readonly string Duration;
-        public readonly bool Paused;
+        public readonly ImmutableArray<string> NodeAntiAffinityKeys;
+        /// <summary>
+        /// A label selector is a label query over a set of resources. The result of matchLabels and matchExpressions are ANDed. An empty label selector matches all objects. A null label selector matches no objects.
+        /// </summary>
+        public readonly Pulumi.Kubernetes.Types.Outputs.Datadoghq.V1Alpha1.DatadogAgentSpecAgentDeploymentStrategyCanaryNodeSelector NodeSelector;
         public readonly Pulumi.Kubernetes.Types.Outputs.Datadoghq.V1Alpha1.DatadogAgentSpecAgentDeploymentStrategyCanaryReplicas Replicas;
 
         [OutputConstructor]
         private DatadogAgentSpecAgentDeploymentStrategyCanary(
             string duration,
 
-            bool paused,
+            ImmutableArray<string> nodeAntiAffinityKeys,
+
+            Pulumi.Kubernetes.Types.Outputs.Datadoghq.V1Alpha1.DatadogAgentSpecAgentDeploymentStrategyCanaryNodeSelector nodeSelector,
 
             Pulumi.Kubernetes.Types.Outputs.Datadoghq.V1Alpha1.DatadogAgentSpecAgentDeploymentStrategyCanaryReplicas replicas)
         {
             Duration = duration;
-            Paused = paused;
+            NodeAntiAffinityKeys = nodeAntiAffinityKeys;
+            NodeSelector = nodeSelector;
             Replicas = replicas;
         }
     }

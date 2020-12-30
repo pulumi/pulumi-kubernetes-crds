@@ -8,6 +8,9 @@ import * as utilities from "../../utilities";
 
 import {ObjectMeta} from "../../meta/v1";
 
+/**
+ * Binding is the Schema for the bindings API
+ */
 export class Binding extends pulumi.CustomResource {
     /**
      * Get an existing Binding resource's state with the given name, ID, and optional extra
@@ -38,7 +41,13 @@ export class Binding extends pulumi.CustomResource {
     public readonly apiVersion!: pulumi.Output<"ibmcloud.ibm.com/v1alpha1" | undefined>;
     public readonly kind!: pulumi.Output<"Binding" | undefined>;
     public readonly metadata!: pulumi.Output<ObjectMeta | undefined>;
+    /**
+     * BindingSpec defines the desired state of Binding
+     */
     public readonly spec!: pulumi.Output<outputs.ibmcloud.v1alpha1.BindingSpec | undefined>;
+    /**
+     * BindingStatus defines the observed state of Binding
+     */
     public readonly status!: pulumi.Output<outputs.ibmcloud.v1alpha1.BindingStatus | undefined>;
 
     /**
@@ -81,6 +90,12 @@ export interface BindingArgs {
     readonly apiVersion?: pulumi.Input<"ibmcloud.ibm.com/v1alpha1">;
     readonly kind?: pulumi.Input<"Binding">;
     readonly metadata?: pulumi.Input<ObjectMeta>;
+    /**
+     * BindingSpec defines the desired state of Binding
+     */
     readonly spec?: pulumi.Input<inputs.ibmcloud.v1alpha1.BindingSpec>;
+    /**
+     * BindingStatus defines the observed state of Binding
+     */
     readonly status?: pulumi.Input<inputs.ibmcloud.v1alpha1.BindingStatus>;
 }

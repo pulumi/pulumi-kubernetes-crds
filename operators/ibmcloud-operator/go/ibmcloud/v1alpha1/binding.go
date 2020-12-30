@@ -10,14 +10,17 @@ import (
 	"github.com/pulumi/pulumi/sdk/v2/go/pulumi"
 )
 
+// Binding is the Schema for the bindings API
 type Binding struct {
 	pulumi.CustomResourceState
 
 	ApiVersion pulumi.StringPtrOutput     `pulumi:"apiVersion"`
 	Kind       pulumi.StringPtrOutput     `pulumi:"kind"`
 	Metadata   metav1.ObjectMetaPtrOutput `pulumi:"metadata"`
-	Spec       BindingSpecPtrOutput       `pulumi:"spec"`
-	Status     BindingStatusPtrOutput     `pulumi:"status"`
+	// BindingSpec defines the desired state of Binding
+	Spec BindingSpecPtrOutput `pulumi:"spec"`
+	// BindingStatus defines the observed state of Binding
+	Status BindingStatusPtrOutput `pulumi:"status"`
 }
 
 // NewBinding registers a new resource with the given unique name, arguments, and options.
@@ -53,16 +56,20 @@ type bindingState struct {
 	ApiVersion *string            `pulumi:"apiVersion"`
 	Kind       *string            `pulumi:"kind"`
 	Metadata   *metav1.ObjectMeta `pulumi:"metadata"`
-	Spec       *BindingSpec       `pulumi:"spec"`
-	Status     *BindingStatus     `pulumi:"status"`
+	// BindingSpec defines the desired state of Binding
+	Spec *BindingSpec `pulumi:"spec"`
+	// BindingStatus defines the observed state of Binding
+	Status *BindingStatus `pulumi:"status"`
 }
 
 type BindingState struct {
 	ApiVersion pulumi.StringPtrInput
 	Kind       pulumi.StringPtrInput
 	Metadata   metav1.ObjectMetaPtrInput
-	Spec       BindingSpecPtrInput
-	Status     BindingStatusPtrInput
+	// BindingSpec defines the desired state of Binding
+	Spec BindingSpecPtrInput
+	// BindingStatus defines the observed state of Binding
+	Status BindingStatusPtrInput
 }
 
 func (BindingState) ElementType() reflect.Type {
@@ -73,8 +80,10 @@ type bindingArgs struct {
 	ApiVersion *string            `pulumi:"apiVersion"`
 	Kind       *string            `pulumi:"kind"`
 	Metadata   *metav1.ObjectMeta `pulumi:"metadata"`
-	Spec       *BindingSpec       `pulumi:"spec"`
-	Status     *BindingStatus     `pulumi:"status"`
+	// BindingSpec defines the desired state of Binding
+	Spec *BindingSpec `pulumi:"spec"`
+	// BindingStatus defines the observed state of Binding
+	Status *BindingStatus `pulumi:"status"`
 }
 
 // The set of arguments for constructing a Binding resource.
@@ -82,8 +91,10 @@ type BindingArgs struct {
 	ApiVersion pulumi.StringPtrInput
 	Kind       pulumi.StringPtrInput
 	Metadata   metav1.ObjectMetaPtrInput
-	Spec       BindingSpecPtrInput
-	Status     BindingStatusPtrInput
+	// BindingSpec defines the desired state of Binding
+	Spec BindingSpecPtrInput
+	// BindingStatus defines the observed state of Binding
+	Status BindingStatusPtrInput
 }
 
 func (BindingArgs) ElementType() reflect.Type {

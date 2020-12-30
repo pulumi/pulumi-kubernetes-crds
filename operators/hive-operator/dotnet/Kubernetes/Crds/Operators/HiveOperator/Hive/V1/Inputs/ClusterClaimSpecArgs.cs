@@ -22,7 +22,13 @@ namespace Pulumi.Kubernetes.Types.Inputs.Hive.V1
         public Input<string> ClusterPoolName { get; set; } = null!;
 
         /// <summary>
-        /// Namespace is the namespace containing the ClusterDeployment of the claimed cluster. This field will be set by the ClusterPool when the claim is assigned a cluster.
+        /// Lifetime is the maximum lifetime of the claim after it is assigned a cluster. If the claim still exists when the lifetime has elapsed, the claim will be deleted by Hive.
+        /// </summary>
+        [Input("lifetime")]
+        public Input<string>? Lifetime { get; set; }
+
+        /// <summary>
+        /// Namespace is the namespace containing the ClusterDeployment (name will match the namespace) of the claimed cluster. This field will be set as soon as a suitable cluster can be found, however that cluster may still be resuming and not yet ready for use. Wait for the ClusterRunning condition to be true to avoid this issue.
         /// </summary>
         [Input("namespace")]
         public Input<string>? Namespace { get; set; }

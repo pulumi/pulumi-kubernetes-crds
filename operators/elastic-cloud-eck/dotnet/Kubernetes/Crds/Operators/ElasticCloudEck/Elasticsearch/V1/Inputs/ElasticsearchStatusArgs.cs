@@ -15,6 +15,9 @@ namespace Pulumi.Kubernetes.Types.Inputs.Elasticsearch.V1
     /// </summary>
     public class ElasticsearchStatusArgs : Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// AvailableNodes is the number of available instances.
+        /// </summary>
         [Input("availableNodes")]
         public Input<int>? AvailableNodes { get; set; }
 
@@ -29,6 +32,12 @@ namespace Pulumi.Kubernetes.Types.Inputs.Elasticsearch.V1
         /// </summary>
         [Input("phase")]
         public Input<string>? Phase { get; set; }
+
+        /// <summary>
+        /// Version of the stack resource currently running. During version upgrades, multiple versions may run in parallel: this value specifies the lowest version currently running.
+        /// </summary>
+        [Input("version")]
+        public Input<string>? Version { get; set; }
 
         public ElasticsearchStatusArgs()
         {

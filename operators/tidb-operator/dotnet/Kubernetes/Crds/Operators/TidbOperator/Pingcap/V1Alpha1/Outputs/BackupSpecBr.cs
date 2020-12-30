@@ -20,6 +20,7 @@ namespace Pulumi.Kubernetes.Types.Outputs.Pingcap.V1Alpha1
         public readonly string Db;
         public readonly string LogLevel;
         public readonly bool OnLine;
+        public readonly ImmutableArray<string> Options;
         public readonly int RateLimit;
         public readonly bool SendCredToTikv;
         public readonly string StatusAddr;
@@ -42,6 +43,8 @@ namespace Pulumi.Kubernetes.Types.Outputs.Pingcap.V1Alpha1
 
             bool onLine,
 
+            ImmutableArray<string> options,
+
             int rateLimit,
 
             bool sendCredToTikv,
@@ -59,6 +62,7 @@ namespace Pulumi.Kubernetes.Types.Outputs.Pingcap.V1Alpha1
             Db = db;
             LogLevel = logLevel;
             OnLine = onLine;
+            Options = options;
             RateLimit = rateLimit;
             SendCredToTikv = sendCredToTikv;
             StatusAddr = statusAddr;

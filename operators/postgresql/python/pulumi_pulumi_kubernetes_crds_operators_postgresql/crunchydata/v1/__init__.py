@@ -4,4 +4,6 @@
 
 # Export this package's modules as members:
 from .Pgcluster import *
+from .Pgpolicy import *
+from .Pgreplica import *
 from .Pgtask import *

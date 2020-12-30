@@ -20,8 +20,8 @@ namespace Pulumi.Kubernetes.Types.Inputs.Migration.V1Alpha1
             set => _errors = value;
         }
 
-        [Input("itenerary")]
-        public Input<string>? Itenerary { get; set; }
+        [Input("itinerary")]
+        public Input<string>? Itinerary { get; set; }
 
         [Input("observedDigest")]
         public Input<string>? ObservedDigest { get; set; }

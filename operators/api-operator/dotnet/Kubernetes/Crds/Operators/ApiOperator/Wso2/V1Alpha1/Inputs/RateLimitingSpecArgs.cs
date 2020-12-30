@@ -10,17 +10,29 @@ using Pulumi.Serialization;
 namespace Pulumi.Kubernetes.Types.Inputs.Wso2.V1Alpha1
 {
 
+    /// <summary>
+    /// RateLimitingSpec defines the desired state of RateLimiting
+    /// </summary>
     public class RateLimitingSpecArgs : Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// Bandwidth is exported type in Ratelimiting Spec
+        /// </summary>
         [Input("bandwidth")]
         public Input<Pulumi.Kubernetes.Types.Inputs.Wso2.V1Alpha1.RateLimitingSpecBandwidthArgs>? Bandwidth { get; set; }
 
+        /// <summary>
+        /// Conditions is exported type in Ratelimiting Spec
+        /// </summary>
         [Input("conditions")]
         public Input<Pulumi.Kubernetes.Types.Inputs.Wso2.V1Alpha1.RateLimitingSpecConditionsArgs>? Conditions { get; set; }
 
         [Input("description")]
         public Input<string>? Description { get; set; }
 
+        /// <summary>
+        /// RequestCount is exported type in Ratelimiting Spec
+        /// </summary>
         [Input("requestCount", required: true)]
         public Input<Pulumi.Kubernetes.Types.Inputs.Wso2.V1Alpha1.RateLimitingSpecRequestCountArgs> RequestCount { get; set; } = null!;
 

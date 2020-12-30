@@ -8,6 +8,9 @@ import * as utilities from "../../utilities";
 
 import {ObjectMeta} from "../../meta/v1";
 
+/**
+ * The `CheCluster` custom resource allows defining and managing a Che server installation
+ */
 export class CheCluster extends pulumi.CustomResource {
     /**
      * Get an existing CheCluster resource's state with the given name, ID, and optional extra

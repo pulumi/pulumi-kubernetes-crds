@@ -14,10 +14,19 @@ namespace Pulumi.Kubernetes.Types.Outputs.Capabilities.V1Alpha1
     public sealed class TenantSpec
     {
         public readonly string Email;
+        /// <summary>
+        /// SecretReference represents a Secret Reference. It has enough information to retrieve secret in any namespace
+        /// </summary>
         public readonly Pulumi.Kubernetes.Types.Outputs.Capabilities.V1Alpha1.TenantSpecMasterCredentialsRef MasterCredentialsRef;
         public readonly string OrganizationName;
+        /// <summary>
+        /// SecretReference represents a Secret Reference. It has enough information to retrieve secret in any namespace
+        /// </summary>
         public readonly Pulumi.Kubernetes.Types.Outputs.Capabilities.V1Alpha1.TenantSpecPasswordCredentialsRef PasswordCredentialsRef;
         public readonly string SystemMasterUrl;
+        /// <summary>
+        /// SecretReference represents a Secret Reference. It has enough information to retrieve secret in any namespace
+        /// </summary>
         public readonly Pulumi.Kubernetes.Types.Outputs.Capabilities.V1Alpha1.TenantSpecTenantSecretRef TenantSecretRef;
         public readonly string Username;
 

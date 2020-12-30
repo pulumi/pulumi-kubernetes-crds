@@ -10,6 +10,9 @@ using Pulumi.Serialization;
 namespace Pulumi.Kubernetes.Types.Inputs.Wso2.V1Alpha1
 {
 
+    /// <summary>
+    /// SecuritySpec defines the desired state of Security
+    /// </summary>
     public class SecuritySpecArgs : Pulumi.ResourceArgs
     {
         [Input("securityConfig")]

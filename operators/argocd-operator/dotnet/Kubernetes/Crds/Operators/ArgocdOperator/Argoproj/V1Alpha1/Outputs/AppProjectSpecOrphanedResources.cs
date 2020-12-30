@@ -13,14 +13,19 @@ namespace Pulumi.Kubernetes.Types.Outputs.Argoproj.V1Alpha1
     [OutputType]
     public sealed class AppProjectSpecOrphanedResources
     {
+        public readonly ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Argoproj.V1Alpha1.AppProjectSpecOrphanedResourcesIgnore> Ignore;
         /// <summary>
         /// Warn indicates if warning condition should be created for apps which have orphaned resources
         /// </summary>
         public readonly bool Warn;
 
         [OutputConstructor]
-        private AppProjectSpecOrphanedResources(bool warn)
+        private AppProjectSpecOrphanedResources(
+            ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Argoproj.V1Alpha1.AppProjectSpecOrphanedResourcesIgnore> ignore,
+
+            bool warn)
         {
+            Ignore = ignore;
             Warn = warn;
         }
     }

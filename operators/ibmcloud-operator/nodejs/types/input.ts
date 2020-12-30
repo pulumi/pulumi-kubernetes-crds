@@ -8,7 +8,388 @@ import * as outputs from "../types/output";
 import {ObjectMeta} from "../meta/v1";
 
 export namespace ibmcloud {
+    export namespace v1 {
+        /**
+         * BindingSpec defines the desired state of Binding
+         */
+        export interface BindingSpec {
+            /**
+             * Alias is the name for the credentials to be aliased
+             */
+            alias?: pulumi.Input<string>;
+            /**
+             * Parameters pass configuration to the service during creation
+             */
+            parameters?: pulumi.Input<pulumi.Input<inputs.ibmcloud.v1.BindingSpecParameters>[]>;
+            /**
+             * Role is the role for the credentials
+             */
+            role?: pulumi.Input<string>;
+            /**
+             * SecretName is the name of the secret where credentials will be stored
+             */
+            secretName?: pulumi.Input<string>;
+            /**
+             * ServiceClass is the name of the service resource to bind
+             */
+            serviceName: pulumi.Input<string>;
+            /**
+             * ServiceNamespace is the namespace of the service resource to bind
+             */
+            serviceNamespace?: pulumi.Input<string>;
+        }
+
+        /**
+         * Param represents a key-value pair
+         */
+        export interface BindingSpecParameters {
+            /**
+             * A parameter may have attributes (e.g. message hub topic might have partitions)
+             */
+            attributes?: pulumi.Input<{[key: string]: pulumi.Input<{[key: string]: any}>}>;
+            /**
+             * Name representing the key.
+             */
+            name: pulumi.Input<string>;
+            /**
+             * Defaults to null.
+             */
+            value?: any;
+            /**
+             * Source for the value. Cannot be used if value is not empty.
+             */
+            valueFrom?: pulumi.Input<inputs.ibmcloud.v1.BindingSpecParametersValueFrom>;
+        }
+
+        /**
+         * Source for the value. Cannot be used if value is not empty.
+         */
+        export interface BindingSpecParametersValueFrom {
+            /**
+             * Selects a key of a ConfigMap.
+             */
+            configMapKeyRef?: pulumi.Input<inputs.ibmcloud.v1.BindingSpecParametersValueFromConfigMapKeyRef>;
+            /**
+             * Selects a key of a secret in the resource namespace
+             */
+            secretKeyRef?: pulumi.Input<inputs.ibmcloud.v1.BindingSpecParametersValueFromSecretKeyRef>;
+        }
+
+        /**
+         * Selects a key of a ConfigMap.
+         */
+        export interface BindingSpecParametersValueFromConfigMapKeyRef {
+            /**
+             * The key to select.
+             */
+            key: pulumi.Input<string>;
+            /**
+             * Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+             */
+            name?: pulumi.Input<string>;
+            /**
+             * Specify whether the ConfigMap or its key must be defined
+             */
+            optional?: pulumi.Input<boolean>;
+        }
+
+        /**
+         * Selects a key of a secret in the resource namespace
+         */
+        export interface BindingSpecParametersValueFromSecretKeyRef {
+            /**
+             * The key of the secret to select from.  Must be a valid secret key.
+             */
+            key: pulumi.Input<string>;
+            /**
+             * Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+             */
+            name?: pulumi.Input<string>;
+            /**
+             * Specify whether the Secret or its key must be defined
+             */
+            optional?: pulumi.Input<boolean>;
+        }
+
+        /**
+         * BindingStatus defines the observed state of Binding
+         */
+        export interface BindingStatus {
+            generation?: pulumi.Input<number>;
+            /**
+             * InstanceID is the instance ID for the service
+             */
+            instanceId?: pulumi.Input<string>;
+            /**
+             * KeyInstanceID is the key instance ID for the credentials
+             */
+            keyInstanceId?: pulumi.Input<string>;
+            /**
+             * Message is a detailed message on current status
+             */
+            message?: pulumi.Input<string>;
+            /**
+             * SecretName is the name of the generated secret with service credentials
+             */
+            secretName?: pulumi.Input<string>;
+            /**
+             * State is a short name for the current status
+             */
+            state?: pulumi.Input<string>;
+        }
+
+        /**
+         * ServiceSpec defines the desired state of Service
+         */
+        export interface ServiceSpec {
+            /**
+             * ResourceContext defines the CloudFoundry context and resource group
+             */
+            context?: pulumi.Input<inputs.ibmcloud.v1.ServiceSpecContext>;
+            /**
+             * ExternalName is the name for the service as it appears on IBM Cloud
+             */
+            externalName?: pulumi.Input<string>;
+            /**
+             * Parameters pass configuration to the service during creation
+             */
+            parameters?: pulumi.Input<pulumi.Input<inputs.ibmcloud.v1.ServiceSpecParameters>[]>;
+            /**
+             * Plan for the service from the IBM Cloud Catalog
+             */
+            plan: pulumi.Input<string>;
+            /**
+             * ServiceClass is the name of the service from the IBM Cloud Catalog
+             */
+            serviceClass: pulumi.Input<string>;
+            /**
+             * ServiceClassType is set to CF if the service is CloundFoundry
+             */
+            serviceClassType?: pulumi.Input<string>;
+            tags?: pulumi.Input<pulumi.Input<string>[]>;
+        }
+
+        /**
+         * ResourceContext defines the CloudFoundry context and resource group
+         */
+        export interface ServiceSpecContext {
+            org?: pulumi.Input<string>;
+            region?: pulumi.Input<string>;
+            resourcegroupid?: pulumi.Input<string>;
+            resourcelocation?: pulumi.Input<string>;
+            space?: pulumi.Input<string>;
+            user?: pulumi.Input<string>;
+        }
+
+        /**
+         * Param represents a key-value pair
+         */
+        export interface ServiceSpecParameters {
+            /**
+             * A parameter may have attributes (e.g. message hub topic might have partitions)
+             */
+            attributes?: pulumi.Input<{[key: string]: pulumi.Input<{[key: string]: any}>}>;
+            /**
+             * Name representing the key.
+             */
+            name: pulumi.Input<string>;
+            /**
+             * Defaults to null.
+             */
+            value?: any;
+            /**
+             * Source for the value. Cannot be used if value is not empty.
+             */
+            valueFrom?: pulumi.Input<inputs.ibmcloud.v1.ServiceSpecParametersValueFrom>;
+        }
+
+        /**
+         * Source for the value. Cannot be used if value is not empty.
+         */
+        export interface ServiceSpecParametersValueFrom {
+            /**
+             * Selects a key of a ConfigMap.
+             */
+            configMapKeyRef?: pulumi.Input<inputs.ibmcloud.v1.ServiceSpecParametersValueFromConfigMapKeyRef>;
+            /**
+             * Selects a key of a secret in the resource namespace
+             */
+            secretKeyRef?: pulumi.Input<inputs.ibmcloud.v1.ServiceSpecParametersValueFromSecretKeyRef>;
+        }
+
+        /**
+         * Selects a key of a ConfigMap.
+         */
+        export interface ServiceSpecParametersValueFromConfigMapKeyRef {
+            /**
+             * The key to select.
+             */
+            key: pulumi.Input<string>;
+            /**
+             * Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+             */
+            name?: pulumi.Input<string>;
+            /**
+             * Specify whether the ConfigMap or its key must be defined
+             */
+            optional?: pulumi.Input<boolean>;
+        }
+
+        /**
+         * Selects a key of a secret in the resource namespace
+         */
+        export interface ServiceSpecParametersValueFromSecretKeyRef {
+            /**
+             * The key of the secret to select from.  Must be a valid secret key.
+             */
+            key: pulumi.Input<string>;
+            /**
+             * Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+             */
+            name?: pulumi.Input<string>;
+            /**
+             * Specify whether the Secret or its key must be defined
+             */
+            optional?: pulumi.Input<boolean>;
+        }
+
+        /**
+         * ServiceStatus defines the observed state of Service
+         */
+        export interface ServiceStatus {
+            /**
+             * ResourceContext defines the CloudFoundry context and resource group
+             */
+            context?: pulumi.Input<inputs.ibmcloud.v1.ServiceStatusContext>;
+            /**
+             * DashboardURL is the dashboard URL for the service
+             */
+            dashboardURL?: pulumi.Input<string>;
+            /**
+             * ExternalName is the name for the service as it appears on IBM Cloud
+             */
+            externalName?: pulumi.Input<string>;
+            generation?: pulumi.Input<number>;
+            /**
+             * InstanceID is the instance ID for the service
+             */
+            instanceId?: pulumi.Input<string>;
+            /**
+             * Message is a detailed message on current status
+             */
+            message?: pulumi.Input<string>;
+            /**
+             * Parameters pass configuration to the service during creation
+             */
+            parameters?: pulumi.Input<pulumi.Input<inputs.ibmcloud.v1.ServiceStatusParameters>[]>;
+            /**
+             * Plan for the service from the IBM Cloud Catalog
+             */
+            plan: pulumi.Input<string>;
+            /**
+             * ServiceClass is the name of the service from the IBM Cloud Catalog
+             */
+            serviceClass: pulumi.Input<string>;
+            /**
+             * ServiceClassType is set to CF if the service is CloundFoundry
+             */
+            serviceClassType: pulumi.Input<string>;
+            /**
+             * State is a short name for the current status
+             */
+            state?: pulumi.Input<string>;
+            tags?: pulumi.Input<pulumi.Input<string>[]>;
+        }
+
+        /**
+         * ResourceContext defines the CloudFoundry context and resource group
+         */
+        export interface ServiceStatusContext {
+            org?: pulumi.Input<string>;
+            region?: pulumi.Input<string>;
+            resourcegroupid?: pulumi.Input<string>;
+            resourcelocation?: pulumi.Input<string>;
+            space?: pulumi.Input<string>;
+            user?: pulumi.Input<string>;
+        }
+
+        /**
+         * Param represents a key-value pair
+         */
+        export interface ServiceStatusParameters {
+            /**
+             * A parameter may have attributes (e.g. message hub topic might have partitions)
+             */
+            attributes?: pulumi.Input<{[key: string]: pulumi.Input<{[key: string]: any}>}>;
+            /**
+             * Name representing the key.
+             */
+            name: pulumi.Input<string>;
+            /**
+             * Defaults to null.
+             */
+            value?: any;
+            /**
+             * Source for the value. Cannot be used if value is not empty.
+             */
+            valueFrom?: pulumi.Input<inputs.ibmcloud.v1.ServiceStatusParametersValueFrom>;
+        }
+
+        /**
+         * Source for the value. Cannot be used if value is not empty.
+         */
+        export interface ServiceStatusParametersValueFrom {
+            /**
+             * Selects a key of a ConfigMap.
+             */
+            configMapKeyRef?: pulumi.Input<inputs.ibmcloud.v1.ServiceStatusParametersValueFromConfigMapKeyRef>;
+            /**
+             * Selects a key of a secret in the resource namespace
+             */
+            secretKeyRef?: pulumi.Input<inputs.ibmcloud.v1.ServiceStatusParametersValueFromSecretKeyRef>;
+        }
+
+        /**
+         * Selects a key of a ConfigMap.
+         */
+        export interface ServiceStatusParametersValueFromConfigMapKeyRef {
+            /**
+             * The key to select.
+             */
+            key: pulumi.Input<string>;
+            /**
+             * Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+             */
+            name?: pulumi.Input<string>;
+            /**
+             * Specify whether the ConfigMap or its key must be defined
+             */
+            optional?: pulumi.Input<boolean>;
+        }
+
+        /**
+         * Selects a key of a secret in the resource namespace
+         */
+        export interface ServiceStatusParametersValueFromSecretKeyRef {
+            /**
+             * The key of the secret to select from.  Must be a valid secret key.
+             */
+            key: pulumi.Input<string>;
+            /**
+             * Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+             */
+            name?: pulumi.Input<string>;
+            /**
+             * Specify whether the Secret or its key must be defined
+             */
+            optional?: pulumi.Input<boolean>;
+        }
+    }
+
     export namespace v1alpha1 {
+        /**
+         * BindingSpec defines the desired state of Binding
+         */
         export interface BindingSpec {
             alias?: pulumi.Input<string>;
             parameters?: pulumi.Input<pulumi.Input<inputs.ibmcloud.v1alpha1.BindingSpecParameters>[]>;
@@ -18,11 +399,14 @@ export namespace ibmcloud {
             serviceNamespace?: pulumi.Input<string>;
         }
 
+        /**
+         * Param represents a key-value pair
+         */
         export interface BindingSpecParameters {
             /**
              * A parameter may have attributes (e.g. message hub topic might have partitions)
              */
-            attributes?: pulumi.Input<{[key: string]: any}>;
+            attributes?: pulumi.Input<{[key: string]: pulumi.Input<{[key: string]: any}>}>;
             /**
              * Name representing the key.
              */
@@ -44,13 +428,52 @@ export namespace ibmcloud {
             /**
              * Selects a key of a ConfigMap.
              */
-            configMapKeyRef?: pulumi.Input<{[key: string]: any}>;
+            configMapKeyRef?: pulumi.Input<inputs.ibmcloud.v1alpha1.BindingSpecParametersValueFromConfigMapKeyRef>;
             /**
              * Selects a key of a secret in the resource namespace
              */
-            secretKeyRef?: pulumi.Input<{[key: string]: any}>;
+            secretKeyRef?: pulumi.Input<inputs.ibmcloud.v1alpha1.BindingSpecParametersValueFromSecretKeyRef>;
         }
 
+        /**
+         * Selects a key of a ConfigMap.
+         */
+        export interface BindingSpecParametersValueFromConfigMapKeyRef {
+            /**
+             * The key to select.
+             */
+            key: pulumi.Input<string>;
+            /**
+             * Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+             */
+            name?: pulumi.Input<string>;
+            /**
+             * Specify whether the ConfigMap or its key must be defined
+             */
+            optional?: pulumi.Input<boolean>;
+        }
+
+        /**
+         * Selects a key of a secret in the resource namespace
+         */
+        export interface BindingSpecParametersValueFromSecretKeyRef {
+            /**
+             * The key of the secret to select from.  Must be a valid secret key.
+             */
+            key: pulumi.Input<string>;
+            /**
+             * Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+             */
+            name?: pulumi.Input<string>;
+            /**
+             * Specify whether the Secret or its key must be defined
+             */
+            optional?: pulumi.Input<boolean>;
+        }
+
+        /**
+         * BindingStatus defines the observed state of Binding
+         */
         export interface BindingStatus {
             generation?: pulumi.Input<number>;
             instanceId?: pulumi.Input<string>;
@@ -60,7 +483,13 @@ export namespace ibmcloud {
             state?: pulumi.Input<string>;
         }
 
+        /**
+         * ServiceSpec defines the desired state of Service
+         */
         export interface ServiceSpec {
+            /**
+             * ResourceContext defines the CloudFoundry context and resource group
+             */
             context?: pulumi.Input<inputs.ibmcloud.v1alpha1.ServiceSpecContext>;
             externalName?: pulumi.Input<string>;
             parameters?: pulumi.Input<pulumi.Input<inputs.ibmcloud.v1alpha1.ServiceSpecParameters>[]>;
@@ -70,6 +499,9 @@ export namespace ibmcloud {
             tags?: pulumi.Input<pulumi.Input<string>[]>;
         }
 
+        /**
+         * ResourceContext defines the CloudFoundry context and resource group
+         */
         export interface ServiceSpecContext {
             org?: pulumi.Input<string>;
             region?: pulumi.Input<string>;
@@ -80,11 +512,14 @@ export namespace ibmcloud {
             user?: pulumi.Input<string>;
         }
 
+        /**
+         * Param represents a key-value pair
+         */
         export interface ServiceSpecParameters {
             /**
              * A parameter may have attributes (e.g. message hub topic might have partitions)
              */
-            attributes?: pulumi.Input<{[key: string]: any}>;
+            attributes?: pulumi.Input<{[key: string]: pulumi.Input<{[key: string]: any}>}>;
             /**
              * Name representing the key.
              */
@@ -106,14 +541,56 @@ export namespace ibmcloud {
             /**
              * Selects a key of a ConfigMap.
              */
-            configMapKeyRef?: pulumi.Input<{[key: string]: any}>;
+            configMapKeyRef?: pulumi.Input<inputs.ibmcloud.v1alpha1.ServiceSpecParametersValueFromConfigMapKeyRef>;
             /**
              * Selects a key of a secret in the resource namespace
              */
-            secretKeyRef?: pulumi.Input<{[key: string]: any}>;
+            secretKeyRef?: pulumi.Input<inputs.ibmcloud.v1alpha1.ServiceSpecParametersValueFromSecretKeyRef>;
         }
 
+        /**
+         * Selects a key of a ConfigMap.
+         */
+        export interface ServiceSpecParametersValueFromConfigMapKeyRef {
+            /**
+             * The key to select.
+             */
+            key: pulumi.Input<string>;
+            /**
+             * Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+             */
+            name?: pulumi.Input<string>;
+            /**
+             * Specify whether the ConfigMap or its key must be defined
+             */
+            optional?: pulumi.Input<boolean>;
+        }
+
+        /**
+         * Selects a key of a secret in the resource namespace
+         */
+        export interface ServiceSpecParametersValueFromSecretKeyRef {
+            /**
+             * The key of the secret to select from.  Must be a valid secret key.
+             */
+            key: pulumi.Input<string>;
+            /**
+             * Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+             */
+            name?: pulumi.Input<string>;
+            /**
+             * Specify whether the Secret or its key must be defined
+             */
+            optional?: pulumi.Input<boolean>;
+        }
+
+        /**
+         * ServiceStatus defines the observed state of Service
+         */
         export interface ServiceStatus {
+            /**
+             * ResourceContext defines the CloudFoundry context and resource group
+             */
             context?: pulumi.Input<inputs.ibmcloud.v1alpha1.ServiceStatusContext>;
             dashboardURL?: pulumi.Input<string>;
             externalName?: pulumi.Input<string>;
@@ -128,6 +605,9 @@ export namespace ibmcloud {
             tags?: pulumi.Input<pulumi.Input<string>[]>;
         }
 
+        /**
+         * ResourceContext defines the CloudFoundry context and resource group
+         */
         export interface ServiceStatusContext {
             org?: pulumi.Input<string>;
             region?: pulumi.Input<string>;
@@ -138,11 +618,14 @@ export namespace ibmcloud {
             user?: pulumi.Input<string>;
         }
 
+        /**
+         * Param represents a key-value pair
+         */
         export interface ServiceStatusParameters {
             /**
              * A parameter may have attributes (e.g. message hub topic might have partitions)
              */
-            attributes?: pulumi.Input<{[key: string]: any}>;
+            attributes?: pulumi.Input<{[key: string]: pulumi.Input<{[key: string]: any}>}>;
             /**
              * Name representing the key.
              */
@@ -164,12 +647,425 @@ export namespace ibmcloud {
             /**
              * Selects a key of a ConfigMap.
              */
-            configMapKeyRef?: pulumi.Input<{[key: string]: any}>;
+            configMapKeyRef?: pulumi.Input<inputs.ibmcloud.v1alpha1.ServiceStatusParametersValueFromConfigMapKeyRef>;
             /**
              * Selects a key of a secret in the resource namespace
              */
-            secretKeyRef?: pulumi.Input<{[key: string]: any}>;
+            secretKeyRef?: pulumi.Input<inputs.ibmcloud.v1alpha1.ServiceStatusParametersValueFromSecretKeyRef>;
         }
 
+        /**
+         * Selects a key of a ConfigMap.
+         */
+        export interface ServiceStatusParametersValueFromConfigMapKeyRef {
+            /**
+             * The key to select.
+             */
+            key: pulumi.Input<string>;
+            /**
+             * Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+             */
+            name?: pulumi.Input<string>;
+            /**
+             * Specify whether the ConfigMap or its key must be defined
+             */
+            optional?: pulumi.Input<boolean>;
+        }
+
+        /**
+         * Selects a key of a secret in the resource namespace
+         */
+        export interface ServiceStatusParametersValueFromSecretKeyRef {
+            /**
+             * The key of the secret to select from.  Must be a valid secret key.
+             */
+            key: pulumi.Input<string>;
+            /**
+             * Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+             */
+            name?: pulumi.Input<string>;
+            /**
+             * Specify whether the Secret or its key must be defined
+             */
+            optional?: pulumi.Input<boolean>;
+        }
+    }
+
+    export namespace v1beta1 {
+        /**
+         * BindingSpec defines the desired state of Binding
+         */
+        export interface BindingSpec {
+            /**
+             * Alias is the name for the credentials to be aliased
+             */
+            alias?: pulumi.Input<string>;
+            /**
+             * Parameters pass configuration to the service during creation
+             */
+            parameters?: pulumi.Input<pulumi.Input<inputs.ibmcloud.v1beta1.BindingSpecParameters>[]>;
+            /**
+             * Role is the role for the credentials
+             */
+            role?: pulumi.Input<string>;
+            /**
+             * SecretName is the name of the secret where credentials will be stored
+             */
+            secretName?: pulumi.Input<string>;
+            /**
+             * ServiceClass is the name of the service resource to bind
+             */
+            serviceName: pulumi.Input<string>;
+            /**
+             * ServiceNamespace is the namespace of the service resource to bind
+             */
+            serviceNamespace?: pulumi.Input<string>;
+        }
+
+        /**
+         * Param represents a key-value pair
+         */
+        export interface BindingSpecParameters {
+            /**
+             * A parameter may have attributes (e.g. message hub topic might have partitions)
+             */
+            attributes?: pulumi.Input<{[key: string]: pulumi.Input<{[key: string]: any}>}>;
+            /**
+             * Name representing the key.
+             */
+            name: pulumi.Input<string>;
+            /**
+             * Defaults to null.
+             */
+            value?: any;
+            /**
+             * Source for the value. Cannot be used if value is not empty.
+             */
+            valueFrom?: pulumi.Input<inputs.ibmcloud.v1beta1.BindingSpecParametersValueFrom>;
+        }
+
+        /**
+         * Source for the value. Cannot be used if value is not empty.
+         */
+        export interface BindingSpecParametersValueFrom {
+            /**
+             * Selects a key of a ConfigMap.
+             */
+            configMapKeyRef?: pulumi.Input<inputs.ibmcloud.v1beta1.BindingSpecParametersValueFromConfigMapKeyRef>;
+            /**
+             * Selects a key of a secret in the resource namespace
+             */
+            secretKeyRef?: pulumi.Input<inputs.ibmcloud.v1beta1.BindingSpecParametersValueFromSecretKeyRef>;
+        }
+
+        /**
+         * Selects a key of a ConfigMap.
+         */
+        export interface BindingSpecParametersValueFromConfigMapKeyRef {
+            /**
+             * The key to select.
+             */
+            key: pulumi.Input<string>;
+            /**
+             * Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+             */
+            name?: pulumi.Input<string>;
+            /**
+             * Specify whether the ConfigMap or its key must be defined
+             */
+            optional?: pulumi.Input<boolean>;
+        }
+
+        /**
+         * Selects a key of a secret in the resource namespace
+         */
+        export interface BindingSpecParametersValueFromSecretKeyRef {
+            /**
+             * The key of the secret to select from.  Must be a valid secret key.
+             */
+            key: pulumi.Input<string>;
+            /**
+             * Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+             */
+            name?: pulumi.Input<string>;
+            /**
+             * Specify whether the Secret or its key must be defined
+             */
+            optional?: pulumi.Input<boolean>;
+        }
+
+        /**
+         * BindingStatus defines the observed state of Binding
+         */
+        export interface BindingStatus {
+            generation?: pulumi.Input<number>;
+            /**
+             * InstanceID is the instance ID for the service
+             */
+            instanceId?: pulumi.Input<string>;
+            /**
+             * KeyInstanceID is the key instance ID for the credentials
+             */
+            keyInstanceId?: pulumi.Input<string>;
+            /**
+             * Message is a detailed message on current status
+             */
+            message?: pulumi.Input<string>;
+            /**
+             * SecretName is the name of the generated secret with service credentials
+             */
+            secretName?: pulumi.Input<string>;
+            /**
+             * State is a short name for the current status
+             */
+            state?: pulumi.Input<string>;
+        }
+
+        /**
+         * ServiceSpec defines the desired state of Service
+         */
+        export interface ServiceSpec {
+            /**
+             * ResourceContext defines the CloudFoundry context and resource group
+             */
+            context?: pulumi.Input<inputs.ibmcloud.v1beta1.ServiceSpecContext>;
+            /**
+             * ExternalName is the name for the service as it appears on IBM Cloud
+             */
+            externalName?: pulumi.Input<string>;
+            /**
+             * Parameters pass configuration to the service during creation
+             */
+            parameters?: pulumi.Input<pulumi.Input<inputs.ibmcloud.v1beta1.ServiceSpecParameters>[]>;
+            /**
+             * Plan for the service from the IBM Cloud Catalog
+             */
+            plan: pulumi.Input<string>;
+            /**
+             * ServiceClass is the name of the service from the IBM Cloud Catalog
+             */
+            serviceClass: pulumi.Input<string>;
+            /**
+             * ServiceClassType is set to CF if the service is CloundFoundry
+             */
+            serviceClassType?: pulumi.Input<string>;
+            tags?: pulumi.Input<pulumi.Input<string>[]>;
+        }
+
+        /**
+         * ResourceContext defines the CloudFoundry context and resource group
+         */
+        export interface ServiceSpecContext {
+            org?: pulumi.Input<string>;
+            region?: pulumi.Input<string>;
+            resourcegroupid?: pulumi.Input<string>;
+            resourcelocation?: pulumi.Input<string>;
+            space?: pulumi.Input<string>;
+            user?: pulumi.Input<string>;
+        }
+
+        /**
+         * Param represents a key-value pair
+         */
+        export interface ServiceSpecParameters {
+            /**
+             * A parameter may have attributes (e.g. message hub topic might have partitions)
+             */
+            attributes?: pulumi.Input<{[key: string]: pulumi.Input<{[key: string]: any}>}>;
+            /**
+             * Name representing the key.
+             */
+            name: pulumi.Input<string>;
+            /**
+             * Defaults to null.
+             */
+            value?: any;
+            /**
+             * Source for the value. Cannot be used if value is not empty.
+             */
+            valueFrom?: pulumi.Input<inputs.ibmcloud.v1beta1.ServiceSpecParametersValueFrom>;
+        }
+
+        /**
+         * Source for the value. Cannot be used if value is not empty.
+         */
+        export interface ServiceSpecParametersValueFrom {
+            /**
+             * Selects a key of a ConfigMap.
+             */
+            configMapKeyRef?: pulumi.Input<inputs.ibmcloud.v1beta1.ServiceSpecParametersValueFromConfigMapKeyRef>;
+            /**
+             * Selects a key of a secret in the resource namespace
+             */
+            secretKeyRef?: pulumi.Input<inputs.ibmcloud.v1beta1.ServiceSpecParametersValueFromSecretKeyRef>;
+        }
+
+        /**
+         * Selects a key of a ConfigMap.
+         */
+        export interface ServiceSpecParametersValueFromConfigMapKeyRef {
+            /**
+             * The key to select.
+             */
+            key: pulumi.Input<string>;
+            /**
+             * Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+             */
+            name?: pulumi.Input<string>;
+            /**
+             * Specify whether the ConfigMap or its key must be defined
+             */
+            optional?: pulumi.Input<boolean>;
+        }
+
+        /**
+         * Selects a key of a secret in the resource namespace
+         */
+        export interface ServiceSpecParametersValueFromSecretKeyRef {
+            /**
+             * The key of the secret to select from.  Must be a valid secret key.
+             */
+            key: pulumi.Input<string>;
+            /**
+             * Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+             */
+            name?: pulumi.Input<string>;
+            /**
+             * Specify whether the Secret or its key must be defined
+             */
+            optional?: pulumi.Input<boolean>;
+        }
+
+        /**
+         * ServiceStatus defines the observed state of Service
+         */
+        export interface ServiceStatus {
+            /**
+             * ResourceContext defines the CloudFoundry context and resource group
+             */
+            context?: pulumi.Input<inputs.ibmcloud.v1beta1.ServiceStatusContext>;
+            /**
+             * DashboardURL is the dashboard URL for the service
+             */
+            dashboardURL?: pulumi.Input<string>;
+            /**
+             * ExternalName is the name for the service as it appears on IBM Cloud
+             */
+            externalName?: pulumi.Input<string>;
+            generation?: pulumi.Input<number>;
+            /**
+             * InstanceID is the instance ID for the service
+             */
+            instanceId?: pulumi.Input<string>;
+            /**
+             * Message is a detailed message on current status
+             */
+            message?: pulumi.Input<string>;
+            /**
+             * Parameters pass configuration to the service during creation
+             */
+            parameters?: pulumi.Input<pulumi.Input<inputs.ibmcloud.v1beta1.ServiceStatusParameters>[]>;
+            /**
+             * Plan for the service from the IBM Cloud Catalog
+             */
+            plan: pulumi.Input<string>;
+            /**
+             * ServiceClass is the name of the service from the IBM Cloud Catalog
+             */
+            serviceClass: pulumi.Input<string>;
+            /**
+             * ServiceClassType is set to CF if the service is CloundFoundry
+             */
+            serviceClassType: pulumi.Input<string>;
+            /**
+             * State is a short name for the current status
+             */
+            state?: pulumi.Input<string>;
+            tags?: pulumi.Input<pulumi.Input<string>[]>;
+        }
+
+        /**
+         * ResourceContext defines the CloudFoundry context and resource group
+         */
+        export interface ServiceStatusContext {
+            org?: pulumi.Input<string>;
+            region?: pulumi.Input<string>;
+            resourcegroupid?: pulumi.Input<string>;
+            resourcelocation?: pulumi.Input<string>;
+            space?: pulumi.Input<string>;
+            user?: pulumi.Input<string>;
+        }
+
+        /**
+         * Param represents a key-value pair
+         */
+        export interface ServiceStatusParameters {
+            /**
+             * A parameter may have attributes (e.g. message hub topic might have partitions)
+             */
+            attributes?: pulumi.Input<{[key: string]: pulumi.Input<{[key: string]: any}>}>;
+            /**
+             * Name representing the key.
+             */
+            name: pulumi.Input<string>;
+            /**
+             * Defaults to null.
+             */
+            value?: any;
+            /**
+             * Source for the value. Cannot be used if value is not empty.
+             */
+            valueFrom?: pulumi.Input<inputs.ibmcloud.v1beta1.ServiceStatusParametersValueFrom>;
+        }
+
+        /**
+         * Source for the value. Cannot be used if value is not empty.
+         */
+        export interface ServiceStatusParametersValueFrom {
+            /**
+             * Selects a key of a ConfigMap.
+             */
+            configMapKeyRef?: pulumi.Input<inputs.ibmcloud.v1beta1.ServiceStatusParametersValueFromConfigMapKeyRef>;
+            /**
+             * Selects a key of a secret in the resource namespace
+             */
+            secretKeyRef?: pulumi.Input<inputs.ibmcloud.v1beta1.ServiceStatusParametersValueFromSecretKeyRef>;
+        }
+
+        /**
+         * Selects a key of a ConfigMap.
+         */
+        export interface ServiceStatusParametersValueFromConfigMapKeyRef {
+            /**
+             * The key to select.
+             */
+            key: pulumi.Input<string>;
+            /**
+             * Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+             */
+            name?: pulumi.Input<string>;
+            /**
+             * Specify whether the ConfigMap or its key must be defined
+             */
+            optional?: pulumi.Input<boolean>;
+        }
+
+        /**
+         * Selects a key of a secret in the resource namespace
+         */
+        export interface ServiceStatusParametersValueFromSecretKeyRef {
+            /**
+             * The key of the secret to select from.  Must be a valid secret key.
+             */
+            key: pulumi.Input<string>;
+            /**
+             * Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+             */
+            name?: pulumi.Input<string>;
+            /**
+             * Specify whether the Secret or its key must be defined
+             */
+            optional?: pulumi.Input<boolean>;
+        }
     }
 }

@@ -8,6 +8,9 @@ import * as utilities from "../../utilities";
 
 import {ObjectMeta} from "../../meta/v1";
 
+/**
+ * Security is the Schema for the securities API
+ */
 export class Security extends pulumi.CustomResource {
     /**
      * Get an existing Security resource's state with the given name, ID, and optional extra
@@ -38,7 +41,13 @@ export class Security extends pulumi.CustomResource {
     public readonly apiVersion!: pulumi.Output<"wso2.com/v1alpha1" | undefined>;
     public readonly kind!: pulumi.Output<"Security" | undefined>;
     public readonly metadata!: pulumi.Output<ObjectMeta | undefined>;
+    /**
+     * SecuritySpec defines the desired state of Security
+     */
     public readonly spec!: pulumi.Output<outputs.wso2.v1alpha1.SecuritySpec | undefined>;
+    /**
+     * SecurityStatus defines the observed state of Security
+     */
     public readonly status!: pulumi.Output<{[key: string]: any} | undefined>;
 
     /**
@@ -81,6 +90,12 @@ export interface SecurityArgs {
     readonly apiVersion?: pulumi.Input<"wso2.com/v1alpha1">;
     readonly kind?: pulumi.Input<"Security">;
     readonly metadata?: pulumi.Input<ObjectMeta>;
+    /**
+     * SecuritySpec defines the desired state of Security
+     */
     readonly spec?: pulumi.Input<inputs.wso2.v1alpha1.SecuritySpec>;
+    /**
+     * SecurityStatus defines the observed state of Security
+     */
     readonly status?: pulumi.Input<{[key: string]: any}>;
 }

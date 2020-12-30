@@ -11,7 +11,7 @@ import (
 	"github.com/pulumi/pulumi/sdk/v2/go/pulumi"
 )
 
-// Build is the Schema for the builds API
+// Build is the Schema representing a Build definition
 type BuildType struct {
 	ApiVersion *string            `pulumi:"apiVersion"`
 	Kind       *string            `pulumi:"kind"`
@@ -19,7 +19,7 @@ type BuildType struct {
 	// BuildSpec defines the desired state of Build
 	Spec *BuildSpec `pulumi:"spec"`
 	// BuildStatus defines the observed state of Build
-	Status map[string]interface{} `pulumi:"status"`
+	Status *BuildStatus `pulumi:"status"`
 }
 
 // BuildTypeInput is an input type that accepts BuildTypeArgs and BuildTypeOutput values.
@@ -33,7 +33,7 @@ type BuildTypeInput interface {
 	ToBuildTypeOutputWithContext(context.Context) BuildTypeOutput
 }
 
-// Build is the Schema for the builds API
+// Build is the Schema representing a Build definition
 type BuildTypeArgs struct {
 	ApiVersion pulumi.StringPtrInput     `pulumi:"apiVersion"`
 	Kind       pulumi.StringPtrInput     `pulumi:"kind"`
@@ -41,7 +41,7 @@ type BuildTypeArgs struct {
 	// BuildSpec defines the desired state of Build
 	Spec BuildSpecPtrInput `pulumi:"spec"`
 	// BuildStatus defines the observed state of Build
-	Status pulumi.MapInput `pulumi:"status"`
+	Status BuildStatusPtrInput `pulumi:"status"`
 }
 
 func (BuildTypeArgs) ElementType() reflect.Type {
@@ -56,7 +56,7 @@ func (i BuildTypeArgs) ToBuildTypeOutputWithContext(ctx context.Context) BuildTy
 	return pulumi.ToOutputWithContext(ctx, i).(BuildTypeOutput)
 }
 
-// Build is the Schema for the builds API
+// Build is the Schema representing a Build definition
 type BuildTypeOutput struct{ *pulumi.OutputState }
 
 func (BuildTypeOutput) ElementType() reflect.Type {
@@ -89,8 +89,8 @@ func (o BuildTypeOutput) Spec() BuildSpecPtrOutput {
 }
 
 // BuildStatus defines the observed state of Build
-func (o BuildTypeOutput) Status() pulumi.MapOutput {
-	return o.ApplyT(func(v BuildType) map[string]interface{} { return v.Status }).(pulumi.MapOutput)
+func (o BuildTypeOutput) Status() BuildStatusPtrOutput {
+	return o.ApplyT(func(v BuildType) *BuildStatus { return v.Status }).(BuildStatusPtrOutput)
 }
 
 type BuildMetadata struct {
@@ -136,7 +136,7 @@ func (o BuildMetadataOutput) ToBuildMetadataOutputWithContext(ctx context.Contex
 	return o
 }
 
-// BuildRun is the Schema for the buildruns API
+// BuildRun is the Schema representing an instance of build execution
 type BuildRunType struct {
 	ApiVersion *string            `pulumi:"apiVersion"`
 	Kind       *string            `pulumi:"kind"`
@@ -158,7 +158,7 @@ type BuildRunTypeInput interface {
 	ToBuildRunTypeOutputWithContext(context.Context) BuildRunTypeOutput
 }
 
-// BuildRun is the Schema for the buildruns API
+// BuildRun is the Schema representing an instance of build execution
 type BuildRunTypeArgs struct {
 	ApiVersion pulumi.StringPtrInput     `pulumi:"apiVersion"`
 	Kind       pulumi.StringPtrInput     `pulumi:"kind"`
@@ -181,7 +181,7 @@ func (i BuildRunTypeArgs) ToBuildRunTypeOutputWithContext(ctx context.Context) B
 	return pulumi.ToOutputWithContext(ctx, i).(BuildRunTypeOutput)
 }
 
-// BuildRun is the Schema for the buildruns API
+// BuildRun is the Schema representing an instance of build execution
 type BuildRunTypeOutput struct{ *pulumi.OutputState }
 
 func (BuildRunTypeOutput) ElementType() reflect.Type {
@@ -265,10 +265,12 @@ func (o BuildRunMetadataOutput) ToBuildRunMetadataOutputWithContext(ctx context.
 type BuildRunSpec struct {
 	// BuildRef refers to the Build
 	BuildRef BuildRunSpecBuildRef `pulumi:"buildRef"`
-	// Compute Resources required by the build container which can overwrite the configuration in Build. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-	Resources *BuildRunSpecResources `pulumi:"resources"`
+	// Output refers to the location where the generated image would be pushed to. It will overwrite the output image in build spec
+	Output *BuildRunSpecOutput `pulumi:"output"`
 	// ServiceAccount refers to the kubernetes serviceaccount which is used for resource control. Default serviceaccount will be set if it is empty
-	ServiceAccount *string `pulumi:"serviceAccount"`
+	ServiceAccount *BuildRunSpecServiceAccount `pulumi:"serviceAccount"`
+	// Timeout defines the maximum run time of this build run.
+	Timeout *string `pulumi:"timeout"`
 }
 
 // BuildRunSpecInput is an input type that accepts BuildRunSpecArgs and BuildRunSpecOutput values.
@@ -286,10 +288,12 @@ type BuildRunSpecInput interface {
 type BuildRunSpecArgs struct {
 	// BuildRef refers to the Build
 	BuildRef BuildRunSpecBuildRefInput `pulumi:"buildRef"`
-	// Compute Resources required by the build container which can overwrite the configuration in Build. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-	Resources BuildRunSpecResourcesPtrInput `pulumi:"resources"`
+	// Output refers to the location where the generated image would be pushed to. It will overwrite the output image in build spec
+	Output BuildRunSpecOutputPtrInput `pulumi:"output"`
 	// ServiceAccount refers to the kubernetes serviceaccount which is used for resource control. Default serviceaccount will be set if it is empty
-	ServiceAccount pulumi.StringPtrInput `pulumi:"serviceAccount"`
+	ServiceAccount BuildRunSpecServiceAccountPtrInput `pulumi:"serviceAccount"`
+	// Timeout defines the maximum run time of this build run.
+	Timeout pulumi.StringPtrInput `pulumi:"timeout"`
 }
 
 func (BuildRunSpecArgs) ElementType() reflect.Type {
@@ -375,14 +379,19 @@ func (o BuildRunSpecOutput) BuildRef() BuildRunSpecBuildRefOutput {
 	return o.ApplyT(func(v BuildRunSpec) BuildRunSpecBuildRef { return v.BuildRef }).(BuildRunSpecBuildRefOutput)
 }
 
-// Compute Resources required by the build container which can overwrite the configuration in Build. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-func (o BuildRunSpecOutput) Resources() BuildRunSpecResourcesPtrOutput {
-	return o.ApplyT(func(v BuildRunSpec) *BuildRunSpecResources { return v.Resources }).(BuildRunSpecResourcesPtrOutput)
+// Output refers to the location where the generated image would be pushed to. It will overwrite the output image in build spec
+func (o BuildRunSpecOutput) Output() BuildRunSpecOutputPtrOutput {
+	return o.ApplyT(func(v BuildRunSpec) *BuildRunSpecOutput { return v.Output }).(BuildRunSpecOutputPtrOutput)
 }
 
 // ServiceAccount refers to the kubernetes serviceaccount which is used for resource control. Default serviceaccount will be set if it is empty
-func (o BuildRunSpecOutput) ServiceAccount() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v BuildRunSpec) *string { return v.ServiceAccount }).(pulumi.StringPtrOutput)
+func (o BuildRunSpecOutput) ServiceAccount() BuildRunSpecServiceAccountPtrOutput {
+	return o.ApplyT(func(v BuildRunSpec) *BuildRunSpecServiceAccount { return v.ServiceAccount }).(BuildRunSpecServiceAccountPtrOutput)
+}
+
+// Timeout defines the maximum run time of this build run.
+func (o BuildRunSpecOutput) Timeout() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v BuildRunSpec) *string { return v.Timeout }).(pulumi.StringPtrOutput)
 }
 
 type BuildRunSpecPtrOutput struct{ *pulumi.OutputState }
@@ -413,23 +422,33 @@ func (o BuildRunSpecPtrOutput) BuildRef() BuildRunSpecBuildRefPtrOutput {
 	}).(BuildRunSpecBuildRefPtrOutput)
 }
 
-// Compute Resources required by the build container which can overwrite the configuration in Build. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-func (o BuildRunSpecPtrOutput) Resources() BuildRunSpecResourcesPtrOutput {
-	return o.ApplyT(func(v *BuildRunSpec) *BuildRunSpecResources {
+// Output refers to the location where the generated image would be pushed to. It will overwrite the output image in build spec
+func (o BuildRunSpecPtrOutput) Output() BuildRunSpecOutputPtrOutput {
+	return o.ApplyT(func(v *BuildRunSpec) *BuildRunSpecOutput {
 		if v == nil {
 			return nil
 		}
-		return v.Resources
-	}).(BuildRunSpecResourcesPtrOutput)
+		return v.Output
+	}).(BuildRunSpecOutputPtrOutput)
 }
 
 // ServiceAccount refers to the kubernetes serviceaccount which is used for resource control. Default serviceaccount will be set if it is empty
-func (o BuildRunSpecPtrOutput) ServiceAccount() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *BuildRunSpec) *string {
+func (o BuildRunSpecPtrOutput) ServiceAccount() BuildRunSpecServiceAccountPtrOutput {
+	return o.ApplyT(func(v *BuildRunSpec) *BuildRunSpecServiceAccount {
 		if v == nil {
 			return nil
 		}
 		return v.ServiceAccount
+	}).(BuildRunSpecServiceAccountPtrOutput)
+}
+
+// Timeout defines the maximum run time of this build run.
+func (o BuildRunSpecPtrOutput) Timeout() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *BuildRunSpec) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Timeout
 	}).(pulumi.StringPtrOutput)
 }
 
@@ -438,7 +457,7 @@ type BuildRunSpecBuildRef struct {
 	// API version of the referent
 	ApiVersion *string `pulumi:"apiVersion"`
 	// Name of the referent; More info: http://kubernetes.io/docs/user-guide/identifiers#names
-	Name *string `pulumi:"name"`
+	Name string `pulumi:"name"`
 }
 
 // BuildRunSpecBuildRefInput is an input type that accepts BuildRunSpecBuildRefArgs and BuildRunSpecBuildRefOutput values.
@@ -457,7 +476,7 @@ type BuildRunSpecBuildRefArgs struct {
 	// API version of the referent
 	ApiVersion pulumi.StringPtrInput `pulumi:"apiVersion"`
 	// Name of the referent; More info: http://kubernetes.io/docs/user-guide/identifiers#names
-	Name pulumi.StringPtrInput `pulumi:"name"`
+	Name pulumi.StringInput `pulumi:"name"`
 }
 
 func (BuildRunSpecBuildRefArgs) ElementType() reflect.Type {
@@ -544,8 +563,8 @@ func (o BuildRunSpecBuildRefOutput) ApiVersion() pulumi.StringPtrOutput {
 }
 
 // Name of the referent; More info: http://kubernetes.io/docs/user-guide/identifiers#names
-func (o BuildRunSpecBuildRefOutput) Name() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v BuildRunSpecBuildRef) *string { return v.Name }).(pulumi.StringPtrOutput)
+func (o BuildRunSpecBuildRefOutput) Name() pulumi.StringOutput {
+	return o.ApplyT(func(v BuildRunSpecBuildRef) string { return v.Name }).(pulumi.StringOutput)
 }
 
 type BuildRunSpecBuildRefPtrOutput struct{ *pulumi.OutputState }
@@ -582,257 +601,454 @@ func (o BuildRunSpecBuildRefPtrOutput) Name() pulumi.StringPtrOutput {
 		if v == nil {
 			return nil
 		}
-		return v.Name
+		return &v.Name
 	}).(pulumi.StringPtrOutput)
 }
 
-// Compute Resources required by the build container which can overwrite the configuration in Build. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-type BuildRunSpecResources struct {
-	// Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-	Limits map[string]string `pulumi:"limits"`
-	// Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-	Requests map[string]string `pulumi:"requests"`
+// Output refers to the location where the generated image would be pushed to. It will overwrite the output image in build spec
+type BuildRunSpecOutput struct {
+	// SecretRef is a reference to the Secret containing the credentials to push the image to the registry
+	Credentials *BuildRunSpecOutputCredentials `pulumi:"credentials"`
+	// ImageURL is the URL where the image will be pushed to.
+	Image string `pulumi:"image"`
 }
 
-// BuildRunSpecResourcesInput is an input type that accepts BuildRunSpecResourcesArgs and BuildRunSpecResourcesOutput values.
-// You can construct a concrete instance of `BuildRunSpecResourcesInput` via:
+// BuildRunSpecOutputInput is an input type that accepts BuildRunSpecOutputArgs and BuildRunSpecOutputOutput values.
+// You can construct a concrete instance of `BuildRunSpecOutputInput` via:
 //
-//          BuildRunSpecResourcesArgs{...}
-type BuildRunSpecResourcesInput interface {
+//          BuildRunSpecOutputArgs{...}
+type BuildRunSpecOutputInput interface {
 	pulumi.Input
 
-	ToBuildRunSpecResourcesOutput() BuildRunSpecResourcesOutput
-	ToBuildRunSpecResourcesOutputWithContext(context.Context) BuildRunSpecResourcesOutput
+	ToBuildRunSpecOutputOutput() BuildRunSpecOutputOutput
+	ToBuildRunSpecOutputOutputWithContext(context.Context) BuildRunSpecOutputOutput
 }
 
-// Compute Resources required by the build container which can overwrite the configuration in Build. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-type BuildRunSpecResourcesArgs struct {
-	// Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-	Limits pulumi.StringMapInput `pulumi:"limits"`
-	// Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-	Requests pulumi.StringMapInput `pulumi:"requests"`
+// Output refers to the location where the generated image would be pushed to. It will overwrite the output image in build spec
+type BuildRunSpecOutputArgs struct {
+	// SecretRef is a reference to the Secret containing the credentials to push the image to the registry
+	Credentials BuildRunSpecOutputCredentialsPtrInput `pulumi:"credentials"`
+	// ImageURL is the URL where the image will be pushed to.
+	Image pulumi.StringInput `pulumi:"image"`
 }
 
-func (BuildRunSpecResourcesArgs) ElementType() reflect.Type {
-	return reflect.TypeOf((*BuildRunSpecResources)(nil)).Elem()
+func (BuildRunSpecOutputArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*BuildRunSpecOutput)(nil)).Elem()
 }
 
-func (i BuildRunSpecResourcesArgs) ToBuildRunSpecResourcesOutput() BuildRunSpecResourcesOutput {
-	return i.ToBuildRunSpecResourcesOutputWithContext(context.Background())
+func (i BuildRunSpecOutputArgs) ToBuildRunSpecOutputOutput() BuildRunSpecOutputOutput {
+	return i.ToBuildRunSpecOutputOutputWithContext(context.Background())
 }
 
-func (i BuildRunSpecResourcesArgs) ToBuildRunSpecResourcesOutputWithContext(ctx context.Context) BuildRunSpecResourcesOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(BuildRunSpecResourcesOutput)
+func (i BuildRunSpecOutputArgs) ToBuildRunSpecOutputOutputWithContext(ctx context.Context) BuildRunSpecOutputOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BuildRunSpecOutputOutput)
 }
 
-func (i BuildRunSpecResourcesArgs) ToBuildRunSpecResourcesPtrOutput() BuildRunSpecResourcesPtrOutput {
-	return i.ToBuildRunSpecResourcesPtrOutputWithContext(context.Background())
+func (i BuildRunSpecOutputArgs) ToBuildRunSpecOutputPtrOutput() BuildRunSpecOutputPtrOutput {
+	return i.ToBuildRunSpecOutputPtrOutputWithContext(context.Background())
 }
 
-func (i BuildRunSpecResourcesArgs) ToBuildRunSpecResourcesPtrOutputWithContext(ctx context.Context) BuildRunSpecResourcesPtrOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(BuildRunSpecResourcesOutput).ToBuildRunSpecResourcesPtrOutputWithContext(ctx)
+func (i BuildRunSpecOutputArgs) ToBuildRunSpecOutputPtrOutputWithContext(ctx context.Context) BuildRunSpecOutputPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BuildRunSpecOutputOutput).ToBuildRunSpecOutputPtrOutputWithContext(ctx)
 }
 
-// BuildRunSpecResourcesPtrInput is an input type that accepts BuildRunSpecResourcesArgs, BuildRunSpecResourcesPtr and BuildRunSpecResourcesPtrOutput values.
-// You can construct a concrete instance of `BuildRunSpecResourcesPtrInput` via:
+// BuildRunSpecOutputPtrInput is an input type that accepts BuildRunSpecOutputArgs, BuildRunSpecOutputPtr and BuildRunSpecOutputPtrOutput values.
+// You can construct a concrete instance of `BuildRunSpecOutputPtrInput` via:
 //
-//          BuildRunSpecResourcesArgs{...}
+//          BuildRunSpecOutputArgs{...}
 //
 //  or:
 //
 //          nil
-type BuildRunSpecResourcesPtrInput interface {
+type BuildRunSpecOutputPtrInput interface {
 	pulumi.Input
 
-	ToBuildRunSpecResourcesPtrOutput() BuildRunSpecResourcesPtrOutput
-	ToBuildRunSpecResourcesPtrOutputWithContext(context.Context) BuildRunSpecResourcesPtrOutput
+	ToBuildRunSpecOutputPtrOutput() BuildRunSpecOutputPtrOutput
+	ToBuildRunSpecOutputPtrOutputWithContext(context.Context) BuildRunSpecOutputPtrOutput
 }
 
-type buildRunSpecResourcesPtrType BuildRunSpecResourcesArgs
+type buildRunSpecOutputPtrType BuildRunSpecOutputArgs
 
-func BuildRunSpecResourcesPtr(v *BuildRunSpecResourcesArgs) BuildRunSpecResourcesPtrInput {
-	return (*buildRunSpecResourcesPtrType)(v)
+func BuildRunSpecOutputPtr(v *BuildRunSpecOutputArgs) BuildRunSpecOutputPtrInput {
+	return (*buildRunSpecOutputPtrType)(v)
 }
 
-func (*buildRunSpecResourcesPtrType) ElementType() reflect.Type {
-	return reflect.TypeOf((**BuildRunSpecResources)(nil)).Elem()
+func (*buildRunSpecOutputPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**BuildRunSpecOutput)(nil)).Elem()
 }
 
-func (i *buildRunSpecResourcesPtrType) ToBuildRunSpecResourcesPtrOutput() BuildRunSpecResourcesPtrOutput {
-	return i.ToBuildRunSpecResourcesPtrOutputWithContext(context.Background())
+func (i *buildRunSpecOutputPtrType) ToBuildRunSpecOutputPtrOutput() BuildRunSpecOutputPtrOutput {
+	return i.ToBuildRunSpecOutputPtrOutputWithContext(context.Background())
 }
 
-func (i *buildRunSpecResourcesPtrType) ToBuildRunSpecResourcesPtrOutputWithContext(ctx context.Context) BuildRunSpecResourcesPtrOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(BuildRunSpecResourcesPtrOutput)
+func (i *buildRunSpecOutputPtrType) ToBuildRunSpecOutputPtrOutputWithContext(ctx context.Context) BuildRunSpecOutputPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BuildRunSpecOutputPtrOutput)
 }
 
-// Compute Resources required by the build container which can overwrite the configuration in Build. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-type BuildRunSpecResourcesOutput struct{ *pulumi.OutputState }
+// Output refers to the location where the generated image would be pushed to. It will overwrite the output image in build spec
+type BuildRunSpecOutputOutput struct{ *pulumi.OutputState }
 
-func (BuildRunSpecResourcesOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*BuildRunSpecResources)(nil)).Elem()
+func (BuildRunSpecOutputOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*BuildRunSpecOutput)(nil)).Elem()
 }
 
-func (o BuildRunSpecResourcesOutput) ToBuildRunSpecResourcesOutput() BuildRunSpecResourcesOutput {
+func (o BuildRunSpecOutputOutput) ToBuildRunSpecOutputOutput() BuildRunSpecOutputOutput {
 	return o
 }
 
-func (o BuildRunSpecResourcesOutput) ToBuildRunSpecResourcesOutputWithContext(ctx context.Context) BuildRunSpecResourcesOutput {
+func (o BuildRunSpecOutputOutput) ToBuildRunSpecOutputOutputWithContext(ctx context.Context) BuildRunSpecOutputOutput {
 	return o
 }
 
-func (o BuildRunSpecResourcesOutput) ToBuildRunSpecResourcesPtrOutput() BuildRunSpecResourcesPtrOutput {
-	return o.ToBuildRunSpecResourcesPtrOutputWithContext(context.Background())
+func (o BuildRunSpecOutputOutput) ToBuildRunSpecOutputPtrOutput() BuildRunSpecOutputPtrOutput {
+	return o.ToBuildRunSpecOutputPtrOutputWithContext(context.Background())
 }
 
-func (o BuildRunSpecResourcesOutput) ToBuildRunSpecResourcesPtrOutputWithContext(ctx context.Context) BuildRunSpecResourcesPtrOutput {
-	return o.ApplyT(func(v BuildRunSpecResources) *BuildRunSpecResources {
+func (o BuildRunSpecOutputOutput) ToBuildRunSpecOutputPtrOutputWithContext(ctx context.Context) BuildRunSpecOutputPtrOutput {
+	return o.ApplyT(func(v BuildRunSpecOutput) *BuildRunSpecOutput {
 		return &v
-	}).(BuildRunSpecResourcesPtrOutput)
+	}).(BuildRunSpecOutputPtrOutput)
 }
 
-// Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-func (o BuildRunSpecResourcesOutput) Limits() pulumi.StringMapOutput {
-	return o.ApplyT(func(v BuildRunSpecResources) map[string]string { return v.Limits }).(pulumi.StringMapOutput)
+// SecretRef is a reference to the Secret containing the credentials to push the image to the registry
+func (o BuildRunSpecOutputOutput) Credentials() BuildRunSpecOutputCredentialsPtrOutput {
+	return o.ApplyT(func(v BuildRunSpecOutput) *BuildRunSpecOutputCredentials { return v.Credentials }).(BuildRunSpecOutputCredentialsPtrOutput)
 }
 
-// Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-func (o BuildRunSpecResourcesOutput) Requests() pulumi.StringMapOutput {
-	return o.ApplyT(func(v BuildRunSpecResources) map[string]string { return v.Requests }).(pulumi.StringMapOutput)
+// ImageURL is the URL where the image will be pushed to.
+func (o BuildRunSpecOutputOutput) Image() pulumi.StringOutput {
+	return o.ApplyT(func(v BuildRunSpecOutput) string { return v.Image }).(pulumi.StringOutput)
 }
 
-type BuildRunSpecResourcesPtrOutput struct{ *pulumi.OutputState }
+type BuildRunSpecOutputPtrOutput struct{ *pulumi.OutputState }
 
-func (BuildRunSpecResourcesPtrOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((**BuildRunSpecResources)(nil)).Elem()
+func (BuildRunSpecOutputPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**BuildRunSpecOutput)(nil)).Elem()
 }
 
-func (o BuildRunSpecResourcesPtrOutput) ToBuildRunSpecResourcesPtrOutput() BuildRunSpecResourcesPtrOutput {
+func (o BuildRunSpecOutputPtrOutput) ToBuildRunSpecOutputPtrOutput() BuildRunSpecOutputPtrOutput {
 	return o
 }
 
-func (o BuildRunSpecResourcesPtrOutput) ToBuildRunSpecResourcesPtrOutputWithContext(ctx context.Context) BuildRunSpecResourcesPtrOutput {
+func (o BuildRunSpecOutputPtrOutput) ToBuildRunSpecOutputPtrOutputWithContext(ctx context.Context) BuildRunSpecOutputPtrOutput {
 	return o
 }
 
-func (o BuildRunSpecResourcesPtrOutput) Elem() BuildRunSpecResourcesOutput {
-	return o.ApplyT(func(v *BuildRunSpecResources) BuildRunSpecResources { return *v }).(BuildRunSpecResourcesOutput)
+func (o BuildRunSpecOutputPtrOutput) Elem() BuildRunSpecOutputOutput {
+	return o.ApplyT(func(v *BuildRunSpecOutput) BuildRunSpecOutput { return *v }).(BuildRunSpecOutputOutput)
 }
 
-// Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-func (o BuildRunSpecResourcesPtrOutput) Limits() pulumi.StringMapOutput {
-	return o.ApplyT(func(v *BuildRunSpecResources) map[string]string {
+// SecretRef is a reference to the Secret containing the credentials to push the image to the registry
+func (o BuildRunSpecOutputPtrOutput) Credentials() BuildRunSpecOutputCredentialsPtrOutput {
+	return o.ApplyT(func(v *BuildRunSpecOutput) *BuildRunSpecOutputCredentials {
 		if v == nil {
 			return nil
 		}
-		return v.Limits
-	}).(pulumi.StringMapOutput)
+		return v.Credentials
+	}).(BuildRunSpecOutputCredentialsPtrOutput)
 }
 
-// Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-func (o BuildRunSpecResourcesPtrOutput) Requests() pulumi.StringMapOutput {
-	return o.ApplyT(func(v *BuildRunSpecResources) map[string]string {
+// ImageURL is the URL where the image will be pushed to.
+func (o BuildRunSpecOutputPtrOutput) Image() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *BuildRunSpecOutput) *string {
 		if v == nil {
 			return nil
 		}
-		return v.Requests
-	}).(pulumi.StringMapOutput)
+		return &v.Image
+	}).(pulumi.StringPtrOutput)
 }
 
-// Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-type BuildRunSpecResourcesLimits struct {
+// SecretRef is a reference to the Secret containing the credentials to push the image to the registry
+type BuildRunSpecOutputCredentials struct {
+	// Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+	Name *string `pulumi:"name"`
 }
 
-// BuildRunSpecResourcesLimitsInput is an input type that accepts BuildRunSpecResourcesLimitsArgs and BuildRunSpecResourcesLimitsOutput values.
-// You can construct a concrete instance of `BuildRunSpecResourcesLimitsInput` via:
+// BuildRunSpecOutputCredentialsInput is an input type that accepts BuildRunSpecOutputCredentialsArgs and BuildRunSpecOutputCredentialsOutput values.
+// You can construct a concrete instance of `BuildRunSpecOutputCredentialsInput` via:
 //
-//          BuildRunSpecResourcesLimitsArgs{...}
-type BuildRunSpecResourcesLimitsInput interface {
+//          BuildRunSpecOutputCredentialsArgs{...}
+type BuildRunSpecOutputCredentialsInput interface {
 	pulumi.Input
 
-	ToBuildRunSpecResourcesLimitsOutput() BuildRunSpecResourcesLimitsOutput
-	ToBuildRunSpecResourcesLimitsOutputWithContext(context.Context) BuildRunSpecResourcesLimitsOutput
+	ToBuildRunSpecOutputCredentialsOutput() BuildRunSpecOutputCredentialsOutput
+	ToBuildRunSpecOutputCredentialsOutputWithContext(context.Context) BuildRunSpecOutputCredentialsOutput
 }
 
-// Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-type BuildRunSpecResourcesLimitsArgs struct {
+// SecretRef is a reference to the Secret containing the credentials to push the image to the registry
+type BuildRunSpecOutputCredentialsArgs struct {
+	// Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+	Name pulumi.StringPtrInput `pulumi:"name"`
 }
 
-func (BuildRunSpecResourcesLimitsArgs) ElementType() reflect.Type {
-	return reflect.TypeOf((*BuildRunSpecResourcesLimits)(nil)).Elem()
+func (BuildRunSpecOutputCredentialsArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*BuildRunSpecOutputCredentials)(nil)).Elem()
 }
 
-func (i BuildRunSpecResourcesLimitsArgs) ToBuildRunSpecResourcesLimitsOutput() BuildRunSpecResourcesLimitsOutput {
-	return i.ToBuildRunSpecResourcesLimitsOutputWithContext(context.Background())
+func (i BuildRunSpecOutputCredentialsArgs) ToBuildRunSpecOutputCredentialsOutput() BuildRunSpecOutputCredentialsOutput {
+	return i.ToBuildRunSpecOutputCredentialsOutputWithContext(context.Background())
 }
 
-func (i BuildRunSpecResourcesLimitsArgs) ToBuildRunSpecResourcesLimitsOutputWithContext(ctx context.Context) BuildRunSpecResourcesLimitsOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(BuildRunSpecResourcesLimitsOutput)
+func (i BuildRunSpecOutputCredentialsArgs) ToBuildRunSpecOutputCredentialsOutputWithContext(ctx context.Context) BuildRunSpecOutputCredentialsOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BuildRunSpecOutputCredentialsOutput)
 }
 
-// Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-type BuildRunSpecResourcesLimitsOutput struct{ *pulumi.OutputState }
-
-func (BuildRunSpecResourcesLimitsOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*BuildRunSpecResourcesLimits)(nil)).Elem()
+func (i BuildRunSpecOutputCredentialsArgs) ToBuildRunSpecOutputCredentialsPtrOutput() BuildRunSpecOutputCredentialsPtrOutput {
+	return i.ToBuildRunSpecOutputCredentialsPtrOutputWithContext(context.Background())
 }
 
-func (o BuildRunSpecResourcesLimitsOutput) ToBuildRunSpecResourcesLimitsOutput() BuildRunSpecResourcesLimitsOutput {
-	return o
+func (i BuildRunSpecOutputCredentialsArgs) ToBuildRunSpecOutputCredentialsPtrOutputWithContext(ctx context.Context) BuildRunSpecOutputCredentialsPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BuildRunSpecOutputCredentialsOutput).ToBuildRunSpecOutputCredentialsPtrOutputWithContext(ctx)
 }
 
-func (o BuildRunSpecResourcesLimitsOutput) ToBuildRunSpecResourcesLimitsOutputWithContext(ctx context.Context) BuildRunSpecResourcesLimitsOutput {
-	return o
-}
-
-// Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-type BuildRunSpecResourcesRequests struct {
-}
-
-// BuildRunSpecResourcesRequestsInput is an input type that accepts BuildRunSpecResourcesRequestsArgs and BuildRunSpecResourcesRequestsOutput values.
-// You can construct a concrete instance of `BuildRunSpecResourcesRequestsInput` via:
+// BuildRunSpecOutputCredentialsPtrInput is an input type that accepts BuildRunSpecOutputCredentialsArgs, BuildRunSpecOutputCredentialsPtr and BuildRunSpecOutputCredentialsPtrOutput values.
+// You can construct a concrete instance of `BuildRunSpecOutputCredentialsPtrInput` via:
 //
-//          BuildRunSpecResourcesRequestsArgs{...}
-type BuildRunSpecResourcesRequestsInput interface {
+//          BuildRunSpecOutputCredentialsArgs{...}
+//
+//  or:
+//
+//          nil
+type BuildRunSpecOutputCredentialsPtrInput interface {
 	pulumi.Input
 
-	ToBuildRunSpecResourcesRequestsOutput() BuildRunSpecResourcesRequestsOutput
-	ToBuildRunSpecResourcesRequestsOutputWithContext(context.Context) BuildRunSpecResourcesRequestsOutput
+	ToBuildRunSpecOutputCredentialsPtrOutput() BuildRunSpecOutputCredentialsPtrOutput
+	ToBuildRunSpecOutputCredentialsPtrOutputWithContext(context.Context) BuildRunSpecOutputCredentialsPtrOutput
 }
 
-// Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-type BuildRunSpecResourcesRequestsArgs struct {
+type buildRunSpecOutputCredentialsPtrType BuildRunSpecOutputCredentialsArgs
+
+func BuildRunSpecOutputCredentialsPtr(v *BuildRunSpecOutputCredentialsArgs) BuildRunSpecOutputCredentialsPtrInput {
+	return (*buildRunSpecOutputCredentialsPtrType)(v)
 }
 
-func (BuildRunSpecResourcesRequestsArgs) ElementType() reflect.Type {
-	return reflect.TypeOf((*BuildRunSpecResourcesRequests)(nil)).Elem()
+func (*buildRunSpecOutputCredentialsPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**BuildRunSpecOutputCredentials)(nil)).Elem()
 }
 
-func (i BuildRunSpecResourcesRequestsArgs) ToBuildRunSpecResourcesRequestsOutput() BuildRunSpecResourcesRequestsOutput {
-	return i.ToBuildRunSpecResourcesRequestsOutputWithContext(context.Background())
+func (i *buildRunSpecOutputCredentialsPtrType) ToBuildRunSpecOutputCredentialsPtrOutput() BuildRunSpecOutputCredentialsPtrOutput {
+	return i.ToBuildRunSpecOutputCredentialsPtrOutputWithContext(context.Background())
 }
 
-func (i BuildRunSpecResourcesRequestsArgs) ToBuildRunSpecResourcesRequestsOutputWithContext(ctx context.Context) BuildRunSpecResourcesRequestsOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(BuildRunSpecResourcesRequestsOutput)
+func (i *buildRunSpecOutputCredentialsPtrType) ToBuildRunSpecOutputCredentialsPtrOutputWithContext(ctx context.Context) BuildRunSpecOutputCredentialsPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BuildRunSpecOutputCredentialsPtrOutput)
 }
 
-// Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-type BuildRunSpecResourcesRequestsOutput struct{ *pulumi.OutputState }
+// SecretRef is a reference to the Secret containing the credentials to push the image to the registry
+type BuildRunSpecOutputCredentialsOutput struct{ *pulumi.OutputState }
 
-func (BuildRunSpecResourcesRequestsOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*BuildRunSpecResourcesRequests)(nil)).Elem()
+func (BuildRunSpecOutputCredentialsOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*BuildRunSpecOutputCredentials)(nil)).Elem()
 }
 
-func (o BuildRunSpecResourcesRequestsOutput) ToBuildRunSpecResourcesRequestsOutput() BuildRunSpecResourcesRequestsOutput {
+func (o BuildRunSpecOutputCredentialsOutput) ToBuildRunSpecOutputCredentialsOutput() BuildRunSpecOutputCredentialsOutput {
 	return o
 }
 
-func (o BuildRunSpecResourcesRequestsOutput) ToBuildRunSpecResourcesRequestsOutputWithContext(ctx context.Context) BuildRunSpecResourcesRequestsOutput {
+func (o BuildRunSpecOutputCredentialsOutput) ToBuildRunSpecOutputCredentialsOutputWithContext(ctx context.Context) BuildRunSpecOutputCredentialsOutput {
 	return o
+}
+
+func (o BuildRunSpecOutputCredentialsOutput) ToBuildRunSpecOutputCredentialsPtrOutput() BuildRunSpecOutputCredentialsPtrOutput {
+	return o.ToBuildRunSpecOutputCredentialsPtrOutputWithContext(context.Background())
+}
+
+func (o BuildRunSpecOutputCredentialsOutput) ToBuildRunSpecOutputCredentialsPtrOutputWithContext(ctx context.Context) BuildRunSpecOutputCredentialsPtrOutput {
+	return o.ApplyT(func(v BuildRunSpecOutputCredentials) *BuildRunSpecOutputCredentials {
+		return &v
+	}).(BuildRunSpecOutputCredentialsPtrOutput)
+}
+
+// Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+func (o BuildRunSpecOutputCredentialsOutput) Name() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v BuildRunSpecOutputCredentials) *string { return v.Name }).(pulumi.StringPtrOutput)
+}
+
+type BuildRunSpecOutputCredentialsPtrOutput struct{ *pulumi.OutputState }
+
+func (BuildRunSpecOutputCredentialsPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**BuildRunSpecOutputCredentials)(nil)).Elem()
+}
+
+func (o BuildRunSpecOutputCredentialsPtrOutput) ToBuildRunSpecOutputCredentialsPtrOutput() BuildRunSpecOutputCredentialsPtrOutput {
+	return o
+}
+
+func (o BuildRunSpecOutputCredentialsPtrOutput) ToBuildRunSpecOutputCredentialsPtrOutputWithContext(ctx context.Context) BuildRunSpecOutputCredentialsPtrOutput {
+	return o
+}
+
+func (o BuildRunSpecOutputCredentialsPtrOutput) Elem() BuildRunSpecOutputCredentialsOutput {
+	return o.ApplyT(func(v *BuildRunSpecOutputCredentials) BuildRunSpecOutputCredentials { return *v }).(BuildRunSpecOutputCredentialsOutput)
+}
+
+// Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+func (o BuildRunSpecOutputCredentialsPtrOutput) Name() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *BuildRunSpecOutputCredentials) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Name
+	}).(pulumi.StringPtrOutput)
+}
+
+// ServiceAccount refers to the kubernetes serviceaccount which is used for resource control. Default serviceaccount will be set if it is empty
+type BuildRunSpecServiceAccount struct {
+	// If generates a new ServiceAccount for the build
+	Generate *bool `pulumi:"generate"`
+	// Name of the referent; More info: http://kubernetes.io/docs/user-guide/identifiers#names
+	Name *string `pulumi:"name"`
+}
+
+// BuildRunSpecServiceAccountInput is an input type that accepts BuildRunSpecServiceAccountArgs and BuildRunSpecServiceAccountOutput values.
+// You can construct a concrete instance of `BuildRunSpecServiceAccountInput` via:
+//
+//          BuildRunSpecServiceAccountArgs{...}
+type BuildRunSpecServiceAccountInput interface {
+	pulumi.Input
+
+	ToBuildRunSpecServiceAccountOutput() BuildRunSpecServiceAccountOutput
+	ToBuildRunSpecServiceAccountOutputWithContext(context.Context) BuildRunSpecServiceAccountOutput
+}
+
+// ServiceAccount refers to the kubernetes serviceaccount which is used for resource control. Default serviceaccount will be set if it is empty
+type BuildRunSpecServiceAccountArgs struct {
+	// If generates a new ServiceAccount for the build
+	Generate pulumi.BoolPtrInput `pulumi:"generate"`
+	// Name of the referent; More info: http://kubernetes.io/docs/user-guide/identifiers#names
+	Name pulumi.StringPtrInput `pulumi:"name"`
+}
+
+func (BuildRunSpecServiceAccountArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*BuildRunSpecServiceAccount)(nil)).Elem()
+}
+
+func (i BuildRunSpecServiceAccountArgs) ToBuildRunSpecServiceAccountOutput() BuildRunSpecServiceAccountOutput {
+	return i.ToBuildRunSpecServiceAccountOutputWithContext(context.Background())
+}
+
+func (i BuildRunSpecServiceAccountArgs) ToBuildRunSpecServiceAccountOutputWithContext(ctx context.Context) BuildRunSpecServiceAccountOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BuildRunSpecServiceAccountOutput)
+}
+
+func (i BuildRunSpecServiceAccountArgs) ToBuildRunSpecServiceAccountPtrOutput() BuildRunSpecServiceAccountPtrOutput {
+	return i.ToBuildRunSpecServiceAccountPtrOutputWithContext(context.Background())
+}
+
+func (i BuildRunSpecServiceAccountArgs) ToBuildRunSpecServiceAccountPtrOutputWithContext(ctx context.Context) BuildRunSpecServiceAccountPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BuildRunSpecServiceAccountOutput).ToBuildRunSpecServiceAccountPtrOutputWithContext(ctx)
+}
+
+// BuildRunSpecServiceAccountPtrInput is an input type that accepts BuildRunSpecServiceAccountArgs, BuildRunSpecServiceAccountPtr and BuildRunSpecServiceAccountPtrOutput values.
+// You can construct a concrete instance of `BuildRunSpecServiceAccountPtrInput` via:
+//
+//          BuildRunSpecServiceAccountArgs{...}
+//
+//  or:
+//
+//          nil
+type BuildRunSpecServiceAccountPtrInput interface {
+	pulumi.Input
+
+	ToBuildRunSpecServiceAccountPtrOutput() BuildRunSpecServiceAccountPtrOutput
+	ToBuildRunSpecServiceAccountPtrOutputWithContext(context.Context) BuildRunSpecServiceAccountPtrOutput
+}
+
+type buildRunSpecServiceAccountPtrType BuildRunSpecServiceAccountArgs
+
+func BuildRunSpecServiceAccountPtr(v *BuildRunSpecServiceAccountArgs) BuildRunSpecServiceAccountPtrInput {
+	return (*buildRunSpecServiceAccountPtrType)(v)
+}
+
+func (*buildRunSpecServiceAccountPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**BuildRunSpecServiceAccount)(nil)).Elem()
+}
+
+func (i *buildRunSpecServiceAccountPtrType) ToBuildRunSpecServiceAccountPtrOutput() BuildRunSpecServiceAccountPtrOutput {
+	return i.ToBuildRunSpecServiceAccountPtrOutputWithContext(context.Background())
+}
+
+func (i *buildRunSpecServiceAccountPtrType) ToBuildRunSpecServiceAccountPtrOutputWithContext(ctx context.Context) BuildRunSpecServiceAccountPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BuildRunSpecServiceAccountPtrOutput)
+}
+
+// ServiceAccount refers to the kubernetes serviceaccount which is used for resource control. Default serviceaccount will be set if it is empty
+type BuildRunSpecServiceAccountOutput struct{ *pulumi.OutputState }
+
+func (BuildRunSpecServiceAccountOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*BuildRunSpecServiceAccount)(nil)).Elem()
+}
+
+func (o BuildRunSpecServiceAccountOutput) ToBuildRunSpecServiceAccountOutput() BuildRunSpecServiceAccountOutput {
+	return o
+}
+
+func (o BuildRunSpecServiceAccountOutput) ToBuildRunSpecServiceAccountOutputWithContext(ctx context.Context) BuildRunSpecServiceAccountOutput {
+	return o
+}
+
+func (o BuildRunSpecServiceAccountOutput) ToBuildRunSpecServiceAccountPtrOutput() BuildRunSpecServiceAccountPtrOutput {
+	return o.ToBuildRunSpecServiceAccountPtrOutputWithContext(context.Background())
+}
+
+func (o BuildRunSpecServiceAccountOutput) ToBuildRunSpecServiceAccountPtrOutputWithContext(ctx context.Context) BuildRunSpecServiceAccountPtrOutput {
+	return o.ApplyT(func(v BuildRunSpecServiceAccount) *BuildRunSpecServiceAccount {
+		return &v
+	}).(BuildRunSpecServiceAccountPtrOutput)
+}
+
+// If generates a new ServiceAccount for the build
+func (o BuildRunSpecServiceAccountOutput) Generate() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v BuildRunSpecServiceAccount) *bool { return v.Generate }).(pulumi.BoolPtrOutput)
+}
+
+// Name of the referent; More info: http://kubernetes.io/docs/user-guide/identifiers#names
+func (o BuildRunSpecServiceAccountOutput) Name() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v BuildRunSpecServiceAccount) *string { return v.Name }).(pulumi.StringPtrOutput)
+}
+
+type BuildRunSpecServiceAccountPtrOutput struct{ *pulumi.OutputState }
+
+func (BuildRunSpecServiceAccountPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**BuildRunSpecServiceAccount)(nil)).Elem()
+}
+
+func (o BuildRunSpecServiceAccountPtrOutput) ToBuildRunSpecServiceAccountPtrOutput() BuildRunSpecServiceAccountPtrOutput {
+	return o
+}
+
+func (o BuildRunSpecServiceAccountPtrOutput) ToBuildRunSpecServiceAccountPtrOutputWithContext(ctx context.Context) BuildRunSpecServiceAccountPtrOutput {
+	return o
+}
+
+func (o BuildRunSpecServiceAccountPtrOutput) Elem() BuildRunSpecServiceAccountOutput {
+	return o.ApplyT(func(v *BuildRunSpecServiceAccount) BuildRunSpecServiceAccount { return *v }).(BuildRunSpecServiceAccountOutput)
+}
+
+// If generates a new ServiceAccount for the build
+func (o BuildRunSpecServiceAccountPtrOutput) Generate() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *BuildRunSpecServiceAccount) *bool {
+		if v == nil {
+			return nil
+		}
+		return v.Generate
+	}).(pulumi.BoolPtrOutput)
+}
+
+// Name of the referent; More info: http://kubernetes.io/docs/user-guide/identifiers#names
+func (o BuildRunSpecServiceAccountPtrOutput) Name() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *BuildRunSpecServiceAccount) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Name
+	}).(pulumi.StringPtrOutput)
 }
 
 // BuildRunStatus defines the observed state of BuildRun
 type BuildRunStatus struct {
+	// BuildSpec is the Build Spec of this BuildRun.
+	BuildSpec *BuildRunStatusBuildSpec `pulumi:"buildSpec"`
 	// CompletionTime is the time the build completed.
 	CompletionTime *string `pulumi:"completionTime"`
 	// PodName is the name of the pod responsible for executing this task's steps.
@@ -858,6 +1074,8 @@ type BuildRunStatusInput interface {
 
 // BuildRunStatus defines the observed state of BuildRun
 type BuildRunStatusArgs struct {
+	// BuildSpec is the Build Spec of this BuildRun.
+	BuildSpec BuildRunStatusBuildSpecPtrInput `pulumi:"buildSpec"`
 	// CompletionTime is the time the build completed.
 	CompletionTime pulumi.StringPtrInput `pulumi:"completionTime"`
 	// PodName is the name of the pod responsible for executing this task's steps.
@@ -948,6 +1166,11 @@ func (o BuildRunStatusOutput) ToBuildRunStatusPtrOutputWithContext(ctx context.C
 	}).(BuildRunStatusPtrOutput)
 }
 
+// BuildSpec is the Build Spec of this BuildRun.
+func (o BuildRunStatusOutput) BuildSpec() BuildRunStatusBuildSpecPtrOutput {
+	return o.ApplyT(func(v BuildRunStatus) *BuildRunStatusBuildSpec { return v.BuildSpec }).(BuildRunStatusBuildSpecPtrOutput)
+}
+
 // CompletionTime is the time the build completed.
 func (o BuildRunStatusOutput) CompletionTime() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v BuildRunStatus) *string { return v.CompletionTime }).(pulumi.StringPtrOutput)
@@ -989,6 +1212,16 @@ func (o BuildRunStatusPtrOutput) ToBuildRunStatusPtrOutputWithContext(ctx contex
 
 func (o BuildRunStatusPtrOutput) Elem() BuildRunStatusOutput {
 	return o.ApplyT(func(v *BuildRunStatus) BuildRunStatus { return *v }).(BuildRunStatusOutput)
+}
+
+// BuildSpec is the Build Spec of this BuildRun.
+func (o BuildRunStatusPtrOutput) BuildSpec() BuildRunStatusBuildSpecPtrOutput {
+	return o.ApplyT(func(v *BuildRunStatus) *BuildRunStatusBuildSpec {
+		if v == nil {
+			return nil
+		}
+		return v.BuildSpec
+	}).(BuildRunStatusBuildSpecPtrOutput)
 }
 
 // CompletionTime is the time the build completed.
@@ -1041,6 +1274,2330 @@ func (o BuildRunStatusPtrOutput) Succeeded() pulumi.StringPtrOutput {
 	}).(pulumi.StringPtrOutput)
 }
 
+// BuildSpec is the Build Spec of this BuildRun.
+type BuildRunStatusBuildSpec struct {
+	// BuilderImage refers to the image containing the build tools inside which the source code would be built.
+	Builder *BuildRunStatusBuildSpecBuilder `pulumi:"builder"`
+	// Dockerfile is the path to the Dockerfile to be used for build strategies which bank on the Dockerfile for building an image.
+	Dockerfile *string `pulumi:"dockerfile"`
+	// Output refers to the location where the generated image would be pushed to.
+	Output BuildRunStatusBuildSpecOutput `pulumi:"output"`
+	// Parameters contains name-value that could be used to loosely type parameters in the BuildStrategy.
+	Parameters []BuildRunStatusBuildSpecParameters `pulumi:"parameters"`
+	// Runtime represents the runtime-image
+	Runtime *BuildRunStatusBuildSpecRuntime `pulumi:"runtime"`
+	// Source refers to the Git repository containing the source code to be built.
+	Source BuildRunStatusBuildSpecSource `pulumi:"source"`
+	// StrategyRef refers to the BuildStrategy to be used to build the container image. There are namespaced scope and cluster scope BuildStrategy
+	Strategy BuildRunStatusBuildSpecStrategy `pulumi:"strategy"`
+	// Timeout defines the maximum run time of a build run.
+	Timeout *string `pulumi:"timeout"`
+}
+
+// BuildRunStatusBuildSpecInput is an input type that accepts BuildRunStatusBuildSpecArgs and BuildRunStatusBuildSpecOutput values.
+// You can construct a concrete instance of `BuildRunStatusBuildSpecInput` via:
+//
+//          BuildRunStatusBuildSpecArgs{...}
+type BuildRunStatusBuildSpecInput interface {
+	pulumi.Input
+
+	ToBuildRunStatusBuildSpecOutput() BuildRunStatusBuildSpecOutput
+	ToBuildRunStatusBuildSpecOutputWithContext(context.Context) BuildRunStatusBuildSpecOutput
+}
+
+// BuildSpec is the Build Spec of this BuildRun.
+type BuildRunStatusBuildSpecArgs struct {
+	// BuilderImage refers to the image containing the build tools inside which the source code would be built.
+	Builder BuildRunStatusBuildSpecBuilderPtrInput `pulumi:"builder"`
+	// Dockerfile is the path to the Dockerfile to be used for build strategies which bank on the Dockerfile for building an image.
+	Dockerfile pulumi.StringPtrInput `pulumi:"dockerfile"`
+	// Output refers to the location where the generated image would be pushed to.
+	Output BuildRunStatusBuildSpecOutputInput `pulumi:"output"`
+	// Parameters contains name-value that could be used to loosely type parameters in the BuildStrategy.
+	Parameters BuildRunStatusBuildSpecParametersArrayInput `pulumi:"parameters"`
+	// Runtime represents the runtime-image
+	Runtime BuildRunStatusBuildSpecRuntimePtrInput `pulumi:"runtime"`
+	// Source refers to the Git repository containing the source code to be built.
+	Source BuildRunStatusBuildSpecSourceInput `pulumi:"source"`
+	// StrategyRef refers to the BuildStrategy to be used to build the container image. There are namespaced scope and cluster scope BuildStrategy
+	Strategy BuildRunStatusBuildSpecStrategyInput `pulumi:"strategy"`
+	// Timeout defines the maximum run time of a build run.
+	Timeout pulumi.StringPtrInput `pulumi:"timeout"`
+}
+
+func (BuildRunStatusBuildSpecArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*BuildRunStatusBuildSpec)(nil)).Elem()
+}
+
+func (i BuildRunStatusBuildSpecArgs) ToBuildRunStatusBuildSpecOutput() BuildRunStatusBuildSpecOutput {
+	return i.ToBuildRunStatusBuildSpecOutputWithContext(context.Background())
+}
+
+func (i BuildRunStatusBuildSpecArgs) ToBuildRunStatusBuildSpecOutputWithContext(ctx context.Context) BuildRunStatusBuildSpecOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BuildRunStatusBuildSpecOutput)
+}
+
+func (i BuildRunStatusBuildSpecArgs) ToBuildRunStatusBuildSpecPtrOutput() BuildRunStatusBuildSpecPtrOutput {
+	return i.ToBuildRunStatusBuildSpecPtrOutputWithContext(context.Background())
+}
+
+func (i BuildRunStatusBuildSpecArgs) ToBuildRunStatusBuildSpecPtrOutputWithContext(ctx context.Context) BuildRunStatusBuildSpecPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BuildRunStatusBuildSpecOutput).ToBuildRunStatusBuildSpecPtrOutputWithContext(ctx)
+}
+
+// BuildRunStatusBuildSpecPtrInput is an input type that accepts BuildRunStatusBuildSpecArgs, BuildRunStatusBuildSpecPtr and BuildRunStatusBuildSpecPtrOutput values.
+// You can construct a concrete instance of `BuildRunStatusBuildSpecPtrInput` via:
+//
+//          BuildRunStatusBuildSpecArgs{...}
+//
+//  or:
+//
+//          nil
+type BuildRunStatusBuildSpecPtrInput interface {
+	pulumi.Input
+
+	ToBuildRunStatusBuildSpecPtrOutput() BuildRunStatusBuildSpecPtrOutput
+	ToBuildRunStatusBuildSpecPtrOutputWithContext(context.Context) BuildRunStatusBuildSpecPtrOutput
+}
+
+type buildRunStatusBuildSpecPtrType BuildRunStatusBuildSpecArgs
+
+func BuildRunStatusBuildSpecPtr(v *BuildRunStatusBuildSpecArgs) BuildRunStatusBuildSpecPtrInput {
+	return (*buildRunStatusBuildSpecPtrType)(v)
+}
+
+func (*buildRunStatusBuildSpecPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**BuildRunStatusBuildSpec)(nil)).Elem()
+}
+
+func (i *buildRunStatusBuildSpecPtrType) ToBuildRunStatusBuildSpecPtrOutput() BuildRunStatusBuildSpecPtrOutput {
+	return i.ToBuildRunStatusBuildSpecPtrOutputWithContext(context.Background())
+}
+
+func (i *buildRunStatusBuildSpecPtrType) ToBuildRunStatusBuildSpecPtrOutputWithContext(ctx context.Context) BuildRunStatusBuildSpecPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BuildRunStatusBuildSpecPtrOutput)
+}
+
+// BuildSpec is the Build Spec of this BuildRun.
+type BuildRunStatusBuildSpecOutput struct{ *pulumi.OutputState }
+
+func (BuildRunStatusBuildSpecOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*BuildRunStatusBuildSpec)(nil)).Elem()
+}
+
+func (o BuildRunStatusBuildSpecOutput) ToBuildRunStatusBuildSpecOutput() BuildRunStatusBuildSpecOutput {
+	return o
+}
+
+func (o BuildRunStatusBuildSpecOutput) ToBuildRunStatusBuildSpecOutputWithContext(ctx context.Context) BuildRunStatusBuildSpecOutput {
+	return o
+}
+
+func (o BuildRunStatusBuildSpecOutput) ToBuildRunStatusBuildSpecPtrOutput() BuildRunStatusBuildSpecPtrOutput {
+	return o.ToBuildRunStatusBuildSpecPtrOutputWithContext(context.Background())
+}
+
+func (o BuildRunStatusBuildSpecOutput) ToBuildRunStatusBuildSpecPtrOutputWithContext(ctx context.Context) BuildRunStatusBuildSpecPtrOutput {
+	return o.ApplyT(func(v BuildRunStatusBuildSpec) *BuildRunStatusBuildSpec {
+		return &v
+	}).(BuildRunStatusBuildSpecPtrOutput)
+}
+
+// BuilderImage refers to the image containing the build tools inside which the source code would be built.
+func (o BuildRunStatusBuildSpecOutput) Builder() BuildRunStatusBuildSpecBuilderPtrOutput {
+	return o.ApplyT(func(v BuildRunStatusBuildSpec) *BuildRunStatusBuildSpecBuilder { return v.Builder }).(BuildRunStatusBuildSpecBuilderPtrOutput)
+}
+
+// Dockerfile is the path to the Dockerfile to be used for build strategies which bank on the Dockerfile for building an image.
+func (o BuildRunStatusBuildSpecOutput) Dockerfile() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v BuildRunStatusBuildSpec) *string { return v.Dockerfile }).(pulumi.StringPtrOutput)
+}
+
+// Output refers to the location where the generated image would be pushed to.
+func (o BuildRunStatusBuildSpecOutput) Output() BuildRunStatusBuildSpecOutputOutput {
+	return o.ApplyT(func(v BuildRunStatusBuildSpec) BuildRunStatusBuildSpecOutput { return v.Output }).(BuildRunStatusBuildSpecOutputOutput)
+}
+
+// Parameters contains name-value that could be used to loosely type parameters in the BuildStrategy.
+func (o BuildRunStatusBuildSpecOutput) Parameters() BuildRunStatusBuildSpecParametersArrayOutput {
+	return o.ApplyT(func(v BuildRunStatusBuildSpec) []BuildRunStatusBuildSpecParameters { return v.Parameters }).(BuildRunStatusBuildSpecParametersArrayOutput)
+}
+
+// Runtime represents the runtime-image
+func (o BuildRunStatusBuildSpecOutput) Runtime() BuildRunStatusBuildSpecRuntimePtrOutput {
+	return o.ApplyT(func(v BuildRunStatusBuildSpec) *BuildRunStatusBuildSpecRuntime { return v.Runtime }).(BuildRunStatusBuildSpecRuntimePtrOutput)
+}
+
+// Source refers to the Git repository containing the source code to be built.
+func (o BuildRunStatusBuildSpecOutput) Source() BuildRunStatusBuildSpecSourceOutput {
+	return o.ApplyT(func(v BuildRunStatusBuildSpec) BuildRunStatusBuildSpecSource { return v.Source }).(BuildRunStatusBuildSpecSourceOutput)
+}
+
+// StrategyRef refers to the BuildStrategy to be used to build the container image. There are namespaced scope and cluster scope BuildStrategy
+func (o BuildRunStatusBuildSpecOutput) Strategy() BuildRunStatusBuildSpecStrategyOutput {
+	return o.ApplyT(func(v BuildRunStatusBuildSpec) BuildRunStatusBuildSpecStrategy { return v.Strategy }).(BuildRunStatusBuildSpecStrategyOutput)
+}
+
+// Timeout defines the maximum run time of a build run.
+func (o BuildRunStatusBuildSpecOutput) Timeout() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v BuildRunStatusBuildSpec) *string { return v.Timeout }).(pulumi.StringPtrOutput)
+}
+
+type BuildRunStatusBuildSpecPtrOutput struct{ *pulumi.OutputState }
+
+func (BuildRunStatusBuildSpecPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**BuildRunStatusBuildSpec)(nil)).Elem()
+}
+
+func (o BuildRunStatusBuildSpecPtrOutput) ToBuildRunStatusBuildSpecPtrOutput() BuildRunStatusBuildSpecPtrOutput {
+	return o
+}
+
+func (o BuildRunStatusBuildSpecPtrOutput) ToBuildRunStatusBuildSpecPtrOutputWithContext(ctx context.Context) BuildRunStatusBuildSpecPtrOutput {
+	return o
+}
+
+func (o BuildRunStatusBuildSpecPtrOutput) Elem() BuildRunStatusBuildSpecOutput {
+	return o.ApplyT(func(v *BuildRunStatusBuildSpec) BuildRunStatusBuildSpec { return *v }).(BuildRunStatusBuildSpecOutput)
+}
+
+// BuilderImage refers to the image containing the build tools inside which the source code would be built.
+func (o BuildRunStatusBuildSpecPtrOutput) Builder() BuildRunStatusBuildSpecBuilderPtrOutput {
+	return o.ApplyT(func(v *BuildRunStatusBuildSpec) *BuildRunStatusBuildSpecBuilder {
+		if v == nil {
+			return nil
+		}
+		return v.Builder
+	}).(BuildRunStatusBuildSpecBuilderPtrOutput)
+}
+
+// Dockerfile is the path to the Dockerfile to be used for build strategies which bank on the Dockerfile for building an image.
+func (o BuildRunStatusBuildSpecPtrOutput) Dockerfile() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *BuildRunStatusBuildSpec) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Dockerfile
+	}).(pulumi.StringPtrOutput)
+}
+
+// Output refers to the location where the generated image would be pushed to.
+func (o BuildRunStatusBuildSpecPtrOutput) Output() BuildRunStatusBuildSpecOutputPtrOutput {
+	return o.ApplyT(func(v *BuildRunStatusBuildSpec) *BuildRunStatusBuildSpecOutput {
+		if v == nil {
+			return nil
+		}
+		return &v.Output
+	}).(BuildRunStatusBuildSpecOutputPtrOutput)
+}
+
+// Parameters contains name-value that could be used to loosely type parameters in the BuildStrategy.
+func (o BuildRunStatusBuildSpecPtrOutput) Parameters() BuildRunStatusBuildSpecParametersArrayOutput {
+	return o.ApplyT(func(v *BuildRunStatusBuildSpec) []BuildRunStatusBuildSpecParameters {
+		if v == nil {
+			return nil
+		}
+		return v.Parameters
+	}).(BuildRunStatusBuildSpecParametersArrayOutput)
+}
+
+// Runtime represents the runtime-image
+func (o BuildRunStatusBuildSpecPtrOutput) Runtime() BuildRunStatusBuildSpecRuntimePtrOutput {
+	return o.ApplyT(func(v *BuildRunStatusBuildSpec) *BuildRunStatusBuildSpecRuntime {
+		if v == nil {
+			return nil
+		}
+		return v.Runtime
+	}).(BuildRunStatusBuildSpecRuntimePtrOutput)
+}
+
+// Source refers to the Git repository containing the source code to be built.
+func (o BuildRunStatusBuildSpecPtrOutput) Source() BuildRunStatusBuildSpecSourcePtrOutput {
+	return o.ApplyT(func(v *BuildRunStatusBuildSpec) *BuildRunStatusBuildSpecSource {
+		if v == nil {
+			return nil
+		}
+		return &v.Source
+	}).(BuildRunStatusBuildSpecSourcePtrOutput)
+}
+
+// StrategyRef refers to the BuildStrategy to be used to build the container image. There are namespaced scope and cluster scope BuildStrategy
+func (o BuildRunStatusBuildSpecPtrOutput) Strategy() BuildRunStatusBuildSpecStrategyPtrOutput {
+	return o.ApplyT(func(v *BuildRunStatusBuildSpec) *BuildRunStatusBuildSpecStrategy {
+		if v == nil {
+			return nil
+		}
+		return &v.Strategy
+	}).(BuildRunStatusBuildSpecStrategyPtrOutput)
+}
+
+// Timeout defines the maximum run time of a build run.
+func (o BuildRunStatusBuildSpecPtrOutput) Timeout() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *BuildRunStatusBuildSpec) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Timeout
+	}).(pulumi.StringPtrOutput)
+}
+
+// BuilderImage refers to the image containing the build tools inside which the source code would be built.
+type BuildRunStatusBuildSpecBuilder struct {
+	// SecretRef is a reference to the Secret containing the credentials to push the image to the registry
+	Credentials *BuildRunStatusBuildSpecBuilderCredentials `pulumi:"credentials"`
+	// ImageURL is the URL where the image will be pushed to.
+	Image string `pulumi:"image"`
+}
+
+// BuildRunStatusBuildSpecBuilderInput is an input type that accepts BuildRunStatusBuildSpecBuilderArgs and BuildRunStatusBuildSpecBuilderOutput values.
+// You can construct a concrete instance of `BuildRunStatusBuildSpecBuilderInput` via:
+//
+//          BuildRunStatusBuildSpecBuilderArgs{...}
+type BuildRunStatusBuildSpecBuilderInput interface {
+	pulumi.Input
+
+	ToBuildRunStatusBuildSpecBuilderOutput() BuildRunStatusBuildSpecBuilderOutput
+	ToBuildRunStatusBuildSpecBuilderOutputWithContext(context.Context) BuildRunStatusBuildSpecBuilderOutput
+}
+
+// BuilderImage refers to the image containing the build tools inside which the source code would be built.
+type BuildRunStatusBuildSpecBuilderArgs struct {
+	// SecretRef is a reference to the Secret containing the credentials to push the image to the registry
+	Credentials BuildRunStatusBuildSpecBuilderCredentialsPtrInput `pulumi:"credentials"`
+	// ImageURL is the URL where the image will be pushed to.
+	Image pulumi.StringInput `pulumi:"image"`
+}
+
+func (BuildRunStatusBuildSpecBuilderArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*BuildRunStatusBuildSpecBuilder)(nil)).Elem()
+}
+
+func (i BuildRunStatusBuildSpecBuilderArgs) ToBuildRunStatusBuildSpecBuilderOutput() BuildRunStatusBuildSpecBuilderOutput {
+	return i.ToBuildRunStatusBuildSpecBuilderOutputWithContext(context.Background())
+}
+
+func (i BuildRunStatusBuildSpecBuilderArgs) ToBuildRunStatusBuildSpecBuilderOutputWithContext(ctx context.Context) BuildRunStatusBuildSpecBuilderOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BuildRunStatusBuildSpecBuilderOutput)
+}
+
+func (i BuildRunStatusBuildSpecBuilderArgs) ToBuildRunStatusBuildSpecBuilderPtrOutput() BuildRunStatusBuildSpecBuilderPtrOutput {
+	return i.ToBuildRunStatusBuildSpecBuilderPtrOutputWithContext(context.Background())
+}
+
+func (i BuildRunStatusBuildSpecBuilderArgs) ToBuildRunStatusBuildSpecBuilderPtrOutputWithContext(ctx context.Context) BuildRunStatusBuildSpecBuilderPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BuildRunStatusBuildSpecBuilderOutput).ToBuildRunStatusBuildSpecBuilderPtrOutputWithContext(ctx)
+}
+
+// BuildRunStatusBuildSpecBuilderPtrInput is an input type that accepts BuildRunStatusBuildSpecBuilderArgs, BuildRunStatusBuildSpecBuilderPtr and BuildRunStatusBuildSpecBuilderPtrOutput values.
+// You can construct a concrete instance of `BuildRunStatusBuildSpecBuilderPtrInput` via:
+//
+//          BuildRunStatusBuildSpecBuilderArgs{...}
+//
+//  or:
+//
+//          nil
+type BuildRunStatusBuildSpecBuilderPtrInput interface {
+	pulumi.Input
+
+	ToBuildRunStatusBuildSpecBuilderPtrOutput() BuildRunStatusBuildSpecBuilderPtrOutput
+	ToBuildRunStatusBuildSpecBuilderPtrOutputWithContext(context.Context) BuildRunStatusBuildSpecBuilderPtrOutput
+}
+
+type buildRunStatusBuildSpecBuilderPtrType BuildRunStatusBuildSpecBuilderArgs
+
+func BuildRunStatusBuildSpecBuilderPtr(v *BuildRunStatusBuildSpecBuilderArgs) BuildRunStatusBuildSpecBuilderPtrInput {
+	return (*buildRunStatusBuildSpecBuilderPtrType)(v)
+}
+
+func (*buildRunStatusBuildSpecBuilderPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**BuildRunStatusBuildSpecBuilder)(nil)).Elem()
+}
+
+func (i *buildRunStatusBuildSpecBuilderPtrType) ToBuildRunStatusBuildSpecBuilderPtrOutput() BuildRunStatusBuildSpecBuilderPtrOutput {
+	return i.ToBuildRunStatusBuildSpecBuilderPtrOutputWithContext(context.Background())
+}
+
+func (i *buildRunStatusBuildSpecBuilderPtrType) ToBuildRunStatusBuildSpecBuilderPtrOutputWithContext(ctx context.Context) BuildRunStatusBuildSpecBuilderPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BuildRunStatusBuildSpecBuilderPtrOutput)
+}
+
+// BuilderImage refers to the image containing the build tools inside which the source code would be built.
+type BuildRunStatusBuildSpecBuilderOutput struct{ *pulumi.OutputState }
+
+func (BuildRunStatusBuildSpecBuilderOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*BuildRunStatusBuildSpecBuilder)(nil)).Elem()
+}
+
+func (o BuildRunStatusBuildSpecBuilderOutput) ToBuildRunStatusBuildSpecBuilderOutput() BuildRunStatusBuildSpecBuilderOutput {
+	return o
+}
+
+func (o BuildRunStatusBuildSpecBuilderOutput) ToBuildRunStatusBuildSpecBuilderOutputWithContext(ctx context.Context) BuildRunStatusBuildSpecBuilderOutput {
+	return o
+}
+
+func (o BuildRunStatusBuildSpecBuilderOutput) ToBuildRunStatusBuildSpecBuilderPtrOutput() BuildRunStatusBuildSpecBuilderPtrOutput {
+	return o.ToBuildRunStatusBuildSpecBuilderPtrOutputWithContext(context.Background())
+}
+
+func (o BuildRunStatusBuildSpecBuilderOutput) ToBuildRunStatusBuildSpecBuilderPtrOutputWithContext(ctx context.Context) BuildRunStatusBuildSpecBuilderPtrOutput {
+	return o.ApplyT(func(v BuildRunStatusBuildSpecBuilder) *BuildRunStatusBuildSpecBuilder {
+		return &v
+	}).(BuildRunStatusBuildSpecBuilderPtrOutput)
+}
+
+// SecretRef is a reference to the Secret containing the credentials to push the image to the registry
+func (o BuildRunStatusBuildSpecBuilderOutput) Credentials() BuildRunStatusBuildSpecBuilderCredentialsPtrOutput {
+	return o.ApplyT(func(v BuildRunStatusBuildSpecBuilder) *BuildRunStatusBuildSpecBuilderCredentials {
+		return v.Credentials
+	}).(BuildRunStatusBuildSpecBuilderCredentialsPtrOutput)
+}
+
+// ImageURL is the URL where the image will be pushed to.
+func (o BuildRunStatusBuildSpecBuilderOutput) Image() pulumi.StringOutput {
+	return o.ApplyT(func(v BuildRunStatusBuildSpecBuilder) string { return v.Image }).(pulumi.StringOutput)
+}
+
+type BuildRunStatusBuildSpecBuilderPtrOutput struct{ *pulumi.OutputState }
+
+func (BuildRunStatusBuildSpecBuilderPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**BuildRunStatusBuildSpecBuilder)(nil)).Elem()
+}
+
+func (o BuildRunStatusBuildSpecBuilderPtrOutput) ToBuildRunStatusBuildSpecBuilderPtrOutput() BuildRunStatusBuildSpecBuilderPtrOutput {
+	return o
+}
+
+func (o BuildRunStatusBuildSpecBuilderPtrOutput) ToBuildRunStatusBuildSpecBuilderPtrOutputWithContext(ctx context.Context) BuildRunStatusBuildSpecBuilderPtrOutput {
+	return o
+}
+
+func (o BuildRunStatusBuildSpecBuilderPtrOutput) Elem() BuildRunStatusBuildSpecBuilderOutput {
+	return o.ApplyT(func(v *BuildRunStatusBuildSpecBuilder) BuildRunStatusBuildSpecBuilder { return *v }).(BuildRunStatusBuildSpecBuilderOutput)
+}
+
+// SecretRef is a reference to the Secret containing the credentials to push the image to the registry
+func (o BuildRunStatusBuildSpecBuilderPtrOutput) Credentials() BuildRunStatusBuildSpecBuilderCredentialsPtrOutput {
+	return o.ApplyT(func(v *BuildRunStatusBuildSpecBuilder) *BuildRunStatusBuildSpecBuilderCredentials {
+		if v == nil {
+			return nil
+		}
+		return v.Credentials
+	}).(BuildRunStatusBuildSpecBuilderCredentialsPtrOutput)
+}
+
+// ImageURL is the URL where the image will be pushed to.
+func (o BuildRunStatusBuildSpecBuilderPtrOutput) Image() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *BuildRunStatusBuildSpecBuilder) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.Image
+	}).(pulumi.StringPtrOutput)
+}
+
+// SecretRef is a reference to the Secret containing the credentials to push the image to the registry
+type BuildRunStatusBuildSpecBuilderCredentials struct {
+	// Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+	Name *string `pulumi:"name"`
+}
+
+// BuildRunStatusBuildSpecBuilderCredentialsInput is an input type that accepts BuildRunStatusBuildSpecBuilderCredentialsArgs and BuildRunStatusBuildSpecBuilderCredentialsOutput values.
+// You can construct a concrete instance of `BuildRunStatusBuildSpecBuilderCredentialsInput` via:
+//
+//          BuildRunStatusBuildSpecBuilderCredentialsArgs{...}
+type BuildRunStatusBuildSpecBuilderCredentialsInput interface {
+	pulumi.Input
+
+	ToBuildRunStatusBuildSpecBuilderCredentialsOutput() BuildRunStatusBuildSpecBuilderCredentialsOutput
+	ToBuildRunStatusBuildSpecBuilderCredentialsOutputWithContext(context.Context) BuildRunStatusBuildSpecBuilderCredentialsOutput
+}
+
+// SecretRef is a reference to the Secret containing the credentials to push the image to the registry
+type BuildRunStatusBuildSpecBuilderCredentialsArgs struct {
+	// Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+	Name pulumi.StringPtrInput `pulumi:"name"`
+}
+
+func (BuildRunStatusBuildSpecBuilderCredentialsArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*BuildRunStatusBuildSpecBuilderCredentials)(nil)).Elem()
+}
+
+func (i BuildRunStatusBuildSpecBuilderCredentialsArgs) ToBuildRunStatusBuildSpecBuilderCredentialsOutput() BuildRunStatusBuildSpecBuilderCredentialsOutput {
+	return i.ToBuildRunStatusBuildSpecBuilderCredentialsOutputWithContext(context.Background())
+}
+
+func (i BuildRunStatusBuildSpecBuilderCredentialsArgs) ToBuildRunStatusBuildSpecBuilderCredentialsOutputWithContext(ctx context.Context) BuildRunStatusBuildSpecBuilderCredentialsOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BuildRunStatusBuildSpecBuilderCredentialsOutput)
+}
+
+func (i BuildRunStatusBuildSpecBuilderCredentialsArgs) ToBuildRunStatusBuildSpecBuilderCredentialsPtrOutput() BuildRunStatusBuildSpecBuilderCredentialsPtrOutput {
+	return i.ToBuildRunStatusBuildSpecBuilderCredentialsPtrOutputWithContext(context.Background())
+}
+
+func (i BuildRunStatusBuildSpecBuilderCredentialsArgs) ToBuildRunStatusBuildSpecBuilderCredentialsPtrOutputWithContext(ctx context.Context) BuildRunStatusBuildSpecBuilderCredentialsPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BuildRunStatusBuildSpecBuilderCredentialsOutput).ToBuildRunStatusBuildSpecBuilderCredentialsPtrOutputWithContext(ctx)
+}
+
+// BuildRunStatusBuildSpecBuilderCredentialsPtrInput is an input type that accepts BuildRunStatusBuildSpecBuilderCredentialsArgs, BuildRunStatusBuildSpecBuilderCredentialsPtr and BuildRunStatusBuildSpecBuilderCredentialsPtrOutput values.
+// You can construct a concrete instance of `BuildRunStatusBuildSpecBuilderCredentialsPtrInput` via:
+//
+//          BuildRunStatusBuildSpecBuilderCredentialsArgs{...}
+//
+//  or:
+//
+//          nil
+type BuildRunStatusBuildSpecBuilderCredentialsPtrInput interface {
+	pulumi.Input
+
+	ToBuildRunStatusBuildSpecBuilderCredentialsPtrOutput() BuildRunStatusBuildSpecBuilderCredentialsPtrOutput
+	ToBuildRunStatusBuildSpecBuilderCredentialsPtrOutputWithContext(context.Context) BuildRunStatusBuildSpecBuilderCredentialsPtrOutput
+}
+
+type buildRunStatusBuildSpecBuilderCredentialsPtrType BuildRunStatusBuildSpecBuilderCredentialsArgs
+
+func BuildRunStatusBuildSpecBuilderCredentialsPtr(v *BuildRunStatusBuildSpecBuilderCredentialsArgs) BuildRunStatusBuildSpecBuilderCredentialsPtrInput {
+	return (*buildRunStatusBuildSpecBuilderCredentialsPtrType)(v)
+}
+
+func (*buildRunStatusBuildSpecBuilderCredentialsPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**BuildRunStatusBuildSpecBuilderCredentials)(nil)).Elem()
+}
+
+func (i *buildRunStatusBuildSpecBuilderCredentialsPtrType) ToBuildRunStatusBuildSpecBuilderCredentialsPtrOutput() BuildRunStatusBuildSpecBuilderCredentialsPtrOutput {
+	return i.ToBuildRunStatusBuildSpecBuilderCredentialsPtrOutputWithContext(context.Background())
+}
+
+func (i *buildRunStatusBuildSpecBuilderCredentialsPtrType) ToBuildRunStatusBuildSpecBuilderCredentialsPtrOutputWithContext(ctx context.Context) BuildRunStatusBuildSpecBuilderCredentialsPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BuildRunStatusBuildSpecBuilderCredentialsPtrOutput)
+}
+
+// SecretRef is a reference to the Secret containing the credentials to push the image to the registry
+type BuildRunStatusBuildSpecBuilderCredentialsOutput struct{ *pulumi.OutputState }
+
+func (BuildRunStatusBuildSpecBuilderCredentialsOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*BuildRunStatusBuildSpecBuilderCredentials)(nil)).Elem()
+}
+
+func (o BuildRunStatusBuildSpecBuilderCredentialsOutput) ToBuildRunStatusBuildSpecBuilderCredentialsOutput() BuildRunStatusBuildSpecBuilderCredentialsOutput {
+	return o
+}
+
+func (o BuildRunStatusBuildSpecBuilderCredentialsOutput) ToBuildRunStatusBuildSpecBuilderCredentialsOutputWithContext(ctx context.Context) BuildRunStatusBuildSpecBuilderCredentialsOutput {
+	return o
+}
+
+func (o BuildRunStatusBuildSpecBuilderCredentialsOutput) ToBuildRunStatusBuildSpecBuilderCredentialsPtrOutput() BuildRunStatusBuildSpecBuilderCredentialsPtrOutput {
+	return o.ToBuildRunStatusBuildSpecBuilderCredentialsPtrOutputWithContext(context.Background())
+}
+
+func (o BuildRunStatusBuildSpecBuilderCredentialsOutput) ToBuildRunStatusBuildSpecBuilderCredentialsPtrOutputWithContext(ctx context.Context) BuildRunStatusBuildSpecBuilderCredentialsPtrOutput {
+	return o.ApplyT(func(v BuildRunStatusBuildSpecBuilderCredentials) *BuildRunStatusBuildSpecBuilderCredentials {
+		return &v
+	}).(BuildRunStatusBuildSpecBuilderCredentialsPtrOutput)
+}
+
+// Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+func (o BuildRunStatusBuildSpecBuilderCredentialsOutput) Name() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v BuildRunStatusBuildSpecBuilderCredentials) *string { return v.Name }).(pulumi.StringPtrOutput)
+}
+
+type BuildRunStatusBuildSpecBuilderCredentialsPtrOutput struct{ *pulumi.OutputState }
+
+func (BuildRunStatusBuildSpecBuilderCredentialsPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**BuildRunStatusBuildSpecBuilderCredentials)(nil)).Elem()
+}
+
+func (o BuildRunStatusBuildSpecBuilderCredentialsPtrOutput) ToBuildRunStatusBuildSpecBuilderCredentialsPtrOutput() BuildRunStatusBuildSpecBuilderCredentialsPtrOutput {
+	return o
+}
+
+func (o BuildRunStatusBuildSpecBuilderCredentialsPtrOutput) ToBuildRunStatusBuildSpecBuilderCredentialsPtrOutputWithContext(ctx context.Context) BuildRunStatusBuildSpecBuilderCredentialsPtrOutput {
+	return o
+}
+
+func (o BuildRunStatusBuildSpecBuilderCredentialsPtrOutput) Elem() BuildRunStatusBuildSpecBuilderCredentialsOutput {
+	return o.ApplyT(func(v *BuildRunStatusBuildSpecBuilderCredentials) BuildRunStatusBuildSpecBuilderCredentials {
+		return *v
+	}).(BuildRunStatusBuildSpecBuilderCredentialsOutput)
+}
+
+// Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+func (o BuildRunStatusBuildSpecBuilderCredentialsPtrOutput) Name() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *BuildRunStatusBuildSpecBuilderCredentials) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Name
+	}).(pulumi.StringPtrOutput)
+}
+
+// Output refers to the location where the generated image would be pushed to.
+type BuildRunStatusBuildSpecOutput struct {
+	// SecretRef is a reference to the Secret containing the credentials to push the image to the registry
+	Credentials *BuildRunStatusBuildSpecOutputCredentials `pulumi:"credentials"`
+	// ImageURL is the URL where the image will be pushed to.
+	Image string `pulumi:"image"`
+}
+
+// BuildRunStatusBuildSpecOutputInput is an input type that accepts BuildRunStatusBuildSpecOutputArgs and BuildRunStatusBuildSpecOutputOutput values.
+// You can construct a concrete instance of `BuildRunStatusBuildSpecOutputInput` via:
+//
+//          BuildRunStatusBuildSpecOutputArgs{...}
+type BuildRunStatusBuildSpecOutputInput interface {
+	pulumi.Input
+
+	ToBuildRunStatusBuildSpecOutputOutput() BuildRunStatusBuildSpecOutputOutput
+	ToBuildRunStatusBuildSpecOutputOutputWithContext(context.Context) BuildRunStatusBuildSpecOutputOutput
+}
+
+// Output refers to the location where the generated image would be pushed to.
+type BuildRunStatusBuildSpecOutputArgs struct {
+	// SecretRef is a reference to the Secret containing the credentials to push the image to the registry
+	Credentials BuildRunStatusBuildSpecOutputCredentialsPtrInput `pulumi:"credentials"`
+	// ImageURL is the URL where the image will be pushed to.
+	Image pulumi.StringInput `pulumi:"image"`
+}
+
+func (BuildRunStatusBuildSpecOutputArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*BuildRunStatusBuildSpecOutput)(nil)).Elem()
+}
+
+func (i BuildRunStatusBuildSpecOutputArgs) ToBuildRunStatusBuildSpecOutputOutput() BuildRunStatusBuildSpecOutputOutput {
+	return i.ToBuildRunStatusBuildSpecOutputOutputWithContext(context.Background())
+}
+
+func (i BuildRunStatusBuildSpecOutputArgs) ToBuildRunStatusBuildSpecOutputOutputWithContext(ctx context.Context) BuildRunStatusBuildSpecOutputOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BuildRunStatusBuildSpecOutputOutput)
+}
+
+func (i BuildRunStatusBuildSpecOutputArgs) ToBuildRunStatusBuildSpecOutputPtrOutput() BuildRunStatusBuildSpecOutputPtrOutput {
+	return i.ToBuildRunStatusBuildSpecOutputPtrOutputWithContext(context.Background())
+}
+
+func (i BuildRunStatusBuildSpecOutputArgs) ToBuildRunStatusBuildSpecOutputPtrOutputWithContext(ctx context.Context) BuildRunStatusBuildSpecOutputPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BuildRunStatusBuildSpecOutputOutput).ToBuildRunStatusBuildSpecOutputPtrOutputWithContext(ctx)
+}
+
+// BuildRunStatusBuildSpecOutputPtrInput is an input type that accepts BuildRunStatusBuildSpecOutputArgs, BuildRunStatusBuildSpecOutputPtr and BuildRunStatusBuildSpecOutputPtrOutput values.
+// You can construct a concrete instance of `BuildRunStatusBuildSpecOutputPtrInput` via:
+//
+//          BuildRunStatusBuildSpecOutputArgs{...}
+//
+//  or:
+//
+//          nil
+type BuildRunStatusBuildSpecOutputPtrInput interface {
+	pulumi.Input
+
+	ToBuildRunStatusBuildSpecOutputPtrOutput() BuildRunStatusBuildSpecOutputPtrOutput
+	ToBuildRunStatusBuildSpecOutputPtrOutputWithContext(context.Context) BuildRunStatusBuildSpecOutputPtrOutput
+}
+
+type buildRunStatusBuildSpecOutputPtrType BuildRunStatusBuildSpecOutputArgs
+
+func BuildRunStatusBuildSpecOutputPtr(v *BuildRunStatusBuildSpecOutputArgs) BuildRunStatusBuildSpecOutputPtrInput {
+	return (*buildRunStatusBuildSpecOutputPtrType)(v)
+}
+
+func (*buildRunStatusBuildSpecOutputPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**BuildRunStatusBuildSpecOutput)(nil)).Elem()
+}
+
+func (i *buildRunStatusBuildSpecOutputPtrType) ToBuildRunStatusBuildSpecOutputPtrOutput() BuildRunStatusBuildSpecOutputPtrOutput {
+	return i.ToBuildRunStatusBuildSpecOutputPtrOutputWithContext(context.Background())
+}
+
+func (i *buildRunStatusBuildSpecOutputPtrType) ToBuildRunStatusBuildSpecOutputPtrOutputWithContext(ctx context.Context) BuildRunStatusBuildSpecOutputPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BuildRunStatusBuildSpecOutputPtrOutput)
+}
+
+// Output refers to the location where the generated image would be pushed to.
+type BuildRunStatusBuildSpecOutputOutput struct{ *pulumi.OutputState }
+
+func (BuildRunStatusBuildSpecOutputOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*BuildRunStatusBuildSpecOutput)(nil)).Elem()
+}
+
+func (o BuildRunStatusBuildSpecOutputOutput) ToBuildRunStatusBuildSpecOutputOutput() BuildRunStatusBuildSpecOutputOutput {
+	return o
+}
+
+func (o BuildRunStatusBuildSpecOutputOutput) ToBuildRunStatusBuildSpecOutputOutputWithContext(ctx context.Context) BuildRunStatusBuildSpecOutputOutput {
+	return o
+}
+
+func (o BuildRunStatusBuildSpecOutputOutput) ToBuildRunStatusBuildSpecOutputPtrOutput() BuildRunStatusBuildSpecOutputPtrOutput {
+	return o.ToBuildRunStatusBuildSpecOutputPtrOutputWithContext(context.Background())
+}
+
+func (o BuildRunStatusBuildSpecOutputOutput) ToBuildRunStatusBuildSpecOutputPtrOutputWithContext(ctx context.Context) BuildRunStatusBuildSpecOutputPtrOutput {
+	return o.ApplyT(func(v BuildRunStatusBuildSpecOutput) *BuildRunStatusBuildSpecOutput {
+		return &v
+	}).(BuildRunStatusBuildSpecOutputPtrOutput)
+}
+
+// SecretRef is a reference to the Secret containing the credentials to push the image to the registry
+func (o BuildRunStatusBuildSpecOutputOutput) Credentials() BuildRunStatusBuildSpecOutputCredentialsPtrOutput {
+	return o.ApplyT(func(v BuildRunStatusBuildSpecOutput) *BuildRunStatusBuildSpecOutputCredentials { return v.Credentials }).(BuildRunStatusBuildSpecOutputCredentialsPtrOutput)
+}
+
+// ImageURL is the URL where the image will be pushed to.
+func (o BuildRunStatusBuildSpecOutputOutput) Image() pulumi.StringOutput {
+	return o.ApplyT(func(v BuildRunStatusBuildSpecOutput) string { return v.Image }).(pulumi.StringOutput)
+}
+
+type BuildRunStatusBuildSpecOutputPtrOutput struct{ *pulumi.OutputState }
+
+func (BuildRunStatusBuildSpecOutputPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**BuildRunStatusBuildSpecOutput)(nil)).Elem()
+}
+
+func (o BuildRunStatusBuildSpecOutputPtrOutput) ToBuildRunStatusBuildSpecOutputPtrOutput() BuildRunStatusBuildSpecOutputPtrOutput {
+	return o
+}
+
+func (o BuildRunStatusBuildSpecOutputPtrOutput) ToBuildRunStatusBuildSpecOutputPtrOutputWithContext(ctx context.Context) BuildRunStatusBuildSpecOutputPtrOutput {
+	return o
+}
+
+func (o BuildRunStatusBuildSpecOutputPtrOutput) Elem() BuildRunStatusBuildSpecOutputOutput {
+	return o.ApplyT(func(v *BuildRunStatusBuildSpecOutput) BuildRunStatusBuildSpecOutput { return *v }).(BuildRunStatusBuildSpecOutputOutput)
+}
+
+// SecretRef is a reference to the Secret containing the credentials to push the image to the registry
+func (o BuildRunStatusBuildSpecOutputPtrOutput) Credentials() BuildRunStatusBuildSpecOutputCredentialsPtrOutput {
+	return o.ApplyT(func(v *BuildRunStatusBuildSpecOutput) *BuildRunStatusBuildSpecOutputCredentials {
+		if v == nil {
+			return nil
+		}
+		return v.Credentials
+	}).(BuildRunStatusBuildSpecOutputCredentialsPtrOutput)
+}
+
+// ImageURL is the URL where the image will be pushed to.
+func (o BuildRunStatusBuildSpecOutputPtrOutput) Image() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *BuildRunStatusBuildSpecOutput) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.Image
+	}).(pulumi.StringPtrOutput)
+}
+
+// SecretRef is a reference to the Secret containing the credentials to push the image to the registry
+type BuildRunStatusBuildSpecOutputCredentials struct {
+	// Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+	Name *string `pulumi:"name"`
+}
+
+// BuildRunStatusBuildSpecOutputCredentialsInput is an input type that accepts BuildRunStatusBuildSpecOutputCredentialsArgs and BuildRunStatusBuildSpecOutputCredentialsOutput values.
+// You can construct a concrete instance of `BuildRunStatusBuildSpecOutputCredentialsInput` via:
+//
+//          BuildRunStatusBuildSpecOutputCredentialsArgs{...}
+type BuildRunStatusBuildSpecOutputCredentialsInput interface {
+	pulumi.Input
+
+	ToBuildRunStatusBuildSpecOutputCredentialsOutput() BuildRunStatusBuildSpecOutputCredentialsOutput
+	ToBuildRunStatusBuildSpecOutputCredentialsOutputWithContext(context.Context) BuildRunStatusBuildSpecOutputCredentialsOutput
+}
+
+// SecretRef is a reference to the Secret containing the credentials to push the image to the registry
+type BuildRunStatusBuildSpecOutputCredentialsArgs struct {
+	// Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+	Name pulumi.StringPtrInput `pulumi:"name"`
+}
+
+func (BuildRunStatusBuildSpecOutputCredentialsArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*BuildRunStatusBuildSpecOutputCredentials)(nil)).Elem()
+}
+
+func (i BuildRunStatusBuildSpecOutputCredentialsArgs) ToBuildRunStatusBuildSpecOutputCredentialsOutput() BuildRunStatusBuildSpecOutputCredentialsOutput {
+	return i.ToBuildRunStatusBuildSpecOutputCredentialsOutputWithContext(context.Background())
+}
+
+func (i BuildRunStatusBuildSpecOutputCredentialsArgs) ToBuildRunStatusBuildSpecOutputCredentialsOutputWithContext(ctx context.Context) BuildRunStatusBuildSpecOutputCredentialsOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BuildRunStatusBuildSpecOutputCredentialsOutput)
+}
+
+func (i BuildRunStatusBuildSpecOutputCredentialsArgs) ToBuildRunStatusBuildSpecOutputCredentialsPtrOutput() BuildRunStatusBuildSpecOutputCredentialsPtrOutput {
+	return i.ToBuildRunStatusBuildSpecOutputCredentialsPtrOutputWithContext(context.Background())
+}
+
+func (i BuildRunStatusBuildSpecOutputCredentialsArgs) ToBuildRunStatusBuildSpecOutputCredentialsPtrOutputWithContext(ctx context.Context) BuildRunStatusBuildSpecOutputCredentialsPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BuildRunStatusBuildSpecOutputCredentialsOutput).ToBuildRunStatusBuildSpecOutputCredentialsPtrOutputWithContext(ctx)
+}
+
+// BuildRunStatusBuildSpecOutputCredentialsPtrInput is an input type that accepts BuildRunStatusBuildSpecOutputCredentialsArgs, BuildRunStatusBuildSpecOutputCredentialsPtr and BuildRunStatusBuildSpecOutputCredentialsPtrOutput values.
+// You can construct a concrete instance of `BuildRunStatusBuildSpecOutputCredentialsPtrInput` via:
+//
+//          BuildRunStatusBuildSpecOutputCredentialsArgs{...}
+//
+//  or:
+//
+//          nil
+type BuildRunStatusBuildSpecOutputCredentialsPtrInput interface {
+	pulumi.Input
+
+	ToBuildRunStatusBuildSpecOutputCredentialsPtrOutput() BuildRunStatusBuildSpecOutputCredentialsPtrOutput
+	ToBuildRunStatusBuildSpecOutputCredentialsPtrOutputWithContext(context.Context) BuildRunStatusBuildSpecOutputCredentialsPtrOutput
+}
+
+type buildRunStatusBuildSpecOutputCredentialsPtrType BuildRunStatusBuildSpecOutputCredentialsArgs
+
+func BuildRunStatusBuildSpecOutputCredentialsPtr(v *BuildRunStatusBuildSpecOutputCredentialsArgs) BuildRunStatusBuildSpecOutputCredentialsPtrInput {
+	return (*buildRunStatusBuildSpecOutputCredentialsPtrType)(v)
+}
+
+func (*buildRunStatusBuildSpecOutputCredentialsPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**BuildRunStatusBuildSpecOutputCredentials)(nil)).Elem()
+}
+
+func (i *buildRunStatusBuildSpecOutputCredentialsPtrType) ToBuildRunStatusBuildSpecOutputCredentialsPtrOutput() BuildRunStatusBuildSpecOutputCredentialsPtrOutput {
+	return i.ToBuildRunStatusBuildSpecOutputCredentialsPtrOutputWithContext(context.Background())
+}
+
+func (i *buildRunStatusBuildSpecOutputCredentialsPtrType) ToBuildRunStatusBuildSpecOutputCredentialsPtrOutputWithContext(ctx context.Context) BuildRunStatusBuildSpecOutputCredentialsPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BuildRunStatusBuildSpecOutputCredentialsPtrOutput)
+}
+
+// SecretRef is a reference to the Secret containing the credentials to push the image to the registry
+type BuildRunStatusBuildSpecOutputCredentialsOutput struct{ *pulumi.OutputState }
+
+func (BuildRunStatusBuildSpecOutputCredentialsOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*BuildRunStatusBuildSpecOutputCredentials)(nil)).Elem()
+}
+
+func (o BuildRunStatusBuildSpecOutputCredentialsOutput) ToBuildRunStatusBuildSpecOutputCredentialsOutput() BuildRunStatusBuildSpecOutputCredentialsOutput {
+	return o
+}
+
+func (o BuildRunStatusBuildSpecOutputCredentialsOutput) ToBuildRunStatusBuildSpecOutputCredentialsOutputWithContext(ctx context.Context) BuildRunStatusBuildSpecOutputCredentialsOutput {
+	return o
+}
+
+func (o BuildRunStatusBuildSpecOutputCredentialsOutput) ToBuildRunStatusBuildSpecOutputCredentialsPtrOutput() BuildRunStatusBuildSpecOutputCredentialsPtrOutput {
+	return o.ToBuildRunStatusBuildSpecOutputCredentialsPtrOutputWithContext(context.Background())
+}
+
+func (o BuildRunStatusBuildSpecOutputCredentialsOutput) ToBuildRunStatusBuildSpecOutputCredentialsPtrOutputWithContext(ctx context.Context) BuildRunStatusBuildSpecOutputCredentialsPtrOutput {
+	return o.ApplyT(func(v BuildRunStatusBuildSpecOutputCredentials) *BuildRunStatusBuildSpecOutputCredentials {
+		return &v
+	}).(BuildRunStatusBuildSpecOutputCredentialsPtrOutput)
+}
+
+// Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+func (o BuildRunStatusBuildSpecOutputCredentialsOutput) Name() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v BuildRunStatusBuildSpecOutputCredentials) *string { return v.Name }).(pulumi.StringPtrOutput)
+}
+
+type BuildRunStatusBuildSpecOutputCredentialsPtrOutput struct{ *pulumi.OutputState }
+
+func (BuildRunStatusBuildSpecOutputCredentialsPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**BuildRunStatusBuildSpecOutputCredentials)(nil)).Elem()
+}
+
+func (o BuildRunStatusBuildSpecOutputCredentialsPtrOutput) ToBuildRunStatusBuildSpecOutputCredentialsPtrOutput() BuildRunStatusBuildSpecOutputCredentialsPtrOutput {
+	return o
+}
+
+func (o BuildRunStatusBuildSpecOutputCredentialsPtrOutput) ToBuildRunStatusBuildSpecOutputCredentialsPtrOutputWithContext(ctx context.Context) BuildRunStatusBuildSpecOutputCredentialsPtrOutput {
+	return o
+}
+
+func (o BuildRunStatusBuildSpecOutputCredentialsPtrOutput) Elem() BuildRunStatusBuildSpecOutputCredentialsOutput {
+	return o.ApplyT(func(v *BuildRunStatusBuildSpecOutputCredentials) BuildRunStatusBuildSpecOutputCredentials { return *v }).(BuildRunStatusBuildSpecOutputCredentialsOutput)
+}
+
+// Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+func (o BuildRunStatusBuildSpecOutputCredentialsPtrOutput) Name() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *BuildRunStatusBuildSpecOutputCredentials) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Name
+	}).(pulumi.StringPtrOutput)
+}
+
+// Parameter defines the data structure that would be used for expressing arbitrary key/value pairs for the execution of a build
+type BuildRunStatusBuildSpecParameters struct {
+	Name  string `pulumi:"name"`
+	Value string `pulumi:"value"`
+}
+
+// BuildRunStatusBuildSpecParametersInput is an input type that accepts BuildRunStatusBuildSpecParametersArgs and BuildRunStatusBuildSpecParametersOutput values.
+// You can construct a concrete instance of `BuildRunStatusBuildSpecParametersInput` via:
+//
+//          BuildRunStatusBuildSpecParametersArgs{...}
+type BuildRunStatusBuildSpecParametersInput interface {
+	pulumi.Input
+
+	ToBuildRunStatusBuildSpecParametersOutput() BuildRunStatusBuildSpecParametersOutput
+	ToBuildRunStatusBuildSpecParametersOutputWithContext(context.Context) BuildRunStatusBuildSpecParametersOutput
+}
+
+// Parameter defines the data structure that would be used for expressing arbitrary key/value pairs for the execution of a build
+type BuildRunStatusBuildSpecParametersArgs struct {
+	Name  pulumi.StringInput `pulumi:"name"`
+	Value pulumi.StringInput `pulumi:"value"`
+}
+
+func (BuildRunStatusBuildSpecParametersArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*BuildRunStatusBuildSpecParameters)(nil)).Elem()
+}
+
+func (i BuildRunStatusBuildSpecParametersArgs) ToBuildRunStatusBuildSpecParametersOutput() BuildRunStatusBuildSpecParametersOutput {
+	return i.ToBuildRunStatusBuildSpecParametersOutputWithContext(context.Background())
+}
+
+func (i BuildRunStatusBuildSpecParametersArgs) ToBuildRunStatusBuildSpecParametersOutputWithContext(ctx context.Context) BuildRunStatusBuildSpecParametersOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BuildRunStatusBuildSpecParametersOutput)
+}
+
+// BuildRunStatusBuildSpecParametersArrayInput is an input type that accepts BuildRunStatusBuildSpecParametersArray and BuildRunStatusBuildSpecParametersArrayOutput values.
+// You can construct a concrete instance of `BuildRunStatusBuildSpecParametersArrayInput` via:
+//
+//          BuildRunStatusBuildSpecParametersArray{ BuildRunStatusBuildSpecParametersArgs{...} }
+type BuildRunStatusBuildSpecParametersArrayInput interface {
+	pulumi.Input
+
+	ToBuildRunStatusBuildSpecParametersArrayOutput() BuildRunStatusBuildSpecParametersArrayOutput
+	ToBuildRunStatusBuildSpecParametersArrayOutputWithContext(context.Context) BuildRunStatusBuildSpecParametersArrayOutput
+}
+
+type BuildRunStatusBuildSpecParametersArray []BuildRunStatusBuildSpecParametersInput
+
+func (BuildRunStatusBuildSpecParametersArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]BuildRunStatusBuildSpecParameters)(nil)).Elem()
+}
+
+func (i BuildRunStatusBuildSpecParametersArray) ToBuildRunStatusBuildSpecParametersArrayOutput() BuildRunStatusBuildSpecParametersArrayOutput {
+	return i.ToBuildRunStatusBuildSpecParametersArrayOutputWithContext(context.Background())
+}
+
+func (i BuildRunStatusBuildSpecParametersArray) ToBuildRunStatusBuildSpecParametersArrayOutputWithContext(ctx context.Context) BuildRunStatusBuildSpecParametersArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BuildRunStatusBuildSpecParametersArrayOutput)
+}
+
+// Parameter defines the data structure that would be used for expressing arbitrary key/value pairs for the execution of a build
+type BuildRunStatusBuildSpecParametersOutput struct{ *pulumi.OutputState }
+
+func (BuildRunStatusBuildSpecParametersOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*BuildRunStatusBuildSpecParameters)(nil)).Elem()
+}
+
+func (o BuildRunStatusBuildSpecParametersOutput) ToBuildRunStatusBuildSpecParametersOutput() BuildRunStatusBuildSpecParametersOutput {
+	return o
+}
+
+func (o BuildRunStatusBuildSpecParametersOutput) ToBuildRunStatusBuildSpecParametersOutputWithContext(ctx context.Context) BuildRunStatusBuildSpecParametersOutput {
+	return o
+}
+
+func (o BuildRunStatusBuildSpecParametersOutput) Name() pulumi.StringOutput {
+	return o.ApplyT(func(v BuildRunStatusBuildSpecParameters) string { return v.Name }).(pulumi.StringOutput)
+}
+
+func (o BuildRunStatusBuildSpecParametersOutput) Value() pulumi.StringOutput {
+	return o.ApplyT(func(v BuildRunStatusBuildSpecParameters) string { return v.Value }).(pulumi.StringOutput)
+}
+
+type BuildRunStatusBuildSpecParametersArrayOutput struct{ *pulumi.OutputState }
+
+func (BuildRunStatusBuildSpecParametersArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]BuildRunStatusBuildSpecParameters)(nil)).Elem()
+}
+
+func (o BuildRunStatusBuildSpecParametersArrayOutput) ToBuildRunStatusBuildSpecParametersArrayOutput() BuildRunStatusBuildSpecParametersArrayOutput {
+	return o
+}
+
+func (o BuildRunStatusBuildSpecParametersArrayOutput) ToBuildRunStatusBuildSpecParametersArrayOutputWithContext(ctx context.Context) BuildRunStatusBuildSpecParametersArrayOutput {
+	return o
+}
+
+func (o BuildRunStatusBuildSpecParametersArrayOutput) Index(i pulumi.IntInput) BuildRunStatusBuildSpecParametersOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) BuildRunStatusBuildSpecParameters {
+		return vs[0].([]BuildRunStatusBuildSpecParameters)[vs[1].(int)]
+	}).(BuildRunStatusBuildSpecParametersOutput)
+}
+
+// Runtime represents the runtime-image
+type BuildRunStatusBuildSpecRuntime struct {
+	// Base runtime base image.
+	Base *BuildRunStatusBuildSpecRuntimeBase `pulumi:"base"`
+	// Entrypoint runtime-image entrypoint.
+	Entrypoint []string `pulumi:"entrypoint"`
+	// Env environment variables for runtime.
+	Env map[string]string `pulumi:"env"`
+	// Labels map of additional labels to be applied on image.
+	Labels map[string]string `pulumi:"labels"`
+	// Paths list of directories/files to be copied into runtime-image, using colon ":" to split up source and destination paths.
+	Paths []string `pulumi:"paths"`
+	// Run arbitrary commands to run before copying data into runtime-image.
+	Run []string `pulumi:"run"`
+	// User definitions of user and group for runtime-image.
+	User *BuildRunStatusBuildSpecRuntimeUser `pulumi:"user"`
+	// WorkDir runtime image working directory `WORKDIR`.
+	WorkDir *string `pulumi:"workDir"`
+}
+
+// BuildRunStatusBuildSpecRuntimeInput is an input type that accepts BuildRunStatusBuildSpecRuntimeArgs and BuildRunStatusBuildSpecRuntimeOutput values.
+// You can construct a concrete instance of `BuildRunStatusBuildSpecRuntimeInput` via:
+//
+//          BuildRunStatusBuildSpecRuntimeArgs{...}
+type BuildRunStatusBuildSpecRuntimeInput interface {
+	pulumi.Input
+
+	ToBuildRunStatusBuildSpecRuntimeOutput() BuildRunStatusBuildSpecRuntimeOutput
+	ToBuildRunStatusBuildSpecRuntimeOutputWithContext(context.Context) BuildRunStatusBuildSpecRuntimeOutput
+}
+
+// Runtime represents the runtime-image
+type BuildRunStatusBuildSpecRuntimeArgs struct {
+	// Base runtime base image.
+	Base BuildRunStatusBuildSpecRuntimeBasePtrInput `pulumi:"base"`
+	// Entrypoint runtime-image entrypoint.
+	Entrypoint pulumi.StringArrayInput `pulumi:"entrypoint"`
+	// Env environment variables for runtime.
+	Env pulumi.StringMapInput `pulumi:"env"`
+	// Labels map of additional labels to be applied on image.
+	Labels pulumi.StringMapInput `pulumi:"labels"`
+	// Paths list of directories/files to be copied into runtime-image, using colon ":" to split up source and destination paths.
+	Paths pulumi.StringArrayInput `pulumi:"paths"`
+	// Run arbitrary commands to run before copying data into runtime-image.
+	Run pulumi.StringArrayInput `pulumi:"run"`
+	// User definitions of user and group for runtime-image.
+	User BuildRunStatusBuildSpecRuntimeUserPtrInput `pulumi:"user"`
+	// WorkDir runtime image working directory `WORKDIR`.
+	WorkDir pulumi.StringPtrInput `pulumi:"workDir"`
+}
+
+func (BuildRunStatusBuildSpecRuntimeArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*BuildRunStatusBuildSpecRuntime)(nil)).Elem()
+}
+
+func (i BuildRunStatusBuildSpecRuntimeArgs) ToBuildRunStatusBuildSpecRuntimeOutput() BuildRunStatusBuildSpecRuntimeOutput {
+	return i.ToBuildRunStatusBuildSpecRuntimeOutputWithContext(context.Background())
+}
+
+func (i BuildRunStatusBuildSpecRuntimeArgs) ToBuildRunStatusBuildSpecRuntimeOutputWithContext(ctx context.Context) BuildRunStatusBuildSpecRuntimeOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BuildRunStatusBuildSpecRuntimeOutput)
+}
+
+func (i BuildRunStatusBuildSpecRuntimeArgs) ToBuildRunStatusBuildSpecRuntimePtrOutput() BuildRunStatusBuildSpecRuntimePtrOutput {
+	return i.ToBuildRunStatusBuildSpecRuntimePtrOutputWithContext(context.Background())
+}
+
+func (i BuildRunStatusBuildSpecRuntimeArgs) ToBuildRunStatusBuildSpecRuntimePtrOutputWithContext(ctx context.Context) BuildRunStatusBuildSpecRuntimePtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BuildRunStatusBuildSpecRuntimeOutput).ToBuildRunStatusBuildSpecRuntimePtrOutputWithContext(ctx)
+}
+
+// BuildRunStatusBuildSpecRuntimePtrInput is an input type that accepts BuildRunStatusBuildSpecRuntimeArgs, BuildRunStatusBuildSpecRuntimePtr and BuildRunStatusBuildSpecRuntimePtrOutput values.
+// You can construct a concrete instance of `BuildRunStatusBuildSpecRuntimePtrInput` via:
+//
+//          BuildRunStatusBuildSpecRuntimeArgs{...}
+//
+//  or:
+//
+//          nil
+type BuildRunStatusBuildSpecRuntimePtrInput interface {
+	pulumi.Input
+
+	ToBuildRunStatusBuildSpecRuntimePtrOutput() BuildRunStatusBuildSpecRuntimePtrOutput
+	ToBuildRunStatusBuildSpecRuntimePtrOutputWithContext(context.Context) BuildRunStatusBuildSpecRuntimePtrOutput
+}
+
+type buildRunStatusBuildSpecRuntimePtrType BuildRunStatusBuildSpecRuntimeArgs
+
+func BuildRunStatusBuildSpecRuntimePtr(v *BuildRunStatusBuildSpecRuntimeArgs) BuildRunStatusBuildSpecRuntimePtrInput {
+	return (*buildRunStatusBuildSpecRuntimePtrType)(v)
+}
+
+func (*buildRunStatusBuildSpecRuntimePtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**BuildRunStatusBuildSpecRuntime)(nil)).Elem()
+}
+
+func (i *buildRunStatusBuildSpecRuntimePtrType) ToBuildRunStatusBuildSpecRuntimePtrOutput() BuildRunStatusBuildSpecRuntimePtrOutput {
+	return i.ToBuildRunStatusBuildSpecRuntimePtrOutputWithContext(context.Background())
+}
+
+func (i *buildRunStatusBuildSpecRuntimePtrType) ToBuildRunStatusBuildSpecRuntimePtrOutputWithContext(ctx context.Context) BuildRunStatusBuildSpecRuntimePtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BuildRunStatusBuildSpecRuntimePtrOutput)
+}
+
+// Runtime represents the runtime-image
+type BuildRunStatusBuildSpecRuntimeOutput struct{ *pulumi.OutputState }
+
+func (BuildRunStatusBuildSpecRuntimeOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*BuildRunStatusBuildSpecRuntime)(nil)).Elem()
+}
+
+func (o BuildRunStatusBuildSpecRuntimeOutput) ToBuildRunStatusBuildSpecRuntimeOutput() BuildRunStatusBuildSpecRuntimeOutput {
+	return o
+}
+
+func (o BuildRunStatusBuildSpecRuntimeOutput) ToBuildRunStatusBuildSpecRuntimeOutputWithContext(ctx context.Context) BuildRunStatusBuildSpecRuntimeOutput {
+	return o
+}
+
+func (o BuildRunStatusBuildSpecRuntimeOutput) ToBuildRunStatusBuildSpecRuntimePtrOutput() BuildRunStatusBuildSpecRuntimePtrOutput {
+	return o.ToBuildRunStatusBuildSpecRuntimePtrOutputWithContext(context.Background())
+}
+
+func (o BuildRunStatusBuildSpecRuntimeOutput) ToBuildRunStatusBuildSpecRuntimePtrOutputWithContext(ctx context.Context) BuildRunStatusBuildSpecRuntimePtrOutput {
+	return o.ApplyT(func(v BuildRunStatusBuildSpecRuntime) *BuildRunStatusBuildSpecRuntime {
+		return &v
+	}).(BuildRunStatusBuildSpecRuntimePtrOutput)
+}
+
+// Base runtime base image.
+func (o BuildRunStatusBuildSpecRuntimeOutput) Base() BuildRunStatusBuildSpecRuntimeBasePtrOutput {
+	return o.ApplyT(func(v BuildRunStatusBuildSpecRuntime) *BuildRunStatusBuildSpecRuntimeBase { return v.Base }).(BuildRunStatusBuildSpecRuntimeBasePtrOutput)
+}
+
+// Entrypoint runtime-image entrypoint.
+func (o BuildRunStatusBuildSpecRuntimeOutput) Entrypoint() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v BuildRunStatusBuildSpecRuntime) []string { return v.Entrypoint }).(pulumi.StringArrayOutput)
+}
+
+// Env environment variables for runtime.
+func (o BuildRunStatusBuildSpecRuntimeOutput) Env() pulumi.StringMapOutput {
+	return o.ApplyT(func(v BuildRunStatusBuildSpecRuntime) map[string]string { return v.Env }).(pulumi.StringMapOutput)
+}
+
+// Labels map of additional labels to be applied on image.
+func (o BuildRunStatusBuildSpecRuntimeOutput) Labels() pulumi.StringMapOutput {
+	return o.ApplyT(func(v BuildRunStatusBuildSpecRuntime) map[string]string { return v.Labels }).(pulumi.StringMapOutput)
+}
+
+// Paths list of directories/files to be copied into runtime-image, using colon ":" to split up source and destination paths.
+func (o BuildRunStatusBuildSpecRuntimeOutput) Paths() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v BuildRunStatusBuildSpecRuntime) []string { return v.Paths }).(pulumi.StringArrayOutput)
+}
+
+// Run arbitrary commands to run before copying data into runtime-image.
+func (o BuildRunStatusBuildSpecRuntimeOutput) Run() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v BuildRunStatusBuildSpecRuntime) []string { return v.Run }).(pulumi.StringArrayOutput)
+}
+
+// User definitions of user and group for runtime-image.
+func (o BuildRunStatusBuildSpecRuntimeOutput) User() BuildRunStatusBuildSpecRuntimeUserPtrOutput {
+	return o.ApplyT(func(v BuildRunStatusBuildSpecRuntime) *BuildRunStatusBuildSpecRuntimeUser { return v.User }).(BuildRunStatusBuildSpecRuntimeUserPtrOutput)
+}
+
+// WorkDir runtime image working directory `WORKDIR`.
+func (o BuildRunStatusBuildSpecRuntimeOutput) WorkDir() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v BuildRunStatusBuildSpecRuntime) *string { return v.WorkDir }).(pulumi.StringPtrOutput)
+}
+
+type BuildRunStatusBuildSpecRuntimePtrOutput struct{ *pulumi.OutputState }
+
+func (BuildRunStatusBuildSpecRuntimePtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**BuildRunStatusBuildSpecRuntime)(nil)).Elem()
+}
+
+func (o BuildRunStatusBuildSpecRuntimePtrOutput) ToBuildRunStatusBuildSpecRuntimePtrOutput() BuildRunStatusBuildSpecRuntimePtrOutput {
+	return o
+}
+
+func (o BuildRunStatusBuildSpecRuntimePtrOutput) ToBuildRunStatusBuildSpecRuntimePtrOutputWithContext(ctx context.Context) BuildRunStatusBuildSpecRuntimePtrOutput {
+	return o
+}
+
+func (o BuildRunStatusBuildSpecRuntimePtrOutput) Elem() BuildRunStatusBuildSpecRuntimeOutput {
+	return o.ApplyT(func(v *BuildRunStatusBuildSpecRuntime) BuildRunStatusBuildSpecRuntime { return *v }).(BuildRunStatusBuildSpecRuntimeOutput)
+}
+
+// Base runtime base image.
+func (o BuildRunStatusBuildSpecRuntimePtrOutput) Base() BuildRunStatusBuildSpecRuntimeBasePtrOutput {
+	return o.ApplyT(func(v *BuildRunStatusBuildSpecRuntime) *BuildRunStatusBuildSpecRuntimeBase {
+		if v == nil {
+			return nil
+		}
+		return v.Base
+	}).(BuildRunStatusBuildSpecRuntimeBasePtrOutput)
+}
+
+// Entrypoint runtime-image entrypoint.
+func (o BuildRunStatusBuildSpecRuntimePtrOutput) Entrypoint() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v *BuildRunStatusBuildSpecRuntime) []string {
+		if v == nil {
+			return nil
+		}
+		return v.Entrypoint
+	}).(pulumi.StringArrayOutput)
+}
+
+// Env environment variables for runtime.
+func (o BuildRunStatusBuildSpecRuntimePtrOutput) Env() pulumi.StringMapOutput {
+	return o.ApplyT(func(v *BuildRunStatusBuildSpecRuntime) map[string]string {
+		if v == nil {
+			return nil
+		}
+		return v.Env
+	}).(pulumi.StringMapOutput)
+}
+
+// Labels map of additional labels to be applied on image.
+func (o BuildRunStatusBuildSpecRuntimePtrOutput) Labels() pulumi.StringMapOutput {
+	return o.ApplyT(func(v *BuildRunStatusBuildSpecRuntime) map[string]string {
+		if v == nil {
+			return nil
+		}
+		return v.Labels
+	}).(pulumi.StringMapOutput)
+}
+
+// Paths list of directories/files to be copied into runtime-image, using colon ":" to split up source and destination paths.
+func (o BuildRunStatusBuildSpecRuntimePtrOutput) Paths() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v *BuildRunStatusBuildSpecRuntime) []string {
+		if v == nil {
+			return nil
+		}
+		return v.Paths
+	}).(pulumi.StringArrayOutput)
+}
+
+// Run arbitrary commands to run before copying data into runtime-image.
+func (o BuildRunStatusBuildSpecRuntimePtrOutput) Run() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v *BuildRunStatusBuildSpecRuntime) []string {
+		if v == nil {
+			return nil
+		}
+		return v.Run
+	}).(pulumi.StringArrayOutput)
+}
+
+// User definitions of user and group for runtime-image.
+func (o BuildRunStatusBuildSpecRuntimePtrOutput) User() BuildRunStatusBuildSpecRuntimeUserPtrOutput {
+	return o.ApplyT(func(v *BuildRunStatusBuildSpecRuntime) *BuildRunStatusBuildSpecRuntimeUser {
+		if v == nil {
+			return nil
+		}
+		return v.User
+	}).(BuildRunStatusBuildSpecRuntimeUserPtrOutput)
+}
+
+// WorkDir runtime image working directory `WORKDIR`.
+func (o BuildRunStatusBuildSpecRuntimePtrOutput) WorkDir() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *BuildRunStatusBuildSpecRuntime) *string {
+		if v == nil {
+			return nil
+		}
+		return v.WorkDir
+	}).(pulumi.StringPtrOutput)
+}
+
+// Base runtime base image.
+type BuildRunStatusBuildSpecRuntimeBase struct {
+	// SecretRef is a reference to the Secret containing the credentials to push the image to the registry
+	Credentials *BuildRunStatusBuildSpecRuntimeBaseCredentials `pulumi:"credentials"`
+	// ImageURL is the URL where the image will be pushed to.
+	Image string `pulumi:"image"`
+}
+
+// BuildRunStatusBuildSpecRuntimeBaseInput is an input type that accepts BuildRunStatusBuildSpecRuntimeBaseArgs and BuildRunStatusBuildSpecRuntimeBaseOutput values.
+// You can construct a concrete instance of `BuildRunStatusBuildSpecRuntimeBaseInput` via:
+//
+//          BuildRunStatusBuildSpecRuntimeBaseArgs{...}
+type BuildRunStatusBuildSpecRuntimeBaseInput interface {
+	pulumi.Input
+
+	ToBuildRunStatusBuildSpecRuntimeBaseOutput() BuildRunStatusBuildSpecRuntimeBaseOutput
+	ToBuildRunStatusBuildSpecRuntimeBaseOutputWithContext(context.Context) BuildRunStatusBuildSpecRuntimeBaseOutput
+}
+
+// Base runtime base image.
+type BuildRunStatusBuildSpecRuntimeBaseArgs struct {
+	// SecretRef is a reference to the Secret containing the credentials to push the image to the registry
+	Credentials BuildRunStatusBuildSpecRuntimeBaseCredentialsPtrInput `pulumi:"credentials"`
+	// ImageURL is the URL where the image will be pushed to.
+	Image pulumi.StringInput `pulumi:"image"`
+}
+
+func (BuildRunStatusBuildSpecRuntimeBaseArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*BuildRunStatusBuildSpecRuntimeBase)(nil)).Elem()
+}
+
+func (i BuildRunStatusBuildSpecRuntimeBaseArgs) ToBuildRunStatusBuildSpecRuntimeBaseOutput() BuildRunStatusBuildSpecRuntimeBaseOutput {
+	return i.ToBuildRunStatusBuildSpecRuntimeBaseOutputWithContext(context.Background())
+}
+
+func (i BuildRunStatusBuildSpecRuntimeBaseArgs) ToBuildRunStatusBuildSpecRuntimeBaseOutputWithContext(ctx context.Context) BuildRunStatusBuildSpecRuntimeBaseOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BuildRunStatusBuildSpecRuntimeBaseOutput)
+}
+
+func (i BuildRunStatusBuildSpecRuntimeBaseArgs) ToBuildRunStatusBuildSpecRuntimeBasePtrOutput() BuildRunStatusBuildSpecRuntimeBasePtrOutput {
+	return i.ToBuildRunStatusBuildSpecRuntimeBasePtrOutputWithContext(context.Background())
+}
+
+func (i BuildRunStatusBuildSpecRuntimeBaseArgs) ToBuildRunStatusBuildSpecRuntimeBasePtrOutputWithContext(ctx context.Context) BuildRunStatusBuildSpecRuntimeBasePtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BuildRunStatusBuildSpecRuntimeBaseOutput).ToBuildRunStatusBuildSpecRuntimeBasePtrOutputWithContext(ctx)
+}
+
+// BuildRunStatusBuildSpecRuntimeBasePtrInput is an input type that accepts BuildRunStatusBuildSpecRuntimeBaseArgs, BuildRunStatusBuildSpecRuntimeBasePtr and BuildRunStatusBuildSpecRuntimeBasePtrOutput values.
+// You can construct a concrete instance of `BuildRunStatusBuildSpecRuntimeBasePtrInput` via:
+//
+//          BuildRunStatusBuildSpecRuntimeBaseArgs{...}
+//
+//  or:
+//
+//          nil
+type BuildRunStatusBuildSpecRuntimeBasePtrInput interface {
+	pulumi.Input
+
+	ToBuildRunStatusBuildSpecRuntimeBasePtrOutput() BuildRunStatusBuildSpecRuntimeBasePtrOutput
+	ToBuildRunStatusBuildSpecRuntimeBasePtrOutputWithContext(context.Context) BuildRunStatusBuildSpecRuntimeBasePtrOutput
+}
+
+type buildRunStatusBuildSpecRuntimeBasePtrType BuildRunStatusBuildSpecRuntimeBaseArgs
+
+func BuildRunStatusBuildSpecRuntimeBasePtr(v *BuildRunStatusBuildSpecRuntimeBaseArgs) BuildRunStatusBuildSpecRuntimeBasePtrInput {
+	return (*buildRunStatusBuildSpecRuntimeBasePtrType)(v)
+}
+
+func (*buildRunStatusBuildSpecRuntimeBasePtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**BuildRunStatusBuildSpecRuntimeBase)(nil)).Elem()
+}
+
+func (i *buildRunStatusBuildSpecRuntimeBasePtrType) ToBuildRunStatusBuildSpecRuntimeBasePtrOutput() BuildRunStatusBuildSpecRuntimeBasePtrOutput {
+	return i.ToBuildRunStatusBuildSpecRuntimeBasePtrOutputWithContext(context.Background())
+}
+
+func (i *buildRunStatusBuildSpecRuntimeBasePtrType) ToBuildRunStatusBuildSpecRuntimeBasePtrOutputWithContext(ctx context.Context) BuildRunStatusBuildSpecRuntimeBasePtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BuildRunStatusBuildSpecRuntimeBasePtrOutput)
+}
+
+// Base runtime base image.
+type BuildRunStatusBuildSpecRuntimeBaseOutput struct{ *pulumi.OutputState }
+
+func (BuildRunStatusBuildSpecRuntimeBaseOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*BuildRunStatusBuildSpecRuntimeBase)(nil)).Elem()
+}
+
+func (o BuildRunStatusBuildSpecRuntimeBaseOutput) ToBuildRunStatusBuildSpecRuntimeBaseOutput() BuildRunStatusBuildSpecRuntimeBaseOutput {
+	return o
+}
+
+func (o BuildRunStatusBuildSpecRuntimeBaseOutput) ToBuildRunStatusBuildSpecRuntimeBaseOutputWithContext(ctx context.Context) BuildRunStatusBuildSpecRuntimeBaseOutput {
+	return o
+}
+
+func (o BuildRunStatusBuildSpecRuntimeBaseOutput) ToBuildRunStatusBuildSpecRuntimeBasePtrOutput() BuildRunStatusBuildSpecRuntimeBasePtrOutput {
+	return o.ToBuildRunStatusBuildSpecRuntimeBasePtrOutputWithContext(context.Background())
+}
+
+func (o BuildRunStatusBuildSpecRuntimeBaseOutput) ToBuildRunStatusBuildSpecRuntimeBasePtrOutputWithContext(ctx context.Context) BuildRunStatusBuildSpecRuntimeBasePtrOutput {
+	return o.ApplyT(func(v BuildRunStatusBuildSpecRuntimeBase) *BuildRunStatusBuildSpecRuntimeBase {
+		return &v
+	}).(BuildRunStatusBuildSpecRuntimeBasePtrOutput)
+}
+
+// SecretRef is a reference to the Secret containing the credentials to push the image to the registry
+func (o BuildRunStatusBuildSpecRuntimeBaseOutput) Credentials() BuildRunStatusBuildSpecRuntimeBaseCredentialsPtrOutput {
+	return o.ApplyT(func(v BuildRunStatusBuildSpecRuntimeBase) *BuildRunStatusBuildSpecRuntimeBaseCredentials {
+		return v.Credentials
+	}).(BuildRunStatusBuildSpecRuntimeBaseCredentialsPtrOutput)
+}
+
+// ImageURL is the URL where the image will be pushed to.
+func (o BuildRunStatusBuildSpecRuntimeBaseOutput) Image() pulumi.StringOutput {
+	return o.ApplyT(func(v BuildRunStatusBuildSpecRuntimeBase) string { return v.Image }).(pulumi.StringOutput)
+}
+
+type BuildRunStatusBuildSpecRuntimeBasePtrOutput struct{ *pulumi.OutputState }
+
+func (BuildRunStatusBuildSpecRuntimeBasePtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**BuildRunStatusBuildSpecRuntimeBase)(nil)).Elem()
+}
+
+func (o BuildRunStatusBuildSpecRuntimeBasePtrOutput) ToBuildRunStatusBuildSpecRuntimeBasePtrOutput() BuildRunStatusBuildSpecRuntimeBasePtrOutput {
+	return o
+}
+
+func (o BuildRunStatusBuildSpecRuntimeBasePtrOutput) ToBuildRunStatusBuildSpecRuntimeBasePtrOutputWithContext(ctx context.Context) BuildRunStatusBuildSpecRuntimeBasePtrOutput {
+	return o
+}
+
+func (o BuildRunStatusBuildSpecRuntimeBasePtrOutput) Elem() BuildRunStatusBuildSpecRuntimeBaseOutput {
+	return o.ApplyT(func(v *BuildRunStatusBuildSpecRuntimeBase) BuildRunStatusBuildSpecRuntimeBase { return *v }).(BuildRunStatusBuildSpecRuntimeBaseOutput)
+}
+
+// SecretRef is a reference to the Secret containing the credentials to push the image to the registry
+func (o BuildRunStatusBuildSpecRuntimeBasePtrOutput) Credentials() BuildRunStatusBuildSpecRuntimeBaseCredentialsPtrOutput {
+	return o.ApplyT(func(v *BuildRunStatusBuildSpecRuntimeBase) *BuildRunStatusBuildSpecRuntimeBaseCredentials {
+		if v == nil {
+			return nil
+		}
+		return v.Credentials
+	}).(BuildRunStatusBuildSpecRuntimeBaseCredentialsPtrOutput)
+}
+
+// ImageURL is the URL where the image will be pushed to.
+func (o BuildRunStatusBuildSpecRuntimeBasePtrOutput) Image() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *BuildRunStatusBuildSpecRuntimeBase) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.Image
+	}).(pulumi.StringPtrOutput)
+}
+
+// SecretRef is a reference to the Secret containing the credentials to push the image to the registry
+type BuildRunStatusBuildSpecRuntimeBaseCredentials struct {
+	// Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+	Name *string `pulumi:"name"`
+}
+
+// BuildRunStatusBuildSpecRuntimeBaseCredentialsInput is an input type that accepts BuildRunStatusBuildSpecRuntimeBaseCredentialsArgs and BuildRunStatusBuildSpecRuntimeBaseCredentialsOutput values.
+// You can construct a concrete instance of `BuildRunStatusBuildSpecRuntimeBaseCredentialsInput` via:
+//
+//          BuildRunStatusBuildSpecRuntimeBaseCredentialsArgs{...}
+type BuildRunStatusBuildSpecRuntimeBaseCredentialsInput interface {
+	pulumi.Input
+
+	ToBuildRunStatusBuildSpecRuntimeBaseCredentialsOutput() BuildRunStatusBuildSpecRuntimeBaseCredentialsOutput
+	ToBuildRunStatusBuildSpecRuntimeBaseCredentialsOutputWithContext(context.Context) BuildRunStatusBuildSpecRuntimeBaseCredentialsOutput
+}
+
+// SecretRef is a reference to the Secret containing the credentials to push the image to the registry
+type BuildRunStatusBuildSpecRuntimeBaseCredentialsArgs struct {
+	// Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+	Name pulumi.StringPtrInput `pulumi:"name"`
+}
+
+func (BuildRunStatusBuildSpecRuntimeBaseCredentialsArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*BuildRunStatusBuildSpecRuntimeBaseCredentials)(nil)).Elem()
+}
+
+func (i BuildRunStatusBuildSpecRuntimeBaseCredentialsArgs) ToBuildRunStatusBuildSpecRuntimeBaseCredentialsOutput() BuildRunStatusBuildSpecRuntimeBaseCredentialsOutput {
+	return i.ToBuildRunStatusBuildSpecRuntimeBaseCredentialsOutputWithContext(context.Background())
+}
+
+func (i BuildRunStatusBuildSpecRuntimeBaseCredentialsArgs) ToBuildRunStatusBuildSpecRuntimeBaseCredentialsOutputWithContext(ctx context.Context) BuildRunStatusBuildSpecRuntimeBaseCredentialsOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BuildRunStatusBuildSpecRuntimeBaseCredentialsOutput)
+}
+
+func (i BuildRunStatusBuildSpecRuntimeBaseCredentialsArgs) ToBuildRunStatusBuildSpecRuntimeBaseCredentialsPtrOutput() BuildRunStatusBuildSpecRuntimeBaseCredentialsPtrOutput {
+	return i.ToBuildRunStatusBuildSpecRuntimeBaseCredentialsPtrOutputWithContext(context.Background())
+}
+
+func (i BuildRunStatusBuildSpecRuntimeBaseCredentialsArgs) ToBuildRunStatusBuildSpecRuntimeBaseCredentialsPtrOutputWithContext(ctx context.Context) BuildRunStatusBuildSpecRuntimeBaseCredentialsPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BuildRunStatusBuildSpecRuntimeBaseCredentialsOutput).ToBuildRunStatusBuildSpecRuntimeBaseCredentialsPtrOutputWithContext(ctx)
+}
+
+// BuildRunStatusBuildSpecRuntimeBaseCredentialsPtrInput is an input type that accepts BuildRunStatusBuildSpecRuntimeBaseCredentialsArgs, BuildRunStatusBuildSpecRuntimeBaseCredentialsPtr and BuildRunStatusBuildSpecRuntimeBaseCredentialsPtrOutput values.
+// You can construct a concrete instance of `BuildRunStatusBuildSpecRuntimeBaseCredentialsPtrInput` via:
+//
+//          BuildRunStatusBuildSpecRuntimeBaseCredentialsArgs{...}
+//
+//  or:
+//
+//          nil
+type BuildRunStatusBuildSpecRuntimeBaseCredentialsPtrInput interface {
+	pulumi.Input
+
+	ToBuildRunStatusBuildSpecRuntimeBaseCredentialsPtrOutput() BuildRunStatusBuildSpecRuntimeBaseCredentialsPtrOutput
+	ToBuildRunStatusBuildSpecRuntimeBaseCredentialsPtrOutputWithContext(context.Context) BuildRunStatusBuildSpecRuntimeBaseCredentialsPtrOutput
+}
+
+type buildRunStatusBuildSpecRuntimeBaseCredentialsPtrType BuildRunStatusBuildSpecRuntimeBaseCredentialsArgs
+
+func BuildRunStatusBuildSpecRuntimeBaseCredentialsPtr(v *BuildRunStatusBuildSpecRuntimeBaseCredentialsArgs) BuildRunStatusBuildSpecRuntimeBaseCredentialsPtrInput {
+	return (*buildRunStatusBuildSpecRuntimeBaseCredentialsPtrType)(v)
+}
+
+func (*buildRunStatusBuildSpecRuntimeBaseCredentialsPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**BuildRunStatusBuildSpecRuntimeBaseCredentials)(nil)).Elem()
+}
+
+func (i *buildRunStatusBuildSpecRuntimeBaseCredentialsPtrType) ToBuildRunStatusBuildSpecRuntimeBaseCredentialsPtrOutput() BuildRunStatusBuildSpecRuntimeBaseCredentialsPtrOutput {
+	return i.ToBuildRunStatusBuildSpecRuntimeBaseCredentialsPtrOutputWithContext(context.Background())
+}
+
+func (i *buildRunStatusBuildSpecRuntimeBaseCredentialsPtrType) ToBuildRunStatusBuildSpecRuntimeBaseCredentialsPtrOutputWithContext(ctx context.Context) BuildRunStatusBuildSpecRuntimeBaseCredentialsPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BuildRunStatusBuildSpecRuntimeBaseCredentialsPtrOutput)
+}
+
+// SecretRef is a reference to the Secret containing the credentials to push the image to the registry
+type BuildRunStatusBuildSpecRuntimeBaseCredentialsOutput struct{ *pulumi.OutputState }
+
+func (BuildRunStatusBuildSpecRuntimeBaseCredentialsOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*BuildRunStatusBuildSpecRuntimeBaseCredentials)(nil)).Elem()
+}
+
+func (o BuildRunStatusBuildSpecRuntimeBaseCredentialsOutput) ToBuildRunStatusBuildSpecRuntimeBaseCredentialsOutput() BuildRunStatusBuildSpecRuntimeBaseCredentialsOutput {
+	return o
+}
+
+func (o BuildRunStatusBuildSpecRuntimeBaseCredentialsOutput) ToBuildRunStatusBuildSpecRuntimeBaseCredentialsOutputWithContext(ctx context.Context) BuildRunStatusBuildSpecRuntimeBaseCredentialsOutput {
+	return o
+}
+
+func (o BuildRunStatusBuildSpecRuntimeBaseCredentialsOutput) ToBuildRunStatusBuildSpecRuntimeBaseCredentialsPtrOutput() BuildRunStatusBuildSpecRuntimeBaseCredentialsPtrOutput {
+	return o.ToBuildRunStatusBuildSpecRuntimeBaseCredentialsPtrOutputWithContext(context.Background())
+}
+
+func (o BuildRunStatusBuildSpecRuntimeBaseCredentialsOutput) ToBuildRunStatusBuildSpecRuntimeBaseCredentialsPtrOutputWithContext(ctx context.Context) BuildRunStatusBuildSpecRuntimeBaseCredentialsPtrOutput {
+	return o.ApplyT(func(v BuildRunStatusBuildSpecRuntimeBaseCredentials) *BuildRunStatusBuildSpecRuntimeBaseCredentials {
+		return &v
+	}).(BuildRunStatusBuildSpecRuntimeBaseCredentialsPtrOutput)
+}
+
+// Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+func (o BuildRunStatusBuildSpecRuntimeBaseCredentialsOutput) Name() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v BuildRunStatusBuildSpecRuntimeBaseCredentials) *string { return v.Name }).(pulumi.StringPtrOutput)
+}
+
+type BuildRunStatusBuildSpecRuntimeBaseCredentialsPtrOutput struct{ *pulumi.OutputState }
+
+func (BuildRunStatusBuildSpecRuntimeBaseCredentialsPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**BuildRunStatusBuildSpecRuntimeBaseCredentials)(nil)).Elem()
+}
+
+func (o BuildRunStatusBuildSpecRuntimeBaseCredentialsPtrOutput) ToBuildRunStatusBuildSpecRuntimeBaseCredentialsPtrOutput() BuildRunStatusBuildSpecRuntimeBaseCredentialsPtrOutput {
+	return o
+}
+
+func (o BuildRunStatusBuildSpecRuntimeBaseCredentialsPtrOutput) ToBuildRunStatusBuildSpecRuntimeBaseCredentialsPtrOutputWithContext(ctx context.Context) BuildRunStatusBuildSpecRuntimeBaseCredentialsPtrOutput {
+	return o
+}
+
+func (o BuildRunStatusBuildSpecRuntimeBaseCredentialsPtrOutput) Elem() BuildRunStatusBuildSpecRuntimeBaseCredentialsOutput {
+	return o.ApplyT(func(v *BuildRunStatusBuildSpecRuntimeBaseCredentials) BuildRunStatusBuildSpecRuntimeBaseCredentials {
+		return *v
+	}).(BuildRunStatusBuildSpecRuntimeBaseCredentialsOutput)
+}
+
+// Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+func (o BuildRunStatusBuildSpecRuntimeBaseCredentialsPtrOutput) Name() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *BuildRunStatusBuildSpecRuntimeBaseCredentials) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Name
+	}).(pulumi.StringPtrOutput)
+}
+
+// Env environment variables for runtime.
+type BuildRunStatusBuildSpecRuntimeEnv struct {
+}
+
+// BuildRunStatusBuildSpecRuntimeEnvInput is an input type that accepts BuildRunStatusBuildSpecRuntimeEnvArgs and BuildRunStatusBuildSpecRuntimeEnvOutput values.
+// You can construct a concrete instance of `BuildRunStatusBuildSpecRuntimeEnvInput` via:
+//
+//          BuildRunStatusBuildSpecRuntimeEnvArgs{...}
+type BuildRunStatusBuildSpecRuntimeEnvInput interface {
+	pulumi.Input
+
+	ToBuildRunStatusBuildSpecRuntimeEnvOutput() BuildRunStatusBuildSpecRuntimeEnvOutput
+	ToBuildRunStatusBuildSpecRuntimeEnvOutputWithContext(context.Context) BuildRunStatusBuildSpecRuntimeEnvOutput
+}
+
+// Env environment variables for runtime.
+type BuildRunStatusBuildSpecRuntimeEnvArgs struct {
+}
+
+func (BuildRunStatusBuildSpecRuntimeEnvArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*BuildRunStatusBuildSpecRuntimeEnv)(nil)).Elem()
+}
+
+func (i BuildRunStatusBuildSpecRuntimeEnvArgs) ToBuildRunStatusBuildSpecRuntimeEnvOutput() BuildRunStatusBuildSpecRuntimeEnvOutput {
+	return i.ToBuildRunStatusBuildSpecRuntimeEnvOutputWithContext(context.Background())
+}
+
+func (i BuildRunStatusBuildSpecRuntimeEnvArgs) ToBuildRunStatusBuildSpecRuntimeEnvOutputWithContext(ctx context.Context) BuildRunStatusBuildSpecRuntimeEnvOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BuildRunStatusBuildSpecRuntimeEnvOutput)
+}
+
+// Env environment variables for runtime.
+type BuildRunStatusBuildSpecRuntimeEnvOutput struct{ *pulumi.OutputState }
+
+func (BuildRunStatusBuildSpecRuntimeEnvOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*BuildRunStatusBuildSpecRuntimeEnv)(nil)).Elem()
+}
+
+func (o BuildRunStatusBuildSpecRuntimeEnvOutput) ToBuildRunStatusBuildSpecRuntimeEnvOutput() BuildRunStatusBuildSpecRuntimeEnvOutput {
+	return o
+}
+
+func (o BuildRunStatusBuildSpecRuntimeEnvOutput) ToBuildRunStatusBuildSpecRuntimeEnvOutputWithContext(ctx context.Context) BuildRunStatusBuildSpecRuntimeEnvOutput {
+	return o
+}
+
+// Labels map of additional labels to be applied on image.
+type BuildRunStatusBuildSpecRuntimeLabels struct {
+}
+
+// BuildRunStatusBuildSpecRuntimeLabelsInput is an input type that accepts BuildRunStatusBuildSpecRuntimeLabelsArgs and BuildRunStatusBuildSpecRuntimeLabelsOutput values.
+// You can construct a concrete instance of `BuildRunStatusBuildSpecRuntimeLabelsInput` via:
+//
+//          BuildRunStatusBuildSpecRuntimeLabelsArgs{...}
+type BuildRunStatusBuildSpecRuntimeLabelsInput interface {
+	pulumi.Input
+
+	ToBuildRunStatusBuildSpecRuntimeLabelsOutput() BuildRunStatusBuildSpecRuntimeLabelsOutput
+	ToBuildRunStatusBuildSpecRuntimeLabelsOutputWithContext(context.Context) BuildRunStatusBuildSpecRuntimeLabelsOutput
+}
+
+// Labels map of additional labels to be applied on image.
+type BuildRunStatusBuildSpecRuntimeLabelsArgs struct {
+}
+
+func (BuildRunStatusBuildSpecRuntimeLabelsArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*BuildRunStatusBuildSpecRuntimeLabels)(nil)).Elem()
+}
+
+func (i BuildRunStatusBuildSpecRuntimeLabelsArgs) ToBuildRunStatusBuildSpecRuntimeLabelsOutput() BuildRunStatusBuildSpecRuntimeLabelsOutput {
+	return i.ToBuildRunStatusBuildSpecRuntimeLabelsOutputWithContext(context.Background())
+}
+
+func (i BuildRunStatusBuildSpecRuntimeLabelsArgs) ToBuildRunStatusBuildSpecRuntimeLabelsOutputWithContext(ctx context.Context) BuildRunStatusBuildSpecRuntimeLabelsOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BuildRunStatusBuildSpecRuntimeLabelsOutput)
+}
+
+// Labels map of additional labels to be applied on image.
+type BuildRunStatusBuildSpecRuntimeLabelsOutput struct{ *pulumi.OutputState }
+
+func (BuildRunStatusBuildSpecRuntimeLabelsOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*BuildRunStatusBuildSpecRuntimeLabels)(nil)).Elem()
+}
+
+func (o BuildRunStatusBuildSpecRuntimeLabelsOutput) ToBuildRunStatusBuildSpecRuntimeLabelsOutput() BuildRunStatusBuildSpecRuntimeLabelsOutput {
+	return o
+}
+
+func (o BuildRunStatusBuildSpecRuntimeLabelsOutput) ToBuildRunStatusBuildSpecRuntimeLabelsOutputWithContext(ctx context.Context) BuildRunStatusBuildSpecRuntimeLabelsOutput {
+	return o
+}
+
+// User definitions of user and group for runtime-image.
+type BuildRunStatusBuildSpecRuntimeUser struct {
+	// Group group name or GID employed in runtime-image.
+	Group *string `pulumi:"group"`
+	// Name user name to be employed in runtime-image.
+	Name string `pulumi:"name"`
+}
+
+// BuildRunStatusBuildSpecRuntimeUserInput is an input type that accepts BuildRunStatusBuildSpecRuntimeUserArgs and BuildRunStatusBuildSpecRuntimeUserOutput values.
+// You can construct a concrete instance of `BuildRunStatusBuildSpecRuntimeUserInput` via:
+//
+//          BuildRunStatusBuildSpecRuntimeUserArgs{...}
+type BuildRunStatusBuildSpecRuntimeUserInput interface {
+	pulumi.Input
+
+	ToBuildRunStatusBuildSpecRuntimeUserOutput() BuildRunStatusBuildSpecRuntimeUserOutput
+	ToBuildRunStatusBuildSpecRuntimeUserOutputWithContext(context.Context) BuildRunStatusBuildSpecRuntimeUserOutput
+}
+
+// User definitions of user and group for runtime-image.
+type BuildRunStatusBuildSpecRuntimeUserArgs struct {
+	// Group group name or GID employed in runtime-image.
+	Group pulumi.StringPtrInput `pulumi:"group"`
+	// Name user name to be employed in runtime-image.
+	Name pulumi.StringInput `pulumi:"name"`
+}
+
+func (BuildRunStatusBuildSpecRuntimeUserArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*BuildRunStatusBuildSpecRuntimeUser)(nil)).Elem()
+}
+
+func (i BuildRunStatusBuildSpecRuntimeUserArgs) ToBuildRunStatusBuildSpecRuntimeUserOutput() BuildRunStatusBuildSpecRuntimeUserOutput {
+	return i.ToBuildRunStatusBuildSpecRuntimeUserOutputWithContext(context.Background())
+}
+
+func (i BuildRunStatusBuildSpecRuntimeUserArgs) ToBuildRunStatusBuildSpecRuntimeUserOutputWithContext(ctx context.Context) BuildRunStatusBuildSpecRuntimeUserOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BuildRunStatusBuildSpecRuntimeUserOutput)
+}
+
+func (i BuildRunStatusBuildSpecRuntimeUserArgs) ToBuildRunStatusBuildSpecRuntimeUserPtrOutput() BuildRunStatusBuildSpecRuntimeUserPtrOutput {
+	return i.ToBuildRunStatusBuildSpecRuntimeUserPtrOutputWithContext(context.Background())
+}
+
+func (i BuildRunStatusBuildSpecRuntimeUserArgs) ToBuildRunStatusBuildSpecRuntimeUserPtrOutputWithContext(ctx context.Context) BuildRunStatusBuildSpecRuntimeUserPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BuildRunStatusBuildSpecRuntimeUserOutput).ToBuildRunStatusBuildSpecRuntimeUserPtrOutputWithContext(ctx)
+}
+
+// BuildRunStatusBuildSpecRuntimeUserPtrInput is an input type that accepts BuildRunStatusBuildSpecRuntimeUserArgs, BuildRunStatusBuildSpecRuntimeUserPtr and BuildRunStatusBuildSpecRuntimeUserPtrOutput values.
+// You can construct a concrete instance of `BuildRunStatusBuildSpecRuntimeUserPtrInput` via:
+//
+//          BuildRunStatusBuildSpecRuntimeUserArgs{...}
+//
+//  or:
+//
+//          nil
+type BuildRunStatusBuildSpecRuntimeUserPtrInput interface {
+	pulumi.Input
+
+	ToBuildRunStatusBuildSpecRuntimeUserPtrOutput() BuildRunStatusBuildSpecRuntimeUserPtrOutput
+	ToBuildRunStatusBuildSpecRuntimeUserPtrOutputWithContext(context.Context) BuildRunStatusBuildSpecRuntimeUserPtrOutput
+}
+
+type buildRunStatusBuildSpecRuntimeUserPtrType BuildRunStatusBuildSpecRuntimeUserArgs
+
+func BuildRunStatusBuildSpecRuntimeUserPtr(v *BuildRunStatusBuildSpecRuntimeUserArgs) BuildRunStatusBuildSpecRuntimeUserPtrInput {
+	return (*buildRunStatusBuildSpecRuntimeUserPtrType)(v)
+}
+
+func (*buildRunStatusBuildSpecRuntimeUserPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**BuildRunStatusBuildSpecRuntimeUser)(nil)).Elem()
+}
+
+func (i *buildRunStatusBuildSpecRuntimeUserPtrType) ToBuildRunStatusBuildSpecRuntimeUserPtrOutput() BuildRunStatusBuildSpecRuntimeUserPtrOutput {
+	return i.ToBuildRunStatusBuildSpecRuntimeUserPtrOutputWithContext(context.Background())
+}
+
+func (i *buildRunStatusBuildSpecRuntimeUserPtrType) ToBuildRunStatusBuildSpecRuntimeUserPtrOutputWithContext(ctx context.Context) BuildRunStatusBuildSpecRuntimeUserPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BuildRunStatusBuildSpecRuntimeUserPtrOutput)
+}
+
+// User definitions of user and group for runtime-image.
+type BuildRunStatusBuildSpecRuntimeUserOutput struct{ *pulumi.OutputState }
+
+func (BuildRunStatusBuildSpecRuntimeUserOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*BuildRunStatusBuildSpecRuntimeUser)(nil)).Elem()
+}
+
+func (o BuildRunStatusBuildSpecRuntimeUserOutput) ToBuildRunStatusBuildSpecRuntimeUserOutput() BuildRunStatusBuildSpecRuntimeUserOutput {
+	return o
+}
+
+func (o BuildRunStatusBuildSpecRuntimeUserOutput) ToBuildRunStatusBuildSpecRuntimeUserOutputWithContext(ctx context.Context) BuildRunStatusBuildSpecRuntimeUserOutput {
+	return o
+}
+
+func (o BuildRunStatusBuildSpecRuntimeUserOutput) ToBuildRunStatusBuildSpecRuntimeUserPtrOutput() BuildRunStatusBuildSpecRuntimeUserPtrOutput {
+	return o.ToBuildRunStatusBuildSpecRuntimeUserPtrOutputWithContext(context.Background())
+}
+
+func (o BuildRunStatusBuildSpecRuntimeUserOutput) ToBuildRunStatusBuildSpecRuntimeUserPtrOutputWithContext(ctx context.Context) BuildRunStatusBuildSpecRuntimeUserPtrOutput {
+	return o.ApplyT(func(v BuildRunStatusBuildSpecRuntimeUser) *BuildRunStatusBuildSpecRuntimeUser {
+		return &v
+	}).(BuildRunStatusBuildSpecRuntimeUserPtrOutput)
+}
+
+// Group group name or GID employed in runtime-image.
+func (o BuildRunStatusBuildSpecRuntimeUserOutput) Group() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v BuildRunStatusBuildSpecRuntimeUser) *string { return v.Group }).(pulumi.StringPtrOutput)
+}
+
+// Name user name to be employed in runtime-image.
+func (o BuildRunStatusBuildSpecRuntimeUserOutput) Name() pulumi.StringOutput {
+	return o.ApplyT(func(v BuildRunStatusBuildSpecRuntimeUser) string { return v.Name }).(pulumi.StringOutput)
+}
+
+type BuildRunStatusBuildSpecRuntimeUserPtrOutput struct{ *pulumi.OutputState }
+
+func (BuildRunStatusBuildSpecRuntimeUserPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**BuildRunStatusBuildSpecRuntimeUser)(nil)).Elem()
+}
+
+func (o BuildRunStatusBuildSpecRuntimeUserPtrOutput) ToBuildRunStatusBuildSpecRuntimeUserPtrOutput() BuildRunStatusBuildSpecRuntimeUserPtrOutput {
+	return o
+}
+
+func (o BuildRunStatusBuildSpecRuntimeUserPtrOutput) ToBuildRunStatusBuildSpecRuntimeUserPtrOutputWithContext(ctx context.Context) BuildRunStatusBuildSpecRuntimeUserPtrOutput {
+	return o
+}
+
+func (o BuildRunStatusBuildSpecRuntimeUserPtrOutput) Elem() BuildRunStatusBuildSpecRuntimeUserOutput {
+	return o.ApplyT(func(v *BuildRunStatusBuildSpecRuntimeUser) BuildRunStatusBuildSpecRuntimeUser { return *v }).(BuildRunStatusBuildSpecRuntimeUserOutput)
+}
+
+// Group group name or GID employed in runtime-image.
+func (o BuildRunStatusBuildSpecRuntimeUserPtrOutput) Group() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *BuildRunStatusBuildSpecRuntimeUser) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Group
+	}).(pulumi.StringPtrOutput)
+}
+
+// Name user name to be employed in runtime-image.
+func (o BuildRunStatusBuildSpecRuntimeUserPtrOutput) Name() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *BuildRunStatusBuildSpecRuntimeUser) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.Name
+	}).(pulumi.StringPtrOutput)
+}
+
+// Source refers to the Git repository containing the source code to be built.
+type BuildRunStatusBuildSpecSource struct {
+	// ContextDir is a path to subfolder in the repo. Optional.
+	ContextDir *string `pulumi:"contextDir"`
+	// SecretRef refers to the secret that contains credentials to access the git repo. Optional.
+	Credentials *BuildRunStatusBuildSpecSourceCredentials `pulumi:"credentials"`
+	// Flavor of the git provider like github, gitlab, bitbucket, generic, etc. Optional.
+	Flavor *string `pulumi:"flavor"`
+	// HTTPProxy is optional.
+	HttpProxy *string `pulumi:"httpProxy"`
+	// HTTPSProxy is optional.
+	HttpsProxy *string `pulumi:"httpsProxy"`
+	// NoProxy can be used to specify domains for which no proxying should be performed. Optional.
+	NoProxy *string `pulumi:"noProxy"`
+	// Ref is a git reference. Optional. "master" is used by default.
+	Revision *string `pulumi:"revision"`
+	// URL of the git repo
+	Url string `pulumi:"url"`
+}
+
+// BuildRunStatusBuildSpecSourceInput is an input type that accepts BuildRunStatusBuildSpecSourceArgs and BuildRunStatusBuildSpecSourceOutput values.
+// You can construct a concrete instance of `BuildRunStatusBuildSpecSourceInput` via:
+//
+//          BuildRunStatusBuildSpecSourceArgs{...}
+type BuildRunStatusBuildSpecSourceInput interface {
+	pulumi.Input
+
+	ToBuildRunStatusBuildSpecSourceOutput() BuildRunStatusBuildSpecSourceOutput
+	ToBuildRunStatusBuildSpecSourceOutputWithContext(context.Context) BuildRunStatusBuildSpecSourceOutput
+}
+
+// Source refers to the Git repository containing the source code to be built.
+type BuildRunStatusBuildSpecSourceArgs struct {
+	// ContextDir is a path to subfolder in the repo. Optional.
+	ContextDir pulumi.StringPtrInput `pulumi:"contextDir"`
+	// SecretRef refers to the secret that contains credentials to access the git repo. Optional.
+	Credentials BuildRunStatusBuildSpecSourceCredentialsPtrInput `pulumi:"credentials"`
+	// Flavor of the git provider like github, gitlab, bitbucket, generic, etc. Optional.
+	Flavor pulumi.StringPtrInput `pulumi:"flavor"`
+	// HTTPProxy is optional.
+	HttpProxy pulumi.StringPtrInput `pulumi:"httpProxy"`
+	// HTTPSProxy is optional.
+	HttpsProxy pulumi.StringPtrInput `pulumi:"httpsProxy"`
+	// NoProxy can be used to specify domains for which no proxying should be performed. Optional.
+	NoProxy pulumi.StringPtrInput `pulumi:"noProxy"`
+	// Ref is a git reference. Optional. "master" is used by default.
+	Revision pulumi.StringPtrInput `pulumi:"revision"`
+	// URL of the git repo
+	Url pulumi.StringInput `pulumi:"url"`
+}
+
+func (BuildRunStatusBuildSpecSourceArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*BuildRunStatusBuildSpecSource)(nil)).Elem()
+}
+
+func (i BuildRunStatusBuildSpecSourceArgs) ToBuildRunStatusBuildSpecSourceOutput() BuildRunStatusBuildSpecSourceOutput {
+	return i.ToBuildRunStatusBuildSpecSourceOutputWithContext(context.Background())
+}
+
+func (i BuildRunStatusBuildSpecSourceArgs) ToBuildRunStatusBuildSpecSourceOutputWithContext(ctx context.Context) BuildRunStatusBuildSpecSourceOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BuildRunStatusBuildSpecSourceOutput)
+}
+
+func (i BuildRunStatusBuildSpecSourceArgs) ToBuildRunStatusBuildSpecSourcePtrOutput() BuildRunStatusBuildSpecSourcePtrOutput {
+	return i.ToBuildRunStatusBuildSpecSourcePtrOutputWithContext(context.Background())
+}
+
+func (i BuildRunStatusBuildSpecSourceArgs) ToBuildRunStatusBuildSpecSourcePtrOutputWithContext(ctx context.Context) BuildRunStatusBuildSpecSourcePtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BuildRunStatusBuildSpecSourceOutput).ToBuildRunStatusBuildSpecSourcePtrOutputWithContext(ctx)
+}
+
+// BuildRunStatusBuildSpecSourcePtrInput is an input type that accepts BuildRunStatusBuildSpecSourceArgs, BuildRunStatusBuildSpecSourcePtr and BuildRunStatusBuildSpecSourcePtrOutput values.
+// You can construct a concrete instance of `BuildRunStatusBuildSpecSourcePtrInput` via:
+//
+//          BuildRunStatusBuildSpecSourceArgs{...}
+//
+//  or:
+//
+//          nil
+type BuildRunStatusBuildSpecSourcePtrInput interface {
+	pulumi.Input
+
+	ToBuildRunStatusBuildSpecSourcePtrOutput() BuildRunStatusBuildSpecSourcePtrOutput
+	ToBuildRunStatusBuildSpecSourcePtrOutputWithContext(context.Context) BuildRunStatusBuildSpecSourcePtrOutput
+}
+
+type buildRunStatusBuildSpecSourcePtrType BuildRunStatusBuildSpecSourceArgs
+
+func BuildRunStatusBuildSpecSourcePtr(v *BuildRunStatusBuildSpecSourceArgs) BuildRunStatusBuildSpecSourcePtrInput {
+	return (*buildRunStatusBuildSpecSourcePtrType)(v)
+}
+
+func (*buildRunStatusBuildSpecSourcePtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**BuildRunStatusBuildSpecSource)(nil)).Elem()
+}
+
+func (i *buildRunStatusBuildSpecSourcePtrType) ToBuildRunStatusBuildSpecSourcePtrOutput() BuildRunStatusBuildSpecSourcePtrOutput {
+	return i.ToBuildRunStatusBuildSpecSourcePtrOutputWithContext(context.Background())
+}
+
+func (i *buildRunStatusBuildSpecSourcePtrType) ToBuildRunStatusBuildSpecSourcePtrOutputWithContext(ctx context.Context) BuildRunStatusBuildSpecSourcePtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BuildRunStatusBuildSpecSourcePtrOutput)
+}
+
+// Source refers to the Git repository containing the source code to be built.
+type BuildRunStatusBuildSpecSourceOutput struct{ *pulumi.OutputState }
+
+func (BuildRunStatusBuildSpecSourceOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*BuildRunStatusBuildSpecSource)(nil)).Elem()
+}
+
+func (o BuildRunStatusBuildSpecSourceOutput) ToBuildRunStatusBuildSpecSourceOutput() BuildRunStatusBuildSpecSourceOutput {
+	return o
+}
+
+func (o BuildRunStatusBuildSpecSourceOutput) ToBuildRunStatusBuildSpecSourceOutputWithContext(ctx context.Context) BuildRunStatusBuildSpecSourceOutput {
+	return o
+}
+
+func (o BuildRunStatusBuildSpecSourceOutput) ToBuildRunStatusBuildSpecSourcePtrOutput() BuildRunStatusBuildSpecSourcePtrOutput {
+	return o.ToBuildRunStatusBuildSpecSourcePtrOutputWithContext(context.Background())
+}
+
+func (o BuildRunStatusBuildSpecSourceOutput) ToBuildRunStatusBuildSpecSourcePtrOutputWithContext(ctx context.Context) BuildRunStatusBuildSpecSourcePtrOutput {
+	return o.ApplyT(func(v BuildRunStatusBuildSpecSource) *BuildRunStatusBuildSpecSource {
+		return &v
+	}).(BuildRunStatusBuildSpecSourcePtrOutput)
+}
+
+// ContextDir is a path to subfolder in the repo. Optional.
+func (o BuildRunStatusBuildSpecSourceOutput) ContextDir() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v BuildRunStatusBuildSpecSource) *string { return v.ContextDir }).(pulumi.StringPtrOutput)
+}
+
+// SecretRef refers to the secret that contains credentials to access the git repo. Optional.
+func (o BuildRunStatusBuildSpecSourceOutput) Credentials() BuildRunStatusBuildSpecSourceCredentialsPtrOutput {
+	return o.ApplyT(func(v BuildRunStatusBuildSpecSource) *BuildRunStatusBuildSpecSourceCredentials { return v.Credentials }).(BuildRunStatusBuildSpecSourceCredentialsPtrOutput)
+}
+
+// Flavor of the git provider like github, gitlab, bitbucket, generic, etc. Optional.
+func (o BuildRunStatusBuildSpecSourceOutput) Flavor() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v BuildRunStatusBuildSpecSource) *string { return v.Flavor }).(pulumi.StringPtrOutput)
+}
+
+// HTTPProxy is optional.
+func (o BuildRunStatusBuildSpecSourceOutput) HttpProxy() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v BuildRunStatusBuildSpecSource) *string { return v.HttpProxy }).(pulumi.StringPtrOutput)
+}
+
+// HTTPSProxy is optional.
+func (o BuildRunStatusBuildSpecSourceOutput) HttpsProxy() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v BuildRunStatusBuildSpecSource) *string { return v.HttpsProxy }).(pulumi.StringPtrOutput)
+}
+
+// NoProxy can be used to specify domains for which no proxying should be performed. Optional.
+func (o BuildRunStatusBuildSpecSourceOutput) NoProxy() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v BuildRunStatusBuildSpecSource) *string { return v.NoProxy }).(pulumi.StringPtrOutput)
+}
+
+// Ref is a git reference. Optional. "master" is used by default.
+func (o BuildRunStatusBuildSpecSourceOutput) Revision() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v BuildRunStatusBuildSpecSource) *string { return v.Revision }).(pulumi.StringPtrOutput)
+}
+
+// URL of the git repo
+func (o BuildRunStatusBuildSpecSourceOutput) Url() pulumi.StringOutput {
+	return o.ApplyT(func(v BuildRunStatusBuildSpecSource) string { return v.Url }).(pulumi.StringOutput)
+}
+
+type BuildRunStatusBuildSpecSourcePtrOutput struct{ *pulumi.OutputState }
+
+func (BuildRunStatusBuildSpecSourcePtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**BuildRunStatusBuildSpecSource)(nil)).Elem()
+}
+
+func (o BuildRunStatusBuildSpecSourcePtrOutput) ToBuildRunStatusBuildSpecSourcePtrOutput() BuildRunStatusBuildSpecSourcePtrOutput {
+	return o
+}
+
+func (o BuildRunStatusBuildSpecSourcePtrOutput) ToBuildRunStatusBuildSpecSourcePtrOutputWithContext(ctx context.Context) BuildRunStatusBuildSpecSourcePtrOutput {
+	return o
+}
+
+func (o BuildRunStatusBuildSpecSourcePtrOutput) Elem() BuildRunStatusBuildSpecSourceOutput {
+	return o.ApplyT(func(v *BuildRunStatusBuildSpecSource) BuildRunStatusBuildSpecSource { return *v }).(BuildRunStatusBuildSpecSourceOutput)
+}
+
+// ContextDir is a path to subfolder in the repo. Optional.
+func (o BuildRunStatusBuildSpecSourcePtrOutput) ContextDir() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *BuildRunStatusBuildSpecSource) *string {
+		if v == nil {
+			return nil
+		}
+		return v.ContextDir
+	}).(pulumi.StringPtrOutput)
+}
+
+// SecretRef refers to the secret that contains credentials to access the git repo. Optional.
+func (o BuildRunStatusBuildSpecSourcePtrOutput) Credentials() BuildRunStatusBuildSpecSourceCredentialsPtrOutput {
+	return o.ApplyT(func(v *BuildRunStatusBuildSpecSource) *BuildRunStatusBuildSpecSourceCredentials {
+		if v == nil {
+			return nil
+		}
+		return v.Credentials
+	}).(BuildRunStatusBuildSpecSourceCredentialsPtrOutput)
+}
+
+// Flavor of the git provider like github, gitlab, bitbucket, generic, etc. Optional.
+func (o BuildRunStatusBuildSpecSourcePtrOutput) Flavor() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *BuildRunStatusBuildSpecSource) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Flavor
+	}).(pulumi.StringPtrOutput)
+}
+
+// HTTPProxy is optional.
+func (o BuildRunStatusBuildSpecSourcePtrOutput) HttpProxy() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *BuildRunStatusBuildSpecSource) *string {
+		if v == nil {
+			return nil
+		}
+		return v.HttpProxy
+	}).(pulumi.StringPtrOutput)
+}
+
+// HTTPSProxy is optional.
+func (o BuildRunStatusBuildSpecSourcePtrOutput) HttpsProxy() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *BuildRunStatusBuildSpecSource) *string {
+		if v == nil {
+			return nil
+		}
+		return v.HttpsProxy
+	}).(pulumi.StringPtrOutput)
+}
+
+// NoProxy can be used to specify domains for which no proxying should be performed. Optional.
+func (o BuildRunStatusBuildSpecSourcePtrOutput) NoProxy() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *BuildRunStatusBuildSpecSource) *string {
+		if v == nil {
+			return nil
+		}
+		return v.NoProxy
+	}).(pulumi.StringPtrOutput)
+}
+
+// Ref is a git reference. Optional. "master" is used by default.
+func (o BuildRunStatusBuildSpecSourcePtrOutput) Revision() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *BuildRunStatusBuildSpecSource) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Revision
+	}).(pulumi.StringPtrOutput)
+}
+
+// URL of the git repo
+func (o BuildRunStatusBuildSpecSourcePtrOutput) Url() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *BuildRunStatusBuildSpecSource) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.Url
+	}).(pulumi.StringPtrOutput)
+}
+
+// SecretRef refers to the secret that contains credentials to access the git repo. Optional.
+type BuildRunStatusBuildSpecSourceCredentials struct {
+	// Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+	Name *string `pulumi:"name"`
+}
+
+// BuildRunStatusBuildSpecSourceCredentialsInput is an input type that accepts BuildRunStatusBuildSpecSourceCredentialsArgs and BuildRunStatusBuildSpecSourceCredentialsOutput values.
+// You can construct a concrete instance of `BuildRunStatusBuildSpecSourceCredentialsInput` via:
+//
+//          BuildRunStatusBuildSpecSourceCredentialsArgs{...}
+type BuildRunStatusBuildSpecSourceCredentialsInput interface {
+	pulumi.Input
+
+	ToBuildRunStatusBuildSpecSourceCredentialsOutput() BuildRunStatusBuildSpecSourceCredentialsOutput
+	ToBuildRunStatusBuildSpecSourceCredentialsOutputWithContext(context.Context) BuildRunStatusBuildSpecSourceCredentialsOutput
+}
+
+// SecretRef refers to the secret that contains credentials to access the git repo. Optional.
+type BuildRunStatusBuildSpecSourceCredentialsArgs struct {
+	// Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+	Name pulumi.StringPtrInput `pulumi:"name"`
+}
+
+func (BuildRunStatusBuildSpecSourceCredentialsArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*BuildRunStatusBuildSpecSourceCredentials)(nil)).Elem()
+}
+
+func (i BuildRunStatusBuildSpecSourceCredentialsArgs) ToBuildRunStatusBuildSpecSourceCredentialsOutput() BuildRunStatusBuildSpecSourceCredentialsOutput {
+	return i.ToBuildRunStatusBuildSpecSourceCredentialsOutputWithContext(context.Background())
+}
+
+func (i BuildRunStatusBuildSpecSourceCredentialsArgs) ToBuildRunStatusBuildSpecSourceCredentialsOutputWithContext(ctx context.Context) BuildRunStatusBuildSpecSourceCredentialsOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BuildRunStatusBuildSpecSourceCredentialsOutput)
+}
+
+func (i BuildRunStatusBuildSpecSourceCredentialsArgs) ToBuildRunStatusBuildSpecSourceCredentialsPtrOutput() BuildRunStatusBuildSpecSourceCredentialsPtrOutput {
+	return i.ToBuildRunStatusBuildSpecSourceCredentialsPtrOutputWithContext(context.Background())
+}
+
+func (i BuildRunStatusBuildSpecSourceCredentialsArgs) ToBuildRunStatusBuildSpecSourceCredentialsPtrOutputWithContext(ctx context.Context) BuildRunStatusBuildSpecSourceCredentialsPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BuildRunStatusBuildSpecSourceCredentialsOutput).ToBuildRunStatusBuildSpecSourceCredentialsPtrOutputWithContext(ctx)
+}
+
+// BuildRunStatusBuildSpecSourceCredentialsPtrInput is an input type that accepts BuildRunStatusBuildSpecSourceCredentialsArgs, BuildRunStatusBuildSpecSourceCredentialsPtr and BuildRunStatusBuildSpecSourceCredentialsPtrOutput values.
+// You can construct a concrete instance of `BuildRunStatusBuildSpecSourceCredentialsPtrInput` via:
+//
+//          BuildRunStatusBuildSpecSourceCredentialsArgs{...}
+//
+//  or:
+//
+//          nil
+type BuildRunStatusBuildSpecSourceCredentialsPtrInput interface {
+	pulumi.Input
+
+	ToBuildRunStatusBuildSpecSourceCredentialsPtrOutput() BuildRunStatusBuildSpecSourceCredentialsPtrOutput
+	ToBuildRunStatusBuildSpecSourceCredentialsPtrOutputWithContext(context.Context) BuildRunStatusBuildSpecSourceCredentialsPtrOutput
+}
+
+type buildRunStatusBuildSpecSourceCredentialsPtrType BuildRunStatusBuildSpecSourceCredentialsArgs
+
+func BuildRunStatusBuildSpecSourceCredentialsPtr(v *BuildRunStatusBuildSpecSourceCredentialsArgs) BuildRunStatusBuildSpecSourceCredentialsPtrInput {
+	return (*buildRunStatusBuildSpecSourceCredentialsPtrType)(v)
+}
+
+func (*buildRunStatusBuildSpecSourceCredentialsPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**BuildRunStatusBuildSpecSourceCredentials)(nil)).Elem()
+}
+
+func (i *buildRunStatusBuildSpecSourceCredentialsPtrType) ToBuildRunStatusBuildSpecSourceCredentialsPtrOutput() BuildRunStatusBuildSpecSourceCredentialsPtrOutput {
+	return i.ToBuildRunStatusBuildSpecSourceCredentialsPtrOutputWithContext(context.Background())
+}
+
+func (i *buildRunStatusBuildSpecSourceCredentialsPtrType) ToBuildRunStatusBuildSpecSourceCredentialsPtrOutputWithContext(ctx context.Context) BuildRunStatusBuildSpecSourceCredentialsPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BuildRunStatusBuildSpecSourceCredentialsPtrOutput)
+}
+
+// SecretRef refers to the secret that contains credentials to access the git repo. Optional.
+type BuildRunStatusBuildSpecSourceCredentialsOutput struct{ *pulumi.OutputState }
+
+func (BuildRunStatusBuildSpecSourceCredentialsOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*BuildRunStatusBuildSpecSourceCredentials)(nil)).Elem()
+}
+
+func (o BuildRunStatusBuildSpecSourceCredentialsOutput) ToBuildRunStatusBuildSpecSourceCredentialsOutput() BuildRunStatusBuildSpecSourceCredentialsOutput {
+	return o
+}
+
+func (o BuildRunStatusBuildSpecSourceCredentialsOutput) ToBuildRunStatusBuildSpecSourceCredentialsOutputWithContext(ctx context.Context) BuildRunStatusBuildSpecSourceCredentialsOutput {
+	return o
+}
+
+func (o BuildRunStatusBuildSpecSourceCredentialsOutput) ToBuildRunStatusBuildSpecSourceCredentialsPtrOutput() BuildRunStatusBuildSpecSourceCredentialsPtrOutput {
+	return o.ToBuildRunStatusBuildSpecSourceCredentialsPtrOutputWithContext(context.Background())
+}
+
+func (o BuildRunStatusBuildSpecSourceCredentialsOutput) ToBuildRunStatusBuildSpecSourceCredentialsPtrOutputWithContext(ctx context.Context) BuildRunStatusBuildSpecSourceCredentialsPtrOutput {
+	return o.ApplyT(func(v BuildRunStatusBuildSpecSourceCredentials) *BuildRunStatusBuildSpecSourceCredentials {
+		return &v
+	}).(BuildRunStatusBuildSpecSourceCredentialsPtrOutput)
+}
+
+// Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+func (o BuildRunStatusBuildSpecSourceCredentialsOutput) Name() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v BuildRunStatusBuildSpecSourceCredentials) *string { return v.Name }).(pulumi.StringPtrOutput)
+}
+
+type BuildRunStatusBuildSpecSourceCredentialsPtrOutput struct{ *pulumi.OutputState }
+
+func (BuildRunStatusBuildSpecSourceCredentialsPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**BuildRunStatusBuildSpecSourceCredentials)(nil)).Elem()
+}
+
+func (o BuildRunStatusBuildSpecSourceCredentialsPtrOutput) ToBuildRunStatusBuildSpecSourceCredentialsPtrOutput() BuildRunStatusBuildSpecSourceCredentialsPtrOutput {
+	return o
+}
+
+func (o BuildRunStatusBuildSpecSourceCredentialsPtrOutput) ToBuildRunStatusBuildSpecSourceCredentialsPtrOutputWithContext(ctx context.Context) BuildRunStatusBuildSpecSourceCredentialsPtrOutput {
+	return o
+}
+
+func (o BuildRunStatusBuildSpecSourceCredentialsPtrOutput) Elem() BuildRunStatusBuildSpecSourceCredentialsOutput {
+	return o.ApplyT(func(v *BuildRunStatusBuildSpecSourceCredentials) BuildRunStatusBuildSpecSourceCredentials { return *v }).(BuildRunStatusBuildSpecSourceCredentialsOutput)
+}
+
+// Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+func (o BuildRunStatusBuildSpecSourceCredentialsPtrOutput) Name() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *BuildRunStatusBuildSpecSourceCredentials) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Name
+	}).(pulumi.StringPtrOutput)
+}
+
+// StrategyRef refers to the BuildStrategy to be used to build the container image. There are namespaced scope and cluster scope BuildStrategy
+type BuildRunStatusBuildSpecStrategy struct {
+	// API version of the referent
+	ApiVersion *string `pulumi:"apiVersion"`
+	// BuildStrategyKind indicates the kind of the buildstrategy, namespaced or cluster scoped.
+	Kind *string `pulumi:"kind"`
+	// Name of the referent; More info: http://kubernetes.io/docs/user-guide/identifiers#names
+	Name string `pulumi:"name"`
+}
+
+// BuildRunStatusBuildSpecStrategyInput is an input type that accepts BuildRunStatusBuildSpecStrategyArgs and BuildRunStatusBuildSpecStrategyOutput values.
+// You can construct a concrete instance of `BuildRunStatusBuildSpecStrategyInput` via:
+//
+//          BuildRunStatusBuildSpecStrategyArgs{...}
+type BuildRunStatusBuildSpecStrategyInput interface {
+	pulumi.Input
+
+	ToBuildRunStatusBuildSpecStrategyOutput() BuildRunStatusBuildSpecStrategyOutput
+	ToBuildRunStatusBuildSpecStrategyOutputWithContext(context.Context) BuildRunStatusBuildSpecStrategyOutput
+}
+
+// StrategyRef refers to the BuildStrategy to be used to build the container image. There are namespaced scope and cluster scope BuildStrategy
+type BuildRunStatusBuildSpecStrategyArgs struct {
+	// API version of the referent
+	ApiVersion pulumi.StringPtrInput `pulumi:"apiVersion"`
+	// BuildStrategyKind indicates the kind of the buildstrategy, namespaced or cluster scoped.
+	Kind pulumi.StringPtrInput `pulumi:"kind"`
+	// Name of the referent; More info: http://kubernetes.io/docs/user-guide/identifiers#names
+	Name pulumi.StringInput `pulumi:"name"`
+}
+
+func (BuildRunStatusBuildSpecStrategyArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*BuildRunStatusBuildSpecStrategy)(nil)).Elem()
+}
+
+func (i BuildRunStatusBuildSpecStrategyArgs) ToBuildRunStatusBuildSpecStrategyOutput() BuildRunStatusBuildSpecStrategyOutput {
+	return i.ToBuildRunStatusBuildSpecStrategyOutputWithContext(context.Background())
+}
+
+func (i BuildRunStatusBuildSpecStrategyArgs) ToBuildRunStatusBuildSpecStrategyOutputWithContext(ctx context.Context) BuildRunStatusBuildSpecStrategyOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BuildRunStatusBuildSpecStrategyOutput)
+}
+
+func (i BuildRunStatusBuildSpecStrategyArgs) ToBuildRunStatusBuildSpecStrategyPtrOutput() BuildRunStatusBuildSpecStrategyPtrOutput {
+	return i.ToBuildRunStatusBuildSpecStrategyPtrOutputWithContext(context.Background())
+}
+
+func (i BuildRunStatusBuildSpecStrategyArgs) ToBuildRunStatusBuildSpecStrategyPtrOutputWithContext(ctx context.Context) BuildRunStatusBuildSpecStrategyPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BuildRunStatusBuildSpecStrategyOutput).ToBuildRunStatusBuildSpecStrategyPtrOutputWithContext(ctx)
+}
+
+// BuildRunStatusBuildSpecStrategyPtrInput is an input type that accepts BuildRunStatusBuildSpecStrategyArgs, BuildRunStatusBuildSpecStrategyPtr and BuildRunStatusBuildSpecStrategyPtrOutput values.
+// You can construct a concrete instance of `BuildRunStatusBuildSpecStrategyPtrInput` via:
+//
+//          BuildRunStatusBuildSpecStrategyArgs{...}
+//
+//  or:
+//
+//          nil
+type BuildRunStatusBuildSpecStrategyPtrInput interface {
+	pulumi.Input
+
+	ToBuildRunStatusBuildSpecStrategyPtrOutput() BuildRunStatusBuildSpecStrategyPtrOutput
+	ToBuildRunStatusBuildSpecStrategyPtrOutputWithContext(context.Context) BuildRunStatusBuildSpecStrategyPtrOutput
+}
+
+type buildRunStatusBuildSpecStrategyPtrType BuildRunStatusBuildSpecStrategyArgs
+
+func BuildRunStatusBuildSpecStrategyPtr(v *BuildRunStatusBuildSpecStrategyArgs) BuildRunStatusBuildSpecStrategyPtrInput {
+	return (*buildRunStatusBuildSpecStrategyPtrType)(v)
+}
+
+func (*buildRunStatusBuildSpecStrategyPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**BuildRunStatusBuildSpecStrategy)(nil)).Elem()
+}
+
+func (i *buildRunStatusBuildSpecStrategyPtrType) ToBuildRunStatusBuildSpecStrategyPtrOutput() BuildRunStatusBuildSpecStrategyPtrOutput {
+	return i.ToBuildRunStatusBuildSpecStrategyPtrOutputWithContext(context.Background())
+}
+
+func (i *buildRunStatusBuildSpecStrategyPtrType) ToBuildRunStatusBuildSpecStrategyPtrOutputWithContext(ctx context.Context) BuildRunStatusBuildSpecStrategyPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BuildRunStatusBuildSpecStrategyPtrOutput)
+}
+
+// StrategyRef refers to the BuildStrategy to be used to build the container image. There are namespaced scope and cluster scope BuildStrategy
+type BuildRunStatusBuildSpecStrategyOutput struct{ *pulumi.OutputState }
+
+func (BuildRunStatusBuildSpecStrategyOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*BuildRunStatusBuildSpecStrategy)(nil)).Elem()
+}
+
+func (o BuildRunStatusBuildSpecStrategyOutput) ToBuildRunStatusBuildSpecStrategyOutput() BuildRunStatusBuildSpecStrategyOutput {
+	return o
+}
+
+func (o BuildRunStatusBuildSpecStrategyOutput) ToBuildRunStatusBuildSpecStrategyOutputWithContext(ctx context.Context) BuildRunStatusBuildSpecStrategyOutput {
+	return o
+}
+
+func (o BuildRunStatusBuildSpecStrategyOutput) ToBuildRunStatusBuildSpecStrategyPtrOutput() BuildRunStatusBuildSpecStrategyPtrOutput {
+	return o.ToBuildRunStatusBuildSpecStrategyPtrOutputWithContext(context.Background())
+}
+
+func (o BuildRunStatusBuildSpecStrategyOutput) ToBuildRunStatusBuildSpecStrategyPtrOutputWithContext(ctx context.Context) BuildRunStatusBuildSpecStrategyPtrOutput {
+	return o.ApplyT(func(v BuildRunStatusBuildSpecStrategy) *BuildRunStatusBuildSpecStrategy {
+		return &v
+	}).(BuildRunStatusBuildSpecStrategyPtrOutput)
+}
+
+// API version of the referent
+func (o BuildRunStatusBuildSpecStrategyOutput) ApiVersion() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v BuildRunStatusBuildSpecStrategy) *string { return v.ApiVersion }).(pulumi.StringPtrOutput)
+}
+
+// BuildStrategyKind indicates the kind of the buildstrategy, namespaced or cluster scoped.
+func (o BuildRunStatusBuildSpecStrategyOutput) Kind() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v BuildRunStatusBuildSpecStrategy) *string { return v.Kind }).(pulumi.StringPtrOutput)
+}
+
+// Name of the referent; More info: http://kubernetes.io/docs/user-guide/identifiers#names
+func (o BuildRunStatusBuildSpecStrategyOutput) Name() pulumi.StringOutput {
+	return o.ApplyT(func(v BuildRunStatusBuildSpecStrategy) string { return v.Name }).(pulumi.StringOutput)
+}
+
+type BuildRunStatusBuildSpecStrategyPtrOutput struct{ *pulumi.OutputState }
+
+func (BuildRunStatusBuildSpecStrategyPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**BuildRunStatusBuildSpecStrategy)(nil)).Elem()
+}
+
+func (o BuildRunStatusBuildSpecStrategyPtrOutput) ToBuildRunStatusBuildSpecStrategyPtrOutput() BuildRunStatusBuildSpecStrategyPtrOutput {
+	return o
+}
+
+func (o BuildRunStatusBuildSpecStrategyPtrOutput) ToBuildRunStatusBuildSpecStrategyPtrOutputWithContext(ctx context.Context) BuildRunStatusBuildSpecStrategyPtrOutput {
+	return o
+}
+
+func (o BuildRunStatusBuildSpecStrategyPtrOutput) Elem() BuildRunStatusBuildSpecStrategyOutput {
+	return o.ApplyT(func(v *BuildRunStatusBuildSpecStrategy) BuildRunStatusBuildSpecStrategy { return *v }).(BuildRunStatusBuildSpecStrategyOutput)
+}
+
+// API version of the referent
+func (o BuildRunStatusBuildSpecStrategyPtrOutput) ApiVersion() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *BuildRunStatusBuildSpecStrategy) *string {
+		if v == nil {
+			return nil
+		}
+		return v.ApiVersion
+	}).(pulumi.StringPtrOutput)
+}
+
+// BuildStrategyKind indicates the kind of the buildstrategy, namespaced or cluster scoped.
+func (o BuildRunStatusBuildSpecStrategyPtrOutput) Kind() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *BuildRunStatusBuildSpecStrategy) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Kind
+	}).(pulumi.StringPtrOutput)
+}
+
+// Name of the referent; More info: http://kubernetes.io/docs/user-guide/identifiers#names
+func (o BuildRunStatusBuildSpecStrategyPtrOutput) Name() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *BuildRunStatusBuildSpecStrategy) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.Name
+	}).(pulumi.StringPtrOutput)
+}
+
 // BuildSpec defines the desired state of Build
 type BuildSpec struct {
 	// BuilderImage refers to the image containing the build tools inside which the source code would be built.
@@ -1051,12 +3608,14 @@ type BuildSpec struct {
 	Output BuildSpecOutput `pulumi:"output"`
 	// Parameters contains name-value that could be used to loosely type parameters in the BuildStrategy.
 	Parameters []BuildSpecParameters `pulumi:"parameters"`
-	// Compute Resources required by the build container. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-	Resources *BuildSpecResources `pulumi:"resources"`
+	// Runtime represents the runtime-image
+	Runtime *BuildSpecRuntime `pulumi:"runtime"`
 	// Source refers to the Git repository containing the source code to be built.
 	Source BuildSpecSource `pulumi:"source"`
 	// StrategyRef refers to the BuildStrategy to be used to build the container image. There are namespaced scope and cluster scope BuildStrategy
 	Strategy BuildSpecStrategy `pulumi:"strategy"`
+	// Timeout defines the maximum run time of a build run.
+	Timeout *string `pulumi:"timeout"`
 }
 
 // BuildSpecInput is an input type that accepts BuildSpecArgs and BuildSpecOutput values.
@@ -1080,12 +3639,14 @@ type BuildSpecArgs struct {
 	Output BuildSpecOutputInput `pulumi:"output"`
 	// Parameters contains name-value that could be used to loosely type parameters in the BuildStrategy.
 	Parameters BuildSpecParametersArrayInput `pulumi:"parameters"`
-	// Compute Resources required by the build container. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-	Resources BuildSpecResourcesPtrInput `pulumi:"resources"`
+	// Runtime represents the runtime-image
+	Runtime BuildSpecRuntimePtrInput `pulumi:"runtime"`
 	// Source refers to the Git repository containing the source code to be built.
 	Source BuildSpecSourceInput `pulumi:"source"`
 	// StrategyRef refers to the BuildStrategy to be used to build the container image. There are namespaced scope and cluster scope BuildStrategy
 	Strategy BuildSpecStrategyInput `pulumi:"strategy"`
+	// Timeout defines the maximum run time of a build run.
+	Timeout pulumi.StringPtrInput `pulumi:"timeout"`
 }
 
 func (BuildSpecArgs) ElementType() reflect.Type {
@@ -1186,9 +3747,9 @@ func (o BuildSpecOutput) Parameters() BuildSpecParametersArrayOutput {
 	return o.ApplyT(func(v BuildSpec) []BuildSpecParameters { return v.Parameters }).(BuildSpecParametersArrayOutput)
 }
 
-// Compute Resources required by the build container. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-func (o BuildSpecOutput) Resources() BuildSpecResourcesPtrOutput {
-	return o.ApplyT(func(v BuildSpec) *BuildSpecResources { return v.Resources }).(BuildSpecResourcesPtrOutput)
+// Runtime represents the runtime-image
+func (o BuildSpecOutput) Runtime() BuildSpecRuntimePtrOutput {
+	return o.ApplyT(func(v BuildSpec) *BuildSpecRuntime { return v.Runtime }).(BuildSpecRuntimePtrOutput)
 }
 
 // Source refers to the Git repository containing the source code to be built.
@@ -1199,6 +3760,11 @@ func (o BuildSpecOutput) Source() BuildSpecSourceOutput {
 // StrategyRef refers to the BuildStrategy to be used to build the container image. There are namespaced scope and cluster scope BuildStrategy
 func (o BuildSpecOutput) Strategy() BuildSpecStrategyOutput {
 	return o.ApplyT(func(v BuildSpec) BuildSpecStrategy { return v.Strategy }).(BuildSpecStrategyOutput)
+}
+
+// Timeout defines the maximum run time of a build run.
+func (o BuildSpecOutput) Timeout() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v BuildSpec) *string { return v.Timeout }).(pulumi.StringPtrOutput)
 }
 
 type BuildSpecPtrOutput struct{ *pulumi.OutputState }
@@ -1259,14 +3825,14 @@ func (o BuildSpecPtrOutput) Parameters() BuildSpecParametersArrayOutput {
 	}).(BuildSpecParametersArrayOutput)
 }
 
-// Compute Resources required by the build container. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-func (o BuildSpecPtrOutput) Resources() BuildSpecResourcesPtrOutput {
-	return o.ApplyT(func(v *BuildSpec) *BuildSpecResources {
+// Runtime represents the runtime-image
+func (o BuildSpecPtrOutput) Runtime() BuildSpecRuntimePtrOutput {
+	return o.ApplyT(func(v *BuildSpec) *BuildSpecRuntime {
 		if v == nil {
 			return nil
 		}
-		return v.Resources
-	}).(BuildSpecResourcesPtrOutput)
+		return v.Runtime
+	}).(BuildSpecRuntimePtrOutput)
 }
 
 // Source refers to the Git repository containing the source code to be built.
@@ -1287,6 +3853,16 @@ func (o BuildSpecPtrOutput) Strategy() BuildSpecStrategyPtrOutput {
 		}
 		return &v.Strategy
 	}).(BuildSpecStrategyPtrOutput)
+}
+
+// Timeout defines the maximum run time of a build run.
+func (o BuildSpecPtrOutput) Timeout() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *BuildSpec) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Timeout
+	}).(pulumi.StringPtrOutput)
 }
 
 // BuilderImage refers to the image containing the build tools inside which the source code would be built.
@@ -1966,249 +4542,803 @@ func (o BuildSpecParametersArrayOutput) Index(i pulumi.IntInput) BuildSpecParame
 	}).(BuildSpecParametersOutput)
 }
 
-// Compute Resources required by the build container. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-type BuildSpecResources struct {
-	// Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-	Limits map[string]string `pulumi:"limits"`
-	// Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-	Requests map[string]string `pulumi:"requests"`
+// Runtime represents the runtime-image
+type BuildSpecRuntime struct {
+	// Base runtime base image.
+	Base *BuildSpecRuntimeBase `pulumi:"base"`
+	// Entrypoint runtime-image entrypoint.
+	Entrypoint []string `pulumi:"entrypoint"`
+	// Env environment variables for runtime.
+	Env map[string]string `pulumi:"env"`
+	// Labels map of additional labels to be applied on image.
+	Labels map[string]string `pulumi:"labels"`
+	// Paths list of directories/files to be copied into runtime-image, using colon ":" to split up source and destination paths.
+	Paths []string `pulumi:"paths"`
+	// Run arbitrary commands to run before copying data into runtime-image.
+	Run []string `pulumi:"run"`
+	// User definitions of user and group for runtime-image.
+	User *BuildSpecRuntimeUser `pulumi:"user"`
+	// WorkDir runtime image working directory `WORKDIR`.
+	WorkDir *string `pulumi:"workDir"`
 }
 
-// BuildSpecResourcesInput is an input type that accepts BuildSpecResourcesArgs and BuildSpecResourcesOutput values.
-// You can construct a concrete instance of `BuildSpecResourcesInput` via:
+// BuildSpecRuntimeInput is an input type that accepts BuildSpecRuntimeArgs and BuildSpecRuntimeOutput values.
+// You can construct a concrete instance of `BuildSpecRuntimeInput` via:
 //
-//          BuildSpecResourcesArgs{...}
-type BuildSpecResourcesInput interface {
+//          BuildSpecRuntimeArgs{...}
+type BuildSpecRuntimeInput interface {
 	pulumi.Input
 
-	ToBuildSpecResourcesOutput() BuildSpecResourcesOutput
-	ToBuildSpecResourcesOutputWithContext(context.Context) BuildSpecResourcesOutput
+	ToBuildSpecRuntimeOutput() BuildSpecRuntimeOutput
+	ToBuildSpecRuntimeOutputWithContext(context.Context) BuildSpecRuntimeOutput
 }
 
-// Compute Resources required by the build container. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-type BuildSpecResourcesArgs struct {
-	// Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-	Limits pulumi.StringMapInput `pulumi:"limits"`
-	// Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-	Requests pulumi.StringMapInput `pulumi:"requests"`
+// Runtime represents the runtime-image
+type BuildSpecRuntimeArgs struct {
+	// Base runtime base image.
+	Base BuildSpecRuntimeBasePtrInput `pulumi:"base"`
+	// Entrypoint runtime-image entrypoint.
+	Entrypoint pulumi.StringArrayInput `pulumi:"entrypoint"`
+	// Env environment variables for runtime.
+	Env pulumi.StringMapInput `pulumi:"env"`
+	// Labels map of additional labels to be applied on image.
+	Labels pulumi.StringMapInput `pulumi:"labels"`
+	// Paths list of directories/files to be copied into runtime-image, using colon ":" to split up source and destination paths.
+	Paths pulumi.StringArrayInput `pulumi:"paths"`
+	// Run arbitrary commands to run before copying data into runtime-image.
+	Run pulumi.StringArrayInput `pulumi:"run"`
+	// User definitions of user and group for runtime-image.
+	User BuildSpecRuntimeUserPtrInput `pulumi:"user"`
+	// WorkDir runtime image working directory `WORKDIR`.
+	WorkDir pulumi.StringPtrInput `pulumi:"workDir"`
 }
 
-func (BuildSpecResourcesArgs) ElementType() reflect.Type {
-	return reflect.TypeOf((*BuildSpecResources)(nil)).Elem()
+func (BuildSpecRuntimeArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*BuildSpecRuntime)(nil)).Elem()
 }
 
-func (i BuildSpecResourcesArgs) ToBuildSpecResourcesOutput() BuildSpecResourcesOutput {
-	return i.ToBuildSpecResourcesOutputWithContext(context.Background())
+func (i BuildSpecRuntimeArgs) ToBuildSpecRuntimeOutput() BuildSpecRuntimeOutput {
+	return i.ToBuildSpecRuntimeOutputWithContext(context.Background())
 }
 
-func (i BuildSpecResourcesArgs) ToBuildSpecResourcesOutputWithContext(ctx context.Context) BuildSpecResourcesOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(BuildSpecResourcesOutput)
+func (i BuildSpecRuntimeArgs) ToBuildSpecRuntimeOutputWithContext(ctx context.Context) BuildSpecRuntimeOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BuildSpecRuntimeOutput)
 }
 
-func (i BuildSpecResourcesArgs) ToBuildSpecResourcesPtrOutput() BuildSpecResourcesPtrOutput {
-	return i.ToBuildSpecResourcesPtrOutputWithContext(context.Background())
+func (i BuildSpecRuntimeArgs) ToBuildSpecRuntimePtrOutput() BuildSpecRuntimePtrOutput {
+	return i.ToBuildSpecRuntimePtrOutputWithContext(context.Background())
 }
 
-func (i BuildSpecResourcesArgs) ToBuildSpecResourcesPtrOutputWithContext(ctx context.Context) BuildSpecResourcesPtrOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(BuildSpecResourcesOutput).ToBuildSpecResourcesPtrOutputWithContext(ctx)
+func (i BuildSpecRuntimeArgs) ToBuildSpecRuntimePtrOutputWithContext(ctx context.Context) BuildSpecRuntimePtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BuildSpecRuntimeOutput).ToBuildSpecRuntimePtrOutputWithContext(ctx)
 }
 
-// BuildSpecResourcesPtrInput is an input type that accepts BuildSpecResourcesArgs, BuildSpecResourcesPtr and BuildSpecResourcesPtrOutput values.
-// You can construct a concrete instance of `BuildSpecResourcesPtrInput` via:
+// BuildSpecRuntimePtrInput is an input type that accepts BuildSpecRuntimeArgs, BuildSpecRuntimePtr and BuildSpecRuntimePtrOutput values.
+// You can construct a concrete instance of `BuildSpecRuntimePtrInput` via:
 //
-//          BuildSpecResourcesArgs{...}
+//          BuildSpecRuntimeArgs{...}
 //
 //  or:
 //
 //          nil
-type BuildSpecResourcesPtrInput interface {
+type BuildSpecRuntimePtrInput interface {
 	pulumi.Input
 
-	ToBuildSpecResourcesPtrOutput() BuildSpecResourcesPtrOutput
-	ToBuildSpecResourcesPtrOutputWithContext(context.Context) BuildSpecResourcesPtrOutput
+	ToBuildSpecRuntimePtrOutput() BuildSpecRuntimePtrOutput
+	ToBuildSpecRuntimePtrOutputWithContext(context.Context) BuildSpecRuntimePtrOutput
 }
 
-type buildSpecResourcesPtrType BuildSpecResourcesArgs
+type buildSpecRuntimePtrType BuildSpecRuntimeArgs
 
-func BuildSpecResourcesPtr(v *BuildSpecResourcesArgs) BuildSpecResourcesPtrInput {
-	return (*buildSpecResourcesPtrType)(v)
+func BuildSpecRuntimePtr(v *BuildSpecRuntimeArgs) BuildSpecRuntimePtrInput {
+	return (*buildSpecRuntimePtrType)(v)
 }
 
-func (*buildSpecResourcesPtrType) ElementType() reflect.Type {
-	return reflect.TypeOf((**BuildSpecResources)(nil)).Elem()
+func (*buildSpecRuntimePtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**BuildSpecRuntime)(nil)).Elem()
 }
 
-func (i *buildSpecResourcesPtrType) ToBuildSpecResourcesPtrOutput() BuildSpecResourcesPtrOutput {
-	return i.ToBuildSpecResourcesPtrOutputWithContext(context.Background())
+func (i *buildSpecRuntimePtrType) ToBuildSpecRuntimePtrOutput() BuildSpecRuntimePtrOutput {
+	return i.ToBuildSpecRuntimePtrOutputWithContext(context.Background())
 }
 
-func (i *buildSpecResourcesPtrType) ToBuildSpecResourcesPtrOutputWithContext(ctx context.Context) BuildSpecResourcesPtrOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(BuildSpecResourcesPtrOutput)
+func (i *buildSpecRuntimePtrType) ToBuildSpecRuntimePtrOutputWithContext(ctx context.Context) BuildSpecRuntimePtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BuildSpecRuntimePtrOutput)
 }
 
-// Compute Resources required by the build container. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-type BuildSpecResourcesOutput struct{ *pulumi.OutputState }
+// Runtime represents the runtime-image
+type BuildSpecRuntimeOutput struct{ *pulumi.OutputState }
 
-func (BuildSpecResourcesOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*BuildSpecResources)(nil)).Elem()
+func (BuildSpecRuntimeOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*BuildSpecRuntime)(nil)).Elem()
 }
 
-func (o BuildSpecResourcesOutput) ToBuildSpecResourcesOutput() BuildSpecResourcesOutput {
+func (o BuildSpecRuntimeOutput) ToBuildSpecRuntimeOutput() BuildSpecRuntimeOutput {
 	return o
 }
 
-func (o BuildSpecResourcesOutput) ToBuildSpecResourcesOutputWithContext(ctx context.Context) BuildSpecResourcesOutput {
+func (o BuildSpecRuntimeOutput) ToBuildSpecRuntimeOutputWithContext(ctx context.Context) BuildSpecRuntimeOutput {
 	return o
 }
 
-func (o BuildSpecResourcesOutput) ToBuildSpecResourcesPtrOutput() BuildSpecResourcesPtrOutput {
-	return o.ToBuildSpecResourcesPtrOutputWithContext(context.Background())
+func (o BuildSpecRuntimeOutput) ToBuildSpecRuntimePtrOutput() BuildSpecRuntimePtrOutput {
+	return o.ToBuildSpecRuntimePtrOutputWithContext(context.Background())
 }
 
-func (o BuildSpecResourcesOutput) ToBuildSpecResourcesPtrOutputWithContext(ctx context.Context) BuildSpecResourcesPtrOutput {
-	return o.ApplyT(func(v BuildSpecResources) *BuildSpecResources {
+func (o BuildSpecRuntimeOutput) ToBuildSpecRuntimePtrOutputWithContext(ctx context.Context) BuildSpecRuntimePtrOutput {
+	return o.ApplyT(func(v BuildSpecRuntime) *BuildSpecRuntime {
 		return &v
-	}).(BuildSpecResourcesPtrOutput)
+	}).(BuildSpecRuntimePtrOutput)
 }
 
-// Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-func (o BuildSpecResourcesOutput) Limits() pulumi.StringMapOutput {
-	return o.ApplyT(func(v BuildSpecResources) map[string]string { return v.Limits }).(pulumi.StringMapOutput)
+// Base runtime base image.
+func (o BuildSpecRuntimeOutput) Base() BuildSpecRuntimeBasePtrOutput {
+	return o.ApplyT(func(v BuildSpecRuntime) *BuildSpecRuntimeBase { return v.Base }).(BuildSpecRuntimeBasePtrOutput)
 }
 
-// Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-func (o BuildSpecResourcesOutput) Requests() pulumi.StringMapOutput {
-	return o.ApplyT(func(v BuildSpecResources) map[string]string { return v.Requests }).(pulumi.StringMapOutput)
+// Entrypoint runtime-image entrypoint.
+func (o BuildSpecRuntimeOutput) Entrypoint() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v BuildSpecRuntime) []string { return v.Entrypoint }).(pulumi.StringArrayOutput)
 }
 
-type BuildSpecResourcesPtrOutput struct{ *pulumi.OutputState }
-
-func (BuildSpecResourcesPtrOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((**BuildSpecResources)(nil)).Elem()
+// Env environment variables for runtime.
+func (o BuildSpecRuntimeOutput) Env() pulumi.StringMapOutput {
+	return o.ApplyT(func(v BuildSpecRuntime) map[string]string { return v.Env }).(pulumi.StringMapOutput)
 }
 
-func (o BuildSpecResourcesPtrOutput) ToBuildSpecResourcesPtrOutput() BuildSpecResourcesPtrOutput {
+// Labels map of additional labels to be applied on image.
+func (o BuildSpecRuntimeOutput) Labels() pulumi.StringMapOutput {
+	return o.ApplyT(func(v BuildSpecRuntime) map[string]string { return v.Labels }).(pulumi.StringMapOutput)
+}
+
+// Paths list of directories/files to be copied into runtime-image, using colon ":" to split up source and destination paths.
+func (o BuildSpecRuntimeOutput) Paths() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v BuildSpecRuntime) []string { return v.Paths }).(pulumi.StringArrayOutput)
+}
+
+// Run arbitrary commands to run before copying data into runtime-image.
+func (o BuildSpecRuntimeOutput) Run() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v BuildSpecRuntime) []string { return v.Run }).(pulumi.StringArrayOutput)
+}
+
+// User definitions of user and group for runtime-image.
+func (o BuildSpecRuntimeOutput) User() BuildSpecRuntimeUserPtrOutput {
+	return o.ApplyT(func(v BuildSpecRuntime) *BuildSpecRuntimeUser { return v.User }).(BuildSpecRuntimeUserPtrOutput)
+}
+
+// WorkDir runtime image working directory `WORKDIR`.
+func (o BuildSpecRuntimeOutput) WorkDir() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v BuildSpecRuntime) *string { return v.WorkDir }).(pulumi.StringPtrOutput)
+}
+
+type BuildSpecRuntimePtrOutput struct{ *pulumi.OutputState }
+
+func (BuildSpecRuntimePtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**BuildSpecRuntime)(nil)).Elem()
+}
+
+func (o BuildSpecRuntimePtrOutput) ToBuildSpecRuntimePtrOutput() BuildSpecRuntimePtrOutput {
 	return o
 }
 
-func (o BuildSpecResourcesPtrOutput) ToBuildSpecResourcesPtrOutputWithContext(ctx context.Context) BuildSpecResourcesPtrOutput {
+func (o BuildSpecRuntimePtrOutput) ToBuildSpecRuntimePtrOutputWithContext(ctx context.Context) BuildSpecRuntimePtrOutput {
 	return o
 }
 
-func (o BuildSpecResourcesPtrOutput) Elem() BuildSpecResourcesOutput {
-	return o.ApplyT(func(v *BuildSpecResources) BuildSpecResources { return *v }).(BuildSpecResourcesOutput)
+func (o BuildSpecRuntimePtrOutput) Elem() BuildSpecRuntimeOutput {
+	return o.ApplyT(func(v *BuildSpecRuntime) BuildSpecRuntime { return *v }).(BuildSpecRuntimeOutput)
 }
 
-// Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-func (o BuildSpecResourcesPtrOutput) Limits() pulumi.StringMapOutput {
-	return o.ApplyT(func(v *BuildSpecResources) map[string]string {
+// Base runtime base image.
+func (o BuildSpecRuntimePtrOutput) Base() BuildSpecRuntimeBasePtrOutput {
+	return o.ApplyT(func(v *BuildSpecRuntime) *BuildSpecRuntimeBase {
 		if v == nil {
 			return nil
 		}
-		return v.Limits
-	}).(pulumi.StringMapOutput)
+		return v.Base
+	}).(BuildSpecRuntimeBasePtrOutput)
 }
 
-// Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-func (o BuildSpecResourcesPtrOutput) Requests() pulumi.StringMapOutput {
-	return o.ApplyT(func(v *BuildSpecResources) map[string]string {
+// Entrypoint runtime-image entrypoint.
+func (o BuildSpecRuntimePtrOutput) Entrypoint() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v *BuildSpecRuntime) []string {
 		if v == nil {
 			return nil
 		}
-		return v.Requests
+		return v.Entrypoint
+	}).(pulumi.StringArrayOutput)
+}
+
+// Env environment variables for runtime.
+func (o BuildSpecRuntimePtrOutput) Env() pulumi.StringMapOutput {
+	return o.ApplyT(func(v *BuildSpecRuntime) map[string]string {
+		if v == nil {
+			return nil
+		}
+		return v.Env
 	}).(pulumi.StringMapOutput)
 }
 
-// Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-type BuildSpecResourcesLimits struct {
+// Labels map of additional labels to be applied on image.
+func (o BuildSpecRuntimePtrOutput) Labels() pulumi.StringMapOutput {
+	return o.ApplyT(func(v *BuildSpecRuntime) map[string]string {
+		if v == nil {
+			return nil
+		}
+		return v.Labels
+	}).(pulumi.StringMapOutput)
 }
 
-// BuildSpecResourcesLimitsInput is an input type that accepts BuildSpecResourcesLimitsArgs and BuildSpecResourcesLimitsOutput values.
-// You can construct a concrete instance of `BuildSpecResourcesLimitsInput` via:
+// Paths list of directories/files to be copied into runtime-image, using colon ":" to split up source and destination paths.
+func (o BuildSpecRuntimePtrOutput) Paths() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v *BuildSpecRuntime) []string {
+		if v == nil {
+			return nil
+		}
+		return v.Paths
+	}).(pulumi.StringArrayOutput)
+}
+
+// Run arbitrary commands to run before copying data into runtime-image.
+func (o BuildSpecRuntimePtrOutput) Run() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v *BuildSpecRuntime) []string {
+		if v == nil {
+			return nil
+		}
+		return v.Run
+	}).(pulumi.StringArrayOutput)
+}
+
+// User definitions of user and group for runtime-image.
+func (o BuildSpecRuntimePtrOutput) User() BuildSpecRuntimeUserPtrOutput {
+	return o.ApplyT(func(v *BuildSpecRuntime) *BuildSpecRuntimeUser {
+		if v == nil {
+			return nil
+		}
+		return v.User
+	}).(BuildSpecRuntimeUserPtrOutput)
+}
+
+// WorkDir runtime image working directory `WORKDIR`.
+func (o BuildSpecRuntimePtrOutput) WorkDir() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *BuildSpecRuntime) *string {
+		if v == nil {
+			return nil
+		}
+		return v.WorkDir
+	}).(pulumi.StringPtrOutput)
+}
+
+// Base runtime base image.
+type BuildSpecRuntimeBase struct {
+	// SecretRef is a reference to the Secret containing the credentials to push the image to the registry
+	Credentials *BuildSpecRuntimeBaseCredentials `pulumi:"credentials"`
+	// ImageURL is the URL where the image will be pushed to.
+	Image string `pulumi:"image"`
+}
+
+// BuildSpecRuntimeBaseInput is an input type that accepts BuildSpecRuntimeBaseArgs and BuildSpecRuntimeBaseOutput values.
+// You can construct a concrete instance of `BuildSpecRuntimeBaseInput` via:
 //
-//          BuildSpecResourcesLimitsArgs{...}
-type BuildSpecResourcesLimitsInput interface {
+//          BuildSpecRuntimeBaseArgs{...}
+type BuildSpecRuntimeBaseInput interface {
 	pulumi.Input
 
-	ToBuildSpecResourcesLimitsOutput() BuildSpecResourcesLimitsOutput
-	ToBuildSpecResourcesLimitsOutputWithContext(context.Context) BuildSpecResourcesLimitsOutput
+	ToBuildSpecRuntimeBaseOutput() BuildSpecRuntimeBaseOutput
+	ToBuildSpecRuntimeBaseOutputWithContext(context.Context) BuildSpecRuntimeBaseOutput
 }
 
-// Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-type BuildSpecResourcesLimitsArgs struct {
+// Base runtime base image.
+type BuildSpecRuntimeBaseArgs struct {
+	// SecretRef is a reference to the Secret containing the credentials to push the image to the registry
+	Credentials BuildSpecRuntimeBaseCredentialsPtrInput `pulumi:"credentials"`
+	// ImageURL is the URL where the image will be pushed to.
+	Image pulumi.StringInput `pulumi:"image"`
 }
 
-func (BuildSpecResourcesLimitsArgs) ElementType() reflect.Type {
-	return reflect.TypeOf((*BuildSpecResourcesLimits)(nil)).Elem()
+func (BuildSpecRuntimeBaseArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*BuildSpecRuntimeBase)(nil)).Elem()
 }
 
-func (i BuildSpecResourcesLimitsArgs) ToBuildSpecResourcesLimitsOutput() BuildSpecResourcesLimitsOutput {
-	return i.ToBuildSpecResourcesLimitsOutputWithContext(context.Background())
+func (i BuildSpecRuntimeBaseArgs) ToBuildSpecRuntimeBaseOutput() BuildSpecRuntimeBaseOutput {
+	return i.ToBuildSpecRuntimeBaseOutputWithContext(context.Background())
 }
 
-func (i BuildSpecResourcesLimitsArgs) ToBuildSpecResourcesLimitsOutputWithContext(ctx context.Context) BuildSpecResourcesLimitsOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(BuildSpecResourcesLimitsOutput)
+func (i BuildSpecRuntimeBaseArgs) ToBuildSpecRuntimeBaseOutputWithContext(ctx context.Context) BuildSpecRuntimeBaseOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BuildSpecRuntimeBaseOutput)
 }
 
-// Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-type BuildSpecResourcesLimitsOutput struct{ *pulumi.OutputState }
-
-func (BuildSpecResourcesLimitsOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*BuildSpecResourcesLimits)(nil)).Elem()
+func (i BuildSpecRuntimeBaseArgs) ToBuildSpecRuntimeBasePtrOutput() BuildSpecRuntimeBasePtrOutput {
+	return i.ToBuildSpecRuntimeBasePtrOutputWithContext(context.Background())
 }
 
-func (o BuildSpecResourcesLimitsOutput) ToBuildSpecResourcesLimitsOutput() BuildSpecResourcesLimitsOutput {
-	return o
+func (i BuildSpecRuntimeBaseArgs) ToBuildSpecRuntimeBasePtrOutputWithContext(ctx context.Context) BuildSpecRuntimeBasePtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BuildSpecRuntimeBaseOutput).ToBuildSpecRuntimeBasePtrOutputWithContext(ctx)
 }
 
-func (o BuildSpecResourcesLimitsOutput) ToBuildSpecResourcesLimitsOutputWithContext(ctx context.Context) BuildSpecResourcesLimitsOutput {
-	return o
-}
-
-// Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-type BuildSpecResourcesRequests struct {
-}
-
-// BuildSpecResourcesRequestsInput is an input type that accepts BuildSpecResourcesRequestsArgs and BuildSpecResourcesRequestsOutput values.
-// You can construct a concrete instance of `BuildSpecResourcesRequestsInput` via:
+// BuildSpecRuntimeBasePtrInput is an input type that accepts BuildSpecRuntimeBaseArgs, BuildSpecRuntimeBasePtr and BuildSpecRuntimeBasePtrOutput values.
+// You can construct a concrete instance of `BuildSpecRuntimeBasePtrInput` via:
 //
-//          BuildSpecResourcesRequestsArgs{...}
-type BuildSpecResourcesRequestsInput interface {
+//          BuildSpecRuntimeBaseArgs{...}
+//
+//  or:
+//
+//          nil
+type BuildSpecRuntimeBasePtrInput interface {
 	pulumi.Input
 
-	ToBuildSpecResourcesRequestsOutput() BuildSpecResourcesRequestsOutput
-	ToBuildSpecResourcesRequestsOutputWithContext(context.Context) BuildSpecResourcesRequestsOutput
+	ToBuildSpecRuntimeBasePtrOutput() BuildSpecRuntimeBasePtrOutput
+	ToBuildSpecRuntimeBasePtrOutputWithContext(context.Context) BuildSpecRuntimeBasePtrOutput
 }
 
-// Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-type BuildSpecResourcesRequestsArgs struct {
+type buildSpecRuntimeBasePtrType BuildSpecRuntimeBaseArgs
+
+func BuildSpecRuntimeBasePtr(v *BuildSpecRuntimeBaseArgs) BuildSpecRuntimeBasePtrInput {
+	return (*buildSpecRuntimeBasePtrType)(v)
 }
 
-func (BuildSpecResourcesRequestsArgs) ElementType() reflect.Type {
-	return reflect.TypeOf((*BuildSpecResourcesRequests)(nil)).Elem()
+func (*buildSpecRuntimeBasePtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**BuildSpecRuntimeBase)(nil)).Elem()
 }
 
-func (i BuildSpecResourcesRequestsArgs) ToBuildSpecResourcesRequestsOutput() BuildSpecResourcesRequestsOutput {
-	return i.ToBuildSpecResourcesRequestsOutputWithContext(context.Background())
+func (i *buildSpecRuntimeBasePtrType) ToBuildSpecRuntimeBasePtrOutput() BuildSpecRuntimeBasePtrOutput {
+	return i.ToBuildSpecRuntimeBasePtrOutputWithContext(context.Background())
 }
 
-func (i BuildSpecResourcesRequestsArgs) ToBuildSpecResourcesRequestsOutputWithContext(ctx context.Context) BuildSpecResourcesRequestsOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(BuildSpecResourcesRequestsOutput)
+func (i *buildSpecRuntimeBasePtrType) ToBuildSpecRuntimeBasePtrOutputWithContext(ctx context.Context) BuildSpecRuntimeBasePtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BuildSpecRuntimeBasePtrOutput)
 }
 
-// Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-type BuildSpecResourcesRequestsOutput struct{ *pulumi.OutputState }
+// Base runtime base image.
+type BuildSpecRuntimeBaseOutput struct{ *pulumi.OutputState }
 
-func (BuildSpecResourcesRequestsOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*BuildSpecResourcesRequests)(nil)).Elem()
+func (BuildSpecRuntimeBaseOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*BuildSpecRuntimeBase)(nil)).Elem()
 }
 
-func (o BuildSpecResourcesRequestsOutput) ToBuildSpecResourcesRequestsOutput() BuildSpecResourcesRequestsOutput {
+func (o BuildSpecRuntimeBaseOutput) ToBuildSpecRuntimeBaseOutput() BuildSpecRuntimeBaseOutput {
 	return o
 }
 
-func (o BuildSpecResourcesRequestsOutput) ToBuildSpecResourcesRequestsOutputWithContext(ctx context.Context) BuildSpecResourcesRequestsOutput {
+func (o BuildSpecRuntimeBaseOutput) ToBuildSpecRuntimeBaseOutputWithContext(ctx context.Context) BuildSpecRuntimeBaseOutput {
 	return o
+}
+
+func (o BuildSpecRuntimeBaseOutput) ToBuildSpecRuntimeBasePtrOutput() BuildSpecRuntimeBasePtrOutput {
+	return o.ToBuildSpecRuntimeBasePtrOutputWithContext(context.Background())
+}
+
+func (o BuildSpecRuntimeBaseOutput) ToBuildSpecRuntimeBasePtrOutputWithContext(ctx context.Context) BuildSpecRuntimeBasePtrOutput {
+	return o.ApplyT(func(v BuildSpecRuntimeBase) *BuildSpecRuntimeBase {
+		return &v
+	}).(BuildSpecRuntimeBasePtrOutput)
+}
+
+// SecretRef is a reference to the Secret containing the credentials to push the image to the registry
+func (o BuildSpecRuntimeBaseOutput) Credentials() BuildSpecRuntimeBaseCredentialsPtrOutput {
+	return o.ApplyT(func(v BuildSpecRuntimeBase) *BuildSpecRuntimeBaseCredentials { return v.Credentials }).(BuildSpecRuntimeBaseCredentialsPtrOutput)
+}
+
+// ImageURL is the URL where the image will be pushed to.
+func (o BuildSpecRuntimeBaseOutput) Image() pulumi.StringOutput {
+	return o.ApplyT(func(v BuildSpecRuntimeBase) string { return v.Image }).(pulumi.StringOutput)
+}
+
+type BuildSpecRuntimeBasePtrOutput struct{ *pulumi.OutputState }
+
+func (BuildSpecRuntimeBasePtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**BuildSpecRuntimeBase)(nil)).Elem()
+}
+
+func (o BuildSpecRuntimeBasePtrOutput) ToBuildSpecRuntimeBasePtrOutput() BuildSpecRuntimeBasePtrOutput {
+	return o
+}
+
+func (o BuildSpecRuntimeBasePtrOutput) ToBuildSpecRuntimeBasePtrOutputWithContext(ctx context.Context) BuildSpecRuntimeBasePtrOutput {
+	return o
+}
+
+func (o BuildSpecRuntimeBasePtrOutput) Elem() BuildSpecRuntimeBaseOutput {
+	return o.ApplyT(func(v *BuildSpecRuntimeBase) BuildSpecRuntimeBase { return *v }).(BuildSpecRuntimeBaseOutput)
+}
+
+// SecretRef is a reference to the Secret containing the credentials to push the image to the registry
+func (o BuildSpecRuntimeBasePtrOutput) Credentials() BuildSpecRuntimeBaseCredentialsPtrOutput {
+	return o.ApplyT(func(v *BuildSpecRuntimeBase) *BuildSpecRuntimeBaseCredentials {
+		if v == nil {
+			return nil
+		}
+		return v.Credentials
+	}).(BuildSpecRuntimeBaseCredentialsPtrOutput)
+}
+
+// ImageURL is the URL where the image will be pushed to.
+func (o BuildSpecRuntimeBasePtrOutput) Image() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *BuildSpecRuntimeBase) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.Image
+	}).(pulumi.StringPtrOutput)
+}
+
+// SecretRef is a reference to the Secret containing the credentials to push the image to the registry
+type BuildSpecRuntimeBaseCredentials struct {
+	// Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+	Name *string `pulumi:"name"`
+}
+
+// BuildSpecRuntimeBaseCredentialsInput is an input type that accepts BuildSpecRuntimeBaseCredentialsArgs and BuildSpecRuntimeBaseCredentialsOutput values.
+// You can construct a concrete instance of `BuildSpecRuntimeBaseCredentialsInput` via:
+//
+//          BuildSpecRuntimeBaseCredentialsArgs{...}
+type BuildSpecRuntimeBaseCredentialsInput interface {
+	pulumi.Input
+
+	ToBuildSpecRuntimeBaseCredentialsOutput() BuildSpecRuntimeBaseCredentialsOutput
+	ToBuildSpecRuntimeBaseCredentialsOutputWithContext(context.Context) BuildSpecRuntimeBaseCredentialsOutput
+}
+
+// SecretRef is a reference to the Secret containing the credentials to push the image to the registry
+type BuildSpecRuntimeBaseCredentialsArgs struct {
+	// Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+	Name pulumi.StringPtrInput `pulumi:"name"`
+}
+
+func (BuildSpecRuntimeBaseCredentialsArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*BuildSpecRuntimeBaseCredentials)(nil)).Elem()
+}
+
+func (i BuildSpecRuntimeBaseCredentialsArgs) ToBuildSpecRuntimeBaseCredentialsOutput() BuildSpecRuntimeBaseCredentialsOutput {
+	return i.ToBuildSpecRuntimeBaseCredentialsOutputWithContext(context.Background())
+}
+
+func (i BuildSpecRuntimeBaseCredentialsArgs) ToBuildSpecRuntimeBaseCredentialsOutputWithContext(ctx context.Context) BuildSpecRuntimeBaseCredentialsOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BuildSpecRuntimeBaseCredentialsOutput)
+}
+
+func (i BuildSpecRuntimeBaseCredentialsArgs) ToBuildSpecRuntimeBaseCredentialsPtrOutput() BuildSpecRuntimeBaseCredentialsPtrOutput {
+	return i.ToBuildSpecRuntimeBaseCredentialsPtrOutputWithContext(context.Background())
+}
+
+func (i BuildSpecRuntimeBaseCredentialsArgs) ToBuildSpecRuntimeBaseCredentialsPtrOutputWithContext(ctx context.Context) BuildSpecRuntimeBaseCredentialsPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BuildSpecRuntimeBaseCredentialsOutput).ToBuildSpecRuntimeBaseCredentialsPtrOutputWithContext(ctx)
+}
+
+// BuildSpecRuntimeBaseCredentialsPtrInput is an input type that accepts BuildSpecRuntimeBaseCredentialsArgs, BuildSpecRuntimeBaseCredentialsPtr and BuildSpecRuntimeBaseCredentialsPtrOutput values.
+// You can construct a concrete instance of `BuildSpecRuntimeBaseCredentialsPtrInput` via:
+//
+//          BuildSpecRuntimeBaseCredentialsArgs{...}
+//
+//  or:
+//
+//          nil
+type BuildSpecRuntimeBaseCredentialsPtrInput interface {
+	pulumi.Input
+
+	ToBuildSpecRuntimeBaseCredentialsPtrOutput() BuildSpecRuntimeBaseCredentialsPtrOutput
+	ToBuildSpecRuntimeBaseCredentialsPtrOutputWithContext(context.Context) BuildSpecRuntimeBaseCredentialsPtrOutput
+}
+
+type buildSpecRuntimeBaseCredentialsPtrType BuildSpecRuntimeBaseCredentialsArgs
+
+func BuildSpecRuntimeBaseCredentialsPtr(v *BuildSpecRuntimeBaseCredentialsArgs) BuildSpecRuntimeBaseCredentialsPtrInput {
+	return (*buildSpecRuntimeBaseCredentialsPtrType)(v)
+}
+
+func (*buildSpecRuntimeBaseCredentialsPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**BuildSpecRuntimeBaseCredentials)(nil)).Elem()
+}
+
+func (i *buildSpecRuntimeBaseCredentialsPtrType) ToBuildSpecRuntimeBaseCredentialsPtrOutput() BuildSpecRuntimeBaseCredentialsPtrOutput {
+	return i.ToBuildSpecRuntimeBaseCredentialsPtrOutputWithContext(context.Background())
+}
+
+func (i *buildSpecRuntimeBaseCredentialsPtrType) ToBuildSpecRuntimeBaseCredentialsPtrOutputWithContext(ctx context.Context) BuildSpecRuntimeBaseCredentialsPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BuildSpecRuntimeBaseCredentialsPtrOutput)
+}
+
+// SecretRef is a reference to the Secret containing the credentials to push the image to the registry
+type BuildSpecRuntimeBaseCredentialsOutput struct{ *pulumi.OutputState }
+
+func (BuildSpecRuntimeBaseCredentialsOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*BuildSpecRuntimeBaseCredentials)(nil)).Elem()
+}
+
+func (o BuildSpecRuntimeBaseCredentialsOutput) ToBuildSpecRuntimeBaseCredentialsOutput() BuildSpecRuntimeBaseCredentialsOutput {
+	return o
+}
+
+func (o BuildSpecRuntimeBaseCredentialsOutput) ToBuildSpecRuntimeBaseCredentialsOutputWithContext(ctx context.Context) BuildSpecRuntimeBaseCredentialsOutput {
+	return o
+}
+
+func (o BuildSpecRuntimeBaseCredentialsOutput) ToBuildSpecRuntimeBaseCredentialsPtrOutput() BuildSpecRuntimeBaseCredentialsPtrOutput {
+	return o.ToBuildSpecRuntimeBaseCredentialsPtrOutputWithContext(context.Background())
+}
+
+func (o BuildSpecRuntimeBaseCredentialsOutput) ToBuildSpecRuntimeBaseCredentialsPtrOutputWithContext(ctx context.Context) BuildSpecRuntimeBaseCredentialsPtrOutput {
+	return o.ApplyT(func(v BuildSpecRuntimeBaseCredentials) *BuildSpecRuntimeBaseCredentials {
+		return &v
+	}).(BuildSpecRuntimeBaseCredentialsPtrOutput)
+}
+
+// Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+func (o BuildSpecRuntimeBaseCredentialsOutput) Name() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v BuildSpecRuntimeBaseCredentials) *string { return v.Name }).(pulumi.StringPtrOutput)
+}
+
+type BuildSpecRuntimeBaseCredentialsPtrOutput struct{ *pulumi.OutputState }
+
+func (BuildSpecRuntimeBaseCredentialsPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**BuildSpecRuntimeBaseCredentials)(nil)).Elem()
+}
+
+func (o BuildSpecRuntimeBaseCredentialsPtrOutput) ToBuildSpecRuntimeBaseCredentialsPtrOutput() BuildSpecRuntimeBaseCredentialsPtrOutput {
+	return o
+}
+
+func (o BuildSpecRuntimeBaseCredentialsPtrOutput) ToBuildSpecRuntimeBaseCredentialsPtrOutputWithContext(ctx context.Context) BuildSpecRuntimeBaseCredentialsPtrOutput {
+	return o
+}
+
+func (o BuildSpecRuntimeBaseCredentialsPtrOutput) Elem() BuildSpecRuntimeBaseCredentialsOutput {
+	return o.ApplyT(func(v *BuildSpecRuntimeBaseCredentials) BuildSpecRuntimeBaseCredentials { return *v }).(BuildSpecRuntimeBaseCredentialsOutput)
+}
+
+// Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+func (o BuildSpecRuntimeBaseCredentialsPtrOutput) Name() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *BuildSpecRuntimeBaseCredentials) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Name
+	}).(pulumi.StringPtrOutput)
+}
+
+// Env environment variables for runtime.
+type BuildSpecRuntimeEnv struct {
+}
+
+// BuildSpecRuntimeEnvInput is an input type that accepts BuildSpecRuntimeEnvArgs and BuildSpecRuntimeEnvOutput values.
+// You can construct a concrete instance of `BuildSpecRuntimeEnvInput` via:
+//
+//          BuildSpecRuntimeEnvArgs{...}
+type BuildSpecRuntimeEnvInput interface {
+	pulumi.Input
+
+	ToBuildSpecRuntimeEnvOutput() BuildSpecRuntimeEnvOutput
+	ToBuildSpecRuntimeEnvOutputWithContext(context.Context) BuildSpecRuntimeEnvOutput
+}
+
+// Env environment variables for runtime.
+type BuildSpecRuntimeEnvArgs struct {
+}
+
+func (BuildSpecRuntimeEnvArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*BuildSpecRuntimeEnv)(nil)).Elem()
+}
+
+func (i BuildSpecRuntimeEnvArgs) ToBuildSpecRuntimeEnvOutput() BuildSpecRuntimeEnvOutput {
+	return i.ToBuildSpecRuntimeEnvOutputWithContext(context.Background())
+}
+
+func (i BuildSpecRuntimeEnvArgs) ToBuildSpecRuntimeEnvOutputWithContext(ctx context.Context) BuildSpecRuntimeEnvOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BuildSpecRuntimeEnvOutput)
+}
+
+// Env environment variables for runtime.
+type BuildSpecRuntimeEnvOutput struct{ *pulumi.OutputState }
+
+func (BuildSpecRuntimeEnvOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*BuildSpecRuntimeEnv)(nil)).Elem()
+}
+
+func (o BuildSpecRuntimeEnvOutput) ToBuildSpecRuntimeEnvOutput() BuildSpecRuntimeEnvOutput {
+	return o
+}
+
+func (o BuildSpecRuntimeEnvOutput) ToBuildSpecRuntimeEnvOutputWithContext(ctx context.Context) BuildSpecRuntimeEnvOutput {
+	return o
+}
+
+// Labels map of additional labels to be applied on image.
+type BuildSpecRuntimeLabels struct {
+}
+
+// BuildSpecRuntimeLabelsInput is an input type that accepts BuildSpecRuntimeLabelsArgs and BuildSpecRuntimeLabelsOutput values.
+// You can construct a concrete instance of `BuildSpecRuntimeLabelsInput` via:
+//
+//          BuildSpecRuntimeLabelsArgs{...}
+type BuildSpecRuntimeLabelsInput interface {
+	pulumi.Input
+
+	ToBuildSpecRuntimeLabelsOutput() BuildSpecRuntimeLabelsOutput
+	ToBuildSpecRuntimeLabelsOutputWithContext(context.Context) BuildSpecRuntimeLabelsOutput
+}
+
+// Labels map of additional labels to be applied on image.
+type BuildSpecRuntimeLabelsArgs struct {
+}
+
+func (BuildSpecRuntimeLabelsArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*BuildSpecRuntimeLabels)(nil)).Elem()
+}
+
+func (i BuildSpecRuntimeLabelsArgs) ToBuildSpecRuntimeLabelsOutput() BuildSpecRuntimeLabelsOutput {
+	return i.ToBuildSpecRuntimeLabelsOutputWithContext(context.Background())
+}
+
+func (i BuildSpecRuntimeLabelsArgs) ToBuildSpecRuntimeLabelsOutputWithContext(ctx context.Context) BuildSpecRuntimeLabelsOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BuildSpecRuntimeLabelsOutput)
+}
+
+// Labels map of additional labels to be applied on image.
+type BuildSpecRuntimeLabelsOutput struct{ *pulumi.OutputState }
+
+func (BuildSpecRuntimeLabelsOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*BuildSpecRuntimeLabels)(nil)).Elem()
+}
+
+func (o BuildSpecRuntimeLabelsOutput) ToBuildSpecRuntimeLabelsOutput() BuildSpecRuntimeLabelsOutput {
+	return o
+}
+
+func (o BuildSpecRuntimeLabelsOutput) ToBuildSpecRuntimeLabelsOutputWithContext(ctx context.Context) BuildSpecRuntimeLabelsOutput {
+	return o
+}
+
+// User definitions of user and group for runtime-image.
+type BuildSpecRuntimeUser struct {
+	// Group group name or GID employed in runtime-image.
+	Group *string `pulumi:"group"`
+	// Name user name to be employed in runtime-image.
+	Name string `pulumi:"name"`
+}
+
+// BuildSpecRuntimeUserInput is an input type that accepts BuildSpecRuntimeUserArgs and BuildSpecRuntimeUserOutput values.
+// You can construct a concrete instance of `BuildSpecRuntimeUserInput` via:
+//
+//          BuildSpecRuntimeUserArgs{...}
+type BuildSpecRuntimeUserInput interface {
+	pulumi.Input
+
+	ToBuildSpecRuntimeUserOutput() BuildSpecRuntimeUserOutput
+	ToBuildSpecRuntimeUserOutputWithContext(context.Context) BuildSpecRuntimeUserOutput
+}
+
+// User definitions of user and group for runtime-image.
+type BuildSpecRuntimeUserArgs struct {
+	// Group group name or GID employed in runtime-image.
+	Group pulumi.StringPtrInput `pulumi:"group"`
+	// Name user name to be employed in runtime-image.
+	Name pulumi.StringInput `pulumi:"name"`
+}
+
+func (BuildSpecRuntimeUserArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*BuildSpecRuntimeUser)(nil)).Elem()
+}
+
+func (i BuildSpecRuntimeUserArgs) ToBuildSpecRuntimeUserOutput() BuildSpecRuntimeUserOutput {
+	return i.ToBuildSpecRuntimeUserOutputWithContext(context.Background())
+}
+
+func (i BuildSpecRuntimeUserArgs) ToBuildSpecRuntimeUserOutputWithContext(ctx context.Context) BuildSpecRuntimeUserOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BuildSpecRuntimeUserOutput)
+}
+
+func (i BuildSpecRuntimeUserArgs) ToBuildSpecRuntimeUserPtrOutput() BuildSpecRuntimeUserPtrOutput {
+	return i.ToBuildSpecRuntimeUserPtrOutputWithContext(context.Background())
+}
+
+func (i BuildSpecRuntimeUserArgs) ToBuildSpecRuntimeUserPtrOutputWithContext(ctx context.Context) BuildSpecRuntimeUserPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BuildSpecRuntimeUserOutput).ToBuildSpecRuntimeUserPtrOutputWithContext(ctx)
+}
+
+// BuildSpecRuntimeUserPtrInput is an input type that accepts BuildSpecRuntimeUserArgs, BuildSpecRuntimeUserPtr and BuildSpecRuntimeUserPtrOutput values.
+// You can construct a concrete instance of `BuildSpecRuntimeUserPtrInput` via:
+//
+//          BuildSpecRuntimeUserArgs{...}
+//
+//  or:
+//
+//          nil
+type BuildSpecRuntimeUserPtrInput interface {
+	pulumi.Input
+
+	ToBuildSpecRuntimeUserPtrOutput() BuildSpecRuntimeUserPtrOutput
+	ToBuildSpecRuntimeUserPtrOutputWithContext(context.Context) BuildSpecRuntimeUserPtrOutput
+}
+
+type buildSpecRuntimeUserPtrType BuildSpecRuntimeUserArgs
+
+func BuildSpecRuntimeUserPtr(v *BuildSpecRuntimeUserArgs) BuildSpecRuntimeUserPtrInput {
+	return (*buildSpecRuntimeUserPtrType)(v)
+}
+
+func (*buildSpecRuntimeUserPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**BuildSpecRuntimeUser)(nil)).Elem()
+}
+
+func (i *buildSpecRuntimeUserPtrType) ToBuildSpecRuntimeUserPtrOutput() BuildSpecRuntimeUserPtrOutput {
+	return i.ToBuildSpecRuntimeUserPtrOutputWithContext(context.Background())
+}
+
+func (i *buildSpecRuntimeUserPtrType) ToBuildSpecRuntimeUserPtrOutputWithContext(ctx context.Context) BuildSpecRuntimeUserPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BuildSpecRuntimeUserPtrOutput)
+}
+
+// User definitions of user and group for runtime-image.
+type BuildSpecRuntimeUserOutput struct{ *pulumi.OutputState }
+
+func (BuildSpecRuntimeUserOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*BuildSpecRuntimeUser)(nil)).Elem()
+}
+
+func (o BuildSpecRuntimeUserOutput) ToBuildSpecRuntimeUserOutput() BuildSpecRuntimeUserOutput {
+	return o
+}
+
+func (o BuildSpecRuntimeUserOutput) ToBuildSpecRuntimeUserOutputWithContext(ctx context.Context) BuildSpecRuntimeUserOutput {
+	return o
+}
+
+func (o BuildSpecRuntimeUserOutput) ToBuildSpecRuntimeUserPtrOutput() BuildSpecRuntimeUserPtrOutput {
+	return o.ToBuildSpecRuntimeUserPtrOutputWithContext(context.Background())
+}
+
+func (o BuildSpecRuntimeUserOutput) ToBuildSpecRuntimeUserPtrOutputWithContext(ctx context.Context) BuildSpecRuntimeUserPtrOutput {
+	return o.ApplyT(func(v BuildSpecRuntimeUser) *BuildSpecRuntimeUser {
+		return &v
+	}).(BuildSpecRuntimeUserPtrOutput)
+}
+
+// Group group name or GID employed in runtime-image.
+func (o BuildSpecRuntimeUserOutput) Group() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v BuildSpecRuntimeUser) *string { return v.Group }).(pulumi.StringPtrOutput)
+}
+
+// Name user name to be employed in runtime-image.
+func (o BuildSpecRuntimeUserOutput) Name() pulumi.StringOutput {
+	return o.ApplyT(func(v BuildSpecRuntimeUser) string { return v.Name }).(pulumi.StringOutput)
+}
+
+type BuildSpecRuntimeUserPtrOutput struct{ *pulumi.OutputState }
+
+func (BuildSpecRuntimeUserPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**BuildSpecRuntimeUser)(nil)).Elem()
+}
+
+func (o BuildSpecRuntimeUserPtrOutput) ToBuildSpecRuntimeUserPtrOutput() BuildSpecRuntimeUserPtrOutput {
+	return o
+}
+
+func (o BuildSpecRuntimeUserPtrOutput) ToBuildSpecRuntimeUserPtrOutputWithContext(ctx context.Context) BuildSpecRuntimeUserPtrOutput {
+	return o
+}
+
+func (o BuildSpecRuntimeUserPtrOutput) Elem() BuildSpecRuntimeUserOutput {
+	return o.ApplyT(func(v *BuildSpecRuntimeUser) BuildSpecRuntimeUser { return *v }).(BuildSpecRuntimeUserOutput)
+}
+
+// Group group name or GID employed in runtime-image.
+func (o BuildSpecRuntimeUserPtrOutput) Group() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *BuildSpecRuntimeUser) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Group
+	}).(pulumi.StringPtrOutput)
+}
+
+// Name user name to be employed in runtime-image.
+func (o BuildSpecRuntimeUserPtrOutput) Name() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *BuildSpecRuntimeUser) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.Name
+	}).(pulumi.StringPtrOutput)
 }
 
 // Source refers to the Git repository containing the source code to be built.
@@ -2786,6 +5916,10 @@ func (o BuildSpecStrategyPtrOutput) Name() pulumi.StringPtrOutput {
 
 // BuildStatus defines the observed state of Build
 type BuildStatus struct {
+	// The reason of the registered Build, either an error or succeed message
+	Reason *string `pulumi:"reason"`
+	// The Register status of the Build
+	Registered *string `pulumi:"registered"`
 }
 
 // BuildStatusInput is an input type that accepts BuildStatusArgs and BuildStatusOutput values.
@@ -2801,6 +5935,10 @@ type BuildStatusInput interface {
 
 // BuildStatus defines the observed state of Build
 type BuildStatusArgs struct {
+	// The reason of the registered Build, either an error or succeed message
+	Reason pulumi.StringPtrInput `pulumi:"reason"`
+	// The Register status of the Build
+	Registered pulumi.StringPtrInput `pulumi:"registered"`
 }
 
 func (BuildStatusArgs) ElementType() reflect.Type {
@@ -2813,6 +5951,47 @@ func (i BuildStatusArgs) ToBuildStatusOutput() BuildStatusOutput {
 
 func (i BuildStatusArgs) ToBuildStatusOutputWithContext(ctx context.Context) BuildStatusOutput {
 	return pulumi.ToOutputWithContext(ctx, i).(BuildStatusOutput)
+}
+
+func (i BuildStatusArgs) ToBuildStatusPtrOutput() BuildStatusPtrOutput {
+	return i.ToBuildStatusPtrOutputWithContext(context.Background())
+}
+
+func (i BuildStatusArgs) ToBuildStatusPtrOutputWithContext(ctx context.Context) BuildStatusPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BuildStatusOutput).ToBuildStatusPtrOutputWithContext(ctx)
+}
+
+// BuildStatusPtrInput is an input type that accepts BuildStatusArgs, BuildStatusPtr and BuildStatusPtrOutput values.
+// You can construct a concrete instance of `BuildStatusPtrInput` via:
+//
+//          BuildStatusArgs{...}
+//
+//  or:
+//
+//          nil
+type BuildStatusPtrInput interface {
+	pulumi.Input
+
+	ToBuildStatusPtrOutput() BuildStatusPtrOutput
+	ToBuildStatusPtrOutputWithContext(context.Context) BuildStatusPtrOutput
+}
+
+type buildStatusPtrType BuildStatusArgs
+
+func BuildStatusPtr(v *BuildStatusArgs) BuildStatusPtrInput {
+	return (*buildStatusPtrType)(v)
+}
+
+func (*buildStatusPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**BuildStatus)(nil)).Elem()
+}
+
+func (i *buildStatusPtrType) ToBuildStatusPtrOutput() BuildStatusPtrOutput {
+	return i.ToBuildStatusPtrOutputWithContext(context.Background())
+}
+
+func (i *buildStatusPtrType) ToBuildStatusPtrOutputWithContext(ctx context.Context) BuildStatusPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BuildStatusPtrOutput)
 }
 
 // BuildStatus defines the observed state of Build
@@ -2830,7 +6009,65 @@ func (o BuildStatusOutput) ToBuildStatusOutputWithContext(ctx context.Context) B
 	return o
 }
 
-// BuildStrategy is the Schema for the buildstrategies API
+func (o BuildStatusOutput) ToBuildStatusPtrOutput() BuildStatusPtrOutput {
+	return o.ToBuildStatusPtrOutputWithContext(context.Background())
+}
+
+func (o BuildStatusOutput) ToBuildStatusPtrOutputWithContext(ctx context.Context) BuildStatusPtrOutput {
+	return o.ApplyT(func(v BuildStatus) *BuildStatus {
+		return &v
+	}).(BuildStatusPtrOutput)
+}
+
+// The reason of the registered Build, either an error or succeed message
+func (o BuildStatusOutput) Reason() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v BuildStatus) *string { return v.Reason }).(pulumi.StringPtrOutput)
+}
+
+// The Register status of the Build
+func (o BuildStatusOutput) Registered() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v BuildStatus) *string { return v.Registered }).(pulumi.StringPtrOutput)
+}
+
+type BuildStatusPtrOutput struct{ *pulumi.OutputState }
+
+func (BuildStatusPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**BuildStatus)(nil)).Elem()
+}
+
+func (o BuildStatusPtrOutput) ToBuildStatusPtrOutput() BuildStatusPtrOutput {
+	return o
+}
+
+func (o BuildStatusPtrOutput) ToBuildStatusPtrOutputWithContext(ctx context.Context) BuildStatusPtrOutput {
+	return o
+}
+
+func (o BuildStatusPtrOutput) Elem() BuildStatusOutput {
+	return o.ApplyT(func(v *BuildStatus) BuildStatus { return *v }).(BuildStatusOutput)
+}
+
+// The reason of the registered Build, either an error or succeed message
+func (o BuildStatusPtrOutput) Reason() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *BuildStatus) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Reason
+	}).(pulumi.StringPtrOutput)
+}
+
+// The Register status of the Build
+func (o BuildStatusPtrOutput) Registered() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *BuildStatus) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Registered
+	}).(pulumi.StringPtrOutput)
+}
+
+// BuildStrategy is the Schema representing a strategy in the namespace scope to build images from source code.
 type BuildStrategyType struct {
 	ApiVersion *string            `pulumi:"apiVersion"`
 	Kind       *string            `pulumi:"kind"`
@@ -2852,7 +6089,7 @@ type BuildStrategyTypeInput interface {
 	ToBuildStrategyTypeOutputWithContext(context.Context) BuildStrategyTypeOutput
 }
 
-// BuildStrategy is the Schema for the buildstrategies API
+// BuildStrategy is the Schema representing a strategy in the namespace scope to build images from source code.
 type BuildStrategyTypeArgs struct {
 	ApiVersion pulumi.StringPtrInput     `pulumi:"apiVersion"`
 	Kind       pulumi.StringPtrInput     `pulumi:"kind"`
@@ -2875,7 +6112,7 @@ func (i BuildStrategyTypeArgs) ToBuildStrategyTypeOutputWithContext(ctx context.
 	return pulumi.ToOutputWithContext(ctx, i).(BuildStrategyTypeOutput)
 }
 
-// BuildStrategy is the Schema for the buildstrategies API
+// BuildStrategy is the Schema representing a strategy in the namespace scope to build images from source code.
 type BuildStrategyTypeOutput struct{ *pulumi.OutputState }
 
 func (BuildStrategyTypeOutput) ElementType() reflect.Type {
@@ -3931,7 +7168,7 @@ func (o BuildStrategySpecBuildStepsEnvFromSecretRefPtrOutput) Optional() pulumi.
 type BuildStrategySpecBuildStepsEnvValueFrom struct {
 	// Selects a key of a ConfigMap.
 	ConfigMapKeyRef *BuildStrategySpecBuildStepsEnvValueFromConfigMapKeyRef `pulumi:"configMapKeyRef"`
-	// Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+	// Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
 	FieldRef *BuildStrategySpecBuildStepsEnvValueFromFieldRef `pulumi:"fieldRef"`
 	// Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
 	ResourceFieldRef *BuildStrategySpecBuildStepsEnvValueFromResourceFieldRef `pulumi:"resourceFieldRef"`
@@ -3954,7 +7191,7 @@ type BuildStrategySpecBuildStepsEnvValueFromInput interface {
 type BuildStrategySpecBuildStepsEnvValueFromArgs struct {
 	// Selects a key of a ConfigMap.
 	ConfigMapKeyRef BuildStrategySpecBuildStepsEnvValueFromConfigMapKeyRefPtrInput `pulumi:"configMapKeyRef"`
-	// Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+	// Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
 	FieldRef BuildStrategySpecBuildStepsEnvValueFromFieldRefPtrInput `pulumi:"fieldRef"`
 	// Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
 	ResourceFieldRef BuildStrategySpecBuildStepsEnvValueFromResourceFieldRefPtrInput `pulumi:"resourceFieldRef"`
@@ -4047,7 +7284,7 @@ func (o BuildStrategySpecBuildStepsEnvValueFromOutput) ConfigMapKeyRef() BuildSt
 	}).(BuildStrategySpecBuildStepsEnvValueFromConfigMapKeyRefPtrOutput)
 }
 
-// Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+// Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
 func (o BuildStrategySpecBuildStepsEnvValueFromOutput) FieldRef() BuildStrategySpecBuildStepsEnvValueFromFieldRefPtrOutput {
 	return o.ApplyT(func(v BuildStrategySpecBuildStepsEnvValueFrom) *BuildStrategySpecBuildStepsEnvValueFromFieldRef {
 		return v.FieldRef
@@ -4096,7 +7333,7 @@ func (o BuildStrategySpecBuildStepsEnvValueFromPtrOutput) ConfigMapKeyRef() Buil
 	}).(BuildStrategySpecBuildStepsEnvValueFromConfigMapKeyRefPtrOutput)
 }
 
-// Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+// Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
 func (o BuildStrategySpecBuildStepsEnvValueFromPtrOutput) FieldRef() BuildStrategySpecBuildStepsEnvValueFromFieldRefPtrOutput {
 	return o.ApplyT(func(v *BuildStrategySpecBuildStepsEnvValueFrom) *BuildStrategySpecBuildStepsEnvValueFromFieldRef {
 		if v == nil {
@@ -4300,7 +7537,7 @@ func (o BuildStrategySpecBuildStepsEnvValueFromConfigMapKeyRefPtrOutput) Optiona
 	}).(pulumi.BoolPtrOutput)
 }
 
-// Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+// Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
 type BuildStrategySpecBuildStepsEnvValueFromFieldRef struct {
 	// Version of the schema the FieldPath is written in terms of, defaults to "v1".
 	ApiVersion *string `pulumi:"apiVersion"`
@@ -4319,7 +7556,7 @@ type BuildStrategySpecBuildStepsEnvValueFromFieldRefInput interface {
 	ToBuildStrategySpecBuildStepsEnvValueFromFieldRefOutputWithContext(context.Context) BuildStrategySpecBuildStepsEnvValueFromFieldRefOutput
 }
 
-// Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+// Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
 type BuildStrategySpecBuildStepsEnvValueFromFieldRefArgs struct {
 	// Version of the schema the FieldPath is written in terms of, defaults to "v1".
 	ApiVersion pulumi.StringPtrInput `pulumi:"apiVersion"`
@@ -4380,7 +7617,7 @@ func (i *buildStrategySpecBuildStepsEnvValueFromFieldRefPtrType) ToBuildStrategy
 	return pulumi.ToOutputWithContext(ctx, i).(BuildStrategySpecBuildStepsEnvValueFromFieldRefPtrOutput)
 }
 
-// Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+// Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
 type BuildStrategySpecBuildStepsEnvValueFromFieldRefOutput struct{ *pulumi.OutputState }
 
 func (BuildStrategySpecBuildStepsEnvValueFromFieldRefOutput) ElementType() reflect.Type {
@@ -4460,7 +7697,7 @@ type BuildStrategySpecBuildStepsEnvValueFromResourceFieldRef struct {
 	// Container name: required for volumes, optional for env vars
 	ContainerName *string `pulumi:"containerName"`
 	// Specifies the output format of the exposed resources, defaults to "1"
-	Divisor *string `pulumi:"divisor"`
+	Divisor *BuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisor `pulumi:"divisor"`
 	// Required: resource to select
 	Resource string `pulumi:"resource"`
 }
@@ -4481,7 +7718,7 @@ type BuildStrategySpecBuildStepsEnvValueFromResourceFieldRefArgs struct {
 	// Container name: required for volumes, optional for env vars
 	ContainerName pulumi.StringPtrInput `pulumi:"containerName"`
 	// Specifies the output format of the exposed resources, defaults to "1"
-	Divisor pulumi.StringPtrInput `pulumi:"divisor"`
+	Divisor BuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorPtrInput `pulumi:"divisor"`
 	// Required: resource to select
 	Resource pulumi.StringInput `pulumi:"resource"`
 }
@@ -4570,8 +7807,10 @@ func (o BuildStrategySpecBuildStepsEnvValueFromResourceFieldRefOutput) Container
 }
 
 // Specifies the output format of the exposed resources, defaults to "1"
-func (o BuildStrategySpecBuildStepsEnvValueFromResourceFieldRefOutput) Divisor() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v BuildStrategySpecBuildStepsEnvValueFromResourceFieldRef) *string { return v.Divisor }).(pulumi.StringPtrOutput)
+func (o BuildStrategySpecBuildStepsEnvValueFromResourceFieldRefOutput) Divisor() BuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorPtrOutput {
+	return o.ApplyT(func(v BuildStrategySpecBuildStepsEnvValueFromResourceFieldRef) *BuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisor {
+		return v.Divisor
+	}).(BuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorPtrOutput)
 }
 
 // Required: resource to select
@@ -4610,13 +7849,13 @@ func (o BuildStrategySpecBuildStepsEnvValueFromResourceFieldRefPtrOutput) Contai
 }
 
 // Specifies the output format of the exposed resources, defaults to "1"
-func (o BuildStrategySpecBuildStepsEnvValueFromResourceFieldRefPtrOutput) Divisor() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *BuildStrategySpecBuildStepsEnvValueFromResourceFieldRef) *string {
+func (o BuildStrategySpecBuildStepsEnvValueFromResourceFieldRefPtrOutput) Divisor() BuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorPtrOutput {
+	return o.ApplyT(func(v *BuildStrategySpecBuildStepsEnvValueFromResourceFieldRef) *BuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisor {
 		if v == nil {
 			return nil
 		}
 		return v.Divisor
-	}).(pulumi.StringPtrOutput)
+	}).(BuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorPtrOutput)
 }
 
 // Required: resource to select
@@ -4627,6 +7866,120 @@ func (o BuildStrategySpecBuildStepsEnvValueFromResourceFieldRefPtrOutput) Resour
 		}
 		return &v.Resource
 	}).(pulumi.StringPtrOutput)
+}
+
+type BuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisor struct {
+}
+
+// BuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorInput is an input type that accepts BuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorArgs and BuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorOutput values.
+// You can construct a concrete instance of `BuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorInput` via:
+//
+//          BuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorArgs{...}
+type BuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorInput interface {
+	pulumi.Input
+
+	ToBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorOutput() BuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorOutput
+	ToBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorOutputWithContext(context.Context) BuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorOutput
+}
+
+type BuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorArgs struct {
+}
+
+func (BuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*BuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisor)(nil)).Elem()
+}
+
+func (i BuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorArgs) ToBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorOutput() BuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorOutput {
+	return i.ToBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorOutputWithContext(context.Background())
+}
+
+func (i BuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorArgs) ToBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorOutputWithContext(ctx context.Context) BuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorOutput)
+}
+
+func (i BuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorArgs) ToBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorPtrOutput() BuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorPtrOutput {
+	return i.ToBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorPtrOutputWithContext(context.Background())
+}
+
+func (i BuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorArgs) ToBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorPtrOutputWithContext(ctx context.Context) BuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorOutput).ToBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorPtrOutputWithContext(ctx)
+}
+
+// BuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorPtrInput is an input type that accepts BuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorArgs, BuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorPtr and BuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorPtrOutput values.
+// You can construct a concrete instance of `BuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorPtrInput` via:
+//
+//          BuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorArgs{...}
+//
+//  or:
+//
+//          nil
+type BuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorPtrInput interface {
+	pulumi.Input
+
+	ToBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorPtrOutput() BuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorPtrOutput
+	ToBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorPtrOutputWithContext(context.Context) BuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorPtrOutput
+}
+
+type buildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorPtrType BuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorArgs
+
+func BuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorPtr(v *BuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorArgs) BuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorPtrInput {
+	return (*buildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorPtrType)(v)
+}
+
+func (*buildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**BuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisor)(nil)).Elem()
+}
+
+func (i *buildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorPtrType) ToBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorPtrOutput() BuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorPtrOutput {
+	return i.ToBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorPtrOutputWithContext(context.Background())
+}
+
+func (i *buildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorPtrType) ToBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorPtrOutputWithContext(ctx context.Context) BuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorPtrOutput)
+}
+
+type BuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorOutput struct{ *pulumi.OutputState }
+
+func (BuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*BuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisor)(nil)).Elem()
+}
+
+func (o BuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorOutput) ToBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorOutput() BuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorOutput {
+	return o
+}
+
+func (o BuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorOutput) ToBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorOutputWithContext(ctx context.Context) BuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorOutput {
+	return o
+}
+
+func (o BuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorOutput) ToBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorPtrOutput() BuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorPtrOutput {
+	return o.ToBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorPtrOutputWithContext(context.Background())
+}
+
+func (o BuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorOutput) ToBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorPtrOutputWithContext(ctx context.Context) BuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorPtrOutput {
+	return o.ApplyT(func(v BuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisor) *BuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisor {
+		return &v
+	}).(BuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorPtrOutput)
+}
+
+type BuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorPtrOutput struct{ *pulumi.OutputState }
+
+func (BuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**BuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisor)(nil)).Elem()
+}
+
+func (o BuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorPtrOutput) ToBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorPtrOutput() BuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorPtrOutput {
+	return o
+}
+
+func (o BuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorPtrOutput) ToBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorPtrOutputWithContext(ctx context.Context) BuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorPtrOutput {
+	return o
+}
+
+func (o BuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorPtrOutput) Elem() BuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorOutput {
+	return o.ApplyT(func(v *BuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisor) BuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisor {
+		return *v
+	}).(BuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorOutput)
 }
 
 // Selects a key of a secret in the pod's namespace
@@ -9391,9 +12744,9 @@ func (o BuildStrategySpecBuildStepsReadinessProbeTcpSocketPortPtrOutput) Elem() 
 // Compute Resources required by this container. Cannot be updated. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
 type BuildStrategySpecBuildStepsResources struct {
 	// Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-	Limits map[string]string `pulumi:"limits"`
+	Limits map[string]BuildStrategySpecBuildStepsResourcesLimits `pulumi:"limits"`
 	// Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-	Requests map[string]string `pulumi:"requests"`
+	Requests map[string]BuildStrategySpecBuildStepsResourcesRequests `pulumi:"requests"`
 }
 
 // BuildStrategySpecBuildStepsResourcesInput is an input type that accepts BuildStrategySpecBuildStepsResourcesArgs and BuildStrategySpecBuildStepsResourcesOutput values.
@@ -9410,9 +12763,9 @@ type BuildStrategySpecBuildStepsResourcesInput interface {
 // Compute Resources required by this container. Cannot be updated. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
 type BuildStrategySpecBuildStepsResourcesArgs struct {
 	// Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-	Limits pulumi.StringMapInput `pulumi:"limits"`
+	Limits BuildStrategySpecBuildStepsResourcesLimitsMapInput `pulumi:"limits"`
 	// Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-	Requests pulumi.StringMapInput `pulumi:"requests"`
+	Requests BuildStrategySpecBuildStepsResourcesRequestsMapInput `pulumi:"requests"`
 }
 
 func (BuildStrategySpecBuildStepsResourcesArgs) ElementType() reflect.Type {
@@ -9494,13 +12847,17 @@ func (o BuildStrategySpecBuildStepsResourcesOutput) ToBuildStrategySpecBuildStep
 }
 
 // Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-func (o BuildStrategySpecBuildStepsResourcesOutput) Limits() pulumi.StringMapOutput {
-	return o.ApplyT(func(v BuildStrategySpecBuildStepsResources) map[string]string { return v.Limits }).(pulumi.StringMapOutput)
+func (o BuildStrategySpecBuildStepsResourcesOutput) Limits() BuildStrategySpecBuildStepsResourcesLimitsMapOutput {
+	return o.ApplyT(func(v BuildStrategySpecBuildStepsResources) map[string]BuildStrategySpecBuildStepsResourcesLimits {
+		return v.Limits
+	}).(BuildStrategySpecBuildStepsResourcesLimitsMapOutput)
 }
 
 // Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-func (o BuildStrategySpecBuildStepsResourcesOutput) Requests() pulumi.StringMapOutput {
-	return o.ApplyT(func(v BuildStrategySpecBuildStepsResources) map[string]string { return v.Requests }).(pulumi.StringMapOutput)
+func (o BuildStrategySpecBuildStepsResourcesOutput) Requests() BuildStrategySpecBuildStepsResourcesRequestsMapOutput {
+	return o.ApplyT(func(v BuildStrategySpecBuildStepsResources) map[string]BuildStrategySpecBuildStepsResourcesRequests {
+		return v.Requests
+	}).(BuildStrategySpecBuildStepsResourcesRequestsMapOutput)
 }
 
 type BuildStrategySpecBuildStepsResourcesPtrOutput struct{ *pulumi.OutputState }
@@ -9522,26 +12879,25 @@ func (o BuildStrategySpecBuildStepsResourcesPtrOutput) Elem() BuildStrategySpecB
 }
 
 // Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-func (o BuildStrategySpecBuildStepsResourcesPtrOutput) Limits() pulumi.StringMapOutput {
-	return o.ApplyT(func(v *BuildStrategySpecBuildStepsResources) map[string]string {
+func (o BuildStrategySpecBuildStepsResourcesPtrOutput) Limits() BuildStrategySpecBuildStepsResourcesLimitsMapOutput {
+	return o.ApplyT(func(v *BuildStrategySpecBuildStepsResources) map[string]BuildStrategySpecBuildStepsResourcesLimits {
 		if v == nil {
 			return nil
 		}
 		return v.Limits
-	}).(pulumi.StringMapOutput)
+	}).(BuildStrategySpecBuildStepsResourcesLimitsMapOutput)
 }
 
 // Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-func (o BuildStrategySpecBuildStepsResourcesPtrOutput) Requests() pulumi.StringMapOutput {
-	return o.ApplyT(func(v *BuildStrategySpecBuildStepsResources) map[string]string {
+func (o BuildStrategySpecBuildStepsResourcesPtrOutput) Requests() BuildStrategySpecBuildStepsResourcesRequestsMapOutput {
+	return o.ApplyT(func(v *BuildStrategySpecBuildStepsResources) map[string]BuildStrategySpecBuildStepsResourcesRequests {
 		if v == nil {
 			return nil
 		}
 		return v.Requests
-	}).(pulumi.StringMapOutput)
+	}).(BuildStrategySpecBuildStepsResourcesRequestsMapOutput)
 }
 
-// Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
 type BuildStrategySpecBuildStepsResourcesLimits struct {
 }
 
@@ -9556,7 +12912,6 @@ type BuildStrategySpecBuildStepsResourcesLimitsInput interface {
 	ToBuildStrategySpecBuildStepsResourcesLimitsOutputWithContext(context.Context) BuildStrategySpecBuildStepsResourcesLimitsOutput
 }
 
-// Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
 type BuildStrategySpecBuildStepsResourcesLimitsArgs struct {
 }
 
@@ -9572,7 +12927,31 @@ func (i BuildStrategySpecBuildStepsResourcesLimitsArgs) ToBuildStrategySpecBuild
 	return pulumi.ToOutputWithContext(ctx, i).(BuildStrategySpecBuildStepsResourcesLimitsOutput)
 }
 
-// Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
+// BuildStrategySpecBuildStepsResourcesLimitsMapInput is an input type that accepts BuildStrategySpecBuildStepsResourcesLimitsMap and BuildStrategySpecBuildStepsResourcesLimitsMapOutput values.
+// You can construct a concrete instance of `BuildStrategySpecBuildStepsResourcesLimitsMapInput` via:
+//
+//          BuildStrategySpecBuildStepsResourcesLimitsMap{ "key": BuildStrategySpecBuildStepsResourcesLimitsArgs{...} }
+type BuildStrategySpecBuildStepsResourcesLimitsMapInput interface {
+	pulumi.Input
+
+	ToBuildStrategySpecBuildStepsResourcesLimitsMapOutput() BuildStrategySpecBuildStepsResourcesLimitsMapOutput
+	ToBuildStrategySpecBuildStepsResourcesLimitsMapOutputWithContext(context.Context) BuildStrategySpecBuildStepsResourcesLimitsMapOutput
+}
+
+type BuildStrategySpecBuildStepsResourcesLimitsMap map[string]BuildStrategySpecBuildStepsResourcesLimitsInput
+
+func (BuildStrategySpecBuildStepsResourcesLimitsMap) ElementType() reflect.Type {
+	return reflect.TypeOf((*map[string]BuildStrategySpecBuildStepsResourcesLimits)(nil)).Elem()
+}
+
+func (i BuildStrategySpecBuildStepsResourcesLimitsMap) ToBuildStrategySpecBuildStepsResourcesLimitsMapOutput() BuildStrategySpecBuildStepsResourcesLimitsMapOutput {
+	return i.ToBuildStrategySpecBuildStepsResourcesLimitsMapOutputWithContext(context.Background())
+}
+
+func (i BuildStrategySpecBuildStepsResourcesLimitsMap) ToBuildStrategySpecBuildStepsResourcesLimitsMapOutputWithContext(ctx context.Context) BuildStrategySpecBuildStepsResourcesLimitsMapOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BuildStrategySpecBuildStepsResourcesLimitsMapOutput)
+}
+
 type BuildStrategySpecBuildStepsResourcesLimitsOutput struct{ *pulumi.OutputState }
 
 func (BuildStrategySpecBuildStepsResourcesLimitsOutput) ElementType() reflect.Type {
@@ -9587,7 +12966,26 @@ func (o BuildStrategySpecBuildStepsResourcesLimitsOutput) ToBuildStrategySpecBui
 	return o
 }
 
-// Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
+type BuildStrategySpecBuildStepsResourcesLimitsMapOutput struct{ *pulumi.OutputState }
+
+func (BuildStrategySpecBuildStepsResourcesLimitsMapOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*map[string]BuildStrategySpecBuildStepsResourcesLimits)(nil)).Elem()
+}
+
+func (o BuildStrategySpecBuildStepsResourcesLimitsMapOutput) ToBuildStrategySpecBuildStepsResourcesLimitsMapOutput() BuildStrategySpecBuildStepsResourcesLimitsMapOutput {
+	return o
+}
+
+func (o BuildStrategySpecBuildStepsResourcesLimitsMapOutput) ToBuildStrategySpecBuildStepsResourcesLimitsMapOutputWithContext(ctx context.Context) BuildStrategySpecBuildStepsResourcesLimitsMapOutput {
+	return o
+}
+
+func (o BuildStrategySpecBuildStepsResourcesLimitsMapOutput) MapIndex(k pulumi.StringInput) BuildStrategySpecBuildStepsResourcesLimitsOutput {
+	return pulumi.All(o, k).ApplyT(func(vs []interface{}) BuildStrategySpecBuildStepsResourcesLimits {
+		return vs[0].(map[string]BuildStrategySpecBuildStepsResourcesLimits)[vs[1].(string)]
+	}).(BuildStrategySpecBuildStepsResourcesLimitsOutput)
+}
+
 type BuildStrategySpecBuildStepsResourcesRequests struct {
 }
 
@@ -9602,7 +13000,6 @@ type BuildStrategySpecBuildStepsResourcesRequestsInput interface {
 	ToBuildStrategySpecBuildStepsResourcesRequestsOutputWithContext(context.Context) BuildStrategySpecBuildStepsResourcesRequestsOutput
 }
 
-// Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
 type BuildStrategySpecBuildStepsResourcesRequestsArgs struct {
 }
 
@@ -9618,7 +13015,31 @@ func (i BuildStrategySpecBuildStepsResourcesRequestsArgs) ToBuildStrategySpecBui
 	return pulumi.ToOutputWithContext(ctx, i).(BuildStrategySpecBuildStepsResourcesRequestsOutput)
 }
 
-// Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
+// BuildStrategySpecBuildStepsResourcesRequestsMapInput is an input type that accepts BuildStrategySpecBuildStepsResourcesRequestsMap and BuildStrategySpecBuildStepsResourcesRequestsMapOutput values.
+// You can construct a concrete instance of `BuildStrategySpecBuildStepsResourcesRequestsMapInput` via:
+//
+//          BuildStrategySpecBuildStepsResourcesRequestsMap{ "key": BuildStrategySpecBuildStepsResourcesRequestsArgs{...} }
+type BuildStrategySpecBuildStepsResourcesRequestsMapInput interface {
+	pulumi.Input
+
+	ToBuildStrategySpecBuildStepsResourcesRequestsMapOutput() BuildStrategySpecBuildStepsResourcesRequestsMapOutput
+	ToBuildStrategySpecBuildStepsResourcesRequestsMapOutputWithContext(context.Context) BuildStrategySpecBuildStepsResourcesRequestsMapOutput
+}
+
+type BuildStrategySpecBuildStepsResourcesRequestsMap map[string]BuildStrategySpecBuildStepsResourcesRequestsInput
+
+func (BuildStrategySpecBuildStepsResourcesRequestsMap) ElementType() reflect.Type {
+	return reflect.TypeOf((*map[string]BuildStrategySpecBuildStepsResourcesRequests)(nil)).Elem()
+}
+
+func (i BuildStrategySpecBuildStepsResourcesRequestsMap) ToBuildStrategySpecBuildStepsResourcesRequestsMapOutput() BuildStrategySpecBuildStepsResourcesRequestsMapOutput {
+	return i.ToBuildStrategySpecBuildStepsResourcesRequestsMapOutputWithContext(context.Background())
+}
+
+func (i BuildStrategySpecBuildStepsResourcesRequestsMap) ToBuildStrategySpecBuildStepsResourcesRequestsMapOutputWithContext(ctx context.Context) BuildStrategySpecBuildStepsResourcesRequestsMapOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BuildStrategySpecBuildStepsResourcesRequestsMapOutput)
+}
+
 type BuildStrategySpecBuildStepsResourcesRequestsOutput struct{ *pulumi.OutputState }
 
 func (BuildStrategySpecBuildStepsResourcesRequestsOutput) ElementType() reflect.Type {
@@ -9631,6 +13052,26 @@ func (o BuildStrategySpecBuildStepsResourcesRequestsOutput) ToBuildStrategySpecB
 
 func (o BuildStrategySpecBuildStepsResourcesRequestsOutput) ToBuildStrategySpecBuildStepsResourcesRequestsOutputWithContext(ctx context.Context) BuildStrategySpecBuildStepsResourcesRequestsOutput {
 	return o
+}
+
+type BuildStrategySpecBuildStepsResourcesRequestsMapOutput struct{ *pulumi.OutputState }
+
+func (BuildStrategySpecBuildStepsResourcesRequestsMapOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*map[string]BuildStrategySpecBuildStepsResourcesRequests)(nil)).Elem()
+}
+
+func (o BuildStrategySpecBuildStepsResourcesRequestsMapOutput) ToBuildStrategySpecBuildStepsResourcesRequestsMapOutput() BuildStrategySpecBuildStepsResourcesRequestsMapOutput {
+	return o
+}
+
+func (o BuildStrategySpecBuildStepsResourcesRequestsMapOutput) ToBuildStrategySpecBuildStepsResourcesRequestsMapOutputWithContext(ctx context.Context) BuildStrategySpecBuildStepsResourcesRequestsMapOutput {
+	return o
+}
+
+func (o BuildStrategySpecBuildStepsResourcesRequestsMapOutput) MapIndex(k pulumi.StringInput) BuildStrategySpecBuildStepsResourcesRequestsOutput {
+	return pulumi.All(o, k).ApplyT(func(vs []interface{}) BuildStrategySpecBuildStepsResourcesRequests {
+		return vs[0].(map[string]BuildStrategySpecBuildStepsResourcesRequests)[vs[1].(string)]
+	}).(BuildStrategySpecBuildStepsResourcesRequestsOutput)
 }
 
 // Security options the pod should run with. More info: https://kubernetes.io/docs/concepts/policy/security-context/ More info: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
@@ -10300,7 +13741,7 @@ type BuildStrategySpecBuildStepsSecurityContextWindowsOptions struct {
 	GmsaCredentialSpec *string `pulumi:"gmsaCredentialSpec"`
 	// GMSACredentialSpecName is the name of the GMSA credential spec to use. This field is alpha-level and is only honored by servers that enable the WindowsGMSA feature flag.
 	GmsaCredentialSpecName *string `pulumi:"gmsaCredentialSpecName"`
-	// The UserName in Windows to run the entrypoint of the container process. Defaults to the user specified in image metadata if unspecified. May also be set in PodSecurityContext. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence. This field is alpha-level and it is only honored by servers that enable the WindowsRunAsUserName feature flag.
+	// The UserName in Windows to run the entrypoint of the container process. Defaults to the user specified in image metadata if unspecified. May also be set in PodSecurityContext. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence. This field is beta-level and may be disabled with the WindowsRunAsUserName feature flag.
 	RunAsUserName *string `pulumi:"runAsUserName"`
 }
 
@@ -10321,7 +13762,7 @@ type BuildStrategySpecBuildStepsSecurityContextWindowsOptionsArgs struct {
 	GmsaCredentialSpec pulumi.StringPtrInput `pulumi:"gmsaCredentialSpec"`
 	// GMSACredentialSpecName is the name of the GMSA credential spec to use. This field is alpha-level and is only honored by servers that enable the WindowsGMSA feature flag.
 	GmsaCredentialSpecName pulumi.StringPtrInput `pulumi:"gmsaCredentialSpecName"`
-	// The UserName in Windows to run the entrypoint of the container process. Defaults to the user specified in image metadata if unspecified. May also be set in PodSecurityContext. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence. This field is alpha-level and it is only honored by servers that enable the WindowsRunAsUserName feature flag.
+	// The UserName in Windows to run the entrypoint of the container process. Defaults to the user specified in image metadata if unspecified. May also be set in PodSecurityContext. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence. This field is beta-level and may be disabled with the WindowsRunAsUserName feature flag.
 	RunAsUserName pulumi.StringPtrInput `pulumi:"runAsUserName"`
 }
 
@@ -10415,7 +13856,7 @@ func (o BuildStrategySpecBuildStepsSecurityContextWindowsOptionsOutput) GmsaCred
 	}).(pulumi.StringPtrOutput)
 }
 
-// The UserName in Windows to run the entrypoint of the container process. Defaults to the user specified in image metadata if unspecified. May also be set in PodSecurityContext. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence. This field is alpha-level and it is only honored by servers that enable the WindowsRunAsUserName feature flag.
+// The UserName in Windows to run the entrypoint of the container process. Defaults to the user specified in image metadata if unspecified. May also be set in PodSecurityContext. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence. This field is beta-level and may be disabled with the WindowsRunAsUserName feature flag.
 func (o BuildStrategySpecBuildStepsSecurityContextWindowsOptionsOutput) RunAsUserName() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v BuildStrategySpecBuildStepsSecurityContextWindowsOptions) *string { return v.RunAsUserName }).(pulumi.StringPtrOutput)
 }
@@ -10460,7 +13901,7 @@ func (o BuildStrategySpecBuildStepsSecurityContextWindowsOptionsPtrOutput) GmsaC
 	}).(pulumi.StringPtrOutput)
 }
 
-// The UserName in Windows to run the entrypoint of the container process. Defaults to the user specified in image metadata if unspecified. May also be set in PodSecurityContext. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence. This field is alpha-level and it is only honored by servers that enable the WindowsRunAsUserName feature flag.
+// The UserName in Windows to run the entrypoint of the container process. Defaults to the user specified in image metadata if unspecified. May also be set in PodSecurityContext. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence. This field is beta-level and may be disabled with the WindowsRunAsUserName feature flag.
 func (o BuildStrategySpecBuildStepsSecurityContextWindowsOptionsPtrOutput) RunAsUserName() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *BuildStrategySpecBuildStepsSecurityContextWindowsOptions) *string {
 		if v == nil {
@@ -11710,7 +15151,7 @@ type BuildStrategySpecBuildStepsVolumeMounts struct {
 	ReadOnly *bool `pulumi:"readOnly"`
 	// Path within the volume from which the container's volume should be mounted. Defaults to "" (volume's root).
 	SubPath *string `pulumi:"subPath"`
-	// Expanded path within the volume from which the container's volume should be mounted. Behaves similarly to SubPath but environment variable references $(VAR_NAME) are expanded using the container's environment. Defaults to "" (volume's root). SubPathExpr and SubPath are mutually exclusive. This field is beta in 1.15.
+	// Expanded path within the volume from which the container's volume should be mounted. Behaves similarly to SubPath but environment variable references $(VAR_NAME) are expanded using the container's environment. Defaults to "" (volume's root). SubPathExpr and SubPath are mutually exclusive.
 	SubPathExpr *string `pulumi:"subPathExpr"`
 }
 
@@ -11737,7 +15178,7 @@ type BuildStrategySpecBuildStepsVolumeMountsArgs struct {
 	ReadOnly pulumi.BoolPtrInput `pulumi:"readOnly"`
 	// Path within the volume from which the container's volume should be mounted. Defaults to "" (volume's root).
 	SubPath pulumi.StringPtrInput `pulumi:"subPath"`
-	// Expanded path within the volume from which the container's volume should be mounted. Behaves similarly to SubPath but environment variable references $(VAR_NAME) are expanded using the container's environment. Defaults to "" (volume's root). SubPathExpr and SubPath are mutually exclusive. This field is beta in 1.15.
+	// Expanded path within the volume from which the container's volume should be mounted. Behaves similarly to SubPath but environment variable references $(VAR_NAME) are expanded using the container's environment. Defaults to "" (volume's root). SubPathExpr and SubPath are mutually exclusive.
 	SubPathExpr pulumi.StringPtrInput `pulumi:"subPathExpr"`
 }
 
@@ -11818,7 +15259,7 @@ func (o BuildStrategySpecBuildStepsVolumeMountsOutput) SubPath() pulumi.StringPt
 	return o.ApplyT(func(v BuildStrategySpecBuildStepsVolumeMounts) *string { return v.SubPath }).(pulumi.StringPtrOutput)
 }
 
-// Expanded path within the volume from which the container's volume should be mounted. Behaves similarly to SubPath but environment variable references $(VAR_NAME) are expanded using the container's environment. Defaults to "" (volume's root). SubPathExpr and SubPath are mutually exclusive. This field is beta in 1.15.
+// Expanded path within the volume from which the container's volume should be mounted. Behaves similarly to SubPath but environment variable references $(VAR_NAME) are expanded using the container's environment. Defaults to "" (volume's root). SubPathExpr and SubPath are mutually exclusive.
 func (o BuildStrategySpecBuildStepsVolumeMountsOutput) SubPathExpr() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v BuildStrategySpecBuildStepsVolumeMounts) *string { return v.SubPathExpr }).(pulumi.StringPtrOutput)
 }
@@ -11889,7 +15330,7 @@ func (o BuildStrategyStatusOutput) ToBuildStrategyStatusOutputWithContext(ctx co
 	return o
 }
 
-// ClusterBuildStrategy is the Schema for the clusterbuildstrategies API
+// ClusterBuildStrategy is the Schema representing a strategy in the cluster scope to build images from source code.
 type ClusterBuildStrategyType struct {
 	ApiVersion *string            `pulumi:"apiVersion"`
 	Kind       *string            `pulumi:"kind"`
@@ -11911,7 +15352,7 @@ type ClusterBuildStrategyTypeInput interface {
 	ToClusterBuildStrategyTypeOutputWithContext(context.Context) ClusterBuildStrategyTypeOutput
 }
 
-// ClusterBuildStrategy is the Schema for the clusterbuildstrategies API
+// ClusterBuildStrategy is the Schema representing a strategy in the cluster scope to build images from source code.
 type ClusterBuildStrategyTypeArgs struct {
 	ApiVersion pulumi.StringPtrInput     `pulumi:"apiVersion"`
 	Kind       pulumi.StringPtrInput     `pulumi:"kind"`
@@ -11934,7 +15375,7 @@ func (i ClusterBuildStrategyTypeArgs) ToClusterBuildStrategyTypeOutputWithContex
 	return pulumi.ToOutputWithContext(ctx, i).(ClusterBuildStrategyTypeOutput)
 }
 
-// ClusterBuildStrategy is the Schema for the clusterbuildstrategies API
+// ClusterBuildStrategy is the Schema representing a strategy in the cluster scope to build images from source code.
 type ClusterBuildStrategyTypeOutput struct{ *pulumi.OutputState }
 
 func (ClusterBuildStrategyTypeOutput) ElementType() reflect.Type {
@@ -13006,7 +16447,7 @@ func (o ClusterBuildStrategySpecBuildStepsEnvFromSecretRefPtrOutput) Optional() 
 type ClusterBuildStrategySpecBuildStepsEnvValueFrom struct {
 	// Selects a key of a ConfigMap.
 	ConfigMapKeyRef *ClusterBuildStrategySpecBuildStepsEnvValueFromConfigMapKeyRef `pulumi:"configMapKeyRef"`
-	// Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+	// Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
 	FieldRef *ClusterBuildStrategySpecBuildStepsEnvValueFromFieldRef `pulumi:"fieldRef"`
 	// Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
 	ResourceFieldRef *ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRef `pulumi:"resourceFieldRef"`
@@ -13029,7 +16470,7 @@ type ClusterBuildStrategySpecBuildStepsEnvValueFromInput interface {
 type ClusterBuildStrategySpecBuildStepsEnvValueFromArgs struct {
 	// Selects a key of a ConfigMap.
 	ConfigMapKeyRef ClusterBuildStrategySpecBuildStepsEnvValueFromConfigMapKeyRefPtrInput `pulumi:"configMapKeyRef"`
-	// Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+	// Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
 	FieldRef ClusterBuildStrategySpecBuildStepsEnvValueFromFieldRefPtrInput `pulumi:"fieldRef"`
 	// Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
 	ResourceFieldRef ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefPtrInput `pulumi:"resourceFieldRef"`
@@ -13122,7 +16563,7 @@ func (o ClusterBuildStrategySpecBuildStepsEnvValueFromOutput) ConfigMapKeyRef() 
 	}).(ClusterBuildStrategySpecBuildStepsEnvValueFromConfigMapKeyRefPtrOutput)
 }
 
-// Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+// Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
 func (o ClusterBuildStrategySpecBuildStepsEnvValueFromOutput) FieldRef() ClusterBuildStrategySpecBuildStepsEnvValueFromFieldRefPtrOutput {
 	return o.ApplyT(func(v ClusterBuildStrategySpecBuildStepsEnvValueFrom) *ClusterBuildStrategySpecBuildStepsEnvValueFromFieldRef {
 		return v.FieldRef
@@ -13173,7 +16614,7 @@ func (o ClusterBuildStrategySpecBuildStepsEnvValueFromPtrOutput) ConfigMapKeyRef
 	}).(ClusterBuildStrategySpecBuildStepsEnvValueFromConfigMapKeyRefPtrOutput)
 }
 
-// Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+// Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
 func (o ClusterBuildStrategySpecBuildStepsEnvValueFromPtrOutput) FieldRef() ClusterBuildStrategySpecBuildStepsEnvValueFromFieldRefPtrOutput {
 	return o.ApplyT(func(v *ClusterBuildStrategySpecBuildStepsEnvValueFrom) *ClusterBuildStrategySpecBuildStepsEnvValueFromFieldRef {
 		if v == nil {
@@ -13377,7 +16818,7 @@ func (o ClusterBuildStrategySpecBuildStepsEnvValueFromConfigMapKeyRefPtrOutput) 
 	}).(pulumi.BoolPtrOutput)
 }
 
-// Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+// Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
 type ClusterBuildStrategySpecBuildStepsEnvValueFromFieldRef struct {
 	// Version of the schema the FieldPath is written in terms of, defaults to "v1".
 	ApiVersion *string `pulumi:"apiVersion"`
@@ -13396,7 +16837,7 @@ type ClusterBuildStrategySpecBuildStepsEnvValueFromFieldRefInput interface {
 	ToClusterBuildStrategySpecBuildStepsEnvValueFromFieldRefOutputWithContext(context.Context) ClusterBuildStrategySpecBuildStepsEnvValueFromFieldRefOutput
 }
 
-// Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+// Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
 type ClusterBuildStrategySpecBuildStepsEnvValueFromFieldRefArgs struct {
 	// Version of the schema the FieldPath is written in terms of, defaults to "v1".
 	ApiVersion pulumi.StringPtrInput `pulumi:"apiVersion"`
@@ -13457,7 +16898,7 @@ func (i *clusterBuildStrategySpecBuildStepsEnvValueFromFieldRefPtrType) ToCluste
 	return pulumi.ToOutputWithContext(ctx, i).(ClusterBuildStrategySpecBuildStepsEnvValueFromFieldRefPtrOutput)
 }
 
-// Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+// Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
 type ClusterBuildStrategySpecBuildStepsEnvValueFromFieldRefOutput struct{ *pulumi.OutputState }
 
 func (ClusterBuildStrategySpecBuildStepsEnvValueFromFieldRefOutput) ElementType() reflect.Type {
@@ -13537,7 +16978,7 @@ type ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRef struct {
 	// Container name: required for volumes, optional for env vars
 	ContainerName *string `pulumi:"containerName"`
 	// Specifies the output format of the exposed resources, defaults to "1"
-	Divisor *string `pulumi:"divisor"`
+	Divisor *ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisor `pulumi:"divisor"`
 	// Required: resource to select
 	Resource string `pulumi:"resource"`
 }
@@ -13558,7 +16999,7 @@ type ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefArgs struct {
 	// Container name: required for volumes, optional for env vars
 	ContainerName pulumi.StringPtrInput `pulumi:"containerName"`
 	// Specifies the output format of the exposed resources, defaults to "1"
-	Divisor pulumi.StringPtrInput `pulumi:"divisor"`
+	Divisor ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorPtrInput `pulumi:"divisor"`
 	// Required: resource to select
 	Resource pulumi.StringInput `pulumi:"resource"`
 }
@@ -13647,8 +17088,10 @@ func (o ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefOutput) Co
 }
 
 // Specifies the output format of the exposed resources, defaults to "1"
-func (o ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefOutput) Divisor() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRef) *string { return v.Divisor }).(pulumi.StringPtrOutput)
+func (o ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefOutput) Divisor() ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorPtrOutput {
+	return o.ApplyT(func(v ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRef) *ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisor {
+		return v.Divisor
+	}).(ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorPtrOutput)
 }
 
 // Required: resource to select
@@ -13687,13 +17130,13 @@ func (o ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefPtrOutput)
 }
 
 // Specifies the output format of the exposed resources, defaults to "1"
-func (o ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefPtrOutput) Divisor() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRef) *string {
+func (o ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefPtrOutput) Divisor() ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorPtrOutput {
+	return o.ApplyT(func(v *ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRef) *ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisor {
 		if v == nil {
 			return nil
 		}
 		return v.Divisor
-	}).(pulumi.StringPtrOutput)
+	}).(ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorPtrOutput)
 }
 
 // Required: resource to select
@@ -13704,6 +17147,120 @@ func (o ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefPtrOutput)
 		}
 		return &v.Resource
 	}).(pulumi.StringPtrOutput)
+}
+
+type ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisor struct {
+}
+
+// ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorInput is an input type that accepts ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorArgs and ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorOutput values.
+// You can construct a concrete instance of `ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorInput` via:
+//
+//          ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorArgs{...}
+type ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorInput interface {
+	pulumi.Input
+
+	ToClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorOutput() ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorOutput
+	ToClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorOutputWithContext(context.Context) ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorOutput
+}
+
+type ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorArgs struct {
+}
+
+func (ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisor)(nil)).Elem()
+}
+
+func (i ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorArgs) ToClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorOutput() ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorOutput {
+	return i.ToClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorOutputWithContext(context.Background())
+}
+
+func (i ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorArgs) ToClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorOutputWithContext(ctx context.Context) ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorOutput)
+}
+
+func (i ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorArgs) ToClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorPtrOutput() ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorPtrOutput {
+	return i.ToClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorPtrOutputWithContext(context.Background())
+}
+
+func (i ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorArgs) ToClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorPtrOutputWithContext(ctx context.Context) ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorOutput).ToClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorPtrOutputWithContext(ctx)
+}
+
+// ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorPtrInput is an input type that accepts ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorArgs, ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorPtr and ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorPtrOutput values.
+// You can construct a concrete instance of `ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorPtrInput` via:
+//
+//          ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorArgs{...}
+//
+//  or:
+//
+//          nil
+type ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorPtrInput interface {
+	pulumi.Input
+
+	ToClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorPtrOutput() ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorPtrOutput
+	ToClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorPtrOutputWithContext(context.Context) ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorPtrOutput
+}
+
+type clusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorPtrType ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorArgs
+
+func ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorPtr(v *ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorArgs) ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorPtrInput {
+	return (*clusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorPtrType)(v)
+}
+
+func (*clusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisor)(nil)).Elem()
+}
+
+func (i *clusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorPtrType) ToClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorPtrOutput() ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorPtrOutput {
+	return i.ToClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorPtrOutputWithContext(context.Background())
+}
+
+func (i *clusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorPtrType) ToClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorPtrOutputWithContext(ctx context.Context) ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorPtrOutput)
+}
+
+type ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorOutput struct{ *pulumi.OutputState }
+
+func (ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisor)(nil)).Elem()
+}
+
+func (o ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorOutput) ToClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorOutput() ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorOutput {
+	return o
+}
+
+func (o ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorOutput) ToClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorOutputWithContext(ctx context.Context) ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorOutput {
+	return o
+}
+
+func (o ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorOutput) ToClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorPtrOutput() ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorPtrOutput {
+	return o.ToClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorPtrOutputWithContext(context.Background())
+}
+
+func (o ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorOutput) ToClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorPtrOutputWithContext(ctx context.Context) ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorPtrOutput {
+	return o.ApplyT(func(v ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisor) *ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisor {
+		return &v
+	}).(ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorPtrOutput)
+}
+
+type ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorPtrOutput struct{ *pulumi.OutputState }
+
+func (ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisor)(nil)).Elem()
+}
+
+func (o ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorPtrOutput) ToClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorPtrOutput() ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorPtrOutput {
+	return o
+}
+
+func (o ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorPtrOutput) ToClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorPtrOutputWithContext(ctx context.Context) ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorPtrOutput {
+	return o
+}
+
+func (o ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorPtrOutput) Elem() ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorOutput {
+	return o.ApplyT(func(v *ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisor) ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisor {
+		return *v
+	}).(ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorOutput)
 }
 
 // Selects a key of a secret in the pod's namespace
@@ -18472,9 +22029,9 @@ func (o ClusterBuildStrategySpecBuildStepsReadinessProbeTcpSocketPortPtrOutput) 
 // Compute Resources required by this container. Cannot be updated. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
 type ClusterBuildStrategySpecBuildStepsResources struct {
 	// Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-	Limits map[string]string `pulumi:"limits"`
+	Limits map[string]ClusterBuildStrategySpecBuildStepsResourcesLimits `pulumi:"limits"`
 	// Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-	Requests map[string]string `pulumi:"requests"`
+	Requests map[string]ClusterBuildStrategySpecBuildStepsResourcesRequests `pulumi:"requests"`
 }
 
 // ClusterBuildStrategySpecBuildStepsResourcesInput is an input type that accepts ClusterBuildStrategySpecBuildStepsResourcesArgs and ClusterBuildStrategySpecBuildStepsResourcesOutput values.
@@ -18491,9 +22048,9 @@ type ClusterBuildStrategySpecBuildStepsResourcesInput interface {
 // Compute Resources required by this container. Cannot be updated. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
 type ClusterBuildStrategySpecBuildStepsResourcesArgs struct {
 	// Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-	Limits pulumi.StringMapInput `pulumi:"limits"`
+	Limits ClusterBuildStrategySpecBuildStepsResourcesLimitsMapInput `pulumi:"limits"`
 	// Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-	Requests pulumi.StringMapInput `pulumi:"requests"`
+	Requests ClusterBuildStrategySpecBuildStepsResourcesRequestsMapInput `pulumi:"requests"`
 }
 
 func (ClusterBuildStrategySpecBuildStepsResourcesArgs) ElementType() reflect.Type {
@@ -18575,13 +22132,17 @@ func (o ClusterBuildStrategySpecBuildStepsResourcesOutput) ToClusterBuildStrateg
 }
 
 // Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-func (o ClusterBuildStrategySpecBuildStepsResourcesOutput) Limits() pulumi.StringMapOutput {
-	return o.ApplyT(func(v ClusterBuildStrategySpecBuildStepsResources) map[string]string { return v.Limits }).(pulumi.StringMapOutput)
+func (o ClusterBuildStrategySpecBuildStepsResourcesOutput) Limits() ClusterBuildStrategySpecBuildStepsResourcesLimitsMapOutput {
+	return o.ApplyT(func(v ClusterBuildStrategySpecBuildStepsResources) map[string]ClusterBuildStrategySpecBuildStepsResourcesLimits {
+		return v.Limits
+	}).(ClusterBuildStrategySpecBuildStepsResourcesLimitsMapOutput)
 }
 
 // Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-func (o ClusterBuildStrategySpecBuildStepsResourcesOutput) Requests() pulumi.StringMapOutput {
-	return o.ApplyT(func(v ClusterBuildStrategySpecBuildStepsResources) map[string]string { return v.Requests }).(pulumi.StringMapOutput)
+func (o ClusterBuildStrategySpecBuildStepsResourcesOutput) Requests() ClusterBuildStrategySpecBuildStepsResourcesRequestsMapOutput {
+	return o.ApplyT(func(v ClusterBuildStrategySpecBuildStepsResources) map[string]ClusterBuildStrategySpecBuildStepsResourcesRequests {
+		return v.Requests
+	}).(ClusterBuildStrategySpecBuildStepsResourcesRequestsMapOutput)
 }
 
 type ClusterBuildStrategySpecBuildStepsResourcesPtrOutput struct{ *pulumi.OutputState }
@@ -18605,26 +22166,25 @@ func (o ClusterBuildStrategySpecBuildStepsResourcesPtrOutput) Elem() ClusterBuil
 }
 
 // Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-func (o ClusterBuildStrategySpecBuildStepsResourcesPtrOutput) Limits() pulumi.StringMapOutput {
-	return o.ApplyT(func(v *ClusterBuildStrategySpecBuildStepsResources) map[string]string {
+func (o ClusterBuildStrategySpecBuildStepsResourcesPtrOutput) Limits() ClusterBuildStrategySpecBuildStepsResourcesLimitsMapOutput {
+	return o.ApplyT(func(v *ClusterBuildStrategySpecBuildStepsResources) map[string]ClusterBuildStrategySpecBuildStepsResourcesLimits {
 		if v == nil {
 			return nil
 		}
 		return v.Limits
-	}).(pulumi.StringMapOutput)
+	}).(ClusterBuildStrategySpecBuildStepsResourcesLimitsMapOutput)
 }
 
 // Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-func (o ClusterBuildStrategySpecBuildStepsResourcesPtrOutput) Requests() pulumi.StringMapOutput {
-	return o.ApplyT(func(v *ClusterBuildStrategySpecBuildStepsResources) map[string]string {
+func (o ClusterBuildStrategySpecBuildStepsResourcesPtrOutput) Requests() ClusterBuildStrategySpecBuildStepsResourcesRequestsMapOutput {
+	return o.ApplyT(func(v *ClusterBuildStrategySpecBuildStepsResources) map[string]ClusterBuildStrategySpecBuildStepsResourcesRequests {
 		if v == nil {
 			return nil
 		}
 		return v.Requests
-	}).(pulumi.StringMapOutput)
+	}).(ClusterBuildStrategySpecBuildStepsResourcesRequestsMapOutput)
 }
 
-// Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
 type ClusterBuildStrategySpecBuildStepsResourcesLimits struct {
 }
 
@@ -18639,7 +22199,6 @@ type ClusterBuildStrategySpecBuildStepsResourcesLimitsInput interface {
 	ToClusterBuildStrategySpecBuildStepsResourcesLimitsOutputWithContext(context.Context) ClusterBuildStrategySpecBuildStepsResourcesLimitsOutput
 }
 
-// Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
 type ClusterBuildStrategySpecBuildStepsResourcesLimitsArgs struct {
 }
 
@@ -18655,7 +22214,31 @@ func (i ClusterBuildStrategySpecBuildStepsResourcesLimitsArgs) ToClusterBuildStr
 	return pulumi.ToOutputWithContext(ctx, i).(ClusterBuildStrategySpecBuildStepsResourcesLimitsOutput)
 }
 
-// Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
+// ClusterBuildStrategySpecBuildStepsResourcesLimitsMapInput is an input type that accepts ClusterBuildStrategySpecBuildStepsResourcesLimitsMap and ClusterBuildStrategySpecBuildStepsResourcesLimitsMapOutput values.
+// You can construct a concrete instance of `ClusterBuildStrategySpecBuildStepsResourcesLimitsMapInput` via:
+//
+//          ClusterBuildStrategySpecBuildStepsResourcesLimitsMap{ "key": ClusterBuildStrategySpecBuildStepsResourcesLimitsArgs{...} }
+type ClusterBuildStrategySpecBuildStepsResourcesLimitsMapInput interface {
+	pulumi.Input
+
+	ToClusterBuildStrategySpecBuildStepsResourcesLimitsMapOutput() ClusterBuildStrategySpecBuildStepsResourcesLimitsMapOutput
+	ToClusterBuildStrategySpecBuildStepsResourcesLimitsMapOutputWithContext(context.Context) ClusterBuildStrategySpecBuildStepsResourcesLimitsMapOutput
+}
+
+type ClusterBuildStrategySpecBuildStepsResourcesLimitsMap map[string]ClusterBuildStrategySpecBuildStepsResourcesLimitsInput
+
+func (ClusterBuildStrategySpecBuildStepsResourcesLimitsMap) ElementType() reflect.Type {
+	return reflect.TypeOf((*map[string]ClusterBuildStrategySpecBuildStepsResourcesLimits)(nil)).Elem()
+}
+
+func (i ClusterBuildStrategySpecBuildStepsResourcesLimitsMap) ToClusterBuildStrategySpecBuildStepsResourcesLimitsMapOutput() ClusterBuildStrategySpecBuildStepsResourcesLimitsMapOutput {
+	return i.ToClusterBuildStrategySpecBuildStepsResourcesLimitsMapOutputWithContext(context.Background())
+}
+
+func (i ClusterBuildStrategySpecBuildStepsResourcesLimitsMap) ToClusterBuildStrategySpecBuildStepsResourcesLimitsMapOutputWithContext(ctx context.Context) ClusterBuildStrategySpecBuildStepsResourcesLimitsMapOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(ClusterBuildStrategySpecBuildStepsResourcesLimitsMapOutput)
+}
+
 type ClusterBuildStrategySpecBuildStepsResourcesLimitsOutput struct{ *pulumi.OutputState }
 
 func (ClusterBuildStrategySpecBuildStepsResourcesLimitsOutput) ElementType() reflect.Type {
@@ -18670,7 +22253,26 @@ func (o ClusterBuildStrategySpecBuildStepsResourcesLimitsOutput) ToClusterBuildS
 	return o
 }
 
-// Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
+type ClusterBuildStrategySpecBuildStepsResourcesLimitsMapOutput struct{ *pulumi.OutputState }
+
+func (ClusterBuildStrategySpecBuildStepsResourcesLimitsMapOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*map[string]ClusterBuildStrategySpecBuildStepsResourcesLimits)(nil)).Elem()
+}
+
+func (o ClusterBuildStrategySpecBuildStepsResourcesLimitsMapOutput) ToClusterBuildStrategySpecBuildStepsResourcesLimitsMapOutput() ClusterBuildStrategySpecBuildStepsResourcesLimitsMapOutput {
+	return o
+}
+
+func (o ClusterBuildStrategySpecBuildStepsResourcesLimitsMapOutput) ToClusterBuildStrategySpecBuildStepsResourcesLimitsMapOutputWithContext(ctx context.Context) ClusterBuildStrategySpecBuildStepsResourcesLimitsMapOutput {
+	return o
+}
+
+func (o ClusterBuildStrategySpecBuildStepsResourcesLimitsMapOutput) MapIndex(k pulumi.StringInput) ClusterBuildStrategySpecBuildStepsResourcesLimitsOutput {
+	return pulumi.All(o, k).ApplyT(func(vs []interface{}) ClusterBuildStrategySpecBuildStepsResourcesLimits {
+		return vs[0].(map[string]ClusterBuildStrategySpecBuildStepsResourcesLimits)[vs[1].(string)]
+	}).(ClusterBuildStrategySpecBuildStepsResourcesLimitsOutput)
+}
+
 type ClusterBuildStrategySpecBuildStepsResourcesRequests struct {
 }
 
@@ -18685,7 +22287,6 @@ type ClusterBuildStrategySpecBuildStepsResourcesRequestsInput interface {
 	ToClusterBuildStrategySpecBuildStepsResourcesRequestsOutputWithContext(context.Context) ClusterBuildStrategySpecBuildStepsResourcesRequestsOutput
 }
 
-// Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
 type ClusterBuildStrategySpecBuildStepsResourcesRequestsArgs struct {
 }
 
@@ -18701,7 +22302,31 @@ func (i ClusterBuildStrategySpecBuildStepsResourcesRequestsArgs) ToClusterBuildS
 	return pulumi.ToOutputWithContext(ctx, i).(ClusterBuildStrategySpecBuildStepsResourcesRequestsOutput)
 }
 
-// Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
+// ClusterBuildStrategySpecBuildStepsResourcesRequestsMapInput is an input type that accepts ClusterBuildStrategySpecBuildStepsResourcesRequestsMap and ClusterBuildStrategySpecBuildStepsResourcesRequestsMapOutput values.
+// You can construct a concrete instance of `ClusterBuildStrategySpecBuildStepsResourcesRequestsMapInput` via:
+//
+//          ClusterBuildStrategySpecBuildStepsResourcesRequestsMap{ "key": ClusterBuildStrategySpecBuildStepsResourcesRequestsArgs{...} }
+type ClusterBuildStrategySpecBuildStepsResourcesRequestsMapInput interface {
+	pulumi.Input
+
+	ToClusterBuildStrategySpecBuildStepsResourcesRequestsMapOutput() ClusterBuildStrategySpecBuildStepsResourcesRequestsMapOutput
+	ToClusterBuildStrategySpecBuildStepsResourcesRequestsMapOutputWithContext(context.Context) ClusterBuildStrategySpecBuildStepsResourcesRequestsMapOutput
+}
+
+type ClusterBuildStrategySpecBuildStepsResourcesRequestsMap map[string]ClusterBuildStrategySpecBuildStepsResourcesRequestsInput
+
+func (ClusterBuildStrategySpecBuildStepsResourcesRequestsMap) ElementType() reflect.Type {
+	return reflect.TypeOf((*map[string]ClusterBuildStrategySpecBuildStepsResourcesRequests)(nil)).Elem()
+}
+
+func (i ClusterBuildStrategySpecBuildStepsResourcesRequestsMap) ToClusterBuildStrategySpecBuildStepsResourcesRequestsMapOutput() ClusterBuildStrategySpecBuildStepsResourcesRequestsMapOutput {
+	return i.ToClusterBuildStrategySpecBuildStepsResourcesRequestsMapOutputWithContext(context.Background())
+}
+
+func (i ClusterBuildStrategySpecBuildStepsResourcesRequestsMap) ToClusterBuildStrategySpecBuildStepsResourcesRequestsMapOutputWithContext(ctx context.Context) ClusterBuildStrategySpecBuildStepsResourcesRequestsMapOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(ClusterBuildStrategySpecBuildStepsResourcesRequestsMapOutput)
+}
+
 type ClusterBuildStrategySpecBuildStepsResourcesRequestsOutput struct{ *pulumi.OutputState }
 
 func (ClusterBuildStrategySpecBuildStepsResourcesRequestsOutput) ElementType() reflect.Type {
@@ -18714,6 +22339,26 @@ func (o ClusterBuildStrategySpecBuildStepsResourcesRequestsOutput) ToClusterBuil
 
 func (o ClusterBuildStrategySpecBuildStepsResourcesRequestsOutput) ToClusterBuildStrategySpecBuildStepsResourcesRequestsOutputWithContext(ctx context.Context) ClusterBuildStrategySpecBuildStepsResourcesRequestsOutput {
 	return o
+}
+
+type ClusterBuildStrategySpecBuildStepsResourcesRequestsMapOutput struct{ *pulumi.OutputState }
+
+func (ClusterBuildStrategySpecBuildStepsResourcesRequestsMapOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*map[string]ClusterBuildStrategySpecBuildStepsResourcesRequests)(nil)).Elem()
+}
+
+func (o ClusterBuildStrategySpecBuildStepsResourcesRequestsMapOutput) ToClusterBuildStrategySpecBuildStepsResourcesRequestsMapOutput() ClusterBuildStrategySpecBuildStepsResourcesRequestsMapOutput {
+	return o
+}
+
+func (o ClusterBuildStrategySpecBuildStepsResourcesRequestsMapOutput) ToClusterBuildStrategySpecBuildStepsResourcesRequestsMapOutputWithContext(ctx context.Context) ClusterBuildStrategySpecBuildStepsResourcesRequestsMapOutput {
+	return o
+}
+
+func (o ClusterBuildStrategySpecBuildStepsResourcesRequestsMapOutput) MapIndex(k pulumi.StringInput) ClusterBuildStrategySpecBuildStepsResourcesRequestsOutput {
+	return pulumi.All(o, k).ApplyT(func(vs []interface{}) ClusterBuildStrategySpecBuildStepsResourcesRequests {
+		return vs[0].(map[string]ClusterBuildStrategySpecBuildStepsResourcesRequests)[vs[1].(string)]
+	}).(ClusterBuildStrategySpecBuildStepsResourcesRequestsOutput)
 }
 
 // Security options the pod should run with. More info: https://kubernetes.io/docs/concepts/policy/security-context/ More info: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
@@ -19383,7 +23028,7 @@ type ClusterBuildStrategySpecBuildStepsSecurityContextWindowsOptions struct {
 	GmsaCredentialSpec *string `pulumi:"gmsaCredentialSpec"`
 	// GMSACredentialSpecName is the name of the GMSA credential spec to use. This field is alpha-level and is only honored by servers that enable the WindowsGMSA feature flag.
 	GmsaCredentialSpecName *string `pulumi:"gmsaCredentialSpecName"`
-	// The UserName in Windows to run the entrypoint of the container process. Defaults to the user specified in image metadata if unspecified. May also be set in PodSecurityContext. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence. This field is alpha-level and it is only honored by servers that enable the WindowsRunAsUserName feature flag.
+	// The UserName in Windows to run the entrypoint of the container process. Defaults to the user specified in image metadata if unspecified. May also be set in PodSecurityContext. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence. This field is beta-level and may be disabled with the WindowsRunAsUserName feature flag.
 	RunAsUserName *string `pulumi:"runAsUserName"`
 }
 
@@ -19404,7 +23049,7 @@ type ClusterBuildStrategySpecBuildStepsSecurityContextWindowsOptionsArgs struct 
 	GmsaCredentialSpec pulumi.StringPtrInput `pulumi:"gmsaCredentialSpec"`
 	// GMSACredentialSpecName is the name of the GMSA credential spec to use. This field is alpha-level and is only honored by servers that enable the WindowsGMSA feature flag.
 	GmsaCredentialSpecName pulumi.StringPtrInput `pulumi:"gmsaCredentialSpecName"`
-	// The UserName in Windows to run the entrypoint of the container process. Defaults to the user specified in image metadata if unspecified. May also be set in PodSecurityContext. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence. This field is alpha-level and it is only honored by servers that enable the WindowsRunAsUserName feature flag.
+	// The UserName in Windows to run the entrypoint of the container process. Defaults to the user specified in image metadata if unspecified. May also be set in PodSecurityContext. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence. This field is beta-level and may be disabled with the WindowsRunAsUserName feature flag.
 	RunAsUserName pulumi.StringPtrInput `pulumi:"runAsUserName"`
 }
 
@@ -19500,7 +23145,7 @@ func (o ClusterBuildStrategySpecBuildStepsSecurityContextWindowsOptionsOutput) G
 	}).(pulumi.StringPtrOutput)
 }
 
-// The UserName in Windows to run the entrypoint of the container process. Defaults to the user specified in image metadata if unspecified. May also be set in PodSecurityContext. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence. This field is alpha-level and it is only honored by servers that enable the WindowsRunAsUserName feature flag.
+// The UserName in Windows to run the entrypoint of the container process. Defaults to the user specified in image metadata if unspecified. May also be set in PodSecurityContext. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence. This field is beta-level and may be disabled with the WindowsRunAsUserName feature flag.
 func (o ClusterBuildStrategySpecBuildStepsSecurityContextWindowsOptionsOutput) RunAsUserName() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v ClusterBuildStrategySpecBuildStepsSecurityContextWindowsOptions) *string {
 		return v.RunAsUserName
@@ -19547,7 +23192,7 @@ func (o ClusterBuildStrategySpecBuildStepsSecurityContextWindowsOptionsPtrOutput
 	}).(pulumi.StringPtrOutput)
 }
 
-// The UserName in Windows to run the entrypoint of the container process. Defaults to the user specified in image metadata if unspecified. May also be set in PodSecurityContext. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence. This field is alpha-level and it is only honored by servers that enable the WindowsRunAsUserName feature flag.
+// The UserName in Windows to run the entrypoint of the container process. Defaults to the user specified in image metadata if unspecified. May also be set in PodSecurityContext. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence. This field is beta-level and may be disabled with the WindowsRunAsUserName feature flag.
 func (o ClusterBuildStrategySpecBuildStepsSecurityContextWindowsOptionsPtrOutput) RunAsUserName() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *ClusterBuildStrategySpecBuildStepsSecurityContextWindowsOptions) *string {
 		if v == nil {
@@ -20799,7 +24444,7 @@ type ClusterBuildStrategySpecBuildStepsVolumeMounts struct {
 	ReadOnly *bool `pulumi:"readOnly"`
 	// Path within the volume from which the container's volume should be mounted. Defaults to "" (volume's root).
 	SubPath *string `pulumi:"subPath"`
-	// Expanded path within the volume from which the container's volume should be mounted. Behaves similarly to SubPath but environment variable references $(VAR_NAME) are expanded using the container's environment. Defaults to "" (volume's root). SubPathExpr and SubPath are mutually exclusive. This field is beta in 1.15.
+	// Expanded path within the volume from which the container's volume should be mounted. Behaves similarly to SubPath but environment variable references $(VAR_NAME) are expanded using the container's environment. Defaults to "" (volume's root). SubPathExpr and SubPath are mutually exclusive.
 	SubPathExpr *string `pulumi:"subPathExpr"`
 }
 
@@ -20826,7 +24471,7 @@ type ClusterBuildStrategySpecBuildStepsVolumeMountsArgs struct {
 	ReadOnly pulumi.BoolPtrInput `pulumi:"readOnly"`
 	// Path within the volume from which the container's volume should be mounted. Defaults to "" (volume's root).
 	SubPath pulumi.StringPtrInput `pulumi:"subPath"`
-	// Expanded path within the volume from which the container's volume should be mounted. Behaves similarly to SubPath but environment variable references $(VAR_NAME) are expanded using the container's environment. Defaults to "" (volume's root). SubPathExpr and SubPath are mutually exclusive. This field is beta in 1.15.
+	// Expanded path within the volume from which the container's volume should be mounted. Behaves similarly to SubPath but environment variable references $(VAR_NAME) are expanded using the container's environment. Defaults to "" (volume's root). SubPathExpr and SubPath are mutually exclusive.
 	SubPathExpr pulumi.StringPtrInput `pulumi:"subPathExpr"`
 }
 
@@ -20907,7 +24552,7 @@ func (o ClusterBuildStrategySpecBuildStepsVolumeMountsOutput) SubPath() pulumi.S
 	return o.ApplyT(func(v ClusterBuildStrategySpecBuildStepsVolumeMounts) *string { return v.SubPath }).(pulumi.StringPtrOutput)
 }
 
-// Expanded path within the volume from which the container's volume should be mounted. Behaves similarly to SubPath but environment variable references $(VAR_NAME) are expanded using the container's environment. Defaults to "" (volume's root). SubPathExpr and SubPath are mutually exclusive. This field is beta in 1.15.
+// Expanded path within the volume from which the container's volume should be mounted. Behaves similarly to SubPath but environment variable references $(VAR_NAME) are expanded using the container's environment. Defaults to "" (volume's root). SubPathExpr and SubPath are mutually exclusive.
 func (o ClusterBuildStrategySpecBuildStepsVolumeMountsOutput) SubPathExpr() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v ClusterBuildStrategySpecBuildStepsVolumeMounts) *string { return v.SubPathExpr }).(pulumi.StringPtrOutput)
 }
@@ -20987,12 +24632,42 @@ func init() {
 	pulumi.RegisterOutputType(BuildRunSpecPtrOutput{})
 	pulumi.RegisterOutputType(BuildRunSpecBuildRefOutput{})
 	pulumi.RegisterOutputType(BuildRunSpecBuildRefPtrOutput{})
-	pulumi.RegisterOutputType(BuildRunSpecResourcesOutput{})
-	pulumi.RegisterOutputType(BuildRunSpecResourcesPtrOutput{})
-	pulumi.RegisterOutputType(BuildRunSpecResourcesLimitsOutput{})
-	pulumi.RegisterOutputType(BuildRunSpecResourcesRequestsOutput{})
+	pulumi.RegisterOutputType(BuildRunSpecOutputOutput{})
+	pulumi.RegisterOutputType(BuildRunSpecOutputPtrOutput{})
+	pulumi.RegisterOutputType(BuildRunSpecOutputCredentialsOutput{})
+	pulumi.RegisterOutputType(BuildRunSpecOutputCredentialsPtrOutput{})
+	pulumi.RegisterOutputType(BuildRunSpecServiceAccountOutput{})
+	pulumi.RegisterOutputType(BuildRunSpecServiceAccountPtrOutput{})
 	pulumi.RegisterOutputType(BuildRunStatusOutput{})
 	pulumi.RegisterOutputType(BuildRunStatusPtrOutput{})
+	pulumi.RegisterOutputType(BuildRunStatusBuildSpecOutput{})
+	pulumi.RegisterOutputType(BuildRunStatusBuildSpecPtrOutput{})
+	pulumi.RegisterOutputType(BuildRunStatusBuildSpecBuilderOutput{})
+	pulumi.RegisterOutputType(BuildRunStatusBuildSpecBuilderPtrOutput{})
+	pulumi.RegisterOutputType(BuildRunStatusBuildSpecBuilderCredentialsOutput{})
+	pulumi.RegisterOutputType(BuildRunStatusBuildSpecBuilderCredentialsPtrOutput{})
+	pulumi.RegisterOutputType(BuildRunStatusBuildSpecOutputOutput{})
+	pulumi.RegisterOutputType(BuildRunStatusBuildSpecOutputPtrOutput{})
+	pulumi.RegisterOutputType(BuildRunStatusBuildSpecOutputCredentialsOutput{})
+	pulumi.RegisterOutputType(BuildRunStatusBuildSpecOutputCredentialsPtrOutput{})
+	pulumi.RegisterOutputType(BuildRunStatusBuildSpecParametersOutput{})
+	pulumi.RegisterOutputType(BuildRunStatusBuildSpecParametersArrayOutput{})
+	pulumi.RegisterOutputType(BuildRunStatusBuildSpecRuntimeOutput{})
+	pulumi.RegisterOutputType(BuildRunStatusBuildSpecRuntimePtrOutput{})
+	pulumi.RegisterOutputType(BuildRunStatusBuildSpecRuntimeBaseOutput{})
+	pulumi.RegisterOutputType(BuildRunStatusBuildSpecRuntimeBasePtrOutput{})
+	pulumi.RegisterOutputType(BuildRunStatusBuildSpecRuntimeBaseCredentialsOutput{})
+	pulumi.RegisterOutputType(BuildRunStatusBuildSpecRuntimeBaseCredentialsPtrOutput{})
+	pulumi.RegisterOutputType(BuildRunStatusBuildSpecRuntimeEnvOutput{})
+	pulumi.RegisterOutputType(BuildRunStatusBuildSpecRuntimeLabelsOutput{})
+	pulumi.RegisterOutputType(BuildRunStatusBuildSpecRuntimeUserOutput{})
+	pulumi.RegisterOutputType(BuildRunStatusBuildSpecRuntimeUserPtrOutput{})
+	pulumi.RegisterOutputType(BuildRunStatusBuildSpecSourceOutput{})
+	pulumi.RegisterOutputType(BuildRunStatusBuildSpecSourcePtrOutput{})
+	pulumi.RegisterOutputType(BuildRunStatusBuildSpecSourceCredentialsOutput{})
+	pulumi.RegisterOutputType(BuildRunStatusBuildSpecSourceCredentialsPtrOutput{})
+	pulumi.RegisterOutputType(BuildRunStatusBuildSpecStrategyOutput{})
+	pulumi.RegisterOutputType(BuildRunStatusBuildSpecStrategyPtrOutput{})
 	pulumi.RegisterOutputType(BuildSpecOutput{})
 	pulumi.RegisterOutputType(BuildSpecPtrOutput{})
 	pulumi.RegisterOutputType(BuildSpecBuilderOutput{})
@@ -21005,10 +24680,16 @@ func init() {
 	pulumi.RegisterOutputType(BuildSpecOutputCredentialsPtrOutput{})
 	pulumi.RegisterOutputType(BuildSpecParametersOutput{})
 	pulumi.RegisterOutputType(BuildSpecParametersArrayOutput{})
-	pulumi.RegisterOutputType(BuildSpecResourcesOutput{})
-	pulumi.RegisterOutputType(BuildSpecResourcesPtrOutput{})
-	pulumi.RegisterOutputType(BuildSpecResourcesLimitsOutput{})
-	pulumi.RegisterOutputType(BuildSpecResourcesRequestsOutput{})
+	pulumi.RegisterOutputType(BuildSpecRuntimeOutput{})
+	pulumi.RegisterOutputType(BuildSpecRuntimePtrOutput{})
+	pulumi.RegisterOutputType(BuildSpecRuntimeBaseOutput{})
+	pulumi.RegisterOutputType(BuildSpecRuntimeBasePtrOutput{})
+	pulumi.RegisterOutputType(BuildSpecRuntimeBaseCredentialsOutput{})
+	pulumi.RegisterOutputType(BuildSpecRuntimeBaseCredentialsPtrOutput{})
+	pulumi.RegisterOutputType(BuildSpecRuntimeEnvOutput{})
+	pulumi.RegisterOutputType(BuildSpecRuntimeLabelsOutput{})
+	pulumi.RegisterOutputType(BuildSpecRuntimeUserOutput{})
+	pulumi.RegisterOutputType(BuildSpecRuntimeUserPtrOutput{})
 	pulumi.RegisterOutputType(BuildSpecSourceOutput{})
 	pulumi.RegisterOutputType(BuildSpecSourcePtrOutput{})
 	pulumi.RegisterOutputType(BuildSpecSourceCredentialsOutput{})
@@ -21016,6 +24697,7 @@ func init() {
 	pulumi.RegisterOutputType(BuildSpecStrategyOutput{})
 	pulumi.RegisterOutputType(BuildSpecStrategyPtrOutput{})
 	pulumi.RegisterOutputType(BuildStatusOutput{})
+	pulumi.RegisterOutputType(BuildStatusPtrOutput{})
 	pulumi.RegisterOutputType(BuildStrategyTypeOutput{})
 	pulumi.RegisterOutputType(BuildStrategyMetadataOutput{})
 	pulumi.RegisterOutputType(BuildStrategySpecOutput{})
@@ -21038,6 +24720,8 @@ func init() {
 	pulumi.RegisterOutputType(BuildStrategySpecBuildStepsEnvValueFromFieldRefPtrOutput{})
 	pulumi.RegisterOutputType(BuildStrategySpecBuildStepsEnvValueFromResourceFieldRefOutput{})
 	pulumi.RegisterOutputType(BuildStrategySpecBuildStepsEnvValueFromResourceFieldRefPtrOutput{})
+	pulumi.RegisterOutputType(BuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorOutput{})
+	pulumi.RegisterOutputType(BuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorPtrOutput{})
 	pulumi.RegisterOutputType(BuildStrategySpecBuildStepsEnvValueFromSecretKeyRefOutput{})
 	pulumi.RegisterOutputType(BuildStrategySpecBuildStepsEnvValueFromSecretKeyRefPtrOutput{})
 	pulumi.RegisterOutputType(BuildStrategySpecBuildStepsLifecycleOutput{})
@@ -21103,7 +24787,9 @@ func init() {
 	pulumi.RegisterOutputType(BuildStrategySpecBuildStepsResourcesOutput{})
 	pulumi.RegisterOutputType(BuildStrategySpecBuildStepsResourcesPtrOutput{})
 	pulumi.RegisterOutputType(BuildStrategySpecBuildStepsResourcesLimitsOutput{})
+	pulumi.RegisterOutputType(BuildStrategySpecBuildStepsResourcesLimitsMapOutput{})
 	pulumi.RegisterOutputType(BuildStrategySpecBuildStepsResourcesRequestsOutput{})
+	pulumi.RegisterOutputType(BuildStrategySpecBuildStepsResourcesRequestsMapOutput{})
 	pulumi.RegisterOutputType(BuildStrategySpecBuildStepsSecurityContextOutput{})
 	pulumi.RegisterOutputType(BuildStrategySpecBuildStepsSecurityContextPtrOutput{})
 	pulumi.RegisterOutputType(BuildStrategySpecBuildStepsSecurityContextCapabilitiesOutput{})
@@ -21153,6 +24839,8 @@ func init() {
 	pulumi.RegisterOutputType(ClusterBuildStrategySpecBuildStepsEnvValueFromFieldRefPtrOutput{})
 	pulumi.RegisterOutputType(ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefOutput{})
 	pulumi.RegisterOutputType(ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefPtrOutput{})
+	pulumi.RegisterOutputType(ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorOutput{})
+	pulumi.RegisterOutputType(ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorPtrOutput{})
 	pulumi.RegisterOutputType(ClusterBuildStrategySpecBuildStepsEnvValueFromSecretKeyRefOutput{})
 	pulumi.RegisterOutputType(ClusterBuildStrategySpecBuildStepsEnvValueFromSecretKeyRefPtrOutput{})
 	pulumi.RegisterOutputType(ClusterBuildStrategySpecBuildStepsLifecycleOutput{})
@@ -21218,7 +24906,9 @@ func init() {
 	pulumi.RegisterOutputType(ClusterBuildStrategySpecBuildStepsResourcesOutput{})
 	pulumi.RegisterOutputType(ClusterBuildStrategySpecBuildStepsResourcesPtrOutput{})
 	pulumi.RegisterOutputType(ClusterBuildStrategySpecBuildStepsResourcesLimitsOutput{})
+	pulumi.RegisterOutputType(ClusterBuildStrategySpecBuildStepsResourcesLimitsMapOutput{})
 	pulumi.RegisterOutputType(ClusterBuildStrategySpecBuildStepsResourcesRequestsOutput{})
+	pulumi.RegisterOutputType(ClusterBuildStrategySpecBuildStepsResourcesRequestsMapOutput{})
 	pulumi.RegisterOutputType(ClusterBuildStrategySpecBuildStepsSecurityContextOutput{})
 	pulumi.RegisterOutputType(ClusterBuildStrategySpecBuildStepsSecurityContextPtrOutput{})
 	pulumi.RegisterOutputType(ClusterBuildStrategySpecBuildStepsSecurityContextCapabilitiesOutput{})

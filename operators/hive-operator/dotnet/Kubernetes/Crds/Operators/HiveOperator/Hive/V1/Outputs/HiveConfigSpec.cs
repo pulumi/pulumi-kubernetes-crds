@@ -22,6 +22,10 @@ namespace Pulumi.Kubernetes.Types.Outputs.Hive.V1
         /// </summary>
         public readonly Pulumi.Kubernetes.Types.Outputs.Hive.V1.HiveConfigSpecBackup Backup;
         /// <summary>
+        /// ControllersConfig is used to configure different hive controllers
+        /// </summary>
+        public readonly Pulumi.Kubernetes.Types.Outputs.Hive.V1.HiveConfigSpecControllersConfig ControllersConfig;
+        /// <summary>
         /// DeleteProtection can be set to "enabled" to turn on automatic delete protection for ClusterDeployments. When enabled, Hive will add the "hive.openshift.io/protected-delete" annotation to new ClusterDeployments. Once a ClusterDeployment has been installed, a user must remove the annotation from a ClusterDeployment prior to deleting it.
         /// </summary>
         public readonly string DeleteProtection;
@@ -41,10 +45,6 @@ namespace Pulumi.Kubernetes.Types.Outputs.Hive.V1
         /// GlobalPullSecretRef is used to specify a pull secret that will be used globally by all of the cluster deployments. For each cluster deployment, the contents of GlobalPullSecret will be merged with the specific pull secret for a cluster deployment(if specified), with precedence given to the contents of the pull secret for the cluster deployment. The global pull secret is assumed to be in the TargetNamespace.
         /// </summary>
         public readonly Pulumi.Kubernetes.Types.Outputs.Hive.V1.HiveConfigSpecGlobalPullSecretRef GlobalPullSecretRef;
-        /// <summary>
-        /// HiveAPIEnabled is a boolean controlling whether or not the Hive operator will start up the v1alpha1 aggregated API server.
-        /// </summary>
-        public readonly bool HiveAPIEnabled;
         /// <summary>
         /// LogLevel is the level of logging to use for the Hive controllers. Acceptable levels, from coarsest to finest, are panic, fatal, error, warn, info, debug, and trace. The default level is info.
         /// </summary>
@@ -72,6 +72,8 @@ namespace Pulumi.Kubernetes.Types.Outputs.Hive.V1
 
             Pulumi.Kubernetes.Types.Outputs.Hive.V1.HiveConfigSpecBackup backup,
 
+            Pulumi.Kubernetes.Types.Outputs.Hive.V1.HiveConfigSpecControllersConfig controllersConfig,
+
             string deleteProtection,
 
             bool deprovisionsDisabled,
@@ -81,8 +83,6 @@ namespace Pulumi.Kubernetes.Types.Outputs.Hive.V1
             Pulumi.Kubernetes.Types.Outputs.Hive.V1.HiveConfigSpecFailedProvisionConfig failedProvisionConfig,
 
             Pulumi.Kubernetes.Types.Outputs.Hive.V1.HiveConfigSpecGlobalPullSecretRef globalPullSecretRef,
-
-            bool hiveAPIEnabled,
 
             string logLevel,
 
@@ -96,12 +96,12 @@ namespace Pulumi.Kubernetes.Types.Outputs.Hive.V1
         {
             AdditionalCertificateAuthoritiesSecretRef = additionalCertificateAuthoritiesSecretRef;
             Backup = backup;
+            ControllersConfig = controllersConfig;
             DeleteProtection = deleteProtection;
             DeprovisionsDisabled = deprovisionsDisabled;
             DisabledControllers = disabledControllers;
             FailedProvisionConfig = failedProvisionConfig;
             GlobalPullSecretRef = globalPullSecretRef;
-            HiveAPIEnabled = hiveAPIEnabled;
             LogLevel = logLevel;
             MaintenanceMode = maintenanceMode;
             ManagedDomains = managedDomains;

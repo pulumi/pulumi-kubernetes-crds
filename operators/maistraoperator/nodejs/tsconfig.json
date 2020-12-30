@@ -14,7 +14,17 @@
     },
     "files": [
         "index.ts",
+        "maistra/index.ts",
+        "maistra/v1/index.ts",
+        "maistra/v1/serviceMeshControlPlane.ts",
+        "maistra/v1/serviceMeshMember.ts",
+        "maistra/v1/serviceMeshMemberRoll.ts",
+        "maistra/v2/index.ts",
+        "maistra/v2/serviceMeshControlPlane.ts",
         "provider.ts",
+        "types/index.ts",
+        "types/input.ts",
+        "types/output.ts",
         "utilities.ts"
     ]
 }

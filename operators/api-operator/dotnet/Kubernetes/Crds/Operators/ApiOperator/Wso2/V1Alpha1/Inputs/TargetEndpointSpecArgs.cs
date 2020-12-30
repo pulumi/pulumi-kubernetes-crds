@@ -10,37 +10,40 @@ using Pulumi.Serialization;
 namespace Pulumi.Kubernetes.Types.Inputs.Wso2.V1Alpha1
 {
 
+    /// <summary>
+    /// TargetEndpointSpec defines the desired state of TargetEndpoint
+    /// </summary>
     public class TargetEndpointSpecArgs : Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// Protocol of the application. Supports "http" and "https".
+        /// </summary>
+        [Input("applicationProtocol", required: true)]
+        public Input<string> ApplicationProtocol { get; set; } = null!;
+
+        /// <summary>
+        /// Deployment details.
+        /// </summary>
         [Input("deploy", required: true)]
         public Input<Pulumi.Kubernetes.Types.Inputs.Wso2.V1Alpha1.TargetEndpointSpecDeployArgs> Deploy { get; set; } = null!;
 
-        [Input("endpointName")]
-        public Input<string>? EndpointName { get; set; }
-
-        [Input("endpointSecurity")]
-        public Input<Pulumi.Kubernetes.Types.Inputs.Wso2.V1Alpha1.TargetEndpointSpecEndpointSecurityArgs>? EndpointSecurity { get; set; }
-
-        [Input("hostname")]
-        public Input<string>? Hostname { get; set; }
-
+        /// <summary>
+        /// Mode of the Target Endpoint. Supports "privateJet", "sidecar", "serverless". Default value "privateJet"
+        /// </summary>
         [Input("mode")]
         public Input<string>? Mode { get; set; }
 
-        [Input("port", required: true)]
-        public Input<int> Port { get; set; } = null!;
-
-        [Input("protocol", required: true)]
-        public Input<string> Protocol { get; set; } = null!;
-
-        [Input("targetPort", required: true)]
-        public Input<int> TargetPort { get; set; } = null!;
+        [Input("ports", required: true)]
+        private InputList<Pulumi.Kubernetes.Types.Inputs.Wso2.V1Alpha1.TargetEndpointSpecPortsArgs>? _ports;
 
         /// <summary>
-        /// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster Important: Run "operator-sdk generate k8s" to regenerate code after modifying this file Add custom validation using kubebuilder tags: https://book.kubebuilder.io/beyond_basics/generating_crd.html
+        /// List of optional ports of the target endpoint. First port should be the port of the target endpoint which is referred in swagger definition.
         /// </summary>
-        [Input("type")]
-        public Input<string>? Type { get; set; }
+        public InputList<Pulumi.Kubernetes.Types.Inputs.Wso2.V1Alpha1.TargetEndpointSpecPortsArgs> Ports
+        {
+            get => _ports ?? (_ports = new InputList<Pulumi.Kubernetes.Types.Inputs.Wso2.V1Alpha1.TargetEndpointSpecPortsArgs>());
+            set => _ports = value;
+        }
 
         public TargetEndpointSpecArgs()
         {

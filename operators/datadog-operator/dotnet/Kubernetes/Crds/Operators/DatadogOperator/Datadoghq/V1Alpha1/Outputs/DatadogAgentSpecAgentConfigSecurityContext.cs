@@ -14,57 +14,49 @@ namespace Pulumi.Kubernetes.Types.Outputs.Datadoghq.V1Alpha1
     public sealed class DatadogAgentSpecAgentConfigSecurityContext
     {
         /// <summary>
-        /// AllowPrivilegeEscalation controls whether a process can gain more privileges than its parent process. This bool directly controls if the no_new_privs flag will be set on the container process. AllowPrivilegeEscalation is true always when the container is: 1) run as Privileged 2) has CAP_SYS_ADMIN
+        /// A special supplemental group that applies to all containers in a pod. Some volume types allow the Kubelet to change the ownership of that volume to be owned by the pod: 
+        ///  1. The owning GID will be the FSGroup 2. The setgid bit is set (new files created in the volume will be owned by FSGroup) 3. The permission bits are OR'd with rw-rw---- 
+        ///  If unset, the Kubelet will not modify the ownership and permissions of any volume.
         /// </summary>
-        public readonly bool AllowPrivilegeEscalation;
+        public readonly int FsGroup;
         /// <summary>
-        /// The capabilities to add/drop when running containers. Defaults to the default set of capabilities granted by the container runtime.
+        /// fsGroupChangePolicy defines behavior of changing ownership and permission of the volume before being exposed inside Pod. This field will only apply to volume types which support fsGroup based ownership(and permissions). It will have no effect on ephemeral volume types such as: secret, configmaps and emptydir. Valid values are "OnRootMismatch" and "Always". If not specified defaults to "Always".
         /// </summary>
-        public readonly Pulumi.Kubernetes.Types.Outputs.Datadoghq.V1Alpha1.DatadogAgentSpecAgentConfigSecurityContextCapabilities Capabilities;
+        public readonly string FsGroupChangePolicy;
         /// <summary>
-        /// Run container in privileged mode. Processes in privileged containers are essentially equivalent to root on the host. Defaults to false.
-        /// </summary>
-        public readonly bool Privileged;
-        /// <summary>
-        /// procMount denotes the type of proc mount to use for the containers. The default is DefaultProcMount which uses the container runtime defaults for readonly paths and masked paths. This requires the ProcMountType feature flag to be enabled.
-        /// </summary>
-        public readonly string ProcMount;
-        /// <summary>
-        /// Whether this container has a read-only root filesystem. Default is false.
-        /// </summary>
-        public readonly bool ReadOnlyRootFilesystem;
-        /// <summary>
-        /// The GID to run the entrypoint of the container process. Uses runtime default if unset. May also be set in PodSecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
+        /// The GID to run the entrypoint of the container process. Uses runtime default if unset. May also be set in SecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence for that container.
         /// </summary>
         public readonly int RunAsGroup;
         /// <summary>
-        /// Indicates that the container must run as a non-root user. If true, the Kubelet will validate the image at runtime to ensure that it does not run as UID 0 (root) and fail to start the container if it does. If unset or false, no such validation will be performed. May also be set in PodSecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
+        /// Indicates that the container must run as a non-root user. If true, the Kubelet will validate the image at runtime to ensure that it does not run as UID 0 (root) and fail to start the container if it does. If unset or false, no such validation will be performed. May also be set in SecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
         /// </summary>
         public readonly bool RunAsNonRoot;
         /// <summary>
-        /// The UID to run the entrypoint of the container process. Defaults to user specified in image metadata if unspecified. May also be set in PodSecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
+        /// The UID to run the entrypoint of the container process. Defaults to user specified in image metadata if unspecified. May also be set in SecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence for that container.
         /// </summary>
         public readonly int RunAsUser;
         /// <summary>
-        /// The SELinux context to be applied to the container. If unspecified, the container runtime will allocate a random SELinux context for each container.  May also be set in PodSecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
+        /// The SELinux context to be applied to all containers. If unspecified, the container runtime will allocate a random SELinux context for each container.  May also be set in SecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence for that container.
         /// </summary>
         public readonly Pulumi.Kubernetes.Types.Outputs.Datadoghq.V1Alpha1.DatadogAgentSpecAgentConfigSecurityContextSeLinuxOptions SeLinuxOptions;
         /// <summary>
-        /// The Windows specific settings applied to all containers. If unspecified, the options from the PodSecurityContext will be used. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
+        /// A list of groups applied to the first process run in each container, in addition to the container's primary GID.  If unspecified, no groups will be added to any container.
+        /// </summary>
+        public readonly ImmutableArray<int> SupplementalGroups;
+        /// <summary>
+        /// Sysctls hold a list of namespaced sysctls used for the pod. Pods with unsupported sysctls (by the container runtime) might fail to launch.
+        /// </summary>
+        public readonly ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Datadoghq.V1Alpha1.DatadogAgentSpecAgentConfigSecurityContextSysctls> Sysctls;
+        /// <summary>
+        /// The Windows specific settings applied to all containers. If unspecified, the options within a container's SecurityContext will be used. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
         /// </summary>
         public readonly Pulumi.Kubernetes.Types.Outputs.Datadoghq.V1Alpha1.DatadogAgentSpecAgentConfigSecurityContextWindowsOptions WindowsOptions;
 
         [OutputConstructor]
         private DatadogAgentSpecAgentConfigSecurityContext(
-            bool allowPrivilegeEscalation,
+            int fsGroup,
 
-            Pulumi.Kubernetes.Types.Outputs.Datadoghq.V1Alpha1.DatadogAgentSpecAgentConfigSecurityContextCapabilities capabilities,
-
-            bool privileged,
-
-            string procMount,
-
-            bool readOnlyRootFilesystem,
+            string fsGroupChangePolicy,
 
             int runAsGroup,
 
@@ -74,17 +66,20 @@ namespace Pulumi.Kubernetes.Types.Outputs.Datadoghq.V1Alpha1
 
             Pulumi.Kubernetes.Types.Outputs.Datadoghq.V1Alpha1.DatadogAgentSpecAgentConfigSecurityContextSeLinuxOptions seLinuxOptions,
 
+            ImmutableArray<int> supplementalGroups,
+
+            ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Datadoghq.V1Alpha1.DatadogAgentSpecAgentConfigSecurityContextSysctls> sysctls,
+
             Pulumi.Kubernetes.Types.Outputs.Datadoghq.V1Alpha1.DatadogAgentSpecAgentConfigSecurityContextWindowsOptions windowsOptions)
         {
-            AllowPrivilegeEscalation = allowPrivilegeEscalation;
-            Capabilities = capabilities;
-            Privileged = privileged;
-            ProcMount = procMount;
-            ReadOnlyRootFilesystem = readOnlyRootFilesystem;
+            FsGroup = fsGroup;
+            FsGroupChangePolicy = fsGroupChangePolicy;
             RunAsGroup = runAsGroup;
             RunAsNonRoot = runAsNonRoot;
             RunAsUser = runAsUser;
             SeLinuxOptions = seLinuxOptions;
+            SupplementalGroups = supplementalGroups;
+            Sysctls = sysctls;
             WindowsOptions = windowsOptions;
         }
     }

@@ -4,12 +4,22 @@
 
 SNAKE_TO_CAMEL_CASE_TABLE = {
     "api_version": "apiVersion",
+    "hawkbit_url": "hawkbitUrl",
     "image_overrides": "imageOverrides",
+    "instance_selector": "instanceSelector",
+    "match_expressions": "matchExpressions",
+    "match_labels": "matchLabels",
     "pull_policy": "pullPolicy",
+    "sign_on": "signOn",
 }
 
 CAMEL_TO_SNAKE_CASE_TABLE = {
     "apiVersion": "api_version",
+    "hawkbitUrl": "hawkbit_url",
     "imageOverrides": "image_overrides",
+    "instanceSelector": "instance_selector",
+    "matchExpressions": "match_expressions",
+    "matchLabels": "match_labels",
     "pullPolicy": "pull_policy",
+    "signOn": "sign_on",
 }

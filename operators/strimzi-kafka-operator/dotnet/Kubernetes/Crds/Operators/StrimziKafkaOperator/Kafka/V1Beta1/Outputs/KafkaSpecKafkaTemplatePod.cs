@@ -18,6 +18,10 @@ namespace Pulumi.Kubernetes.Types.Outputs.Kafka.V1Beta1
         /// </summary>
         public readonly Pulumi.Kubernetes.Types.Outputs.Kafka.V1Beta1.KafkaSpecKafkaTemplatePodAffinity Affinity;
         /// <summary>
+        /// The pod's HostAliases. HostAliases is an optional list of hosts and IPs that will be injected into the pod's hosts file if specified.
+        /// </summary>
+        public readonly ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Kafka.V1Beta1.KafkaSpecKafkaTemplatePodHostAliases> HostAliases;
+        /// <summary>
         /// List of references to secrets in the same namespace to use for pulling any of the images used by this Pod. When the `STRIMZI_IMAGE_PULL_SECRETS` environment variable in Cluster Operator and the `imagePullSecrets` option are specified, only the `imagePullSecrets` variable is used and the `STRIMZI_IMAGE_PULL_SECRETS` variable is ignored.
         /// </summary>
         public readonly ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Kafka.V1Beta1.KafkaSpecKafkaTemplatePodImagePullSecrets> ImagePullSecrets;
@@ -50,6 +54,8 @@ namespace Pulumi.Kubernetes.Types.Outputs.Kafka.V1Beta1
         private KafkaSpecKafkaTemplatePod(
             Pulumi.Kubernetes.Types.Outputs.Kafka.V1Beta1.KafkaSpecKafkaTemplatePodAffinity affinity,
 
+            ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Kafka.V1Beta1.KafkaSpecKafkaTemplatePodHostAliases> hostAliases,
+
             ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Kafka.V1Beta1.KafkaSpecKafkaTemplatePodImagePullSecrets> imagePullSecrets,
 
             Pulumi.Kubernetes.Types.Outputs.Kafka.V1Beta1.KafkaSpecKafkaTemplatePodMetadata metadata,
@@ -65,6 +71,7 @@ namespace Pulumi.Kubernetes.Types.Outputs.Kafka.V1Beta1
             ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Kafka.V1Beta1.KafkaSpecKafkaTemplatePodTolerations> tolerations)
         {
             Affinity = affinity;
+            HostAliases = hostAliases;
             ImagePullSecrets = imagePullSecrets;
             Metadata = metadata;
             PriorityClassName = priorityClassName;

@@ -21,6 +21,10 @@ namespace Pulumi.Kubernetes.Types.Outputs.Machinelearning.V1
         public readonly string Oauth_key;
         public readonly string Oauth_secret;
         public readonly ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Machinelearning.V1.SeldonDeploymentSpecPredictors> Predictors;
+        public readonly string Protocol;
+        public readonly int Replicas;
+        public readonly string ServerType;
+        public readonly string Transport;
 
         [OutputConstructor]
         private SeldonDeploymentSpec(
@@ -32,13 +36,25 @@ namespace Pulumi.Kubernetes.Types.Outputs.Machinelearning.V1
 
             string oauth_secret,
 
-            ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Machinelearning.V1.SeldonDeploymentSpecPredictors> predictors)
+            ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Machinelearning.V1.SeldonDeploymentSpecPredictors> predictors,
+
+            string protocol,
+
+            int replicas,
+
+            string serverType,
+
+            string transport)
         {
             Annotations = annotations;
             Name = name;
             Oauth_key = oauth_key;
             Oauth_secret = oauth_secret;
             Predictors = predictors;
+            Protocol = protocol;
+            Replicas = replicas;
+            ServerType = serverType;
+            Transport = transport;
         }
     }
 }

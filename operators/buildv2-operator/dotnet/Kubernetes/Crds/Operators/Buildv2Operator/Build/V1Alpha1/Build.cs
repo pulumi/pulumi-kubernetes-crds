@@ -10,7 +10,7 @@ using Pulumi.Serialization;
 namespace Pulumi.Pulumi.Kubernetes.Crds.Operators.Buildv2Operator.Build.V1Alpha1
 {
     /// <summary>
-    /// Build is the Schema for the builds API
+    /// Build is the Schema representing a Build definition
     /// </summary>
     public partial class Build : KubernetesResource
     {
@@ -33,7 +33,7 @@ namespace Pulumi.Pulumi.Kubernetes.Crds.Operators.Buildv2Operator.Build.V1Alpha1
         /// BuildStatus defines the observed state of Build
         /// </summary>
         [Output("status")]
-        public Output<ImmutableDictionary<string, object>> Status { get; private set; } = null!;
+        public Output<Pulumi.Kubernetes.Types.Outputs.Build.V1Alpha1.BuildStatus> Status { get; private set; } = null!;
 
 
         /// <summary>
@@ -110,17 +110,11 @@ namespace Pulumi.Kubernetes.Types.Inputs.Build.V1Alpha1
         [Input("spec")]
         public Input<Pulumi.Kubernetes.Types.Inputs.Build.V1Alpha1.BuildSpecArgs>? Spec { get; set; }
 
-        [Input("status")]
-        private InputMap<object>? _status;
-
         /// <summary>
         /// BuildStatus defines the observed state of Build
         /// </summary>
-        public InputMap<object> Status
-        {
-            get => _status ?? (_status = new InputMap<object>());
-            set => _status = value;
-        }
+        [Input("status")]
+        public Input<Pulumi.Kubernetes.Types.Inputs.Build.V1Alpha1.BuildStatusArgs>? Status { get; set; }
 
         public BuildArgs()
         {

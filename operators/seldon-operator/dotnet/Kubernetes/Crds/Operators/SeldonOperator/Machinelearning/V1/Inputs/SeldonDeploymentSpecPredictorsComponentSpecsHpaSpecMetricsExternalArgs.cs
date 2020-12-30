@@ -31,13 +31,13 @@ namespace Pulumi.Kubernetes.Types.Inputs.Machinelearning.V1
         /// targetAverageValue is the target per-pod value of global metric (as a quantity). Mutually exclusive with TargetValue.
         /// </summary>
         [Input("targetAverageValue")]
-        public Input<string>? TargetAverageValue { get; set; }
+        public Input<Pulumi.Kubernetes.Types.Inputs.Machinelearning.V1.SeldonDeploymentSpecPredictorsComponentSpecsHpaSpecMetricsExternalTargetAverageValueArgs>? TargetAverageValue { get; set; }
 
         /// <summary>
         /// targetValue is the target value of the metric (as a quantity). Mutually exclusive with TargetAverageValue.
         /// </summary>
         [Input("targetValue")]
-        public Input<string>? TargetValue { get; set; }
+        public Input<Pulumi.Kubernetes.Types.Inputs.Machinelearning.V1.SeldonDeploymentSpecPredictorsComponentSpecsHpaSpecMetricsExternalTargetValueArgs>? TargetValue { get; set; }
 
         public SeldonDeploymentSpecPredictorsComponentSpecsHpaSpecMetricsExternalArgs()
         {

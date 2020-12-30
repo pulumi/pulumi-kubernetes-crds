@@ -11,12 +11,15 @@ import (
 	"github.com/pulumi/pulumi/sdk/v2/go/pulumi"
 )
 
+// Binding is the Schema for the bindings API
 type BindingType struct {
 	ApiVersion *string            `pulumi:"apiVersion"`
 	Kind       *string            `pulumi:"kind"`
 	Metadata   *metav1.ObjectMeta `pulumi:"metadata"`
-	Spec       *BindingSpec       `pulumi:"spec"`
-	Status     *BindingStatus     `pulumi:"status"`
+	// BindingSpec defines the desired state of Binding
+	Spec *BindingSpec `pulumi:"spec"`
+	// BindingStatus defines the observed state of Binding
+	Status *BindingStatus `pulumi:"status"`
 }
 
 // BindingTypeInput is an input type that accepts BindingTypeArgs and BindingTypeOutput values.
@@ -30,12 +33,15 @@ type BindingTypeInput interface {
 	ToBindingTypeOutputWithContext(context.Context) BindingTypeOutput
 }
 
+// Binding is the Schema for the bindings API
 type BindingTypeArgs struct {
 	ApiVersion pulumi.StringPtrInput     `pulumi:"apiVersion"`
 	Kind       pulumi.StringPtrInput     `pulumi:"kind"`
 	Metadata   metav1.ObjectMetaPtrInput `pulumi:"metadata"`
-	Spec       BindingSpecPtrInput       `pulumi:"spec"`
-	Status     BindingStatusPtrInput     `pulumi:"status"`
+	// BindingSpec defines the desired state of Binding
+	Spec BindingSpecPtrInput `pulumi:"spec"`
+	// BindingStatus defines the observed state of Binding
+	Status BindingStatusPtrInput `pulumi:"status"`
 }
 
 func (BindingTypeArgs) ElementType() reflect.Type {
@@ -50,6 +56,7 @@ func (i BindingTypeArgs) ToBindingTypeOutputWithContext(ctx context.Context) Bin
 	return pulumi.ToOutputWithContext(ctx, i).(BindingTypeOutput)
 }
 
+// Binding is the Schema for the bindings API
 type BindingTypeOutput struct{ *pulumi.OutputState }
 
 func (BindingTypeOutput) ElementType() reflect.Type {
@@ -76,10 +83,12 @@ func (o BindingTypeOutput) Metadata() metav1.ObjectMetaPtrOutput {
 	return o.ApplyT(func(v BindingType) *metav1.ObjectMeta { return v.Metadata }).(metav1.ObjectMetaPtrOutput)
 }
 
+// BindingSpec defines the desired state of Binding
 func (o BindingTypeOutput) Spec() BindingSpecPtrOutput {
 	return o.ApplyT(func(v BindingType) *BindingSpec { return v.Spec }).(BindingSpecPtrOutput)
 }
 
+// BindingStatus defines the observed state of Binding
 func (o BindingTypeOutput) Status() BindingStatusPtrOutput {
 	return o.ApplyT(func(v BindingType) *BindingStatus { return v.Status }).(BindingStatusPtrOutput)
 }
@@ -127,6 +136,7 @@ func (o BindingMetadataOutput) ToBindingMetadataOutputWithContext(ctx context.Co
 	return o
 }
 
+// BindingSpec defines the desired state of Binding
 type BindingSpec struct {
 	Alias            *string                 `pulumi:"alias"`
 	Parameters       []BindingSpecParameters `pulumi:"parameters"`
@@ -147,6 +157,7 @@ type BindingSpecInput interface {
 	ToBindingSpecOutputWithContext(context.Context) BindingSpecOutput
 }
 
+// BindingSpec defines the desired state of Binding
 type BindingSpecArgs struct {
 	Alias            pulumi.StringPtrInput           `pulumi:"alias"`
 	Parameters       BindingSpecParametersArrayInput `pulumi:"parameters"`
@@ -209,6 +220,7 @@ func (i *bindingSpecPtrType) ToBindingSpecPtrOutputWithContext(ctx context.Conte
 	return pulumi.ToOutputWithContext(ctx, i).(BindingSpecPtrOutput)
 }
 
+// BindingSpec defines the desired state of Binding
 type BindingSpecOutput struct{ *pulumi.OutputState }
 
 func (BindingSpecOutput) ElementType() reflect.Type {
@@ -328,9 +340,10 @@ func (o BindingSpecPtrOutput) ServiceNamespace() pulumi.StringPtrOutput {
 	}).(pulumi.StringPtrOutput)
 }
 
+// Param represents a key-value pair
 type BindingSpecParameters struct {
 	// A parameter may have attributes (e.g. message hub topic might have partitions)
-	Attributes map[string]interface{} `pulumi:"attributes"`
+	Attributes map[string]map[string]interface{} `pulumi:"attributes"`
 	// Name representing the key.
 	Name string `pulumi:"name"`
 	// Defaults to null.
@@ -350,9 +363,10 @@ type BindingSpecParametersInput interface {
 	ToBindingSpecParametersOutputWithContext(context.Context) BindingSpecParametersOutput
 }
 
+// Param represents a key-value pair
 type BindingSpecParametersArgs struct {
 	// A parameter may have attributes (e.g. message hub topic might have partitions)
-	Attributes pulumi.MapInput `pulumi:"attributes"`
+	Attributes pulumi.MapMapInput `pulumi:"attributes"`
 	// Name representing the key.
 	Name pulumi.StringInput `pulumi:"name"`
 	// Defaults to null.
@@ -398,6 +412,7 @@ func (i BindingSpecParametersArray) ToBindingSpecParametersArrayOutputWithContex
 	return pulumi.ToOutputWithContext(ctx, i).(BindingSpecParametersArrayOutput)
 }
 
+// Param represents a key-value pair
 type BindingSpecParametersOutput struct{ *pulumi.OutputState }
 
 func (BindingSpecParametersOutput) ElementType() reflect.Type {
@@ -413,8 +428,8 @@ func (o BindingSpecParametersOutput) ToBindingSpecParametersOutputWithContext(ct
 }
 
 // A parameter may have attributes (e.g. message hub topic might have partitions)
-func (o BindingSpecParametersOutput) Attributes() pulumi.MapOutput {
-	return o.ApplyT(func(v BindingSpecParameters) map[string]interface{} { return v.Attributes }).(pulumi.MapOutput)
+func (o BindingSpecParametersOutput) Attributes() pulumi.MapMapOutput {
+	return o.ApplyT(func(v BindingSpecParameters) map[string]map[string]interface{} { return v.Attributes }).(pulumi.MapMapOutput)
 }
 
 // Name representing the key.
@@ -452,7 +467,6 @@ func (o BindingSpecParametersArrayOutput) Index(i pulumi.IntInput) BindingSpecPa
 	}).(BindingSpecParametersOutput)
 }
 
-// A parameter may have attributes (e.g. message hub topic might have partitions)
 type BindingSpecParametersAttributes struct {
 }
 
@@ -467,7 +481,6 @@ type BindingSpecParametersAttributesInput interface {
 	ToBindingSpecParametersAttributesOutputWithContext(context.Context) BindingSpecParametersAttributesOutput
 }
 
-// A parameter may have attributes (e.g. message hub topic might have partitions)
 type BindingSpecParametersAttributesArgs struct {
 }
 
@@ -483,7 +496,6 @@ func (i BindingSpecParametersAttributesArgs) ToBindingSpecParametersAttributesOu
 	return pulumi.ToOutputWithContext(ctx, i).(BindingSpecParametersAttributesOutput)
 }
 
-// A parameter may have attributes (e.g. message hub topic might have partitions)
 type BindingSpecParametersAttributesOutput struct{ *pulumi.OutputState }
 
 func (BindingSpecParametersAttributesOutput) ElementType() reflect.Type {
@@ -501,9 +513,9 @@ func (o BindingSpecParametersAttributesOutput) ToBindingSpecParametersAttributes
 // Source for the value. Cannot be used if value is not empty.
 type BindingSpecParametersValueFrom struct {
 	// Selects a key of a ConfigMap.
-	ConfigMapKeyRef map[string]interface{} `pulumi:"configMapKeyRef"`
+	ConfigMapKeyRef *BindingSpecParametersValueFromConfigMapKeyRef `pulumi:"configMapKeyRef"`
 	// Selects a key of a secret in the resource namespace
-	SecretKeyRef map[string]interface{} `pulumi:"secretKeyRef"`
+	SecretKeyRef *BindingSpecParametersValueFromSecretKeyRef `pulumi:"secretKeyRef"`
 }
 
 // BindingSpecParametersValueFromInput is an input type that accepts BindingSpecParametersValueFromArgs and BindingSpecParametersValueFromOutput values.
@@ -520,9 +532,9 @@ type BindingSpecParametersValueFromInput interface {
 // Source for the value. Cannot be used if value is not empty.
 type BindingSpecParametersValueFromArgs struct {
 	// Selects a key of a ConfigMap.
-	ConfigMapKeyRef pulumi.MapInput `pulumi:"configMapKeyRef"`
+	ConfigMapKeyRef BindingSpecParametersValueFromConfigMapKeyRefPtrInput `pulumi:"configMapKeyRef"`
 	// Selects a key of a secret in the resource namespace
-	SecretKeyRef pulumi.MapInput `pulumi:"secretKeyRef"`
+	SecretKeyRef BindingSpecParametersValueFromSecretKeyRefPtrInput `pulumi:"secretKeyRef"`
 }
 
 func (BindingSpecParametersValueFromArgs) ElementType() reflect.Type {
@@ -604,13 +616,17 @@ func (o BindingSpecParametersValueFromOutput) ToBindingSpecParametersValueFromPt
 }
 
 // Selects a key of a ConfigMap.
-func (o BindingSpecParametersValueFromOutput) ConfigMapKeyRef() pulumi.MapOutput {
-	return o.ApplyT(func(v BindingSpecParametersValueFrom) map[string]interface{} { return v.ConfigMapKeyRef }).(pulumi.MapOutput)
+func (o BindingSpecParametersValueFromOutput) ConfigMapKeyRef() BindingSpecParametersValueFromConfigMapKeyRefPtrOutput {
+	return o.ApplyT(func(v BindingSpecParametersValueFrom) *BindingSpecParametersValueFromConfigMapKeyRef {
+		return v.ConfigMapKeyRef
+	}).(BindingSpecParametersValueFromConfigMapKeyRefPtrOutput)
 }
 
 // Selects a key of a secret in the resource namespace
-func (o BindingSpecParametersValueFromOutput) SecretKeyRef() pulumi.MapOutput {
-	return o.ApplyT(func(v BindingSpecParametersValueFrom) map[string]interface{} { return v.SecretKeyRef }).(pulumi.MapOutput)
+func (o BindingSpecParametersValueFromOutput) SecretKeyRef() BindingSpecParametersValueFromSecretKeyRefPtrOutput {
+	return o.ApplyT(func(v BindingSpecParametersValueFrom) *BindingSpecParametersValueFromSecretKeyRef {
+		return v.SecretKeyRef
+	}).(BindingSpecParametersValueFromSecretKeyRefPtrOutput)
 }
 
 type BindingSpecParametersValueFromPtrOutput struct{ *pulumi.OutputState }
@@ -632,27 +648,33 @@ func (o BindingSpecParametersValueFromPtrOutput) Elem() BindingSpecParametersVal
 }
 
 // Selects a key of a ConfigMap.
-func (o BindingSpecParametersValueFromPtrOutput) ConfigMapKeyRef() pulumi.MapOutput {
-	return o.ApplyT(func(v *BindingSpecParametersValueFrom) map[string]interface{} {
+func (o BindingSpecParametersValueFromPtrOutput) ConfigMapKeyRef() BindingSpecParametersValueFromConfigMapKeyRefPtrOutput {
+	return o.ApplyT(func(v *BindingSpecParametersValueFrom) *BindingSpecParametersValueFromConfigMapKeyRef {
 		if v == nil {
 			return nil
 		}
 		return v.ConfigMapKeyRef
-	}).(pulumi.MapOutput)
+	}).(BindingSpecParametersValueFromConfigMapKeyRefPtrOutput)
 }
 
 // Selects a key of a secret in the resource namespace
-func (o BindingSpecParametersValueFromPtrOutput) SecretKeyRef() pulumi.MapOutput {
-	return o.ApplyT(func(v *BindingSpecParametersValueFrom) map[string]interface{} {
+func (o BindingSpecParametersValueFromPtrOutput) SecretKeyRef() BindingSpecParametersValueFromSecretKeyRefPtrOutput {
+	return o.ApplyT(func(v *BindingSpecParametersValueFrom) *BindingSpecParametersValueFromSecretKeyRef {
 		if v == nil {
 			return nil
 		}
 		return v.SecretKeyRef
-	}).(pulumi.MapOutput)
+	}).(BindingSpecParametersValueFromSecretKeyRefPtrOutput)
 }
 
 // Selects a key of a ConfigMap.
 type BindingSpecParametersValueFromConfigMapKeyRef struct {
+	// The key to select.
+	Key string `pulumi:"key"`
+	// Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+	Name *string `pulumi:"name"`
+	// Specify whether the ConfigMap or its key must be defined
+	Optional *bool `pulumi:"optional"`
 }
 
 // BindingSpecParametersValueFromConfigMapKeyRefInput is an input type that accepts BindingSpecParametersValueFromConfigMapKeyRefArgs and BindingSpecParametersValueFromConfigMapKeyRefOutput values.
@@ -668,6 +690,12 @@ type BindingSpecParametersValueFromConfigMapKeyRefInput interface {
 
 // Selects a key of a ConfigMap.
 type BindingSpecParametersValueFromConfigMapKeyRefArgs struct {
+	// The key to select.
+	Key pulumi.StringInput `pulumi:"key"`
+	// Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+	Name pulumi.StringPtrInput `pulumi:"name"`
+	// Specify whether the ConfigMap or its key must be defined
+	Optional pulumi.BoolPtrInput `pulumi:"optional"`
 }
 
 func (BindingSpecParametersValueFromConfigMapKeyRefArgs) ElementType() reflect.Type {
@@ -680,6 +708,47 @@ func (i BindingSpecParametersValueFromConfigMapKeyRefArgs) ToBindingSpecParamete
 
 func (i BindingSpecParametersValueFromConfigMapKeyRefArgs) ToBindingSpecParametersValueFromConfigMapKeyRefOutputWithContext(ctx context.Context) BindingSpecParametersValueFromConfigMapKeyRefOutput {
 	return pulumi.ToOutputWithContext(ctx, i).(BindingSpecParametersValueFromConfigMapKeyRefOutput)
+}
+
+func (i BindingSpecParametersValueFromConfigMapKeyRefArgs) ToBindingSpecParametersValueFromConfigMapKeyRefPtrOutput() BindingSpecParametersValueFromConfigMapKeyRefPtrOutput {
+	return i.ToBindingSpecParametersValueFromConfigMapKeyRefPtrOutputWithContext(context.Background())
+}
+
+func (i BindingSpecParametersValueFromConfigMapKeyRefArgs) ToBindingSpecParametersValueFromConfigMapKeyRefPtrOutputWithContext(ctx context.Context) BindingSpecParametersValueFromConfigMapKeyRefPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BindingSpecParametersValueFromConfigMapKeyRefOutput).ToBindingSpecParametersValueFromConfigMapKeyRefPtrOutputWithContext(ctx)
+}
+
+// BindingSpecParametersValueFromConfigMapKeyRefPtrInput is an input type that accepts BindingSpecParametersValueFromConfigMapKeyRefArgs, BindingSpecParametersValueFromConfigMapKeyRefPtr and BindingSpecParametersValueFromConfigMapKeyRefPtrOutput values.
+// You can construct a concrete instance of `BindingSpecParametersValueFromConfigMapKeyRefPtrInput` via:
+//
+//          BindingSpecParametersValueFromConfigMapKeyRefArgs{...}
+//
+//  or:
+//
+//          nil
+type BindingSpecParametersValueFromConfigMapKeyRefPtrInput interface {
+	pulumi.Input
+
+	ToBindingSpecParametersValueFromConfigMapKeyRefPtrOutput() BindingSpecParametersValueFromConfigMapKeyRefPtrOutput
+	ToBindingSpecParametersValueFromConfigMapKeyRefPtrOutputWithContext(context.Context) BindingSpecParametersValueFromConfigMapKeyRefPtrOutput
+}
+
+type bindingSpecParametersValueFromConfigMapKeyRefPtrType BindingSpecParametersValueFromConfigMapKeyRefArgs
+
+func BindingSpecParametersValueFromConfigMapKeyRefPtr(v *BindingSpecParametersValueFromConfigMapKeyRefArgs) BindingSpecParametersValueFromConfigMapKeyRefPtrInput {
+	return (*bindingSpecParametersValueFromConfigMapKeyRefPtrType)(v)
+}
+
+func (*bindingSpecParametersValueFromConfigMapKeyRefPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**BindingSpecParametersValueFromConfigMapKeyRef)(nil)).Elem()
+}
+
+func (i *bindingSpecParametersValueFromConfigMapKeyRefPtrType) ToBindingSpecParametersValueFromConfigMapKeyRefPtrOutput() BindingSpecParametersValueFromConfigMapKeyRefPtrOutput {
+	return i.ToBindingSpecParametersValueFromConfigMapKeyRefPtrOutputWithContext(context.Background())
+}
+
+func (i *bindingSpecParametersValueFromConfigMapKeyRefPtrType) ToBindingSpecParametersValueFromConfigMapKeyRefPtrOutputWithContext(ctx context.Context) BindingSpecParametersValueFromConfigMapKeyRefPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BindingSpecParametersValueFromConfigMapKeyRefPtrOutput)
 }
 
 // Selects a key of a ConfigMap.
@@ -697,8 +766,89 @@ func (o BindingSpecParametersValueFromConfigMapKeyRefOutput) ToBindingSpecParame
 	return o
 }
 
+func (o BindingSpecParametersValueFromConfigMapKeyRefOutput) ToBindingSpecParametersValueFromConfigMapKeyRefPtrOutput() BindingSpecParametersValueFromConfigMapKeyRefPtrOutput {
+	return o.ToBindingSpecParametersValueFromConfigMapKeyRefPtrOutputWithContext(context.Background())
+}
+
+func (o BindingSpecParametersValueFromConfigMapKeyRefOutput) ToBindingSpecParametersValueFromConfigMapKeyRefPtrOutputWithContext(ctx context.Context) BindingSpecParametersValueFromConfigMapKeyRefPtrOutput {
+	return o.ApplyT(func(v BindingSpecParametersValueFromConfigMapKeyRef) *BindingSpecParametersValueFromConfigMapKeyRef {
+		return &v
+	}).(BindingSpecParametersValueFromConfigMapKeyRefPtrOutput)
+}
+
+// The key to select.
+func (o BindingSpecParametersValueFromConfigMapKeyRefOutput) Key() pulumi.StringOutput {
+	return o.ApplyT(func(v BindingSpecParametersValueFromConfigMapKeyRef) string { return v.Key }).(pulumi.StringOutput)
+}
+
+// Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+func (o BindingSpecParametersValueFromConfigMapKeyRefOutput) Name() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v BindingSpecParametersValueFromConfigMapKeyRef) *string { return v.Name }).(pulumi.StringPtrOutput)
+}
+
+// Specify whether the ConfigMap or its key must be defined
+func (o BindingSpecParametersValueFromConfigMapKeyRefOutput) Optional() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v BindingSpecParametersValueFromConfigMapKeyRef) *bool { return v.Optional }).(pulumi.BoolPtrOutput)
+}
+
+type BindingSpecParametersValueFromConfigMapKeyRefPtrOutput struct{ *pulumi.OutputState }
+
+func (BindingSpecParametersValueFromConfigMapKeyRefPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**BindingSpecParametersValueFromConfigMapKeyRef)(nil)).Elem()
+}
+
+func (o BindingSpecParametersValueFromConfigMapKeyRefPtrOutput) ToBindingSpecParametersValueFromConfigMapKeyRefPtrOutput() BindingSpecParametersValueFromConfigMapKeyRefPtrOutput {
+	return o
+}
+
+func (o BindingSpecParametersValueFromConfigMapKeyRefPtrOutput) ToBindingSpecParametersValueFromConfigMapKeyRefPtrOutputWithContext(ctx context.Context) BindingSpecParametersValueFromConfigMapKeyRefPtrOutput {
+	return o
+}
+
+func (o BindingSpecParametersValueFromConfigMapKeyRefPtrOutput) Elem() BindingSpecParametersValueFromConfigMapKeyRefOutput {
+	return o.ApplyT(func(v *BindingSpecParametersValueFromConfigMapKeyRef) BindingSpecParametersValueFromConfigMapKeyRef {
+		return *v
+	}).(BindingSpecParametersValueFromConfigMapKeyRefOutput)
+}
+
+// The key to select.
+func (o BindingSpecParametersValueFromConfigMapKeyRefPtrOutput) Key() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *BindingSpecParametersValueFromConfigMapKeyRef) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.Key
+	}).(pulumi.StringPtrOutput)
+}
+
+// Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+func (o BindingSpecParametersValueFromConfigMapKeyRefPtrOutput) Name() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *BindingSpecParametersValueFromConfigMapKeyRef) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Name
+	}).(pulumi.StringPtrOutput)
+}
+
+// Specify whether the ConfigMap or its key must be defined
+func (o BindingSpecParametersValueFromConfigMapKeyRefPtrOutput) Optional() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *BindingSpecParametersValueFromConfigMapKeyRef) *bool {
+		if v == nil {
+			return nil
+		}
+		return v.Optional
+	}).(pulumi.BoolPtrOutput)
+}
+
 // Selects a key of a secret in the resource namespace
 type BindingSpecParametersValueFromSecretKeyRef struct {
+	// The key of the secret to select from.  Must be a valid secret key.
+	Key string `pulumi:"key"`
+	// Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+	Name *string `pulumi:"name"`
+	// Specify whether the Secret or its key must be defined
+	Optional *bool `pulumi:"optional"`
 }
 
 // BindingSpecParametersValueFromSecretKeyRefInput is an input type that accepts BindingSpecParametersValueFromSecretKeyRefArgs and BindingSpecParametersValueFromSecretKeyRefOutput values.
@@ -714,6 +864,12 @@ type BindingSpecParametersValueFromSecretKeyRefInput interface {
 
 // Selects a key of a secret in the resource namespace
 type BindingSpecParametersValueFromSecretKeyRefArgs struct {
+	// The key of the secret to select from.  Must be a valid secret key.
+	Key pulumi.StringInput `pulumi:"key"`
+	// Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+	Name pulumi.StringPtrInput `pulumi:"name"`
+	// Specify whether the Secret or its key must be defined
+	Optional pulumi.BoolPtrInput `pulumi:"optional"`
 }
 
 func (BindingSpecParametersValueFromSecretKeyRefArgs) ElementType() reflect.Type {
@@ -726,6 +882,47 @@ func (i BindingSpecParametersValueFromSecretKeyRefArgs) ToBindingSpecParametersV
 
 func (i BindingSpecParametersValueFromSecretKeyRefArgs) ToBindingSpecParametersValueFromSecretKeyRefOutputWithContext(ctx context.Context) BindingSpecParametersValueFromSecretKeyRefOutput {
 	return pulumi.ToOutputWithContext(ctx, i).(BindingSpecParametersValueFromSecretKeyRefOutput)
+}
+
+func (i BindingSpecParametersValueFromSecretKeyRefArgs) ToBindingSpecParametersValueFromSecretKeyRefPtrOutput() BindingSpecParametersValueFromSecretKeyRefPtrOutput {
+	return i.ToBindingSpecParametersValueFromSecretKeyRefPtrOutputWithContext(context.Background())
+}
+
+func (i BindingSpecParametersValueFromSecretKeyRefArgs) ToBindingSpecParametersValueFromSecretKeyRefPtrOutputWithContext(ctx context.Context) BindingSpecParametersValueFromSecretKeyRefPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BindingSpecParametersValueFromSecretKeyRefOutput).ToBindingSpecParametersValueFromSecretKeyRefPtrOutputWithContext(ctx)
+}
+
+// BindingSpecParametersValueFromSecretKeyRefPtrInput is an input type that accepts BindingSpecParametersValueFromSecretKeyRefArgs, BindingSpecParametersValueFromSecretKeyRefPtr and BindingSpecParametersValueFromSecretKeyRefPtrOutput values.
+// You can construct a concrete instance of `BindingSpecParametersValueFromSecretKeyRefPtrInput` via:
+//
+//          BindingSpecParametersValueFromSecretKeyRefArgs{...}
+//
+//  or:
+//
+//          nil
+type BindingSpecParametersValueFromSecretKeyRefPtrInput interface {
+	pulumi.Input
+
+	ToBindingSpecParametersValueFromSecretKeyRefPtrOutput() BindingSpecParametersValueFromSecretKeyRefPtrOutput
+	ToBindingSpecParametersValueFromSecretKeyRefPtrOutputWithContext(context.Context) BindingSpecParametersValueFromSecretKeyRefPtrOutput
+}
+
+type bindingSpecParametersValueFromSecretKeyRefPtrType BindingSpecParametersValueFromSecretKeyRefArgs
+
+func BindingSpecParametersValueFromSecretKeyRefPtr(v *BindingSpecParametersValueFromSecretKeyRefArgs) BindingSpecParametersValueFromSecretKeyRefPtrInput {
+	return (*bindingSpecParametersValueFromSecretKeyRefPtrType)(v)
+}
+
+func (*bindingSpecParametersValueFromSecretKeyRefPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**BindingSpecParametersValueFromSecretKeyRef)(nil)).Elem()
+}
+
+func (i *bindingSpecParametersValueFromSecretKeyRefPtrType) ToBindingSpecParametersValueFromSecretKeyRefPtrOutput() BindingSpecParametersValueFromSecretKeyRefPtrOutput {
+	return i.ToBindingSpecParametersValueFromSecretKeyRefPtrOutputWithContext(context.Background())
+}
+
+func (i *bindingSpecParametersValueFromSecretKeyRefPtrType) ToBindingSpecParametersValueFromSecretKeyRefPtrOutputWithContext(ctx context.Context) BindingSpecParametersValueFromSecretKeyRefPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BindingSpecParametersValueFromSecretKeyRefPtrOutput)
 }
 
 // Selects a key of a secret in the resource namespace
@@ -743,6 +940,82 @@ func (o BindingSpecParametersValueFromSecretKeyRefOutput) ToBindingSpecParameter
 	return o
 }
 
+func (o BindingSpecParametersValueFromSecretKeyRefOutput) ToBindingSpecParametersValueFromSecretKeyRefPtrOutput() BindingSpecParametersValueFromSecretKeyRefPtrOutput {
+	return o.ToBindingSpecParametersValueFromSecretKeyRefPtrOutputWithContext(context.Background())
+}
+
+func (o BindingSpecParametersValueFromSecretKeyRefOutput) ToBindingSpecParametersValueFromSecretKeyRefPtrOutputWithContext(ctx context.Context) BindingSpecParametersValueFromSecretKeyRefPtrOutput {
+	return o.ApplyT(func(v BindingSpecParametersValueFromSecretKeyRef) *BindingSpecParametersValueFromSecretKeyRef {
+		return &v
+	}).(BindingSpecParametersValueFromSecretKeyRefPtrOutput)
+}
+
+// The key of the secret to select from.  Must be a valid secret key.
+func (o BindingSpecParametersValueFromSecretKeyRefOutput) Key() pulumi.StringOutput {
+	return o.ApplyT(func(v BindingSpecParametersValueFromSecretKeyRef) string { return v.Key }).(pulumi.StringOutput)
+}
+
+// Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+func (o BindingSpecParametersValueFromSecretKeyRefOutput) Name() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v BindingSpecParametersValueFromSecretKeyRef) *string { return v.Name }).(pulumi.StringPtrOutput)
+}
+
+// Specify whether the Secret or its key must be defined
+func (o BindingSpecParametersValueFromSecretKeyRefOutput) Optional() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v BindingSpecParametersValueFromSecretKeyRef) *bool { return v.Optional }).(pulumi.BoolPtrOutput)
+}
+
+type BindingSpecParametersValueFromSecretKeyRefPtrOutput struct{ *pulumi.OutputState }
+
+func (BindingSpecParametersValueFromSecretKeyRefPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**BindingSpecParametersValueFromSecretKeyRef)(nil)).Elem()
+}
+
+func (o BindingSpecParametersValueFromSecretKeyRefPtrOutput) ToBindingSpecParametersValueFromSecretKeyRefPtrOutput() BindingSpecParametersValueFromSecretKeyRefPtrOutput {
+	return o
+}
+
+func (o BindingSpecParametersValueFromSecretKeyRefPtrOutput) ToBindingSpecParametersValueFromSecretKeyRefPtrOutputWithContext(ctx context.Context) BindingSpecParametersValueFromSecretKeyRefPtrOutput {
+	return o
+}
+
+func (o BindingSpecParametersValueFromSecretKeyRefPtrOutput) Elem() BindingSpecParametersValueFromSecretKeyRefOutput {
+	return o.ApplyT(func(v *BindingSpecParametersValueFromSecretKeyRef) BindingSpecParametersValueFromSecretKeyRef {
+		return *v
+	}).(BindingSpecParametersValueFromSecretKeyRefOutput)
+}
+
+// The key of the secret to select from.  Must be a valid secret key.
+func (o BindingSpecParametersValueFromSecretKeyRefPtrOutput) Key() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *BindingSpecParametersValueFromSecretKeyRef) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.Key
+	}).(pulumi.StringPtrOutput)
+}
+
+// Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+func (o BindingSpecParametersValueFromSecretKeyRefPtrOutput) Name() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *BindingSpecParametersValueFromSecretKeyRef) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Name
+	}).(pulumi.StringPtrOutput)
+}
+
+// Specify whether the Secret or its key must be defined
+func (o BindingSpecParametersValueFromSecretKeyRefPtrOutput) Optional() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *BindingSpecParametersValueFromSecretKeyRef) *bool {
+		if v == nil {
+			return nil
+		}
+		return v.Optional
+	}).(pulumi.BoolPtrOutput)
+}
+
+// BindingStatus defines the observed state of Binding
 type BindingStatus struct {
 	Generation    *int    `pulumi:"generation"`
 	InstanceId    *string `pulumi:"instanceId"`
@@ -763,6 +1036,7 @@ type BindingStatusInput interface {
 	ToBindingStatusOutputWithContext(context.Context) BindingStatusOutput
 }
 
+// BindingStatus defines the observed state of Binding
 type BindingStatusArgs struct {
 	Generation    pulumi.IntPtrInput    `pulumi:"generation"`
 	InstanceId    pulumi.StringPtrInput `pulumi:"instanceId"`
@@ -825,6 +1099,7 @@ func (i *bindingStatusPtrType) ToBindingStatusPtrOutputWithContext(ctx context.C
 	return pulumi.ToOutputWithContext(ctx, i).(BindingStatusPtrOutput)
 }
 
+// BindingStatus defines the observed state of Binding
 type BindingStatusOutput struct{ *pulumi.OutputState }
 
 func (BindingStatusOutput) ElementType() reflect.Type {
@@ -944,12 +1219,15 @@ func (o BindingStatusPtrOutput) State() pulumi.StringPtrOutput {
 	}).(pulumi.StringPtrOutput)
 }
 
+// Service is the Schema for the services API
 type ServiceType struct {
 	ApiVersion *string            `pulumi:"apiVersion"`
 	Kind       *string            `pulumi:"kind"`
 	Metadata   *metav1.ObjectMeta `pulumi:"metadata"`
-	Spec       *ServiceSpec       `pulumi:"spec"`
-	Status     *ServiceStatus     `pulumi:"status"`
+	// ServiceSpec defines the desired state of Service
+	Spec *ServiceSpec `pulumi:"spec"`
+	// ServiceStatus defines the observed state of Service
+	Status *ServiceStatus `pulumi:"status"`
 }
 
 // ServiceTypeInput is an input type that accepts ServiceTypeArgs and ServiceTypeOutput values.
@@ -963,12 +1241,15 @@ type ServiceTypeInput interface {
 	ToServiceTypeOutputWithContext(context.Context) ServiceTypeOutput
 }
 
+// Service is the Schema for the services API
 type ServiceTypeArgs struct {
 	ApiVersion pulumi.StringPtrInput     `pulumi:"apiVersion"`
 	Kind       pulumi.StringPtrInput     `pulumi:"kind"`
 	Metadata   metav1.ObjectMetaPtrInput `pulumi:"metadata"`
-	Spec       ServiceSpecPtrInput       `pulumi:"spec"`
-	Status     ServiceStatusPtrInput     `pulumi:"status"`
+	// ServiceSpec defines the desired state of Service
+	Spec ServiceSpecPtrInput `pulumi:"spec"`
+	// ServiceStatus defines the observed state of Service
+	Status ServiceStatusPtrInput `pulumi:"status"`
 }
 
 func (ServiceTypeArgs) ElementType() reflect.Type {
@@ -983,6 +1264,7 @@ func (i ServiceTypeArgs) ToServiceTypeOutputWithContext(ctx context.Context) Ser
 	return pulumi.ToOutputWithContext(ctx, i).(ServiceTypeOutput)
 }
 
+// Service is the Schema for the services API
 type ServiceTypeOutput struct{ *pulumi.OutputState }
 
 func (ServiceTypeOutput) ElementType() reflect.Type {
@@ -1009,10 +1291,12 @@ func (o ServiceTypeOutput) Metadata() metav1.ObjectMetaPtrOutput {
 	return o.ApplyT(func(v ServiceType) *metav1.ObjectMeta { return v.Metadata }).(metav1.ObjectMetaPtrOutput)
 }
 
+// ServiceSpec defines the desired state of Service
 func (o ServiceTypeOutput) Spec() ServiceSpecPtrOutput {
 	return o.ApplyT(func(v ServiceType) *ServiceSpec { return v.Spec }).(ServiceSpecPtrOutput)
 }
 
+// ServiceStatus defines the observed state of Service
 func (o ServiceTypeOutput) Status() ServiceStatusPtrOutput {
 	return o.ApplyT(func(v ServiceType) *ServiceStatus { return v.Status }).(ServiceStatusPtrOutput)
 }
@@ -1060,7 +1344,9 @@ func (o ServiceMetadataOutput) ToServiceMetadataOutputWithContext(ctx context.Co
 	return o
 }
 
+// ServiceSpec defines the desired state of Service
 type ServiceSpec struct {
+	// ResourceContext defines the CloudFoundry context and resource group
 	Context          *ServiceSpecContext     `pulumi:"context"`
 	ExternalName     *string                 `pulumi:"externalName"`
 	Parameters       []ServiceSpecParameters `pulumi:"parameters"`
@@ -1081,7 +1367,9 @@ type ServiceSpecInput interface {
 	ToServiceSpecOutputWithContext(context.Context) ServiceSpecOutput
 }
 
+// ServiceSpec defines the desired state of Service
 type ServiceSpecArgs struct {
+	// ResourceContext defines the CloudFoundry context and resource group
 	Context          ServiceSpecContextPtrInput      `pulumi:"context"`
 	ExternalName     pulumi.StringPtrInput           `pulumi:"externalName"`
 	Parameters       ServiceSpecParametersArrayInput `pulumi:"parameters"`
@@ -1144,6 +1432,7 @@ func (i *serviceSpecPtrType) ToServiceSpecPtrOutputWithContext(ctx context.Conte
 	return pulumi.ToOutputWithContext(ctx, i).(ServiceSpecPtrOutput)
 }
 
+// ServiceSpec defines the desired state of Service
 type ServiceSpecOutput struct{ *pulumi.OutputState }
 
 func (ServiceSpecOutput) ElementType() reflect.Type {
@@ -1167,6 +1456,8 @@ func (o ServiceSpecOutput) ToServiceSpecPtrOutputWithContext(ctx context.Context
 		return &v
 	}).(ServiceSpecPtrOutput)
 }
+
+// ResourceContext defines the CloudFoundry context and resource group
 func (o ServiceSpecOutput) Context() ServiceSpecContextPtrOutput {
 	return o.ApplyT(func(v ServiceSpec) *ServiceSpecContext { return v.Context }).(ServiceSpecContextPtrOutput)
 }
@@ -1213,6 +1504,7 @@ func (o ServiceSpecPtrOutput) Elem() ServiceSpecOutput {
 	return o.ApplyT(func(v *ServiceSpec) ServiceSpec { return *v }).(ServiceSpecOutput)
 }
 
+// ResourceContext defines the CloudFoundry context and resource group
 func (o ServiceSpecPtrOutput) Context() ServiceSpecContextPtrOutput {
 	return o.ApplyT(func(v *ServiceSpec) *ServiceSpecContext {
 		if v == nil {
@@ -1276,6 +1568,7 @@ func (o ServiceSpecPtrOutput) Tags() pulumi.StringArrayOutput {
 	}).(pulumi.StringArrayOutput)
 }
 
+// ResourceContext defines the CloudFoundry context and resource group
 type ServiceSpecContext struct {
 	Org              *string `pulumi:"org"`
 	Region           *string `pulumi:"region"`
@@ -1297,6 +1590,7 @@ type ServiceSpecContextInput interface {
 	ToServiceSpecContextOutputWithContext(context.Context) ServiceSpecContextOutput
 }
 
+// ResourceContext defines the CloudFoundry context and resource group
 type ServiceSpecContextArgs struct {
 	Org              pulumi.StringPtrInput `pulumi:"org"`
 	Region           pulumi.StringPtrInput `pulumi:"region"`
@@ -1360,6 +1654,7 @@ func (i *serviceSpecContextPtrType) ToServiceSpecContextPtrOutputWithContext(ctx
 	return pulumi.ToOutputWithContext(ctx, i).(ServiceSpecContextPtrOutput)
 }
 
+// ResourceContext defines the CloudFoundry context and resource group
 type ServiceSpecContextOutput struct{ *pulumi.OutputState }
 
 func (ServiceSpecContextOutput) ElementType() reflect.Type {
@@ -1492,9 +1787,10 @@ func (o ServiceSpecContextPtrOutput) User() pulumi.StringPtrOutput {
 	}).(pulumi.StringPtrOutput)
 }
 
+// Param represents a key-value pair
 type ServiceSpecParameters struct {
 	// A parameter may have attributes (e.g. message hub topic might have partitions)
-	Attributes map[string]interface{} `pulumi:"attributes"`
+	Attributes map[string]map[string]interface{} `pulumi:"attributes"`
 	// Name representing the key.
 	Name string `pulumi:"name"`
 	// Defaults to null.
@@ -1514,9 +1810,10 @@ type ServiceSpecParametersInput interface {
 	ToServiceSpecParametersOutputWithContext(context.Context) ServiceSpecParametersOutput
 }
 
+// Param represents a key-value pair
 type ServiceSpecParametersArgs struct {
 	// A parameter may have attributes (e.g. message hub topic might have partitions)
-	Attributes pulumi.MapInput `pulumi:"attributes"`
+	Attributes pulumi.MapMapInput `pulumi:"attributes"`
 	// Name representing the key.
 	Name pulumi.StringInput `pulumi:"name"`
 	// Defaults to null.
@@ -1562,6 +1859,7 @@ func (i ServiceSpecParametersArray) ToServiceSpecParametersArrayOutputWithContex
 	return pulumi.ToOutputWithContext(ctx, i).(ServiceSpecParametersArrayOutput)
 }
 
+// Param represents a key-value pair
 type ServiceSpecParametersOutput struct{ *pulumi.OutputState }
 
 func (ServiceSpecParametersOutput) ElementType() reflect.Type {
@@ -1577,8 +1875,8 @@ func (o ServiceSpecParametersOutput) ToServiceSpecParametersOutputWithContext(ct
 }
 
 // A parameter may have attributes (e.g. message hub topic might have partitions)
-func (o ServiceSpecParametersOutput) Attributes() pulumi.MapOutput {
-	return o.ApplyT(func(v ServiceSpecParameters) map[string]interface{} { return v.Attributes }).(pulumi.MapOutput)
+func (o ServiceSpecParametersOutput) Attributes() pulumi.MapMapOutput {
+	return o.ApplyT(func(v ServiceSpecParameters) map[string]map[string]interface{} { return v.Attributes }).(pulumi.MapMapOutput)
 }
 
 // Name representing the key.
@@ -1616,7 +1914,6 @@ func (o ServiceSpecParametersArrayOutput) Index(i pulumi.IntInput) ServiceSpecPa
 	}).(ServiceSpecParametersOutput)
 }
 
-// A parameter may have attributes (e.g. message hub topic might have partitions)
 type ServiceSpecParametersAttributes struct {
 }
 
@@ -1631,7 +1928,6 @@ type ServiceSpecParametersAttributesInput interface {
 	ToServiceSpecParametersAttributesOutputWithContext(context.Context) ServiceSpecParametersAttributesOutput
 }
 
-// A parameter may have attributes (e.g. message hub topic might have partitions)
 type ServiceSpecParametersAttributesArgs struct {
 }
 
@@ -1647,7 +1943,6 @@ func (i ServiceSpecParametersAttributesArgs) ToServiceSpecParametersAttributesOu
 	return pulumi.ToOutputWithContext(ctx, i).(ServiceSpecParametersAttributesOutput)
 }
 
-// A parameter may have attributes (e.g. message hub topic might have partitions)
 type ServiceSpecParametersAttributesOutput struct{ *pulumi.OutputState }
 
 func (ServiceSpecParametersAttributesOutput) ElementType() reflect.Type {
@@ -1665,9 +1960,9 @@ func (o ServiceSpecParametersAttributesOutput) ToServiceSpecParametersAttributes
 // Source for the value. Cannot be used if value is not empty.
 type ServiceSpecParametersValueFrom struct {
 	// Selects a key of a ConfigMap.
-	ConfigMapKeyRef map[string]interface{} `pulumi:"configMapKeyRef"`
+	ConfigMapKeyRef *ServiceSpecParametersValueFromConfigMapKeyRef `pulumi:"configMapKeyRef"`
 	// Selects a key of a secret in the resource namespace
-	SecretKeyRef map[string]interface{} `pulumi:"secretKeyRef"`
+	SecretKeyRef *ServiceSpecParametersValueFromSecretKeyRef `pulumi:"secretKeyRef"`
 }
 
 // ServiceSpecParametersValueFromInput is an input type that accepts ServiceSpecParametersValueFromArgs and ServiceSpecParametersValueFromOutput values.
@@ -1684,9 +1979,9 @@ type ServiceSpecParametersValueFromInput interface {
 // Source for the value. Cannot be used if value is not empty.
 type ServiceSpecParametersValueFromArgs struct {
 	// Selects a key of a ConfigMap.
-	ConfigMapKeyRef pulumi.MapInput `pulumi:"configMapKeyRef"`
+	ConfigMapKeyRef ServiceSpecParametersValueFromConfigMapKeyRefPtrInput `pulumi:"configMapKeyRef"`
 	// Selects a key of a secret in the resource namespace
-	SecretKeyRef pulumi.MapInput `pulumi:"secretKeyRef"`
+	SecretKeyRef ServiceSpecParametersValueFromSecretKeyRefPtrInput `pulumi:"secretKeyRef"`
 }
 
 func (ServiceSpecParametersValueFromArgs) ElementType() reflect.Type {
@@ -1768,13 +2063,17 @@ func (o ServiceSpecParametersValueFromOutput) ToServiceSpecParametersValueFromPt
 }
 
 // Selects a key of a ConfigMap.
-func (o ServiceSpecParametersValueFromOutput) ConfigMapKeyRef() pulumi.MapOutput {
-	return o.ApplyT(func(v ServiceSpecParametersValueFrom) map[string]interface{} { return v.ConfigMapKeyRef }).(pulumi.MapOutput)
+func (o ServiceSpecParametersValueFromOutput) ConfigMapKeyRef() ServiceSpecParametersValueFromConfigMapKeyRefPtrOutput {
+	return o.ApplyT(func(v ServiceSpecParametersValueFrom) *ServiceSpecParametersValueFromConfigMapKeyRef {
+		return v.ConfigMapKeyRef
+	}).(ServiceSpecParametersValueFromConfigMapKeyRefPtrOutput)
 }
 
 // Selects a key of a secret in the resource namespace
-func (o ServiceSpecParametersValueFromOutput) SecretKeyRef() pulumi.MapOutput {
-	return o.ApplyT(func(v ServiceSpecParametersValueFrom) map[string]interface{} { return v.SecretKeyRef }).(pulumi.MapOutput)
+func (o ServiceSpecParametersValueFromOutput) SecretKeyRef() ServiceSpecParametersValueFromSecretKeyRefPtrOutput {
+	return o.ApplyT(func(v ServiceSpecParametersValueFrom) *ServiceSpecParametersValueFromSecretKeyRef {
+		return v.SecretKeyRef
+	}).(ServiceSpecParametersValueFromSecretKeyRefPtrOutput)
 }
 
 type ServiceSpecParametersValueFromPtrOutput struct{ *pulumi.OutputState }
@@ -1796,27 +2095,33 @@ func (o ServiceSpecParametersValueFromPtrOutput) Elem() ServiceSpecParametersVal
 }
 
 // Selects a key of a ConfigMap.
-func (o ServiceSpecParametersValueFromPtrOutput) ConfigMapKeyRef() pulumi.MapOutput {
-	return o.ApplyT(func(v *ServiceSpecParametersValueFrom) map[string]interface{} {
+func (o ServiceSpecParametersValueFromPtrOutput) ConfigMapKeyRef() ServiceSpecParametersValueFromConfigMapKeyRefPtrOutput {
+	return o.ApplyT(func(v *ServiceSpecParametersValueFrom) *ServiceSpecParametersValueFromConfigMapKeyRef {
 		if v == nil {
 			return nil
 		}
 		return v.ConfigMapKeyRef
-	}).(pulumi.MapOutput)
+	}).(ServiceSpecParametersValueFromConfigMapKeyRefPtrOutput)
 }
 
 // Selects a key of a secret in the resource namespace
-func (o ServiceSpecParametersValueFromPtrOutput) SecretKeyRef() pulumi.MapOutput {
-	return o.ApplyT(func(v *ServiceSpecParametersValueFrom) map[string]interface{} {
+func (o ServiceSpecParametersValueFromPtrOutput) SecretKeyRef() ServiceSpecParametersValueFromSecretKeyRefPtrOutput {
+	return o.ApplyT(func(v *ServiceSpecParametersValueFrom) *ServiceSpecParametersValueFromSecretKeyRef {
 		if v == nil {
 			return nil
 		}
 		return v.SecretKeyRef
-	}).(pulumi.MapOutput)
+	}).(ServiceSpecParametersValueFromSecretKeyRefPtrOutput)
 }
 
 // Selects a key of a ConfigMap.
 type ServiceSpecParametersValueFromConfigMapKeyRef struct {
+	// The key to select.
+	Key string `pulumi:"key"`
+	// Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+	Name *string `pulumi:"name"`
+	// Specify whether the ConfigMap or its key must be defined
+	Optional *bool `pulumi:"optional"`
 }
 
 // ServiceSpecParametersValueFromConfigMapKeyRefInput is an input type that accepts ServiceSpecParametersValueFromConfigMapKeyRefArgs and ServiceSpecParametersValueFromConfigMapKeyRefOutput values.
@@ -1832,6 +2137,12 @@ type ServiceSpecParametersValueFromConfigMapKeyRefInput interface {
 
 // Selects a key of a ConfigMap.
 type ServiceSpecParametersValueFromConfigMapKeyRefArgs struct {
+	// The key to select.
+	Key pulumi.StringInput `pulumi:"key"`
+	// Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+	Name pulumi.StringPtrInput `pulumi:"name"`
+	// Specify whether the ConfigMap or its key must be defined
+	Optional pulumi.BoolPtrInput `pulumi:"optional"`
 }
 
 func (ServiceSpecParametersValueFromConfigMapKeyRefArgs) ElementType() reflect.Type {
@@ -1844,6 +2155,47 @@ func (i ServiceSpecParametersValueFromConfigMapKeyRefArgs) ToServiceSpecParamete
 
 func (i ServiceSpecParametersValueFromConfigMapKeyRefArgs) ToServiceSpecParametersValueFromConfigMapKeyRefOutputWithContext(ctx context.Context) ServiceSpecParametersValueFromConfigMapKeyRefOutput {
 	return pulumi.ToOutputWithContext(ctx, i).(ServiceSpecParametersValueFromConfigMapKeyRefOutput)
+}
+
+func (i ServiceSpecParametersValueFromConfigMapKeyRefArgs) ToServiceSpecParametersValueFromConfigMapKeyRefPtrOutput() ServiceSpecParametersValueFromConfigMapKeyRefPtrOutput {
+	return i.ToServiceSpecParametersValueFromConfigMapKeyRefPtrOutputWithContext(context.Background())
+}
+
+func (i ServiceSpecParametersValueFromConfigMapKeyRefArgs) ToServiceSpecParametersValueFromConfigMapKeyRefPtrOutputWithContext(ctx context.Context) ServiceSpecParametersValueFromConfigMapKeyRefPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(ServiceSpecParametersValueFromConfigMapKeyRefOutput).ToServiceSpecParametersValueFromConfigMapKeyRefPtrOutputWithContext(ctx)
+}
+
+// ServiceSpecParametersValueFromConfigMapKeyRefPtrInput is an input type that accepts ServiceSpecParametersValueFromConfigMapKeyRefArgs, ServiceSpecParametersValueFromConfigMapKeyRefPtr and ServiceSpecParametersValueFromConfigMapKeyRefPtrOutput values.
+// You can construct a concrete instance of `ServiceSpecParametersValueFromConfigMapKeyRefPtrInput` via:
+//
+//          ServiceSpecParametersValueFromConfigMapKeyRefArgs{...}
+//
+//  or:
+//
+//          nil
+type ServiceSpecParametersValueFromConfigMapKeyRefPtrInput interface {
+	pulumi.Input
+
+	ToServiceSpecParametersValueFromConfigMapKeyRefPtrOutput() ServiceSpecParametersValueFromConfigMapKeyRefPtrOutput
+	ToServiceSpecParametersValueFromConfigMapKeyRefPtrOutputWithContext(context.Context) ServiceSpecParametersValueFromConfigMapKeyRefPtrOutput
+}
+
+type serviceSpecParametersValueFromConfigMapKeyRefPtrType ServiceSpecParametersValueFromConfigMapKeyRefArgs
+
+func ServiceSpecParametersValueFromConfigMapKeyRefPtr(v *ServiceSpecParametersValueFromConfigMapKeyRefArgs) ServiceSpecParametersValueFromConfigMapKeyRefPtrInput {
+	return (*serviceSpecParametersValueFromConfigMapKeyRefPtrType)(v)
+}
+
+func (*serviceSpecParametersValueFromConfigMapKeyRefPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**ServiceSpecParametersValueFromConfigMapKeyRef)(nil)).Elem()
+}
+
+func (i *serviceSpecParametersValueFromConfigMapKeyRefPtrType) ToServiceSpecParametersValueFromConfigMapKeyRefPtrOutput() ServiceSpecParametersValueFromConfigMapKeyRefPtrOutput {
+	return i.ToServiceSpecParametersValueFromConfigMapKeyRefPtrOutputWithContext(context.Background())
+}
+
+func (i *serviceSpecParametersValueFromConfigMapKeyRefPtrType) ToServiceSpecParametersValueFromConfigMapKeyRefPtrOutputWithContext(ctx context.Context) ServiceSpecParametersValueFromConfigMapKeyRefPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(ServiceSpecParametersValueFromConfigMapKeyRefPtrOutput)
 }
 
 // Selects a key of a ConfigMap.
@@ -1861,8 +2213,89 @@ func (o ServiceSpecParametersValueFromConfigMapKeyRefOutput) ToServiceSpecParame
 	return o
 }
 
+func (o ServiceSpecParametersValueFromConfigMapKeyRefOutput) ToServiceSpecParametersValueFromConfigMapKeyRefPtrOutput() ServiceSpecParametersValueFromConfigMapKeyRefPtrOutput {
+	return o.ToServiceSpecParametersValueFromConfigMapKeyRefPtrOutputWithContext(context.Background())
+}
+
+func (o ServiceSpecParametersValueFromConfigMapKeyRefOutput) ToServiceSpecParametersValueFromConfigMapKeyRefPtrOutputWithContext(ctx context.Context) ServiceSpecParametersValueFromConfigMapKeyRefPtrOutput {
+	return o.ApplyT(func(v ServiceSpecParametersValueFromConfigMapKeyRef) *ServiceSpecParametersValueFromConfigMapKeyRef {
+		return &v
+	}).(ServiceSpecParametersValueFromConfigMapKeyRefPtrOutput)
+}
+
+// The key to select.
+func (o ServiceSpecParametersValueFromConfigMapKeyRefOutput) Key() pulumi.StringOutput {
+	return o.ApplyT(func(v ServiceSpecParametersValueFromConfigMapKeyRef) string { return v.Key }).(pulumi.StringOutput)
+}
+
+// Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+func (o ServiceSpecParametersValueFromConfigMapKeyRefOutput) Name() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v ServiceSpecParametersValueFromConfigMapKeyRef) *string { return v.Name }).(pulumi.StringPtrOutput)
+}
+
+// Specify whether the ConfigMap or its key must be defined
+func (o ServiceSpecParametersValueFromConfigMapKeyRefOutput) Optional() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v ServiceSpecParametersValueFromConfigMapKeyRef) *bool { return v.Optional }).(pulumi.BoolPtrOutput)
+}
+
+type ServiceSpecParametersValueFromConfigMapKeyRefPtrOutput struct{ *pulumi.OutputState }
+
+func (ServiceSpecParametersValueFromConfigMapKeyRefPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**ServiceSpecParametersValueFromConfigMapKeyRef)(nil)).Elem()
+}
+
+func (o ServiceSpecParametersValueFromConfigMapKeyRefPtrOutput) ToServiceSpecParametersValueFromConfigMapKeyRefPtrOutput() ServiceSpecParametersValueFromConfigMapKeyRefPtrOutput {
+	return o
+}
+
+func (o ServiceSpecParametersValueFromConfigMapKeyRefPtrOutput) ToServiceSpecParametersValueFromConfigMapKeyRefPtrOutputWithContext(ctx context.Context) ServiceSpecParametersValueFromConfigMapKeyRefPtrOutput {
+	return o
+}
+
+func (o ServiceSpecParametersValueFromConfigMapKeyRefPtrOutput) Elem() ServiceSpecParametersValueFromConfigMapKeyRefOutput {
+	return o.ApplyT(func(v *ServiceSpecParametersValueFromConfigMapKeyRef) ServiceSpecParametersValueFromConfigMapKeyRef {
+		return *v
+	}).(ServiceSpecParametersValueFromConfigMapKeyRefOutput)
+}
+
+// The key to select.
+func (o ServiceSpecParametersValueFromConfigMapKeyRefPtrOutput) Key() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *ServiceSpecParametersValueFromConfigMapKeyRef) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.Key
+	}).(pulumi.StringPtrOutput)
+}
+
+// Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+func (o ServiceSpecParametersValueFromConfigMapKeyRefPtrOutput) Name() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *ServiceSpecParametersValueFromConfigMapKeyRef) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Name
+	}).(pulumi.StringPtrOutput)
+}
+
+// Specify whether the ConfigMap or its key must be defined
+func (o ServiceSpecParametersValueFromConfigMapKeyRefPtrOutput) Optional() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *ServiceSpecParametersValueFromConfigMapKeyRef) *bool {
+		if v == nil {
+			return nil
+		}
+		return v.Optional
+	}).(pulumi.BoolPtrOutput)
+}
+
 // Selects a key of a secret in the resource namespace
 type ServiceSpecParametersValueFromSecretKeyRef struct {
+	// The key of the secret to select from.  Must be a valid secret key.
+	Key string `pulumi:"key"`
+	// Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+	Name *string `pulumi:"name"`
+	// Specify whether the Secret or its key must be defined
+	Optional *bool `pulumi:"optional"`
 }
 
 // ServiceSpecParametersValueFromSecretKeyRefInput is an input type that accepts ServiceSpecParametersValueFromSecretKeyRefArgs and ServiceSpecParametersValueFromSecretKeyRefOutput values.
@@ -1878,6 +2311,12 @@ type ServiceSpecParametersValueFromSecretKeyRefInput interface {
 
 // Selects a key of a secret in the resource namespace
 type ServiceSpecParametersValueFromSecretKeyRefArgs struct {
+	// The key of the secret to select from.  Must be a valid secret key.
+	Key pulumi.StringInput `pulumi:"key"`
+	// Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+	Name pulumi.StringPtrInput `pulumi:"name"`
+	// Specify whether the Secret or its key must be defined
+	Optional pulumi.BoolPtrInput `pulumi:"optional"`
 }
 
 func (ServiceSpecParametersValueFromSecretKeyRefArgs) ElementType() reflect.Type {
@@ -1890,6 +2329,47 @@ func (i ServiceSpecParametersValueFromSecretKeyRefArgs) ToServiceSpecParametersV
 
 func (i ServiceSpecParametersValueFromSecretKeyRefArgs) ToServiceSpecParametersValueFromSecretKeyRefOutputWithContext(ctx context.Context) ServiceSpecParametersValueFromSecretKeyRefOutput {
 	return pulumi.ToOutputWithContext(ctx, i).(ServiceSpecParametersValueFromSecretKeyRefOutput)
+}
+
+func (i ServiceSpecParametersValueFromSecretKeyRefArgs) ToServiceSpecParametersValueFromSecretKeyRefPtrOutput() ServiceSpecParametersValueFromSecretKeyRefPtrOutput {
+	return i.ToServiceSpecParametersValueFromSecretKeyRefPtrOutputWithContext(context.Background())
+}
+
+func (i ServiceSpecParametersValueFromSecretKeyRefArgs) ToServiceSpecParametersValueFromSecretKeyRefPtrOutputWithContext(ctx context.Context) ServiceSpecParametersValueFromSecretKeyRefPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(ServiceSpecParametersValueFromSecretKeyRefOutput).ToServiceSpecParametersValueFromSecretKeyRefPtrOutputWithContext(ctx)
+}
+
+// ServiceSpecParametersValueFromSecretKeyRefPtrInput is an input type that accepts ServiceSpecParametersValueFromSecretKeyRefArgs, ServiceSpecParametersValueFromSecretKeyRefPtr and ServiceSpecParametersValueFromSecretKeyRefPtrOutput values.
+// You can construct a concrete instance of `ServiceSpecParametersValueFromSecretKeyRefPtrInput` via:
+//
+//          ServiceSpecParametersValueFromSecretKeyRefArgs{...}
+//
+//  or:
+//
+//          nil
+type ServiceSpecParametersValueFromSecretKeyRefPtrInput interface {
+	pulumi.Input
+
+	ToServiceSpecParametersValueFromSecretKeyRefPtrOutput() ServiceSpecParametersValueFromSecretKeyRefPtrOutput
+	ToServiceSpecParametersValueFromSecretKeyRefPtrOutputWithContext(context.Context) ServiceSpecParametersValueFromSecretKeyRefPtrOutput
+}
+
+type serviceSpecParametersValueFromSecretKeyRefPtrType ServiceSpecParametersValueFromSecretKeyRefArgs
+
+func ServiceSpecParametersValueFromSecretKeyRefPtr(v *ServiceSpecParametersValueFromSecretKeyRefArgs) ServiceSpecParametersValueFromSecretKeyRefPtrInput {
+	return (*serviceSpecParametersValueFromSecretKeyRefPtrType)(v)
+}
+
+func (*serviceSpecParametersValueFromSecretKeyRefPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**ServiceSpecParametersValueFromSecretKeyRef)(nil)).Elem()
+}
+
+func (i *serviceSpecParametersValueFromSecretKeyRefPtrType) ToServiceSpecParametersValueFromSecretKeyRefPtrOutput() ServiceSpecParametersValueFromSecretKeyRefPtrOutput {
+	return i.ToServiceSpecParametersValueFromSecretKeyRefPtrOutputWithContext(context.Background())
+}
+
+func (i *serviceSpecParametersValueFromSecretKeyRefPtrType) ToServiceSpecParametersValueFromSecretKeyRefPtrOutputWithContext(ctx context.Context) ServiceSpecParametersValueFromSecretKeyRefPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(ServiceSpecParametersValueFromSecretKeyRefPtrOutput)
 }
 
 // Selects a key of a secret in the resource namespace
@@ -1907,7 +2387,84 @@ func (o ServiceSpecParametersValueFromSecretKeyRefOutput) ToServiceSpecParameter
 	return o
 }
 
+func (o ServiceSpecParametersValueFromSecretKeyRefOutput) ToServiceSpecParametersValueFromSecretKeyRefPtrOutput() ServiceSpecParametersValueFromSecretKeyRefPtrOutput {
+	return o.ToServiceSpecParametersValueFromSecretKeyRefPtrOutputWithContext(context.Background())
+}
+
+func (o ServiceSpecParametersValueFromSecretKeyRefOutput) ToServiceSpecParametersValueFromSecretKeyRefPtrOutputWithContext(ctx context.Context) ServiceSpecParametersValueFromSecretKeyRefPtrOutput {
+	return o.ApplyT(func(v ServiceSpecParametersValueFromSecretKeyRef) *ServiceSpecParametersValueFromSecretKeyRef {
+		return &v
+	}).(ServiceSpecParametersValueFromSecretKeyRefPtrOutput)
+}
+
+// The key of the secret to select from.  Must be a valid secret key.
+func (o ServiceSpecParametersValueFromSecretKeyRefOutput) Key() pulumi.StringOutput {
+	return o.ApplyT(func(v ServiceSpecParametersValueFromSecretKeyRef) string { return v.Key }).(pulumi.StringOutput)
+}
+
+// Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+func (o ServiceSpecParametersValueFromSecretKeyRefOutput) Name() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v ServiceSpecParametersValueFromSecretKeyRef) *string { return v.Name }).(pulumi.StringPtrOutput)
+}
+
+// Specify whether the Secret or its key must be defined
+func (o ServiceSpecParametersValueFromSecretKeyRefOutput) Optional() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v ServiceSpecParametersValueFromSecretKeyRef) *bool { return v.Optional }).(pulumi.BoolPtrOutput)
+}
+
+type ServiceSpecParametersValueFromSecretKeyRefPtrOutput struct{ *pulumi.OutputState }
+
+func (ServiceSpecParametersValueFromSecretKeyRefPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**ServiceSpecParametersValueFromSecretKeyRef)(nil)).Elem()
+}
+
+func (o ServiceSpecParametersValueFromSecretKeyRefPtrOutput) ToServiceSpecParametersValueFromSecretKeyRefPtrOutput() ServiceSpecParametersValueFromSecretKeyRefPtrOutput {
+	return o
+}
+
+func (o ServiceSpecParametersValueFromSecretKeyRefPtrOutput) ToServiceSpecParametersValueFromSecretKeyRefPtrOutputWithContext(ctx context.Context) ServiceSpecParametersValueFromSecretKeyRefPtrOutput {
+	return o
+}
+
+func (o ServiceSpecParametersValueFromSecretKeyRefPtrOutput) Elem() ServiceSpecParametersValueFromSecretKeyRefOutput {
+	return o.ApplyT(func(v *ServiceSpecParametersValueFromSecretKeyRef) ServiceSpecParametersValueFromSecretKeyRef {
+		return *v
+	}).(ServiceSpecParametersValueFromSecretKeyRefOutput)
+}
+
+// The key of the secret to select from.  Must be a valid secret key.
+func (o ServiceSpecParametersValueFromSecretKeyRefPtrOutput) Key() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *ServiceSpecParametersValueFromSecretKeyRef) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.Key
+	}).(pulumi.StringPtrOutput)
+}
+
+// Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+func (o ServiceSpecParametersValueFromSecretKeyRefPtrOutput) Name() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *ServiceSpecParametersValueFromSecretKeyRef) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Name
+	}).(pulumi.StringPtrOutput)
+}
+
+// Specify whether the Secret or its key must be defined
+func (o ServiceSpecParametersValueFromSecretKeyRefPtrOutput) Optional() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *ServiceSpecParametersValueFromSecretKeyRef) *bool {
+		if v == nil {
+			return nil
+		}
+		return v.Optional
+	}).(pulumi.BoolPtrOutput)
+}
+
+// ServiceStatus defines the observed state of Service
 type ServiceStatus struct {
+	// ResourceContext defines the CloudFoundry context and resource group
 	Context          *ServiceStatusContext     `pulumi:"context"`
 	DashboardURL     *string                   `pulumi:"dashboardURL"`
 	ExternalName     *string                   `pulumi:"externalName"`
@@ -1933,7 +2490,9 @@ type ServiceStatusInput interface {
 	ToServiceStatusOutputWithContext(context.Context) ServiceStatusOutput
 }
 
+// ServiceStatus defines the observed state of Service
 type ServiceStatusArgs struct {
+	// ResourceContext defines the CloudFoundry context and resource group
 	Context          ServiceStatusContextPtrInput      `pulumi:"context"`
 	DashboardURL     pulumi.StringPtrInput             `pulumi:"dashboardURL"`
 	ExternalName     pulumi.StringPtrInput             `pulumi:"externalName"`
@@ -2001,6 +2560,7 @@ func (i *serviceStatusPtrType) ToServiceStatusPtrOutputWithContext(ctx context.C
 	return pulumi.ToOutputWithContext(ctx, i).(ServiceStatusPtrOutput)
 }
 
+// ServiceStatus defines the observed state of Service
 type ServiceStatusOutput struct{ *pulumi.OutputState }
 
 func (ServiceStatusOutput) ElementType() reflect.Type {
@@ -2024,6 +2584,8 @@ func (o ServiceStatusOutput) ToServiceStatusPtrOutputWithContext(ctx context.Con
 		return &v
 	}).(ServiceStatusPtrOutput)
 }
+
+// ResourceContext defines the CloudFoundry context and resource group
 func (o ServiceStatusOutput) Context() ServiceStatusContextPtrOutput {
 	return o.ApplyT(func(v ServiceStatus) *ServiceStatusContext { return v.Context }).(ServiceStatusContextPtrOutput)
 }
@@ -2090,6 +2652,7 @@ func (o ServiceStatusPtrOutput) Elem() ServiceStatusOutput {
 	return o.ApplyT(func(v *ServiceStatus) ServiceStatus { return *v }).(ServiceStatusOutput)
 }
 
+// ResourceContext defines the CloudFoundry context and resource group
 func (o ServiceStatusPtrOutput) Context() ServiceStatusContextPtrOutput {
 	return o.ApplyT(func(v *ServiceStatus) *ServiceStatusContext {
 		if v == nil {
@@ -2198,6 +2761,7 @@ func (o ServiceStatusPtrOutput) Tags() pulumi.StringArrayOutput {
 	}).(pulumi.StringArrayOutput)
 }
 
+// ResourceContext defines the CloudFoundry context and resource group
 type ServiceStatusContext struct {
 	Org              *string `pulumi:"org"`
 	Region           *string `pulumi:"region"`
@@ -2219,6 +2783,7 @@ type ServiceStatusContextInput interface {
 	ToServiceStatusContextOutputWithContext(context.Context) ServiceStatusContextOutput
 }
 
+// ResourceContext defines the CloudFoundry context and resource group
 type ServiceStatusContextArgs struct {
 	Org              pulumi.StringPtrInput `pulumi:"org"`
 	Region           pulumi.StringPtrInput `pulumi:"region"`
@@ -2282,6 +2847,7 @@ func (i *serviceStatusContextPtrType) ToServiceStatusContextPtrOutputWithContext
 	return pulumi.ToOutputWithContext(ctx, i).(ServiceStatusContextPtrOutput)
 }
 
+// ResourceContext defines the CloudFoundry context and resource group
 type ServiceStatusContextOutput struct{ *pulumi.OutputState }
 
 func (ServiceStatusContextOutput) ElementType() reflect.Type {
@@ -2414,9 +2980,10 @@ func (o ServiceStatusContextPtrOutput) User() pulumi.StringPtrOutput {
 	}).(pulumi.StringPtrOutput)
 }
 
+// Param represents a key-value pair
 type ServiceStatusParameters struct {
 	// A parameter may have attributes (e.g. message hub topic might have partitions)
-	Attributes map[string]interface{} `pulumi:"attributes"`
+	Attributes map[string]map[string]interface{} `pulumi:"attributes"`
 	// Name representing the key.
 	Name string `pulumi:"name"`
 	// Defaults to null.
@@ -2436,9 +3003,10 @@ type ServiceStatusParametersInput interface {
 	ToServiceStatusParametersOutputWithContext(context.Context) ServiceStatusParametersOutput
 }
 
+// Param represents a key-value pair
 type ServiceStatusParametersArgs struct {
 	// A parameter may have attributes (e.g. message hub topic might have partitions)
-	Attributes pulumi.MapInput `pulumi:"attributes"`
+	Attributes pulumi.MapMapInput `pulumi:"attributes"`
 	// Name representing the key.
 	Name pulumi.StringInput `pulumi:"name"`
 	// Defaults to null.
@@ -2484,6 +3052,7 @@ func (i ServiceStatusParametersArray) ToServiceStatusParametersArrayOutputWithCo
 	return pulumi.ToOutputWithContext(ctx, i).(ServiceStatusParametersArrayOutput)
 }
 
+// Param represents a key-value pair
 type ServiceStatusParametersOutput struct{ *pulumi.OutputState }
 
 func (ServiceStatusParametersOutput) ElementType() reflect.Type {
@@ -2499,8 +3068,8 @@ func (o ServiceStatusParametersOutput) ToServiceStatusParametersOutputWithContex
 }
 
 // A parameter may have attributes (e.g. message hub topic might have partitions)
-func (o ServiceStatusParametersOutput) Attributes() pulumi.MapOutput {
-	return o.ApplyT(func(v ServiceStatusParameters) map[string]interface{} { return v.Attributes }).(pulumi.MapOutput)
+func (o ServiceStatusParametersOutput) Attributes() pulumi.MapMapOutput {
+	return o.ApplyT(func(v ServiceStatusParameters) map[string]map[string]interface{} { return v.Attributes }).(pulumi.MapMapOutput)
 }
 
 // Name representing the key.
@@ -2538,7 +3107,6 @@ func (o ServiceStatusParametersArrayOutput) Index(i pulumi.IntInput) ServiceStat
 	}).(ServiceStatusParametersOutput)
 }
 
-// A parameter may have attributes (e.g. message hub topic might have partitions)
 type ServiceStatusParametersAttributes struct {
 }
 
@@ -2553,7 +3121,6 @@ type ServiceStatusParametersAttributesInput interface {
 	ToServiceStatusParametersAttributesOutputWithContext(context.Context) ServiceStatusParametersAttributesOutput
 }
 
-// A parameter may have attributes (e.g. message hub topic might have partitions)
 type ServiceStatusParametersAttributesArgs struct {
 }
 
@@ -2569,7 +3136,6 @@ func (i ServiceStatusParametersAttributesArgs) ToServiceStatusParametersAttribut
 	return pulumi.ToOutputWithContext(ctx, i).(ServiceStatusParametersAttributesOutput)
 }
 
-// A parameter may have attributes (e.g. message hub topic might have partitions)
 type ServiceStatusParametersAttributesOutput struct{ *pulumi.OutputState }
 
 func (ServiceStatusParametersAttributesOutput) ElementType() reflect.Type {
@@ -2587,9 +3153,9 @@ func (o ServiceStatusParametersAttributesOutput) ToServiceStatusParametersAttrib
 // Source for the value. Cannot be used if value is not empty.
 type ServiceStatusParametersValueFrom struct {
 	// Selects a key of a ConfigMap.
-	ConfigMapKeyRef map[string]interface{} `pulumi:"configMapKeyRef"`
+	ConfigMapKeyRef *ServiceStatusParametersValueFromConfigMapKeyRef `pulumi:"configMapKeyRef"`
 	// Selects a key of a secret in the resource namespace
-	SecretKeyRef map[string]interface{} `pulumi:"secretKeyRef"`
+	SecretKeyRef *ServiceStatusParametersValueFromSecretKeyRef `pulumi:"secretKeyRef"`
 }
 
 // ServiceStatusParametersValueFromInput is an input type that accepts ServiceStatusParametersValueFromArgs and ServiceStatusParametersValueFromOutput values.
@@ -2606,9 +3172,9 @@ type ServiceStatusParametersValueFromInput interface {
 // Source for the value. Cannot be used if value is not empty.
 type ServiceStatusParametersValueFromArgs struct {
 	// Selects a key of a ConfigMap.
-	ConfigMapKeyRef pulumi.MapInput `pulumi:"configMapKeyRef"`
+	ConfigMapKeyRef ServiceStatusParametersValueFromConfigMapKeyRefPtrInput `pulumi:"configMapKeyRef"`
 	// Selects a key of a secret in the resource namespace
-	SecretKeyRef pulumi.MapInput `pulumi:"secretKeyRef"`
+	SecretKeyRef ServiceStatusParametersValueFromSecretKeyRefPtrInput `pulumi:"secretKeyRef"`
 }
 
 func (ServiceStatusParametersValueFromArgs) ElementType() reflect.Type {
@@ -2690,13 +3256,17 @@ func (o ServiceStatusParametersValueFromOutput) ToServiceStatusParametersValueFr
 }
 
 // Selects a key of a ConfigMap.
-func (o ServiceStatusParametersValueFromOutput) ConfigMapKeyRef() pulumi.MapOutput {
-	return o.ApplyT(func(v ServiceStatusParametersValueFrom) map[string]interface{} { return v.ConfigMapKeyRef }).(pulumi.MapOutput)
+func (o ServiceStatusParametersValueFromOutput) ConfigMapKeyRef() ServiceStatusParametersValueFromConfigMapKeyRefPtrOutput {
+	return o.ApplyT(func(v ServiceStatusParametersValueFrom) *ServiceStatusParametersValueFromConfigMapKeyRef {
+		return v.ConfigMapKeyRef
+	}).(ServiceStatusParametersValueFromConfigMapKeyRefPtrOutput)
 }
 
 // Selects a key of a secret in the resource namespace
-func (o ServiceStatusParametersValueFromOutput) SecretKeyRef() pulumi.MapOutput {
-	return o.ApplyT(func(v ServiceStatusParametersValueFrom) map[string]interface{} { return v.SecretKeyRef }).(pulumi.MapOutput)
+func (o ServiceStatusParametersValueFromOutput) SecretKeyRef() ServiceStatusParametersValueFromSecretKeyRefPtrOutput {
+	return o.ApplyT(func(v ServiceStatusParametersValueFrom) *ServiceStatusParametersValueFromSecretKeyRef {
+		return v.SecretKeyRef
+	}).(ServiceStatusParametersValueFromSecretKeyRefPtrOutput)
 }
 
 type ServiceStatusParametersValueFromPtrOutput struct{ *pulumi.OutputState }
@@ -2718,27 +3288,33 @@ func (o ServiceStatusParametersValueFromPtrOutput) Elem() ServiceStatusParameter
 }
 
 // Selects a key of a ConfigMap.
-func (o ServiceStatusParametersValueFromPtrOutput) ConfigMapKeyRef() pulumi.MapOutput {
-	return o.ApplyT(func(v *ServiceStatusParametersValueFrom) map[string]interface{} {
+func (o ServiceStatusParametersValueFromPtrOutput) ConfigMapKeyRef() ServiceStatusParametersValueFromConfigMapKeyRefPtrOutput {
+	return o.ApplyT(func(v *ServiceStatusParametersValueFrom) *ServiceStatusParametersValueFromConfigMapKeyRef {
 		if v == nil {
 			return nil
 		}
 		return v.ConfigMapKeyRef
-	}).(pulumi.MapOutput)
+	}).(ServiceStatusParametersValueFromConfigMapKeyRefPtrOutput)
 }
 
 // Selects a key of a secret in the resource namespace
-func (o ServiceStatusParametersValueFromPtrOutput) SecretKeyRef() pulumi.MapOutput {
-	return o.ApplyT(func(v *ServiceStatusParametersValueFrom) map[string]interface{} {
+func (o ServiceStatusParametersValueFromPtrOutput) SecretKeyRef() ServiceStatusParametersValueFromSecretKeyRefPtrOutput {
+	return o.ApplyT(func(v *ServiceStatusParametersValueFrom) *ServiceStatusParametersValueFromSecretKeyRef {
 		if v == nil {
 			return nil
 		}
 		return v.SecretKeyRef
-	}).(pulumi.MapOutput)
+	}).(ServiceStatusParametersValueFromSecretKeyRefPtrOutput)
 }
 
 // Selects a key of a ConfigMap.
 type ServiceStatusParametersValueFromConfigMapKeyRef struct {
+	// The key to select.
+	Key string `pulumi:"key"`
+	// Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+	Name *string `pulumi:"name"`
+	// Specify whether the ConfigMap or its key must be defined
+	Optional *bool `pulumi:"optional"`
 }
 
 // ServiceStatusParametersValueFromConfigMapKeyRefInput is an input type that accepts ServiceStatusParametersValueFromConfigMapKeyRefArgs and ServiceStatusParametersValueFromConfigMapKeyRefOutput values.
@@ -2754,6 +3330,12 @@ type ServiceStatusParametersValueFromConfigMapKeyRefInput interface {
 
 // Selects a key of a ConfigMap.
 type ServiceStatusParametersValueFromConfigMapKeyRefArgs struct {
+	// The key to select.
+	Key pulumi.StringInput `pulumi:"key"`
+	// Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+	Name pulumi.StringPtrInput `pulumi:"name"`
+	// Specify whether the ConfigMap or its key must be defined
+	Optional pulumi.BoolPtrInput `pulumi:"optional"`
 }
 
 func (ServiceStatusParametersValueFromConfigMapKeyRefArgs) ElementType() reflect.Type {
@@ -2766,6 +3348,47 @@ func (i ServiceStatusParametersValueFromConfigMapKeyRefArgs) ToServiceStatusPara
 
 func (i ServiceStatusParametersValueFromConfigMapKeyRefArgs) ToServiceStatusParametersValueFromConfigMapKeyRefOutputWithContext(ctx context.Context) ServiceStatusParametersValueFromConfigMapKeyRefOutput {
 	return pulumi.ToOutputWithContext(ctx, i).(ServiceStatusParametersValueFromConfigMapKeyRefOutput)
+}
+
+func (i ServiceStatusParametersValueFromConfigMapKeyRefArgs) ToServiceStatusParametersValueFromConfigMapKeyRefPtrOutput() ServiceStatusParametersValueFromConfigMapKeyRefPtrOutput {
+	return i.ToServiceStatusParametersValueFromConfigMapKeyRefPtrOutputWithContext(context.Background())
+}
+
+func (i ServiceStatusParametersValueFromConfigMapKeyRefArgs) ToServiceStatusParametersValueFromConfigMapKeyRefPtrOutputWithContext(ctx context.Context) ServiceStatusParametersValueFromConfigMapKeyRefPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(ServiceStatusParametersValueFromConfigMapKeyRefOutput).ToServiceStatusParametersValueFromConfigMapKeyRefPtrOutputWithContext(ctx)
+}
+
+// ServiceStatusParametersValueFromConfigMapKeyRefPtrInput is an input type that accepts ServiceStatusParametersValueFromConfigMapKeyRefArgs, ServiceStatusParametersValueFromConfigMapKeyRefPtr and ServiceStatusParametersValueFromConfigMapKeyRefPtrOutput values.
+// You can construct a concrete instance of `ServiceStatusParametersValueFromConfigMapKeyRefPtrInput` via:
+//
+//          ServiceStatusParametersValueFromConfigMapKeyRefArgs{...}
+//
+//  or:
+//
+//          nil
+type ServiceStatusParametersValueFromConfigMapKeyRefPtrInput interface {
+	pulumi.Input
+
+	ToServiceStatusParametersValueFromConfigMapKeyRefPtrOutput() ServiceStatusParametersValueFromConfigMapKeyRefPtrOutput
+	ToServiceStatusParametersValueFromConfigMapKeyRefPtrOutputWithContext(context.Context) ServiceStatusParametersValueFromConfigMapKeyRefPtrOutput
+}
+
+type serviceStatusParametersValueFromConfigMapKeyRefPtrType ServiceStatusParametersValueFromConfigMapKeyRefArgs
+
+func ServiceStatusParametersValueFromConfigMapKeyRefPtr(v *ServiceStatusParametersValueFromConfigMapKeyRefArgs) ServiceStatusParametersValueFromConfigMapKeyRefPtrInput {
+	return (*serviceStatusParametersValueFromConfigMapKeyRefPtrType)(v)
+}
+
+func (*serviceStatusParametersValueFromConfigMapKeyRefPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**ServiceStatusParametersValueFromConfigMapKeyRef)(nil)).Elem()
+}
+
+func (i *serviceStatusParametersValueFromConfigMapKeyRefPtrType) ToServiceStatusParametersValueFromConfigMapKeyRefPtrOutput() ServiceStatusParametersValueFromConfigMapKeyRefPtrOutput {
+	return i.ToServiceStatusParametersValueFromConfigMapKeyRefPtrOutputWithContext(context.Background())
+}
+
+func (i *serviceStatusParametersValueFromConfigMapKeyRefPtrType) ToServiceStatusParametersValueFromConfigMapKeyRefPtrOutputWithContext(ctx context.Context) ServiceStatusParametersValueFromConfigMapKeyRefPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(ServiceStatusParametersValueFromConfigMapKeyRefPtrOutput)
 }
 
 // Selects a key of a ConfigMap.
@@ -2783,8 +3406,89 @@ func (o ServiceStatusParametersValueFromConfigMapKeyRefOutput) ToServiceStatusPa
 	return o
 }
 
+func (o ServiceStatusParametersValueFromConfigMapKeyRefOutput) ToServiceStatusParametersValueFromConfigMapKeyRefPtrOutput() ServiceStatusParametersValueFromConfigMapKeyRefPtrOutput {
+	return o.ToServiceStatusParametersValueFromConfigMapKeyRefPtrOutputWithContext(context.Background())
+}
+
+func (o ServiceStatusParametersValueFromConfigMapKeyRefOutput) ToServiceStatusParametersValueFromConfigMapKeyRefPtrOutputWithContext(ctx context.Context) ServiceStatusParametersValueFromConfigMapKeyRefPtrOutput {
+	return o.ApplyT(func(v ServiceStatusParametersValueFromConfigMapKeyRef) *ServiceStatusParametersValueFromConfigMapKeyRef {
+		return &v
+	}).(ServiceStatusParametersValueFromConfigMapKeyRefPtrOutput)
+}
+
+// The key to select.
+func (o ServiceStatusParametersValueFromConfigMapKeyRefOutput) Key() pulumi.StringOutput {
+	return o.ApplyT(func(v ServiceStatusParametersValueFromConfigMapKeyRef) string { return v.Key }).(pulumi.StringOutput)
+}
+
+// Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+func (o ServiceStatusParametersValueFromConfigMapKeyRefOutput) Name() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v ServiceStatusParametersValueFromConfigMapKeyRef) *string { return v.Name }).(pulumi.StringPtrOutput)
+}
+
+// Specify whether the ConfigMap or its key must be defined
+func (o ServiceStatusParametersValueFromConfigMapKeyRefOutput) Optional() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v ServiceStatusParametersValueFromConfigMapKeyRef) *bool { return v.Optional }).(pulumi.BoolPtrOutput)
+}
+
+type ServiceStatusParametersValueFromConfigMapKeyRefPtrOutput struct{ *pulumi.OutputState }
+
+func (ServiceStatusParametersValueFromConfigMapKeyRefPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**ServiceStatusParametersValueFromConfigMapKeyRef)(nil)).Elem()
+}
+
+func (o ServiceStatusParametersValueFromConfigMapKeyRefPtrOutput) ToServiceStatusParametersValueFromConfigMapKeyRefPtrOutput() ServiceStatusParametersValueFromConfigMapKeyRefPtrOutput {
+	return o
+}
+
+func (o ServiceStatusParametersValueFromConfigMapKeyRefPtrOutput) ToServiceStatusParametersValueFromConfigMapKeyRefPtrOutputWithContext(ctx context.Context) ServiceStatusParametersValueFromConfigMapKeyRefPtrOutput {
+	return o
+}
+
+func (o ServiceStatusParametersValueFromConfigMapKeyRefPtrOutput) Elem() ServiceStatusParametersValueFromConfigMapKeyRefOutput {
+	return o.ApplyT(func(v *ServiceStatusParametersValueFromConfigMapKeyRef) ServiceStatusParametersValueFromConfigMapKeyRef {
+		return *v
+	}).(ServiceStatusParametersValueFromConfigMapKeyRefOutput)
+}
+
+// The key to select.
+func (o ServiceStatusParametersValueFromConfigMapKeyRefPtrOutput) Key() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *ServiceStatusParametersValueFromConfigMapKeyRef) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.Key
+	}).(pulumi.StringPtrOutput)
+}
+
+// Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+func (o ServiceStatusParametersValueFromConfigMapKeyRefPtrOutput) Name() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *ServiceStatusParametersValueFromConfigMapKeyRef) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Name
+	}).(pulumi.StringPtrOutput)
+}
+
+// Specify whether the ConfigMap or its key must be defined
+func (o ServiceStatusParametersValueFromConfigMapKeyRefPtrOutput) Optional() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *ServiceStatusParametersValueFromConfigMapKeyRef) *bool {
+		if v == nil {
+			return nil
+		}
+		return v.Optional
+	}).(pulumi.BoolPtrOutput)
+}
+
 // Selects a key of a secret in the resource namespace
 type ServiceStatusParametersValueFromSecretKeyRef struct {
+	// The key of the secret to select from.  Must be a valid secret key.
+	Key string `pulumi:"key"`
+	// Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+	Name *string `pulumi:"name"`
+	// Specify whether the Secret or its key must be defined
+	Optional *bool `pulumi:"optional"`
 }
 
 // ServiceStatusParametersValueFromSecretKeyRefInput is an input type that accepts ServiceStatusParametersValueFromSecretKeyRefArgs and ServiceStatusParametersValueFromSecretKeyRefOutput values.
@@ -2800,6 +3504,12 @@ type ServiceStatusParametersValueFromSecretKeyRefInput interface {
 
 // Selects a key of a secret in the resource namespace
 type ServiceStatusParametersValueFromSecretKeyRefArgs struct {
+	// The key of the secret to select from.  Must be a valid secret key.
+	Key pulumi.StringInput `pulumi:"key"`
+	// Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+	Name pulumi.StringPtrInput `pulumi:"name"`
+	// Specify whether the Secret or its key must be defined
+	Optional pulumi.BoolPtrInput `pulumi:"optional"`
 }
 
 func (ServiceStatusParametersValueFromSecretKeyRefArgs) ElementType() reflect.Type {
@@ -2812,6 +3522,47 @@ func (i ServiceStatusParametersValueFromSecretKeyRefArgs) ToServiceStatusParamet
 
 func (i ServiceStatusParametersValueFromSecretKeyRefArgs) ToServiceStatusParametersValueFromSecretKeyRefOutputWithContext(ctx context.Context) ServiceStatusParametersValueFromSecretKeyRefOutput {
 	return pulumi.ToOutputWithContext(ctx, i).(ServiceStatusParametersValueFromSecretKeyRefOutput)
+}
+
+func (i ServiceStatusParametersValueFromSecretKeyRefArgs) ToServiceStatusParametersValueFromSecretKeyRefPtrOutput() ServiceStatusParametersValueFromSecretKeyRefPtrOutput {
+	return i.ToServiceStatusParametersValueFromSecretKeyRefPtrOutputWithContext(context.Background())
+}
+
+func (i ServiceStatusParametersValueFromSecretKeyRefArgs) ToServiceStatusParametersValueFromSecretKeyRefPtrOutputWithContext(ctx context.Context) ServiceStatusParametersValueFromSecretKeyRefPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(ServiceStatusParametersValueFromSecretKeyRefOutput).ToServiceStatusParametersValueFromSecretKeyRefPtrOutputWithContext(ctx)
+}
+
+// ServiceStatusParametersValueFromSecretKeyRefPtrInput is an input type that accepts ServiceStatusParametersValueFromSecretKeyRefArgs, ServiceStatusParametersValueFromSecretKeyRefPtr and ServiceStatusParametersValueFromSecretKeyRefPtrOutput values.
+// You can construct a concrete instance of `ServiceStatusParametersValueFromSecretKeyRefPtrInput` via:
+//
+//          ServiceStatusParametersValueFromSecretKeyRefArgs{...}
+//
+//  or:
+//
+//          nil
+type ServiceStatusParametersValueFromSecretKeyRefPtrInput interface {
+	pulumi.Input
+
+	ToServiceStatusParametersValueFromSecretKeyRefPtrOutput() ServiceStatusParametersValueFromSecretKeyRefPtrOutput
+	ToServiceStatusParametersValueFromSecretKeyRefPtrOutputWithContext(context.Context) ServiceStatusParametersValueFromSecretKeyRefPtrOutput
+}
+
+type serviceStatusParametersValueFromSecretKeyRefPtrType ServiceStatusParametersValueFromSecretKeyRefArgs
+
+func ServiceStatusParametersValueFromSecretKeyRefPtr(v *ServiceStatusParametersValueFromSecretKeyRefArgs) ServiceStatusParametersValueFromSecretKeyRefPtrInput {
+	return (*serviceStatusParametersValueFromSecretKeyRefPtrType)(v)
+}
+
+func (*serviceStatusParametersValueFromSecretKeyRefPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**ServiceStatusParametersValueFromSecretKeyRef)(nil)).Elem()
+}
+
+func (i *serviceStatusParametersValueFromSecretKeyRefPtrType) ToServiceStatusParametersValueFromSecretKeyRefPtrOutput() ServiceStatusParametersValueFromSecretKeyRefPtrOutput {
+	return i.ToServiceStatusParametersValueFromSecretKeyRefPtrOutputWithContext(context.Background())
+}
+
+func (i *serviceStatusParametersValueFromSecretKeyRefPtrType) ToServiceStatusParametersValueFromSecretKeyRefPtrOutputWithContext(ctx context.Context) ServiceStatusParametersValueFromSecretKeyRefPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(ServiceStatusParametersValueFromSecretKeyRefPtrOutput)
 }
 
 // Selects a key of a secret in the resource namespace
@@ -2829,6 +3580,81 @@ func (o ServiceStatusParametersValueFromSecretKeyRefOutput) ToServiceStatusParam
 	return o
 }
 
+func (o ServiceStatusParametersValueFromSecretKeyRefOutput) ToServiceStatusParametersValueFromSecretKeyRefPtrOutput() ServiceStatusParametersValueFromSecretKeyRefPtrOutput {
+	return o.ToServiceStatusParametersValueFromSecretKeyRefPtrOutputWithContext(context.Background())
+}
+
+func (o ServiceStatusParametersValueFromSecretKeyRefOutput) ToServiceStatusParametersValueFromSecretKeyRefPtrOutputWithContext(ctx context.Context) ServiceStatusParametersValueFromSecretKeyRefPtrOutput {
+	return o.ApplyT(func(v ServiceStatusParametersValueFromSecretKeyRef) *ServiceStatusParametersValueFromSecretKeyRef {
+		return &v
+	}).(ServiceStatusParametersValueFromSecretKeyRefPtrOutput)
+}
+
+// The key of the secret to select from.  Must be a valid secret key.
+func (o ServiceStatusParametersValueFromSecretKeyRefOutput) Key() pulumi.StringOutput {
+	return o.ApplyT(func(v ServiceStatusParametersValueFromSecretKeyRef) string { return v.Key }).(pulumi.StringOutput)
+}
+
+// Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+func (o ServiceStatusParametersValueFromSecretKeyRefOutput) Name() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v ServiceStatusParametersValueFromSecretKeyRef) *string { return v.Name }).(pulumi.StringPtrOutput)
+}
+
+// Specify whether the Secret or its key must be defined
+func (o ServiceStatusParametersValueFromSecretKeyRefOutput) Optional() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v ServiceStatusParametersValueFromSecretKeyRef) *bool { return v.Optional }).(pulumi.BoolPtrOutput)
+}
+
+type ServiceStatusParametersValueFromSecretKeyRefPtrOutput struct{ *pulumi.OutputState }
+
+func (ServiceStatusParametersValueFromSecretKeyRefPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**ServiceStatusParametersValueFromSecretKeyRef)(nil)).Elem()
+}
+
+func (o ServiceStatusParametersValueFromSecretKeyRefPtrOutput) ToServiceStatusParametersValueFromSecretKeyRefPtrOutput() ServiceStatusParametersValueFromSecretKeyRefPtrOutput {
+	return o
+}
+
+func (o ServiceStatusParametersValueFromSecretKeyRefPtrOutput) ToServiceStatusParametersValueFromSecretKeyRefPtrOutputWithContext(ctx context.Context) ServiceStatusParametersValueFromSecretKeyRefPtrOutput {
+	return o
+}
+
+func (o ServiceStatusParametersValueFromSecretKeyRefPtrOutput) Elem() ServiceStatusParametersValueFromSecretKeyRefOutput {
+	return o.ApplyT(func(v *ServiceStatusParametersValueFromSecretKeyRef) ServiceStatusParametersValueFromSecretKeyRef {
+		return *v
+	}).(ServiceStatusParametersValueFromSecretKeyRefOutput)
+}
+
+// The key of the secret to select from.  Must be a valid secret key.
+func (o ServiceStatusParametersValueFromSecretKeyRefPtrOutput) Key() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *ServiceStatusParametersValueFromSecretKeyRef) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.Key
+	}).(pulumi.StringPtrOutput)
+}
+
+// Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+func (o ServiceStatusParametersValueFromSecretKeyRefPtrOutput) Name() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *ServiceStatusParametersValueFromSecretKeyRef) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Name
+	}).(pulumi.StringPtrOutput)
+}
+
+// Specify whether the Secret or its key must be defined
+func (o ServiceStatusParametersValueFromSecretKeyRefPtrOutput) Optional() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *ServiceStatusParametersValueFromSecretKeyRef) *bool {
+		if v == nil {
+			return nil
+		}
+		return v.Optional
+	}).(pulumi.BoolPtrOutput)
+}
+
 func init() {
 	pulumi.RegisterOutputType(BindingTypeOutput{})
 	pulumi.RegisterOutputType(BindingMetadataOutput{})
@@ -2840,7 +3666,9 @@ func init() {
 	pulumi.RegisterOutputType(BindingSpecParametersValueFromOutput{})
 	pulumi.RegisterOutputType(BindingSpecParametersValueFromPtrOutput{})
 	pulumi.RegisterOutputType(BindingSpecParametersValueFromConfigMapKeyRefOutput{})
+	pulumi.RegisterOutputType(BindingSpecParametersValueFromConfigMapKeyRefPtrOutput{})
 	pulumi.RegisterOutputType(BindingSpecParametersValueFromSecretKeyRefOutput{})
+	pulumi.RegisterOutputType(BindingSpecParametersValueFromSecretKeyRefPtrOutput{})
 	pulumi.RegisterOutputType(BindingStatusOutput{})
 	pulumi.RegisterOutputType(BindingStatusPtrOutput{})
 	pulumi.RegisterOutputType(ServiceTypeOutput{})
@@ -2855,7 +3683,9 @@ func init() {
 	pulumi.RegisterOutputType(ServiceSpecParametersValueFromOutput{})
 	pulumi.RegisterOutputType(ServiceSpecParametersValueFromPtrOutput{})
 	pulumi.RegisterOutputType(ServiceSpecParametersValueFromConfigMapKeyRefOutput{})
+	pulumi.RegisterOutputType(ServiceSpecParametersValueFromConfigMapKeyRefPtrOutput{})
 	pulumi.RegisterOutputType(ServiceSpecParametersValueFromSecretKeyRefOutput{})
+	pulumi.RegisterOutputType(ServiceSpecParametersValueFromSecretKeyRefPtrOutput{})
 	pulumi.RegisterOutputType(ServiceStatusOutput{})
 	pulumi.RegisterOutputType(ServiceStatusPtrOutput{})
 	pulumi.RegisterOutputType(ServiceStatusContextOutput{})
@@ -2866,5 +3696,7 @@ func init() {
 	pulumi.RegisterOutputType(ServiceStatusParametersValueFromOutput{})
 	pulumi.RegisterOutputType(ServiceStatusParametersValueFromPtrOutput{})
 	pulumi.RegisterOutputType(ServiceStatusParametersValueFromConfigMapKeyRefOutput{})
+	pulumi.RegisterOutputType(ServiceStatusParametersValueFromConfigMapKeyRefPtrOutput{})
 	pulumi.RegisterOutputType(ServiceStatusParametersValueFromSecretKeyRefOutput{})
+	pulumi.RegisterOutputType(ServiceStatusParametersValueFromSecretKeyRefPtrOutput{})
 }

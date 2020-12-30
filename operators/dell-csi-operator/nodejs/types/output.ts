@@ -93,6 +93,14 @@ export namespace storage {
              * Name is the name of Container
              */
             name?: string;
+            /**
+             * NodeSelector is a selector which must be true for the pod to fit on a node. Selector which must match a node's labels for the pod to be scheduled on that node.
+             */
+            nodeSelector?: {[key: string]: string};
+            /**
+             * Tolerations is the list of tolerations for the driver pods
+             */
+            tolerations?: outputs.storage.v1.CSIIsilonSpecDriverCommonTolerations[];
         }
 
         /**
@@ -122,7 +130,7 @@ export namespace storage {
              */
             configMapKeyRef?: outputs.storage.v1.CSIIsilonSpecDriverCommonEnvsValueFromConfigMapKeyRef;
             /**
-             * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+             * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
              */
             fieldRef?: outputs.storage.v1.CSIIsilonSpecDriverCommonEnvsValueFromFieldRef;
             /**
@@ -154,7 +162,7 @@ export namespace storage {
         }
 
         /**
-         * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+         * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
          */
         export interface CSIIsilonSpecDriverCommonEnvsValueFromFieldRef {
             /**
@@ -178,11 +186,14 @@ export namespace storage {
             /**
              * Specifies the output format of the exposed resources, defaults to "1"
              */
-            divisor?: string;
+            divisor?: outputs.storage.v1.CSIIsilonSpecDriverCommonEnvsValueFromResourceFieldRefDivisor;
             /**
              * Required: resource to select
              */
             resource: string;
+        }
+
+        export interface CSIIsilonSpecDriverCommonEnvsValueFromResourceFieldRefDivisor {
         }
 
         /**
@@ -201,6 +212,32 @@ export namespace storage {
              * Specify whether the Secret or its key must be defined
              */
             optional?: boolean;
+        }
+
+        /**
+         * The pod this Toleration is attached to tolerates any taint that matches the triple <key,value,effect> using the matching operator <operator>.
+         */
+        export interface CSIIsilonSpecDriverCommonTolerations {
+            /**
+             * Effect indicates the taint effect to match. Empty means match all taint effects. When specified, allowed values are NoSchedule, PreferNoSchedule and NoExecute.
+             */
+            effect?: string;
+            /**
+             * Key is the taint key that the toleration applies to. Empty means match all taint keys. If the key is empty, operator must be Exists; this combination means to match all values and all keys.
+             */
+            key?: string;
+            /**
+             * Operator represents a key's relationship to the value. Valid operators are Exists and Equal. Defaults to Equal. Exists is equivalent to wildcard for value, so that a pod can tolerate all taints of a particular category.
+             */
+            operator?: string;
+            /**
+             * TolerationSeconds represents the period of time the toleration (which must be of effect NoExecute, otherwise this field is ignored) tolerates the taint. By default, it is not set, which means tolerate the taint forever (do not evict). Zero and negative values will be treated as 0 (evict immediately) by the system.
+             */
+            tolerationSeconds?: number;
+            /**
+             * Value is the taint value the toleration matches to. If the operator is Exists, the value should be empty, otherwise just a regular string.
+             */
+            value?: string;
         }
 
         /**
@@ -227,6 +264,14 @@ export namespace storage {
              * Name is the name of Container
              */
             name?: string;
+            /**
+             * NodeSelector is a selector which must be true for the pod to fit on a node. Selector which must match a node's labels for the pod to be scheduled on that node.
+             */
+            nodeSelector?: {[key: string]: string};
+            /**
+             * Tolerations is the list of tolerations for the driver pods
+             */
+            tolerations?: outputs.storage.v1.CSIIsilonSpecDriverControllerTolerations[];
         }
 
         /**
@@ -256,7 +301,7 @@ export namespace storage {
              */
             configMapKeyRef?: outputs.storage.v1.CSIIsilonSpecDriverControllerEnvsValueFromConfigMapKeyRef;
             /**
-             * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+             * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
              */
             fieldRef?: outputs.storage.v1.CSIIsilonSpecDriverControllerEnvsValueFromFieldRef;
             /**
@@ -288,7 +333,7 @@ export namespace storage {
         }
 
         /**
-         * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+         * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
          */
         export interface CSIIsilonSpecDriverControllerEnvsValueFromFieldRef {
             /**
@@ -312,11 +357,14 @@ export namespace storage {
             /**
              * Specifies the output format of the exposed resources, defaults to "1"
              */
-            divisor?: string;
+            divisor?: outputs.storage.v1.CSIIsilonSpecDriverControllerEnvsValueFromResourceFieldRefDivisor;
             /**
              * Required: resource to select
              */
             resource: string;
+        }
+
+        export interface CSIIsilonSpecDriverControllerEnvsValueFromResourceFieldRefDivisor {
         }
 
         /**
@@ -335,6 +383,32 @@ export namespace storage {
              * Specify whether the Secret or its key must be defined
              */
             optional?: boolean;
+        }
+
+        /**
+         * The pod this Toleration is attached to tolerates any taint that matches the triple <key,value,effect> using the matching operator <operator>.
+         */
+        export interface CSIIsilonSpecDriverControllerTolerations {
+            /**
+             * Effect indicates the taint effect to match. Empty means match all taint effects. When specified, allowed values are NoSchedule, PreferNoSchedule and NoExecute.
+             */
+            effect?: string;
+            /**
+             * Key is the taint key that the toleration applies to. Empty means match all taint keys. If the key is empty, operator must be Exists; this combination means to match all values and all keys.
+             */
+            key?: string;
+            /**
+             * Operator represents a key's relationship to the value. Valid operators are Exists and Equal. Defaults to Equal. Exists is equivalent to wildcard for value, so that a pod can tolerate all taints of a particular category.
+             */
+            operator?: string;
+            /**
+             * TolerationSeconds represents the period of time the toleration (which must be of effect NoExecute, otherwise this field is ignored) tolerates the taint. By default, it is not set, which means tolerate the taint forever (do not evict). Zero and negative values will be treated as 0 (evict immediately) by the system.
+             */
+            tolerationSeconds?: number;
+            /**
+             * Value is the taint value the toleration matches to. If the operator is Exists, the value should be empty, otherwise just a regular string.
+             */
+            value?: string;
         }
 
         /**
@@ -361,6 +435,14 @@ export namespace storage {
              * Name is the name of Container
              */
             name?: string;
+            /**
+             * NodeSelector is a selector which must be true for the pod to fit on a node. Selector which must match a node's labels for the pod to be scheduled on that node.
+             */
+            nodeSelector?: {[key: string]: string};
+            /**
+             * Tolerations is the list of tolerations for the driver pods
+             */
+            tolerations?: outputs.storage.v1.CSIIsilonSpecDriverNodeTolerations[];
         }
 
         /**
@@ -390,7 +472,7 @@ export namespace storage {
              */
             configMapKeyRef?: outputs.storage.v1.CSIIsilonSpecDriverNodeEnvsValueFromConfigMapKeyRef;
             /**
-             * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+             * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
              */
             fieldRef?: outputs.storage.v1.CSIIsilonSpecDriverNodeEnvsValueFromFieldRef;
             /**
@@ -422,7 +504,7 @@ export namespace storage {
         }
 
         /**
-         * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+         * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
          */
         export interface CSIIsilonSpecDriverNodeEnvsValueFromFieldRef {
             /**
@@ -446,11 +528,14 @@ export namespace storage {
             /**
              * Specifies the output format of the exposed resources, defaults to "1"
              */
-            divisor?: string;
+            divisor?: outputs.storage.v1.CSIIsilonSpecDriverNodeEnvsValueFromResourceFieldRefDivisor;
             /**
              * Required: resource to select
              */
             resource: string;
+        }
+
+        export interface CSIIsilonSpecDriverNodeEnvsValueFromResourceFieldRefDivisor {
         }
 
         /**
@@ -469,6 +554,32 @@ export namespace storage {
              * Specify whether the Secret or its key must be defined
              */
             optional?: boolean;
+        }
+
+        /**
+         * The pod this Toleration is attached to tolerates any taint that matches the triple <key,value,effect> using the matching operator <operator>.
+         */
+        export interface CSIIsilonSpecDriverNodeTolerations {
+            /**
+             * Effect indicates the taint effect to match. Empty means match all taint effects. When specified, allowed values are NoSchedule, PreferNoSchedule and NoExecute.
+             */
+            effect?: string;
+            /**
+             * Key is the taint key that the toleration applies to. Empty means match all taint keys. If the key is empty, operator must be Exists; this combination means to match all values and all keys.
+             */
+            key?: string;
+            /**
+             * Operator represents a key's relationship to the value. Valid operators are Exists and Equal. Defaults to Equal. Exists is equivalent to wildcard for value, so that a pod can tolerate all taints of a particular category.
+             */
+            operator?: string;
+            /**
+             * TolerationSeconds represents the period of time the toleration (which must be of effect NoExecute, otherwise this field is ignored) tolerates the taint. By default, it is not set, which means tolerate the taint forever (do not evict). Zero and negative values will be treated as 0 (evict immediately) by the system.
+             */
+            tolerationSeconds?: number;
+            /**
+             * Value is the taint value the toleration matches to. If the operator is Exists, the value should be empty, otherwise just a regular string.
+             */
+            value?: string;
         }
 
         /**
@@ -495,6 +606,14 @@ export namespace storage {
              * Name is the name of Container
              */
             name?: string;
+            /**
+             * NodeSelector is a selector which must be true for the pod to fit on a node. Selector which must match a node's labels for the pod to be scheduled on that node.
+             */
+            nodeSelector?: {[key: string]: string};
+            /**
+             * Tolerations is the list of tolerations for the driver pods
+             */
+            tolerations?: outputs.storage.v1.CSIIsilonSpecDriverSideCarsTolerations[];
         }
 
         /**
@@ -524,7 +643,7 @@ export namespace storage {
              */
             configMapKeyRef?: outputs.storage.v1.CSIIsilonSpecDriverSideCarsEnvsValueFromConfigMapKeyRef;
             /**
-             * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+             * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
              */
             fieldRef?: outputs.storage.v1.CSIIsilonSpecDriverSideCarsEnvsValueFromFieldRef;
             /**
@@ -556,7 +675,7 @@ export namespace storage {
         }
 
         /**
-         * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+         * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
          */
         export interface CSIIsilonSpecDriverSideCarsEnvsValueFromFieldRef {
             /**
@@ -580,11 +699,14 @@ export namespace storage {
             /**
              * Specifies the output format of the exposed resources, defaults to "1"
              */
-            divisor?: string;
+            divisor?: outputs.storage.v1.CSIIsilonSpecDriverSideCarsEnvsValueFromResourceFieldRefDivisor;
             /**
              * Required: resource to select
              */
             resource: string;
+        }
+
+        export interface CSIIsilonSpecDriverSideCarsEnvsValueFromResourceFieldRefDivisor {
         }
 
         /**
@@ -603,6 +725,32 @@ export namespace storage {
              * Specify whether the Secret or its key must be defined
              */
             optional?: boolean;
+        }
+
+        /**
+         * The pod this Toleration is attached to tolerates any taint that matches the triple <key,value,effect> using the matching operator <operator>.
+         */
+        export interface CSIIsilonSpecDriverSideCarsTolerations {
+            /**
+             * Effect indicates the taint effect to match. Empty means match all taint effects. When specified, allowed values are NoSchedule, PreferNoSchedule and NoExecute.
+             */
+            effect?: string;
+            /**
+             * Key is the taint key that the toleration applies to. Empty means match all taint keys. If the key is empty, operator must be Exists; this combination means to match all values and all keys.
+             */
+            key?: string;
+            /**
+             * Operator represents a key's relationship to the value. Valid operators are Exists and Equal. Defaults to Equal. Exists is equivalent to wildcard for value, so that a pod can tolerate all taints of a particular category.
+             */
+            operator?: string;
+            /**
+             * TolerationSeconds represents the period of time the toleration (which must be of effect NoExecute, otherwise this field is ignored) tolerates the taint. By default, it is not set, which means tolerate the taint forever (do not evict). Zero and negative values will be treated as 0 (evict immediately) by the system.
+             */
+            tolerationSeconds?: number;
+            /**
+             * Value is the taint value the toleration matches to. If the operator is Exists, the value should be empty, otherwise just a regular string.
+             */
+            value?: string;
         }
 
         /**
@@ -628,6 +776,10 @@ export namespace storage {
              */
             allowVolumeExpansion?: boolean;
             /**
+             * Restrict the node topologies where volumes can be dynamically provisioned.
+             */
+            allowedTopologies?: outputs.storage.v1.CSIIsilonSpecDriverStorageClassAllowedTopologies[];
+            /**
              * DefaultSc is a boolean flag to indicate if the storage class is going to be marked as default
              */
             default?: boolean;
@@ -643,6 +795,30 @@ export namespace storage {
              * ReclaimPolicy is the reclaim policy for the storage class
              */
             reclaimPolicy?: string;
+        }
+
+        /**
+         * A topology selector term represents the result of label queries. A null or empty topology selector term matches no objects. The requirements of them are ANDed. It provides a subset of functionality as NodeSelectorTerm. This is an alpha feature and may change in the future.
+         */
+        export interface CSIIsilonSpecDriverStorageClassAllowedTopologies {
+            /**
+             * A list of topology selector requirements by labels.
+             */
+            matchLabelExpressions?: outputs.storage.v1.CSIIsilonSpecDriverStorageClassAllowedTopologiesMatchLabelExpressions[];
+        }
+
+        /**
+         * A topology selector requirement is a selector that matches given label. This is an alpha feature and may change in the future.
+         */
+        export interface CSIIsilonSpecDriverStorageClassAllowedTopologiesMatchLabelExpressions {
+            /**
+             * The label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * An array of string values. One value must match the label to be selected. Each entry in Values is ORed.
+             */
+            values: string[];
         }
 
         /**
@@ -703,6 +879,195 @@ export namespace storage {
          * NodeStatus is the status of Controller pods
          */
         export interface CSIIsilonStatusNodeStatus {
+            available?: string[];
+            ready?: string[];
+            starting?: string[];
+            stopped?: string[];
+        }
+
+        /**
+         * CSIPowerMaxRevProxySpec defines the desired state of CSIPowerMaxRevProxy
+         */
+        export interface CSIPowerMaxRevProxySpec {
+            /**
+             * RevProxyConfig represents the reverse proxy configuration
+             */
+            config: outputs.storage.v1.CSIPowerMaxRevProxySpecConfig;
+            /**
+             * INSERT ADDITIONAL SPEC FIELDS - desired state of cluster Important: Run "operator-sdk generate k8s" to regenerate code after modifying this file Add custom validation using kubebuilder tags: https://book-v1.book.kubebuilder.io/beyond_basics/generating_crd.html
+             */
+            image: string;
+            /**
+             * PullPolicy describes a policy for if/when to pull a container image
+             */
+            imagePullPolicy?: string;
+            tlsSecret: string;
+        }
+
+        /**
+         * RevProxyConfig represents the reverse proxy configuration
+         */
+        export interface CSIPowerMaxRevProxySpecConfig {
+            /**
+             * LinkConfig is one of the configuration modes for reverse proxy
+             */
+            linkConfig?: outputs.storage.v1.CSIPowerMaxRevProxySpecConfigLinkConfig;
+            mode?: string;
+            port?: number;
+            /**
+             * StandAloneConfig is one of the configuration modes for reverse proxy
+             */
+            standAloneConfig?: outputs.storage.v1.CSIPowerMaxRevProxySpecConfigStandAloneConfig;
+        }
+
+        /**
+         * LinkConfig is one of the configuration modes for reverse proxy
+         */
+        export interface CSIPowerMaxRevProxySpecConfigLinkConfig {
+            /**
+             * ManagementServerConfig - represents a management server configuration for the management server
+             */
+            backup?: outputs.storage.v1.CSIPowerMaxRevProxySpecConfigLinkConfigBackup;
+            /**
+             * ManagementServerConfig - represents a management server configuration for the management server
+             */
+            primary: outputs.storage.v1.CSIPowerMaxRevProxySpecConfigLinkConfigPrimary;
+        }
+
+        /**
+         * ManagementServerConfig - represents a management server configuration for the management server
+         */
+        export interface CSIPowerMaxRevProxySpecConfigLinkConfigBackup {
+            arrayCredentialSecret?: string;
+            certSecret?: string;
+            /**
+             * ProxyLimits is used for storing the various types of limits applied for a particular proxy instance
+             */
+            limits?: outputs.storage.v1.CSIPowerMaxRevProxySpecConfigLinkConfigBackupLimits;
+            skipCertificateValidation?: boolean;
+            url: string;
+        }
+
+        /**
+         * ProxyLimits is used for storing the various types of limits applied for a particular proxy instance
+         */
+        export interface CSIPowerMaxRevProxySpecConfigLinkConfigBackupLimits {
+            maxActiveRead?: number;
+            maxActiveWrite?: number;
+            maxOutStandingRead?: number;
+            maxOutStandingWrite?: number;
+        }
+
+        /**
+         * ManagementServerConfig - represents a management server configuration for the management server
+         */
+        export interface CSIPowerMaxRevProxySpecConfigLinkConfigPrimary {
+            arrayCredentialSecret?: string;
+            certSecret?: string;
+            /**
+             * ProxyLimits is used for storing the various types of limits applied for a particular proxy instance
+             */
+            limits?: outputs.storage.v1.CSIPowerMaxRevProxySpecConfigLinkConfigPrimaryLimits;
+            skipCertificateValidation?: boolean;
+            url: string;
+        }
+
+        /**
+         * ProxyLimits is used for storing the various types of limits applied for a particular proxy instance
+         */
+        export interface CSIPowerMaxRevProxySpecConfigLinkConfigPrimaryLimits {
+            maxActiveRead?: number;
+            maxActiveWrite?: number;
+            maxOutStandingRead?: number;
+            maxOutStandingWrite?: number;
+        }
+
+        /**
+         * StandAloneConfig is one of the configuration modes for reverse proxy
+         */
+        export interface CSIPowerMaxRevProxySpecConfigStandAloneConfig {
+            managementServers: outputs.storage.v1.CSIPowerMaxRevProxySpecConfigStandAloneConfigManagementServers[];
+            storageArrays: outputs.storage.v1.CSIPowerMaxRevProxySpecConfigStandAloneConfigStorageArrays[];
+        }
+
+        /**
+         * ManagementServerConfig - represents a management server configuration for the management server
+         */
+        export interface CSIPowerMaxRevProxySpecConfigStandAloneConfigManagementServers {
+            arrayCredentialSecret?: string;
+            certSecret?: string;
+            /**
+             * ProxyLimits is used for storing the various types of limits applied for a particular proxy instance
+             */
+            limits?: outputs.storage.v1.CSIPowerMaxRevProxySpecConfigStandAloneConfigManagementServersLimits;
+            skipCertificateValidation?: boolean;
+            url: string;
+        }
+
+        /**
+         * ProxyLimits is used for storing the various types of limits applied for a particular proxy instance
+         */
+        export interface CSIPowerMaxRevProxySpecConfigStandAloneConfigManagementServersLimits {
+            maxActiveRead?: number;
+            maxActiveWrite?: number;
+            maxOutStandingRead?: number;
+            maxOutStandingWrite?: number;
+        }
+
+        /**
+         * StorageArrayConfig represents a storage array managed by reverse proxy
+         */
+        export interface CSIPowerMaxRevProxySpecConfigStandAloneConfigStorageArrays {
+            backupURL?: string;
+            primaryURL: string;
+            proxyCredentialSecrets: string[];
+            storageArrayId: string;
+        }
+
+        /**
+         * CSIPowerMaxRevProxyStatus defines the observed state of CSIPowerMaxRevProxy
+         */
+        export interface CSIPowerMaxRevProxyStatus {
+            /**
+             * LastUpdate is the last updated state of the driver
+             */
+            lastUpdate?: outputs.storage.v1.CSIPowerMaxRevProxyStatusLastUpdate;
+            /**
+             * DriverHash is a hash of the driver specification
+             */
+            proxyHash?: number;
+            /**
+             * INSERT ADDITIONAL STATUS FIELD - define observed state of cluster Important: Run "operator-sdk generate k8s" to regenerate code after modifying this file Add custom validation using kubebuilder tags: https://book-v1.book.kubebuilder.io/beyond_basics/generating_crd.html ProxyStatus is the status of proxy pod
+             */
+            proxyStatus?: outputs.storage.v1.CSIPowerMaxRevProxyStatusProxyStatus;
+            /**
+             * State is the state of the driver installation
+             */
+            state?: string;
+        }
+
+        /**
+         * LastUpdate is the last updated state of the driver
+         */
+        export interface CSIPowerMaxRevProxyStatusLastUpdate {
+            /**
+             * Condition is the last known condition of the Custom Resource
+             */
+            condition?: string;
+            /**
+             * ErrorMessage is the last error message associated with the condition
+             */
+            errorMessage?: string;
+            /**
+             * Time is the time stamp for the last condition update
+             */
+            time?: string;
+        }
+
+        /**
+         * INSERT ADDITIONAL STATUS FIELD - define observed state of cluster Important: Run "operator-sdk generate k8s" to regenerate code after modifying this file Add custom validation using kubebuilder tags: https://book-v1.book.kubebuilder.io/beyond_basics/generating_crd.html ProxyStatus is the status of proxy pod
+         */
+        export interface CSIPowerMaxRevProxyStatusProxyStatus {
             available?: string[];
             ready?: string[];
             starting?: string[];
@@ -793,6 +1158,14 @@ export namespace storage {
              * Name is the name of Container
              */
             name?: string;
+            /**
+             * NodeSelector is a selector which must be true for the pod to fit on a node. Selector which must match a node's labels for the pod to be scheduled on that node.
+             */
+            nodeSelector?: {[key: string]: string};
+            /**
+             * Tolerations is the list of tolerations for the driver pods
+             */
+            tolerations?: outputs.storage.v1.CSIPowerMaxSpecDriverCommonTolerations[];
         }
 
         /**
@@ -822,7 +1195,7 @@ export namespace storage {
              */
             configMapKeyRef?: outputs.storage.v1.CSIPowerMaxSpecDriverCommonEnvsValueFromConfigMapKeyRef;
             /**
-             * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+             * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
              */
             fieldRef?: outputs.storage.v1.CSIPowerMaxSpecDriverCommonEnvsValueFromFieldRef;
             /**
@@ -854,7 +1227,7 @@ export namespace storage {
         }
 
         /**
-         * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+         * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
          */
         export interface CSIPowerMaxSpecDriverCommonEnvsValueFromFieldRef {
             /**
@@ -878,11 +1251,14 @@ export namespace storage {
             /**
              * Specifies the output format of the exposed resources, defaults to "1"
              */
-            divisor?: string;
+            divisor?: outputs.storage.v1.CSIPowerMaxSpecDriverCommonEnvsValueFromResourceFieldRefDivisor;
             /**
              * Required: resource to select
              */
             resource: string;
+        }
+
+        export interface CSIPowerMaxSpecDriverCommonEnvsValueFromResourceFieldRefDivisor {
         }
 
         /**
@@ -901,6 +1277,32 @@ export namespace storage {
              * Specify whether the Secret or its key must be defined
              */
             optional?: boolean;
+        }
+
+        /**
+         * The pod this Toleration is attached to tolerates any taint that matches the triple <key,value,effect> using the matching operator <operator>.
+         */
+        export interface CSIPowerMaxSpecDriverCommonTolerations {
+            /**
+             * Effect indicates the taint effect to match. Empty means match all taint effects. When specified, allowed values are NoSchedule, PreferNoSchedule and NoExecute.
+             */
+            effect?: string;
+            /**
+             * Key is the taint key that the toleration applies to. Empty means match all taint keys. If the key is empty, operator must be Exists; this combination means to match all values and all keys.
+             */
+            key?: string;
+            /**
+             * Operator represents a key's relationship to the value. Valid operators are Exists and Equal. Defaults to Equal. Exists is equivalent to wildcard for value, so that a pod can tolerate all taints of a particular category.
+             */
+            operator?: string;
+            /**
+             * TolerationSeconds represents the period of time the toleration (which must be of effect NoExecute, otherwise this field is ignored) tolerates the taint. By default, it is not set, which means tolerate the taint forever (do not evict). Zero and negative values will be treated as 0 (evict immediately) by the system.
+             */
+            tolerationSeconds?: number;
+            /**
+             * Value is the taint value the toleration matches to. If the operator is Exists, the value should be empty, otherwise just a regular string.
+             */
+            value?: string;
         }
 
         /**
@@ -927,6 +1329,14 @@ export namespace storage {
              * Name is the name of Container
              */
             name?: string;
+            /**
+             * NodeSelector is a selector which must be true for the pod to fit on a node. Selector which must match a node's labels for the pod to be scheduled on that node.
+             */
+            nodeSelector?: {[key: string]: string};
+            /**
+             * Tolerations is the list of tolerations for the driver pods
+             */
+            tolerations?: outputs.storage.v1.CSIPowerMaxSpecDriverControllerTolerations[];
         }
 
         /**
@@ -956,7 +1366,7 @@ export namespace storage {
              */
             configMapKeyRef?: outputs.storage.v1.CSIPowerMaxSpecDriverControllerEnvsValueFromConfigMapKeyRef;
             /**
-             * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+             * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
              */
             fieldRef?: outputs.storage.v1.CSIPowerMaxSpecDriverControllerEnvsValueFromFieldRef;
             /**
@@ -988,7 +1398,7 @@ export namespace storage {
         }
 
         /**
-         * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+         * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
          */
         export interface CSIPowerMaxSpecDriverControllerEnvsValueFromFieldRef {
             /**
@@ -1012,11 +1422,14 @@ export namespace storage {
             /**
              * Specifies the output format of the exposed resources, defaults to "1"
              */
-            divisor?: string;
+            divisor?: outputs.storage.v1.CSIPowerMaxSpecDriverControllerEnvsValueFromResourceFieldRefDivisor;
             /**
              * Required: resource to select
              */
             resource: string;
+        }
+
+        export interface CSIPowerMaxSpecDriverControllerEnvsValueFromResourceFieldRefDivisor {
         }
 
         /**
@@ -1035,6 +1448,32 @@ export namespace storage {
              * Specify whether the Secret or its key must be defined
              */
             optional?: boolean;
+        }
+
+        /**
+         * The pod this Toleration is attached to tolerates any taint that matches the triple <key,value,effect> using the matching operator <operator>.
+         */
+        export interface CSIPowerMaxSpecDriverControllerTolerations {
+            /**
+             * Effect indicates the taint effect to match. Empty means match all taint effects. When specified, allowed values are NoSchedule, PreferNoSchedule and NoExecute.
+             */
+            effect?: string;
+            /**
+             * Key is the taint key that the toleration applies to. Empty means match all taint keys. If the key is empty, operator must be Exists; this combination means to match all values and all keys.
+             */
+            key?: string;
+            /**
+             * Operator represents a key's relationship to the value. Valid operators are Exists and Equal. Defaults to Equal. Exists is equivalent to wildcard for value, so that a pod can tolerate all taints of a particular category.
+             */
+            operator?: string;
+            /**
+             * TolerationSeconds represents the period of time the toleration (which must be of effect NoExecute, otherwise this field is ignored) tolerates the taint. By default, it is not set, which means tolerate the taint forever (do not evict). Zero and negative values will be treated as 0 (evict immediately) by the system.
+             */
+            tolerationSeconds?: number;
+            /**
+             * Value is the taint value the toleration matches to. If the operator is Exists, the value should be empty, otherwise just a regular string.
+             */
+            value?: string;
         }
 
         /**
@@ -1061,6 +1500,14 @@ export namespace storage {
              * Name is the name of Container
              */
             name?: string;
+            /**
+             * NodeSelector is a selector which must be true for the pod to fit on a node. Selector which must match a node's labels for the pod to be scheduled on that node.
+             */
+            nodeSelector?: {[key: string]: string};
+            /**
+             * Tolerations is the list of tolerations for the driver pods
+             */
+            tolerations?: outputs.storage.v1.CSIPowerMaxSpecDriverNodeTolerations[];
         }
 
         /**
@@ -1090,7 +1537,7 @@ export namespace storage {
              */
             configMapKeyRef?: outputs.storage.v1.CSIPowerMaxSpecDriverNodeEnvsValueFromConfigMapKeyRef;
             /**
-             * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+             * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
              */
             fieldRef?: outputs.storage.v1.CSIPowerMaxSpecDriverNodeEnvsValueFromFieldRef;
             /**
@@ -1122,7 +1569,7 @@ export namespace storage {
         }
 
         /**
-         * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+         * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
          */
         export interface CSIPowerMaxSpecDriverNodeEnvsValueFromFieldRef {
             /**
@@ -1146,11 +1593,14 @@ export namespace storage {
             /**
              * Specifies the output format of the exposed resources, defaults to "1"
              */
-            divisor?: string;
+            divisor?: outputs.storage.v1.CSIPowerMaxSpecDriverNodeEnvsValueFromResourceFieldRefDivisor;
             /**
              * Required: resource to select
              */
             resource: string;
+        }
+
+        export interface CSIPowerMaxSpecDriverNodeEnvsValueFromResourceFieldRefDivisor {
         }
 
         /**
@@ -1169,6 +1619,32 @@ export namespace storage {
              * Specify whether the Secret or its key must be defined
              */
             optional?: boolean;
+        }
+
+        /**
+         * The pod this Toleration is attached to tolerates any taint that matches the triple <key,value,effect> using the matching operator <operator>.
+         */
+        export interface CSIPowerMaxSpecDriverNodeTolerations {
+            /**
+             * Effect indicates the taint effect to match. Empty means match all taint effects. When specified, allowed values are NoSchedule, PreferNoSchedule and NoExecute.
+             */
+            effect?: string;
+            /**
+             * Key is the taint key that the toleration applies to. Empty means match all taint keys. If the key is empty, operator must be Exists; this combination means to match all values and all keys.
+             */
+            key?: string;
+            /**
+             * Operator represents a key's relationship to the value. Valid operators are Exists and Equal. Defaults to Equal. Exists is equivalent to wildcard for value, so that a pod can tolerate all taints of a particular category.
+             */
+            operator?: string;
+            /**
+             * TolerationSeconds represents the period of time the toleration (which must be of effect NoExecute, otherwise this field is ignored) tolerates the taint. By default, it is not set, which means tolerate the taint forever (do not evict). Zero and negative values will be treated as 0 (evict immediately) by the system.
+             */
+            tolerationSeconds?: number;
+            /**
+             * Value is the taint value the toleration matches to. If the operator is Exists, the value should be empty, otherwise just a regular string.
+             */
+            value?: string;
         }
 
         /**
@@ -1195,6 +1671,14 @@ export namespace storage {
              * Name is the name of Container
              */
             name?: string;
+            /**
+             * NodeSelector is a selector which must be true for the pod to fit on a node. Selector which must match a node's labels for the pod to be scheduled on that node.
+             */
+            nodeSelector?: {[key: string]: string};
+            /**
+             * Tolerations is the list of tolerations for the driver pods
+             */
+            tolerations?: outputs.storage.v1.CSIPowerMaxSpecDriverSideCarsTolerations[];
         }
 
         /**
@@ -1224,7 +1708,7 @@ export namespace storage {
              */
             configMapKeyRef?: outputs.storage.v1.CSIPowerMaxSpecDriverSideCarsEnvsValueFromConfigMapKeyRef;
             /**
-             * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+             * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
              */
             fieldRef?: outputs.storage.v1.CSIPowerMaxSpecDriverSideCarsEnvsValueFromFieldRef;
             /**
@@ -1256,7 +1740,7 @@ export namespace storage {
         }
 
         /**
-         * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+         * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
          */
         export interface CSIPowerMaxSpecDriverSideCarsEnvsValueFromFieldRef {
             /**
@@ -1280,11 +1764,14 @@ export namespace storage {
             /**
              * Specifies the output format of the exposed resources, defaults to "1"
              */
-            divisor?: string;
+            divisor?: outputs.storage.v1.CSIPowerMaxSpecDriverSideCarsEnvsValueFromResourceFieldRefDivisor;
             /**
              * Required: resource to select
              */
             resource: string;
+        }
+
+        export interface CSIPowerMaxSpecDriverSideCarsEnvsValueFromResourceFieldRefDivisor {
         }
 
         /**
@@ -1303,6 +1790,32 @@ export namespace storage {
              * Specify whether the Secret or its key must be defined
              */
             optional?: boolean;
+        }
+
+        /**
+         * The pod this Toleration is attached to tolerates any taint that matches the triple <key,value,effect> using the matching operator <operator>.
+         */
+        export interface CSIPowerMaxSpecDriverSideCarsTolerations {
+            /**
+             * Effect indicates the taint effect to match. Empty means match all taint effects. When specified, allowed values are NoSchedule, PreferNoSchedule and NoExecute.
+             */
+            effect?: string;
+            /**
+             * Key is the taint key that the toleration applies to. Empty means match all taint keys. If the key is empty, operator must be Exists; this combination means to match all values and all keys.
+             */
+            key?: string;
+            /**
+             * Operator represents a key's relationship to the value. Valid operators are Exists and Equal. Defaults to Equal. Exists is equivalent to wildcard for value, so that a pod can tolerate all taints of a particular category.
+             */
+            operator?: string;
+            /**
+             * TolerationSeconds represents the period of time the toleration (which must be of effect NoExecute, otherwise this field is ignored) tolerates the taint. By default, it is not set, which means tolerate the taint forever (do not evict). Zero and negative values will be treated as 0 (evict immediately) by the system.
+             */
+            tolerationSeconds?: number;
+            /**
+             * Value is the taint value the toleration matches to. If the operator is Exists, the value should be empty, otherwise just a regular string.
+             */
+            value?: string;
         }
 
         /**
@@ -1328,6 +1841,10 @@ export namespace storage {
              */
             allowVolumeExpansion?: boolean;
             /**
+             * Restrict the node topologies where volumes can be dynamically provisioned.
+             */
+            allowedTopologies?: outputs.storage.v1.CSIPowerMaxSpecDriverStorageClassAllowedTopologies[];
+            /**
              * DefaultSc is a boolean flag to indicate if the storage class is going to be marked as default
              */
             default?: boolean;
@@ -1343,6 +1860,30 @@ export namespace storage {
              * ReclaimPolicy is the reclaim policy for the storage class
              */
             reclaimPolicy?: string;
+        }
+
+        /**
+         * A topology selector term represents the result of label queries. A null or empty topology selector term matches no objects. The requirements of them are ANDed. It provides a subset of functionality as NodeSelectorTerm. This is an alpha feature and may change in the future.
+         */
+        export interface CSIPowerMaxSpecDriverStorageClassAllowedTopologies {
+            /**
+             * A list of topology selector requirements by labels.
+             */
+            matchLabelExpressions?: outputs.storage.v1.CSIPowerMaxSpecDriverStorageClassAllowedTopologiesMatchLabelExpressions[];
+        }
+
+        /**
+         * A topology selector requirement is a selector that matches given label. This is an alpha feature and may change in the future.
+         */
+        export interface CSIPowerMaxSpecDriverStorageClassAllowedTopologiesMatchLabelExpressions {
+            /**
+             * The label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * An array of string values. One value must match the label to be selected. Each entry in Values is ORed.
+             */
+            values: string[];
         }
 
         /**
@@ -1403,6 +1944,882 @@ export namespace storage {
          * NodeStatus is the status of Controller pods
          */
         export interface CSIPowerMaxStatusNodeStatus {
+            available?: string[];
+            ready?: string[];
+            starting?: string[];
+            stopped?: string[];
+        }
+
+        /**
+         * CSIPowerStoreSpec defines the desired state of CSIPowerStore
+         */
+        export interface CSIPowerStoreSpec {
+            /**
+             * INSERT ADDITIONAL SPEC FIELDS - desired state of cluster Important: Run "operator-sdk generate k8s" to regenerate code after modifying this file Add custom validation using kubebuilder tags: https://book-v1.book.kubebuilder.io/beyond_basics/generating_crd.html
+             */
+            driver: outputs.storage.v1.CSIPowerStoreSpecDriver;
+        }
+
+        /**
+         * INSERT ADDITIONAL SPEC FIELDS - desired state of cluster Important: Run "operator-sdk generate k8s" to regenerate code after modifying this file Add custom validation using kubebuilder tags: https://book-v1.book.kubebuilder.io/beyond_basics/generating_crd.html
+         */
+        export interface CSIPowerStoreSpecDriver {
+            /**
+             * AuthSecret is the name of the credentials secret for the driver
+             */
+            authSecret?: string;
+            /**
+             * Common is the common specification for both controller and node plugins
+             */
+            common: outputs.storage.v1.CSIPowerStoreSpecDriverCommon;
+            /**
+             * ConfigVersion is the configuration version of the driver
+             */
+            configVersion: string;
+            /**
+             * Controller is the specification for Controller plugin only
+             */
+            controller?: outputs.storage.v1.CSIPowerStoreSpecDriverController;
+            /**
+             * ForceUpdate is the boolean flag used to force an update of the driver instance
+             */
+            forceUpdate?: boolean;
+            /**
+             * Node is the specification for Node plugin only
+             */
+            node?: outputs.storage.v1.CSIPowerStoreSpecDriverNode;
+            /**
+             * Replicas is the count of controllers for Controller plugin
+             */
+            replicas: number;
+            /**
+             * SideCars is the specification for CSI sidecar containers
+             */
+            sideCars?: outputs.storage.v1.CSIPowerStoreSpecDriverSideCars[];
+            /**
+             * SnapshotClass is the specification for Snapshot Classes
+             */
+            snapshotClass?: outputs.storage.v1.CSIPowerStoreSpecDriverSnapshotClass[];
+            /**
+             * StorageClass is the specification for Storage Classes
+             */
+            storageClass?: outputs.storage.v1.CSIPowerStoreSpecDriverStorageClass[];
+            /**
+             * TLSCertSecret is the name of the TLS Cert secret
+             */
+            tlsCertSecret?: string;
+        }
+
+        /**
+         * Common is the common specification for both controller and node plugins
+         */
+        export interface CSIPowerStoreSpecDriverCommon {
+            /**
+             * Args is the set of arguments for the container
+             */
+            args?: string[];
+            /**
+             * Envs is the set of environment variables for the container
+             */
+            envs?: outputs.storage.v1.CSIPowerStoreSpecDriverCommonEnvs[];
+            /**
+             * Image is the image tag for the Container
+             */
+            image?: string;
+            /**
+             * ImagePullPolicy is the image pull policy for the image
+             */
+            imagePullPolicy?: string;
+            /**
+             * Name is the name of Container
+             */
+            name?: string;
+            /**
+             * NodeSelector is a selector which must be true for the pod to fit on a node. Selector which must match a node's labels for the pod to be scheduled on that node.
+             */
+            nodeSelector?: {[key: string]: string};
+            /**
+             * Tolerations is the list of tolerations for the driver pods
+             */
+            tolerations?: outputs.storage.v1.CSIPowerStoreSpecDriverCommonTolerations[];
+        }
+
+        /**
+         * EnvVar represents an environment variable present in a Container.
+         */
+        export interface CSIPowerStoreSpecDriverCommonEnvs {
+            /**
+             * Name of the environment variable. Must be a C_IDENTIFIER.
+             */
+            name: string;
+            /**
+             * Variable references $(VAR_NAME) are expanded using the previous defined environment variables in the container and any service environment variables. If a variable cannot be resolved, the reference in the input string will be unchanged. The $(VAR_NAME) syntax can be escaped with a double $$, ie: $$(VAR_NAME). Escaped references will never be expanded, regardless of whether the variable exists or not. Defaults to "".
+             */
+            value?: string;
+            /**
+             * Source for the environment variable's value. Cannot be used if value is not empty.
+             */
+            valueFrom?: outputs.storage.v1.CSIPowerStoreSpecDriverCommonEnvsValueFrom;
+        }
+
+        /**
+         * Source for the environment variable's value. Cannot be used if value is not empty.
+         */
+        export interface CSIPowerStoreSpecDriverCommonEnvsValueFrom {
+            /**
+             * Selects a key of a ConfigMap.
+             */
+            configMapKeyRef?: outputs.storage.v1.CSIPowerStoreSpecDriverCommonEnvsValueFromConfigMapKeyRef;
+            /**
+             * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
+             */
+            fieldRef?: outputs.storage.v1.CSIPowerStoreSpecDriverCommonEnvsValueFromFieldRef;
+            /**
+             * Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
+             */
+            resourceFieldRef?: outputs.storage.v1.CSIPowerStoreSpecDriverCommonEnvsValueFromResourceFieldRef;
+            /**
+             * Selects a key of a secret in the pod's namespace
+             */
+            secretKeyRef?: outputs.storage.v1.CSIPowerStoreSpecDriverCommonEnvsValueFromSecretKeyRef;
+        }
+
+        /**
+         * Selects a key of a ConfigMap.
+         */
+        export interface CSIPowerStoreSpecDriverCommonEnvsValueFromConfigMapKeyRef {
+            /**
+             * The key to select.
+             */
+            key: string;
+            /**
+             * Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+             */
+            name?: string;
+            /**
+             * Specify whether the ConfigMap or its key must be defined
+             */
+            optional?: boolean;
+        }
+
+        /**
+         * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
+         */
+        export interface CSIPowerStoreSpecDriverCommonEnvsValueFromFieldRef {
+            /**
+             * Version of the schema the FieldPath is written in terms of, defaults to "v1".
+             */
+            apiVersion?: string;
+            /**
+             * Path of the field to select in the specified API version.
+             */
+            fieldPath: string;
+        }
+
+        /**
+         * Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
+         */
+        export interface CSIPowerStoreSpecDriverCommonEnvsValueFromResourceFieldRef {
+            /**
+             * Container name: required for volumes, optional for env vars
+             */
+            containerName?: string;
+            /**
+             * Specifies the output format of the exposed resources, defaults to "1"
+             */
+            divisor?: outputs.storage.v1.CSIPowerStoreSpecDriverCommonEnvsValueFromResourceFieldRefDivisor;
+            /**
+             * Required: resource to select
+             */
+            resource: string;
+        }
+
+        export interface CSIPowerStoreSpecDriverCommonEnvsValueFromResourceFieldRefDivisor {
+        }
+
+        /**
+         * Selects a key of a secret in the pod's namespace
+         */
+        export interface CSIPowerStoreSpecDriverCommonEnvsValueFromSecretKeyRef {
+            /**
+             * The key of the secret to select from.  Must be a valid secret key.
+             */
+            key: string;
+            /**
+             * Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+             */
+            name?: string;
+            /**
+             * Specify whether the Secret or its key must be defined
+             */
+            optional?: boolean;
+        }
+
+        /**
+         * The pod this Toleration is attached to tolerates any taint that matches the triple <key,value,effect> using the matching operator <operator>.
+         */
+        export interface CSIPowerStoreSpecDriverCommonTolerations {
+            /**
+             * Effect indicates the taint effect to match. Empty means match all taint effects. When specified, allowed values are NoSchedule, PreferNoSchedule and NoExecute.
+             */
+            effect?: string;
+            /**
+             * Key is the taint key that the toleration applies to. Empty means match all taint keys. If the key is empty, operator must be Exists; this combination means to match all values and all keys.
+             */
+            key?: string;
+            /**
+             * Operator represents a key's relationship to the value. Valid operators are Exists and Equal. Defaults to Equal. Exists is equivalent to wildcard for value, so that a pod can tolerate all taints of a particular category.
+             */
+            operator?: string;
+            /**
+             * TolerationSeconds represents the period of time the toleration (which must be of effect NoExecute, otherwise this field is ignored) tolerates the taint. By default, it is not set, which means tolerate the taint forever (do not evict). Zero and negative values will be treated as 0 (evict immediately) by the system.
+             */
+            tolerationSeconds?: number;
+            /**
+             * Value is the taint value the toleration matches to. If the operator is Exists, the value should be empty, otherwise just a regular string.
+             */
+            value?: string;
+        }
+
+        /**
+         * Controller is the specification for Controller plugin only
+         */
+        export interface CSIPowerStoreSpecDriverController {
+            /**
+             * Args is the set of arguments for the container
+             */
+            args?: string[];
+            /**
+             * Envs is the set of environment variables for the container
+             */
+            envs?: outputs.storage.v1.CSIPowerStoreSpecDriverControllerEnvs[];
+            /**
+             * Image is the image tag for the Container
+             */
+            image?: string;
+            /**
+             * ImagePullPolicy is the image pull policy for the image
+             */
+            imagePullPolicy?: string;
+            /**
+             * Name is the name of Container
+             */
+            name?: string;
+            /**
+             * NodeSelector is a selector which must be true for the pod to fit on a node. Selector which must match a node's labels for the pod to be scheduled on that node.
+             */
+            nodeSelector?: {[key: string]: string};
+            /**
+             * Tolerations is the list of tolerations for the driver pods
+             */
+            tolerations?: outputs.storage.v1.CSIPowerStoreSpecDriverControllerTolerations[];
+        }
+
+        /**
+         * EnvVar represents an environment variable present in a Container.
+         */
+        export interface CSIPowerStoreSpecDriverControllerEnvs {
+            /**
+             * Name of the environment variable. Must be a C_IDENTIFIER.
+             */
+            name: string;
+            /**
+             * Variable references $(VAR_NAME) are expanded using the previous defined environment variables in the container and any service environment variables. If a variable cannot be resolved, the reference in the input string will be unchanged. The $(VAR_NAME) syntax can be escaped with a double $$, ie: $$(VAR_NAME). Escaped references will never be expanded, regardless of whether the variable exists or not. Defaults to "".
+             */
+            value?: string;
+            /**
+             * Source for the environment variable's value. Cannot be used if value is not empty.
+             */
+            valueFrom?: outputs.storage.v1.CSIPowerStoreSpecDriverControllerEnvsValueFrom;
+        }
+
+        /**
+         * Source for the environment variable's value. Cannot be used if value is not empty.
+         */
+        export interface CSIPowerStoreSpecDriverControllerEnvsValueFrom {
+            /**
+             * Selects a key of a ConfigMap.
+             */
+            configMapKeyRef?: outputs.storage.v1.CSIPowerStoreSpecDriverControllerEnvsValueFromConfigMapKeyRef;
+            /**
+             * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
+             */
+            fieldRef?: outputs.storage.v1.CSIPowerStoreSpecDriverControllerEnvsValueFromFieldRef;
+            /**
+             * Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
+             */
+            resourceFieldRef?: outputs.storage.v1.CSIPowerStoreSpecDriverControllerEnvsValueFromResourceFieldRef;
+            /**
+             * Selects a key of a secret in the pod's namespace
+             */
+            secretKeyRef?: outputs.storage.v1.CSIPowerStoreSpecDriverControllerEnvsValueFromSecretKeyRef;
+        }
+
+        /**
+         * Selects a key of a ConfigMap.
+         */
+        export interface CSIPowerStoreSpecDriverControllerEnvsValueFromConfigMapKeyRef {
+            /**
+             * The key to select.
+             */
+            key: string;
+            /**
+             * Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+             */
+            name?: string;
+            /**
+             * Specify whether the ConfigMap or its key must be defined
+             */
+            optional?: boolean;
+        }
+
+        /**
+         * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
+         */
+        export interface CSIPowerStoreSpecDriverControllerEnvsValueFromFieldRef {
+            /**
+             * Version of the schema the FieldPath is written in terms of, defaults to "v1".
+             */
+            apiVersion?: string;
+            /**
+             * Path of the field to select in the specified API version.
+             */
+            fieldPath: string;
+        }
+
+        /**
+         * Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
+         */
+        export interface CSIPowerStoreSpecDriverControllerEnvsValueFromResourceFieldRef {
+            /**
+             * Container name: required for volumes, optional for env vars
+             */
+            containerName?: string;
+            /**
+             * Specifies the output format of the exposed resources, defaults to "1"
+             */
+            divisor?: outputs.storage.v1.CSIPowerStoreSpecDriverControllerEnvsValueFromResourceFieldRefDivisor;
+            /**
+             * Required: resource to select
+             */
+            resource: string;
+        }
+
+        export interface CSIPowerStoreSpecDriverControllerEnvsValueFromResourceFieldRefDivisor {
+        }
+
+        /**
+         * Selects a key of a secret in the pod's namespace
+         */
+        export interface CSIPowerStoreSpecDriverControllerEnvsValueFromSecretKeyRef {
+            /**
+             * The key of the secret to select from.  Must be a valid secret key.
+             */
+            key: string;
+            /**
+             * Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+             */
+            name?: string;
+            /**
+             * Specify whether the Secret or its key must be defined
+             */
+            optional?: boolean;
+        }
+
+        /**
+         * The pod this Toleration is attached to tolerates any taint that matches the triple <key,value,effect> using the matching operator <operator>.
+         */
+        export interface CSIPowerStoreSpecDriverControllerTolerations {
+            /**
+             * Effect indicates the taint effect to match. Empty means match all taint effects. When specified, allowed values are NoSchedule, PreferNoSchedule and NoExecute.
+             */
+            effect?: string;
+            /**
+             * Key is the taint key that the toleration applies to. Empty means match all taint keys. If the key is empty, operator must be Exists; this combination means to match all values and all keys.
+             */
+            key?: string;
+            /**
+             * Operator represents a key's relationship to the value. Valid operators are Exists and Equal. Defaults to Equal. Exists is equivalent to wildcard for value, so that a pod can tolerate all taints of a particular category.
+             */
+            operator?: string;
+            /**
+             * TolerationSeconds represents the period of time the toleration (which must be of effect NoExecute, otherwise this field is ignored) tolerates the taint. By default, it is not set, which means tolerate the taint forever (do not evict). Zero and negative values will be treated as 0 (evict immediately) by the system.
+             */
+            tolerationSeconds?: number;
+            /**
+             * Value is the taint value the toleration matches to. If the operator is Exists, the value should be empty, otherwise just a regular string.
+             */
+            value?: string;
+        }
+
+        /**
+         * Node is the specification for Node plugin only
+         */
+        export interface CSIPowerStoreSpecDriverNode {
+            /**
+             * Args is the set of arguments for the container
+             */
+            args?: string[];
+            /**
+             * Envs is the set of environment variables for the container
+             */
+            envs?: outputs.storage.v1.CSIPowerStoreSpecDriverNodeEnvs[];
+            /**
+             * Image is the image tag for the Container
+             */
+            image?: string;
+            /**
+             * ImagePullPolicy is the image pull policy for the image
+             */
+            imagePullPolicy?: string;
+            /**
+             * Name is the name of Container
+             */
+            name?: string;
+            /**
+             * NodeSelector is a selector which must be true for the pod to fit on a node. Selector which must match a node's labels for the pod to be scheduled on that node.
+             */
+            nodeSelector?: {[key: string]: string};
+            /**
+             * Tolerations is the list of tolerations for the driver pods
+             */
+            tolerations?: outputs.storage.v1.CSIPowerStoreSpecDriverNodeTolerations[];
+        }
+
+        /**
+         * EnvVar represents an environment variable present in a Container.
+         */
+        export interface CSIPowerStoreSpecDriverNodeEnvs {
+            /**
+             * Name of the environment variable. Must be a C_IDENTIFIER.
+             */
+            name: string;
+            /**
+             * Variable references $(VAR_NAME) are expanded using the previous defined environment variables in the container and any service environment variables. If a variable cannot be resolved, the reference in the input string will be unchanged. The $(VAR_NAME) syntax can be escaped with a double $$, ie: $$(VAR_NAME). Escaped references will never be expanded, regardless of whether the variable exists or not. Defaults to "".
+             */
+            value?: string;
+            /**
+             * Source for the environment variable's value. Cannot be used if value is not empty.
+             */
+            valueFrom?: outputs.storage.v1.CSIPowerStoreSpecDriverNodeEnvsValueFrom;
+        }
+
+        /**
+         * Source for the environment variable's value. Cannot be used if value is not empty.
+         */
+        export interface CSIPowerStoreSpecDriverNodeEnvsValueFrom {
+            /**
+             * Selects a key of a ConfigMap.
+             */
+            configMapKeyRef?: outputs.storage.v1.CSIPowerStoreSpecDriverNodeEnvsValueFromConfigMapKeyRef;
+            /**
+             * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
+             */
+            fieldRef?: outputs.storage.v1.CSIPowerStoreSpecDriverNodeEnvsValueFromFieldRef;
+            /**
+             * Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
+             */
+            resourceFieldRef?: outputs.storage.v1.CSIPowerStoreSpecDriverNodeEnvsValueFromResourceFieldRef;
+            /**
+             * Selects a key of a secret in the pod's namespace
+             */
+            secretKeyRef?: outputs.storage.v1.CSIPowerStoreSpecDriverNodeEnvsValueFromSecretKeyRef;
+        }
+
+        /**
+         * Selects a key of a ConfigMap.
+         */
+        export interface CSIPowerStoreSpecDriverNodeEnvsValueFromConfigMapKeyRef {
+            /**
+             * The key to select.
+             */
+            key: string;
+            /**
+             * Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+             */
+            name?: string;
+            /**
+             * Specify whether the ConfigMap or its key must be defined
+             */
+            optional?: boolean;
+        }
+
+        /**
+         * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
+         */
+        export interface CSIPowerStoreSpecDriverNodeEnvsValueFromFieldRef {
+            /**
+             * Version of the schema the FieldPath is written in terms of, defaults to "v1".
+             */
+            apiVersion?: string;
+            /**
+             * Path of the field to select in the specified API version.
+             */
+            fieldPath: string;
+        }
+
+        /**
+         * Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
+         */
+        export interface CSIPowerStoreSpecDriverNodeEnvsValueFromResourceFieldRef {
+            /**
+             * Container name: required for volumes, optional for env vars
+             */
+            containerName?: string;
+            /**
+             * Specifies the output format of the exposed resources, defaults to "1"
+             */
+            divisor?: outputs.storage.v1.CSIPowerStoreSpecDriverNodeEnvsValueFromResourceFieldRefDivisor;
+            /**
+             * Required: resource to select
+             */
+            resource: string;
+        }
+
+        export interface CSIPowerStoreSpecDriverNodeEnvsValueFromResourceFieldRefDivisor {
+        }
+
+        /**
+         * Selects a key of a secret in the pod's namespace
+         */
+        export interface CSIPowerStoreSpecDriverNodeEnvsValueFromSecretKeyRef {
+            /**
+             * The key of the secret to select from.  Must be a valid secret key.
+             */
+            key: string;
+            /**
+             * Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+             */
+            name?: string;
+            /**
+             * Specify whether the Secret or its key must be defined
+             */
+            optional?: boolean;
+        }
+
+        /**
+         * The pod this Toleration is attached to tolerates any taint that matches the triple <key,value,effect> using the matching operator <operator>.
+         */
+        export interface CSIPowerStoreSpecDriverNodeTolerations {
+            /**
+             * Effect indicates the taint effect to match. Empty means match all taint effects. When specified, allowed values are NoSchedule, PreferNoSchedule and NoExecute.
+             */
+            effect?: string;
+            /**
+             * Key is the taint key that the toleration applies to. Empty means match all taint keys. If the key is empty, operator must be Exists; this combination means to match all values and all keys.
+             */
+            key?: string;
+            /**
+             * Operator represents a key's relationship to the value. Valid operators are Exists and Equal. Defaults to Equal. Exists is equivalent to wildcard for value, so that a pod can tolerate all taints of a particular category.
+             */
+            operator?: string;
+            /**
+             * TolerationSeconds represents the period of time the toleration (which must be of effect NoExecute, otherwise this field is ignored) tolerates the taint. By default, it is not set, which means tolerate the taint forever (do not evict). Zero and negative values will be treated as 0 (evict immediately) by the system.
+             */
+            tolerationSeconds?: number;
+            /**
+             * Value is the taint value the toleration matches to. If the operator is Exists, the value should be empty, otherwise just a regular string.
+             */
+            value?: string;
+        }
+
+        /**
+         * ContainerTemplate - Structure representing a container
+         */
+        export interface CSIPowerStoreSpecDriverSideCars {
+            /**
+             * Args is the set of arguments for the container
+             */
+            args?: string[];
+            /**
+             * Envs is the set of environment variables for the container
+             */
+            envs?: outputs.storage.v1.CSIPowerStoreSpecDriverSideCarsEnvs[];
+            /**
+             * Image is the image tag for the Container
+             */
+            image?: string;
+            /**
+             * ImagePullPolicy is the image pull policy for the image
+             */
+            imagePullPolicy?: string;
+            /**
+             * Name is the name of Container
+             */
+            name?: string;
+            /**
+             * NodeSelector is a selector which must be true for the pod to fit on a node. Selector which must match a node's labels for the pod to be scheduled on that node.
+             */
+            nodeSelector?: {[key: string]: string};
+            /**
+             * Tolerations is the list of tolerations for the driver pods
+             */
+            tolerations?: outputs.storage.v1.CSIPowerStoreSpecDriverSideCarsTolerations[];
+        }
+
+        /**
+         * EnvVar represents an environment variable present in a Container.
+         */
+        export interface CSIPowerStoreSpecDriverSideCarsEnvs {
+            /**
+             * Name of the environment variable. Must be a C_IDENTIFIER.
+             */
+            name: string;
+            /**
+             * Variable references $(VAR_NAME) are expanded using the previous defined environment variables in the container and any service environment variables. If a variable cannot be resolved, the reference in the input string will be unchanged. The $(VAR_NAME) syntax can be escaped with a double $$, ie: $$(VAR_NAME). Escaped references will never be expanded, regardless of whether the variable exists or not. Defaults to "".
+             */
+            value?: string;
+            /**
+             * Source for the environment variable's value. Cannot be used if value is not empty.
+             */
+            valueFrom?: outputs.storage.v1.CSIPowerStoreSpecDriverSideCarsEnvsValueFrom;
+        }
+
+        /**
+         * Source for the environment variable's value. Cannot be used if value is not empty.
+         */
+        export interface CSIPowerStoreSpecDriverSideCarsEnvsValueFrom {
+            /**
+             * Selects a key of a ConfigMap.
+             */
+            configMapKeyRef?: outputs.storage.v1.CSIPowerStoreSpecDriverSideCarsEnvsValueFromConfigMapKeyRef;
+            /**
+             * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
+             */
+            fieldRef?: outputs.storage.v1.CSIPowerStoreSpecDriverSideCarsEnvsValueFromFieldRef;
+            /**
+             * Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
+             */
+            resourceFieldRef?: outputs.storage.v1.CSIPowerStoreSpecDriverSideCarsEnvsValueFromResourceFieldRef;
+            /**
+             * Selects a key of a secret in the pod's namespace
+             */
+            secretKeyRef?: outputs.storage.v1.CSIPowerStoreSpecDriverSideCarsEnvsValueFromSecretKeyRef;
+        }
+
+        /**
+         * Selects a key of a ConfigMap.
+         */
+        export interface CSIPowerStoreSpecDriverSideCarsEnvsValueFromConfigMapKeyRef {
+            /**
+             * The key to select.
+             */
+            key: string;
+            /**
+             * Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+             */
+            name?: string;
+            /**
+             * Specify whether the ConfigMap or its key must be defined
+             */
+            optional?: boolean;
+        }
+
+        /**
+         * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
+         */
+        export interface CSIPowerStoreSpecDriverSideCarsEnvsValueFromFieldRef {
+            /**
+             * Version of the schema the FieldPath is written in terms of, defaults to "v1".
+             */
+            apiVersion?: string;
+            /**
+             * Path of the field to select in the specified API version.
+             */
+            fieldPath: string;
+        }
+
+        /**
+         * Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
+         */
+        export interface CSIPowerStoreSpecDriverSideCarsEnvsValueFromResourceFieldRef {
+            /**
+             * Container name: required for volumes, optional for env vars
+             */
+            containerName?: string;
+            /**
+             * Specifies the output format of the exposed resources, defaults to "1"
+             */
+            divisor?: outputs.storage.v1.CSIPowerStoreSpecDriverSideCarsEnvsValueFromResourceFieldRefDivisor;
+            /**
+             * Required: resource to select
+             */
+            resource: string;
+        }
+
+        export interface CSIPowerStoreSpecDriverSideCarsEnvsValueFromResourceFieldRefDivisor {
+        }
+
+        /**
+         * Selects a key of a secret in the pod's namespace
+         */
+        export interface CSIPowerStoreSpecDriverSideCarsEnvsValueFromSecretKeyRef {
+            /**
+             * The key of the secret to select from.  Must be a valid secret key.
+             */
+            key: string;
+            /**
+             * Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+             */
+            name?: string;
+            /**
+             * Specify whether the Secret or its key must be defined
+             */
+            optional?: boolean;
+        }
+
+        /**
+         * The pod this Toleration is attached to tolerates any taint that matches the triple <key,value,effect> using the matching operator <operator>.
+         */
+        export interface CSIPowerStoreSpecDriverSideCarsTolerations {
+            /**
+             * Effect indicates the taint effect to match. Empty means match all taint effects. When specified, allowed values are NoSchedule, PreferNoSchedule and NoExecute.
+             */
+            effect?: string;
+            /**
+             * Key is the taint key that the toleration applies to. Empty means match all taint keys. If the key is empty, operator must be Exists; this combination means to match all values and all keys.
+             */
+            key?: string;
+            /**
+             * Operator represents a key's relationship to the value. Valid operators are Exists and Equal. Defaults to Equal. Exists is equivalent to wildcard for value, so that a pod can tolerate all taints of a particular category.
+             */
+            operator?: string;
+            /**
+             * TolerationSeconds represents the period of time the toleration (which must be of effect NoExecute, otherwise this field is ignored) tolerates the taint. By default, it is not set, which means tolerate the taint forever (do not evict). Zero and negative values will be treated as 0 (evict immediately) by the system.
+             */
+            tolerationSeconds?: number;
+            /**
+             * Value is the taint value the toleration matches to. If the operator is Exists, the value should be empty, otherwise just a regular string.
+             */
+            value?: string;
+        }
+
+        /**
+         * SnapshotClass represents a VolumeSnapshotClass
+         */
+        export interface CSIPowerStoreSpecDriverSnapshotClass {
+            /**
+             * Name is the name of the Snapshot Class
+             */
+            name: string;
+            /**
+             * Parameters is a map of driver specific parameters for snapshot class
+             */
+            parameters?: {[key: string]: string};
+        }
+
+        /**
+         * StorageClass represents a kubernetes storage class
+         */
+        export interface CSIPowerStoreSpecDriverStorageClass {
+            /**
+             * AllowVolumeExpansion is a boolean flag which indicates if volumes can be expanded
+             */
+            allowVolumeExpansion?: boolean;
+            /**
+             * Restrict the node topologies where volumes can be dynamically provisioned.
+             */
+            allowedTopologies?: outputs.storage.v1.CSIPowerStoreSpecDriverStorageClassAllowedTopologies[];
+            /**
+             * DefaultSc is a boolean flag to indicate if the storage class is going to be marked as default
+             */
+            default?: boolean;
+            /**
+             * Name is the name of the StorageClass
+             */
+            name: string;
+            /**
+             * Parameters is a map of driver specific storage class
+             */
+            parameters?: {[key: string]: string};
+            /**
+             * ReclaimPolicy is the reclaim policy for the storage class
+             */
+            reclaimPolicy?: string;
+        }
+
+        /**
+         * A topology selector term represents the result of label queries. A null or empty topology selector term matches no objects. The requirements of them are ANDed. It provides a subset of functionality as NodeSelectorTerm. This is an alpha feature and may change in the future.
+         */
+        export interface CSIPowerStoreSpecDriverStorageClassAllowedTopologies {
+            /**
+             * A list of topology selector requirements by labels.
+             */
+            matchLabelExpressions?: outputs.storage.v1.CSIPowerStoreSpecDriverStorageClassAllowedTopologiesMatchLabelExpressions[];
+        }
+
+        /**
+         * A topology selector requirement is a selector that matches given label. This is an alpha feature and may change in the future.
+         */
+        export interface CSIPowerStoreSpecDriverStorageClassAllowedTopologiesMatchLabelExpressions {
+            /**
+             * The label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * An array of string values. One value must match the label to be selected. Each entry in Values is ORed.
+             */
+            values: string[];
+        }
+
+        /**
+         * DriverStatus defines the observed state of CSIDriver
+         */
+        export interface CSIPowerStoreStatus {
+            /**
+             * ControllerStatus is the status of Controller pods
+             */
+            controllerStatus?: outputs.storage.v1.CSIPowerStoreStatusControllerStatus;
+            /**
+             * DriverHash is a hash of the driver specification
+             */
+            driverHash?: number;
+            /**
+             * LastUpdate is the last updated state of the driver
+             */
+            lastUpdate?: outputs.storage.v1.CSIPowerStoreStatusLastUpdate;
+            /**
+             * NodeStatus is the status of Controller pods
+             */
+            nodeStatus?: outputs.storage.v1.CSIPowerStoreStatusNodeStatus;
+            /**
+             * State is the state of the driver installation
+             */
+            state?: string;
+        }
+
+        /**
+         * ControllerStatus is the status of Controller pods
+         */
+        export interface CSIPowerStoreStatusControllerStatus {
+            available?: string[];
+            ready?: string[];
+            starting?: string[];
+            stopped?: string[];
+        }
+
+        /**
+         * LastUpdate is the last updated state of the driver
+         */
+        export interface CSIPowerStoreStatusLastUpdate {
+            /**
+             * Condition is the last known condition of the Custom Resource
+             */
+            condition?: string;
+            /**
+             * ErrorMessage is the last error message associated with the condition
+             */
+            errorMessage?: string;
+            /**
+             * Time is the time stamp for the last condition update
+             */
+            time?: string;
+        }
+
+        /**
+         * NodeStatus is the status of Controller pods
+         */
+        export interface CSIPowerStoreStatusNodeStatus {
             available?: string[];
             ready?: string[];
             starting?: string[];
@@ -1493,6 +2910,14 @@ export namespace storage {
              * Name is the name of Container
              */
             name?: string;
+            /**
+             * NodeSelector is a selector which must be true for the pod to fit on a node. Selector which must match a node's labels for the pod to be scheduled on that node.
+             */
+            nodeSelector?: {[key: string]: string};
+            /**
+             * Tolerations is the list of tolerations for the driver pods
+             */
+            tolerations?: outputs.storage.v1.CSIUnitySpecDriverCommonTolerations[];
         }
 
         /**
@@ -1522,7 +2947,7 @@ export namespace storage {
              */
             configMapKeyRef?: outputs.storage.v1.CSIUnitySpecDriverCommonEnvsValueFromConfigMapKeyRef;
             /**
-             * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+             * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
              */
             fieldRef?: outputs.storage.v1.CSIUnitySpecDriverCommonEnvsValueFromFieldRef;
             /**
@@ -1554,7 +2979,7 @@ export namespace storage {
         }
 
         /**
-         * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+         * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
          */
         export interface CSIUnitySpecDriverCommonEnvsValueFromFieldRef {
             /**
@@ -1578,11 +3003,14 @@ export namespace storage {
             /**
              * Specifies the output format of the exposed resources, defaults to "1"
              */
-            divisor?: string;
+            divisor?: outputs.storage.v1.CSIUnitySpecDriverCommonEnvsValueFromResourceFieldRefDivisor;
             /**
              * Required: resource to select
              */
             resource: string;
+        }
+
+        export interface CSIUnitySpecDriverCommonEnvsValueFromResourceFieldRefDivisor {
         }
 
         /**
@@ -1601,6 +3029,32 @@ export namespace storage {
              * Specify whether the Secret or its key must be defined
              */
             optional?: boolean;
+        }
+
+        /**
+         * The pod this Toleration is attached to tolerates any taint that matches the triple <key,value,effect> using the matching operator <operator>.
+         */
+        export interface CSIUnitySpecDriverCommonTolerations {
+            /**
+             * Effect indicates the taint effect to match. Empty means match all taint effects. When specified, allowed values are NoSchedule, PreferNoSchedule and NoExecute.
+             */
+            effect?: string;
+            /**
+             * Key is the taint key that the toleration applies to. Empty means match all taint keys. If the key is empty, operator must be Exists; this combination means to match all values and all keys.
+             */
+            key?: string;
+            /**
+             * Operator represents a key's relationship to the value. Valid operators are Exists and Equal. Defaults to Equal. Exists is equivalent to wildcard for value, so that a pod can tolerate all taints of a particular category.
+             */
+            operator?: string;
+            /**
+             * TolerationSeconds represents the period of time the toleration (which must be of effect NoExecute, otherwise this field is ignored) tolerates the taint. By default, it is not set, which means tolerate the taint forever (do not evict). Zero and negative values will be treated as 0 (evict immediately) by the system.
+             */
+            tolerationSeconds?: number;
+            /**
+             * Value is the taint value the toleration matches to. If the operator is Exists, the value should be empty, otherwise just a regular string.
+             */
+            value?: string;
         }
 
         /**
@@ -1627,6 +3081,14 @@ export namespace storage {
              * Name is the name of Container
              */
             name?: string;
+            /**
+             * NodeSelector is a selector which must be true for the pod to fit on a node. Selector which must match a node's labels for the pod to be scheduled on that node.
+             */
+            nodeSelector?: {[key: string]: string};
+            /**
+             * Tolerations is the list of tolerations for the driver pods
+             */
+            tolerations?: outputs.storage.v1.CSIUnitySpecDriverControllerTolerations[];
         }
 
         /**
@@ -1656,7 +3118,7 @@ export namespace storage {
              */
             configMapKeyRef?: outputs.storage.v1.CSIUnitySpecDriverControllerEnvsValueFromConfigMapKeyRef;
             /**
-             * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+             * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
              */
             fieldRef?: outputs.storage.v1.CSIUnitySpecDriverControllerEnvsValueFromFieldRef;
             /**
@@ -1688,7 +3150,7 @@ export namespace storage {
         }
 
         /**
-         * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+         * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
          */
         export interface CSIUnitySpecDriverControllerEnvsValueFromFieldRef {
             /**
@@ -1712,11 +3174,14 @@ export namespace storage {
             /**
              * Specifies the output format of the exposed resources, defaults to "1"
              */
-            divisor?: string;
+            divisor?: outputs.storage.v1.CSIUnitySpecDriverControllerEnvsValueFromResourceFieldRefDivisor;
             /**
              * Required: resource to select
              */
             resource: string;
+        }
+
+        export interface CSIUnitySpecDriverControllerEnvsValueFromResourceFieldRefDivisor {
         }
 
         /**
@@ -1735,6 +3200,32 @@ export namespace storage {
              * Specify whether the Secret or its key must be defined
              */
             optional?: boolean;
+        }
+
+        /**
+         * The pod this Toleration is attached to tolerates any taint that matches the triple <key,value,effect> using the matching operator <operator>.
+         */
+        export interface CSIUnitySpecDriverControllerTolerations {
+            /**
+             * Effect indicates the taint effect to match. Empty means match all taint effects. When specified, allowed values are NoSchedule, PreferNoSchedule and NoExecute.
+             */
+            effect?: string;
+            /**
+             * Key is the taint key that the toleration applies to. Empty means match all taint keys. If the key is empty, operator must be Exists; this combination means to match all values and all keys.
+             */
+            key?: string;
+            /**
+             * Operator represents a key's relationship to the value. Valid operators are Exists and Equal. Defaults to Equal. Exists is equivalent to wildcard for value, so that a pod can tolerate all taints of a particular category.
+             */
+            operator?: string;
+            /**
+             * TolerationSeconds represents the period of time the toleration (which must be of effect NoExecute, otherwise this field is ignored) tolerates the taint. By default, it is not set, which means tolerate the taint forever (do not evict). Zero and negative values will be treated as 0 (evict immediately) by the system.
+             */
+            tolerationSeconds?: number;
+            /**
+             * Value is the taint value the toleration matches to. If the operator is Exists, the value should be empty, otherwise just a regular string.
+             */
+            value?: string;
         }
 
         /**
@@ -1761,6 +3252,14 @@ export namespace storage {
              * Name is the name of Container
              */
             name?: string;
+            /**
+             * NodeSelector is a selector which must be true for the pod to fit on a node. Selector which must match a node's labels for the pod to be scheduled on that node.
+             */
+            nodeSelector?: {[key: string]: string};
+            /**
+             * Tolerations is the list of tolerations for the driver pods
+             */
+            tolerations?: outputs.storage.v1.CSIUnitySpecDriverNodeTolerations[];
         }
 
         /**
@@ -1790,7 +3289,7 @@ export namespace storage {
              */
             configMapKeyRef?: outputs.storage.v1.CSIUnitySpecDriverNodeEnvsValueFromConfigMapKeyRef;
             /**
-             * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+             * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
              */
             fieldRef?: outputs.storage.v1.CSIUnitySpecDriverNodeEnvsValueFromFieldRef;
             /**
@@ -1822,7 +3321,7 @@ export namespace storage {
         }
 
         /**
-         * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+         * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
          */
         export interface CSIUnitySpecDriverNodeEnvsValueFromFieldRef {
             /**
@@ -1846,11 +3345,14 @@ export namespace storage {
             /**
              * Specifies the output format of the exposed resources, defaults to "1"
              */
-            divisor?: string;
+            divisor?: outputs.storage.v1.CSIUnitySpecDriverNodeEnvsValueFromResourceFieldRefDivisor;
             /**
              * Required: resource to select
              */
             resource: string;
+        }
+
+        export interface CSIUnitySpecDriverNodeEnvsValueFromResourceFieldRefDivisor {
         }
 
         /**
@@ -1869,6 +3371,32 @@ export namespace storage {
              * Specify whether the Secret or its key must be defined
              */
             optional?: boolean;
+        }
+
+        /**
+         * The pod this Toleration is attached to tolerates any taint that matches the triple <key,value,effect> using the matching operator <operator>.
+         */
+        export interface CSIUnitySpecDriverNodeTolerations {
+            /**
+             * Effect indicates the taint effect to match. Empty means match all taint effects. When specified, allowed values are NoSchedule, PreferNoSchedule and NoExecute.
+             */
+            effect?: string;
+            /**
+             * Key is the taint key that the toleration applies to. Empty means match all taint keys. If the key is empty, operator must be Exists; this combination means to match all values and all keys.
+             */
+            key?: string;
+            /**
+             * Operator represents a key's relationship to the value. Valid operators are Exists and Equal. Defaults to Equal. Exists is equivalent to wildcard for value, so that a pod can tolerate all taints of a particular category.
+             */
+            operator?: string;
+            /**
+             * TolerationSeconds represents the period of time the toleration (which must be of effect NoExecute, otherwise this field is ignored) tolerates the taint. By default, it is not set, which means tolerate the taint forever (do not evict). Zero and negative values will be treated as 0 (evict immediately) by the system.
+             */
+            tolerationSeconds?: number;
+            /**
+             * Value is the taint value the toleration matches to. If the operator is Exists, the value should be empty, otherwise just a regular string.
+             */
+            value?: string;
         }
 
         /**
@@ -1895,6 +3423,14 @@ export namespace storage {
              * Name is the name of Container
              */
             name?: string;
+            /**
+             * NodeSelector is a selector which must be true for the pod to fit on a node. Selector which must match a node's labels for the pod to be scheduled on that node.
+             */
+            nodeSelector?: {[key: string]: string};
+            /**
+             * Tolerations is the list of tolerations for the driver pods
+             */
+            tolerations?: outputs.storage.v1.CSIUnitySpecDriverSideCarsTolerations[];
         }
 
         /**
@@ -1924,7 +3460,7 @@ export namespace storage {
              */
             configMapKeyRef?: outputs.storage.v1.CSIUnitySpecDriverSideCarsEnvsValueFromConfigMapKeyRef;
             /**
-             * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+             * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
              */
             fieldRef?: outputs.storage.v1.CSIUnitySpecDriverSideCarsEnvsValueFromFieldRef;
             /**
@@ -1956,7 +3492,7 @@ export namespace storage {
         }
 
         /**
-         * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+         * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
          */
         export interface CSIUnitySpecDriverSideCarsEnvsValueFromFieldRef {
             /**
@@ -1980,11 +3516,14 @@ export namespace storage {
             /**
              * Specifies the output format of the exposed resources, defaults to "1"
              */
-            divisor?: string;
+            divisor?: outputs.storage.v1.CSIUnitySpecDriverSideCarsEnvsValueFromResourceFieldRefDivisor;
             /**
              * Required: resource to select
              */
             resource: string;
+        }
+
+        export interface CSIUnitySpecDriverSideCarsEnvsValueFromResourceFieldRefDivisor {
         }
 
         /**
@@ -2003,6 +3542,32 @@ export namespace storage {
              * Specify whether the Secret or its key must be defined
              */
             optional?: boolean;
+        }
+
+        /**
+         * The pod this Toleration is attached to tolerates any taint that matches the triple <key,value,effect> using the matching operator <operator>.
+         */
+        export interface CSIUnitySpecDriverSideCarsTolerations {
+            /**
+             * Effect indicates the taint effect to match. Empty means match all taint effects. When specified, allowed values are NoSchedule, PreferNoSchedule and NoExecute.
+             */
+            effect?: string;
+            /**
+             * Key is the taint key that the toleration applies to. Empty means match all taint keys. If the key is empty, operator must be Exists; this combination means to match all values and all keys.
+             */
+            key?: string;
+            /**
+             * Operator represents a key's relationship to the value. Valid operators are Exists and Equal. Defaults to Equal. Exists is equivalent to wildcard for value, so that a pod can tolerate all taints of a particular category.
+             */
+            operator?: string;
+            /**
+             * TolerationSeconds represents the period of time the toleration (which must be of effect NoExecute, otherwise this field is ignored) tolerates the taint. By default, it is not set, which means tolerate the taint forever (do not evict). Zero and negative values will be treated as 0 (evict immediately) by the system.
+             */
+            tolerationSeconds?: number;
+            /**
+             * Value is the taint value the toleration matches to. If the operator is Exists, the value should be empty, otherwise just a regular string.
+             */
+            value?: string;
         }
 
         /**
@@ -2028,6 +3593,10 @@ export namespace storage {
              */
             allowVolumeExpansion?: boolean;
             /**
+             * Restrict the node topologies where volumes can be dynamically provisioned.
+             */
+            allowedTopologies?: outputs.storage.v1.CSIUnitySpecDriverStorageClassAllowedTopologies[];
+            /**
              * DefaultSc is a boolean flag to indicate if the storage class is going to be marked as default
              */
             default?: boolean;
@@ -2043,6 +3612,30 @@ export namespace storage {
              * ReclaimPolicy is the reclaim policy for the storage class
              */
             reclaimPolicy?: string;
+        }
+
+        /**
+         * A topology selector term represents the result of label queries. A null or empty topology selector term matches no objects. The requirements of them are ANDed. It provides a subset of functionality as NodeSelectorTerm. This is an alpha feature and may change in the future.
+         */
+        export interface CSIUnitySpecDriverStorageClassAllowedTopologies {
+            /**
+             * A list of topology selector requirements by labels.
+             */
+            matchLabelExpressions?: outputs.storage.v1.CSIUnitySpecDriverStorageClassAllowedTopologiesMatchLabelExpressions[];
+        }
+
+        /**
+         * A topology selector requirement is a selector that matches given label. This is an alpha feature and may change in the future.
+         */
+        export interface CSIUnitySpecDriverStorageClassAllowedTopologiesMatchLabelExpressions {
+            /**
+             * The label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * An array of string values. One value must match the label to be selected. Each entry in Values is ORed.
+             */
+            values: string[];
         }
 
         /**
@@ -2193,6 +3786,14 @@ export namespace storage {
              * Name is the name of Container
              */
             name?: string;
+            /**
+             * NodeSelector is a selector which must be true for the pod to fit on a node. Selector which must match a node's labels for the pod to be scheduled on that node.
+             */
+            nodeSelector?: {[key: string]: string};
+            /**
+             * Tolerations is the list of tolerations for the driver pods
+             */
+            tolerations?: outputs.storage.v1.CSIVXFlexOSSpecDriverCommonTolerations[];
         }
 
         /**
@@ -2222,7 +3823,7 @@ export namespace storage {
              */
             configMapKeyRef?: outputs.storage.v1.CSIVXFlexOSSpecDriverCommonEnvsValueFromConfigMapKeyRef;
             /**
-             * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+             * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
              */
             fieldRef?: outputs.storage.v1.CSIVXFlexOSSpecDriverCommonEnvsValueFromFieldRef;
             /**
@@ -2254,7 +3855,7 @@ export namespace storage {
         }
 
         /**
-         * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+         * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
          */
         export interface CSIVXFlexOSSpecDriverCommonEnvsValueFromFieldRef {
             /**
@@ -2278,11 +3879,14 @@ export namespace storage {
             /**
              * Specifies the output format of the exposed resources, defaults to "1"
              */
-            divisor?: string;
+            divisor?: outputs.storage.v1.CSIVXFlexOSSpecDriverCommonEnvsValueFromResourceFieldRefDivisor;
             /**
              * Required: resource to select
              */
             resource: string;
+        }
+
+        export interface CSIVXFlexOSSpecDriverCommonEnvsValueFromResourceFieldRefDivisor {
         }
 
         /**
@@ -2301,6 +3905,32 @@ export namespace storage {
              * Specify whether the Secret or its key must be defined
              */
             optional?: boolean;
+        }
+
+        /**
+         * The pod this Toleration is attached to tolerates any taint that matches the triple <key,value,effect> using the matching operator <operator>.
+         */
+        export interface CSIVXFlexOSSpecDriverCommonTolerations {
+            /**
+             * Effect indicates the taint effect to match. Empty means match all taint effects. When specified, allowed values are NoSchedule, PreferNoSchedule and NoExecute.
+             */
+            effect?: string;
+            /**
+             * Key is the taint key that the toleration applies to. Empty means match all taint keys. If the key is empty, operator must be Exists; this combination means to match all values and all keys.
+             */
+            key?: string;
+            /**
+             * Operator represents a key's relationship to the value. Valid operators are Exists and Equal. Defaults to Equal. Exists is equivalent to wildcard for value, so that a pod can tolerate all taints of a particular category.
+             */
+            operator?: string;
+            /**
+             * TolerationSeconds represents the period of time the toleration (which must be of effect NoExecute, otherwise this field is ignored) tolerates the taint. By default, it is not set, which means tolerate the taint forever (do not evict). Zero and negative values will be treated as 0 (evict immediately) by the system.
+             */
+            tolerationSeconds?: number;
+            /**
+             * Value is the taint value the toleration matches to. If the operator is Exists, the value should be empty, otherwise just a regular string.
+             */
+            value?: string;
         }
 
         /**
@@ -2327,6 +3957,14 @@ export namespace storage {
              * Name is the name of Container
              */
             name?: string;
+            /**
+             * NodeSelector is a selector which must be true for the pod to fit on a node. Selector which must match a node's labels for the pod to be scheduled on that node.
+             */
+            nodeSelector?: {[key: string]: string};
+            /**
+             * Tolerations is the list of tolerations for the driver pods
+             */
+            tolerations?: outputs.storage.v1.CSIVXFlexOSSpecDriverControllerTolerations[];
         }
 
         /**
@@ -2356,7 +3994,7 @@ export namespace storage {
              */
             configMapKeyRef?: outputs.storage.v1.CSIVXFlexOSSpecDriverControllerEnvsValueFromConfigMapKeyRef;
             /**
-             * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+             * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
              */
             fieldRef?: outputs.storage.v1.CSIVXFlexOSSpecDriverControllerEnvsValueFromFieldRef;
             /**
@@ -2388,7 +4026,7 @@ export namespace storage {
         }
 
         /**
-         * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+         * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
          */
         export interface CSIVXFlexOSSpecDriverControllerEnvsValueFromFieldRef {
             /**
@@ -2412,11 +4050,14 @@ export namespace storage {
             /**
              * Specifies the output format of the exposed resources, defaults to "1"
              */
-            divisor?: string;
+            divisor?: outputs.storage.v1.CSIVXFlexOSSpecDriverControllerEnvsValueFromResourceFieldRefDivisor;
             /**
              * Required: resource to select
              */
             resource: string;
+        }
+
+        export interface CSIVXFlexOSSpecDriverControllerEnvsValueFromResourceFieldRefDivisor {
         }
 
         /**
@@ -2435,6 +4076,32 @@ export namespace storage {
              * Specify whether the Secret or its key must be defined
              */
             optional?: boolean;
+        }
+
+        /**
+         * The pod this Toleration is attached to tolerates any taint that matches the triple <key,value,effect> using the matching operator <operator>.
+         */
+        export interface CSIVXFlexOSSpecDriverControllerTolerations {
+            /**
+             * Effect indicates the taint effect to match. Empty means match all taint effects. When specified, allowed values are NoSchedule, PreferNoSchedule and NoExecute.
+             */
+            effect?: string;
+            /**
+             * Key is the taint key that the toleration applies to. Empty means match all taint keys. If the key is empty, operator must be Exists; this combination means to match all values and all keys.
+             */
+            key?: string;
+            /**
+             * Operator represents a key's relationship to the value. Valid operators are Exists and Equal. Defaults to Equal. Exists is equivalent to wildcard for value, so that a pod can tolerate all taints of a particular category.
+             */
+            operator?: string;
+            /**
+             * TolerationSeconds represents the period of time the toleration (which must be of effect NoExecute, otherwise this field is ignored) tolerates the taint. By default, it is not set, which means tolerate the taint forever (do not evict). Zero and negative values will be treated as 0 (evict immediately) by the system.
+             */
+            tolerationSeconds?: number;
+            /**
+             * Value is the taint value the toleration matches to. If the operator is Exists, the value should be empty, otherwise just a regular string.
+             */
+            value?: string;
         }
 
         /**
@@ -2461,6 +4128,14 @@ export namespace storage {
              * Name is the name of Container
              */
             name?: string;
+            /**
+             * NodeSelector is a selector which must be true for the pod to fit on a node. Selector which must match a node's labels for the pod to be scheduled on that node.
+             */
+            nodeSelector?: {[key: string]: string};
+            /**
+             * Tolerations is the list of tolerations for the driver pods
+             */
+            tolerations?: outputs.storage.v1.CSIVXFlexOSSpecDriverNodeTolerations[];
         }
 
         /**
@@ -2490,7 +4165,7 @@ export namespace storage {
              */
             configMapKeyRef?: outputs.storage.v1.CSIVXFlexOSSpecDriverNodeEnvsValueFromConfigMapKeyRef;
             /**
-             * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+             * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
              */
             fieldRef?: outputs.storage.v1.CSIVXFlexOSSpecDriverNodeEnvsValueFromFieldRef;
             /**
@@ -2522,7 +4197,7 @@ export namespace storage {
         }
 
         /**
-         * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+         * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
          */
         export interface CSIVXFlexOSSpecDriverNodeEnvsValueFromFieldRef {
             /**
@@ -2546,11 +4221,14 @@ export namespace storage {
             /**
              * Specifies the output format of the exposed resources, defaults to "1"
              */
-            divisor?: string;
+            divisor?: outputs.storage.v1.CSIVXFlexOSSpecDriverNodeEnvsValueFromResourceFieldRefDivisor;
             /**
              * Required: resource to select
              */
             resource: string;
+        }
+
+        export interface CSIVXFlexOSSpecDriverNodeEnvsValueFromResourceFieldRefDivisor {
         }
 
         /**
@@ -2569,6 +4247,32 @@ export namespace storage {
              * Specify whether the Secret or its key must be defined
              */
             optional?: boolean;
+        }
+
+        /**
+         * The pod this Toleration is attached to tolerates any taint that matches the triple <key,value,effect> using the matching operator <operator>.
+         */
+        export interface CSIVXFlexOSSpecDriverNodeTolerations {
+            /**
+             * Effect indicates the taint effect to match. Empty means match all taint effects. When specified, allowed values are NoSchedule, PreferNoSchedule and NoExecute.
+             */
+            effect?: string;
+            /**
+             * Key is the taint key that the toleration applies to. Empty means match all taint keys. If the key is empty, operator must be Exists; this combination means to match all values and all keys.
+             */
+            key?: string;
+            /**
+             * Operator represents a key's relationship to the value. Valid operators are Exists and Equal. Defaults to Equal. Exists is equivalent to wildcard for value, so that a pod can tolerate all taints of a particular category.
+             */
+            operator?: string;
+            /**
+             * TolerationSeconds represents the period of time the toleration (which must be of effect NoExecute, otherwise this field is ignored) tolerates the taint. By default, it is not set, which means tolerate the taint forever (do not evict). Zero and negative values will be treated as 0 (evict immediately) by the system.
+             */
+            tolerationSeconds?: number;
+            /**
+             * Value is the taint value the toleration matches to. If the operator is Exists, the value should be empty, otherwise just a regular string.
+             */
+            value?: string;
         }
 
         /**
@@ -2595,6 +4299,14 @@ export namespace storage {
              * Name is the name of Container
              */
             name?: string;
+            /**
+             * NodeSelector is a selector which must be true for the pod to fit on a node. Selector which must match a node's labels for the pod to be scheduled on that node.
+             */
+            nodeSelector?: {[key: string]: string};
+            /**
+             * Tolerations is the list of tolerations for the driver pods
+             */
+            tolerations?: outputs.storage.v1.CSIVXFlexOSSpecDriverSideCarsTolerations[];
         }
 
         /**
@@ -2624,7 +4336,7 @@ export namespace storage {
              */
             configMapKeyRef?: outputs.storage.v1.CSIVXFlexOSSpecDriverSideCarsEnvsValueFromConfigMapKeyRef;
             /**
-             * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+             * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
              */
             fieldRef?: outputs.storage.v1.CSIVXFlexOSSpecDriverSideCarsEnvsValueFromFieldRef;
             /**
@@ -2656,7 +4368,7 @@ export namespace storage {
         }
 
         /**
-         * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+         * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
          */
         export interface CSIVXFlexOSSpecDriverSideCarsEnvsValueFromFieldRef {
             /**
@@ -2680,11 +4392,14 @@ export namespace storage {
             /**
              * Specifies the output format of the exposed resources, defaults to "1"
              */
-            divisor?: string;
+            divisor?: outputs.storage.v1.CSIVXFlexOSSpecDriverSideCarsEnvsValueFromResourceFieldRefDivisor;
             /**
              * Required: resource to select
              */
             resource: string;
+        }
+
+        export interface CSIVXFlexOSSpecDriverSideCarsEnvsValueFromResourceFieldRefDivisor {
         }
 
         /**
@@ -2703,6 +4418,32 @@ export namespace storage {
              * Specify whether the Secret or its key must be defined
              */
             optional?: boolean;
+        }
+
+        /**
+         * The pod this Toleration is attached to tolerates any taint that matches the triple <key,value,effect> using the matching operator <operator>.
+         */
+        export interface CSIVXFlexOSSpecDriverSideCarsTolerations {
+            /**
+             * Effect indicates the taint effect to match. Empty means match all taint effects. When specified, allowed values are NoSchedule, PreferNoSchedule and NoExecute.
+             */
+            effect?: string;
+            /**
+             * Key is the taint key that the toleration applies to. Empty means match all taint keys. If the key is empty, operator must be Exists; this combination means to match all values and all keys.
+             */
+            key?: string;
+            /**
+             * Operator represents a key's relationship to the value. Valid operators are Exists and Equal. Defaults to Equal. Exists is equivalent to wildcard for value, so that a pod can tolerate all taints of a particular category.
+             */
+            operator?: string;
+            /**
+             * TolerationSeconds represents the period of time the toleration (which must be of effect NoExecute, otherwise this field is ignored) tolerates the taint. By default, it is not set, which means tolerate the taint forever (do not evict). Zero and negative values will be treated as 0 (evict immediately) by the system.
+             */
+            tolerationSeconds?: number;
+            /**
+             * Value is the taint value the toleration matches to. If the operator is Exists, the value should be empty, otherwise just a regular string.
+             */
+            value?: string;
         }
 
         /**
@@ -2728,6 +4469,10 @@ export namespace storage {
              */
             allowVolumeExpansion?: boolean;
             /**
+             * Restrict the node topologies where volumes can be dynamically provisioned.
+             */
+            allowedTopologies?: outputs.storage.v1.CSIVXFlexOSSpecDriverStorageClassAllowedTopologies[];
+            /**
              * DefaultSc is a boolean flag to indicate if the storage class is going to be marked as default
              */
             default?: boolean;
@@ -2743,6 +4488,30 @@ export namespace storage {
              * ReclaimPolicy is the reclaim policy for the storage class
              */
             reclaimPolicy?: string;
+        }
+
+        /**
+         * A topology selector term represents the result of label queries. A null or empty topology selector term matches no objects. The requirements of them are ANDed. It provides a subset of functionality as NodeSelectorTerm. This is an alpha feature and may change in the future.
+         */
+        export interface CSIVXFlexOSSpecDriverStorageClassAllowedTopologies {
+            /**
+             * A list of topology selector requirements by labels.
+             */
+            matchLabelExpressions?: outputs.storage.v1.CSIVXFlexOSSpecDriverStorageClassAllowedTopologiesMatchLabelExpressions[];
+        }
+
+        /**
+         * A topology selector requirement is a selector that matches given label. This is an alpha feature and may change in the future.
+         */
+        export interface CSIVXFlexOSSpecDriverStorageClassAllowedTopologiesMatchLabelExpressions {
+            /**
+             * The label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * An array of string values. One value must match the label to be selected. Each entry in Values is ORed.
+             */
+            values: string[];
         }
 
         /**

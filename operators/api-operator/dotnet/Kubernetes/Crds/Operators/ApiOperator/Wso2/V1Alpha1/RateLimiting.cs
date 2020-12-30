@@ -9,6 +9,9 @@ using Pulumi.Serialization;
 
 namespace Pulumi.Pulumi.Kubernetes.Crds.Operators.ApiOperator.Wso2.V1Alpha1
 {
+    /// <summary>
+    /// RateLimiting is the Schema for the ratelimitings API
+    /// </summary>
     public partial class RateLimiting : KubernetesResource
     {
         [Output("apiVersion")]
@@ -20,11 +23,11 @@ namespace Pulumi.Pulumi.Kubernetes.Crds.Operators.ApiOperator.Wso2.V1Alpha1
         [Output("metadata")]
         public Output<Pulumi.Kubernetes.Types.Outputs.Meta.V1.ObjectMeta> Metadata { get; private set; } = null!;
 
+        /// <summary>
+        /// RateLimitingSpec defines the desired state of RateLimiting
+        /// </summary>
         [Output("spec")]
         public Output<Pulumi.Kubernetes.Types.Outputs.Wso2.V1Alpha1.RateLimitingSpec> Spec { get; private set; } = null!;
-
-        [Output("status")]
-        public Output<ImmutableDictionary<string, object>> Status { get; private set; } = null!;
 
 
         /// <summary>
@@ -95,16 +98,11 @@ namespace Pulumi.Kubernetes.Types.Inputs.Wso2.V1Alpha1
         [Input("metadata")]
         public Input<Pulumi.Kubernetes.Types.Inputs.Meta.V1.ObjectMetaArgs>? Metadata { get; set; }
 
+        /// <summary>
+        /// RateLimitingSpec defines the desired state of RateLimiting
+        /// </summary>
         [Input("spec")]
         public Input<Pulumi.Kubernetes.Types.Inputs.Wso2.V1Alpha1.RateLimitingSpecArgs>? Spec { get; set; }
-
-        [Input("status")]
-        private InputMap<object>? _status;
-        public InputMap<object> Status
-        {
-            get => _status ?? (_status = new InputMap<object>());
-            set => _status = value;
-        }
 
         public RateLimitingArgs()
         {

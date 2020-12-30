@@ -28,7 +28,7 @@ namespace Pulumi.Kubernetes.Types.Inputs.Machinelearning.V1
         public Input<string>? Name { get; set; }
 
         /// <summary>
-        /// Specify whether the Secret or it's key must be defined
+        /// Specify whether the Secret or its key must be defined
         /// </summary>
         [Input("optional")]
         public Input<bool>? Optional { get; set; }

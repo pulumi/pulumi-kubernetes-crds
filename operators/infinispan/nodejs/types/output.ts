@@ -14,6 +14,10 @@ export namespace infinispan {
          */
         export interface InfinispanSpec {
             /**
+             * Affinity is a group of affinity scheduling rules.
+             */
+            affinity?: outputs.infinispan.v1.InfinispanSpecAffinity;
+            /**
              * Autoscale describe autoscaling configuration for the cluster
              */
             autoscale?: outputs.infinispan.v1.InfinispanSpecAutoscale;
@@ -39,9 +43,422 @@ export namespace infinispan {
         }
 
         /**
+         * Affinity is a group of affinity scheduling rules.
+         */
+        export interface InfinispanSpecAffinity {
+            /**
+             * Describes node affinity scheduling rules for the pod.
+             */
+            nodeAffinity?: outputs.infinispan.v1.InfinispanSpecAffinityNodeAffinity;
+            /**
+             * Describes pod affinity scheduling rules (e.g. co-locate this pod in the same node, zone, etc. as some other pod(s)).
+             */
+            podAffinity?: outputs.infinispan.v1.InfinispanSpecAffinityPodAffinity;
+            /**
+             * Describes pod anti-affinity scheduling rules (e.g. avoid putting this pod in the same node, zone, etc. as some other pod(s)).
+             */
+            podAntiAffinity?: outputs.infinispan.v1.InfinispanSpecAffinityPodAntiAffinity;
+        }
+
+        /**
+         * Describes node affinity scheduling rules for the pod.
+         */
+        export interface InfinispanSpecAffinityNodeAffinity {
+            /**
+             * The scheduler will prefer to schedule pods to nodes that satisfy the affinity expressions specified by this field, but it may choose a node that violates one or more of the expressions. The node that is most preferred is the one with the greatest sum of weights, i.e. for each node that meets all of the scheduling requirements (resource request, requiredDuringScheduling affinity expressions, etc.), compute a sum by iterating through the elements of this field and adding "weight" to the sum if the node matches the corresponding matchExpressions; the node(s) with the highest sum are the most preferred.
+             */
+            preferredDuringSchedulingIgnoredDuringExecution?: outputs.infinispan.v1.InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecution[];
+            /**
+             * If the affinity requirements specified by this field are not met at scheduling time, the pod will not be scheduled onto the node. If the affinity requirements specified by this field cease to be met at some point during pod execution (e.g. due to an update), the system may or may not try to eventually evict the pod from its node.
+             */
+            requiredDuringSchedulingIgnoredDuringExecution?: outputs.infinispan.v1.InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecution;
+        }
+
+        /**
+         * An empty preferred scheduling term matches all objects with implicit weight 0 (i.e. it's a no-op). A null preferred scheduling term matches no objects (i.e. is also a no-op).
+         */
+        export interface InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecution {
+            /**
+             * A node selector term, associated with the corresponding weight.
+             */
+            preference: outputs.infinispan.v1.InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreference;
+            /**
+             * Weight associated with matching the corresponding nodeSelectorTerm, in the range 1-100.
+             */
+            weight: number;
+        }
+
+        /**
+         * A node selector term, associated with the corresponding weight.
+         */
+        export interface InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreference {
+            /**
+             * A list of node selector requirements by node's labels.
+             */
+            matchExpressions?: outputs.infinispan.v1.InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressions[];
+            /**
+             * A list of node selector requirements by node's fields.
+             */
+            matchFields?: outputs.infinispan.v1.InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFields[];
+        }
+
+        /**
+         * A node selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressions {
+            /**
+             * The label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * Represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt.
+             */
+            operator: string;
+            /**
+             * An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. If the operator is Gt or Lt, the values array must have a single element, which will be interpreted as an integer. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * A node selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFields {
+            /**
+             * The label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * Represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt.
+             */
+            operator: string;
+            /**
+             * An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. If the operator is Gt or Lt, the values array must have a single element, which will be interpreted as an integer. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * If the affinity requirements specified by this field are not met at scheduling time, the pod will not be scheduled onto the node. If the affinity requirements specified by this field cease to be met at some point during pod execution (e.g. due to an update), the system may or may not try to eventually evict the pod from its node.
+         */
+        export interface InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecution {
+            /**
+             * Required. A list of node selector terms. The terms are ORed.
+             */
+            nodeSelectorTerms: outputs.infinispan.v1.InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTerms[];
+        }
+
+        /**
+         * A null or empty node selector term matches no objects. The requirements of them are ANDed. The TopologySelectorTerm type implements a subset of the NodeSelectorTerm.
+         */
+        export interface InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTerms {
+            /**
+             * A list of node selector requirements by node's labels.
+             */
+            matchExpressions?: outputs.infinispan.v1.InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressions[];
+            /**
+             * A list of node selector requirements by node's fields.
+             */
+            matchFields?: outputs.infinispan.v1.InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFields[];
+        }
+
+        /**
+         * A node selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressions {
+            /**
+             * The label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * Represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt.
+             */
+            operator: string;
+            /**
+             * An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. If the operator is Gt or Lt, the values array must have a single element, which will be interpreted as an integer. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * A node selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFields {
+            /**
+             * The label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * Represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt.
+             */
+            operator: string;
+            /**
+             * An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. If the operator is Gt or Lt, the values array must have a single element, which will be interpreted as an integer. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * Describes pod affinity scheduling rules (e.g. co-locate this pod in the same node, zone, etc. as some other pod(s)).
+         */
+        export interface InfinispanSpecAffinityPodAffinity {
+            /**
+             * The scheduler will prefer to schedule pods to nodes that satisfy the affinity expressions specified by this field, but it may choose a node that violates one or more of the expressions. The node that is most preferred is the one with the greatest sum of weights, i.e. for each node that meets all of the scheduling requirements (resource request, requiredDuringScheduling affinity expressions, etc.), compute a sum by iterating through the elements of this field and adding "weight" to the sum if the node has pods which matches the corresponding podAffinityTerm; the node(s) with the highest sum are the most preferred.
+             */
+            preferredDuringSchedulingIgnoredDuringExecution?: outputs.infinispan.v1.InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecution[];
+            /**
+             * If the affinity requirements specified by this field are not met at scheduling time, the pod will not be scheduled onto the node. If the affinity requirements specified by this field cease to be met at some point during pod execution (e.g. due to a pod label update), the system may or may not try to eventually evict the pod from its node. When there are multiple elements, the lists of nodes corresponding to each podAffinityTerm are intersected, i.e. all terms must be satisfied.
+             */
+            requiredDuringSchedulingIgnoredDuringExecution?: outputs.infinispan.v1.InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecution[];
+        }
+
+        /**
+         * The weights of all of the matched WeightedPodAffinityTerm fields are added per-node to find the most preferred node(s)
+         */
+        export interface InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecution {
+            /**
+             * Required. A pod affinity term, associated with the corresponding weight.
+             */
+            podAffinityTerm: outputs.infinispan.v1.InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTerm;
+            /**
+             * weight associated with matching the corresponding podAffinityTerm, in the range 1-100.
+             */
+            weight: number;
+        }
+
+        /**
+         * Required. A pod affinity term, associated with the corresponding weight.
+         */
+        export interface InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTerm {
+            /**
+             * A label query over a set of resources, in this case pods.
+             */
+            labelSelector?: outputs.infinispan.v1.InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelector;
+            /**
+             * namespaces specifies which namespaces the labelSelector applies to (matches against); null or empty list means "this pod's namespace"
+             */
+            namespaces?: string[];
+            /**
+             * This pod should be co-located (affinity) or not co-located (anti-affinity) with the pods matching the labelSelector in the specified namespaces, where co-located is defined as running on a node whose value of the label with key topologyKey matches that of any node on which any of the selected pods is running. Empty topologyKey is not allowed.
+             */
+            topologyKey: string;
+        }
+
+        /**
+         * A label query over a set of resources, in this case pods.
+         */
+        export interface InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelector {
+            /**
+             * matchExpressions is a list of label selector requirements. The requirements are ANDed.
+             */
+            matchExpressions?: outputs.infinispan.v1.InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressions[];
+            /**
+             * matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+             */
+            matchLabels?: {[key: string]: string};
+        }
+
+        /**
+         * A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressions {
+            /**
+             * key is the label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+             */
+            operator: string;
+            /**
+             * values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * Defines a set of pods (namely those matching the labelSelector relative to the given namespace(s)) that this pod should be co-located (affinity) or not co-located (anti-affinity) with, where co-located is defined as running on a node whose value of the label with key <topologyKey> matches that of any node on which a pod of the set of pods is running
+         */
+        export interface InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecution {
+            /**
+             * A label query over a set of resources, in this case pods.
+             */
+            labelSelector?: outputs.infinispan.v1.InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector;
+            /**
+             * namespaces specifies which namespaces the labelSelector applies to (matches against); null or empty list means "this pod's namespace"
+             */
+            namespaces?: string[];
+            /**
+             * This pod should be co-located (affinity) or not co-located (anti-affinity) with the pods matching the labelSelector in the specified namespaces, where co-located is defined as running on a node whose value of the label with key topologyKey matches that of any node on which any of the selected pods is running. Empty topologyKey is not allowed.
+             */
+            topologyKey: string;
+        }
+
+        /**
+         * A label query over a set of resources, in this case pods.
+         */
+        export interface InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector {
+            /**
+             * matchExpressions is a list of label selector requirements. The requirements are ANDed.
+             */
+            matchExpressions?: outputs.infinispan.v1.InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions[];
+            /**
+             * matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+             */
+            matchLabels?: {[key: string]: string};
+        }
+
+        /**
+         * A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions {
+            /**
+             * key is the label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+             */
+            operator: string;
+            /**
+             * values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * Describes pod anti-affinity scheduling rules (e.g. avoid putting this pod in the same node, zone, etc. as some other pod(s)).
+         */
+        export interface InfinispanSpecAffinityPodAntiAffinity {
+            /**
+             * The scheduler will prefer to schedule pods to nodes that satisfy the anti-affinity expressions specified by this field, but it may choose a node that violates one or more of the expressions. The node that is most preferred is the one with the greatest sum of weights, i.e. for each node that meets all of the scheduling requirements (resource request, requiredDuringScheduling anti-affinity expressions, etc.), compute a sum by iterating through the elements of this field and adding "weight" to the sum if the node has pods which matches the corresponding podAffinityTerm; the node(s) with the highest sum are the most preferred.
+             */
+            preferredDuringSchedulingIgnoredDuringExecution?: outputs.infinispan.v1.InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecution[];
+            /**
+             * If the anti-affinity requirements specified by this field are not met at scheduling time, the pod will not be scheduled onto the node. If the anti-affinity requirements specified by this field cease to be met at some point during pod execution (e.g. due to a pod label update), the system may or may not try to eventually evict the pod from its node. When there are multiple elements, the lists of nodes corresponding to each podAffinityTerm are intersected, i.e. all terms must be satisfied.
+             */
+            requiredDuringSchedulingIgnoredDuringExecution?: outputs.infinispan.v1.InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecution[];
+        }
+
+        /**
+         * The weights of all of the matched WeightedPodAffinityTerm fields are added per-node to find the most preferred node(s)
+         */
+        export interface InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecution {
+            /**
+             * Required. A pod affinity term, associated with the corresponding weight.
+             */
+            podAffinityTerm: outputs.infinispan.v1.InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTerm;
+            /**
+             * weight associated with matching the corresponding podAffinityTerm, in the range 1-100.
+             */
+            weight: number;
+        }
+
+        /**
+         * Required. A pod affinity term, associated with the corresponding weight.
+         */
+        export interface InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTerm {
+            /**
+             * A label query over a set of resources, in this case pods.
+             */
+            labelSelector?: outputs.infinispan.v1.InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelector;
+            /**
+             * namespaces specifies which namespaces the labelSelector applies to (matches against); null or empty list means "this pod's namespace"
+             */
+            namespaces?: string[];
+            /**
+             * This pod should be co-located (affinity) or not co-located (anti-affinity) with the pods matching the labelSelector in the specified namespaces, where co-located is defined as running on a node whose value of the label with key topologyKey matches that of any node on which any of the selected pods is running. Empty topologyKey is not allowed.
+             */
+            topologyKey: string;
+        }
+
+        /**
+         * A label query over a set of resources, in this case pods.
+         */
+        export interface InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelector {
+            /**
+             * matchExpressions is a list of label selector requirements. The requirements are ANDed.
+             */
+            matchExpressions?: outputs.infinispan.v1.InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressions[];
+            /**
+             * matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+             */
+            matchLabels?: {[key: string]: string};
+        }
+
+        /**
+         * A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressions {
+            /**
+             * key is the label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+             */
+            operator: string;
+            /**
+             * values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * Defines a set of pods (namely those matching the labelSelector relative to the given namespace(s)) that this pod should be co-located (affinity) or not co-located (anti-affinity) with, where co-located is defined as running on a node whose value of the label with key <topologyKey> matches that of any node on which a pod of the set of pods is running
+         */
+        export interface InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecution {
+            /**
+             * A label query over a set of resources, in this case pods.
+             */
+            labelSelector?: outputs.infinispan.v1.InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector;
+            /**
+             * namespaces specifies which namespaces the labelSelector applies to (matches against); null or empty list means "this pod's namespace"
+             */
+            namespaces?: string[];
+            /**
+             * This pod should be co-located (affinity) or not co-located (anti-affinity) with the pods matching the labelSelector in the specified namespaces, where co-located is defined as running on a node whose value of the label with key topologyKey matches that of any node on which any of the selected pods is running. Empty topologyKey is not allowed.
+             */
+            topologyKey: string;
+        }
+
+        /**
+         * A label query over a set of resources, in this case pods.
+         */
+        export interface InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector {
+            /**
+             * matchExpressions is a list of label selector requirements. The requirements are ANDed.
+             */
+            matchExpressions?: outputs.infinispan.v1.InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions[];
+            /**
+             * matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+             */
+            matchLabels?: {[key: string]: string};
+        }
+
+        /**
+         * A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions {
+            /**
+             * key is the label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+             */
+            operator: string;
+            /**
+             * values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
          * Autoscale describe autoscaling configuration for the cluster
          */
         export interface InfinispanSpecAutoscale {
+            disabled?: boolean;
             maxMemUsagePercent: number;
             maxReplicas: number;
             minMemUsagePercent: number;
@@ -61,10 +478,11 @@ export namespace infinispan {
          * ExposeSpec describe how Infinispan will be exposed externally
          */
         export interface InfinispanSpecExpose {
+            annotations?: {[key: string]: string};
             host?: string;
             nodePort?: number;
             /**
-             * Type specifies different exposition methods for datagrid
+             * Type specifies different exposition methods for data grid
              */
             type: string;
         }
@@ -90,7 +508,10 @@ export namespace infinispan {
         export interface InfinispanSpecSecurityEndpointEncryption {
             certSecretName?: string;
             certServiceName?: string;
-            type: string;
+            /**
+             * CertificateSourceType specifies all the possible sources for the encryption certificate
+             */
+            type?: string;
         }
 
         /**
@@ -110,7 +531,9 @@ export namespace infinispan {
          * InfinispanServiceContainerSpec resource requirements specific for service
          */
         export interface InfinispanSpecServiceContainer {
-            storage: string;
+            ephemeralStorage?: boolean;
+            storage?: string;
+            storageClassName?: string;
         }
 
         export interface InfinispanSpecServiceSites {
@@ -130,34 +553,34 @@ export namespace infinispan {
          * ExposeSpec describe how Infinispan will be exposed externally
          */
         export interface InfinispanSpecServiceSitesLocalExpose {
+            annotations?: {[key: string]: string};
             host?: string;
             nodePort?: number;
             /**
-             * Type specifies different exposition methods for datagrid
+             * Type specifies different exposition methods for data grid
              */
             type: string;
         }
 
         export interface InfinispanSpecServiceSitesLocations {
+            host?: string;
             name: string;
-            secretName: string;
-            url: string;
+            port?: number;
+            secretName?: string;
+            url?: string;
         }
 
         /**
          * InfinispanStatus defines the observed state of Infinispan
          */
         export interface InfinispanStatus {
-            /**
-             * Important: Run "operator-sdk generate k8s" to regenerate code after modifying this file
-             */
             conditions?: outputs.infinispan.v1.InfinispanStatusConditions[];
             replicasWantedAtRestart?: number;
             /**
              * InfinispanSecurity info for the user application connection
              */
             security: outputs.infinispan.v1.InfinispanStatusSecurity;
-            statefulSetName: string;
+            statefulSetName?: string;
         }
 
         /**
@@ -167,7 +590,7 @@ export namespace infinispan {
             /**
              * Human-readable message indicating details about last transition.
              */
-            message: string;
+            message?: string;
             /**
              * Status is the status of the condition.
              */
@@ -195,11 +618,67 @@ export namespace infinispan {
         export interface InfinispanStatusSecurityEndpointEncryption {
             certSecretName?: string;
             certServiceName?: string;
-            type: string;
+            /**
+             * CertificateSourceType specifies all the possible sources for the encryption certificate
+             */
+            type?: string;
         }
     }
 
     export namespace v2alpha1 {
+        /**
+         * BackupSpec defines the desired state of Backup
+         */
+        export interface BackupSpec {
+            cluster: string;
+            /**
+             * InfinispanContainerSpec specify resource requirements per container
+             */
+            container?: outputs.infinispan.v2alpha1.BackupSpecContainer;
+            resources?: outputs.infinispan.v2alpha1.BackupSpecResources;
+            volume?: outputs.infinispan.v2alpha1.BackupSpecVolume;
+        }
+
+        /**
+         * InfinispanContainerSpec specify resource requirements per container
+         */
+        export interface BackupSpecContainer {
+            cpu?: string;
+            extraJvmOpts?: string;
+            memory?: string;
+        }
+
+        export interface BackupSpecResources {
+            cacheConfigs?: string[];
+            caches?: string[];
+            counters?: string[];
+            protoSchemas?: string[];
+            scripts?: string[];
+        }
+
+        export interface BackupSpecVolume {
+            storage?: string;
+            storageClassName?: string;
+        }
+
+        /**
+         * BackupStatus defines the observed state of Backup
+         */
+        export interface BackupStatus {
+            /**
+             * State indicates the current state of the backup operation
+             */
+            phase: string;
+            /**
+             * The name of the created PersistentVolumeClaim used to store the backup
+             */
+            pvc?: string;
+            /**
+             * Reason indicates the reason for any backup related failures.
+             */
+            reason?: string;
+        }
+
         /**
          * CacheSpec defines the desired state of Cache
          */
@@ -310,6 +789,50 @@ export namespace infinispan {
              * Type is the type of the condition.
              */
             type: string;
+        }
+
+        /**
+         * BackupSpec defines the desired state of Backup
+         */
+        export interface RestoreSpec {
+            backup: string;
+            cluster: string;
+            /**
+             * InfinispanContainerSpec specify resource requirements per container
+             */
+            container?: outputs.infinispan.v2alpha1.RestoreSpecContainer;
+            resources?: outputs.infinispan.v2alpha1.RestoreSpecResources;
+        }
+
+        /**
+         * InfinispanContainerSpec specify resource requirements per container
+         */
+        export interface RestoreSpecContainer {
+            cpu?: string;
+            extraJvmOpts?: string;
+            memory?: string;
+        }
+
+        export interface RestoreSpecResources {
+            cacheConfigs?: string[];
+            caches?: string[];
+            counters?: string[];
+            protoSchemas?: string[];
+            scripts?: string[];
+        }
+
+        /**
+         * RestoreStatus defines the observed state of Restore
+         */
+        export interface RestoreStatus {
+            /**
+             * State indicates the current state of the restore operation
+             */
+            phase: string;
+            /**
+             * Reason indicates the reason for any Restore related failures.
+             */
+            reason?: string;
         }
     }
 }

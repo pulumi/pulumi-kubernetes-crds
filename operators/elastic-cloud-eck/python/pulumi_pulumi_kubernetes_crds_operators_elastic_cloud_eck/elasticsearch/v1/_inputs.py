@@ -660,6 +660,7 @@ class ElasticsearchSpecHttpServiceSpecArgs:
 class ElasticsearchSpecHttpServiceSpecPortsArgs:
     def __init__(__self__, *,
                  port: pulumi.Input[int],
+                 app_protocol: Optional[pulumi.Input[str]] = None,
                  name: Optional[pulumi.Input[str]] = None,
                  node_port: Optional[pulumi.Input[int]] = None,
                  protocol: Optional[pulumi.Input[str]] = None,
@@ -667,12 +668,15 @@ class ElasticsearchSpecHttpServiceSpecPortsArgs:
         """
         ServicePort contains information on service's port.
         :param pulumi.Input[int] port: The port that will be exposed by this service.
+        :param pulumi.Input[str] app_protocol: The application protocol for this port. This field follows standard Kubernetes label syntax. Un-prefixed names are reserved for IANA standard service names (as per RFC-6335 and http://www.iana.org/assignments/service-names). Non-standard protocols should use prefixed names such as mycompany.com/my-custom-protocol. Field can be enabled with ServiceAppProtocol feature gate.
         :param pulumi.Input[str] name: The name of this port within the service. This must be a DNS_LABEL. All ports within a ServiceSpec must have unique names. When considering the endpoints for a Service, this must match the 'name' field in the EndpointPort. Optional if only one ServicePort is defined on this service.
         :param pulumi.Input[int] node_port: The port on each node on which this service is exposed when type=NodePort or LoadBalancer. Usually assigned by the system. If specified, it will be allocated to the service if unused or else creation of the service will fail. Default is to auto-allocate a port if the ServiceType of this Service requires one. More info: https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport
         :param pulumi.Input[str] protocol: The IP protocol for this port. Supports "TCP", "UDP", and "SCTP". Default is TCP.
         :param pulumi.Input['ElasticsearchSpecHttpServiceSpecPortsTargetPortArgs'] target_port: Number or name of the port to access on the pods targeted by the service. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME. If this is a string, it will be looked up as a named port in the target Pod's container ports. If this is not specified, the value of the 'port' field is used (an identity map). This field is ignored for services with clusterIP=None, and should be omitted or set equal to the 'port' field. More info: https://kubernetes.io/docs/concepts/services-networking/service/#defining-a-service
         """
         pulumi.set(__self__, "port", port)
+        if app_protocol is not None:
+            pulumi.set(__self__, "app_protocol", app_protocol)
         if name is not None:
             pulumi.set(__self__, "name", name)
         if node_port is not None:
@@ -693,6 +697,18 @@ class ElasticsearchSpecHttpServiceSpecPortsArgs:
     @port.setter
     def port(self, value: pulumi.Input[int]):
         pulumi.set(self, "port", value)
+
+    @property
+    @pulumi.getter(name="appProtocol")
+    def app_protocol(self) -> Optional[pulumi.Input[str]]:
+        """
+        The application protocol for this port. This field follows standard Kubernetes label syntax. Un-prefixed names are reserved for IANA standard service names (as per RFC-6335 and http://www.iana.org/assignments/service-names). Non-standard protocols should use prefixed names such as mycompany.com/my-custom-protocol. Field can be enabled with ServiceAppProtocol feature gate.
+        """
+        return pulumi.get(self, "app_protocol")
+
+    @app_protocol.setter
+    def app_protocol(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "app_protocol", value)
 
     @property
     @pulumi.getter
@@ -1131,11 +1147,11 @@ class ElasticsearchSpecNodeSetsVolumeClaimTemplatesSpecArgs:
         """
         Spec defines the desired characteristics of a volume requested by a pod author. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#persistentvolumeclaims
         :param pulumi.Input[Sequence[pulumi.Input[str]]] access_modes: AccessModes contains the desired access modes the volume should have. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#access-modes-1
-        :param pulumi.Input['ElasticsearchSpecNodeSetsVolumeClaimTemplatesSpecDataSourceArgs'] data_source: This field requires the VolumeSnapshotDataSource alpha feature gate to be enabled and currently VolumeSnapshot is the only supported data source. If the provisioner can support VolumeSnapshot data source, it will create a new volume and data will be restored to the volume at the same time. If the provisioner does not support VolumeSnapshot data source, volume will not be created and the failure will be reported as an event. In the future, we plan to support more data source types and the behavior of the provisioner may change.
+        :param pulumi.Input['ElasticsearchSpecNodeSetsVolumeClaimTemplatesSpecDataSourceArgs'] data_source: This field can be used to specify either: * An existing VolumeSnapshot object (snapshot.storage.k8s.io/VolumeSnapshot - Beta) * An existing PVC (PersistentVolumeClaim) * An existing custom resource/object that implements data population (Alpha) In order to use VolumeSnapshot object types, the appropriate feature gate must be enabled (VolumeSnapshotDataSource or AnyVolumeDataSource) If the provisioner or an external controller can support the specified data source, it will create a new volume based on the contents of the specified data source. If the specified data source is not supported, the volume will not be created and the failure will be reported as an event. In the future, we plan to support more data source types and the behavior of the provisioner may change.
         :param pulumi.Input['ElasticsearchSpecNodeSetsVolumeClaimTemplatesSpecResourcesArgs'] resources: Resources represents the minimum resources the volume should have. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#resources
         :param pulumi.Input['ElasticsearchSpecNodeSetsVolumeClaimTemplatesSpecSelectorArgs'] selector: A label query over volumes to consider for binding.
         :param pulumi.Input[str] storage_class_name: Name of the StorageClass required by the claim. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#class-1
-        :param pulumi.Input[str] volume_mode: volumeMode defines what type of volume is required by the claim. Value of Filesystem is implied when not included in claim spec. This is a beta feature.
+        :param pulumi.Input[str] volume_mode: volumeMode defines what type of volume is required by the claim. Value of Filesystem is implied when not included in claim spec.
         :param pulumi.Input[str] volume_name: VolumeName is the binding reference to the PersistentVolume backing this claim.
         """
         if access_modes is not None:
@@ -1169,7 +1185,7 @@ class ElasticsearchSpecNodeSetsVolumeClaimTemplatesSpecArgs:
     @pulumi.getter(name="dataSource")
     def data_source(self) -> Optional[pulumi.Input['ElasticsearchSpecNodeSetsVolumeClaimTemplatesSpecDataSourceArgs']]:
         """
-        This field requires the VolumeSnapshotDataSource alpha feature gate to be enabled and currently VolumeSnapshot is the only supported data source. If the provisioner can support VolumeSnapshot data source, it will create a new volume and data will be restored to the volume at the same time. If the provisioner does not support VolumeSnapshot data source, volume will not be created and the failure will be reported as an event. In the future, we plan to support more data source types and the behavior of the provisioner may change.
+        This field can be used to specify either: * An existing VolumeSnapshot object (snapshot.storage.k8s.io/VolumeSnapshot - Beta) * An existing PVC (PersistentVolumeClaim) * An existing custom resource/object that implements data population (Alpha) In order to use VolumeSnapshot object types, the appropriate feature gate must be enabled (VolumeSnapshotDataSource or AnyVolumeDataSource) If the provisioner or an external controller can support the specified data source, it will create a new volume based on the contents of the specified data source. If the specified data source is not supported, the volume will not be created and the failure will be reported as an event. In the future, we plan to support more data source types and the behavior of the provisioner may change.
         """
         return pulumi.get(self, "data_source")
 
@@ -1217,7 +1233,7 @@ class ElasticsearchSpecNodeSetsVolumeClaimTemplatesSpecArgs:
     @pulumi.getter(name="volumeMode")
     def volume_mode(self) -> Optional[pulumi.Input[str]]:
         """
-        volumeMode defines what type of volume is required by the claim. Value of Filesystem is implied when not included in claim spec. This is a beta feature.
+        volumeMode defines what type of volume is required by the claim. Value of Filesystem is implied when not included in claim spec.
         """
         return pulumi.get(self, "volume_mode")
 
@@ -1245,7 +1261,7 @@ class ElasticsearchSpecNodeSetsVolumeClaimTemplatesSpecDataSourceArgs:
                  name: pulumi.Input[str],
                  api_group: Optional[pulumi.Input[str]] = None):
         """
-        This field requires the VolumeSnapshotDataSource alpha feature gate to be enabled and currently VolumeSnapshot is the only supported data source. If the provisioner can support VolumeSnapshot data source, it will create a new volume and data will be restored to the volume at the same time. If the provisioner does not support VolumeSnapshot data source, volume will not be created and the failure will be reported as an event. In the future, we plan to support more data source types and the behavior of the provisioner may change.
+        This field can be used to specify either: * An existing VolumeSnapshot object (snapshot.storage.k8s.io/VolumeSnapshot - Beta) * An existing PVC (PersistentVolumeClaim) * An existing custom resource/object that implements data population (Alpha) In order to use VolumeSnapshot object types, the appropriate feature gate must be enabled (VolumeSnapshotDataSource or AnyVolumeDataSource) If the provisioner or an external controller can support the specified data source, it will create a new volume based on the contents of the specified data source. If the specified data source is not supported, the volume will not be created and the failure will be reported as an event. In the future, we plan to support more data source types and the behavior of the provisioner may change.
         :param pulumi.Input[str] kind: Kind is the type of resource being referenced
         :param pulumi.Input[str] name: Name is the name of resource being referenced
         :param pulumi.Input[str] api_group: APIGroup is the group for the resource being referenced. If APIGroup is not specified, the specified Kind must be in the core API group. For any other third-party types, APIGroup is required.
@@ -2288,6 +2304,7 @@ class ElasticsearchSpecTransportServiceSpecArgs:
 class ElasticsearchSpecTransportServiceSpecPortsArgs:
     def __init__(__self__, *,
                  port: pulumi.Input[int],
+                 app_protocol: Optional[pulumi.Input[str]] = None,
                  name: Optional[pulumi.Input[str]] = None,
                  node_port: Optional[pulumi.Input[int]] = None,
                  protocol: Optional[pulumi.Input[str]] = None,
@@ -2295,12 +2312,15 @@ class ElasticsearchSpecTransportServiceSpecPortsArgs:
         """
         ServicePort contains information on service's port.
         :param pulumi.Input[int] port: The port that will be exposed by this service.
+        :param pulumi.Input[str] app_protocol: The application protocol for this port. This field follows standard Kubernetes label syntax. Un-prefixed names are reserved for IANA standard service names (as per RFC-6335 and http://www.iana.org/assignments/service-names). Non-standard protocols should use prefixed names such as mycompany.com/my-custom-protocol. Field can be enabled with ServiceAppProtocol feature gate.
         :param pulumi.Input[str] name: The name of this port within the service. This must be a DNS_LABEL. All ports within a ServiceSpec must have unique names. When considering the endpoints for a Service, this must match the 'name' field in the EndpointPort. Optional if only one ServicePort is defined on this service.
         :param pulumi.Input[int] node_port: The port on each node on which this service is exposed when type=NodePort or LoadBalancer. Usually assigned by the system. If specified, it will be allocated to the service if unused or else creation of the service will fail. Default is to auto-allocate a port if the ServiceType of this Service requires one. More info: https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport
         :param pulumi.Input[str] protocol: The IP protocol for this port. Supports "TCP", "UDP", and "SCTP". Default is TCP.
         :param pulumi.Input['ElasticsearchSpecTransportServiceSpecPortsTargetPortArgs'] target_port: Number or name of the port to access on the pods targeted by the service. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME. If this is a string, it will be looked up as a named port in the target Pod's container ports. If this is not specified, the value of the 'port' field is used (an identity map). This field is ignored for services with clusterIP=None, and should be omitted or set equal to the 'port' field. More info: https://kubernetes.io/docs/concepts/services-networking/service/#defining-a-service
         """
         pulumi.set(__self__, "port", port)
+        if app_protocol is not None:
+            pulumi.set(__self__, "app_protocol", app_protocol)
         if name is not None:
             pulumi.set(__self__, "name", name)
         if node_port is not None:
@@ -2321,6 +2341,18 @@ class ElasticsearchSpecTransportServiceSpecPortsArgs:
     @port.setter
     def port(self, value: pulumi.Input[int]):
         pulumi.set(self, "port", value)
+
+    @property
+    @pulumi.getter(name="appProtocol")
+    def app_protocol(self) -> Optional[pulumi.Input[str]]:
+        """
+        The application protocol for this port. This field follows standard Kubernetes label syntax. Un-prefixed names are reserved for IANA standard service names (as per RFC-6335 and http://www.iana.org/assignments/service-names). Non-standard protocols should use prefixed names such as mycompany.com/my-custom-protocol. Field can be enabled with ServiceAppProtocol feature gate.
+        """
+        return pulumi.get(self, "app_protocol")
+
+    @app_protocol.setter
+    def app_protocol(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "app_protocol", value)
 
     @property
     @pulumi.getter
@@ -2494,11 +2526,14 @@ class ElasticsearchStatusArgs:
     def __init__(__self__, *,
                  available_nodes: Optional[pulumi.Input[int]] = None,
                  health: Optional[pulumi.Input[str]] = None,
-                 phase: Optional[pulumi.Input[str]] = None):
+                 phase: Optional[pulumi.Input[str]] = None,
+                 version: Optional[pulumi.Input[str]] = None):
         """
         ElasticsearchStatus defines the observed state of Elasticsearch
+        :param pulumi.Input[int] available_nodes: AvailableNodes is the number of available instances.
         :param pulumi.Input[str] health: ElasticsearchHealth is the health of the cluster as returned by the health API.
         :param pulumi.Input[str] phase: ElasticsearchOrchestrationPhase is the phase Elasticsearch is in from the controller point of view.
+        :param pulumi.Input[str] version: Version of the stack resource currently running. During version upgrades, multiple versions may run in parallel: this value specifies the lowest version currently running.
         """
         if available_nodes is not None:
             pulumi.set(__self__, "available_nodes", available_nodes)
@@ -2506,10 +2541,15 @@ class ElasticsearchStatusArgs:
             pulumi.set(__self__, "health", health)
         if phase is not None:
             pulumi.set(__self__, "phase", phase)
+        if version is not None:
+            pulumi.set(__self__, "version", version)
 
     @property
     @pulumi.getter(name="availableNodes")
     def available_nodes(self) -> Optional[pulumi.Input[int]]:
+        """
+        AvailableNodes is the number of available instances.
+        """
         return pulumi.get(self, "available_nodes")
 
     @available_nodes.setter
@@ -2539,5 +2579,17 @@ class ElasticsearchStatusArgs:
     @phase.setter
     def phase(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "phase", value)
+
+    @property
+    @pulumi.getter
+    def version(self) -> Optional[pulumi.Input[str]]:
+        """
+        Version of the stack resource currently running. During version upgrades, multiple versions may run in parallel: this value specifies the lowest version currently running.
+        """
+        return pulumi.get(self, "version")
+
+    @version.setter
+    def version(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "version", value)
 
 

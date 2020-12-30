@@ -15,6 +15,12 @@ namespace Pulumi.Kubernetes.Types.Inputs.Machinelearning.V1
     /// </summary>
     public class SeldonDeploymentStatusArgs : Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// Addressable placeholder until duckv1 issue is fixed:    https://github.com/kubernetes-sigs/controller-tools/issues/391
+        /// </summary>
+        [Input("address")]
+        public Input<Pulumi.Kubernetes.Types.Inputs.Machinelearning.V1.SeldonDeploymentStatusAddressArgs>? Address { get; set; }
+
         [Input("deploymentStatus")]
         private InputMap<Pulumi.Kubernetes.Types.Inputs.Machinelearning.V1.SeldonDeploymentStatusDeploymentStatusArgs>? _deploymentStatus;
         public InputMap<Pulumi.Kubernetes.Types.Inputs.Machinelearning.V1.SeldonDeploymentStatusDeploymentStatusArgs> DeploymentStatus
@@ -25,6 +31,9 @@ namespace Pulumi.Kubernetes.Types.Inputs.Machinelearning.V1
 
         [Input("description")]
         public Input<string>? Description { get; set; }
+
+        [Input("replicas")]
+        public Input<int>? Replicas { get; set; }
 
         [Input("serviceStatus")]
         private InputMap<Pulumi.Kubernetes.Types.Inputs.Machinelearning.V1.SeldonDeploymentStatusServiceStatusArgs>? _serviceStatus;

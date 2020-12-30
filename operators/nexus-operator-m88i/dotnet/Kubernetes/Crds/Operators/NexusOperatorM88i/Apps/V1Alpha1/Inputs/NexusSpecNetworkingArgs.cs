@@ -16,13 +16,13 @@ namespace Pulumi.Kubernetes.Types.Inputs.Apps.V1Alpha1
     public class NexusSpecNetworkingArgs : Pulumi.ResourceArgs
     {
         /// <summary>
-        /// Set to `true` to expose the Nexus application. Default to false.
+        /// Set to `true` to expose the Nexus application. Defaults to `false`.
         /// </summary>
         [Input("expose")]
         public Input<bool>? Expose { get; set; }
 
         /// <summary>
-        /// Type of networking exposure: NodePort, Route or Ingress. Default to Route on OpenShift and Ingress on Kubernetes.
+        /// Type of networking exposure: NodePort, Route or Ingress. Defaults to Route on OpenShift and Ingress on Kubernetes. Routes are only available on Openshift and Ingresses are only available on Kubernetes.
         /// </summary>
         [Input("exposeAs")]
         public Input<string>? ExposeAs { get; set; }

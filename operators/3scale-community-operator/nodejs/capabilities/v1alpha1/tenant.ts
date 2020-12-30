@@ -8,6 +8,9 @@ import * as utilities from "../../utilities";
 
 import {ObjectMeta} from "../../meta/v1";
 
+/**
+ * Tenant is the Schema for the tenants API
+ */
 export class Tenant extends pulumi.CustomResource {
     /**
      * Get an existing Tenant resource's state with the given name, ID, and optional extra
@@ -38,7 +41,13 @@ export class Tenant extends pulumi.CustomResource {
     public readonly apiVersion!: pulumi.Output<"capabilities.3scale.net/v1alpha1" | undefined>;
     public readonly kind!: pulumi.Output<"Tenant" | undefined>;
     public readonly metadata!: pulumi.Output<ObjectMeta | undefined>;
+    /**
+     * TenantSpec defines the desired state of Tenant
+     */
     public readonly spec!: pulumi.Output<outputs.capabilities.v1alpha1.TenantSpec | undefined>;
+    /**
+     * TenantStatus defines the observed state of Tenant
+     */
     public readonly status!: pulumi.Output<outputs.capabilities.v1alpha1.TenantStatus | undefined>;
 
     /**
@@ -81,6 +90,12 @@ export interface TenantArgs {
     readonly apiVersion?: pulumi.Input<"capabilities.3scale.net/v1alpha1">;
     readonly kind?: pulumi.Input<"Tenant">;
     readonly metadata?: pulumi.Input<ObjectMeta>;
+    /**
+     * TenantSpec defines the desired state of Tenant
+     */
     readonly spec?: pulumi.Input<inputs.capabilities.v1alpha1.TenantSpec>;
+    /**
+     * TenantStatus defines the observed state of Tenant
+     */
     readonly status?: pulumi.Input<inputs.capabilities.v1alpha1.TenantStatus>;
 }

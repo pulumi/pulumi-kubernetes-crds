@@ -15,8 +15,8 @@ namespace Pulumi.Kubernetes.Types.Inputs.Submariner.V1Alpha1
     /// </summary>
     public class SubmarinerStatusArgs : Pulumi.ResourceArgs
     {
-        [Input("clusterCIDR", required: true)]
-        public Input<string> ClusterCIDR { get; set; } = null!;
+        [Input("clusterCIDR")]
+        public Input<string>? ClusterCIDR { get; set; }
 
         [Input("clusterID", required: true)]
         public Input<string> ClusterID { get; set; } = null!;
@@ -24,9 +24,6 @@ namespace Pulumi.Kubernetes.Types.Inputs.Submariner.V1Alpha1
         [Input("colorCodes")]
         public Input<string>? ColorCodes { get; set; }
 
-        /// <summary>
-        /// DaemonSetStatus represents the current status of a daemon set.
-        /// </summary>
         [Input("engineDaemonSetStatus")]
         public Input<Pulumi.Kubernetes.Types.Inputs.Submariner.V1Alpha1.SubmarinerStatusEngineDaemonSetStatusArgs>? EngineDaemonSetStatus { get; set; }
 
@@ -41,23 +38,20 @@ namespace Pulumi.Kubernetes.Types.Inputs.Submariner.V1Alpha1
         [Input("globalCIDR")]
         public Input<string>? GlobalCIDR { get; set; }
 
-        /// <summary>
-        /// DaemonSetStatus represents the current status of a daemon set.
-        /// </summary>
         [Input("globalnetDaemonSetStatus")]
         public Input<Pulumi.Kubernetes.Types.Inputs.Submariner.V1Alpha1.SubmarinerStatusGlobalnetDaemonSetStatusArgs>? GlobalnetDaemonSetStatus { get; set; }
 
         [Input("natEnabled", required: true)]
         public Input<bool> NatEnabled { get; set; } = null!;
 
-        /// <summary>
-        /// DaemonSetStatus represents the current status of a daemon set.
-        /// </summary>
+        [Input("networkPlugin")]
+        public Input<string>? NetworkPlugin { get; set; }
+
         [Input("routeAgentDaemonSetStatus")]
         public Input<Pulumi.Kubernetes.Types.Inputs.Submariner.V1Alpha1.SubmarinerStatusRouteAgentDaemonSetStatusArgs>? RouteAgentDaemonSetStatus { get; set; }
 
-        [Input("serviceCIDR", required: true)]
-        public Input<string> ServiceCIDR { get; set; } = null!;
+        [Input("serviceCIDR")]
+        public Input<string>? ServiceCIDR { get; set; }
 
         public SubmarinerStatusArgs()
         {

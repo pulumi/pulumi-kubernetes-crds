@@ -14,9 +14,25 @@ namespace Pulumi.Kubernetes.Types.Outputs.Apps.V1Alpha1
     public sealed class NexusSpec
     {
         /// <summary>
-        /// Full image tag name for this specific deployment Default: docker.io/sonatype/nexus3:latest
+        /// Automatic updates configuration
+        /// </summary>
+        public readonly Pulumi.Kubernetes.Types.Outputs.Apps.V1Alpha1.NexusSpecAutomaticUpdate AutomaticUpdate;
+        /// <summary>
+        /// GenerateRandomAdminPassword enables the random password generation. Defaults to `false`: the default password for a newly created instance is 'admin123', which should be changed in the first login. If set to `true`, you must use the automatically generated 'admin' password, stored in the container's file system at `/nexus-data/admin.password`. The operator uses the default credentials to create a user for itself to create default repositories. If set to `true`, the repositories won't be created since the operator won't fetch for the random password.
+        /// </summary>
+        public readonly bool GenerateRandomAdminPassword;
+        /// <summary>
+        /// Full image tag name for this specific deployment. Will be ignored if `spec.useRedHatImage` is set to `true`. Default: docker.io/sonatype/nexus3:latest
         /// </summary>
         public readonly string Image;
+        /// <summary>
+        /// The image pull policy for the Nexus image. If left blank behavior will be determined by the image tag (`Always` if "latest" and `IfNotPresent` otherwise). Possible values: `Always`, `IfNotPresent` or `Never`.
+        /// </summary>
+        public readonly string ImagePullPolicy;
+        /// <summary>
+        /// LivenessProbe describes how the Nexus container liveness probe should work
+        /// </summary>
+        public readonly Pulumi.Kubernetes.Types.Outputs.Apps.V1Alpha1.NexusSpecLivenessProbe LivenessProbe;
         /// <summary>
         /// Networking definition
         /// </summary>
@@ -26,7 +42,11 @@ namespace Pulumi.Kubernetes.Types.Outputs.Apps.V1Alpha1
         /// </summary>
         public readonly Pulumi.Kubernetes.Types.Outputs.Apps.V1Alpha1.NexusSpecPersistence Persistence;
         /// <summary>
-        /// Number of pods replicas desired Default: 1
+        /// ReadinessProbe describes how the Nexus container readiness probe should work
+        /// </summary>
+        public readonly Pulumi.Kubernetes.Types.Outputs.Apps.V1Alpha1.NexusSpecReadinessProbe ReadinessProbe;
+        /// <summary>
+        /// Number of pod replicas desired. Defaults to 0.
         /// </summary>
         public readonly int Replicas;
         /// <summary>
@@ -34,35 +54,57 @@ namespace Pulumi.Kubernetes.Types.Outputs.Apps.V1Alpha1
         /// </summary>
         public readonly Pulumi.Kubernetes.Types.Outputs.Apps.V1Alpha1.NexusSpecResources Resources;
         /// <summary>
-        /// ServiceAccountName is the name of the ServiceAccount used to run the Pods. If left blank, a default ServiceAccount is created with the same name as the Nexus CR.
+        /// ServerOperations describes the options for the operations performed on the deployed server instance
+        /// </summary>
+        public readonly Pulumi.Kubernetes.Types.Outputs.Apps.V1Alpha1.NexusSpecServerOperations ServerOperations;
+        /// <summary>
+        /// ServiceAccountName is the name of the ServiceAccount used to run the Pods. If left blank, a default ServiceAccount is created with the same name as the Nexus CR (`metadata.name`).
         /// </summary>
         public readonly string ServiceAccountName;
         /// <summary>
-        /// If you have access to Red Hat Container Catalog, turn this to true to use the certified image provided by Sonatype Default: false
+        /// If you have access to Red Hat Container Catalog, set this to `true` to use the certified image provided by Sonatype Defaults to `false`
         /// </summary>
         public readonly bool UseRedHatImage;
 
         [OutputConstructor]
         private NexusSpec(
+            Pulumi.Kubernetes.Types.Outputs.Apps.V1Alpha1.NexusSpecAutomaticUpdate automaticUpdate,
+
+            bool generateRandomAdminPassword,
+
             string image,
+
+            string imagePullPolicy,
+
+            Pulumi.Kubernetes.Types.Outputs.Apps.V1Alpha1.NexusSpecLivenessProbe livenessProbe,
 
             Pulumi.Kubernetes.Types.Outputs.Apps.V1Alpha1.NexusSpecNetworking networking,
 
             Pulumi.Kubernetes.Types.Outputs.Apps.V1Alpha1.NexusSpecPersistence persistence,
 
+            Pulumi.Kubernetes.Types.Outputs.Apps.V1Alpha1.NexusSpecReadinessProbe readinessProbe,
+
             int replicas,
 
             Pulumi.Kubernetes.Types.Outputs.Apps.V1Alpha1.NexusSpecResources resources,
+
+            Pulumi.Kubernetes.Types.Outputs.Apps.V1Alpha1.NexusSpecServerOperations serverOperations,
 
             string serviceAccountName,
 
             bool useRedHatImage)
         {
+            AutomaticUpdate = automaticUpdate;
+            GenerateRandomAdminPassword = generateRandomAdminPassword;
             Image = image;
+            ImagePullPolicy = imagePullPolicy;
+            LivenessProbe = livenessProbe;
             Networking = networking;
             Persistence = persistence;
+            ReadinessProbe = readinessProbe;
             Replicas = replicas;
             Resources = resources;
+            ServerOperations = serverOperations;
             ServiceAccountName = serviceAccountName;
             UseRedHatImage = useRedHatImage;
         }

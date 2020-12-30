@@ -22,7 +22,7 @@ namespace Pulumi.Kubernetes.Types.Outputs.Kafka.V1Beta1
         /// </summary>
         public readonly string ClientId;
         /// <summary>
-        /// Whether authorization decision should be delegated to the 'Simple' authorizer if DENIED by Keycloak Authorization Services policies.Default value is `false`.
+        /// Whether authorization decision should be delegated to the 'Simple' authorizer if DENIED by Keycloak Authorization Services policies. Default value is `false`.
         /// </summary>
         public readonly bool DelegateToKafkaAcls;
         /// <summary>
@@ -33,6 +33,14 @@ namespace Pulumi.Kubernetes.Types.Outputs.Kafka.V1Beta1
         /// The expiration of the records kept in the local cache to avoid querying the Open Policy Agent for every request. Defines how often the cached authorization decisions are reloaded from the Open Policy Agent server. In milliseconds. Defaults to `3600000`.
         /// </summary>
         public readonly int ExpireAfterMs;
+        /// <summary>
+        /// The time between two consecutive grants refresh runs in seconds. The default value is 60.
+        /// </summary>
+        public readonly int GrantsRefreshPeriodSeconds;
+        /// <summary>
+        /// The number of threads to use to refresh grants for active sessions. The more threads, the more parallelism, so the sooner the job completes. However, using more threads places a heavier load on the authorization server. The default value is 5.
+        /// </summary>
+        public readonly int GrantsRefreshPoolSize;
         /// <summary>
         /// Initial capacity of the local cache used by the authorizer to avoid querying the Open Policy Agent for every request Defaults to `5000`.
         /// </summary>
@@ -54,7 +62,7 @@ namespace Pulumi.Kubernetes.Types.Outputs.Kafka.V1Beta1
         /// </summary>
         public readonly string TokenEndpointUri;
         /// <summary>
-        /// Authorization type. Currently, the supported types are `simple`, `keycloak`, and `opa`. `simple` authorization type uses Kafka's `kafka.security.auth.SimpleAclAuthorizer` class for authorization. `keycloak` authorization type uses Keycloak Authorization Services for authorization. `opa` authorization type uses Open Policy Agent based authorization.
+        /// Authorization type. Currently, the supported types are `simple`, `keycloak`, and `opa`. `simple` authorization type uses Kafka's `kafka.security.authorizer.AclAuthorizer` class for authorization. `keycloak` authorization type uses Keycloak Authorization Services for authorization. `opa` authorization type uses Open Policy Agent based authorization.
         /// </summary>
         public readonly string Type;
         /// <summary>
@@ -73,6 +81,10 @@ namespace Pulumi.Kubernetes.Types.Outputs.Kafka.V1Beta1
             bool disableTlsHostnameVerification,
 
             int expireAfterMs,
+
+            int grantsRefreshPeriodSeconds,
+
+            int grantsRefreshPoolSize,
 
             int initialCacheCapacity,
 
@@ -93,6 +105,8 @@ namespace Pulumi.Kubernetes.Types.Outputs.Kafka.V1Beta1
             DelegateToKafkaAcls = delegateToKafkaAcls;
             DisableTlsHostnameVerification = disableTlsHostnameVerification;
             ExpireAfterMs = expireAfterMs;
+            GrantsRefreshPeriodSeconds = grantsRefreshPeriodSeconds;
+            GrantsRefreshPoolSize = grantsRefreshPoolSize;
             InitialCacheCapacity = initialCacheCapacity;
             MaximumCacheSize = maximumCacheSize;
             SuperUsers = superUsers;

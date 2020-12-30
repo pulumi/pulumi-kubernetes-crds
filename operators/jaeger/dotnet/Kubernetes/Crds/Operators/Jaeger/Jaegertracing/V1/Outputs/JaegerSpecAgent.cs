@@ -17,11 +17,13 @@ namespace Pulumi.Kubernetes.Types.Outputs.Jaegertracing.V1
         public readonly ImmutableDictionary<string, string> Annotations;
         public readonly ImmutableDictionary<string, object> Config;
         public readonly string Image;
+        public readonly ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Jaegertracing.V1.JaegerSpecAgentImagePullSecrets> ImagePullSecrets;
         public readonly ImmutableDictionary<string, string> Labels;
         public readonly ImmutableDictionary<string, object> Options;
         public readonly Pulumi.Kubernetes.Types.Outputs.Jaegertracing.V1.JaegerSpecAgentResources Resources;
         public readonly Pulumi.Kubernetes.Types.Outputs.Jaegertracing.V1.JaegerSpecAgentSecurityContext SecurityContext;
         public readonly string ServiceAccount;
+        public readonly Pulumi.Kubernetes.Types.Outputs.Jaegertracing.V1.JaegerSpecAgentSidecarSecurityContext SidecarSecurityContext;
         public readonly string Strategy;
         public readonly ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Jaegertracing.V1.JaegerSpecAgentTolerations> Tolerations;
         public readonly ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Jaegertracing.V1.JaegerSpecAgentVolumeMounts> VolumeMounts;
@@ -37,6 +39,8 @@ namespace Pulumi.Kubernetes.Types.Outputs.Jaegertracing.V1
 
             string image,
 
+            ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Jaegertracing.V1.JaegerSpecAgentImagePullSecrets> imagePullSecrets,
+
             ImmutableDictionary<string, string> labels,
 
             ImmutableDictionary<string, object> options,
@@ -46,6 +50,8 @@ namespace Pulumi.Kubernetes.Types.Outputs.Jaegertracing.V1
             Pulumi.Kubernetes.Types.Outputs.Jaegertracing.V1.JaegerSpecAgentSecurityContext securityContext,
 
             string serviceAccount,
+
+            Pulumi.Kubernetes.Types.Outputs.Jaegertracing.V1.JaegerSpecAgentSidecarSecurityContext sidecarSecurityContext,
 
             string strategy,
 
@@ -59,11 +65,13 @@ namespace Pulumi.Kubernetes.Types.Outputs.Jaegertracing.V1
             Annotations = annotations;
             Config = config;
             Image = image;
+            ImagePullSecrets = imagePullSecrets;
             Labels = labels;
             Options = options;
             Resources = resources;
             SecurityContext = securityContext;
             ServiceAccount = serviceAccount;
+            SidecarSecurityContext = sidecarSecurityContext;
             Strategy = strategy;
             Tolerations = tolerations;
             VolumeMounts = volumeMounts;

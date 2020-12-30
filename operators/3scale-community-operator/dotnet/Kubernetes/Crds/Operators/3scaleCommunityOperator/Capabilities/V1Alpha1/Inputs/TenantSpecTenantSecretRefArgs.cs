@@ -10,11 +10,20 @@ using Pulumi.Serialization;
 namespace Pulumi.Kubernetes.Types.Inputs.Capabilities.V1Alpha1
 {
 
+    /// <summary>
+    /// SecretReference represents a Secret Reference. It has enough information to retrieve secret in any namespace
+    /// </summary>
     public class TenantSpecTenantSecretRefArgs : Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// Name is unique within a namespace to reference a secret resource.
+        /// </summary>
         [Input("name")]
         public Input<string>? Name { get; set; }
 
+        /// <summary>
+        /// Namespace defines the space within which the secret name must be unique.
+        /// </summary>
         [Input("namespace")]
         public Input<string>? Namespace { get; set; }
 

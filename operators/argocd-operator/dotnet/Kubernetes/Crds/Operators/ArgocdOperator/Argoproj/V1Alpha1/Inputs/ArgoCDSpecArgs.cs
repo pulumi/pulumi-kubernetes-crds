@@ -97,7 +97,7 @@ namespace Pulumi.Kubernetes.Types.Inputs.Argoproj.V1Alpha1
         /// InitialSSHKnownHosts defines the SSH known hosts data upon creation of the cluster for connecting Git repositories via SSH.
         /// </summary>
         [Input("initialSSHKnownHosts")]
-        public Input<string>? InitialSSHKnownHosts { get; set; }
+        public Input<Pulumi.Kubernetes.Types.Inputs.Argoproj.V1Alpha1.ArgoCDSpecInitialSSHKnownHostsArgs>? InitialSSHKnownHosts { get; set; }
 
         /// <summary>
         /// KustomizeBuildOptions is used to specify build options/parameters to use with `kustomize build`.
@@ -152,6 +152,12 @@ namespace Pulumi.Kubernetes.Types.Inputs.Argoproj.V1Alpha1
         /// </summary>
         [Input("resourceExclusions")]
         public Input<string>? ResourceExclusions { get; set; }
+
+        /// <summary>
+        /// ResourceInclusions is used to only include specific group/kinds in the reconciliation process.
+        /// </summary>
+        [Input("resourceInclusions")]
+        public Input<string>? ResourceInclusions { get; set; }
 
         /// <summary>
         /// Server defines the options for the ArgoCD Server component.

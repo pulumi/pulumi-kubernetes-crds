@@ -10,6 +10,32 @@ from ... import _utilities, _tables
 
 __all__ = [
     'InfinispanSpecArgs',
+    'InfinispanSpecAffinityArgs',
+    'InfinispanSpecAffinityNodeAffinityArgs',
+    'InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionArgs',
+    'InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceArgs',
+    'InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressionsArgs',
+    'InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFieldsArgs',
+    'InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionArgs',
+    'InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsArgs',
+    'InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressionsArgs',
+    'InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFieldsArgs',
+    'InfinispanSpecAffinityPodAffinityArgs',
+    'InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionArgs',
+    'InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermArgs',
+    'InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorArgs',
+    'InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsArgs',
+    'InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionArgs',
+    'InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorArgs',
+    'InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsArgs',
+    'InfinispanSpecAffinityPodAntiAffinityArgs',
+    'InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionArgs',
+    'InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermArgs',
+    'InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorArgs',
+    'InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsArgs',
+    'InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionArgs',
+    'InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorArgs',
+    'InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsArgs',
     'InfinispanSpecAutoscaleArgs',
     'InfinispanSpecContainerArgs',
     'InfinispanSpecExposeArgs',
@@ -32,6 +58,7 @@ __all__ = [
 class InfinispanSpecArgs:
     def __init__(__self__, *,
                  replicas: pulumi.Input[int],
+                 affinity: Optional[pulumi.Input['InfinispanSpecAffinityArgs']] = None,
                  autoscale: Optional[pulumi.Input['InfinispanSpecAutoscaleArgs']] = None,
                  container: Optional[pulumi.Input['InfinispanSpecContainerArgs']] = None,
                  expose: Optional[pulumi.Input['InfinispanSpecExposeArgs']] = None,
@@ -41,6 +68,7 @@ class InfinispanSpecArgs:
                  service: Optional[pulumi.Input['InfinispanSpecServiceArgs']] = None):
         """
         InfinispanSpec defines the desired state of Infinispan
+        :param pulumi.Input['InfinispanSpecAffinityArgs'] affinity: Affinity is a group of affinity scheduling rules.
         :param pulumi.Input['InfinispanSpecAutoscaleArgs'] autoscale: Autoscale describe autoscaling configuration for the cluster
         :param pulumi.Input['InfinispanSpecContainerArgs'] container: InfinispanContainerSpec specify resource requirements per container
         :param pulumi.Input['InfinispanSpecExposeArgs'] expose: ExposeSpec describe how Infinispan will be exposed externally
@@ -48,6 +76,8 @@ class InfinispanSpecArgs:
         :param pulumi.Input['InfinispanSpecServiceArgs'] service: InfinispanServiceSpec specify configuration for specific service
         """
         pulumi.set(__self__, "replicas", replicas)
+        if affinity is not None:
+            pulumi.set(__self__, "affinity", affinity)
         if autoscale is not None:
             pulumi.set(__self__, "autoscale", autoscale)
         if container is not None:
@@ -71,6 +101,18 @@ class InfinispanSpecArgs:
     @replicas.setter
     def replicas(self, value: pulumi.Input[int]):
         pulumi.set(self, "replicas", value)
+
+    @property
+    @pulumi.getter
+    def affinity(self) -> Optional[pulumi.Input['InfinispanSpecAffinityArgs']]:
+        """
+        Affinity is a group of affinity scheduling rules.
+        """
+        return pulumi.get(self, "affinity")
+
+    @affinity.setter
+    def affinity(self, value: Optional[pulumi.Input['InfinispanSpecAffinityArgs']]):
+        pulumi.set(self, "affinity", value)
 
     @property
     @pulumi.getter
@@ -152,12 +194,1218 @@ class InfinispanSpecArgs:
 
 
 @pulumi.input_type
+class InfinispanSpecAffinityArgs:
+    def __init__(__self__, *,
+                 node_affinity: Optional[pulumi.Input['InfinispanSpecAffinityNodeAffinityArgs']] = None,
+                 pod_affinity: Optional[pulumi.Input['InfinispanSpecAffinityPodAffinityArgs']] = None,
+                 pod_anti_affinity: Optional[pulumi.Input['InfinispanSpecAffinityPodAntiAffinityArgs']] = None):
+        """
+        Affinity is a group of affinity scheduling rules.
+        :param pulumi.Input['InfinispanSpecAffinityNodeAffinityArgs'] node_affinity: Describes node affinity scheduling rules for the pod.
+        :param pulumi.Input['InfinispanSpecAffinityPodAffinityArgs'] pod_affinity: Describes pod affinity scheduling rules (e.g. co-locate this pod in the same node, zone, etc. as some other pod(s)).
+        :param pulumi.Input['InfinispanSpecAffinityPodAntiAffinityArgs'] pod_anti_affinity: Describes pod anti-affinity scheduling rules (e.g. avoid putting this pod in the same node, zone, etc. as some other pod(s)).
+        """
+        if node_affinity is not None:
+            pulumi.set(__self__, "node_affinity", node_affinity)
+        if pod_affinity is not None:
+            pulumi.set(__self__, "pod_affinity", pod_affinity)
+        if pod_anti_affinity is not None:
+            pulumi.set(__self__, "pod_anti_affinity", pod_anti_affinity)
+
+    @property
+    @pulumi.getter(name="nodeAffinity")
+    def node_affinity(self) -> Optional[pulumi.Input['InfinispanSpecAffinityNodeAffinityArgs']]:
+        """
+        Describes node affinity scheduling rules for the pod.
+        """
+        return pulumi.get(self, "node_affinity")
+
+    @node_affinity.setter
+    def node_affinity(self, value: Optional[pulumi.Input['InfinispanSpecAffinityNodeAffinityArgs']]):
+        pulumi.set(self, "node_affinity", value)
+
+    @property
+    @pulumi.getter(name="podAffinity")
+    def pod_affinity(self) -> Optional[pulumi.Input['InfinispanSpecAffinityPodAffinityArgs']]:
+        """
+        Describes pod affinity scheduling rules (e.g. co-locate this pod in the same node, zone, etc. as some other pod(s)).
+        """
+        return pulumi.get(self, "pod_affinity")
+
+    @pod_affinity.setter
+    def pod_affinity(self, value: Optional[pulumi.Input['InfinispanSpecAffinityPodAffinityArgs']]):
+        pulumi.set(self, "pod_affinity", value)
+
+    @property
+    @pulumi.getter(name="podAntiAffinity")
+    def pod_anti_affinity(self) -> Optional[pulumi.Input['InfinispanSpecAffinityPodAntiAffinityArgs']]:
+        """
+        Describes pod anti-affinity scheduling rules (e.g. avoid putting this pod in the same node, zone, etc. as some other pod(s)).
+        """
+        return pulumi.get(self, "pod_anti_affinity")
+
+    @pod_anti_affinity.setter
+    def pod_anti_affinity(self, value: Optional[pulumi.Input['InfinispanSpecAffinityPodAntiAffinityArgs']]):
+        pulumi.set(self, "pod_anti_affinity", value)
+
+
+@pulumi.input_type
+class InfinispanSpecAffinityNodeAffinityArgs:
+    def __init__(__self__, *,
+                 preferred_during_scheduling_ignored_during_execution: Optional[pulumi.Input[Sequence[pulumi.Input['InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionArgs']]]] = None,
+                 required_during_scheduling_ignored_during_execution: Optional[pulumi.Input['InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionArgs']] = None):
+        """
+        Describes node affinity scheduling rules for the pod.
+        :param pulumi.Input[Sequence[pulumi.Input['InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionArgs']]] preferred_during_scheduling_ignored_during_execution: The scheduler will prefer to schedule pods to nodes that satisfy the affinity expressions specified by this field, but it may choose a node that violates one or more of the expressions. The node that is most preferred is the one with the greatest sum of weights, i.e. for each node that meets all of the scheduling requirements (resource request, requiredDuringScheduling affinity expressions, etc.), compute a sum by iterating through the elements of this field and adding "weight" to the sum if the node matches the corresponding matchExpressions; the node(s) with the highest sum are the most preferred.
+        :param pulumi.Input['InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionArgs'] required_during_scheduling_ignored_during_execution: If the affinity requirements specified by this field are not met at scheduling time, the pod will not be scheduled onto the node. If the affinity requirements specified by this field cease to be met at some point during pod execution (e.g. due to an update), the system may or may not try to eventually evict the pod from its node.
+        """
+        if preferred_during_scheduling_ignored_during_execution is not None:
+            pulumi.set(__self__, "preferred_during_scheduling_ignored_during_execution", preferred_during_scheduling_ignored_during_execution)
+        if required_during_scheduling_ignored_during_execution is not None:
+            pulumi.set(__self__, "required_during_scheduling_ignored_during_execution", required_during_scheduling_ignored_during_execution)
+
+    @property
+    @pulumi.getter(name="preferredDuringSchedulingIgnoredDuringExecution")
+    def preferred_during_scheduling_ignored_during_execution(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionArgs']]]]:
+        """
+        The scheduler will prefer to schedule pods to nodes that satisfy the affinity expressions specified by this field, but it may choose a node that violates one or more of the expressions. The node that is most preferred is the one with the greatest sum of weights, i.e. for each node that meets all of the scheduling requirements (resource request, requiredDuringScheduling affinity expressions, etc.), compute a sum by iterating through the elements of this field and adding "weight" to the sum if the node matches the corresponding matchExpressions; the node(s) with the highest sum are the most preferred.
+        """
+        return pulumi.get(self, "preferred_during_scheduling_ignored_during_execution")
+
+    @preferred_during_scheduling_ignored_during_execution.setter
+    def preferred_during_scheduling_ignored_during_execution(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionArgs']]]]):
+        pulumi.set(self, "preferred_during_scheduling_ignored_during_execution", value)
+
+    @property
+    @pulumi.getter(name="requiredDuringSchedulingIgnoredDuringExecution")
+    def required_during_scheduling_ignored_during_execution(self) -> Optional[pulumi.Input['InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionArgs']]:
+        """
+        If the affinity requirements specified by this field are not met at scheduling time, the pod will not be scheduled onto the node. If the affinity requirements specified by this field cease to be met at some point during pod execution (e.g. due to an update), the system may or may not try to eventually evict the pod from its node.
+        """
+        return pulumi.get(self, "required_during_scheduling_ignored_during_execution")
+
+    @required_during_scheduling_ignored_during_execution.setter
+    def required_during_scheduling_ignored_during_execution(self, value: Optional[pulumi.Input['InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionArgs']]):
+        pulumi.set(self, "required_during_scheduling_ignored_during_execution", value)
+
+
+@pulumi.input_type
+class InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionArgs:
+    def __init__(__self__, *,
+                 preference: pulumi.Input['InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceArgs'],
+                 weight: pulumi.Input[int]):
+        """
+        An empty preferred scheduling term matches all objects with implicit weight 0 (i.e. it's a no-op). A null preferred scheduling term matches no objects (i.e. is also a no-op).
+        :param pulumi.Input['InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceArgs'] preference: A node selector term, associated with the corresponding weight.
+        :param pulumi.Input[int] weight: Weight associated with matching the corresponding nodeSelectorTerm, in the range 1-100.
+        """
+        pulumi.set(__self__, "preference", preference)
+        pulumi.set(__self__, "weight", weight)
+
+    @property
+    @pulumi.getter
+    def preference(self) -> pulumi.Input['InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceArgs']:
+        """
+        A node selector term, associated with the corresponding weight.
+        """
+        return pulumi.get(self, "preference")
+
+    @preference.setter
+    def preference(self, value: pulumi.Input['InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceArgs']):
+        pulumi.set(self, "preference", value)
+
+    @property
+    @pulumi.getter
+    def weight(self) -> pulumi.Input[int]:
+        """
+        Weight associated with matching the corresponding nodeSelectorTerm, in the range 1-100.
+        """
+        return pulumi.get(self, "weight")
+
+    @weight.setter
+    def weight(self, value: pulumi.Input[int]):
+        pulumi.set(self, "weight", value)
+
+
+@pulumi.input_type
+class InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceArgs:
+    def __init__(__self__, *,
+                 match_expressions: Optional[pulumi.Input[Sequence[pulumi.Input['InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressionsArgs']]]] = None,
+                 match_fields: Optional[pulumi.Input[Sequence[pulumi.Input['InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFieldsArgs']]]] = None):
+        """
+        A node selector term, associated with the corresponding weight.
+        :param pulumi.Input[Sequence[pulumi.Input['InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressionsArgs']]] match_expressions: A list of node selector requirements by node's labels.
+        :param pulumi.Input[Sequence[pulumi.Input['InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFieldsArgs']]] match_fields: A list of node selector requirements by node's fields.
+        """
+        if match_expressions is not None:
+            pulumi.set(__self__, "match_expressions", match_expressions)
+        if match_fields is not None:
+            pulumi.set(__self__, "match_fields", match_fields)
+
+    @property
+    @pulumi.getter(name="matchExpressions")
+    def match_expressions(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressionsArgs']]]]:
+        """
+        A list of node selector requirements by node's labels.
+        """
+        return pulumi.get(self, "match_expressions")
+
+    @match_expressions.setter
+    def match_expressions(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressionsArgs']]]]):
+        pulumi.set(self, "match_expressions", value)
+
+    @property
+    @pulumi.getter(name="matchFields")
+    def match_fields(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFieldsArgs']]]]:
+        """
+        A list of node selector requirements by node's fields.
+        """
+        return pulumi.get(self, "match_fields")
+
+    @match_fields.setter
+    def match_fields(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFieldsArgs']]]]):
+        pulumi.set(self, "match_fields", value)
+
+
+@pulumi.input_type
+class InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressionsArgs:
+    def __init__(__self__, *,
+                 key: pulumi.Input[str],
+                 operator: pulumi.Input[str],
+                 values: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None):
+        """
+        A node selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+        :param pulumi.Input[str] key: The label key that the selector applies to.
+        :param pulumi.Input[str] operator: Represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt.
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] values: An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. If the operator is Gt or Lt, the values array must have a single element, which will be interpreted as an integer. This array is replaced during a strategic merge patch.
+        """
+        pulumi.set(__self__, "key", key)
+        pulumi.set(__self__, "operator", operator)
+        if values is not None:
+            pulumi.set(__self__, "values", values)
+
+    @property
+    @pulumi.getter
+    def key(self) -> pulumi.Input[str]:
+        """
+        The label key that the selector applies to.
+        """
+        return pulumi.get(self, "key")
+
+    @key.setter
+    def key(self, value: pulumi.Input[str]):
+        pulumi.set(self, "key", value)
+
+    @property
+    @pulumi.getter
+    def operator(self) -> pulumi.Input[str]:
+        """
+        Represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt.
+        """
+        return pulumi.get(self, "operator")
+
+    @operator.setter
+    def operator(self, value: pulumi.Input[str]):
+        pulumi.set(self, "operator", value)
+
+    @property
+    @pulumi.getter
+    def values(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
+        """
+        An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. If the operator is Gt or Lt, the values array must have a single element, which will be interpreted as an integer. This array is replaced during a strategic merge patch.
+        """
+        return pulumi.get(self, "values")
+
+    @values.setter
+    def values(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]):
+        pulumi.set(self, "values", value)
+
+
+@pulumi.input_type
+class InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFieldsArgs:
+    def __init__(__self__, *,
+                 key: pulumi.Input[str],
+                 operator: pulumi.Input[str],
+                 values: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None):
+        """
+        A node selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+        :param pulumi.Input[str] key: The label key that the selector applies to.
+        :param pulumi.Input[str] operator: Represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt.
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] values: An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. If the operator is Gt or Lt, the values array must have a single element, which will be interpreted as an integer. This array is replaced during a strategic merge patch.
+        """
+        pulumi.set(__self__, "key", key)
+        pulumi.set(__self__, "operator", operator)
+        if values is not None:
+            pulumi.set(__self__, "values", values)
+
+    @property
+    @pulumi.getter
+    def key(self) -> pulumi.Input[str]:
+        """
+        The label key that the selector applies to.
+        """
+        return pulumi.get(self, "key")
+
+    @key.setter
+    def key(self, value: pulumi.Input[str]):
+        pulumi.set(self, "key", value)
+
+    @property
+    @pulumi.getter
+    def operator(self) -> pulumi.Input[str]:
+        """
+        Represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt.
+        """
+        return pulumi.get(self, "operator")
+
+    @operator.setter
+    def operator(self, value: pulumi.Input[str]):
+        pulumi.set(self, "operator", value)
+
+    @property
+    @pulumi.getter
+    def values(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
+        """
+        An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. If the operator is Gt or Lt, the values array must have a single element, which will be interpreted as an integer. This array is replaced during a strategic merge patch.
+        """
+        return pulumi.get(self, "values")
+
+    @values.setter
+    def values(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]):
+        pulumi.set(self, "values", value)
+
+
+@pulumi.input_type
+class InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionArgs:
+    def __init__(__self__, *,
+                 node_selector_terms: pulumi.Input[Sequence[pulumi.Input['InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsArgs']]]):
+        """
+        If the affinity requirements specified by this field are not met at scheduling time, the pod will not be scheduled onto the node. If the affinity requirements specified by this field cease to be met at some point during pod execution (e.g. due to an update), the system may or may not try to eventually evict the pod from its node.
+        :param pulumi.Input[Sequence[pulumi.Input['InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsArgs']]] node_selector_terms: Required. A list of node selector terms. The terms are ORed.
+        """
+        pulumi.set(__self__, "node_selector_terms", node_selector_terms)
+
+    @property
+    @pulumi.getter(name="nodeSelectorTerms")
+    def node_selector_terms(self) -> pulumi.Input[Sequence[pulumi.Input['InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsArgs']]]:
+        """
+        Required. A list of node selector terms. The terms are ORed.
+        """
+        return pulumi.get(self, "node_selector_terms")
+
+    @node_selector_terms.setter
+    def node_selector_terms(self, value: pulumi.Input[Sequence[pulumi.Input['InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsArgs']]]):
+        pulumi.set(self, "node_selector_terms", value)
+
+
+@pulumi.input_type
+class InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsArgs:
+    def __init__(__self__, *,
+                 match_expressions: Optional[pulumi.Input[Sequence[pulumi.Input['InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressionsArgs']]]] = None,
+                 match_fields: Optional[pulumi.Input[Sequence[pulumi.Input['InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFieldsArgs']]]] = None):
+        """
+        A null or empty node selector term matches no objects. The requirements of them are ANDed. The TopologySelectorTerm type implements a subset of the NodeSelectorTerm.
+        :param pulumi.Input[Sequence[pulumi.Input['InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressionsArgs']]] match_expressions: A list of node selector requirements by node's labels.
+        :param pulumi.Input[Sequence[pulumi.Input['InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFieldsArgs']]] match_fields: A list of node selector requirements by node's fields.
+        """
+        if match_expressions is not None:
+            pulumi.set(__self__, "match_expressions", match_expressions)
+        if match_fields is not None:
+            pulumi.set(__self__, "match_fields", match_fields)
+
+    @property
+    @pulumi.getter(name="matchExpressions")
+    def match_expressions(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressionsArgs']]]]:
+        """
+        A list of node selector requirements by node's labels.
+        """
+        return pulumi.get(self, "match_expressions")
+
+    @match_expressions.setter
+    def match_expressions(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressionsArgs']]]]):
+        pulumi.set(self, "match_expressions", value)
+
+    @property
+    @pulumi.getter(name="matchFields")
+    def match_fields(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFieldsArgs']]]]:
+        """
+        A list of node selector requirements by node's fields.
+        """
+        return pulumi.get(self, "match_fields")
+
+    @match_fields.setter
+    def match_fields(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFieldsArgs']]]]):
+        pulumi.set(self, "match_fields", value)
+
+
+@pulumi.input_type
+class InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressionsArgs:
+    def __init__(__self__, *,
+                 key: pulumi.Input[str],
+                 operator: pulumi.Input[str],
+                 values: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None):
+        """
+        A node selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+        :param pulumi.Input[str] key: The label key that the selector applies to.
+        :param pulumi.Input[str] operator: Represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt.
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] values: An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. If the operator is Gt or Lt, the values array must have a single element, which will be interpreted as an integer. This array is replaced during a strategic merge patch.
+        """
+        pulumi.set(__self__, "key", key)
+        pulumi.set(__self__, "operator", operator)
+        if values is not None:
+            pulumi.set(__self__, "values", values)
+
+    @property
+    @pulumi.getter
+    def key(self) -> pulumi.Input[str]:
+        """
+        The label key that the selector applies to.
+        """
+        return pulumi.get(self, "key")
+
+    @key.setter
+    def key(self, value: pulumi.Input[str]):
+        pulumi.set(self, "key", value)
+
+    @property
+    @pulumi.getter
+    def operator(self) -> pulumi.Input[str]:
+        """
+        Represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt.
+        """
+        return pulumi.get(self, "operator")
+
+    @operator.setter
+    def operator(self, value: pulumi.Input[str]):
+        pulumi.set(self, "operator", value)
+
+    @property
+    @pulumi.getter
+    def values(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
+        """
+        An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. If the operator is Gt or Lt, the values array must have a single element, which will be interpreted as an integer. This array is replaced during a strategic merge patch.
+        """
+        return pulumi.get(self, "values")
+
+    @values.setter
+    def values(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]):
+        pulumi.set(self, "values", value)
+
+
+@pulumi.input_type
+class InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFieldsArgs:
+    def __init__(__self__, *,
+                 key: pulumi.Input[str],
+                 operator: pulumi.Input[str],
+                 values: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None):
+        """
+        A node selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+        :param pulumi.Input[str] key: The label key that the selector applies to.
+        :param pulumi.Input[str] operator: Represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt.
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] values: An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. If the operator is Gt or Lt, the values array must have a single element, which will be interpreted as an integer. This array is replaced during a strategic merge patch.
+        """
+        pulumi.set(__self__, "key", key)
+        pulumi.set(__self__, "operator", operator)
+        if values is not None:
+            pulumi.set(__self__, "values", values)
+
+    @property
+    @pulumi.getter
+    def key(self) -> pulumi.Input[str]:
+        """
+        The label key that the selector applies to.
+        """
+        return pulumi.get(self, "key")
+
+    @key.setter
+    def key(self, value: pulumi.Input[str]):
+        pulumi.set(self, "key", value)
+
+    @property
+    @pulumi.getter
+    def operator(self) -> pulumi.Input[str]:
+        """
+        Represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt.
+        """
+        return pulumi.get(self, "operator")
+
+    @operator.setter
+    def operator(self, value: pulumi.Input[str]):
+        pulumi.set(self, "operator", value)
+
+    @property
+    @pulumi.getter
+    def values(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
+        """
+        An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. If the operator is Gt or Lt, the values array must have a single element, which will be interpreted as an integer. This array is replaced during a strategic merge patch.
+        """
+        return pulumi.get(self, "values")
+
+    @values.setter
+    def values(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]):
+        pulumi.set(self, "values", value)
+
+
+@pulumi.input_type
+class InfinispanSpecAffinityPodAffinityArgs:
+    def __init__(__self__, *,
+                 preferred_during_scheduling_ignored_during_execution: Optional[pulumi.Input[Sequence[pulumi.Input['InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionArgs']]]] = None,
+                 required_during_scheduling_ignored_during_execution: Optional[pulumi.Input[Sequence[pulumi.Input['InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionArgs']]]] = None):
+        """
+        Describes pod affinity scheduling rules (e.g. co-locate this pod in the same node, zone, etc. as some other pod(s)).
+        :param pulumi.Input[Sequence[pulumi.Input['InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionArgs']]] preferred_during_scheduling_ignored_during_execution: The scheduler will prefer to schedule pods to nodes that satisfy the affinity expressions specified by this field, but it may choose a node that violates one or more of the expressions. The node that is most preferred is the one with the greatest sum of weights, i.e. for each node that meets all of the scheduling requirements (resource request, requiredDuringScheduling affinity expressions, etc.), compute a sum by iterating through the elements of this field and adding "weight" to the sum if the node has pods which matches the corresponding podAffinityTerm; the node(s) with the highest sum are the most preferred.
+        :param pulumi.Input[Sequence[pulumi.Input['InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionArgs']]] required_during_scheduling_ignored_during_execution: If the affinity requirements specified by this field are not met at scheduling time, the pod will not be scheduled onto the node. If the affinity requirements specified by this field cease to be met at some point during pod execution (e.g. due to a pod label update), the system may or may not try to eventually evict the pod from its node. When there are multiple elements, the lists of nodes corresponding to each podAffinityTerm are intersected, i.e. all terms must be satisfied.
+        """
+        if preferred_during_scheduling_ignored_during_execution is not None:
+            pulumi.set(__self__, "preferred_during_scheduling_ignored_during_execution", preferred_during_scheduling_ignored_during_execution)
+        if required_during_scheduling_ignored_during_execution is not None:
+            pulumi.set(__self__, "required_during_scheduling_ignored_during_execution", required_during_scheduling_ignored_during_execution)
+
+    @property
+    @pulumi.getter(name="preferredDuringSchedulingIgnoredDuringExecution")
+    def preferred_during_scheduling_ignored_during_execution(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionArgs']]]]:
+        """
+        The scheduler will prefer to schedule pods to nodes that satisfy the affinity expressions specified by this field, but it may choose a node that violates one or more of the expressions. The node that is most preferred is the one with the greatest sum of weights, i.e. for each node that meets all of the scheduling requirements (resource request, requiredDuringScheduling affinity expressions, etc.), compute a sum by iterating through the elements of this field and adding "weight" to the sum if the node has pods which matches the corresponding podAffinityTerm; the node(s) with the highest sum are the most preferred.
+        """
+        return pulumi.get(self, "preferred_during_scheduling_ignored_during_execution")
+
+    @preferred_during_scheduling_ignored_during_execution.setter
+    def preferred_during_scheduling_ignored_during_execution(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionArgs']]]]):
+        pulumi.set(self, "preferred_during_scheduling_ignored_during_execution", value)
+
+    @property
+    @pulumi.getter(name="requiredDuringSchedulingIgnoredDuringExecution")
+    def required_during_scheduling_ignored_during_execution(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionArgs']]]]:
+        """
+        If the affinity requirements specified by this field are not met at scheduling time, the pod will not be scheduled onto the node. If the affinity requirements specified by this field cease to be met at some point during pod execution (e.g. due to a pod label update), the system may or may not try to eventually evict the pod from its node. When there are multiple elements, the lists of nodes corresponding to each podAffinityTerm are intersected, i.e. all terms must be satisfied.
+        """
+        return pulumi.get(self, "required_during_scheduling_ignored_during_execution")
+
+    @required_during_scheduling_ignored_during_execution.setter
+    def required_during_scheduling_ignored_during_execution(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionArgs']]]]):
+        pulumi.set(self, "required_during_scheduling_ignored_during_execution", value)
+
+
+@pulumi.input_type
+class InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionArgs:
+    def __init__(__self__, *,
+                 pod_affinity_term: pulumi.Input['InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermArgs'],
+                 weight: pulumi.Input[int]):
+        """
+        The weights of all of the matched WeightedPodAffinityTerm fields are added per-node to find the most preferred node(s)
+        :param pulumi.Input['InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermArgs'] pod_affinity_term: Required. A pod affinity term, associated with the corresponding weight.
+        :param pulumi.Input[int] weight: weight associated with matching the corresponding podAffinityTerm, in the range 1-100.
+        """
+        pulumi.set(__self__, "pod_affinity_term", pod_affinity_term)
+        pulumi.set(__self__, "weight", weight)
+
+    @property
+    @pulumi.getter(name="podAffinityTerm")
+    def pod_affinity_term(self) -> pulumi.Input['InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermArgs']:
+        """
+        Required. A pod affinity term, associated with the corresponding weight.
+        """
+        return pulumi.get(self, "pod_affinity_term")
+
+    @pod_affinity_term.setter
+    def pod_affinity_term(self, value: pulumi.Input['InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermArgs']):
+        pulumi.set(self, "pod_affinity_term", value)
+
+    @property
+    @pulumi.getter
+    def weight(self) -> pulumi.Input[int]:
+        """
+        weight associated with matching the corresponding podAffinityTerm, in the range 1-100.
+        """
+        return pulumi.get(self, "weight")
+
+    @weight.setter
+    def weight(self, value: pulumi.Input[int]):
+        pulumi.set(self, "weight", value)
+
+
+@pulumi.input_type
+class InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermArgs:
+    def __init__(__self__, *,
+                 topology_key: pulumi.Input[str],
+                 label_selector: Optional[pulumi.Input['InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorArgs']] = None,
+                 namespaces: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None):
+        """
+        Required. A pod affinity term, associated with the corresponding weight.
+        :param pulumi.Input[str] topology_key: This pod should be co-located (affinity) or not co-located (anti-affinity) with the pods matching the labelSelector in the specified namespaces, where co-located is defined as running on a node whose value of the label with key topologyKey matches that of any node on which any of the selected pods is running. Empty topologyKey is not allowed.
+        :param pulumi.Input['InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorArgs'] label_selector: A label query over a set of resources, in this case pods.
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] namespaces: namespaces specifies which namespaces the labelSelector applies to (matches against); null or empty list means "this pod's namespace"
+        """
+        pulumi.set(__self__, "topology_key", topology_key)
+        if label_selector is not None:
+            pulumi.set(__self__, "label_selector", label_selector)
+        if namespaces is not None:
+            pulumi.set(__self__, "namespaces", namespaces)
+
+    @property
+    @pulumi.getter(name="topologyKey")
+    def topology_key(self) -> pulumi.Input[str]:
+        """
+        This pod should be co-located (affinity) or not co-located (anti-affinity) with the pods matching the labelSelector in the specified namespaces, where co-located is defined as running on a node whose value of the label with key topologyKey matches that of any node on which any of the selected pods is running. Empty topologyKey is not allowed.
+        """
+        return pulumi.get(self, "topology_key")
+
+    @topology_key.setter
+    def topology_key(self, value: pulumi.Input[str]):
+        pulumi.set(self, "topology_key", value)
+
+    @property
+    @pulumi.getter(name="labelSelector")
+    def label_selector(self) -> Optional[pulumi.Input['InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorArgs']]:
+        """
+        A label query over a set of resources, in this case pods.
+        """
+        return pulumi.get(self, "label_selector")
+
+    @label_selector.setter
+    def label_selector(self, value: Optional[pulumi.Input['InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorArgs']]):
+        pulumi.set(self, "label_selector", value)
+
+    @property
+    @pulumi.getter
+    def namespaces(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
+        """
+        namespaces specifies which namespaces the labelSelector applies to (matches against); null or empty list means "this pod's namespace"
+        """
+        return pulumi.get(self, "namespaces")
+
+    @namespaces.setter
+    def namespaces(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]):
+        pulumi.set(self, "namespaces", value)
+
+
+@pulumi.input_type
+class InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorArgs:
+    def __init__(__self__, *,
+                 match_expressions: Optional[pulumi.Input[Sequence[pulumi.Input['InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsArgs']]]] = None,
+                 match_labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None):
+        """
+        A label query over a set of resources, in this case pods.
+        :param pulumi.Input[Sequence[pulumi.Input['InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsArgs']]] match_expressions: matchExpressions is a list of label selector requirements. The requirements are ANDed.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] match_labels: matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+        """
+        if match_expressions is not None:
+            pulumi.set(__self__, "match_expressions", match_expressions)
+        if match_labels is not None:
+            pulumi.set(__self__, "match_labels", match_labels)
+
+    @property
+    @pulumi.getter(name="matchExpressions")
+    def match_expressions(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsArgs']]]]:
+        """
+        matchExpressions is a list of label selector requirements. The requirements are ANDed.
+        """
+        return pulumi.get(self, "match_expressions")
+
+    @match_expressions.setter
+    def match_expressions(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsArgs']]]]):
+        pulumi.set(self, "match_expressions", value)
+
+    @property
+    @pulumi.getter(name="matchLabels")
+    def match_labels(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+        """
+        matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+        """
+        return pulumi.get(self, "match_labels")
+
+    @match_labels.setter
+    def match_labels(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
+        pulumi.set(self, "match_labels", value)
+
+
+@pulumi.input_type
+class InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsArgs:
+    def __init__(__self__, *,
+                 key: pulumi.Input[str],
+                 operator: pulumi.Input[str],
+                 values: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None):
+        """
+        A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+        :param pulumi.Input[str] key: key is the label key that the selector applies to.
+        :param pulumi.Input[str] operator: operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] values: values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+        """
+        pulumi.set(__self__, "key", key)
+        pulumi.set(__self__, "operator", operator)
+        if values is not None:
+            pulumi.set(__self__, "values", values)
+
+    @property
+    @pulumi.getter
+    def key(self) -> pulumi.Input[str]:
+        """
+        key is the label key that the selector applies to.
+        """
+        return pulumi.get(self, "key")
+
+    @key.setter
+    def key(self, value: pulumi.Input[str]):
+        pulumi.set(self, "key", value)
+
+    @property
+    @pulumi.getter
+    def operator(self) -> pulumi.Input[str]:
+        """
+        operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+        """
+        return pulumi.get(self, "operator")
+
+    @operator.setter
+    def operator(self, value: pulumi.Input[str]):
+        pulumi.set(self, "operator", value)
+
+    @property
+    @pulumi.getter
+    def values(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
+        """
+        values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+        """
+        return pulumi.get(self, "values")
+
+    @values.setter
+    def values(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]):
+        pulumi.set(self, "values", value)
+
+
+@pulumi.input_type
+class InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionArgs:
+    def __init__(__self__, *,
+                 topology_key: pulumi.Input[str],
+                 label_selector: Optional[pulumi.Input['InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorArgs']] = None,
+                 namespaces: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None):
+        """
+        Defines a set of pods (namely those matching the labelSelector relative to the given namespace(s)) that this pod should be co-located (affinity) or not co-located (anti-affinity) with, where co-located is defined as running on a node whose value of the label with key <topologyKey> matches that of any node on which a pod of the set of pods is running
+        :param pulumi.Input[str] topology_key: This pod should be co-located (affinity) or not co-located (anti-affinity) with the pods matching the labelSelector in the specified namespaces, where co-located is defined as running on a node whose value of the label with key topologyKey matches that of any node on which any of the selected pods is running. Empty topologyKey is not allowed.
+        :param pulumi.Input['InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorArgs'] label_selector: A label query over a set of resources, in this case pods.
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] namespaces: namespaces specifies which namespaces the labelSelector applies to (matches against); null or empty list means "this pod's namespace"
+        """
+        pulumi.set(__self__, "topology_key", topology_key)
+        if label_selector is not None:
+            pulumi.set(__self__, "label_selector", label_selector)
+        if namespaces is not None:
+            pulumi.set(__self__, "namespaces", namespaces)
+
+    @property
+    @pulumi.getter(name="topologyKey")
+    def topology_key(self) -> pulumi.Input[str]:
+        """
+        This pod should be co-located (affinity) or not co-located (anti-affinity) with the pods matching the labelSelector in the specified namespaces, where co-located is defined as running on a node whose value of the label with key topologyKey matches that of any node on which any of the selected pods is running. Empty topologyKey is not allowed.
+        """
+        return pulumi.get(self, "topology_key")
+
+    @topology_key.setter
+    def topology_key(self, value: pulumi.Input[str]):
+        pulumi.set(self, "topology_key", value)
+
+    @property
+    @pulumi.getter(name="labelSelector")
+    def label_selector(self) -> Optional[pulumi.Input['InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorArgs']]:
+        """
+        A label query over a set of resources, in this case pods.
+        """
+        return pulumi.get(self, "label_selector")
+
+    @label_selector.setter
+    def label_selector(self, value: Optional[pulumi.Input['InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorArgs']]):
+        pulumi.set(self, "label_selector", value)
+
+    @property
+    @pulumi.getter
+    def namespaces(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
+        """
+        namespaces specifies which namespaces the labelSelector applies to (matches against); null or empty list means "this pod's namespace"
+        """
+        return pulumi.get(self, "namespaces")
+
+    @namespaces.setter
+    def namespaces(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]):
+        pulumi.set(self, "namespaces", value)
+
+
+@pulumi.input_type
+class InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorArgs:
+    def __init__(__self__, *,
+                 match_expressions: Optional[pulumi.Input[Sequence[pulumi.Input['InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsArgs']]]] = None,
+                 match_labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None):
+        """
+        A label query over a set of resources, in this case pods.
+        :param pulumi.Input[Sequence[pulumi.Input['InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsArgs']]] match_expressions: matchExpressions is a list of label selector requirements. The requirements are ANDed.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] match_labels: matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+        """
+        if match_expressions is not None:
+            pulumi.set(__self__, "match_expressions", match_expressions)
+        if match_labels is not None:
+            pulumi.set(__self__, "match_labels", match_labels)
+
+    @property
+    @pulumi.getter(name="matchExpressions")
+    def match_expressions(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsArgs']]]]:
+        """
+        matchExpressions is a list of label selector requirements. The requirements are ANDed.
+        """
+        return pulumi.get(self, "match_expressions")
+
+    @match_expressions.setter
+    def match_expressions(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsArgs']]]]):
+        pulumi.set(self, "match_expressions", value)
+
+    @property
+    @pulumi.getter(name="matchLabels")
+    def match_labels(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+        """
+        matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+        """
+        return pulumi.get(self, "match_labels")
+
+    @match_labels.setter
+    def match_labels(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
+        pulumi.set(self, "match_labels", value)
+
+
+@pulumi.input_type
+class InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsArgs:
+    def __init__(__self__, *,
+                 key: pulumi.Input[str],
+                 operator: pulumi.Input[str],
+                 values: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None):
+        """
+        A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+        :param pulumi.Input[str] key: key is the label key that the selector applies to.
+        :param pulumi.Input[str] operator: operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] values: values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+        """
+        pulumi.set(__self__, "key", key)
+        pulumi.set(__self__, "operator", operator)
+        if values is not None:
+            pulumi.set(__self__, "values", values)
+
+    @property
+    @pulumi.getter
+    def key(self) -> pulumi.Input[str]:
+        """
+        key is the label key that the selector applies to.
+        """
+        return pulumi.get(self, "key")
+
+    @key.setter
+    def key(self, value: pulumi.Input[str]):
+        pulumi.set(self, "key", value)
+
+    @property
+    @pulumi.getter
+    def operator(self) -> pulumi.Input[str]:
+        """
+        operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+        """
+        return pulumi.get(self, "operator")
+
+    @operator.setter
+    def operator(self, value: pulumi.Input[str]):
+        pulumi.set(self, "operator", value)
+
+    @property
+    @pulumi.getter
+    def values(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
+        """
+        values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+        """
+        return pulumi.get(self, "values")
+
+    @values.setter
+    def values(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]):
+        pulumi.set(self, "values", value)
+
+
+@pulumi.input_type
+class InfinispanSpecAffinityPodAntiAffinityArgs:
+    def __init__(__self__, *,
+                 preferred_during_scheduling_ignored_during_execution: Optional[pulumi.Input[Sequence[pulumi.Input['InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionArgs']]]] = None,
+                 required_during_scheduling_ignored_during_execution: Optional[pulumi.Input[Sequence[pulumi.Input['InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionArgs']]]] = None):
+        """
+        Describes pod anti-affinity scheduling rules (e.g. avoid putting this pod in the same node, zone, etc. as some other pod(s)).
+        :param pulumi.Input[Sequence[pulumi.Input['InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionArgs']]] preferred_during_scheduling_ignored_during_execution: The scheduler will prefer to schedule pods to nodes that satisfy the anti-affinity expressions specified by this field, but it may choose a node that violates one or more of the expressions. The node that is most preferred is the one with the greatest sum of weights, i.e. for each node that meets all of the scheduling requirements (resource request, requiredDuringScheduling anti-affinity expressions, etc.), compute a sum by iterating through the elements of this field and adding "weight" to the sum if the node has pods which matches the corresponding podAffinityTerm; the node(s) with the highest sum are the most preferred.
+        :param pulumi.Input[Sequence[pulumi.Input['InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionArgs']]] required_during_scheduling_ignored_during_execution: If the anti-affinity requirements specified by this field are not met at scheduling time, the pod will not be scheduled onto the node. If the anti-affinity requirements specified by this field cease to be met at some point during pod execution (e.g. due to a pod label update), the system may or may not try to eventually evict the pod from its node. When there are multiple elements, the lists of nodes corresponding to each podAffinityTerm are intersected, i.e. all terms must be satisfied.
+        """
+        if preferred_during_scheduling_ignored_during_execution is not None:
+            pulumi.set(__self__, "preferred_during_scheduling_ignored_during_execution", preferred_during_scheduling_ignored_during_execution)
+        if required_during_scheduling_ignored_during_execution is not None:
+            pulumi.set(__self__, "required_during_scheduling_ignored_during_execution", required_during_scheduling_ignored_during_execution)
+
+    @property
+    @pulumi.getter(name="preferredDuringSchedulingIgnoredDuringExecution")
+    def preferred_during_scheduling_ignored_during_execution(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionArgs']]]]:
+        """
+        The scheduler will prefer to schedule pods to nodes that satisfy the anti-affinity expressions specified by this field, but it may choose a node that violates one or more of the expressions. The node that is most preferred is the one with the greatest sum of weights, i.e. for each node that meets all of the scheduling requirements (resource request, requiredDuringScheduling anti-affinity expressions, etc.), compute a sum by iterating through the elements of this field and adding "weight" to the sum if the node has pods which matches the corresponding podAffinityTerm; the node(s) with the highest sum are the most preferred.
+        """
+        return pulumi.get(self, "preferred_during_scheduling_ignored_during_execution")
+
+    @preferred_during_scheduling_ignored_during_execution.setter
+    def preferred_during_scheduling_ignored_during_execution(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionArgs']]]]):
+        pulumi.set(self, "preferred_during_scheduling_ignored_during_execution", value)
+
+    @property
+    @pulumi.getter(name="requiredDuringSchedulingIgnoredDuringExecution")
+    def required_during_scheduling_ignored_during_execution(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionArgs']]]]:
+        """
+        If the anti-affinity requirements specified by this field are not met at scheduling time, the pod will not be scheduled onto the node. If the anti-affinity requirements specified by this field cease to be met at some point during pod execution (e.g. due to a pod label update), the system may or may not try to eventually evict the pod from its node. When there are multiple elements, the lists of nodes corresponding to each podAffinityTerm are intersected, i.e. all terms must be satisfied.
+        """
+        return pulumi.get(self, "required_during_scheduling_ignored_during_execution")
+
+    @required_during_scheduling_ignored_during_execution.setter
+    def required_during_scheduling_ignored_during_execution(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionArgs']]]]):
+        pulumi.set(self, "required_during_scheduling_ignored_during_execution", value)
+
+
+@pulumi.input_type
+class InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionArgs:
+    def __init__(__self__, *,
+                 pod_affinity_term: pulumi.Input['InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermArgs'],
+                 weight: pulumi.Input[int]):
+        """
+        The weights of all of the matched WeightedPodAffinityTerm fields are added per-node to find the most preferred node(s)
+        :param pulumi.Input['InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermArgs'] pod_affinity_term: Required. A pod affinity term, associated with the corresponding weight.
+        :param pulumi.Input[int] weight: weight associated with matching the corresponding podAffinityTerm, in the range 1-100.
+        """
+        pulumi.set(__self__, "pod_affinity_term", pod_affinity_term)
+        pulumi.set(__self__, "weight", weight)
+
+    @property
+    @pulumi.getter(name="podAffinityTerm")
+    def pod_affinity_term(self) -> pulumi.Input['InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermArgs']:
+        """
+        Required. A pod affinity term, associated with the corresponding weight.
+        """
+        return pulumi.get(self, "pod_affinity_term")
+
+    @pod_affinity_term.setter
+    def pod_affinity_term(self, value: pulumi.Input['InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermArgs']):
+        pulumi.set(self, "pod_affinity_term", value)
+
+    @property
+    @pulumi.getter
+    def weight(self) -> pulumi.Input[int]:
+        """
+        weight associated with matching the corresponding podAffinityTerm, in the range 1-100.
+        """
+        return pulumi.get(self, "weight")
+
+    @weight.setter
+    def weight(self, value: pulumi.Input[int]):
+        pulumi.set(self, "weight", value)
+
+
+@pulumi.input_type
+class InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermArgs:
+    def __init__(__self__, *,
+                 topology_key: pulumi.Input[str],
+                 label_selector: Optional[pulumi.Input['InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorArgs']] = None,
+                 namespaces: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None):
+        """
+        Required. A pod affinity term, associated with the corresponding weight.
+        :param pulumi.Input[str] topology_key: This pod should be co-located (affinity) or not co-located (anti-affinity) with the pods matching the labelSelector in the specified namespaces, where co-located is defined as running on a node whose value of the label with key topologyKey matches that of any node on which any of the selected pods is running. Empty topologyKey is not allowed.
+        :param pulumi.Input['InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorArgs'] label_selector: A label query over a set of resources, in this case pods.
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] namespaces: namespaces specifies which namespaces the labelSelector applies to (matches against); null or empty list means "this pod's namespace"
+        """
+        pulumi.set(__self__, "topology_key", topology_key)
+        if label_selector is not None:
+            pulumi.set(__self__, "label_selector", label_selector)
+        if namespaces is not None:
+            pulumi.set(__self__, "namespaces", namespaces)
+
+    @property
+    @pulumi.getter(name="topologyKey")
+    def topology_key(self) -> pulumi.Input[str]:
+        """
+        This pod should be co-located (affinity) or not co-located (anti-affinity) with the pods matching the labelSelector in the specified namespaces, where co-located is defined as running on a node whose value of the label with key topologyKey matches that of any node on which any of the selected pods is running. Empty topologyKey is not allowed.
+        """
+        return pulumi.get(self, "topology_key")
+
+    @topology_key.setter
+    def topology_key(self, value: pulumi.Input[str]):
+        pulumi.set(self, "topology_key", value)
+
+    @property
+    @pulumi.getter(name="labelSelector")
+    def label_selector(self) -> Optional[pulumi.Input['InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorArgs']]:
+        """
+        A label query over a set of resources, in this case pods.
+        """
+        return pulumi.get(self, "label_selector")
+
+    @label_selector.setter
+    def label_selector(self, value: Optional[pulumi.Input['InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorArgs']]):
+        pulumi.set(self, "label_selector", value)
+
+    @property
+    @pulumi.getter
+    def namespaces(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
+        """
+        namespaces specifies which namespaces the labelSelector applies to (matches against); null or empty list means "this pod's namespace"
+        """
+        return pulumi.get(self, "namespaces")
+
+    @namespaces.setter
+    def namespaces(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]):
+        pulumi.set(self, "namespaces", value)
+
+
+@pulumi.input_type
+class InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorArgs:
+    def __init__(__self__, *,
+                 match_expressions: Optional[pulumi.Input[Sequence[pulumi.Input['InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsArgs']]]] = None,
+                 match_labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None):
+        """
+        A label query over a set of resources, in this case pods.
+        :param pulumi.Input[Sequence[pulumi.Input['InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsArgs']]] match_expressions: matchExpressions is a list of label selector requirements. The requirements are ANDed.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] match_labels: matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+        """
+        if match_expressions is not None:
+            pulumi.set(__self__, "match_expressions", match_expressions)
+        if match_labels is not None:
+            pulumi.set(__self__, "match_labels", match_labels)
+
+    @property
+    @pulumi.getter(name="matchExpressions")
+    def match_expressions(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsArgs']]]]:
+        """
+        matchExpressions is a list of label selector requirements. The requirements are ANDed.
+        """
+        return pulumi.get(self, "match_expressions")
+
+    @match_expressions.setter
+    def match_expressions(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsArgs']]]]):
+        pulumi.set(self, "match_expressions", value)
+
+    @property
+    @pulumi.getter(name="matchLabels")
+    def match_labels(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+        """
+        matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+        """
+        return pulumi.get(self, "match_labels")
+
+    @match_labels.setter
+    def match_labels(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
+        pulumi.set(self, "match_labels", value)
+
+
+@pulumi.input_type
+class InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsArgs:
+    def __init__(__self__, *,
+                 key: pulumi.Input[str],
+                 operator: pulumi.Input[str],
+                 values: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None):
+        """
+        A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+        :param pulumi.Input[str] key: key is the label key that the selector applies to.
+        :param pulumi.Input[str] operator: operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] values: values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+        """
+        pulumi.set(__self__, "key", key)
+        pulumi.set(__self__, "operator", operator)
+        if values is not None:
+            pulumi.set(__self__, "values", values)
+
+    @property
+    @pulumi.getter
+    def key(self) -> pulumi.Input[str]:
+        """
+        key is the label key that the selector applies to.
+        """
+        return pulumi.get(self, "key")
+
+    @key.setter
+    def key(self, value: pulumi.Input[str]):
+        pulumi.set(self, "key", value)
+
+    @property
+    @pulumi.getter
+    def operator(self) -> pulumi.Input[str]:
+        """
+        operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+        """
+        return pulumi.get(self, "operator")
+
+    @operator.setter
+    def operator(self, value: pulumi.Input[str]):
+        pulumi.set(self, "operator", value)
+
+    @property
+    @pulumi.getter
+    def values(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
+        """
+        values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+        """
+        return pulumi.get(self, "values")
+
+    @values.setter
+    def values(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]):
+        pulumi.set(self, "values", value)
+
+
+@pulumi.input_type
+class InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionArgs:
+    def __init__(__self__, *,
+                 topology_key: pulumi.Input[str],
+                 label_selector: Optional[pulumi.Input['InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorArgs']] = None,
+                 namespaces: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None):
+        """
+        Defines a set of pods (namely those matching the labelSelector relative to the given namespace(s)) that this pod should be co-located (affinity) or not co-located (anti-affinity) with, where co-located is defined as running on a node whose value of the label with key <topologyKey> matches that of any node on which a pod of the set of pods is running
+        :param pulumi.Input[str] topology_key: This pod should be co-located (affinity) or not co-located (anti-affinity) with the pods matching the labelSelector in the specified namespaces, where co-located is defined as running on a node whose value of the label with key topologyKey matches that of any node on which any of the selected pods is running. Empty topologyKey is not allowed.
+        :param pulumi.Input['InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorArgs'] label_selector: A label query over a set of resources, in this case pods.
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] namespaces: namespaces specifies which namespaces the labelSelector applies to (matches against); null or empty list means "this pod's namespace"
+        """
+        pulumi.set(__self__, "topology_key", topology_key)
+        if label_selector is not None:
+            pulumi.set(__self__, "label_selector", label_selector)
+        if namespaces is not None:
+            pulumi.set(__self__, "namespaces", namespaces)
+
+    @property
+    @pulumi.getter(name="topologyKey")
+    def topology_key(self) -> pulumi.Input[str]:
+        """
+        This pod should be co-located (affinity) or not co-located (anti-affinity) with the pods matching the labelSelector in the specified namespaces, where co-located is defined as running on a node whose value of the label with key topologyKey matches that of any node on which any of the selected pods is running. Empty topologyKey is not allowed.
+        """
+        return pulumi.get(self, "topology_key")
+
+    @topology_key.setter
+    def topology_key(self, value: pulumi.Input[str]):
+        pulumi.set(self, "topology_key", value)
+
+    @property
+    @pulumi.getter(name="labelSelector")
+    def label_selector(self) -> Optional[pulumi.Input['InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorArgs']]:
+        """
+        A label query over a set of resources, in this case pods.
+        """
+        return pulumi.get(self, "label_selector")
+
+    @label_selector.setter
+    def label_selector(self, value: Optional[pulumi.Input['InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorArgs']]):
+        pulumi.set(self, "label_selector", value)
+
+    @property
+    @pulumi.getter
+    def namespaces(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
+        """
+        namespaces specifies which namespaces the labelSelector applies to (matches against); null or empty list means "this pod's namespace"
+        """
+        return pulumi.get(self, "namespaces")
+
+    @namespaces.setter
+    def namespaces(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]):
+        pulumi.set(self, "namespaces", value)
+
+
+@pulumi.input_type
+class InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorArgs:
+    def __init__(__self__, *,
+                 match_expressions: Optional[pulumi.Input[Sequence[pulumi.Input['InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsArgs']]]] = None,
+                 match_labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None):
+        """
+        A label query over a set of resources, in this case pods.
+        :param pulumi.Input[Sequence[pulumi.Input['InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsArgs']]] match_expressions: matchExpressions is a list of label selector requirements. The requirements are ANDed.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] match_labels: matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+        """
+        if match_expressions is not None:
+            pulumi.set(__self__, "match_expressions", match_expressions)
+        if match_labels is not None:
+            pulumi.set(__self__, "match_labels", match_labels)
+
+    @property
+    @pulumi.getter(name="matchExpressions")
+    def match_expressions(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsArgs']]]]:
+        """
+        matchExpressions is a list of label selector requirements. The requirements are ANDed.
+        """
+        return pulumi.get(self, "match_expressions")
+
+    @match_expressions.setter
+    def match_expressions(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsArgs']]]]):
+        pulumi.set(self, "match_expressions", value)
+
+    @property
+    @pulumi.getter(name="matchLabels")
+    def match_labels(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+        """
+        matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+        """
+        return pulumi.get(self, "match_labels")
+
+    @match_labels.setter
+    def match_labels(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
+        pulumi.set(self, "match_labels", value)
+
+
+@pulumi.input_type
+class InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsArgs:
+    def __init__(__self__, *,
+                 key: pulumi.Input[str],
+                 operator: pulumi.Input[str],
+                 values: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None):
+        """
+        A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+        :param pulumi.Input[str] key: key is the label key that the selector applies to.
+        :param pulumi.Input[str] operator: operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] values: values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+        """
+        pulumi.set(__self__, "key", key)
+        pulumi.set(__self__, "operator", operator)
+        if values is not None:
+            pulumi.set(__self__, "values", values)
+
+    @property
+    @pulumi.getter
+    def key(self) -> pulumi.Input[str]:
+        """
+        key is the label key that the selector applies to.
+        """
+        return pulumi.get(self, "key")
+
+    @key.setter
+    def key(self, value: pulumi.Input[str]):
+        pulumi.set(self, "key", value)
+
+    @property
+    @pulumi.getter
+    def operator(self) -> pulumi.Input[str]:
+        """
+        operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+        """
+        return pulumi.get(self, "operator")
+
+    @operator.setter
+    def operator(self, value: pulumi.Input[str]):
+        pulumi.set(self, "operator", value)
+
+    @property
+    @pulumi.getter
+    def values(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
+        """
+        values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+        """
+        return pulumi.get(self, "values")
+
+    @values.setter
+    def values(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]):
+        pulumi.set(self, "values", value)
+
+
+@pulumi.input_type
 class InfinispanSpecAutoscaleArgs:
     def __init__(__self__, *,
                  max_mem_usage_percent: pulumi.Input[int],
                  max_replicas: pulumi.Input[int],
                  min_mem_usage_percent: pulumi.Input[int],
-                 min_replicas: pulumi.Input[int]):
+                 min_replicas: pulumi.Input[int],
+                 disabled: Optional[pulumi.Input[bool]] = None):
         """
         Autoscale describe autoscaling configuration for the cluster
         """
@@ -165,6 +1413,8 @@ class InfinispanSpecAutoscaleArgs:
         pulumi.set(__self__, "max_replicas", max_replicas)
         pulumi.set(__self__, "min_mem_usage_percent", min_mem_usage_percent)
         pulumi.set(__self__, "min_replicas", min_replicas)
+        if disabled is not None:
+            pulumi.set(__self__, "disabled", disabled)
 
     @property
     @pulumi.getter(name="maxMemUsagePercent")
@@ -201,6 +1451,15 @@ class InfinispanSpecAutoscaleArgs:
     @min_replicas.setter
     def min_replicas(self, value: pulumi.Input[int]):
         pulumi.set(self, "min_replicas", value)
+
+    @property
+    @pulumi.getter
+    def disabled(self) -> Optional[pulumi.Input[bool]]:
+        return pulumi.get(self, "disabled")
+
+    @disabled.setter
+    def disabled(self, value: Optional[pulumi.Input[bool]]):
+        pulumi.set(self, "disabled", value)
 
 
 @pulumi.input_type
@@ -251,13 +1510,16 @@ class InfinispanSpecContainerArgs:
 class InfinispanSpecExposeArgs:
     def __init__(__self__, *,
                  type: pulumi.Input[str],
+                 annotations: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  host: Optional[pulumi.Input[str]] = None,
                  node_port: Optional[pulumi.Input[int]] = None):
         """
         ExposeSpec describe how Infinispan will be exposed externally
-        :param pulumi.Input[str] type: Type specifies different exposition methods for datagrid
+        :param pulumi.Input[str] type: Type specifies different exposition methods for data grid
         """
         pulumi.set(__self__, "type", type)
+        if annotations is not None:
+            pulumi.set(__self__, "annotations", annotations)
         if host is not None:
             pulumi.set(__self__, "host", host)
         if node_port is not None:
@@ -267,13 +1529,22 @@ class InfinispanSpecExposeArgs:
     @pulumi.getter
     def type(self) -> pulumi.Input[str]:
         """
-        Type specifies different exposition methods for datagrid
+        Type specifies different exposition methods for data grid
         """
         return pulumi.get(self, "type")
 
     @type.setter
     def type(self, value: pulumi.Input[str]):
         pulumi.set(self, "type", value)
+
+    @property
+    @pulumi.getter
+    def annotations(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+        return pulumi.get(self, "annotations")
+
+    @annotations.setter
+    def annotations(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
+        pulumi.set(self, "annotations", value)
 
     @property
     @pulumi.getter
@@ -350,26 +1621,19 @@ class InfinispanSpecSecurityArgs:
 @pulumi.input_type
 class InfinispanSpecSecurityEndpointEncryptionArgs:
     def __init__(__self__, *,
-                 type: pulumi.Input[str],
                  cert_secret_name: Optional[pulumi.Input[str]] = None,
-                 cert_service_name: Optional[pulumi.Input[str]] = None):
+                 cert_service_name: Optional[pulumi.Input[str]] = None,
+                 type: Optional[pulumi.Input[str]] = None):
         """
         EndpointEncryption configuration
+        :param pulumi.Input[str] type: CertificateSourceType specifies all the possible sources for the encryption certificate
         """
-        pulumi.set(__self__, "type", type)
         if cert_secret_name is not None:
             pulumi.set(__self__, "cert_secret_name", cert_secret_name)
         if cert_service_name is not None:
             pulumi.set(__self__, "cert_service_name", cert_service_name)
-
-    @property
-    @pulumi.getter
-    def type(self) -> pulumi.Input[str]:
-        return pulumi.get(self, "type")
-
-    @type.setter
-    def type(self, value: pulumi.Input[str]):
-        pulumi.set(self, "type", value)
+        if type is not None:
+            pulumi.set(__self__, "type", type)
 
     @property
     @pulumi.getter(name="certSecretName")
@@ -388,6 +1652,18 @@ class InfinispanSpecSecurityEndpointEncryptionArgs:
     @cert_service_name.setter
     def cert_service_name(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "cert_service_name", value)
+
+    @property
+    @pulumi.getter
+    def type(self) -> Optional[pulumi.Input[str]]:
+        """
+        CertificateSourceType specifies all the possible sources for the encryption certificate
+        """
+        return pulumi.get(self, "type")
+
+    @type.setter
+    def type(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "type", value)
 
 
 @pulumi.input_type
@@ -452,20 +1728,45 @@ class InfinispanSpecServiceArgs:
 @pulumi.input_type
 class InfinispanSpecServiceContainerArgs:
     def __init__(__self__, *,
-                 storage: pulumi.Input[str]):
+                 ephemeral_storage: Optional[pulumi.Input[bool]] = None,
+                 storage: Optional[pulumi.Input[str]] = None,
+                 storage_class_name: Optional[pulumi.Input[str]] = None):
         """
         InfinispanServiceContainerSpec resource requirements specific for service
         """
-        pulumi.set(__self__, "storage", storage)
+        if ephemeral_storage is not None:
+            pulumi.set(__self__, "ephemeral_storage", ephemeral_storage)
+        if storage is not None:
+            pulumi.set(__self__, "storage", storage)
+        if storage_class_name is not None:
+            pulumi.set(__self__, "storage_class_name", storage_class_name)
+
+    @property
+    @pulumi.getter(name="ephemeralStorage")
+    def ephemeral_storage(self) -> Optional[pulumi.Input[bool]]:
+        return pulumi.get(self, "ephemeral_storage")
+
+    @ephemeral_storage.setter
+    def ephemeral_storage(self, value: Optional[pulumi.Input[bool]]):
+        pulumi.set(self, "ephemeral_storage", value)
 
     @property
     @pulumi.getter
-    def storage(self) -> pulumi.Input[str]:
+    def storage(self) -> Optional[pulumi.Input[str]]:
         return pulumi.get(self, "storage")
 
     @storage.setter
-    def storage(self, value: pulumi.Input[str]):
+    def storage(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "storage", value)
+
+    @property
+    @pulumi.getter(name="storageClassName")
+    def storage_class_name(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "storage_class_name")
+
+    @storage_class_name.setter
+    def storage_class_name(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "storage_class_name", value)
 
 
 @pulumi.input_type
@@ -533,13 +1834,16 @@ class InfinispanSpecServiceSitesLocalArgs:
 class InfinispanSpecServiceSitesLocalExposeArgs:
     def __init__(__self__, *,
                  type: pulumi.Input[str],
+                 annotations: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  host: Optional[pulumi.Input[str]] = None,
                  node_port: Optional[pulumi.Input[int]] = None):
         """
         ExposeSpec describe how Infinispan will be exposed externally
-        :param pulumi.Input[str] type: Type specifies different exposition methods for datagrid
+        :param pulumi.Input[str] type: Type specifies different exposition methods for data grid
         """
         pulumi.set(__self__, "type", type)
+        if annotations is not None:
+            pulumi.set(__self__, "annotations", annotations)
         if host is not None:
             pulumi.set(__self__, "host", host)
         if node_port is not None:
@@ -549,13 +1853,22 @@ class InfinispanSpecServiceSitesLocalExposeArgs:
     @pulumi.getter
     def type(self) -> pulumi.Input[str]:
         """
-        Type specifies different exposition methods for datagrid
+        Type specifies different exposition methods for data grid
         """
         return pulumi.get(self, "type")
 
     @type.setter
     def type(self, value: pulumi.Input[str]):
         pulumi.set(self, "type", value)
+
+    @property
+    @pulumi.getter
+    def annotations(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+        return pulumi.get(self, "annotations")
+
+    @annotations.setter
+    def annotations(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
+        pulumi.set(self, "annotations", value)
 
     @property
     @pulumi.getter
@@ -580,11 +1893,19 @@ class InfinispanSpecServiceSitesLocalExposeArgs:
 class InfinispanSpecServiceSitesLocationsArgs:
     def __init__(__self__, *,
                  name: pulumi.Input[str],
-                 secret_name: pulumi.Input[str],
-                 url: pulumi.Input[str]):
+                 host: Optional[pulumi.Input[str]] = None,
+                 port: Optional[pulumi.Input[int]] = None,
+                 secret_name: Optional[pulumi.Input[str]] = None,
+                 url: Optional[pulumi.Input[str]] = None):
         pulumi.set(__self__, "name", name)
-        pulumi.set(__self__, "secret_name", secret_name)
-        pulumi.set(__self__, "url", url)
+        if host is not None:
+            pulumi.set(__self__, "host", host)
+        if port is not None:
+            pulumi.set(__self__, "port", port)
+        if secret_name is not None:
+            pulumi.set(__self__, "secret_name", secret_name)
+        if url is not None:
+            pulumi.set(__self__, "url", url)
 
     @property
     @pulumi.getter
@@ -596,21 +1917,39 @@ class InfinispanSpecServiceSitesLocationsArgs:
         pulumi.set(self, "name", value)
 
     @property
+    @pulumi.getter
+    def host(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "host")
+
+    @host.setter
+    def host(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "host", value)
+
+    @property
+    @pulumi.getter
+    def port(self) -> Optional[pulumi.Input[int]]:
+        return pulumi.get(self, "port")
+
+    @port.setter
+    def port(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "port", value)
+
+    @property
     @pulumi.getter(name="secretName")
-    def secret_name(self) -> pulumi.Input[str]:
+    def secret_name(self) -> Optional[pulumi.Input[str]]:
         return pulumi.get(self, "secret_name")
 
     @secret_name.setter
-    def secret_name(self, value: pulumi.Input[str]):
+    def secret_name(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "secret_name", value)
 
     @property
     @pulumi.getter
-    def url(self) -> pulumi.Input[str]:
+    def url(self) -> Optional[pulumi.Input[str]]:
         return pulumi.get(self, "url")
 
     @url.setter
-    def url(self, value: pulumi.Input[str]):
+    def url(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "url", value)
 
 
@@ -618,20 +1957,20 @@ class InfinispanSpecServiceSitesLocationsArgs:
 class InfinispanStatusArgs:
     def __init__(__self__, *,
                  security: pulumi.Input['InfinispanStatusSecurityArgs'],
-                 stateful_set_name: pulumi.Input[str],
                  conditions: Optional[pulumi.Input[Sequence[pulumi.Input['InfinispanStatusConditionsArgs']]]] = None,
-                 replicas_wanted_at_restart: Optional[pulumi.Input[int]] = None):
+                 replicas_wanted_at_restart: Optional[pulumi.Input[int]] = None,
+                 stateful_set_name: Optional[pulumi.Input[str]] = None):
         """
         InfinispanStatus defines the observed state of Infinispan
         :param pulumi.Input['InfinispanStatusSecurityArgs'] security: InfinispanSecurity info for the user application connection
-        :param pulumi.Input[Sequence[pulumi.Input['InfinispanStatusConditionsArgs']]] conditions: Important: Run "operator-sdk generate k8s" to regenerate code after modifying this file
         """
         pulumi.set(__self__, "security", security)
-        pulumi.set(__self__, "stateful_set_name", stateful_set_name)
         if conditions is not None:
             pulumi.set(__self__, "conditions", conditions)
         if replicas_wanted_at_restart is not None:
             pulumi.set(__self__, "replicas_wanted_at_restart", replicas_wanted_at_restart)
+        if stateful_set_name is not None:
+            pulumi.set(__self__, "stateful_set_name", stateful_set_name)
 
     @property
     @pulumi.getter
@@ -646,20 +1985,8 @@ class InfinispanStatusArgs:
         pulumi.set(self, "security", value)
 
     @property
-    @pulumi.getter(name="statefulSetName")
-    def stateful_set_name(self) -> pulumi.Input[str]:
-        return pulumi.get(self, "stateful_set_name")
-
-    @stateful_set_name.setter
-    def stateful_set_name(self, value: pulumi.Input[str]):
-        pulumi.set(self, "stateful_set_name", value)
-
-    @property
     @pulumi.getter
     def conditions(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['InfinispanStatusConditionsArgs']]]]:
-        """
-        Important: Run "operator-sdk generate k8s" to regenerate code after modifying this file
-        """
         return pulumi.get(self, "conditions")
 
     @conditions.setter
@@ -675,34 +2002,32 @@ class InfinispanStatusArgs:
     def replicas_wanted_at_restart(self, value: Optional[pulumi.Input[int]]):
         pulumi.set(self, "replicas_wanted_at_restart", value)
 
+    @property
+    @pulumi.getter(name="statefulSetName")
+    def stateful_set_name(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "stateful_set_name")
+
+    @stateful_set_name.setter
+    def stateful_set_name(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "stateful_set_name", value)
+
 
 @pulumi.input_type
 class InfinispanStatusConditionsArgs:
     def __init__(__self__, *,
-                 message: pulumi.Input[str],
                  status: pulumi.Input[str],
-                 type: pulumi.Input[str]):
+                 type: pulumi.Input[str],
+                 message: Optional[pulumi.Input[str]] = None):
         """
         InfinispanCondition define a condition of the cluster
-        :param pulumi.Input[str] message: Human-readable message indicating details about last transition.
         :param pulumi.Input[str] status: Status is the status of the condition.
         :param pulumi.Input[str] type: Type is the type of the condition.
+        :param pulumi.Input[str] message: Human-readable message indicating details about last transition.
         """
-        pulumi.set(__self__, "message", message)
         pulumi.set(__self__, "status", status)
         pulumi.set(__self__, "type", type)
-
-    @property
-    @pulumi.getter
-    def message(self) -> pulumi.Input[str]:
-        """
-        Human-readable message indicating details about last transition.
-        """
-        return pulumi.get(self, "message")
-
-    @message.setter
-    def message(self, value: pulumi.Input[str]):
-        pulumi.set(self, "message", value)
+        if message is not None:
+            pulumi.set(__self__, "message", message)
 
     @property
     @pulumi.getter
@@ -727,6 +2052,18 @@ class InfinispanStatusConditionsArgs:
     @type.setter
     def type(self, value: pulumi.Input[str]):
         pulumi.set(self, "type", value)
+
+    @property
+    @pulumi.getter
+    def message(self) -> Optional[pulumi.Input[str]]:
+        """
+        Human-readable message indicating details about last transition.
+        """
+        return pulumi.get(self, "message")
+
+    @message.setter
+    def message(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "message", value)
 
 
 @pulumi.input_type
@@ -768,26 +2105,19 @@ class InfinispanStatusSecurityArgs:
 @pulumi.input_type
 class InfinispanStatusSecurityEndpointEncryptionArgs:
     def __init__(__self__, *,
-                 type: pulumi.Input[str],
                  cert_secret_name: Optional[pulumi.Input[str]] = None,
-                 cert_service_name: Optional[pulumi.Input[str]] = None):
+                 cert_service_name: Optional[pulumi.Input[str]] = None,
+                 type: Optional[pulumi.Input[str]] = None):
         """
         EndpointEncryption configuration
+        :param pulumi.Input[str] type: CertificateSourceType specifies all the possible sources for the encryption certificate
         """
-        pulumi.set(__self__, "type", type)
         if cert_secret_name is not None:
             pulumi.set(__self__, "cert_secret_name", cert_secret_name)
         if cert_service_name is not None:
             pulumi.set(__self__, "cert_service_name", cert_service_name)
-
-    @property
-    @pulumi.getter
-    def type(self) -> pulumi.Input[str]:
-        return pulumi.get(self, "type")
-
-    @type.setter
-    def type(self, value: pulumi.Input[str]):
-        pulumi.set(self, "type", value)
+        if type is not None:
+            pulumi.set(__self__, "type", type)
 
     @property
     @pulumi.getter(name="certSecretName")
@@ -806,5 +2136,17 @@ class InfinispanStatusSecurityEndpointEncryptionArgs:
     @cert_service_name.setter
     def cert_service_name(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "cert_service_name", value)
+
+    @property
+    @pulumi.getter
+    def type(self) -> Optional[pulumi.Input[str]]:
+        """
+        CertificateSourceType specifies all the possible sources for the encryption certificate
+        """
+        return pulumi.get(self, "type")
+
+    @type.setter
+    def type(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "type", value)
 
 

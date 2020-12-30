@@ -11,6 +11,967 @@ import (
 	"github.com/pulumi/pulumi/sdk/v2/go/pulumi"
 )
 
+// Backup is the Schema for the backups API
+type BackupType struct {
+	ApiVersion *string            `pulumi:"apiVersion"`
+	Kind       *string            `pulumi:"kind"`
+	Metadata   *metav1.ObjectMeta `pulumi:"metadata"`
+	// BackupSpec defines the desired state of Backup
+	Spec *BackupSpec `pulumi:"spec"`
+	// BackupStatus defines the observed state of Backup
+	Status *BackupStatus `pulumi:"status"`
+}
+
+// BackupTypeInput is an input type that accepts BackupTypeArgs and BackupTypeOutput values.
+// You can construct a concrete instance of `BackupTypeInput` via:
+//
+//          BackupTypeArgs{...}
+type BackupTypeInput interface {
+	pulumi.Input
+
+	ToBackupTypeOutput() BackupTypeOutput
+	ToBackupTypeOutputWithContext(context.Context) BackupTypeOutput
+}
+
+// Backup is the Schema for the backups API
+type BackupTypeArgs struct {
+	ApiVersion pulumi.StringPtrInput     `pulumi:"apiVersion"`
+	Kind       pulumi.StringPtrInput     `pulumi:"kind"`
+	Metadata   metav1.ObjectMetaPtrInput `pulumi:"metadata"`
+	// BackupSpec defines the desired state of Backup
+	Spec BackupSpecPtrInput `pulumi:"spec"`
+	// BackupStatus defines the observed state of Backup
+	Status BackupStatusPtrInput `pulumi:"status"`
+}
+
+func (BackupTypeArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*BackupType)(nil)).Elem()
+}
+
+func (i BackupTypeArgs) ToBackupTypeOutput() BackupTypeOutput {
+	return i.ToBackupTypeOutputWithContext(context.Background())
+}
+
+func (i BackupTypeArgs) ToBackupTypeOutputWithContext(ctx context.Context) BackupTypeOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BackupTypeOutput)
+}
+
+// Backup is the Schema for the backups API
+type BackupTypeOutput struct{ *pulumi.OutputState }
+
+func (BackupTypeOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*BackupType)(nil)).Elem()
+}
+
+func (o BackupTypeOutput) ToBackupTypeOutput() BackupTypeOutput {
+	return o
+}
+
+func (o BackupTypeOutput) ToBackupTypeOutputWithContext(ctx context.Context) BackupTypeOutput {
+	return o
+}
+
+func (o BackupTypeOutput) ApiVersion() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v BackupType) *string { return v.ApiVersion }).(pulumi.StringPtrOutput)
+}
+
+func (o BackupTypeOutput) Kind() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v BackupType) *string { return v.Kind }).(pulumi.StringPtrOutput)
+}
+
+func (o BackupTypeOutput) Metadata() metav1.ObjectMetaPtrOutput {
+	return o.ApplyT(func(v BackupType) *metav1.ObjectMeta { return v.Metadata }).(metav1.ObjectMetaPtrOutput)
+}
+
+// BackupSpec defines the desired state of Backup
+func (o BackupTypeOutput) Spec() BackupSpecPtrOutput {
+	return o.ApplyT(func(v BackupType) *BackupSpec { return v.Spec }).(BackupSpecPtrOutput)
+}
+
+// BackupStatus defines the observed state of Backup
+func (o BackupTypeOutput) Status() BackupStatusPtrOutput {
+	return o.ApplyT(func(v BackupType) *BackupStatus { return v.Status }).(BackupStatusPtrOutput)
+}
+
+type BackupMetadata struct {
+}
+
+// BackupMetadataInput is an input type that accepts BackupMetadataArgs and BackupMetadataOutput values.
+// You can construct a concrete instance of `BackupMetadataInput` via:
+//
+//          BackupMetadataArgs{...}
+type BackupMetadataInput interface {
+	pulumi.Input
+
+	ToBackupMetadataOutput() BackupMetadataOutput
+	ToBackupMetadataOutputWithContext(context.Context) BackupMetadataOutput
+}
+
+type BackupMetadataArgs struct {
+}
+
+func (BackupMetadataArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*BackupMetadata)(nil)).Elem()
+}
+
+func (i BackupMetadataArgs) ToBackupMetadataOutput() BackupMetadataOutput {
+	return i.ToBackupMetadataOutputWithContext(context.Background())
+}
+
+func (i BackupMetadataArgs) ToBackupMetadataOutputWithContext(ctx context.Context) BackupMetadataOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BackupMetadataOutput)
+}
+
+type BackupMetadataOutput struct{ *pulumi.OutputState }
+
+func (BackupMetadataOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*BackupMetadata)(nil)).Elem()
+}
+
+func (o BackupMetadataOutput) ToBackupMetadataOutput() BackupMetadataOutput {
+	return o
+}
+
+func (o BackupMetadataOutput) ToBackupMetadataOutputWithContext(ctx context.Context) BackupMetadataOutput {
+	return o
+}
+
+// BackupSpec defines the desired state of Backup
+type BackupSpec struct {
+	Cluster string `pulumi:"cluster"`
+	// InfinispanContainerSpec specify resource requirements per container
+	Container *BackupSpecContainer `pulumi:"container"`
+	Resources *BackupSpecResources `pulumi:"resources"`
+	Volume    *BackupSpecVolume    `pulumi:"volume"`
+}
+
+// BackupSpecInput is an input type that accepts BackupSpecArgs and BackupSpecOutput values.
+// You can construct a concrete instance of `BackupSpecInput` via:
+//
+//          BackupSpecArgs{...}
+type BackupSpecInput interface {
+	pulumi.Input
+
+	ToBackupSpecOutput() BackupSpecOutput
+	ToBackupSpecOutputWithContext(context.Context) BackupSpecOutput
+}
+
+// BackupSpec defines the desired state of Backup
+type BackupSpecArgs struct {
+	Cluster pulumi.StringInput `pulumi:"cluster"`
+	// InfinispanContainerSpec specify resource requirements per container
+	Container BackupSpecContainerPtrInput `pulumi:"container"`
+	Resources BackupSpecResourcesPtrInput `pulumi:"resources"`
+	Volume    BackupSpecVolumePtrInput    `pulumi:"volume"`
+}
+
+func (BackupSpecArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*BackupSpec)(nil)).Elem()
+}
+
+func (i BackupSpecArgs) ToBackupSpecOutput() BackupSpecOutput {
+	return i.ToBackupSpecOutputWithContext(context.Background())
+}
+
+func (i BackupSpecArgs) ToBackupSpecOutputWithContext(ctx context.Context) BackupSpecOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BackupSpecOutput)
+}
+
+func (i BackupSpecArgs) ToBackupSpecPtrOutput() BackupSpecPtrOutput {
+	return i.ToBackupSpecPtrOutputWithContext(context.Background())
+}
+
+func (i BackupSpecArgs) ToBackupSpecPtrOutputWithContext(ctx context.Context) BackupSpecPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BackupSpecOutput).ToBackupSpecPtrOutputWithContext(ctx)
+}
+
+// BackupSpecPtrInput is an input type that accepts BackupSpecArgs, BackupSpecPtr and BackupSpecPtrOutput values.
+// You can construct a concrete instance of `BackupSpecPtrInput` via:
+//
+//          BackupSpecArgs{...}
+//
+//  or:
+//
+//          nil
+type BackupSpecPtrInput interface {
+	pulumi.Input
+
+	ToBackupSpecPtrOutput() BackupSpecPtrOutput
+	ToBackupSpecPtrOutputWithContext(context.Context) BackupSpecPtrOutput
+}
+
+type backupSpecPtrType BackupSpecArgs
+
+func BackupSpecPtr(v *BackupSpecArgs) BackupSpecPtrInput {
+	return (*backupSpecPtrType)(v)
+}
+
+func (*backupSpecPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**BackupSpec)(nil)).Elem()
+}
+
+func (i *backupSpecPtrType) ToBackupSpecPtrOutput() BackupSpecPtrOutput {
+	return i.ToBackupSpecPtrOutputWithContext(context.Background())
+}
+
+func (i *backupSpecPtrType) ToBackupSpecPtrOutputWithContext(ctx context.Context) BackupSpecPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BackupSpecPtrOutput)
+}
+
+// BackupSpec defines the desired state of Backup
+type BackupSpecOutput struct{ *pulumi.OutputState }
+
+func (BackupSpecOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*BackupSpec)(nil)).Elem()
+}
+
+func (o BackupSpecOutput) ToBackupSpecOutput() BackupSpecOutput {
+	return o
+}
+
+func (o BackupSpecOutput) ToBackupSpecOutputWithContext(ctx context.Context) BackupSpecOutput {
+	return o
+}
+
+func (o BackupSpecOutput) ToBackupSpecPtrOutput() BackupSpecPtrOutput {
+	return o.ToBackupSpecPtrOutputWithContext(context.Background())
+}
+
+func (o BackupSpecOutput) ToBackupSpecPtrOutputWithContext(ctx context.Context) BackupSpecPtrOutput {
+	return o.ApplyT(func(v BackupSpec) *BackupSpec {
+		return &v
+	}).(BackupSpecPtrOutput)
+}
+func (o BackupSpecOutput) Cluster() pulumi.StringOutput {
+	return o.ApplyT(func(v BackupSpec) string { return v.Cluster }).(pulumi.StringOutput)
+}
+
+// InfinispanContainerSpec specify resource requirements per container
+func (o BackupSpecOutput) Container() BackupSpecContainerPtrOutput {
+	return o.ApplyT(func(v BackupSpec) *BackupSpecContainer { return v.Container }).(BackupSpecContainerPtrOutput)
+}
+
+func (o BackupSpecOutput) Resources() BackupSpecResourcesPtrOutput {
+	return o.ApplyT(func(v BackupSpec) *BackupSpecResources { return v.Resources }).(BackupSpecResourcesPtrOutput)
+}
+
+func (o BackupSpecOutput) Volume() BackupSpecVolumePtrOutput {
+	return o.ApplyT(func(v BackupSpec) *BackupSpecVolume { return v.Volume }).(BackupSpecVolumePtrOutput)
+}
+
+type BackupSpecPtrOutput struct{ *pulumi.OutputState }
+
+func (BackupSpecPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**BackupSpec)(nil)).Elem()
+}
+
+func (o BackupSpecPtrOutput) ToBackupSpecPtrOutput() BackupSpecPtrOutput {
+	return o
+}
+
+func (o BackupSpecPtrOutput) ToBackupSpecPtrOutputWithContext(ctx context.Context) BackupSpecPtrOutput {
+	return o
+}
+
+func (o BackupSpecPtrOutput) Elem() BackupSpecOutput {
+	return o.ApplyT(func(v *BackupSpec) BackupSpec { return *v }).(BackupSpecOutput)
+}
+
+func (o BackupSpecPtrOutput) Cluster() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *BackupSpec) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.Cluster
+	}).(pulumi.StringPtrOutput)
+}
+
+// InfinispanContainerSpec specify resource requirements per container
+func (o BackupSpecPtrOutput) Container() BackupSpecContainerPtrOutput {
+	return o.ApplyT(func(v *BackupSpec) *BackupSpecContainer {
+		if v == nil {
+			return nil
+		}
+		return v.Container
+	}).(BackupSpecContainerPtrOutput)
+}
+
+func (o BackupSpecPtrOutput) Resources() BackupSpecResourcesPtrOutput {
+	return o.ApplyT(func(v *BackupSpec) *BackupSpecResources {
+		if v == nil {
+			return nil
+		}
+		return v.Resources
+	}).(BackupSpecResourcesPtrOutput)
+}
+
+func (o BackupSpecPtrOutput) Volume() BackupSpecVolumePtrOutput {
+	return o.ApplyT(func(v *BackupSpec) *BackupSpecVolume {
+		if v == nil {
+			return nil
+		}
+		return v.Volume
+	}).(BackupSpecVolumePtrOutput)
+}
+
+// InfinispanContainerSpec specify resource requirements per container
+type BackupSpecContainer struct {
+	Cpu          *string `pulumi:"cpu"`
+	ExtraJvmOpts *string `pulumi:"extraJvmOpts"`
+	Memory       *string `pulumi:"memory"`
+}
+
+// BackupSpecContainerInput is an input type that accepts BackupSpecContainerArgs and BackupSpecContainerOutput values.
+// You can construct a concrete instance of `BackupSpecContainerInput` via:
+//
+//          BackupSpecContainerArgs{...}
+type BackupSpecContainerInput interface {
+	pulumi.Input
+
+	ToBackupSpecContainerOutput() BackupSpecContainerOutput
+	ToBackupSpecContainerOutputWithContext(context.Context) BackupSpecContainerOutput
+}
+
+// InfinispanContainerSpec specify resource requirements per container
+type BackupSpecContainerArgs struct {
+	Cpu          pulumi.StringPtrInput `pulumi:"cpu"`
+	ExtraJvmOpts pulumi.StringPtrInput `pulumi:"extraJvmOpts"`
+	Memory       pulumi.StringPtrInput `pulumi:"memory"`
+}
+
+func (BackupSpecContainerArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*BackupSpecContainer)(nil)).Elem()
+}
+
+func (i BackupSpecContainerArgs) ToBackupSpecContainerOutput() BackupSpecContainerOutput {
+	return i.ToBackupSpecContainerOutputWithContext(context.Background())
+}
+
+func (i BackupSpecContainerArgs) ToBackupSpecContainerOutputWithContext(ctx context.Context) BackupSpecContainerOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BackupSpecContainerOutput)
+}
+
+func (i BackupSpecContainerArgs) ToBackupSpecContainerPtrOutput() BackupSpecContainerPtrOutput {
+	return i.ToBackupSpecContainerPtrOutputWithContext(context.Background())
+}
+
+func (i BackupSpecContainerArgs) ToBackupSpecContainerPtrOutputWithContext(ctx context.Context) BackupSpecContainerPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BackupSpecContainerOutput).ToBackupSpecContainerPtrOutputWithContext(ctx)
+}
+
+// BackupSpecContainerPtrInput is an input type that accepts BackupSpecContainerArgs, BackupSpecContainerPtr and BackupSpecContainerPtrOutput values.
+// You can construct a concrete instance of `BackupSpecContainerPtrInput` via:
+//
+//          BackupSpecContainerArgs{...}
+//
+//  or:
+//
+//          nil
+type BackupSpecContainerPtrInput interface {
+	pulumi.Input
+
+	ToBackupSpecContainerPtrOutput() BackupSpecContainerPtrOutput
+	ToBackupSpecContainerPtrOutputWithContext(context.Context) BackupSpecContainerPtrOutput
+}
+
+type backupSpecContainerPtrType BackupSpecContainerArgs
+
+func BackupSpecContainerPtr(v *BackupSpecContainerArgs) BackupSpecContainerPtrInput {
+	return (*backupSpecContainerPtrType)(v)
+}
+
+func (*backupSpecContainerPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**BackupSpecContainer)(nil)).Elem()
+}
+
+func (i *backupSpecContainerPtrType) ToBackupSpecContainerPtrOutput() BackupSpecContainerPtrOutput {
+	return i.ToBackupSpecContainerPtrOutputWithContext(context.Background())
+}
+
+func (i *backupSpecContainerPtrType) ToBackupSpecContainerPtrOutputWithContext(ctx context.Context) BackupSpecContainerPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BackupSpecContainerPtrOutput)
+}
+
+// InfinispanContainerSpec specify resource requirements per container
+type BackupSpecContainerOutput struct{ *pulumi.OutputState }
+
+func (BackupSpecContainerOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*BackupSpecContainer)(nil)).Elem()
+}
+
+func (o BackupSpecContainerOutput) ToBackupSpecContainerOutput() BackupSpecContainerOutput {
+	return o
+}
+
+func (o BackupSpecContainerOutput) ToBackupSpecContainerOutputWithContext(ctx context.Context) BackupSpecContainerOutput {
+	return o
+}
+
+func (o BackupSpecContainerOutput) ToBackupSpecContainerPtrOutput() BackupSpecContainerPtrOutput {
+	return o.ToBackupSpecContainerPtrOutputWithContext(context.Background())
+}
+
+func (o BackupSpecContainerOutput) ToBackupSpecContainerPtrOutputWithContext(ctx context.Context) BackupSpecContainerPtrOutput {
+	return o.ApplyT(func(v BackupSpecContainer) *BackupSpecContainer {
+		return &v
+	}).(BackupSpecContainerPtrOutput)
+}
+func (o BackupSpecContainerOutput) Cpu() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v BackupSpecContainer) *string { return v.Cpu }).(pulumi.StringPtrOutput)
+}
+
+func (o BackupSpecContainerOutput) ExtraJvmOpts() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v BackupSpecContainer) *string { return v.ExtraJvmOpts }).(pulumi.StringPtrOutput)
+}
+
+func (o BackupSpecContainerOutput) Memory() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v BackupSpecContainer) *string { return v.Memory }).(pulumi.StringPtrOutput)
+}
+
+type BackupSpecContainerPtrOutput struct{ *pulumi.OutputState }
+
+func (BackupSpecContainerPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**BackupSpecContainer)(nil)).Elem()
+}
+
+func (o BackupSpecContainerPtrOutput) ToBackupSpecContainerPtrOutput() BackupSpecContainerPtrOutput {
+	return o
+}
+
+func (o BackupSpecContainerPtrOutput) ToBackupSpecContainerPtrOutputWithContext(ctx context.Context) BackupSpecContainerPtrOutput {
+	return o
+}
+
+func (o BackupSpecContainerPtrOutput) Elem() BackupSpecContainerOutput {
+	return o.ApplyT(func(v *BackupSpecContainer) BackupSpecContainer { return *v }).(BackupSpecContainerOutput)
+}
+
+func (o BackupSpecContainerPtrOutput) Cpu() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *BackupSpecContainer) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Cpu
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o BackupSpecContainerPtrOutput) ExtraJvmOpts() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *BackupSpecContainer) *string {
+		if v == nil {
+			return nil
+		}
+		return v.ExtraJvmOpts
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o BackupSpecContainerPtrOutput) Memory() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *BackupSpecContainer) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Memory
+	}).(pulumi.StringPtrOutput)
+}
+
+type BackupSpecResources struct {
+	CacheConfigs []string `pulumi:"cacheConfigs"`
+	Caches       []string `pulumi:"caches"`
+	Counters     []string `pulumi:"counters"`
+	ProtoSchemas []string `pulumi:"protoSchemas"`
+	Scripts      []string `pulumi:"scripts"`
+}
+
+// BackupSpecResourcesInput is an input type that accepts BackupSpecResourcesArgs and BackupSpecResourcesOutput values.
+// You can construct a concrete instance of `BackupSpecResourcesInput` via:
+//
+//          BackupSpecResourcesArgs{...}
+type BackupSpecResourcesInput interface {
+	pulumi.Input
+
+	ToBackupSpecResourcesOutput() BackupSpecResourcesOutput
+	ToBackupSpecResourcesOutputWithContext(context.Context) BackupSpecResourcesOutput
+}
+
+type BackupSpecResourcesArgs struct {
+	CacheConfigs pulumi.StringArrayInput `pulumi:"cacheConfigs"`
+	Caches       pulumi.StringArrayInput `pulumi:"caches"`
+	Counters     pulumi.StringArrayInput `pulumi:"counters"`
+	ProtoSchemas pulumi.StringArrayInput `pulumi:"protoSchemas"`
+	Scripts      pulumi.StringArrayInput `pulumi:"scripts"`
+}
+
+func (BackupSpecResourcesArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*BackupSpecResources)(nil)).Elem()
+}
+
+func (i BackupSpecResourcesArgs) ToBackupSpecResourcesOutput() BackupSpecResourcesOutput {
+	return i.ToBackupSpecResourcesOutputWithContext(context.Background())
+}
+
+func (i BackupSpecResourcesArgs) ToBackupSpecResourcesOutputWithContext(ctx context.Context) BackupSpecResourcesOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BackupSpecResourcesOutput)
+}
+
+func (i BackupSpecResourcesArgs) ToBackupSpecResourcesPtrOutput() BackupSpecResourcesPtrOutput {
+	return i.ToBackupSpecResourcesPtrOutputWithContext(context.Background())
+}
+
+func (i BackupSpecResourcesArgs) ToBackupSpecResourcesPtrOutputWithContext(ctx context.Context) BackupSpecResourcesPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BackupSpecResourcesOutput).ToBackupSpecResourcesPtrOutputWithContext(ctx)
+}
+
+// BackupSpecResourcesPtrInput is an input type that accepts BackupSpecResourcesArgs, BackupSpecResourcesPtr and BackupSpecResourcesPtrOutput values.
+// You can construct a concrete instance of `BackupSpecResourcesPtrInput` via:
+//
+//          BackupSpecResourcesArgs{...}
+//
+//  or:
+//
+//          nil
+type BackupSpecResourcesPtrInput interface {
+	pulumi.Input
+
+	ToBackupSpecResourcesPtrOutput() BackupSpecResourcesPtrOutput
+	ToBackupSpecResourcesPtrOutputWithContext(context.Context) BackupSpecResourcesPtrOutput
+}
+
+type backupSpecResourcesPtrType BackupSpecResourcesArgs
+
+func BackupSpecResourcesPtr(v *BackupSpecResourcesArgs) BackupSpecResourcesPtrInput {
+	return (*backupSpecResourcesPtrType)(v)
+}
+
+func (*backupSpecResourcesPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**BackupSpecResources)(nil)).Elem()
+}
+
+func (i *backupSpecResourcesPtrType) ToBackupSpecResourcesPtrOutput() BackupSpecResourcesPtrOutput {
+	return i.ToBackupSpecResourcesPtrOutputWithContext(context.Background())
+}
+
+func (i *backupSpecResourcesPtrType) ToBackupSpecResourcesPtrOutputWithContext(ctx context.Context) BackupSpecResourcesPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BackupSpecResourcesPtrOutput)
+}
+
+type BackupSpecResourcesOutput struct{ *pulumi.OutputState }
+
+func (BackupSpecResourcesOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*BackupSpecResources)(nil)).Elem()
+}
+
+func (o BackupSpecResourcesOutput) ToBackupSpecResourcesOutput() BackupSpecResourcesOutput {
+	return o
+}
+
+func (o BackupSpecResourcesOutput) ToBackupSpecResourcesOutputWithContext(ctx context.Context) BackupSpecResourcesOutput {
+	return o
+}
+
+func (o BackupSpecResourcesOutput) ToBackupSpecResourcesPtrOutput() BackupSpecResourcesPtrOutput {
+	return o.ToBackupSpecResourcesPtrOutputWithContext(context.Background())
+}
+
+func (o BackupSpecResourcesOutput) ToBackupSpecResourcesPtrOutputWithContext(ctx context.Context) BackupSpecResourcesPtrOutput {
+	return o.ApplyT(func(v BackupSpecResources) *BackupSpecResources {
+		return &v
+	}).(BackupSpecResourcesPtrOutput)
+}
+func (o BackupSpecResourcesOutput) CacheConfigs() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v BackupSpecResources) []string { return v.CacheConfigs }).(pulumi.StringArrayOutput)
+}
+
+func (o BackupSpecResourcesOutput) Caches() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v BackupSpecResources) []string { return v.Caches }).(pulumi.StringArrayOutput)
+}
+
+func (o BackupSpecResourcesOutput) Counters() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v BackupSpecResources) []string { return v.Counters }).(pulumi.StringArrayOutput)
+}
+
+func (o BackupSpecResourcesOutput) ProtoSchemas() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v BackupSpecResources) []string { return v.ProtoSchemas }).(pulumi.StringArrayOutput)
+}
+
+func (o BackupSpecResourcesOutput) Scripts() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v BackupSpecResources) []string { return v.Scripts }).(pulumi.StringArrayOutput)
+}
+
+type BackupSpecResourcesPtrOutput struct{ *pulumi.OutputState }
+
+func (BackupSpecResourcesPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**BackupSpecResources)(nil)).Elem()
+}
+
+func (o BackupSpecResourcesPtrOutput) ToBackupSpecResourcesPtrOutput() BackupSpecResourcesPtrOutput {
+	return o
+}
+
+func (o BackupSpecResourcesPtrOutput) ToBackupSpecResourcesPtrOutputWithContext(ctx context.Context) BackupSpecResourcesPtrOutput {
+	return o
+}
+
+func (o BackupSpecResourcesPtrOutput) Elem() BackupSpecResourcesOutput {
+	return o.ApplyT(func(v *BackupSpecResources) BackupSpecResources { return *v }).(BackupSpecResourcesOutput)
+}
+
+func (o BackupSpecResourcesPtrOutput) CacheConfigs() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v *BackupSpecResources) []string {
+		if v == nil {
+			return nil
+		}
+		return v.CacheConfigs
+	}).(pulumi.StringArrayOutput)
+}
+
+func (o BackupSpecResourcesPtrOutput) Caches() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v *BackupSpecResources) []string {
+		if v == nil {
+			return nil
+		}
+		return v.Caches
+	}).(pulumi.StringArrayOutput)
+}
+
+func (o BackupSpecResourcesPtrOutput) Counters() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v *BackupSpecResources) []string {
+		if v == nil {
+			return nil
+		}
+		return v.Counters
+	}).(pulumi.StringArrayOutput)
+}
+
+func (o BackupSpecResourcesPtrOutput) ProtoSchemas() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v *BackupSpecResources) []string {
+		if v == nil {
+			return nil
+		}
+		return v.ProtoSchemas
+	}).(pulumi.StringArrayOutput)
+}
+
+func (o BackupSpecResourcesPtrOutput) Scripts() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v *BackupSpecResources) []string {
+		if v == nil {
+			return nil
+		}
+		return v.Scripts
+	}).(pulumi.StringArrayOutput)
+}
+
+type BackupSpecVolume struct {
+	Storage          *string `pulumi:"storage"`
+	StorageClassName *string `pulumi:"storageClassName"`
+}
+
+// BackupSpecVolumeInput is an input type that accepts BackupSpecVolumeArgs and BackupSpecVolumeOutput values.
+// You can construct a concrete instance of `BackupSpecVolumeInput` via:
+//
+//          BackupSpecVolumeArgs{...}
+type BackupSpecVolumeInput interface {
+	pulumi.Input
+
+	ToBackupSpecVolumeOutput() BackupSpecVolumeOutput
+	ToBackupSpecVolumeOutputWithContext(context.Context) BackupSpecVolumeOutput
+}
+
+type BackupSpecVolumeArgs struct {
+	Storage          pulumi.StringPtrInput `pulumi:"storage"`
+	StorageClassName pulumi.StringPtrInput `pulumi:"storageClassName"`
+}
+
+func (BackupSpecVolumeArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*BackupSpecVolume)(nil)).Elem()
+}
+
+func (i BackupSpecVolumeArgs) ToBackupSpecVolumeOutput() BackupSpecVolumeOutput {
+	return i.ToBackupSpecVolumeOutputWithContext(context.Background())
+}
+
+func (i BackupSpecVolumeArgs) ToBackupSpecVolumeOutputWithContext(ctx context.Context) BackupSpecVolumeOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BackupSpecVolumeOutput)
+}
+
+func (i BackupSpecVolumeArgs) ToBackupSpecVolumePtrOutput() BackupSpecVolumePtrOutput {
+	return i.ToBackupSpecVolumePtrOutputWithContext(context.Background())
+}
+
+func (i BackupSpecVolumeArgs) ToBackupSpecVolumePtrOutputWithContext(ctx context.Context) BackupSpecVolumePtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BackupSpecVolumeOutput).ToBackupSpecVolumePtrOutputWithContext(ctx)
+}
+
+// BackupSpecVolumePtrInput is an input type that accepts BackupSpecVolumeArgs, BackupSpecVolumePtr and BackupSpecVolumePtrOutput values.
+// You can construct a concrete instance of `BackupSpecVolumePtrInput` via:
+//
+//          BackupSpecVolumeArgs{...}
+//
+//  or:
+//
+//          nil
+type BackupSpecVolumePtrInput interface {
+	pulumi.Input
+
+	ToBackupSpecVolumePtrOutput() BackupSpecVolumePtrOutput
+	ToBackupSpecVolumePtrOutputWithContext(context.Context) BackupSpecVolumePtrOutput
+}
+
+type backupSpecVolumePtrType BackupSpecVolumeArgs
+
+func BackupSpecVolumePtr(v *BackupSpecVolumeArgs) BackupSpecVolumePtrInput {
+	return (*backupSpecVolumePtrType)(v)
+}
+
+func (*backupSpecVolumePtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**BackupSpecVolume)(nil)).Elem()
+}
+
+func (i *backupSpecVolumePtrType) ToBackupSpecVolumePtrOutput() BackupSpecVolumePtrOutput {
+	return i.ToBackupSpecVolumePtrOutputWithContext(context.Background())
+}
+
+func (i *backupSpecVolumePtrType) ToBackupSpecVolumePtrOutputWithContext(ctx context.Context) BackupSpecVolumePtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BackupSpecVolumePtrOutput)
+}
+
+type BackupSpecVolumeOutput struct{ *pulumi.OutputState }
+
+func (BackupSpecVolumeOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*BackupSpecVolume)(nil)).Elem()
+}
+
+func (o BackupSpecVolumeOutput) ToBackupSpecVolumeOutput() BackupSpecVolumeOutput {
+	return o
+}
+
+func (o BackupSpecVolumeOutput) ToBackupSpecVolumeOutputWithContext(ctx context.Context) BackupSpecVolumeOutput {
+	return o
+}
+
+func (o BackupSpecVolumeOutput) ToBackupSpecVolumePtrOutput() BackupSpecVolumePtrOutput {
+	return o.ToBackupSpecVolumePtrOutputWithContext(context.Background())
+}
+
+func (o BackupSpecVolumeOutput) ToBackupSpecVolumePtrOutputWithContext(ctx context.Context) BackupSpecVolumePtrOutput {
+	return o.ApplyT(func(v BackupSpecVolume) *BackupSpecVolume {
+		return &v
+	}).(BackupSpecVolumePtrOutput)
+}
+func (o BackupSpecVolumeOutput) Storage() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v BackupSpecVolume) *string { return v.Storage }).(pulumi.StringPtrOutput)
+}
+
+func (o BackupSpecVolumeOutput) StorageClassName() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v BackupSpecVolume) *string { return v.StorageClassName }).(pulumi.StringPtrOutput)
+}
+
+type BackupSpecVolumePtrOutput struct{ *pulumi.OutputState }
+
+func (BackupSpecVolumePtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**BackupSpecVolume)(nil)).Elem()
+}
+
+func (o BackupSpecVolumePtrOutput) ToBackupSpecVolumePtrOutput() BackupSpecVolumePtrOutput {
+	return o
+}
+
+func (o BackupSpecVolumePtrOutput) ToBackupSpecVolumePtrOutputWithContext(ctx context.Context) BackupSpecVolumePtrOutput {
+	return o
+}
+
+func (o BackupSpecVolumePtrOutput) Elem() BackupSpecVolumeOutput {
+	return o.ApplyT(func(v *BackupSpecVolume) BackupSpecVolume { return *v }).(BackupSpecVolumeOutput)
+}
+
+func (o BackupSpecVolumePtrOutput) Storage() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *BackupSpecVolume) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Storage
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o BackupSpecVolumePtrOutput) StorageClassName() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *BackupSpecVolume) *string {
+		if v == nil {
+			return nil
+		}
+		return v.StorageClassName
+	}).(pulumi.StringPtrOutput)
+}
+
+// BackupStatus defines the observed state of Backup
+type BackupStatus struct {
+	// State indicates the current state of the backup operation
+	Phase string `pulumi:"phase"`
+	// The name of the created PersistentVolumeClaim used to store the backup
+	Pvc *string `pulumi:"pvc"`
+	// Reason indicates the reason for any backup related failures.
+	Reason *string `pulumi:"reason"`
+}
+
+// BackupStatusInput is an input type that accepts BackupStatusArgs and BackupStatusOutput values.
+// You can construct a concrete instance of `BackupStatusInput` via:
+//
+//          BackupStatusArgs{...}
+type BackupStatusInput interface {
+	pulumi.Input
+
+	ToBackupStatusOutput() BackupStatusOutput
+	ToBackupStatusOutputWithContext(context.Context) BackupStatusOutput
+}
+
+// BackupStatus defines the observed state of Backup
+type BackupStatusArgs struct {
+	// State indicates the current state of the backup operation
+	Phase pulumi.StringInput `pulumi:"phase"`
+	// The name of the created PersistentVolumeClaim used to store the backup
+	Pvc pulumi.StringPtrInput `pulumi:"pvc"`
+	// Reason indicates the reason for any backup related failures.
+	Reason pulumi.StringPtrInput `pulumi:"reason"`
+}
+
+func (BackupStatusArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*BackupStatus)(nil)).Elem()
+}
+
+func (i BackupStatusArgs) ToBackupStatusOutput() BackupStatusOutput {
+	return i.ToBackupStatusOutputWithContext(context.Background())
+}
+
+func (i BackupStatusArgs) ToBackupStatusOutputWithContext(ctx context.Context) BackupStatusOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BackupStatusOutput)
+}
+
+func (i BackupStatusArgs) ToBackupStatusPtrOutput() BackupStatusPtrOutput {
+	return i.ToBackupStatusPtrOutputWithContext(context.Background())
+}
+
+func (i BackupStatusArgs) ToBackupStatusPtrOutputWithContext(ctx context.Context) BackupStatusPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BackupStatusOutput).ToBackupStatusPtrOutputWithContext(ctx)
+}
+
+// BackupStatusPtrInput is an input type that accepts BackupStatusArgs, BackupStatusPtr and BackupStatusPtrOutput values.
+// You can construct a concrete instance of `BackupStatusPtrInput` via:
+//
+//          BackupStatusArgs{...}
+//
+//  or:
+//
+//          nil
+type BackupStatusPtrInput interface {
+	pulumi.Input
+
+	ToBackupStatusPtrOutput() BackupStatusPtrOutput
+	ToBackupStatusPtrOutputWithContext(context.Context) BackupStatusPtrOutput
+}
+
+type backupStatusPtrType BackupStatusArgs
+
+func BackupStatusPtr(v *BackupStatusArgs) BackupStatusPtrInput {
+	return (*backupStatusPtrType)(v)
+}
+
+func (*backupStatusPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**BackupStatus)(nil)).Elem()
+}
+
+func (i *backupStatusPtrType) ToBackupStatusPtrOutput() BackupStatusPtrOutput {
+	return i.ToBackupStatusPtrOutputWithContext(context.Background())
+}
+
+func (i *backupStatusPtrType) ToBackupStatusPtrOutputWithContext(ctx context.Context) BackupStatusPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BackupStatusPtrOutput)
+}
+
+// BackupStatus defines the observed state of Backup
+type BackupStatusOutput struct{ *pulumi.OutputState }
+
+func (BackupStatusOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*BackupStatus)(nil)).Elem()
+}
+
+func (o BackupStatusOutput) ToBackupStatusOutput() BackupStatusOutput {
+	return o
+}
+
+func (o BackupStatusOutput) ToBackupStatusOutputWithContext(ctx context.Context) BackupStatusOutput {
+	return o
+}
+
+func (o BackupStatusOutput) ToBackupStatusPtrOutput() BackupStatusPtrOutput {
+	return o.ToBackupStatusPtrOutputWithContext(context.Background())
+}
+
+func (o BackupStatusOutput) ToBackupStatusPtrOutputWithContext(ctx context.Context) BackupStatusPtrOutput {
+	return o.ApplyT(func(v BackupStatus) *BackupStatus {
+		return &v
+	}).(BackupStatusPtrOutput)
+}
+
+// State indicates the current state of the backup operation
+func (o BackupStatusOutput) Phase() pulumi.StringOutput {
+	return o.ApplyT(func(v BackupStatus) string { return v.Phase }).(pulumi.StringOutput)
+}
+
+// The name of the created PersistentVolumeClaim used to store the backup
+func (o BackupStatusOutput) Pvc() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v BackupStatus) *string { return v.Pvc }).(pulumi.StringPtrOutput)
+}
+
+// Reason indicates the reason for any backup related failures.
+func (o BackupStatusOutput) Reason() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v BackupStatus) *string { return v.Reason }).(pulumi.StringPtrOutput)
+}
+
+type BackupStatusPtrOutput struct{ *pulumi.OutputState }
+
+func (BackupStatusPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**BackupStatus)(nil)).Elem()
+}
+
+func (o BackupStatusPtrOutput) ToBackupStatusPtrOutput() BackupStatusPtrOutput {
+	return o
+}
+
+func (o BackupStatusPtrOutput) ToBackupStatusPtrOutputWithContext(ctx context.Context) BackupStatusPtrOutput {
+	return o
+}
+
+func (o BackupStatusPtrOutput) Elem() BackupStatusOutput {
+	return o.ApplyT(func(v *BackupStatus) BackupStatus { return *v }).(BackupStatusOutput)
+}
+
+// State indicates the current state of the backup operation
+func (o BackupStatusPtrOutput) Phase() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *BackupStatus) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.Phase
+	}).(pulumi.StringPtrOutput)
+}
+
+// The name of the created PersistentVolumeClaim used to store the backup
+func (o BackupStatusPtrOutput) Pvc() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *BackupStatus) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Pvc
+	}).(pulumi.StringPtrOutput)
+}
+
+// Reason indicates the reason for any backup related failures.
+func (o BackupStatusPtrOutput) Reason() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *BackupStatus) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Reason
+	}).(pulumi.StringPtrOutput)
+}
+
 // Cache is the Schema for the caches API
 type CacheType struct {
 	ApiVersion *string            `pulumi:"apiVersion"`
@@ -1133,7 +2094,820 @@ func (o CacheStatusConditionsArrayOutput) Index(i pulumi.IntInput) CacheStatusCo
 	}).(CacheStatusConditionsOutput)
 }
 
+// Restore is the Schema for the restores API
+type RestoreType struct {
+	ApiVersion *string            `pulumi:"apiVersion"`
+	Kind       *string            `pulumi:"kind"`
+	Metadata   *metav1.ObjectMeta `pulumi:"metadata"`
+	// BackupSpec defines the desired state of Backup
+	Spec *RestoreSpec `pulumi:"spec"`
+	// RestoreStatus defines the observed state of Restore
+	Status *RestoreStatus `pulumi:"status"`
+}
+
+// RestoreTypeInput is an input type that accepts RestoreTypeArgs and RestoreTypeOutput values.
+// You can construct a concrete instance of `RestoreTypeInput` via:
+//
+//          RestoreTypeArgs{...}
+type RestoreTypeInput interface {
+	pulumi.Input
+
+	ToRestoreTypeOutput() RestoreTypeOutput
+	ToRestoreTypeOutputWithContext(context.Context) RestoreTypeOutput
+}
+
+// Restore is the Schema for the restores API
+type RestoreTypeArgs struct {
+	ApiVersion pulumi.StringPtrInput     `pulumi:"apiVersion"`
+	Kind       pulumi.StringPtrInput     `pulumi:"kind"`
+	Metadata   metav1.ObjectMetaPtrInput `pulumi:"metadata"`
+	// BackupSpec defines the desired state of Backup
+	Spec RestoreSpecPtrInput `pulumi:"spec"`
+	// RestoreStatus defines the observed state of Restore
+	Status RestoreStatusPtrInput `pulumi:"status"`
+}
+
+func (RestoreTypeArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*RestoreType)(nil)).Elem()
+}
+
+func (i RestoreTypeArgs) ToRestoreTypeOutput() RestoreTypeOutput {
+	return i.ToRestoreTypeOutputWithContext(context.Background())
+}
+
+func (i RestoreTypeArgs) ToRestoreTypeOutputWithContext(ctx context.Context) RestoreTypeOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(RestoreTypeOutput)
+}
+
+// Restore is the Schema for the restores API
+type RestoreTypeOutput struct{ *pulumi.OutputState }
+
+func (RestoreTypeOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*RestoreType)(nil)).Elem()
+}
+
+func (o RestoreTypeOutput) ToRestoreTypeOutput() RestoreTypeOutput {
+	return o
+}
+
+func (o RestoreTypeOutput) ToRestoreTypeOutputWithContext(ctx context.Context) RestoreTypeOutput {
+	return o
+}
+
+func (o RestoreTypeOutput) ApiVersion() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v RestoreType) *string { return v.ApiVersion }).(pulumi.StringPtrOutput)
+}
+
+func (o RestoreTypeOutput) Kind() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v RestoreType) *string { return v.Kind }).(pulumi.StringPtrOutput)
+}
+
+func (o RestoreTypeOutput) Metadata() metav1.ObjectMetaPtrOutput {
+	return o.ApplyT(func(v RestoreType) *metav1.ObjectMeta { return v.Metadata }).(metav1.ObjectMetaPtrOutput)
+}
+
+// BackupSpec defines the desired state of Backup
+func (o RestoreTypeOutput) Spec() RestoreSpecPtrOutput {
+	return o.ApplyT(func(v RestoreType) *RestoreSpec { return v.Spec }).(RestoreSpecPtrOutput)
+}
+
+// RestoreStatus defines the observed state of Restore
+func (o RestoreTypeOutput) Status() RestoreStatusPtrOutput {
+	return o.ApplyT(func(v RestoreType) *RestoreStatus { return v.Status }).(RestoreStatusPtrOutput)
+}
+
+type RestoreMetadata struct {
+}
+
+// RestoreMetadataInput is an input type that accepts RestoreMetadataArgs and RestoreMetadataOutput values.
+// You can construct a concrete instance of `RestoreMetadataInput` via:
+//
+//          RestoreMetadataArgs{...}
+type RestoreMetadataInput interface {
+	pulumi.Input
+
+	ToRestoreMetadataOutput() RestoreMetadataOutput
+	ToRestoreMetadataOutputWithContext(context.Context) RestoreMetadataOutput
+}
+
+type RestoreMetadataArgs struct {
+}
+
+func (RestoreMetadataArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*RestoreMetadata)(nil)).Elem()
+}
+
+func (i RestoreMetadataArgs) ToRestoreMetadataOutput() RestoreMetadataOutput {
+	return i.ToRestoreMetadataOutputWithContext(context.Background())
+}
+
+func (i RestoreMetadataArgs) ToRestoreMetadataOutputWithContext(ctx context.Context) RestoreMetadataOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(RestoreMetadataOutput)
+}
+
+type RestoreMetadataOutput struct{ *pulumi.OutputState }
+
+func (RestoreMetadataOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*RestoreMetadata)(nil)).Elem()
+}
+
+func (o RestoreMetadataOutput) ToRestoreMetadataOutput() RestoreMetadataOutput {
+	return o
+}
+
+func (o RestoreMetadataOutput) ToRestoreMetadataOutputWithContext(ctx context.Context) RestoreMetadataOutput {
+	return o
+}
+
+// BackupSpec defines the desired state of Backup
+type RestoreSpec struct {
+	Backup  string `pulumi:"backup"`
+	Cluster string `pulumi:"cluster"`
+	// InfinispanContainerSpec specify resource requirements per container
+	Container *RestoreSpecContainer `pulumi:"container"`
+	Resources *RestoreSpecResources `pulumi:"resources"`
+}
+
+// RestoreSpecInput is an input type that accepts RestoreSpecArgs and RestoreSpecOutput values.
+// You can construct a concrete instance of `RestoreSpecInput` via:
+//
+//          RestoreSpecArgs{...}
+type RestoreSpecInput interface {
+	pulumi.Input
+
+	ToRestoreSpecOutput() RestoreSpecOutput
+	ToRestoreSpecOutputWithContext(context.Context) RestoreSpecOutput
+}
+
+// BackupSpec defines the desired state of Backup
+type RestoreSpecArgs struct {
+	Backup  pulumi.StringInput `pulumi:"backup"`
+	Cluster pulumi.StringInput `pulumi:"cluster"`
+	// InfinispanContainerSpec specify resource requirements per container
+	Container RestoreSpecContainerPtrInput `pulumi:"container"`
+	Resources RestoreSpecResourcesPtrInput `pulumi:"resources"`
+}
+
+func (RestoreSpecArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*RestoreSpec)(nil)).Elem()
+}
+
+func (i RestoreSpecArgs) ToRestoreSpecOutput() RestoreSpecOutput {
+	return i.ToRestoreSpecOutputWithContext(context.Background())
+}
+
+func (i RestoreSpecArgs) ToRestoreSpecOutputWithContext(ctx context.Context) RestoreSpecOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(RestoreSpecOutput)
+}
+
+func (i RestoreSpecArgs) ToRestoreSpecPtrOutput() RestoreSpecPtrOutput {
+	return i.ToRestoreSpecPtrOutputWithContext(context.Background())
+}
+
+func (i RestoreSpecArgs) ToRestoreSpecPtrOutputWithContext(ctx context.Context) RestoreSpecPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(RestoreSpecOutput).ToRestoreSpecPtrOutputWithContext(ctx)
+}
+
+// RestoreSpecPtrInput is an input type that accepts RestoreSpecArgs, RestoreSpecPtr and RestoreSpecPtrOutput values.
+// You can construct a concrete instance of `RestoreSpecPtrInput` via:
+//
+//          RestoreSpecArgs{...}
+//
+//  or:
+//
+//          nil
+type RestoreSpecPtrInput interface {
+	pulumi.Input
+
+	ToRestoreSpecPtrOutput() RestoreSpecPtrOutput
+	ToRestoreSpecPtrOutputWithContext(context.Context) RestoreSpecPtrOutput
+}
+
+type restoreSpecPtrType RestoreSpecArgs
+
+func RestoreSpecPtr(v *RestoreSpecArgs) RestoreSpecPtrInput {
+	return (*restoreSpecPtrType)(v)
+}
+
+func (*restoreSpecPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**RestoreSpec)(nil)).Elem()
+}
+
+func (i *restoreSpecPtrType) ToRestoreSpecPtrOutput() RestoreSpecPtrOutput {
+	return i.ToRestoreSpecPtrOutputWithContext(context.Background())
+}
+
+func (i *restoreSpecPtrType) ToRestoreSpecPtrOutputWithContext(ctx context.Context) RestoreSpecPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(RestoreSpecPtrOutput)
+}
+
+// BackupSpec defines the desired state of Backup
+type RestoreSpecOutput struct{ *pulumi.OutputState }
+
+func (RestoreSpecOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*RestoreSpec)(nil)).Elem()
+}
+
+func (o RestoreSpecOutput) ToRestoreSpecOutput() RestoreSpecOutput {
+	return o
+}
+
+func (o RestoreSpecOutput) ToRestoreSpecOutputWithContext(ctx context.Context) RestoreSpecOutput {
+	return o
+}
+
+func (o RestoreSpecOutput) ToRestoreSpecPtrOutput() RestoreSpecPtrOutput {
+	return o.ToRestoreSpecPtrOutputWithContext(context.Background())
+}
+
+func (o RestoreSpecOutput) ToRestoreSpecPtrOutputWithContext(ctx context.Context) RestoreSpecPtrOutput {
+	return o.ApplyT(func(v RestoreSpec) *RestoreSpec {
+		return &v
+	}).(RestoreSpecPtrOutput)
+}
+func (o RestoreSpecOutput) Backup() pulumi.StringOutput {
+	return o.ApplyT(func(v RestoreSpec) string { return v.Backup }).(pulumi.StringOutput)
+}
+
+func (o RestoreSpecOutput) Cluster() pulumi.StringOutput {
+	return o.ApplyT(func(v RestoreSpec) string { return v.Cluster }).(pulumi.StringOutput)
+}
+
+// InfinispanContainerSpec specify resource requirements per container
+func (o RestoreSpecOutput) Container() RestoreSpecContainerPtrOutput {
+	return o.ApplyT(func(v RestoreSpec) *RestoreSpecContainer { return v.Container }).(RestoreSpecContainerPtrOutput)
+}
+
+func (o RestoreSpecOutput) Resources() RestoreSpecResourcesPtrOutput {
+	return o.ApplyT(func(v RestoreSpec) *RestoreSpecResources { return v.Resources }).(RestoreSpecResourcesPtrOutput)
+}
+
+type RestoreSpecPtrOutput struct{ *pulumi.OutputState }
+
+func (RestoreSpecPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**RestoreSpec)(nil)).Elem()
+}
+
+func (o RestoreSpecPtrOutput) ToRestoreSpecPtrOutput() RestoreSpecPtrOutput {
+	return o
+}
+
+func (o RestoreSpecPtrOutput) ToRestoreSpecPtrOutputWithContext(ctx context.Context) RestoreSpecPtrOutput {
+	return o
+}
+
+func (o RestoreSpecPtrOutput) Elem() RestoreSpecOutput {
+	return o.ApplyT(func(v *RestoreSpec) RestoreSpec { return *v }).(RestoreSpecOutput)
+}
+
+func (o RestoreSpecPtrOutput) Backup() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *RestoreSpec) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.Backup
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o RestoreSpecPtrOutput) Cluster() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *RestoreSpec) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.Cluster
+	}).(pulumi.StringPtrOutput)
+}
+
+// InfinispanContainerSpec specify resource requirements per container
+func (o RestoreSpecPtrOutput) Container() RestoreSpecContainerPtrOutput {
+	return o.ApplyT(func(v *RestoreSpec) *RestoreSpecContainer {
+		if v == nil {
+			return nil
+		}
+		return v.Container
+	}).(RestoreSpecContainerPtrOutput)
+}
+
+func (o RestoreSpecPtrOutput) Resources() RestoreSpecResourcesPtrOutput {
+	return o.ApplyT(func(v *RestoreSpec) *RestoreSpecResources {
+		if v == nil {
+			return nil
+		}
+		return v.Resources
+	}).(RestoreSpecResourcesPtrOutput)
+}
+
+// InfinispanContainerSpec specify resource requirements per container
+type RestoreSpecContainer struct {
+	Cpu          *string `pulumi:"cpu"`
+	ExtraJvmOpts *string `pulumi:"extraJvmOpts"`
+	Memory       *string `pulumi:"memory"`
+}
+
+// RestoreSpecContainerInput is an input type that accepts RestoreSpecContainerArgs and RestoreSpecContainerOutput values.
+// You can construct a concrete instance of `RestoreSpecContainerInput` via:
+//
+//          RestoreSpecContainerArgs{...}
+type RestoreSpecContainerInput interface {
+	pulumi.Input
+
+	ToRestoreSpecContainerOutput() RestoreSpecContainerOutput
+	ToRestoreSpecContainerOutputWithContext(context.Context) RestoreSpecContainerOutput
+}
+
+// InfinispanContainerSpec specify resource requirements per container
+type RestoreSpecContainerArgs struct {
+	Cpu          pulumi.StringPtrInput `pulumi:"cpu"`
+	ExtraJvmOpts pulumi.StringPtrInput `pulumi:"extraJvmOpts"`
+	Memory       pulumi.StringPtrInput `pulumi:"memory"`
+}
+
+func (RestoreSpecContainerArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*RestoreSpecContainer)(nil)).Elem()
+}
+
+func (i RestoreSpecContainerArgs) ToRestoreSpecContainerOutput() RestoreSpecContainerOutput {
+	return i.ToRestoreSpecContainerOutputWithContext(context.Background())
+}
+
+func (i RestoreSpecContainerArgs) ToRestoreSpecContainerOutputWithContext(ctx context.Context) RestoreSpecContainerOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(RestoreSpecContainerOutput)
+}
+
+func (i RestoreSpecContainerArgs) ToRestoreSpecContainerPtrOutput() RestoreSpecContainerPtrOutput {
+	return i.ToRestoreSpecContainerPtrOutputWithContext(context.Background())
+}
+
+func (i RestoreSpecContainerArgs) ToRestoreSpecContainerPtrOutputWithContext(ctx context.Context) RestoreSpecContainerPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(RestoreSpecContainerOutput).ToRestoreSpecContainerPtrOutputWithContext(ctx)
+}
+
+// RestoreSpecContainerPtrInput is an input type that accepts RestoreSpecContainerArgs, RestoreSpecContainerPtr and RestoreSpecContainerPtrOutput values.
+// You can construct a concrete instance of `RestoreSpecContainerPtrInput` via:
+//
+//          RestoreSpecContainerArgs{...}
+//
+//  or:
+//
+//          nil
+type RestoreSpecContainerPtrInput interface {
+	pulumi.Input
+
+	ToRestoreSpecContainerPtrOutput() RestoreSpecContainerPtrOutput
+	ToRestoreSpecContainerPtrOutputWithContext(context.Context) RestoreSpecContainerPtrOutput
+}
+
+type restoreSpecContainerPtrType RestoreSpecContainerArgs
+
+func RestoreSpecContainerPtr(v *RestoreSpecContainerArgs) RestoreSpecContainerPtrInput {
+	return (*restoreSpecContainerPtrType)(v)
+}
+
+func (*restoreSpecContainerPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**RestoreSpecContainer)(nil)).Elem()
+}
+
+func (i *restoreSpecContainerPtrType) ToRestoreSpecContainerPtrOutput() RestoreSpecContainerPtrOutput {
+	return i.ToRestoreSpecContainerPtrOutputWithContext(context.Background())
+}
+
+func (i *restoreSpecContainerPtrType) ToRestoreSpecContainerPtrOutputWithContext(ctx context.Context) RestoreSpecContainerPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(RestoreSpecContainerPtrOutput)
+}
+
+// InfinispanContainerSpec specify resource requirements per container
+type RestoreSpecContainerOutput struct{ *pulumi.OutputState }
+
+func (RestoreSpecContainerOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*RestoreSpecContainer)(nil)).Elem()
+}
+
+func (o RestoreSpecContainerOutput) ToRestoreSpecContainerOutput() RestoreSpecContainerOutput {
+	return o
+}
+
+func (o RestoreSpecContainerOutput) ToRestoreSpecContainerOutputWithContext(ctx context.Context) RestoreSpecContainerOutput {
+	return o
+}
+
+func (o RestoreSpecContainerOutput) ToRestoreSpecContainerPtrOutput() RestoreSpecContainerPtrOutput {
+	return o.ToRestoreSpecContainerPtrOutputWithContext(context.Background())
+}
+
+func (o RestoreSpecContainerOutput) ToRestoreSpecContainerPtrOutputWithContext(ctx context.Context) RestoreSpecContainerPtrOutput {
+	return o.ApplyT(func(v RestoreSpecContainer) *RestoreSpecContainer {
+		return &v
+	}).(RestoreSpecContainerPtrOutput)
+}
+func (o RestoreSpecContainerOutput) Cpu() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v RestoreSpecContainer) *string { return v.Cpu }).(pulumi.StringPtrOutput)
+}
+
+func (o RestoreSpecContainerOutput) ExtraJvmOpts() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v RestoreSpecContainer) *string { return v.ExtraJvmOpts }).(pulumi.StringPtrOutput)
+}
+
+func (o RestoreSpecContainerOutput) Memory() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v RestoreSpecContainer) *string { return v.Memory }).(pulumi.StringPtrOutput)
+}
+
+type RestoreSpecContainerPtrOutput struct{ *pulumi.OutputState }
+
+func (RestoreSpecContainerPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**RestoreSpecContainer)(nil)).Elem()
+}
+
+func (o RestoreSpecContainerPtrOutput) ToRestoreSpecContainerPtrOutput() RestoreSpecContainerPtrOutput {
+	return o
+}
+
+func (o RestoreSpecContainerPtrOutput) ToRestoreSpecContainerPtrOutputWithContext(ctx context.Context) RestoreSpecContainerPtrOutput {
+	return o
+}
+
+func (o RestoreSpecContainerPtrOutput) Elem() RestoreSpecContainerOutput {
+	return o.ApplyT(func(v *RestoreSpecContainer) RestoreSpecContainer { return *v }).(RestoreSpecContainerOutput)
+}
+
+func (o RestoreSpecContainerPtrOutput) Cpu() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *RestoreSpecContainer) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Cpu
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o RestoreSpecContainerPtrOutput) ExtraJvmOpts() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *RestoreSpecContainer) *string {
+		if v == nil {
+			return nil
+		}
+		return v.ExtraJvmOpts
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o RestoreSpecContainerPtrOutput) Memory() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *RestoreSpecContainer) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Memory
+	}).(pulumi.StringPtrOutput)
+}
+
+type RestoreSpecResources struct {
+	CacheConfigs []string `pulumi:"cacheConfigs"`
+	Caches       []string `pulumi:"caches"`
+	Counters     []string `pulumi:"counters"`
+	ProtoSchemas []string `pulumi:"protoSchemas"`
+	Scripts      []string `pulumi:"scripts"`
+}
+
+// RestoreSpecResourcesInput is an input type that accepts RestoreSpecResourcesArgs and RestoreSpecResourcesOutput values.
+// You can construct a concrete instance of `RestoreSpecResourcesInput` via:
+//
+//          RestoreSpecResourcesArgs{...}
+type RestoreSpecResourcesInput interface {
+	pulumi.Input
+
+	ToRestoreSpecResourcesOutput() RestoreSpecResourcesOutput
+	ToRestoreSpecResourcesOutputWithContext(context.Context) RestoreSpecResourcesOutput
+}
+
+type RestoreSpecResourcesArgs struct {
+	CacheConfigs pulumi.StringArrayInput `pulumi:"cacheConfigs"`
+	Caches       pulumi.StringArrayInput `pulumi:"caches"`
+	Counters     pulumi.StringArrayInput `pulumi:"counters"`
+	ProtoSchemas pulumi.StringArrayInput `pulumi:"protoSchemas"`
+	Scripts      pulumi.StringArrayInput `pulumi:"scripts"`
+}
+
+func (RestoreSpecResourcesArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*RestoreSpecResources)(nil)).Elem()
+}
+
+func (i RestoreSpecResourcesArgs) ToRestoreSpecResourcesOutput() RestoreSpecResourcesOutput {
+	return i.ToRestoreSpecResourcesOutputWithContext(context.Background())
+}
+
+func (i RestoreSpecResourcesArgs) ToRestoreSpecResourcesOutputWithContext(ctx context.Context) RestoreSpecResourcesOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(RestoreSpecResourcesOutput)
+}
+
+func (i RestoreSpecResourcesArgs) ToRestoreSpecResourcesPtrOutput() RestoreSpecResourcesPtrOutput {
+	return i.ToRestoreSpecResourcesPtrOutputWithContext(context.Background())
+}
+
+func (i RestoreSpecResourcesArgs) ToRestoreSpecResourcesPtrOutputWithContext(ctx context.Context) RestoreSpecResourcesPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(RestoreSpecResourcesOutput).ToRestoreSpecResourcesPtrOutputWithContext(ctx)
+}
+
+// RestoreSpecResourcesPtrInput is an input type that accepts RestoreSpecResourcesArgs, RestoreSpecResourcesPtr and RestoreSpecResourcesPtrOutput values.
+// You can construct a concrete instance of `RestoreSpecResourcesPtrInput` via:
+//
+//          RestoreSpecResourcesArgs{...}
+//
+//  or:
+//
+//          nil
+type RestoreSpecResourcesPtrInput interface {
+	pulumi.Input
+
+	ToRestoreSpecResourcesPtrOutput() RestoreSpecResourcesPtrOutput
+	ToRestoreSpecResourcesPtrOutputWithContext(context.Context) RestoreSpecResourcesPtrOutput
+}
+
+type restoreSpecResourcesPtrType RestoreSpecResourcesArgs
+
+func RestoreSpecResourcesPtr(v *RestoreSpecResourcesArgs) RestoreSpecResourcesPtrInput {
+	return (*restoreSpecResourcesPtrType)(v)
+}
+
+func (*restoreSpecResourcesPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**RestoreSpecResources)(nil)).Elem()
+}
+
+func (i *restoreSpecResourcesPtrType) ToRestoreSpecResourcesPtrOutput() RestoreSpecResourcesPtrOutput {
+	return i.ToRestoreSpecResourcesPtrOutputWithContext(context.Background())
+}
+
+func (i *restoreSpecResourcesPtrType) ToRestoreSpecResourcesPtrOutputWithContext(ctx context.Context) RestoreSpecResourcesPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(RestoreSpecResourcesPtrOutput)
+}
+
+type RestoreSpecResourcesOutput struct{ *pulumi.OutputState }
+
+func (RestoreSpecResourcesOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*RestoreSpecResources)(nil)).Elem()
+}
+
+func (o RestoreSpecResourcesOutput) ToRestoreSpecResourcesOutput() RestoreSpecResourcesOutput {
+	return o
+}
+
+func (o RestoreSpecResourcesOutput) ToRestoreSpecResourcesOutputWithContext(ctx context.Context) RestoreSpecResourcesOutput {
+	return o
+}
+
+func (o RestoreSpecResourcesOutput) ToRestoreSpecResourcesPtrOutput() RestoreSpecResourcesPtrOutput {
+	return o.ToRestoreSpecResourcesPtrOutputWithContext(context.Background())
+}
+
+func (o RestoreSpecResourcesOutput) ToRestoreSpecResourcesPtrOutputWithContext(ctx context.Context) RestoreSpecResourcesPtrOutput {
+	return o.ApplyT(func(v RestoreSpecResources) *RestoreSpecResources {
+		return &v
+	}).(RestoreSpecResourcesPtrOutput)
+}
+func (o RestoreSpecResourcesOutput) CacheConfigs() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v RestoreSpecResources) []string { return v.CacheConfigs }).(pulumi.StringArrayOutput)
+}
+
+func (o RestoreSpecResourcesOutput) Caches() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v RestoreSpecResources) []string { return v.Caches }).(pulumi.StringArrayOutput)
+}
+
+func (o RestoreSpecResourcesOutput) Counters() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v RestoreSpecResources) []string { return v.Counters }).(pulumi.StringArrayOutput)
+}
+
+func (o RestoreSpecResourcesOutput) ProtoSchemas() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v RestoreSpecResources) []string { return v.ProtoSchemas }).(pulumi.StringArrayOutput)
+}
+
+func (o RestoreSpecResourcesOutput) Scripts() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v RestoreSpecResources) []string { return v.Scripts }).(pulumi.StringArrayOutput)
+}
+
+type RestoreSpecResourcesPtrOutput struct{ *pulumi.OutputState }
+
+func (RestoreSpecResourcesPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**RestoreSpecResources)(nil)).Elem()
+}
+
+func (o RestoreSpecResourcesPtrOutput) ToRestoreSpecResourcesPtrOutput() RestoreSpecResourcesPtrOutput {
+	return o
+}
+
+func (o RestoreSpecResourcesPtrOutput) ToRestoreSpecResourcesPtrOutputWithContext(ctx context.Context) RestoreSpecResourcesPtrOutput {
+	return o
+}
+
+func (o RestoreSpecResourcesPtrOutput) Elem() RestoreSpecResourcesOutput {
+	return o.ApplyT(func(v *RestoreSpecResources) RestoreSpecResources { return *v }).(RestoreSpecResourcesOutput)
+}
+
+func (o RestoreSpecResourcesPtrOutput) CacheConfigs() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v *RestoreSpecResources) []string {
+		if v == nil {
+			return nil
+		}
+		return v.CacheConfigs
+	}).(pulumi.StringArrayOutput)
+}
+
+func (o RestoreSpecResourcesPtrOutput) Caches() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v *RestoreSpecResources) []string {
+		if v == nil {
+			return nil
+		}
+		return v.Caches
+	}).(pulumi.StringArrayOutput)
+}
+
+func (o RestoreSpecResourcesPtrOutput) Counters() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v *RestoreSpecResources) []string {
+		if v == nil {
+			return nil
+		}
+		return v.Counters
+	}).(pulumi.StringArrayOutput)
+}
+
+func (o RestoreSpecResourcesPtrOutput) ProtoSchemas() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v *RestoreSpecResources) []string {
+		if v == nil {
+			return nil
+		}
+		return v.ProtoSchemas
+	}).(pulumi.StringArrayOutput)
+}
+
+func (o RestoreSpecResourcesPtrOutput) Scripts() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v *RestoreSpecResources) []string {
+		if v == nil {
+			return nil
+		}
+		return v.Scripts
+	}).(pulumi.StringArrayOutput)
+}
+
+// RestoreStatus defines the observed state of Restore
+type RestoreStatus struct {
+	// State indicates the current state of the restore operation
+	Phase string `pulumi:"phase"`
+	// Reason indicates the reason for any Restore related failures.
+	Reason *string `pulumi:"reason"`
+}
+
+// RestoreStatusInput is an input type that accepts RestoreStatusArgs and RestoreStatusOutput values.
+// You can construct a concrete instance of `RestoreStatusInput` via:
+//
+//          RestoreStatusArgs{...}
+type RestoreStatusInput interface {
+	pulumi.Input
+
+	ToRestoreStatusOutput() RestoreStatusOutput
+	ToRestoreStatusOutputWithContext(context.Context) RestoreStatusOutput
+}
+
+// RestoreStatus defines the observed state of Restore
+type RestoreStatusArgs struct {
+	// State indicates the current state of the restore operation
+	Phase pulumi.StringInput `pulumi:"phase"`
+	// Reason indicates the reason for any Restore related failures.
+	Reason pulumi.StringPtrInput `pulumi:"reason"`
+}
+
+func (RestoreStatusArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*RestoreStatus)(nil)).Elem()
+}
+
+func (i RestoreStatusArgs) ToRestoreStatusOutput() RestoreStatusOutput {
+	return i.ToRestoreStatusOutputWithContext(context.Background())
+}
+
+func (i RestoreStatusArgs) ToRestoreStatusOutputWithContext(ctx context.Context) RestoreStatusOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(RestoreStatusOutput)
+}
+
+func (i RestoreStatusArgs) ToRestoreStatusPtrOutput() RestoreStatusPtrOutput {
+	return i.ToRestoreStatusPtrOutputWithContext(context.Background())
+}
+
+func (i RestoreStatusArgs) ToRestoreStatusPtrOutputWithContext(ctx context.Context) RestoreStatusPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(RestoreStatusOutput).ToRestoreStatusPtrOutputWithContext(ctx)
+}
+
+// RestoreStatusPtrInput is an input type that accepts RestoreStatusArgs, RestoreStatusPtr and RestoreStatusPtrOutput values.
+// You can construct a concrete instance of `RestoreStatusPtrInput` via:
+//
+//          RestoreStatusArgs{...}
+//
+//  or:
+//
+//          nil
+type RestoreStatusPtrInput interface {
+	pulumi.Input
+
+	ToRestoreStatusPtrOutput() RestoreStatusPtrOutput
+	ToRestoreStatusPtrOutputWithContext(context.Context) RestoreStatusPtrOutput
+}
+
+type restoreStatusPtrType RestoreStatusArgs
+
+func RestoreStatusPtr(v *RestoreStatusArgs) RestoreStatusPtrInput {
+	return (*restoreStatusPtrType)(v)
+}
+
+func (*restoreStatusPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**RestoreStatus)(nil)).Elem()
+}
+
+func (i *restoreStatusPtrType) ToRestoreStatusPtrOutput() RestoreStatusPtrOutput {
+	return i.ToRestoreStatusPtrOutputWithContext(context.Background())
+}
+
+func (i *restoreStatusPtrType) ToRestoreStatusPtrOutputWithContext(ctx context.Context) RestoreStatusPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(RestoreStatusPtrOutput)
+}
+
+// RestoreStatus defines the observed state of Restore
+type RestoreStatusOutput struct{ *pulumi.OutputState }
+
+func (RestoreStatusOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*RestoreStatus)(nil)).Elem()
+}
+
+func (o RestoreStatusOutput) ToRestoreStatusOutput() RestoreStatusOutput {
+	return o
+}
+
+func (o RestoreStatusOutput) ToRestoreStatusOutputWithContext(ctx context.Context) RestoreStatusOutput {
+	return o
+}
+
+func (o RestoreStatusOutput) ToRestoreStatusPtrOutput() RestoreStatusPtrOutput {
+	return o.ToRestoreStatusPtrOutputWithContext(context.Background())
+}
+
+func (o RestoreStatusOutput) ToRestoreStatusPtrOutputWithContext(ctx context.Context) RestoreStatusPtrOutput {
+	return o.ApplyT(func(v RestoreStatus) *RestoreStatus {
+		return &v
+	}).(RestoreStatusPtrOutput)
+}
+
+// State indicates the current state of the restore operation
+func (o RestoreStatusOutput) Phase() pulumi.StringOutput {
+	return o.ApplyT(func(v RestoreStatus) string { return v.Phase }).(pulumi.StringOutput)
+}
+
+// Reason indicates the reason for any Restore related failures.
+func (o RestoreStatusOutput) Reason() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v RestoreStatus) *string { return v.Reason }).(pulumi.StringPtrOutput)
+}
+
+type RestoreStatusPtrOutput struct{ *pulumi.OutputState }
+
+func (RestoreStatusPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**RestoreStatus)(nil)).Elem()
+}
+
+func (o RestoreStatusPtrOutput) ToRestoreStatusPtrOutput() RestoreStatusPtrOutput {
+	return o
+}
+
+func (o RestoreStatusPtrOutput) ToRestoreStatusPtrOutputWithContext(ctx context.Context) RestoreStatusPtrOutput {
+	return o
+}
+
+func (o RestoreStatusPtrOutput) Elem() RestoreStatusOutput {
+	return o.ApplyT(func(v *RestoreStatus) RestoreStatus { return *v }).(RestoreStatusOutput)
+}
+
+// State indicates the current state of the restore operation
+func (o RestoreStatusPtrOutput) Phase() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *RestoreStatus) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.Phase
+	}).(pulumi.StringPtrOutput)
+}
+
+// Reason indicates the reason for any Restore related failures.
+func (o RestoreStatusPtrOutput) Reason() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *RestoreStatus) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Reason
+	}).(pulumi.StringPtrOutput)
+}
+
 func init() {
+	pulumi.RegisterOutputType(BackupTypeOutput{})
+	pulumi.RegisterOutputType(BackupMetadataOutput{})
+	pulumi.RegisterOutputType(BackupSpecOutput{})
+	pulumi.RegisterOutputType(BackupSpecPtrOutput{})
+	pulumi.RegisterOutputType(BackupSpecContainerOutput{})
+	pulumi.RegisterOutputType(BackupSpecContainerPtrOutput{})
+	pulumi.RegisterOutputType(BackupSpecResourcesOutput{})
+	pulumi.RegisterOutputType(BackupSpecResourcesPtrOutput{})
+	pulumi.RegisterOutputType(BackupSpecVolumeOutput{})
+	pulumi.RegisterOutputType(BackupSpecVolumePtrOutput{})
+	pulumi.RegisterOutputType(BackupStatusOutput{})
+	pulumi.RegisterOutputType(BackupStatusPtrOutput{})
 	pulumi.RegisterOutputType(CacheTypeOutput{})
 	pulumi.RegisterOutputType(CacheMetadataOutput{})
 	pulumi.RegisterOutputType(CacheSpecOutput{})
@@ -1148,4 +2922,14 @@ func init() {
 	pulumi.RegisterOutputType(CacheStatusPtrOutput{})
 	pulumi.RegisterOutputType(CacheStatusConditionsOutput{})
 	pulumi.RegisterOutputType(CacheStatusConditionsArrayOutput{})
+	pulumi.RegisterOutputType(RestoreTypeOutput{})
+	pulumi.RegisterOutputType(RestoreMetadataOutput{})
+	pulumi.RegisterOutputType(RestoreSpecOutput{})
+	pulumi.RegisterOutputType(RestoreSpecPtrOutput{})
+	pulumi.RegisterOutputType(RestoreSpecContainerOutput{})
+	pulumi.RegisterOutputType(RestoreSpecContainerPtrOutput{})
+	pulumi.RegisterOutputType(RestoreSpecResourcesOutput{})
+	pulumi.RegisterOutputType(RestoreSpecResourcesPtrOutput{})
+	pulumi.RegisterOutputType(RestoreStatusOutput{})
+	pulumi.RegisterOutputType(RestoreStatusPtrOutput{})
 }

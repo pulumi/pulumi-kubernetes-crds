@@ -157,6 +157,7 @@ __all__ = [
     'TidbClusterSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecution',
     'TidbClusterSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector',
     'TidbClusterSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions',
+    'TidbClusterSpecCluster',
     'TidbClusterSpecDiscovery',
     'TidbClusterSpecHelper',
     'TidbClusterSpecImagePullSecrets',
@@ -293,16 +294,6 @@ __all__ = [
     'TidbClusterSpecPdAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecution',
     'TidbClusterSpecPdAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector',
     'TidbClusterSpecPdAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions',
-    'TidbClusterSpecPdConfig',
-    'TidbClusterSpecPdConfigDashboard',
-    'TidbClusterSpecPdConfigLog',
-    'TidbClusterSpecPdConfigLogFile',
-    'TidbClusterSpecPdConfigMetric',
-    'TidbClusterSpecPdConfigPd-Server',
-    'TidbClusterSpecPdConfigReplication',
-    'TidbClusterSpecPdConfigSchedule',
-    'TidbClusterSpecPdConfigScheduleSchedulers-V2',
-    'TidbClusterSpecPdConfigSecurity',
     'TidbClusterSpecPdEnv',
     'TidbClusterSpecPdEnvValueFrom',
     'TidbClusterSpecPdEnvValueFromConfigMapKeyRef',
@@ -740,25 +731,6 @@ __all__ = [
     'TidbClusterSpecTidbAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecution',
     'TidbClusterSpecTidbAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector',
     'TidbClusterSpecTidbAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions',
-    'TidbClusterSpecTidbConfig',
-    'TidbClusterSpecTidbConfigBinlog',
-    'TidbClusterSpecTidbConfigExperimental',
-    'TidbClusterSpecTidbConfigIsolation-Read',
-    'TidbClusterSpecTidbConfigLog',
-    'TidbClusterSpecTidbConfigLogFile',
-    'TidbClusterSpecTidbConfigOpentracing',
-    'TidbClusterSpecTidbConfigOpentracingReporter',
-    'TidbClusterSpecTidbConfigOpentracingSampler',
-    'TidbClusterSpecTidbConfigPerformance',
-    'TidbClusterSpecTidbConfigPessimistic-Txn',
-    'TidbClusterSpecTidbConfigPlugin',
-    'TidbClusterSpecTidbConfigPrepared-Plan-Cache',
-    'TidbClusterSpecTidbConfigProxy-Protocol',
-    'TidbClusterSpecTidbConfigSecurity',
-    'TidbClusterSpecTidbConfigStatus',
-    'TidbClusterSpecTidbConfigStmt-Summary',
-    'TidbClusterSpecTidbConfigTikv-Client',
-    'TidbClusterSpecTidbConfigTxn-Local-Latches',
     'TidbClusterSpecTidbEnv',
     'TidbClusterSpecTidbEnvValueFrom',
     'TidbClusterSpecTidbEnvValueFromConfigMapKeyRef',
@@ -785,6 +757,7 @@ __all__ = [
     'TidbClusterSpecTidbPodSecurityContextSeLinuxOptions',
     'TidbClusterSpecTidbPodSecurityContextSysctls',
     'TidbClusterSpecTidbPodSecurityContextWindowsOptions',
+    'TidbClusterSpecTidbReadinessProbe',
     'TidbClusterSpecTidbService',
     'TidbClusterSpecTidbSlowLogTailer',
     'TidbClusterSpecTidbTolerations',
@@ -921,11 +894,6 @@ __all__ = [
     'TidbClusterSpecTiflashAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecution',
     'TidbClusterSpecTiflashAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector',
     'TidbClusterSpecTiflashAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions',
-    'TidbClusterSpecTiflashConfig',
-    'TidbClusterSpecTiflashConfigConfig',
-    'TidbClusterSpecTiflashConfigConfigFlash',
-    'TidbClusterSpecTiflashConfigConfigFlashFlash_cluster',
-    'TidbClusterSpecTiflashConfigConfigLogger',
     'TidbClusterSpecTiflashEnv',
     'TidbClusterSpecTiflashEnvValueFrom',
     'TidbClusterSpecTiflashEnvValueFromConfigMapKeyRef',
@@ -1074,34 +1042,6 @@ __all__ = [
     'TidbClusterSpecTikvAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecution',
     'TidbClusterSpecTikvAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector',
     'TidbClusterSpecTikvAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions',
-    'TidbClusterSpecTikvConfig',
-    'TidbClusterSpecTikvConfigCoprocessor',
-    'TidbClusterSpecTikvConfigGc',
-    'TidbClusterSpecTikvConfigImport',
-    'TidbClusterSpecTikvConfigPd',
-    'TidbClusterSpecTikvConfigPessimistic-Txn',
-    'TidbClusterSpecTikvConfigRaftdb',
-    'TidbClusterSpecTikvConfigRaftdbDefaultcf',
-    'TidbClusterSpecTikvConfigRaftdbDefaultcfTitan',
-    'TidbClusterSpecTikvConfigRaftstore',
-    'TidbClusterSpecTikvConfigReadpool',
-    'TidbClusterSpecTikvConfigReadpoolCoprocessor',
-    'TidbClusterSpecTikvConfigReadpoolStorage',
-    'TidbClusterSpecTikvConfigReadpoolUnified',
-    'TidbClusterSpecTikvConfigRocksdb',
-    'TidbClusterSpecTikvConfigRocksdbDefaultcf',
-    'TidbClusterSpecTikvConfigRocksdbDefaultcfTitan',
-    'TidbClusterSpecTikvConfigRocksdbLockcf',
-    'TidbClusterSpecTikvConfigRocksdbLockcfTitan',
-    'TidbClusterSpecTikvConfigRocksdbRaftcf',
-    'TidbClusterSpecTikvConfigRocksdbRaftcfTitan',
-    'TidbClusterSpecTikvConfigRocksdbTitan',
-    'TidbClusterSpecTikvConfigRocksdbWritecf',
-    'TidbClusterSpecTikvConfigRocksdbWritecfTitan',
-    'TidbClusterSpecTikvConfigSecurity',
-    'TidbClusterSpecTikvConfigServer',
-    'TidbClusterSpecTikvConfigStorage',
-    'TidbClusterSpecTikvConfigStorageBlock-Cache',
     'TidbClusterSpecTikvEnv',
     'TidbClusterSpecTikvEnvValueFrom',
     'TidbClusterSpecTikvEnvValueFromConfigMapKeyRef',
@@ -1255,7 +1195,7 @@ class BackupScheduleSpecBackupTemplate(dict):
                  affinity: Optional['outputs.BackupScheduleSpecBackupTemplateAffinity'] = None,
                  backup_type: Optional[str] = None,
                  br: Optional['outputs.BackupScheduleSpecBackupTemplateBr'] = None,
-                 clean_data: Optional[bool] = None,
+                 clean_policy: Optional[str] = None,
                  dumpling: Optional['outputs.BackupScheduleSpecBackupTemplateDumpling'] = None,
                  from_: Optional['outputs.BackupScheduleSpecBackupTemplateFrom'] = None,
                  gcs: Optional['outputs.BackupScheduleSpecBackupTemplateGcs'] = None,
@@ -1265,8 +1205,10 @@ class BackupScheduleSpecBackupTemplate(dict):
                  service_account: Optional[str] = None,
                  storage_class_name: Optional[str] = None,
                  storage_size: Optional[str] = None,
+                 table_filter: Optional[Sequence[str]] = None,
                  tikv_gc_life_time: Optional[str] = None,
                  tolerations: Optional[Sequence['outputs.BackupScheduleSpecBackupTemplateTolerations']] = None,
+                 tool_image: Optional[str] = None,
                  use_kms: Optional[bool] = None):
         if affinity is not None:
             pulumi.set(__self__, "affinity", affinity)
@@ -1274,8 +1216,8 @@ class BackupScheduleSpecBackupTemplate(dict):
             pulumi.set(__self__, "backup_type", backup_type)
         if br is not None:
             pulumi.set(__self__, "br", br)
-        if clean_data is not None:
-            pulumi.set(__self__, "clean_data", clean_data)
+        if clean_policy is not None:
+            pulumi.set(__self__, "clean_policy", clean_policy)
         if dumpling is not None:
             pulumi.set(__self__, "dumpling", dumpling)
         if from_ is not None:
@@ -1294,10 +1236,14 @@ class BackupScheduleSpecBackupTemplate(dict):
             pulumi.set(__self__, "storage_class_name", storage_class_name)
         if storage_size is not None:
             pulumi.set(__self__, "storage_size", storage_size)
+        if table_filter is not None:
+            pulumi.set(__self__, "table_filter", table_filter)
         if tikv_gc_life_time is not None:
             pulumi.set(__self__, "tikv_gc_life_time", tikv_gc_life_time)
         if tolerations is not None:
             pulumi.set(__self__, "tolerations", tolerations)
+        if tool_image is not None:
+            pulumi.set(__self__, "tool_image", tool_image)
         if use_kms is not None:
             pulumi.set(__self__, "use_kms", use_kms)
 
@@ -1317,9 +1263,9 @@ class BackupScheduleSpecBackupTemplate(dict):
         return pulumi.get(self, "br")
 
     @property
-    @pulumi.getter(name="cleanData")
-    def clean_data(self) -> Optional[bool]:
-        return pulumi.get(self, "clean_data")
+    @pulumi.getter(name="cleanPolicy")
+    def clean_policy(self) -> Optional[str]:
+        return pulumi.get(self, "clean_policy")
 
     @property
     @pulumi.getter
@@ -1367,6 +1313,11 @@ class BackupScheduleSpecBackupTemplate(dict):
         return pulumi.get(self, "storage_size")
 
     @property
+    @pulumi.getter(name="tableFilter")
+    def table_filter(self) -> Optional[Sequence[str]]:
+        return pulumi.get(self, "table_filter")
+
+    @property
     @pulumi.getter(name="tikvGCLifeTime")
     def tikv_gc_life_time(self) -> Optional[str]:
         return pulumi.get(self, "tikv_gc_life_time")
@@ -1375,6 +1326,11 @@ class BackupScheduleSpecBackupTemplate(dict):
     @pulumi.getter
     def tolerations(self) -> Optional[Sequence['outputs.BackupScheduleSpecBackupTemplateTolerations']]:
         return pulumi.get(self, "tolerations")
+
+    @property
+    @pulumi.getter(name="toolImage")
+    def tool_image(self) -> Optional[str]:
+        return pulumi.get(self, "tool_image")
 
     @property
     @pulumi.getter(name="useKMS")
@@ -2088,6 +2044,7 @@ class BackupScheduleSpecBackupTemplateBr(dict):
                  db: Optional[str] = None,
                  log_level: Optional[str] = None,
                  on_line: Optional[bool] = None,
+                 options: Optional[Sequence[str]] = None,
                  rate_limit: Optional[int] = None,
                  send_cred_to_tikv: Optional[bool] = None,
                  status_addr: Optional[str] = None,
@@ -2106,6 +2063,8 @@ class BackupScheduleSpecBackupTemplateBr(dict):
             pulumi.set(__self__, "log_level", log_level)
         if on_line is not None:
             pulumi.set(__self__, "on_line", on_line)
+        if options is not None:
+            pulumi.set(__self__, "options", options)
         if rate_limit is not None:
             pulumi.set(__self__, "rate_limit", rate_limit)
         if send_cred_to_tikv is not None:
@@ -2151,6 +2110,11 @@ class BackupScheduleSpecBackupTemplateBr(dict):
     @pulumi.getter(name="onLine")
     def on_line(self) -> Optional[bool]:
         return pulumi.get(self, "on_line")
+
+    @property
+    @pulumi.getter
+    def options(self) -> Optional[Sequence[str]]:
+        return pulumi.get(self, "options")
 
     @property
     @pulumi.getter(name="rateLimit")
@@ -2534,7 +2498,7 @@ class BackupSpec(dict):
                  affinity: Optional['outputs.BackupSpecAffinity'] = None,
                  backup_type: Optional[str] = None,
                  br: Optional['outputs.BackupSpecBr'] = None,
-                 clean_data: Optional[bool] = None,
+                 clean_policy: Optional[str] = None,
                  dumpling: Optional['outputs.BackupSpecDumpling'] = None,
                  from_: Optional['outputs.BackupSpecFrom'] = None,
                  gcs: Optional['outputs.BackupSpecGcs'] = None,
@@ -2544,8 +2508,10 @@ class BackupSpec(dict):
                  service_account: Optional[str] = None,
                  storage_class_name: Optional[str] = None,
                  storage_size: Optional[str] = None,
+                 table_filter: Optional[Sequence[str]] = None,
                  tikv_gc_life_time: Optional[str] = None,
                  tolerations: Optional[Sequence['outputs.BackupSpecTolerations']] = None,
+                 tool_image: Optional[str] = None,
                  use_kms: Optional[bool] = None):
         if affinity is not None:
             pulumi.set(__self__, "affinity", affinity)
@@ -2553,8 +2519,8 @@ class BackupSpec(dict):
             pulumi.set(__self__, "backup_type", backup_type)
         if br is not None:
             pulumi.set(__self__, "br", br)
-        if clean_data is not None:
-            pulumi.set(__self__, "clean_data", clean_data)
+        if clean_policy is not None:
+            pulumi.set(__self__, "clean_policy", clean_policy)
         if dumpling is not None:
             pulumi.set(__self__, "dumpling", dumpling)
         if from_ is not None:
@@ -2573,10 +2539,14 @@ class BackupSpec(dict):
             pulumi.set(__self__, "storage_class_name", storage_class_name)
         if storage_size is not None:
             pulumi.set(__self__, "storage_size", storage_size)
+        if table_filter is not None:
+            pulumi.set(__self__, "table_filter", table_filter)
         if tikv_gc_life_time is not None:
             pulumi.set(__self__, "tikv_gc_life_time", tikv_gc_life_time)
         if tolerations is not None:
             pulumi.set(__self__, "tolerations", tolerations)
+        if tool_image is not None:
+            pulumi.set(__self__, "tool_image", tool_image)
         if use_kms is not None:
             pulumi.set(__self__, "use_kms", use_kms)
 
@@ -2596,9 +2566,9 @@ class BackupSpec(dict):
         return pulumi.get(self, "br")
 
     @property
-    @pulumi.getter(name="cleanData")
-    def clean_data(self) -> Optional[bool]:
-        return pulumi.get(self, "clean_data")
+    @pulumi.getter(name="cleanPolicy")
+    def clean_policy(self) -> Optional[str]:
+        return pulumi.get(self, "clean_policy")
 
     @property
     @pulumi.getter
@@ -2646,6 +2616,11 @@ class BackupSpec(dict):
         return pulumi.get(self, "storage_size")
 
     @property
+    @pulumi.getter(name="tableFilter")
+    def table_filter(self) -> Optional[Sequence[str]]:
+        return pulumi.get(self, "table_filter")
+
+    @property
     @pulumi.getter(name="tikvGCLifeTime")
     def tikv_gc_life_time(self) -> Optional[str]:
         return pulumi.get(self, "tikv_gc_life_time")
@@ -2654,6 +2629,11 @@ class BackupSpec(dict):
     @pulumi.getter
     def tolerations(self) -> Optional[Sequence['outputs.BackupSpecTolerations']]:
         return pulumi.get(self, "tolerations")
+
+    @property
+    @pulumi.getter(name="toolImage")
+    def tool_image(self) -> Optional[str]:
+        return pulumi.get(self, "tool_image")
 
     @property
     @pulumi.getter(name="useKMS")
@@ -3367,6 +3347,7 @@ class BackupSpecBr(dict):
                  db: Optional[str] = None,
                  log_level: Optional[str] = None,
                  on_line: Optional[bool] = None,
+                 options: Optional[Sequence[str]] = None,
                  rate_limit: Optional[int] = None,
                  send_cred_to_tikv: Optional[bool] = None,
                  status_addr: Optional[str] = None,
@@ -3385,6 +3366,8 @@ class BackupSpecBr(dict):
             pulumi.set(__self__, "log_level", log_level)
         if on_line is not None:
             pulumi.set(__self__, "on_line", on_line)
+        if options is not None:
+            pulumi.set(__self__, "options", options)
         if rate_limit is not None:
             pulumi.set(__self__, "rate_limit", rate_limit)
         if send_cred_to_tikv is not None:
@@ -3430,6 +3413,11 @@ class BackupSpecBr(dict):
     @pulumi.getter(name="onLine")
     def on_line(self) -> Optional[bool]:
         return pulumi.get(self, "on_line")
+
+    @property
+    @pulumi.getter
+    def options(self) -> Optional[Sequence[str]]:
+        return pulumi.get(self, "options")
 
     @property
     @pulumi.getter(name="rateLimit")
@@ -3804,9 +3792,11 @@ class RestoreSpec(dict):
                  service_account: Optional[str] = None,
                  storage_class_name: Optional[str] = None,
                  storage_size: Optional[str] = None,
+                 table_filter: Optional[Sequence[str]] = None,
                  tikv_gc_life_time: Optional[str] = None,
                  to: Optional['outputs.RestoreSpecTo'] = None,
                  tolerations: Optional[Sequence['outputs.RestoreSpecTolerations']] = None,
+                 tool_image: Optional[str] = None,
                  use_kms: Optional[bool] = None):
         if affinity is not None:
             pulumi.set(__self__, "affinity", affinity)
@@ -3828,12 +3818,16 @@ class RestoreSpec(dict):
             pulumi.set(__self__, "storage_class_name", storage_class_name)
         if storage_size is not None:
             pulumi.set(__self__, "storage_size", storage_size)
+        if table_filter is not None:
+            pulumi.set(__self__, "table_filter", table_filter)
         if tikv_gc_life_time is not None:
             pulumi.set(__self__, "tikv_gc_life_time", tikv_gc_life_time)
         if to is not None:
             pulumi.set(__self__, "to", to)
         if tolerations is not None:
             pulumi.set(__self__, "tolerations", tolerations)
+        if tool_image is not None:
+            pulumi.set(__self__, "tool_image", tool_image)
         if use_kms is not None:
             pulumi.set(__self__, "use_kms", use_kms)
 
@@ -3888,6 +3882,11 @@ class RestoreSpec(dict):
         return pulumi.get(self, "storage_size")
 
     @property
+    @pulumi.getter(name="tableFilter")
+    def table_filter(self) -> Optional[Sequence[str]]:
+        return pulumi.get(self, "table_filter")
+
+    @property
     @pulumi.getter(name="tikvGCLifeTime")
     def tikv_gc_life_time(self) -> Optional[str]:
         return pulumi.get(self, "tikv_gc_life_time")
@@ -3901,6 +3900,11 @@ class RestoreSpec(dict):
     @pulumi.getter
     def tolerations(self) -> Optional[Sequence['outputs.RestoreSpecTolerations']]:
         return pulumi.get(self, "tolerations")
+
+    @property
+    @pulumi.getter(name="toolImage")
+    def tool_image(self) -> Optional[str]:
+        return pulumi.get(self, "tool_image")
 
     @property
     @pulumi.getter(name="useKMS")
@@ -4614,6 +4618,7 @@ class RestoreSpecBr(dict):
                  db: Optional[str] = None,
                  log_level: Optional[str] = None,
                  on_line: Optional[bool] = None,
+                 options: Optional[Sequence[str]] = None,
                  rate_limit: Optional[int] = None,
                  send_cred_to_tikv: Optional[bool] = None,
                  status_addr: Optional[str] = None,
@@ -4632,6 +4637,8 @@ class RestoreSpecBr(dict):
             pulumi.set(__self__, "log_level", log_level)
         if on_line is not None:
             pulumi.set(__self__, "on_line", on_line)
+        if options is not None:
+            pulumi.set(__self__, "options", options)
         if rate_limit is not None:
             pulumi.set(__self__, "rate_limit", rate_limit)
         if send_cred_to_tikv is not None:
@@ -4677,6 +4684,11 @@ class RestoreSpecBr(dict):
     @pulumi.getter(name="onLine")
     def on_line(self) -> Optional[bool]:
         return pulumi.get(self, "on_line")
+
+    @property
+    @pulumi.getter
+    def options(self) -> Optional[Sequence[str]]:
+        return pulumi.get(self, "options")
 
     @property
     @pulumi.getter(name="rateLimit")
@@ -5606,11 +5618,9 @@ class TidbClusterAutoScalerStatusTikvMetrics(dict):
 @pulumi.output_type
 class TidbClusterSpec(dict):
     def __init__(__self__, *,
-                 pd: 'outputs.TidbClusterSpecPd',
-                 tidb: 'outputs.TidbClusterSpecTidb',
-                 tikv: 'outputs.TidbClusterSpecTikv',
                  affinity: Optional['outputs.TidbClusterSpecAffinity'] = None,
                  annotations: Optional[Mapping[str, Any]] = None,
+                 cluster: Optional['outputs.TidbClusterSpecCluster'] = None,
                  config_update_strategy: Optional[str] = None,
                  discovery: Optional['outputs.TidbClusterSpecDiscovery'] = None,
                  enable_dynamic_configuration: Optional[bool] = None,
@@ -5621,23 +5631,28 @@ class TidbClusterSpec(dict):
                  image_pull_secrets: Optional[Sequence['outputs.TidbClusterSpecImagePullSecrets']] = None,
                  node_selector: Optional[Mapping[str, Any]] = None,
                  paused: Optional[bool] = None,
+                 pd: Optional['outputs.TidbClusterSpecPd'] = None,
+                 pd_addresses: Optional[Sequence[str]] = None,
                  priority_class_name: Optional[str] = None,
                  pump: Optional['outputs.TidbClusterSpecPump'] = None,
                  pv_reclaim_policy: Optional[str] = None,
                  scheduler_name: Optional[str] = None,
+                 service_account: Optional[str] = None,
+                 stateful_set_update_strategy: Optional[str] = None,
                  ticdc: Optional['outputs.TidbClusterSpecTicdc'] = None,
+                 tidb: Optional['outputs.TidbClusterSpecTidb'] = None,
                  tiflash: Optional['outputs.TidbClusterSpecTiflash'] = None,
+                 tikv: Optional['outputs.TidbClusterSpecTikv'] = None,
                  timezone: Optional[str] = None,
                  tls_cluster: Optional[Any] = None,
                  tolerations: Optional[Sequence['outputs.TidbClusterSpecTolerations']] = None,
                  version: Optional[str] = None):
-        pulumi.set(__self__, "pd", pd)
-        pulumi.set(__self__, "tidb", tidb)
-        pulumi.set(__self__, "tikv", tikv)
         if affinity is not None:
             pulumi.set(__self__, "affinity", affinity)
         if annotations is not None:
             pulumi.set(__self__, "annotations", annotations)
+        if cluster is not None:
+            pulumi.set(__self__, "cluster", cluster)
         if config_update_strategy is not None:
             pulumi.set(__self__, "config_update_strategy", config_update_strategy)
         if discovery is not None:
@@ -5658,6 +5673,10 @@ class TidbClusterSpec(dict):
             pulumi.set(__self__, "node_selector", node_selector)
         if paused is not None:
             pulumi.set(__self__, "paused", paused)
+        if pd is not None:
+            pulumi.set(__self__, "pd", pd)
+        if pd_addresses is not None:
+            pulumi.set(__self__, "pd_addresses", pd_addresses)
         if priority_class_name is not None:
             pulumi.set(__self__, "priority_class_name", priority_class_name)
         if pump is not None:
@@ -5666,10 +5685,18 @@ class TidbClusterSpec(dict):
             pulumi.set(__self__, "pv_reclaim_policy", pv_reclaim_policy)
         if scheduler_name is not None:
             pulumi.set(__self__, "scheduler_name", scheduler_name)
+        if service_account is not None:
+            pulumi.set(__self__, "service_account", service_account)
+        if stateful_set_update_strategy is not None:
+            pulumi.set(__self__, "stateful_set_update_strategy", stateful_set_update_strategy)
         if ticdc is not None:
             pulumi.set(__self__, "ticdc", ticdc)
+        if tidb is not None:
+            pulumi.set(__self__, "tidb", tidb)
         if tiflash is not None:
             pulumi.set(__self__, "tiflash", tiflash)
+        if tikv is not None:
+            pulumi.set(__self__, "tikv", tikv)
         if timezone is not None:
             pulumi.set(__self__, "timezone", timezone)
         if tls_cluster is not None:
@@ -5681,21 +5708,6 @@ class TidbClusterSpec(dict):
 
     @property
     @pulumi.getter
-    def pd(self) -> 'outputs.TidbClusterSpecPd':
-        return pulumi.get(self, "pd")
-
-    @property
-    @pulumi.getter
-    def tidb(self) -> 'outputs.TidbClusterSpecTidb':
-        return pulumi.get(self, "tidb")
-
-    @property
-    @pulumi.getter
-    def tikv(self) -> 'outputs.TidbClusterSpecTikv':
-        return pulumi.get(self, "tikv")
-
-    @property
-    @pulumi.getter
     def affinity(self) -> Optional['outputs.TidbClusterSpecAffinity']:
         return pulumi.get(self, "affinity")
 
@@ -5703,6 +5715,11 @@ class TidbClusterSpec(dict):
     @pulumi.getter
     def annotations(self) -> Optional[Mapping[str, Any]]:
         return pulumi.get(self, "annotations")
+
+    @property
+    @pulumi.getter
+    def cluster(self) -> Optional['outputs.TidbClusterSpecCluster']:
+        return pulumi.get(self, "cluster")
 
     @property
     @pulumi.getter(name="configUpdateStrategy")
@@ -5755,6 +5772,16 @@ class TidbClusterSpec(dict):
         return pulumi.get(self, "paused")
 
     @property
+    @pulumi.getter
+    def pd(self) -> Optional['outputs.TidbClusterSpecPd']:
+        return pulumi.get(self, "pd")
+
+    @property
+    @pulumi.getter(name="pdAddresses")
+    def pd_addresses(self) -> Optional[Sequence[str]]:
+        return pulumi.get(self, "pd_addresses")
+
+    @property
     @pulumi.getter(name="priorityClassName")
     def priority_class_name(self) -> Optional[str]:
         return pulumi.get(self, "priority_class_name")
@@ -5775,14 +5802,34 @@ class TidbClusterSpec(dict):
         return pulumi.get(self, "scheduler_name")
 
     @property
+    @pulumi.getter(name="serviceAccount")
+    def service_account(self) -> Optional[str]:
+        return pulumi.get(self, "service_account")
+
+    @property
+    @pulumi.getter(name="statefulSetUpdateStrategy")
+    def stateful_set_update_strategy(self) -> Optional[str]:
+        return pulumi.get(self, "stateful_set_update_strategy")
+
+    @property
     @pulumi.getter
     def ticdc(self) -> Optional['outputs.TidbClusterSpecTicdc']:
         return pulumi.get(self, "ticdc")
 
     @property
     @pulumi.getter
+    def tidb(self) -> Optional['outputs.TidbClusterSpecTidb']:
+        return pulumi.get(self, "tidb")
+
+    @property
+    @pulumi.getter
     def tiflash(self) -> Optional['outputs.TidbClusterSpecTiflash']:
         return pulumi.get(self, "tiflash")
+
+    @property
+    @pulumi.getter
+    def tikv(self) -> Optional['outputs.TidbClusterSpecTikv']:
+        return pulumi.get(self, "tikv")
 
     @property
     @pulumi.getter
@@ -6502,6 +6549,29 @@ class TidbClusterSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDurin
 
 
 @pulumi.output_type
+class TidbClusterSpecCluster(dict):
+    def __init__(__self__, *,
+                 name: str,
+                 namespace: Optional[str] = None):
+        pulumi.set(__self__, "name", name)
+        if namespace is not None:
+            pulumi.set(__self__, "namespace", namespace)
+
+    @property
+    @pulumi.getter
+    def name(self) -> str:
+        return pulumi.get(self, "name")
+
+    @property
+    @pulumi.getter
+    def namespace(self) -> Optional[str]:
+        return pulumi.get(self, "namespace")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
 class TidbClusterSpecDiscovery(dict):
     def __init__(__self__, *,
                  limits: Optional[Mapping[str, Any]] = None,
@@ -6574,7 +6644,7 @@ class TidbClusterSpecPd(dict):
                  affinity: Optional['outputs.TidbClusterSpecPdAffinity'] = None,
                  annotations: Optional[Mapping[str, Any]] = None,
                  base_image: Optional[str] = None,
-                 config: Optional['outputs.TidbClusterSpecPdConfig'] = None,
+                 config: Optional[Any] = None,
                  config_update_strategy: Optional[str] = None,
                  data_sub_dir: Optional[str] = None,
                  enable_dashboard_internal_proxy: Optional[bool] = None,
@@ -6584,13 +6654,17 @@ class TidbClusterSpecPd(dict):
                  image_pull_secrets: Optional[Sequence['outputs.TidbClusterSpecPdImagePullSecrets']] = None,
                  limits: Optional[Mapping[str, Any]] = None,
                  max_failover_count: Optional[int] = None,
+                 mount_cluster_client_secret: Optional[bool] = None,
                  node_selector: Optional[Mapping[str, Any]] = None,
                  pod_security_context: Optional['outputs.TidbClusterSpecPdPodSecurityContext'] = None,
                  priority_class_name: Optional[str] = None,
                  requests: Optional[Mapping[str, Any]] = None,
                  scheduler_name: Optional[str] = None,
                  service: Optional['outputs.TidbClusterSpecPdService'] = None,
+                 service_account: Optional[str] = None,
+                 stateful_set_update_strategy: Optional[str] = None,
                  storage_class_name: Optional[str] = None,
+                 storage_volumes: Optional[Sequence[Any]] = None,
                  termination_grace_period_seconds: Optional[int] = None,
                  tls_client_secret_name: Optional[str] = None,
                  tolerations: Optional[Sequence['outputs.TidbClusterSpecPdTolerations']] = None,
@@ -6626,6 +6700,8 @@ class TidbClusterSpecPd(dict):
             pulumi.set(__self__, "limits", limits)
         if max_failover_count is not None:
             pulumi.set(__self__, "max_failover_count", max_failover_count)
+        if mount_cluster_client_secret is not None:
+            pulumi.set(__self__, "mount_cluster_client_secret", mount_cluster_client_secret)
         if node_selector is not None:
             pulumi.set(__self__, "node_selector", node_selector)
         if pod_security_context is not None:
@@ -6638,8 +6714,14 @@ class TidbClusterSpecPd(dict):
             pulumi.set(__self__, "scheduler_name", scheduler_name)
         if service is not None:
             pulumi.set(__self__, "service", service)
+        if service_account is not None:
+            pulumi.set(__self__, "service_account", service_account)
+        if stateful_set_update_strategy is not None:
+            pulumi.set(__self__, "stateful_set_update_strategy", stateful_set_update_strategy)
         if storage_class_name is not None:
             pulumi.set(__self__, "storage_class_name", storage_class_name)
+        if storage_volumes is not None:
+            pulumi.set(__self__, "storage_volumes", storage_volumes)
         if termination_grace_period_seconds is not None:
             pulumi.set(__self__, "termination_grace_period_seconds", termination_grace_period_seconds)
         if tls_client_secret_name is not None:
@@ -6681,7 +6763,7 @@ class TidbClusterSpecPd(dict):
 
     @property
     @pulumi.getter
-    def config(self) -> Optional['outputs.TidbClusterSpecPdConfig']:
+    def config(self) -> Optional[Any]:
         return pulumi.get(self, "config")
 
     @property
@@ -6730,6 +6812,11 @@ class TidbClusterSpecPd(dict):
         return pulumi.get(self, "max_failover_count")
 
     @property
+    @pulumi.getter(name="mountClusterClientSecret")
+    def mount_cluster_client_secret(self) -> Optional[bool]:
+        return pulumi.get(self, "mount_cluster_client_secret")
+
+    @property
     @pulumi.getter(name="nodeSelector")
     def node_selector(self) -> Optional[Mapping[str, Any]]:
         return pulumi.get(self, "node_selector")
@@ -6760,9 +6847,24 @@ class TidbClusterSpecPd(dict):
         return pulumi.get(self, "service")
 
     @property
+    @pulumi.getter(name="serviceAccount")
+    def service_account(self) -> Optional[str]:
+        return pulumi.get(self, "service_account")
+
+    @property
+    @pulumi.getter(name="statefulSetUpdateStrategy")
+    def stateful_set_update_strategy(self) -> Optional[str]:
+        return pulumi.get(self, "stateful_set_update_strategy")
+
+    @property
     @pulumi.getter(name="storageClassName")
     def storage_class_name(self) -> Optional[str]:
         return pulumi.get(self, "storage_class_name")
+
+    @property
+    @pulumi.getter(name="storageVolumes")
+    def storage_volumes(self) -> Optional[Sequence[Any]]:
+        return pulumi.get(self, "storage_volumes")
 
     @property
     @pulumi.getter(name="terminationGracePeriodSeconds")
@@ -11174,750 +11276,6 @@ class TidbClusterSpecPdAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDur
 
 
 @pulumi.output_type
-class TidbClusterSpecPdConfig(dict):
-    def __init__(__self__, *,
-                 auto_compaction_mode: Optional[str] = None,
-                 auto_compaction_retention_v2: Optional[str] = None,
-                 cluster_version: Optional[str] = None,
-                 dashboard: Optional['outputs.TidbClusterSpecPdConfigDashboard'] = None,
-                 election_interval: Optional[str] = None,
-                 enable_grpc_gateway: Optional[bool] = None,
-                 enable_prevote: Optional[bool] = None,
-                 force_new_cluster: Optional[bool] = None,
-                 label_property: Optional[Mapping[str, Any]] = None,
-                 lease: Optional[int] = None,
-                 log: Optional['outputs.TidbClusterSpecPdConfigLog'] = None,
-                 log_file: Optional[str] = None,
-                 log_level: Optional[str] = None,
-                 metric: Optional['outputs.TidbClusterSpecPdConfigMetric'] = None,
-                 namespace: Optional[Mapping[str, Any]] = None,
-                 namespace_classifier: Optional[str] = None,
-                 pd_server: Optional['outputs.TidbClusterSpecPdConfigPd-Server'] = None,
-                 quota_backend_bytes: Optional[str] = None,
-                 replication: Optional['outputs.TidbClusterSpecPdConfigReplication'] = None,
-                 schedule: Optional['outputs.TidbClusterSpecPdConfigSchedule'] = None,
-                 security: Optional['outputs.TidbClusterSpecPdConfigSecurity'] = None,
-                 tikv_interval: Optional[str] = None,
-                 tso_save_interval: Optional[str] = None):
-        if auto_compaction_mode is not None:
-            pulumi.set(__self__, "auto_compaction_mode", auto_compaction_mode)
-        if auto_compaction_retention_v2 is not None:
-            pulumi.set(__self__, "auto_compaction_retention_v2", auto_compaction_retention_v2)
-        if cluster_version is not None:
-            pulumi.set(__self__, "cluster_version", cluster_version)
-        if dashboard is not None:
-            pulumi.set(__self__, "dashboard", dashboard)
-        if election_interval is not None:
-            pulumi.set(__self__, "election_interval", election_interval)
-        if enable_grpc_gateway is not None:
-            pulumi.set(__self__, "enable_grpc_gateway", enable_grpc_gateway)
-        if enable_prevote is not None:
-            pulumi.set(__self__, "enable_prevote", enable_prevote)
-        if force_new_cluster is not None:
-            pulumi.set(__self__, "force_new_cluster", force_new_cluster)
-        if label_property is not None:
-            pulumi.set(__self__, "label_property", label_property)
-        if lease is not None:
-            pulumi.set(__self__, "lease", lease)
-        if log is not None:
-            pulumi.set(__self__, "log", log)
-        if log_file is not None:
-            pulumi.set(__self__, "log_file", log_file)
-        if log_level is not None:
-            pulumi.set(__self__, "log_level", log_level)
-        if metric is not None:
-            pulumi.set(__self__, "metric", metric)
-        if namespace is not None:
-            pulumi.set(__self__, "namespace", namespace)
-        if namespace_classifier is not None:
-            pulumi.set(__self__, "namespace_classifier", namespace_classifier)
-        if pd_server is not None:
-            pulumi.set(__self__, "pd_server", pd_server)
-        if quota_backend_bytes is not None:
-            pulumi.set(__self__, "quota_backend_bytes", quota_backend_bytes)
-        if replication is not None:
-            pulumi.set(__self__, "replication", replication)
-        if schedule is not None:
-            pulumi.set(__self__, "schedule", schedule)
-        if security is not None:
-            pulumi.set(__self__, "security", security)
-        if tikv_interval is not None:
-            pulumi.set(__self__, "tikv_interval", tikv_interval)
-        if tso_save_interval is not None:
-            pulumi.set(__self__, "tso_save_interval", tso_save_interval)
-
-    @property
-    @pulumi.getter(name="auto-compaction-mode")
-    def auto_compaction_mode(self) -> Optional[str]:
-        return pulumi.get(self, "auto_compaction_mode")
-
-    @property
-    @pulumi.getter(name="auto-compaction-retention-v2")
-    def auto_compaction_retention_v2(self) -> Optional[str]:
-        return pulumi.get(self, "auto_compaction_retention_v2")
-
-    @property
-    @pulumi.getter(name="cluster-version")
-    def cluster_version(self) -> Optional[str]:
-        return pulumi.get(self, "cluster_version")
-
-    @property
-    @pulumi.getter
-    def dashboard(self) -> Optional['outputs.TidbClusterSpecPdConfigDashboard']:
-        return pulumi.get(self, "dashboard")
-
-    @property
-    @pulumi.getter(name="election-interval")
-    def election_interval(self) -> Optional[str]:
-        return pulumi.get(self, "election_interval")
-
-    @property
-    @pulumi.getter(name="enable-grpc-gateway")
-    def enable_grpc_gateway(self) -> Optional[bool]:
-        return pulumi.get(self, "enable_grpc_gateway")
-
-    @property
-    @pulumi.getter(name="enable-prevote")
-    def enable_prevote(self) -> Optional[bool]:
-        return pulumi.get(self, "enable_prevote")
-
-    @property
-    @pulumi.getter(name="force-new-cluster")
-    def force_new_cluster(self) -> Optional[bool]:
-        return pulumi.get(self, "force_new_cluster")
-
-    @property
-    @pulumi.getter(name="label-property")
-    def label_property(self) -> Optional[Mapping[str, Any]]:
-        return pulumi.get(self, "label_property")
-
-    @property
-    @pulumi.getter
-    def lease(self) -> Optional[int]:
-        return pulumi.get(self, "lease")
-
-    @property
-    @pulumi.getter
-    def log(self) -> Optional['outputs.TidbClusterSpecPdConfigLog']:
-        return pulumi.get(self, "log")
-
-    @property
-    @pulumi.getter(name="log-file")
-    def log_file(self) -> Optional[str]:
-        return pulumi.get(self, "log_file")
-
-    @property
-    @pulumi.getter(name="log-level")
-    def log_level(self) -> Optional[str]:
-        return pulumi.get(self, "log_level")
-
-    @property
-    @pulumi.getter
-    def metric(self) -> Optional['outputs.TidbClusterSpecPdConfigMetric']:
-        return pulumi.get(self, "metric")
-
-    @property
-    @pulumi.getter
-    def namespace(self) -> Optional[Mapping[str, Any]]:
-        return pulumi.get(self, "namespace")
-
-    @property
-    @pulumi.getter(name="namespace-classifier")
-    def namespace_classifier(self) -> Optional[str]:
-        return pulumi.get(self, "namespace_classifier")
-
-    @property
-    @pulumi.getter(name="pd-server")
-    def pd_server(self) -> Optional['outputs.TidbClusterSpecPdConfigPd-Server']:
-        return pulumi.get(self, "pd_server")
-
-    @property
-    @pulumi.getter(name="quota-backend-bytes")
-    def quota_backend_bytes(self) -> Optional[str]:
-        return pulumi.get(self, "quota_backend_bytes")
-
-    @property
-    @pulumi.getter
-    def replication(self) -> Optional['outputs.TidbClusterSpecPdConfigReplication']:
-        return pulumi.get(self, "replication")
-
-    @property
-    @pulumi.getter
-    def schedule(self) -> Optional['outputs.TidbClusterSpecPdConfigSchedule']:
-        return pulumi.get(self, "schedule")
-
-    @property
-    @pulumi.getter
-    def security(self) -> Optional['outputs.TidbClusterSpecPdConfigSecurity']:
-        return pulumi.get(self, "security")
-
-    @property
-    @pulumi.getter(name="tikv-interval")
-    def tikv_interval(self) -> Optional[str]:
-        return pulumi.get(self, "tikv_interval")
-
-    @property
-    @pulumi.getter(name="tso-save-interval")
-    def tso_save_interval(self) -> Optional[str]:
-        return pulumi.get(self, "tso_save_interval")
-
-    def _translate_property(self, prop):
-        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
-
-
-@pulumi.output_type
-class TidbClusterSpecPdConfigDashboard(dict):
-    def __init__(__self__, *,
-                 disable_telemetry: Optional[bool] = None,
-                 internal_proxy: Optional[bool] = None,
-                 public_path_prefix: Optional[str] = None,
-                 tidb_cacert_path: Optional[str] = None,
-                 tidb_cert_path: Optional[str] = None,
-                 tidb_key_path: Optional[str] = None):
-        if disable_telemetry is not None:
-            pulumi.set(__self__, "disable_telemetry", disable_telemetry)
-        if internal_proxy is not None:
-            pulumi.set(__self__, "internal_proxy", internal_proxy)
-        if public_path_prefix is not None:
-            pulumi.set(__self__, "public_path_prefix", public_path_prefix)
-        if tidb_cacert_path is not None:
-            pulumi.set(__self__, "tidb_cacert_path", tidb_cacert_path)
-        if tidb_cert_path is not None:
-            pulumi.set(__self__, "tidb_cert_path", tidb_cert_path)
-        if tidb_key_path is not None:
-            pulumi.set(__self__, "tidb_key_path", tidb_key_path)
-
-    @property
-    @pulumi.getter(name="disable-telemetry")
-    def disable_telemetry(self) -> Optional[bool]:
-        return pulumi.get(self, "disable_telemetry")
-
-    @property
-    @pulumi.getter(name="internal-proxy")
-    def internal_proxy(self) -> Optional[bool]:
-        return pulumi.get(self, "internal_proxy")
-
-    @property
-    @pulumi.getter(name="public-path-prefix")
-    def public_path_prefix(self) -> Optional[str]:
-        return pulumi.get(self, "public_path_prefix")
-
-    @property
-    @pulumi.getter(name="tidb-cacert-path")
-    def tidb_cacert_path(self) -> Optional[str]:
-        return pulumi.get(self, "tidb_cacert_path")
-
-    @property
-    @pulumi.getter(name="tidb-cert-path")
-    def tidb_cert_path(self) -> Optional[str]:
-        return pulumi.get(self, "tidb_cert_path")
-
-    @property
-    @pulumi.getter(name="tidb-key-path")
-    def tidb_key_path(self) -> Optional[str]:
-        return pulumi.get(self, "tidb_key_path")
-
-    def _translate_property(self, prop):
-        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
-
-
-@pulumi.output_type
-class TidbClusterSpecPdConfigLog(dict):
-    def __init__(__self__, *,
-                 development: Optional[bool] = None,
-                 disable_caller: Optional[bool] = None,
-                 disable_error_verbose: Optional[bool] = None,
-                 disable_stacktrace: Optional[bool] = None,
-                 disable_timestamp: Optional[bool] = None,
-                 file: Optional['outputs.TidbClusterSpecPdConfigLogFile'] = None,
-                 format: Optional[str] = None,
-                 level: Optional[str] = None):
-        if development is not None:
-            pulumi.set(__self__, "development", development)
-        if disable_caller is not None:
-            pulumi.set(__self__, "disable_caller", disable_caller)
-        if disable_error_verbose is not None:
-            pulumi.set(__self__, "disable_error_verbose", disable_error_verbose)
-        if disable_stacktrace is not None:
-            pulumi.set(__self__, "disable_stacktrace", disable_stacktrace)
-        if disable_timestamp is not None:
-            pulumi.set(__self__, "disable_timestamp", disable_timestamp)
-        if file is not None:
-            pulumi.set(__self__, "file", file)
-        if format is not None:
-            pulumi.set(__self__, "format", format)
-        if level is not None:
-            pulumi.set(__self__, "level", level)
-
-    @property
-    @pulumi.getter
-    def development(self) -> Optional[bool]:
-        return pulumi.get(self, "development")
-
-    @property
-    @pulumi.getter(name="disable-caller")
-    def disable_caller(self) -> Optional[bool]:
-        return pulumi.get(self, "disable_caller")
-
-    @property
-    @pulumi.getter(name="disable-error-verbose")
-    def disable_error_verbose(self) -> Optional[bool]:
-        return pulumi.get(self, "disable_error_verbose")
-
-    @property
-    @pulumi.getter(name="disable-stacktrace")
-    def disable_stacktrace(self) -> Optional[bool]:
-        return pulumi.get(self, "disable_stacktrace")
-
-    @property
-    @pulumi.getter(name="disable-timestamp")
-    def disable_timestamp(self) -> Optional[bool]:
-        return pulumi.get(self, "disable_timestamp")
-
-    @property
-    @pulumi.getter
-    def file(self) -> Optional['outputs.TidbClusterSpecPdConfigLogFile']:
-        return pulumi.get(self, "file")
-
-    @property
-    @pulumi.getter
-    def format(self) -> Optional[str]:
-        return pulumi.get(self, "format")
-
-    @property
-    @pulumi.getter
-    def level(self) -> Optional[str]:
-        return pulumi.get(self, "level")
-
-    def _translate_property(self, prop):
-        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
-
-
-@pulumi.output_type
-class TidbClusterSpecPdConfigLogFile(dict):
-    def __init__(__self__, *,
-                 filename: Optional[str] = None,
-                 log_rotate: Optional[bool] = None,
-                 max_backups: Optional[int] = None,
-                 max_days: Optional[int] = None,
-                 max_size: Optional[int] = None):
-        if filename is not None:
-            pulumi.set(__self__, "filename", filename)
-        if log_rotate is not None:
-            pulumi.set(__self__, "log_rotate", log_rotate)
-        if max_backups is not None:
-            pulumi.set(__self__, "max_backups", max_backups)
-        if max_days is not None:
-            pulumi.set(__self__, "max_days", max_days)
-        if max_size is not None:
-            pulumi.set(__self__, "max_size", max_size)
-
-    @property
-    @pulumi.getter
-    def filename(self) -> Optional[str]:
-        return pulumi.get(self, "filename")
-
-    @property
-    @pulumi.getter(name="log-rotate")
-    def log_rotate(self) -> Optional[bool]:
-        return pulumi.get(self, "log_rotate")
-
-    @property
-    @pulumi.getter(name="max-backups")
-    def max_backups(self) -> Optional[int]:
-        return pulumi.get(self, "max_backups")
-
-    @property
-    @pulumi.getter(name="max-days")
-    def max_days(self) -> Optional[int]:
-        return pulumi.get(self, "max_days")
-
-    @property
-    @pulumi.getter(name="max-size")
-    def max_size(self) -> Optional[int]:
-        return pulumi.get(self, "max_size")
-
-    def _translate_property(self, prop):
-        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
-
-
-@pulumi.output_type
-class TidbClusterSpecPdConfigMetric(dict):
-    def __init__(__self__, *,
-                 address: Optional[str] = None,
-                 interval: Optional[str] = None,
-                 job: Optional[str] = None):
-        if address is not None:
-            pulumi.set(__self__, "address", address)
-        if interval is not None:
-            pulumi.set(__self__, "interval", interval)
-        if job is not None:
-            pulumi.set(__self__, "job", job)
-
-    @property
-    @pulumi.getter
-    def address(self) -> Optional[str]:
-        return pulumi.get(self, "address")
-
-    @property
-    @pulumi.getter
-    def interval(self) -> Optional[str]:
-        return pulumi.get(self, "interval")
-
-    @property
-    @pulumi.getter
-    def job(self) -> Optional[str]:
-        return pulumi.get(self, "job")
-
-    def _translate_property(self, prop):
-        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
-
-
-@pulumi.output_type
-class TidbClusterSpecPdConfigPd-Server(dict):
-    def __init__(__self__, *,
-                 metric_storage: Optional[str] = None,
-                 use_region_storage: Optional[str] = None):
-        if metric_storage is not None:
-            pulumi.set(__self__, "metric_storage", metric_storage)
-        if use_region_storage is not None:
-            pulumi.set(__self__, "use_region_storage", use_region_storage)
-
-    @property
-    @pulumi.getter(name="metric-storage")
-    def metric_storage(self) -> Optional[str]:
-        return pulumi.get(self, "metric_storage")
-
-    @property
-    @pulumi.getter(name="use-region-storage")
-    def use_region_storage(self) -> Optional[str]:
-        return pulumi.get(self, "use_region_storage")
-
-    def _translate_property(self, prop):
-        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
-
-
-@pulumi.output_type
-class TidbClusterSpecPdConfigReplication(dict):
-    def __init__(__self__, *,
-                 enable_placement_rules: Optional[str] = None,
-                 max_replicas: Optional[int] = None,
-                 strictly_match_label: Optional[str] = None):
-        if enable_placement_rules is not None:
-            pulumi.set(__self__, "enable_placement_rules", enable_placement_rules)
-        if max_replicas is not None:
-            pulumi.set(__self__, "max_replicas", max_replicas)
-        if strictly_match_label is not None:
-            pulumi.set(__self__, "strictly_match_label", strictly_match_label)
-
-    @property
-    @pulumi.getter(name="enable-placement-rules")
-    def enable_placement_rules(self) -> Optional[str]:
-        return pulumi.get(self, "enable_placement_rules")
-
-    @property
-    @pulumi.getter(name="max-replicas")
-    def max_replicas(self) -> Optional[int]:
-        return pulumi.get(self, "max_replicas")
-
-    @property
-    @pulumi.getter(name="strictly-match-label")
-    def strictly_match_label(self) -> Optional[str]:
-        return pulumi.get(self, "strictly_match_label")
-
-    def _translate_property(self, prop):
-        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
-
-
-@pulumi.output_type
-class TidbClusterSpecPdConfigSchedule(dict):
-    def __init__(__self__, *,
-                 disable_location_replacement: Optional[str] = None,
-                 disable_make_up_replica: Optional[str] = None,
-                 disable_namespace_relocation: Optional[str] = None,
-                 disable_raft_learner: Optional[str] = None,
-                 disable_remove_down_replica: Optional[str] = None,
-                 disable_remove_extra_replica: Optional[str] = None,
-                 disable_replace_offline_replica: Optional[str] = None,
-                 enable_cross_table_merge: Optional[str] = None,
-                 enable_one_way_merge: Optional[str] = None,
-                 high_space_ratio: Optional[float] = None,
-                 hot_region_cache_hits_threshold: Optional[int] = None,
-                 hot_region_schedule_limit: Optional[int] = None,
-                 leader_schedule_limit: Optional[int] = None,
-                 low_space_ratio: Optional[float] = None,
-                 max_merge_region_keys: Optional[int] = None,
-                 max_merge_region_size: Optional[int] = None,
-                 max_pending_peer_count: Optional[int] = None,
-                 max_snapshot_count: Optional[int] = None,
-                 max_store_down_time: Optional[str] = None,
-                 merge_schedule_limit: Optional[int] = None,
-                 patrol_region_interval: Optional[str] = None,
-                 region_schedule_limit: Optional[int] = None,
-                 replica_schedule_limit: Optional[int] = None,
-                 schedulers_payload: Optional[Mapping[str, Any]] = None,
-                 schedulers_v2: Optional[Sequence['outputs.TidbClusterSpecPdConfigScheduleSchedulers-V2']] = None,
-                 split_merge_interval: Optional[str] = None,
-                 tolerant_size_ratio: Optional[float] = None):
-        if disable_location_replacement is not None:
-            pulumi.set(__self__, "disable_location_replacement", disable_location_replacement)
-        if disable_make_up_replica is not None:
-            pulumi.set(__self__, "disable_make_up_replica", disable_make_up_replica)
-        if disable_namespace_relocation is not None:
-            pulumi.set(__self__, "disable_namespace_relocation", disable_namespace_relocation)
-        if disable_raft_learner is not None:
-            pulumi.set(__self__, "disable_raft_learner", disable_raft_learner)
-        if disable_remove_down_replica is not None:
-            pulumi.set(__self__, "disable_remove_down_replica", disable_remove_down_replica)
-        if disable_remove_extra_replica is not None:
-            pulumi.set(__self__, "disable_remove_extra_replica", disable_remove_extra_replica)
-        if disable_replace_offline_replica is not None:
-            pulumi.set(__self__, "disable_replace_offline_replica", disable_replace_offline_replica)
-        if enable_cross_table_merge is not None:
-            pulumi.set(__self__, "enable_cross_table_merge", enable_cross_table_merge)
-        if enable_one_way_merge is not None:
-            pulumi.set(__self__, "enable_one_way_merge", enable_one_way_merge)
-        if high_space_ratio is not None:
-            pulumi.set(__self__, "high_space_ratio", high_space_ratio)
-        if hot_region_cache_hits_threshold is not None:
-            pulumi.set(__self__, "hot_region_cache_hits_threshold", hot_region_cache_hits_threshold)
-        if hot_region_schedule_limit is not None:
-            pulumi.set(__self__, "hot_region_schedule_limit", hot_region_schedule_limit)
-        if leader_schedule_limit is not None:
-            pulumi.set(__self__, "leader_schedule_limit", leader_schedule_limit)
-        if low_space_ratio is not None:
-            pulumi.set(__self__, "low_space_ratio", low_space_ratio)
-        if max_merge_region_keys is not None:
-            pulumi.set(__self__, "max_merge_region_keys", max_merge_region_keys)
-        if max_merge_region_size is not None:
-            pulumi.set(__self__, "max_merge_region_size", max_merge_region_size)
-        if max_pending_peer_count is not None:
-            pulumi.set(__self__, "max_pending_peer_count", max_pending_peer_count)
-        if max_snapshot_count is not None:
-            pulumi.set(__self__, "max_snapshot_count", max_snapshot_count)
-        if max_store_down_time is not None:
-            pulumi.set(__self__, "max_store_down_time", max_store_down_time)
-        if merge_schedule_limit is not None:
-            pulumi.set(__self__, "merge_schedule_limit", merge_schedule_limit)
-        if patrol_region_interval is not None:
-            pulumi.set(__self__, "patrol_region_interval", patrol_region_interval)
-        if region_schedule_limit is not None:
-            pulumi.set(__self__, "region_schedule_limit", region_schedule_limit)
-        if replica_schedule_limit is not None:
-            pulumi.set(__self__, "replica_schedule_limit", replica_schedule_limit)
-        if schedulers_payload is not None:
-            pulumi.set(__self__, "schedulers_payload", schedulers_payload)
-        if schedulers_v2 is not None:
-            pulumi.set(__self__, "schedulers_v2", schedulers_v2)
-        if split_merge_interval is not None:
-            pulumi.set(__self__, "split_merge_interval", split_merge_interval)
-        if tolerant_size_ratio is not None:
-            pulumi.set(__self__, "tolerant_size_ratio", tolerant_size_ratio)
-
-    @property
-    @pulumi.getter(name="disable-location-replacement")
-    def disable_location_replacement(self) -> Optional[str]:
-        return pulumi.get(self, "disable_location_replacement")
-
-    @property
-    @pulumi.getter(name="disable-make-up-replica")
-    def disable_make_up_replica(self) -> Optional[str]:
-        return pulumi.get(self, "disable_make_up_replica")
-
-    @property
-    @pulumi.getter(name="disable-namespace-relocation")
-    def disable_namespace_relocation(self) -> Optional[str]:
-        return pulumi.get(self, "disable_namespace_relocation")
-
-    @property
-    @pulumi.getter(name="disable-raft-learner")
-    def disable_raft_learner(self) -> Optional[str]:
-        return pulumi.get(self, "disable_raft_learner")
-
-    @property
-    @pulumi.getter(name="disable-remove-down-replica")
-    def disable_remove_down_replica(self) -> Optional[str]:
-        return pulumi.get(self, "disable_remove_down_replica")
-
-    @property
-    @pulumi.getter(name="disable-remove-extra-replica")
-    def disable_remove_extra_replica(self) -> Optional[str]:
-        return pulumi.get(self, "disable_remove_extra_replica")
-
-    @property
-    @pulumi.getter(name="disable-replace-offline-replica")
-    def disable_replace_offline_replica(self) -> Optional[str]:
-        return pulumi.get(self, "disable_replace_offline_replica")
-
-    @property
-    @pulumi.getter(name="enable-cross-table-merge")
-    def enable_cross_table_merge(self) -> Optional[str]:
-        return pulumi.get(self, "enable_cross_table_merge")
-
-    @property
-    @pulumi.getter(name="enable-one-way-merge")
-    def enable_one_way_merge(self) -> Optional[str]:
-        return pulumi.get(self, "enable_one_way_merge")
-
-    @property
-    @pulumi.getter(name="high-space-ratio")
-    def high_space_ratio(self) -> Optional[float]:
-        return pulumi.get(self, "high_space_ratio")
-
-    @property
-    @pulumi.getter(name="hot-region-cache-hits-threshold")
-    def hot_region_cache_hits_threshold(self) -> Optional[int]:
-        return pulumi.get(self, "hot_region_cache_hits_threshold")
-
-    @property
-    @pulumi.getter(name="hot-region-schedule-limit")
-    def hot_region_schedule_limit(self) -> Optional[int]:
-        return pulumi.get(self, "hot_region_schedule_limit")
-
-    @property
-    @pulumi.getter(name="leader-schedule-limit")
-    def leader_schedule_limit(self) -> Optional[int]:
-        return pulumi.get(self, "leader_schedule_limit")
-
-    @property
-    @pulumi.getter(name="low-space-ratio")
-    def low_space_ratio(self) -> Optional[float]:
-        return pulumi.get(self, "low_space_ratio")
-
-    @property
-    @pulumi.getter(name="max-merge-region-keys")
-    def max_merge_region_keys(self) -> Optional[int]:
-        return pulumi.get(self, "max_merge_region_keys")
-
-    @property
-    @pulumi.getter(name="max-merge-region-size")
-    def max_merge_region_size(self) -> Optional[int]:
-        return pulumi.get(self, "max_merge_region_size")
-
-    @property
-    @pulumi.getter(name="max-pending-peer-count")
-    def max_pending_peer_count(self) -> Optional[int]:
-        return pulumi.get(self, "max_pending_peer_count")
-
-    @property
-    @pulumi.getter(name="max-snapshot-count")
-    def max_snapshot_count(self) -> Optional[int]:
-        return pulumi.get(self, "max_snapshot_count")
-
-    @property
-    @pulumi.getter(name="max-store-down-time")
-    def max_store_down_time(self) -> Optional[str]:
-        return pulumi.get(self, "max_store_down_time")
-
-    @property
-    @pulumi.getter(name="merge-schedule-limit")
-    def merge_schedule_limit(self) -> Optional[int]:
-        return pulumi.get(self, "merge_schedule_limit")
-
-    @property
-    @pulumi.getter(name="patrol-region-interval")
-    def patrol_region_interval(self) -> Optional[str]:
-        return pulumi.get(self, "patrol_region_interval")
-
-    @property
-    @pulumi.getter(name="region-schedule-limit")
-    def region_schedule_limit(self) -> Optional[int]:
-        return pulumi.get(self, "region_schedule_limit")
-
-    @property
-    @pulumi.getter(name="replica-schedule-limit")
-    def replica_schedule_limit(self) -> Optional[int]:
-        return pulumi.get(self, "replica_schedule_limit")
-
-    @property
-    @pulumi.getter(name="schedulers-payload")
-    def schedulers_payload(self) -> Optional[Mapping[str, Any]]:
-        return pulumi.get(self, "schedulers_payload")
-
-    @property
-    @pulumi.getter(name="schedulers-v2")
-    def schedulers_v2(self) -> Optional[Sequence['outputs.TidbClusterSpecPdConfigScheduleSchedulers-V2']]:
-        return pulumi.get(self, "schedulers_v2")
-
-    @property
-    @pulumi.getter(name="split-merge-interval")
-    def split_merge_interval(self) -> Optional[str]:
-        return pulumi.get(self, "split_merge_interval")
-
-    @property
-    @pulumi.getter(name="tolerant-size-ratio")
-    def tolerant_size_ratio(self) -> Optional[float]:
-        return pulumi.get(self, "tolerant_size_ratio")
-
-    def _translate_property(self, prop):
-        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
-
-
-@pulumi.output_type
-class TidbClusterSpecPdConfigScheduleSchedulers-V2(dict):
-    def __init__(__self__, *,
-                 args: Optional[Sequence[str]] = None,
-                 disable: Optional[bool] = None,
-                 type: Optional[str] = None):
-        if args is not None:
-            pulumi.set(__self__, "args", args)
-        if disable is not None:
-            pulumi.set(__self__, "disable", disable)
-        if type is not None:
-            pulumi.set(__self__, "type", type)
-
-    @property
-    @pulumi.getter
-    def args(self) -> Optional[Sequence[str]]:
-        return pulumi.get(self, "args")
-
-    @property
-    @pulumi.getter
-    def disable(self) -> Optional[bool]:
-        return pulumi.get(self, "disable")
-
-    @property
-    @pulumi.getter
-    def type(self) -> Optional[str]:
-        return pulumi.get(self, "type")
-
-    def _translate_property(self, prop):
-        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
-
-
-@pulumi.output_type
-class TidbClusterSpecPdConfigSecurity(dict):
-    def __init__(__self__, *,
-                 cacert_path: Optional[str] = None,
-                 cert_path: Optional[str] = None,
-                 key_path: Optional[str] = None):
-        if cacert_path is not None:
-            pulumi.set(__self__, "cacert_path", cacert_path)
-        if cert_path is not None:
-            pulumi.set(__self__, "cert_path", cert_path)
-        if key_path is not None:
-            pulumi.set(__self__, "key_path", key_path)
-
-    @property
-    @pulumi.getter(name="cacert-path")
-    def cacert_path(self) -> Optional[str]:
-        return pulumi.get(self, "cacert_path")
-
-    @property
-    @pulumi.getter(name="cert-path")
-    def cert_path(self) -> Optional[str]:
-        return pulumi.get(self, "cert_path")
-
-    @property
-    @pulumi.getter(name="key-path")
-    def key_path(self) -> Optional[str]:
-        return pulumi.get(self, "key_path")
-
-    def _translate_property(self, prop):
-        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
-
-
-@pulumi.output_type
 class TidbClusterSpecPdEnv(dict):
     def __init__(__self__, *,
                  name: str,
@@ -12399,7 +11757,7 @@ class TidbClusterSpecPump(dict):
                  affinity: Optional['outputs.TidbClusterSpecPumpAffinity'] = None,
                  annotations: Optional[Mapping[str, Any]] = None,
                  base_image: Optional[str] = None,
-                 config: Optional[Mapping[str, Any]] = None,
+                 config: Optional[Any] = None,
                  config_update_strategy: Optional[str] = None,
                  env: Optional[Sequence['outputs.TidbClusterSpecPumpEnv']] = None,
                  host_network: Optional[bool] = None,
@@ -12411,6 +11769,8 @@ class TidbClusterSpecPump(dict):
                  priority_class_name: Optional[str] = None,
                  requests: Optional[Mapping[str, Any]] = None,
                  scheduler_name: Optional[str] = None,
+                 service_account: Optional[str] = None,
+                 stateful_set_update_strategy: Optional[str] = None,
                  storage_class_name: Optional[str] = None,
                  termination_grace_period_seconds: Optional[int] = None,
                  tolerations: Optional[Sequence['outputs.TidbClusterSpecPumpTolerations']] = None,
@@ -12450,6 +11810,10 @@ class TidbClusterSpecPump(dict):
             pulumi.set(__self__, "requests", requests)
         if scheduler_name is not None:
             pulumi.set(__self__, "scheduler_name", scheduler_name)
+        if service_account is not None:
+            pulumi.set(__self__, "service_account", service_account)
+        if stateful_set_update_strategy is not None:
+            pulumi.set(__self__, "stateful_set_update_strategy", stateful_set_update_strategy)
         if storage_class_name is not None:
             pulumi.set(__self__, "storage_class_name", storage_class_name)
         if termination_grace_period_seconds is not None:
@@ -12491,7 +11855,7 @@ class TidbClusterSpecPump(dict):
 
     @property
     @pulumi.getter
-    def config(self) -> Optional[Mapping[str, Any]]:
+    def config(self) -> Optional[Any]:
         return pulumi.get(self, "config")
 
     @property
@@ -12548,6 +11912,16 @@ class TidbClusterSpecPump(dict):
     @pulumi.getter(name="schedulerName")
     def scheduler_name(self) -> Optional[str]:
         return pulumi.get(self, "scheduler_name")
+
+    @property
+    @pulumi.getter(name="serviceAccount")
+    def service_account(self) -> Optional[str]:
+        return pulumi.get(self, "service_account")
+
+    @property
+    @pulumi.getter(name="statefulSetUpdateStrategy")
+    def stateful_set_update_strategy(self) -> Optional[str]:
+        return pulumi.get(self, "stateful_set_update_strategy")
 
     @property
     @pulumi.getter(name="storageClassName")
@@ -17397,6 +16771,7 @@ class TidbClusterSpecTicdc(dict):
                  requests: Optional[Mapping[str, Any]] = None,
                  scheduler_name: Optional[str] = None,
                  service_account: Optional[str] = None,
+                 stateful_set_update_strategy: Optional[str] = None,
                  termination_grace_period_seconds: Optional[int] = None,
                  tolerations: Optional[Sequence['outputs.TidbClusterSpecTicdcTolerations']] = None,
                  version: Optional[str] = None):
@@ -17437,6 +16812,8 @@ class TidbClusterSpecTicdc(dict):
             pulumi.set(__self__, "scheduler_name", scheduler_name)
         if service_account is not None:
             pulumi.set(__self__, "service_account", service_account)
+        if stateful_set_update_strategy is not None:
+            pulumi.set(__self__, "stateful_set_update_strategy", stateful_set_update_strategy)
         if termination_grace_period_seconds is not None:
             pulumi.set(__self__, "termination_grace_period_seconds", termination_grace_period_seconds)
         if tolerations is not None:
@@ -17538,6 +16915,11 @@ class TidbClusterSpecTicdc(dict):
     @pulumi.getter(name="serviceAccount")
     def service_account(self) -> Optional[str]:
         return pulumi.get(self, "service_account")
+
+    @property
+    @pulumi.getter(name="statefulSetUpdateStrategy")
+    def stateful_set_update_strategy(self) -> Optional[str]:
+        return pulumi.get(self, "stateful_set_update_strategy")
 
     @property
     @pulumi.getter(name="terminationGracePeriodSeconds")
@@ -22410,7 +21792,7 @@ class TidbClusterSpecTidb(dict):
                  annotations: Optional[Mapping[str, Any]] = None,
                  base_image: Optional[str] = None,
                  binlog_enabled: Optional[bool] = None,
-                 config: Optional['outputs.TidbClusterSpecTidbConfig'] = None,
+                 config: Optional[Any] = None,
                  config_update_strategy: Optional[str] = None,
                  env: Optional[Sequence['outputs.TidbClusterSpecTidbEnv']] = None,
                  host_network: Optional[bool] = None,
@@ -22423,11 +21805,16 @@ class TidbClusterSpecTidb(dict):
                  plugins: Optional[Sequence[str]] = None,
                  pod_security_context: Optional['outputs.TidbClusterSpecTidbPodSecurityContext'] = None,
                  priority_class_name: Optional[str] = None,
+                 readiness_probe: Optional['outputs.TidbClusterSpecTidbReadinessProbe'] = None,
                  requests: Optional[Mapping[str, Any]] = None,
                  scheduler_name: Optional[str] = None,
                  separate_slow_log: Optional[bool] = None,
                  service: Optional['outputs.TidbClusterSpecTidbService'] = None,
+                 service_account: Optional[str] = None,
                  slow_log_tailer: Optional['outputs.TidbClusterSpecTidbSlowLogTailer'] = None,
+                 stateful_set_update_strategy: Optional[str] = None,
+                 storage_class_name: Optional[str] = None,
+                 storage_volumes: Optional[Sequence[Any]] = None,
                  termination_grace_period_seconds: Optional[int] = None,
                  tls_client: Optional[Any] = None,
                  tolerations: Optional[Sequence['outputs.TidbClusterSpecTidbTolerations']] = None,
@@ -22471,6 +21858,8 @@ class TidbClusterSpecTidb(dict):
             pulumi.set(__self__, "pod_security_context", pod_security_context)
         if priority_class_name is not None:
             pulumi.set(__self__, "priority_class_name", priority_class_name)
+        if readiness_probe is not None:
+            pulumi.set(__self__, "readiness_probe", readiness_probe)
         if requests is not None:
             pulumi.set(__self__, "requests", requests)
         if scheduler_name is not None:
@@ -22479,8 +21868,16 @@ class TidbClusterSpecTidb(dict):
             pulumi.set(__self__, "separate_slow_log", separate_slow_log)
         if service is not None:
             pulumi.set(__self__, "service", service)
+        if service_account is not None:
+            pulumi.set(__self__, "service_account", service_account)
         if slow_log_tailer is not None:
             pulumi.set(__self__, "slow_log_tailer", slow_log_tailer)
+        if stateful_set_update_strategy is not None:
+            pulumi.set(__self__, "stateful_set_update_strategy", stateful_set_update_strategy)
+        if storage_class_name is not None:
+            pulumi.set(__self__, "storage_class_name", storage_class_name)
+        if storage_volumes is not None:
+            pulumi.set(__self__, "storage_volumes", storage_volumes)
         if termination_grace_period_seconds is not None:
             pulumi.set(__self__, "termination_grace_period_seconds", termination_grace_period_seconds)
         if tls_client is not None:
@@ -22527,7 +21924,7 @@ class TidbClusterSpecTidb(dict):
 
     @property
     @pulumi.getter
-    def config(self) -> Optional['outputs.TidbClusterSpecTidbConfig']:
+    def config(self) -> Optional[Any]:
         return pulumi.get(self, "config")
 
     @property
@@ -22591,6 +21988,11 @@ class TidbClusterSpecTidb(dict):
         return pulumi.get(self, "priority_class_name")
 
     @property
+    @pulumi.getter(name="readinessProbe")
+    def readiness_probe(self) -> Optional['outputs.TidbClusterSpecTidbReadinessProbe']:
+        return pulumi.get(self, "readiness_probe")
+
+    @property
     @pulumi.getter
     def requests(self) -> Optional[Mapping[str, Any]]:
         return pulumi.get(self, "requests")
@@ -22611,9 +22013,29 @@ class TidbClusterSpecTidb(dict):
         return pulumi.get(self, "service")
 
     @property
+    @pulumi.getter(name="serviceAccount")
+    def service_account(self) -> Optional[str]:
+        return pulumi.get(self, "service_account")
+
+    @property
     @pulumi.getter(name="slowLogTailer")
     def slow_log_tailer(self) -> Optional['outputs.TidbClusterSpecTidbSlowLogTailer']:
         return pulumi.get(self, "slow_log_tailer")
+
+    @property
+    @pulumi.getter(name="statefulSetUpdateStrategy")
+    def stateful_set_update_strategy(self) -> Optional[str]:
+        return pulumi.get(self, "stateful_set_update_strategy")
+
+    @property
+    @pulumi.getter(name="storageClassName")
+    def storage_class_name(self) -> Optional[str]:
+        return pulumi.get(self, "storage_class_name")
+
+    @property
+    @pulumi.getter(name="storageVolumes")
+    def storage_volumes(self) -> Optional[Sequence[Any]]:
+        return pulumi.get(self, "storage_volumes")
 
     @property
     @pulumi.getter(name="terminationGracePeriodSeconds")
@@ -27025,1262 +26447,6 @@ class TidbClusterSpecTidbAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredD
 
 
 @pulumi.output_type
-class TidbClusterSpecTidbConfig(dict):
-    def __init__(__self__, *,
-                 alter_primary_key: Optional[bool] = None,
-                 binlog: Optional['outputs.TidbClusterSpecTidbConfigBinlog'] = None,
-                 check_mb4_value_in_utf8: Optional[bool] = None,
-                 compatible_kill_query: Optional[bool] = None,
-                 cors: Optional[str] = None,
-                 delay_clean_table_lock: Optional[int] = None,
-                 enable_batch_dml: Optional[bool] = None,
-                 enable_dynamic_config: Optional[bool] = None,
-                 enable_streaming: Optional[bool] = None,
-                 enable_table_lock: Optional[bool] = None,
-                 enable_telemetry: Optional[bool] = None,
-                 experimental: Optional['outputs.TidbClusterSpecTidbConfigExperimental'] = None,
-                 isolation_read: Optional['outputs.TidbClusterSpecTidbConfigIsolation-Read'] = None,
-                 lease: Optional[str] = None,
-                 log: Optional['outputs.TidbClusterSpecTidbConfigLog'] = None,
-                 lower_case_table_names: Optional[int] = None,
-                 max_server_connections: Optional[int] = None,
-                 mem_quota_query: Optional[int] = None,
-                 new_collations_enabled_on_first_bootstrap: Optional[bool] = None,
-                 oom_action: Optional[str] = None,
-                 oom_use_tmp_storage: Optional[bool] = None,
-                 opentracing: Optional['outputs.TidbClusterSpecTidbConfigOpentracing'] = None,
-                 performance: Optional['outputs.TidbClusterSpecTidbConfigPerformance'] = None,
-                 pessimistic_txn: Optional['outputs.TidbClusterSpecTidbConfigPessimistic-Txn'] = None,
-                 plugin: Optional['outputs.TidbClusterSpecTidbConfigPlugin'] = None,
-                 prepared_plan_cache: Optional['outputs.TidbClusterSpecTidbConfigPrepared-Plan-Cache'] = None,
-                 proxy_protocol: Optional['outputs.TidbClusterSpecTidbConfigProxy-Protocol'] = None,
-                 repair_mode: Optional[bool] = None,
-                 repair_table_list: Optional[Sequence[str]] = None,
-                 run_ddl: Optional[bool] = None,
-                 security: Optional['outputs.TidbClusterSpecTidbConfigSecurity'] = None,
-                 socket: Optional[str] = None,
-                 split_region_max_num: Optional[int] = None,
-                 split_table: Optional[bool] = None,
-                 status: Optional['outputs.TidbClusterSpecTidbConfigStatus'] = None,
-                 stmt_summary: Optional['outputs.TidbClusterSpecTidbConfigStmt-Summary'] = None,
-                 tikv_client: Optional['outputs.TidbClusterSpecTidbConfigTikv-Client'] = None,
-                 tmp_storage_path: Optional[str] = None,
-                 tmp_storage_quota: Optional[int] = None,
-                 token_limit: Optional[int] = None,
-                 treat_old_version_utf8_as_utf8mb4: Optional[bool] = None,
-                 txn_local_latches: Optional['outputs.TidbClusterSpecTidbConfigTxn-Local-Latches'] = None):
-        if alter_primary_key is not None:
-            pulumi.set(__self__, "alter_primary_key", alter_primary_key)
-        if binlog is not None:
-            pulumi.set(__self__, "binlog", binlog)
-        if check_mb4_value_in_utf8 is not None:
-            pulumi.set(__self__, "check_mb4_value_in_utf8", check_mb4_value_in_utf8)
-        if compatible_kill_query is not None:
-            pulumi.set(__self__, "compatible_kill_query", compatible_kill_query)
-        if cors is not None:
-            pulumi.set(__self__, "cors", cors)
-        if delay_clean_table_lock is not None:
-            pulumi.set(__self__, "delay_clean_table_lock", delay_clean_table_lock)
-        if enable_batch_dml is not None:
-            pulumi.set(__self__, "enable_batch_dml", enable_batch_dml)
-        if enable_dynamic_config is not None:
-            pulumi.set(__self__, "enable_dynamic_config", enable_dynamic_config)
-        if enable_streaming is not None:
-            pulumi.set(__self__, "enable_streaming", enable_streaming)
-        if enable_table_lock is not None:
-            pulumi.set(__self__, "enable_table_lock", enable_table_lock)
-        if enable_telemetry is not None:
-            pulumi.set(__self__, "enable_telemetry", enable_telemetry)
-        if experimental is not None:
-            pulumi.set(__self__, "experimental", experimental)
-        if isolation_read is not None:
-            pulumi.set(__self__, "isolation_read", isolation_read)
-        if lease is not None:
-            pulumi.set(__self__, "lease", lease)
-        if log is not None:
-            pulumi.set(__self__, "log", log)
-        if lower_case_table_names is not None:
-            pulumi.set(__self__, "lower_case_table_names", lower_case_table_names)
-        if max_server_connections is not None:
-            pulumi.set(__self__, "max_server_connections", max_server_connections)
-        if mem_quota_query is not None:
-            pulumi.set(__self__, "mem_quota_query", mem_quota_query)
-        if new_collations_enabled_on_first_bootstrap is not None:
-            pulumi.set(__self__, "new_collations_enabled_on_first_bootstrap", new_collations_enabled_on_first_bootstrap)
-        if oom_action is not None:
-            pulumi.set(__self__, "oom_action", oom_action)
-        if oom_use_tmp_storage is not None:
-            pulumi.set(__self__, "oom_use_tmp_storage", oom_use_tmp_storage)
-        if opentracing is not None:
-            pulumi.set(__self__, "opentracing", opentracing)
-        if performance is not None:
-            pulumi.set(__self__, "performance", performance)
-        if pessimistic_txn is not None:
-            pulumi.set(__self__, "pessimistic_txn", pessimistic_txn)
-        if plugin is not None:
-            pulumi.set(__self__, "plugin", plugin)
-        if prepared_plan_cache is not None:
-            pulumi.set(__self__, "prepared_plan_cache", prepared_plan_cache)
-        if proxy_protocol is not None:
-            pulumi.set(__self__, "proxy_protocol", proxy_protocol)
-        if repair_mode is not None:
-            pulumi.set(__self__, "repair_mode", repair_mode)
-        if repair_table_list is not None:
-            pulumi.set(__self__, "repair_table_list", repair_table_list)
-        if run_ddl is not None:
-            pulumi.set(__self__, "run_ddl", run_ddl)
-        if security is not None:
-            pulumi.set(__self__, "security", security)
-        if socket is not None:
-            pulumi.set(__self__, "socket", socket)
-        if split_region_max_num is not None:
-            pulumi.set(__self__, "split_region_max_num", split_region_max_num)
-        if split_table is not None:
-            pulumi.set(__self__, "split_table", split_table)
-        if status is not None:
-            pulumi.set(__self__, "status", status)
-        if stmt_summary is not None:
-            pulumi.set(__self__, "stmt_summary", stmt_summary)
-        if tikv_client is not None:
-            pulumi.set(__self__, "tikv_client", tikv_client)
-        if tmp_storage_path is not None:
-            pulumi.set(__self__, "tmp_storage_path", tmp_storage_path)
-        if tmp_storage_quota is not None:
-            pulumi.set(__self__, "tmp_storage_quota", tmp_storage_quota)
-        if token_limit is not None:
-            pulumi.set(__self__, "token_limit", token_limit)
-        if treat_old_version_utf8_as_utf8mb4 is not None:
-            pulumi.set(__self__, "treat_old_version_utf8_as_utf8mb4", treat_old_version_utf8_as_utf8mb4)
-        if txn_local_latches is not None:
-            pulumi.set(__self__, "txn_local_latches", txn_local_latches)
-
-    @property
-    @pulumi.getter(name="alter-primary-key")
-    def alter_primary_key(self) -> Optional[bool]:
-        return pulumi.get(self, "alter_primary_key")
-
-    @property
-    @pulumi.getter
-    def binlog(self) -> Optional['outputs.TidbClusterSpecTidbConfigBinlog']:
-        return pulumi.get(self, "binlog")
-
-    @property
-    @pulumi.getter(name="check-mb4-value-in-utf8")
-    def check_mb4_value_in_utf8(self) -> Optional[bool]:
-        return pulumi.get(self, "check_mb4_value_in_utf8")
-
-    @property
-    @pulumi.getter(name="compatible-kill-query")
-    def compatible_kill_query(self) -> Optional[bool]:
-        return pulumi.get(self, "compatible_kill_query")
-
-    @property
-    @pulumi.getter
-    def cors(self) -> Optional[str]:
-        return pulumi.get(self, "cors")
-
-    @property
-    @pulumi.getter(name="delay-clean-table-lock")
-    def delay_clean_table_lock(self) -> Optional[int]:
-        return pulumi.get(self, "delay_clean_table_lock")
-
-    @property
-    @pulumi.getter(name="enable-batch-dml")
-    def enable_batch_dml(self) -> Optional[bool]:
-        return pulumi.get(self, "enable_batch_dml")
-
-    @property
-    @pulumi.getter(name="enable-dynamic-config")
-    def enable_dynamic_config(self) -> Optional[bool]:
-        return pulumi.get(self, "enable_dynamic_config")
-
-    @property
-    @pulumi.getter(name="enable-streaming")
-    def enable_streaming(self) -> Optional[bool]:
-        return pulumi.get(self, "enable_streaming")
-
-    @property
-    @pulumi.getter(name="enable-table-lock")
-    def enable_table_lock(self) -> Optional[bool]:
-        return pulumi.get(self, "enable_table_lock")
-
-    @property
-    @pulumi.getter(name="enable-telemetry")
-    def enable_telemetry(self) -> Optional[bool]:
-        return pulumi.get(self, "enable_telemetry")
-
-    @property
-    @pulumi.getter
-    def experimental(self) -> Optional['outputs.TidbClusterSpecTidbConfigExperimental']:
-        return pulumi.get(self, "experimental")
-
-    @property
-    @pulumi.getter(name="isolation-read")
-    def isolation_read(self) -> Optional['outputs.TidbClusterSpecTidbConfigIsolation-Read']:
-        return pulumi.get(self, "isolation_read")
-
-    @property
-    @pulumi.getter
-    def lease(self) -> Optional[str]:
-        return pulumi.get(self, "lease")
-
-    @property
-    @pulumi.getter
-    def log(self) -> Optional['outputs.TidbClusterSpecTidbConfigLog']:
-        return pulumi.get(self, "log")
-
-    @property
-    @pulumi.getter(name="lower-case-table-names")
-    def lower_case_table_names(self) -> Optional[int]:
-        return pulumi.get(self, "lower_case_table_names")
-
-    @property
-    @pulumi.getter(name="max-server-connections")
-    def max_server_connections(self) -> Optional[int]:
-        return pulumi.get(self, "max_server_connections")
-
-    @property
-    @pulumi.getter(name="mem-quota-query")
-    def mem_quota_query(self) -> Optional[int]:
-        return pulumi.get(self, "mem_quota_query")
-
-    @property
-    @pulumi.getter
-    def new_collations_enabled_on_first_bootstrap(self) -> Optional[bool]:
-        return pulumi.get(self, "new_collations_enabled_on_first_bootstrap")
-
-    @property
-    @pulumi.getter(name="oom-action")
-    def oom_action(self) -> Optional[str]:
-        return pulumi.get(self, "oom_action")
-
-    @property
-    @pulumi.getter(name="oom-use-tmp-storage")
-    def oom_use_tmp_storage(self) -> Optional[bool]:
-        return pulumi.get(self, "oom_use_tmp_storage")
-
-    @property
-    @pulumi.getter
-    def opentracing(self) -> Optional['outputs.TidbClusterSpecTidbConfigOpentracing']:
-        return pulumi.get(self, "opentracing")
-
-    @property
-    @pulumi.getter
-    def performance(self) -> Optional['outputs.TidbClusterSpecTidbConfigPerformance']:
-        return pulumi.get(self, "performance")
-
-    @property
-    @pulumi.getter(name="pessimistic-txn")
-    def pessimistic_txn(self) -> Optional['outputs.TidbClusterSpecTidbConfigPessimistic-Txn']:
-        return pulumi.get(self, "pessimistic_txn")
-
-    @property
-    @pulumi.getter
-    def plugin(self) -> Optional['outputs.TidbClusterSpecTidbConfigPlugin']:
-        return pulumi.get(self, "plugin")
-
-    @property
-    @pulumi.getter(name="prepared-plan-cache")
-    def prepared_plan_cache(self) -> Optional['outputs.TidbClusterSpecTidbConfigPrepared-Plan-Cache']:
-        return pulumi.get(self, "prepared_plan_cache")
-
-    @property
-    @pulumi.getter(name="proxy-protocol")
-    def proxy_protocol(self) -> Optional['outputs.TidbClusterSpecTidbConfigProxy-Protocol']:
-        return pulumi.get(self, "proxy_protocol")
-
-    @property
-    @pulumi.getter(name="repair-mode")
-    def repair_mode(self) -> Optional[bool]:
-        return pulumi.get(self, "repair_mode")
-
-    @property
-    @pulumi.getter(name="repair-table-list")
-    def repair_table_list(self) -> Optional[Sequence[str]]:
-        return pulumi.get(self, "repair_table_list")
-
-    @property
-    @pulumi.getter(name="run-ddl")
-    def run_ddl(self) -> Optional[bool]:
-        return pulumi.get(self, "run_ddl")
-
-    @property
-    @pulumi.getter
-    def security(self) -> Optional['outputs.TidbClusterSpecTidbConfigSecurity']:
-        return pulumi.get(self, "security")
-
-    @property
-    @pulumi.getter
-    def socket(self) -> Optional[str]:
-        return pulumi.get(self, "socket")
-
-    @property
-    @pulumi.getter(name="split-region-max-num")
-    def split_region_max_num(self) -> Optional[int]:
-        return pulumi.get(self, "split_region_max_num")
-
-    @property
-    @pulumi.getter(name="split-table")
-    def split_table(self) -> Optional[bool]:
-        return pulumi.get(self, "split_table")
-
-    @property
-    @pulumi.getter
-    def status(self) -> Optional['outputs.TidbClusterSpecTidbConfigStatus']:
-        return pulumi.get(self, "status")
-
-    @property
-    @pulumi.getter(name="stmt-summary")
-    def stmt_summary(self) -> Optional['outputs.TidbClusterSpecTidbConfigStmt-Summary']:
-        return pulumi.get(self, "stmt_summary")
-
-    @property
-    @pulumi.getter(name="tikv-client")
-    def tikv_client(self) -> Optional['outputs.TidbClusterSpecTidbConfigTikv-Client']:
-        return pulumi.get(self, "tikv_client")
-
-    @property
-    @pulumi.getter(name="tmp-storage-path")
-    def tmp_storage_path(self) -> Optional[str]:
-        return pulumi.get(self, "tmp_storage_path")
-
-    @property
-    @pulumi.getter(name="tmp-storage-quota")
-    def tmp_storage_quota(self) -> Optional[int]:
-        return pulumi.get(self, "tmp_storage_quota")
-
-    @property
-    @pulumi.getter(name="token-limit")
-    def token_limit(self) -> Optional[int]:
-        return pulumi.get(self, "token_limit")
-
-    @property
-    @pulumi.getter(name="treat-old-version-utf8-as-utf8mb4")
-    def treat_old_version_utf8_as_utf8mb4(self) -> Optional[bool]:
-        return pulumi.get(self, "treat_old_version_utf8_as_utf8mb4")
-
-    @property
-    @pulumi.getter(name="txn-local-latches")
-    def txn_local_latches(self) -> Optional['outputs.TidbClusterSpecTidbConfigTxn-Local-Latches']:
-        return pulumi.get(self, "txn_local_latches")
-
-    def _translate_property(self, prop):
-        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
-
-
-@pulumi.output_type
-class TidbClusterSpecTidbConfigBinlog(dict):
-    def __init__(__self__, *,
-                 binlog_socket: Optional[str] = None,
-                 enable: Optional[bool] = None,
-                 ignore_error: Optional[bool] = None,
-                 strategy: Optional[str] = None,
-                 write_timeout: Optional[str] = None):
-        if binlog_socket is not None:
-            pulumi.set(__self__, "binlog_socket", binlog_socket)
-        if enable is not None:
-            pulumi.set(__self__, "enable", enable)
-        if ignore_error is not None:
-            pulumi.set(__self__, "ignore_error", ignore_error)
-        if strategy is not None:
-            pulumi.set(__self__, "strategy", strategy)
-        if write_timeout is not None:
-            pulumi.set(__self__, "write_timeout", write_timeout)
-
-    @property
-    @pulumi.getter(name="binlog-socket")
-    def binlog_socket(self) -> Optional[str]:
-        return pulumi.get(self, "binlog_socket")
-
-    @property
-    @pulumi.getter
-    def enable(self) -> Optional[bool]:
-        return pulumi.get(self, "enable")
-
-    @property
-    @pulumi.getter(name="ignore-error")
-    def ignore_error(self) -> Optional[bool]:
-        return pulumi.get(self, "ignore_error")
-
-    @property
-    @pulumi.getter
-    def strategy(self) -> Optional[str]:
-        return pulumi.get(self, "strategy")
-
-    @property
-    @pulumi.getter(name="write-timeout")
-    def write_timeout(self) -> Optional[str]:
-        return pulumi.get(self, "write_timeout")
-
-    def _translate_property(self, prop):
-        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
-
-
-@pulumi.output_type
-class TidbClusterSpecTidbConfigExperimental(dict):
-    def __init__(__self__, *,
-                 allow_auto_random: Optional[bool] = None,
-                 allow_expression_index: Optional[bool] = None):
-        if allow_auto_random is not None:
-            pulumi.set(__self__, "allow_auto_random", allow_auto_random)
-        if allow_expression_index is not None:
-            pulumi.set(__self__, "allow_expression_index", allow_expression_index)
-
-    @property
-    @pulumi.getter(name="allow-auto-random")
-    def allow_auto_random(self) -> Optional[bool]:
-        return pulumi.get(self, "allow_auto_random")
-
-    @property
-    @pulumi.getter(name="allow-expression-index")
-    def allow_expression_index(self) -> Optional[bool]:
-        return pulumi.get(self, "allow_expression_index")
-
-    def _translate_property(self, prop):
-        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
-
-
-@pulumi.output_type
-class TidbClusterSpecTidbConfigIsolation-Read(dict):
-    def __init__(__self__, *,
-                 engines: Optional[Sequence[str]] = None):
-        if engines is not None:
-            pulumi.set(__self__, "engines", engines)
-
-    @property
-    @pulumi.getter
-    def engines(self) -> Optional[Sequence[str]]:
-        return pulumi.get(self, "engines")
-
-    def _translate_property(self, prop):
-        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
-
-
-@pulumi.output_type
-class TidbClusterSpecTidbConfigLog(dict):
-    def __init__(__self__, *,
-                 disable_timestamp: Optional[bool] = None,
-                 enable_error_stack: Optional[bool] = None,
-                 enable_slow_log: Optional[bool] = None,
-                 enable_timestamp: Optional[bool] = None,
-                 expensive_threshold: Optional[int] = None,
-                 file: Optional['outputs.TidbClusterSpecTidbConfigLogFile'] = None,
-                 format: Optional[str] = None,
-                 level: Optional[str] = None,
-                 query_log_max_len: Optional[int] = None,
-                 record_plan_in_slow_log: Optional[int] = None,
-                 slow_query_file: Optional[str] = None,
-                 slow_threshold: Optional[int] = None):
-        if disable_timestamp is not None:
-            pulumi.set(__self__, "disable_timestamp", disable_timestamp)
-        if enable_error_stack is not None:
-            pulumi.set(__self__, "enable_error_stack", enable_error_stack)
-        if enable_slow_log is not None:
-            pulumi.set(__self__, "enable_slow_log", enable_slow_log)
-        if enable_timestamp is not None:
-            pulumi.set(__self__, "enable_timestamp", enable_timestamp)
-        if expensive_threshold is not None:
-            pulumi.set(__self__, "expensive_threshold", expensive_threshold)
-        if file is not None:
-            pulumi.set(__self__, "file", file)
-        if format is not None:
-            pulumi.set(__self__, "format", format)
-        if level is not None:
-            pulumi.set(__self__, "level", level)
-        if query_log_max_len is not None:
-            pulumi.set(__self__, "query_log_max_len", query_log_max_len)
-        if record_plan_in_slow_log is not None:
-            pulumi.set(__self__, "record_plan_in_slow_log", record_plan_in_slow_log)
-        if slow_query_file is not None:
-            pulumi.set(__self__, "slow_query_file", slow_query_file)
-        if slow_threshold is not None:
-            pulumi.set(__self__, "slow_threshold", slow_threshold)
-
-    @property
-    @pulumi.getter(name="disable-timestamp")
-    def disable_timestamp(self) -> Optional[bool]:
-        return pulumi.get(self, "disable_timestamp")
-
-    @property
-    @pulumi.getter(name="enable-error-stack")
-    def enable_error_stack(self) -> Optional[bool]:
-        return pulumi.get(self, "enable_error_stack")
-
-    @property
-    @pulumi.getter(name="enable-slow-log")
-    def enable_slow_log(self) -> Optional[bool]:
-        return pulumi.get(self, "enable_slow_log")
-
-    @property
-    @pulumi.getter(name="enable-timestamp")
-    def enable_timestamp(self) -> Optional[bool]:
-        return pulumi.get(self, "enable_timestamp")
-
-    @property
-    @pulumi.getter(name="expensive-threshold")
-    def expensive_threshold(self) -> Optional[int]:
-        return pulumi.get(self, "expensive_threshold")
-
-    @property
-    @pulumi.getter
-    def file(self) -> Optional['outputs.TidbClusterSpecTidbConfigLogFile']:
-        return pulumi.get(self, "file")
-
-    @property
-    @pulumi.getter
-    def format(self) -> Optional[str]:
-        return pulumi.get(self, "format")
-
-    @property
-    @pulumi.getter
-    def level(self) -> Optional[str]:
-        return pulumi.get(self, "level")
-
-    @property
-    @pulumi.getter(name="query-log-max-len")
-    def query_log_max_len(self) -> Optional[int]:
-        return pulumi.get(self, "query_log_max_len")
-
-    @property
-    @pulumi.getter(name="record-plan-in-slow-log")
-    def record_plan_in_slow_log(self) -> Optional[int]:
-        return pulumi.get(self, "record_plan_in_slow_log")
-
-    @property
-    @pulumi.getter(name="slow-query-file")
-    def slow_query_file(self) -> Optional[str]:
-        return pulumi.get(self, "slow_query_file")
-
-    @property
-    @pulumi.getter(name="slow-threshold")
-    def slow_threshold(self) -> Optional[int]:
-        return pulumi.get(self, "slow_threshold")
-
-    def _translate_property(self, prop):
-        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
-
-
-@pulumi.output_type
-class TidbClusterSpecTidbConfigLogFile(dict):
-    def __init__(__self__, *,
-                 filename: Optional[str] = None,
-                 log_rotate: Optional[bool] = None,
-                 max_backups: Optional[int] = None,
-                 max_days: Optional[int] = None,
-                 max_size: Optional[int] = None):
-        if filename is not None:
-            pulumi.set(__self__, "filename", filename)
-        if log_rotate is not None:
-            pulumi.set(__self__, "log_rotate", log_rotate)
-        if max_backups is not None:
-            pulumi.set(__self__, "max_backups", max_backups)
-        if max_days is not None:
-            pulumi.set(__self__, "max_days", max_days)
-        if max_size is not None:
-            pulumi.set(__self__, "max_size", max_size)
-
-    @property
-    @pulumi.getter
-    def filename(self) -> Optional[str]:
-        return pulumi.get(self, "filename")
-
-    @property
-    @pulumi.getter(name="log-rotate")
-    def log_rotate(self) -> Optional[bool]:
-        return pulumi.get(self, "log_rotate")
-
-    @property
-    @pulumi.getter(name="max-backups")
-    def max_backups(self) -> Optional[int]:
-        return pulumi.get(self, "max_backups")
-
-    @property
-    @pulumi.getter(name="max-days")
-    def max_days(self) -> Optional[int]:
-        return pulumi.get(self, "max_days")
-
-    @property
-    @pulumi.getter(name="max-size")
-    def max_size(self) -> Optional[int]:
-        return pulumi.get(self, "max_size")
-
-    def _translate_property(self, prop):
-        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
-
-
-@pulumi.output_type
-class TidbClusterSpecTidbConfigOpentracing(dict):
-    def __init__(__self__, *,
-                 enable: Optional[bool] = None,
-                 reporter: Optional['outputs.TidbClusterSpecTidbConfigOpentracingReporter'] = None,
-                 rpc_metrics: Optional[bool] = None,
-                 sampler: Optional['outputs.TidbClusterSpecTidbConfigOpentracingSampler'] = None):
-        if enable is not None:
-            pulumi.set(__self__, "enable", enable)
-        if reporter is not None:
-            pulumi.set(__self__, "reporter", reporter)
-        if rpc_metrics is not None:
-            pulumi.set(__self__, "rpc_metrics", rpc_metrics)
-        if sampler is not None:
-            pulumi.set(__self__, "sampler", sampler)
-
-    @property
-    @pulumi.getter
-    def enable(self) -> Optional[bool]:
-        return pulumi.get(self, "enable")
-
-    @property
-    @pulumi.getter
-    def reporter(self) -> Optional['outputs.TidbClusterSpecTidbConfigOpentracingReporter']:
-        return pulumi.get(self, "reporter")
-
-    @property
-    @pulumi.getter(name="rpc-metrics")
-    def rpc_metrics(self) -> Optional[bool]:
-        return pulumi.get(self, "rpc_metrics")
-
-    @property
-    @pulumi.getter
-    def sampler(self) -> Optional['outputs.TidbClusterSpecTidbConfigOpentracingSampler']:
-        return pulumi.get(self, "sampler")
-
-    def _translate_property(self, prop):
-        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
-
-
-@pulumi.output_type
-class TidbClusterSpecTidbConfigOpentracingReporter(dict):
-    def __init__(__self__, *,
-                 buffer_flush_interval: Optional[int] = None,
-                 local_agent_host_port: Optional[str] = None,
-                 log_spans: Optional[bool] = None,
-                 queue_size: Optional[int] = None):
-        if buffer_flush_interval is not None:
-            pulumi.set(__self__, "buffer_flush_interval", buffer_flush_interval)
-        if local_agent_host_port is not None:
-            pulumi.set(__self__, "local_agent_host_port", local_agent_host_port)
-        if log_spans is not None:
-            pulumi.set(__self__, "log_spans", log_spans)
-        if queue_size is not None:
-            pulumi.set(__self__, "queue_size", queue_size)
-
-    @property
-    @pulumi.getter(name="buffer-flush-interval")
-    def buffer_flush_interval(self) -> Optional[int]:
-        return pulumi.get(self, "buffer_flush_interval")
-
-    @property
-    @pulumi.getter(name="local-agent-host-port")
-    def local_agent_host_port(self) -> Optional[str]:
-        return pulumi.get(self, "local_agent_host_port")
-
-    @property
-    @pulumi.getter(name="log-spans")
-    def log_spans(self) -> Optional[bool]:
-        return pulumi.get(self, "log_spans")
-
-    @property
-    @pulumi.getter(name="queue-size")
-    def queue_size(self) -> Optional[int]:
-        return pulumi.get(self, "queue_size")
-
-    def _translate_property(self, prop):
-        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
-
-
-@pulumi.output_type
-class TidbClusterSpecTidbConfigOpentracingSampler(dict):
-    def __init__(__self__, *,
-                 max_operations: Optional[int] = None,
-                 param: Optional[float] = None,
-                 sampling_refresh_interval: Optional[int] = None,
-                 sampling_server_url: Optional[str] = None,
-                 type: Optional[str] = None):
-        if max_operations is not None:
-            pulumi.set(__self__, "max_operations", max_operations)
-        if param is not None:
-            pulumi.set(__self__, "param", param)
-        if sampling_refresh_interval is not None:
-            pulumi.set(__self__, "sampling_refresh_interval", sampling_refresh_interval)
-        if sampling_server_url is not None:
-            pulumi.set(__self__, "sampling_server_url", sampling_server_url)
-        if type is not None:
-            pulumi.set(__self__, "type", type)
-
-    @property
-    @pulumi.getter(name="max-operations")
-    def max_operations(self) -> Optional[int]:
-        return pulumi.get(self, "max_operations")
-
-    @property
-    @pulumi.getter
-    def param(self) -> Optional[float]:
-        return pulumi.get(self, "param")
-
-    @property
-    @pulumi.getter(name="sampling-refresh-interval")
-    def sampling_refresh_interval(self) -> Optional[int]:
-        return pulumi.get(self, "sampling_refresh_interval")
-
-    @property
-    @pulumi.getter(name="sampling-server-url")
-    def sampling_server_url(self) -> Optional[str]:
-        return pulumi.get(self, "sampling_server_url")
-
-    @property
-    @pulumi.getter
-    def type(self) -> Optional[str]:
-        return pulumi.get(self, "type")
-
-    def _translate_property(self, prop):
-        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
-
-
-@pulumi.output_type
-class TidbClusterSpecTidbConfigPerformance(dict):
-    def __init__(__self__, *,
-                 agg_push_down_join: Optional[bool] = None,
-                 bind_info_lease: Optional[str] = None,
-                 committer_concurrency: Optional[int] = None,
-                 cross_join: Optional[bool] = None,
-                 feedback_probability: Optional[float] = None,
-                 force_priority: Optional[str] = None,
-                 max_memory: Optional[int] = None,
-                 max_procs: Optional[int] = None,
-                 max_txn_ttl: Optional[int] = None,
-                 pseudo_estimate_ratio: Optional[float] = None,
-                 query_feedback_limit: Optional[int] = None,
-                 run_auto_analyze: Optional[bool] = None,
-                 stats_lease: Optional[str] = None,
-                 stmt_count_limit: Optional[int] = None,
-                 tcp_keep_alive: Optional[bool] = None,
-                 txn_entry_count_limit: Optional[int] = None,
-                 txn_total_size_limit: Optional[int] = None):
-        if agg_push_down_join is not None:
-            pulumi.set(__self__, "agg_push_down_join", agg_push_down_join)
-        if bind_info_lease is not None:
-            pulumi.set(__self__, "bind_info_lease", bind_info_lease)
-        if committer_concurrency is not None:
-            pulumi.set(__self__, "committer_concurrency", committer_concurrency)
-        if cross_join is not None:
-            pulumi.set(__self__, "cross_join", cross_join)
-        if feedback_probability is not None:
-            pulumi.set(__self__, "feedback_probability", feedback_probability)
-        if force_priority is not None:
-            pulumi.set(__self__, "force_priority", force_priority)
-        if max_memory is not None:
-            pulumi.set(__self__, "max_memory", max_memory)
-        if max_procs is not None:
-            pulumi.set(__self__, "max_procs", max_procs)
-        if max_txn_ttl is not None:
-            pulumi.set(__self__, "max_txn_ttl", max_txn_ttl)
-        if pseudo_estimate_ratio is not None:
-            pulumi.set(__self__, "pseudo_estimate_ratio", pseudo_estimate_ratio)
-        if query_feedback_limit is not None:
-            pulumi.set(__self__, "query_feedback_limit", query_feedback_limit)
-        if run_auto_analyze is not None:
-            pulumi.set(__self__, "run_auto_analyze", run_auto_analyze)
-        if stats_lease is not None:
-            pulumi.set(__self__, "stats_lease", stats_lease)
-        if stmt_count_limit is not None:
-            pulumi.set(__self__, "stmt_count_limit", stmt_count_limit)
-        if tcp_keep_alive is not None:
-            pulumi.set(__self__, "tcp_keep_alive", tcp_keep_alive)
-        if txn_entry_count_limit is not None:
-            pulumi.set(__self__, "txn_entry_count_limit", txn_entry_count_limit)
-        if txn_total_size_limit is not None:
-            pulumi.set(__self__, "txn_total_size_limit", txn_total_size_limit)
-
-    @property
-    @pulumi.getter(name="agg-push-down-join")
-    def agg_push_down_join(self) -> Optional[bool]:
-        return pulumi.get(self, "agg_push_down_join")
-
-    @property
-    @pulumi.getter(name="bind-info-lease")
-    def bind_info_lease(self) -> Optional[str]:
-        return pulumi.get(self, "bind_info_lease")
-
-    @property
-    @pulumi.getter(name="committer-concurrency")
-    def committer_concurrency(self) -> Optional[int]:
-        return pulumi.get(self, "committer_concurrency")
-
-    @property
-    @pulumi.getter(name="cross-join")
-    def cross_join(self) -> Optional[bool]:
-        return pulumi.get(self, "cross_join")
-
-    @property
-    @pulumi.getter(name="feedback-probability")
-    def feedback_probability(self) -> Optional[float]:
-        return pulumi.get(self, "feedback_probability")
-
-    @property
-    @pulumi.getter(name="force-priority")
-    def force_priority(self) -> Optional[str]:
-        return pulumi.get(self, "force_priority")
-
-    @property
-    @pulumi.getter(name="max-memory")
-    def max_memory(self) -> Optional[int]:
-        return pulumi.get(self, "max_memory")
-
-    @property
-    @pulumi.getter(name="max-procs")
-    def max_procs(self) -> Optional[int]:
-        return pulumi.get(self, "max_procs")
-
-    @property
-    @pulumi.getter(name="max-txn-ttl")
-    def max_txn_ttl(self) -> Optional[int]:
-        return pulumi.get(self, "max_txn_ttl")
-
-    @property
-    @pulumi.getter(name="pseudo-estimate-ratio")
-    def pseudo_estimate_ratio(self) -> Optional[float]:
-        return pulumi.get(self, "pseudo_estimate_ratio")
-
-    @property
-    @pulumi.getter(name="query-feedback-limit")
-    def query_feedback_limit(self) -> Optional[int]:
-        return pulumi.get(self, "query_feedback_limit")
-
-    @property
-    @pulumi.getter(name="run-auto-analyze")
-    def run_auto_analyze(self) -> Optional[bool]:
-        return pulumi.get(self, "run_auto_analyze")
-
-    @property
-    @pulumi.getter(name="stats-lease")
-    def stats_lease(self) -> Optional[str]:
-        return pulumi.get(self, "stats_lease")
-
-    @property
-    @pulumi.getter(name="stmt-count-limit")
-    def stmt_count_limit(self) -> Optional[int]:
-        return pulumi.get(self, "stmt_count_limit")
-
-    @property
-    @pulumi.getter(name="tcp-keep-alive")
-    def tcp_keep_alive(self) -> Optional[bool]:
-        return pulumi.get(self, "tcp_keep_alive")
-
-    @property
-    @pulumi.getter(name="txn-entry-count-limit")
-    def txn_entry_count_limit(self) -> Optional[int]:
-        return pulumi.get(self, "txn_entry_count_limit")
-
-    @property
-    @pulumi.getter(name="txn-total-size-limit")
-    def txn_total_size_limit(self) -> Optional[int]:
-        return pulumi.get(self, "txn_total_size_limit")
-
-    def _translate_property(self, prop):
-        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
-
-
-@pulumi.output_type
-class TidbClusterSpecTidbConfigPessimistic-Txn(dict):
-    def __init__(__self__, *,
-                 enable: Optional[bool] = None,
-                 max_retry_count: Optional[int] = None):
-        if enable is not None:
-            pulumi.set(__self__, "enable", enable)
-        if max_retry_count is not None:
-            pulumi.set(__self__, "max_retry_count", max_retry_count)
-
-    @property
-    @pulumi.getter
-    def enable(self) -> Optional[bool]:
-        return pulumi.get(self, "enable")
-
-    @property
-    @pulumi.getter(name="max-retry-count")
-    def max_retry_count(self) -> Optional[int]:
-        return pulumi.get(self, "max_retry_count")
-
-    def _translate_property(self, prop):
-        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
-
-
-@pulumi.output_type
-class TidbClusterSpecTidbConfigPlugin(dict):
-    def __init__(__self__, *,
-                 dir: Optional[str] = None,
-                 load: Optional[str] = None):
-        if dir is not None:
-            pulumi.set(__self__, "dir", dir)
-        if load is not None:
-            pulumi.set(__self__, "load", load)
-
-    @property
-    @pulumi.getter
-    def dir(self) -> Optional[str]:
-        return pulumi.get(self, "dir")
-
-    @property
-    @pulumi.getter
-    def load(self) -> Optional[str]:
-        return pulumi.get(self, "load")
-
-    def _translate_property(self, prop):
-        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
-
-
-@pulumi.output_type
-class TidbClusterSpecTidbConfigPrepared-Plan-Cache(dict):
-    def __init__(__self__, *,
-                 capacity: Optional[int] = None,
-                 enabled: Optional[bool] = None,
-                 memory_guard_ratio: Optional[float] = None):
-        if capacity is not None:
-            pulumi.set(__self__, "capacity", capacity)
-        if enabled is not None:
-            pulumi.set(__self__, "enabled", enabled)
-        if memory_guard_ratio is not None:
-            pulumi.set(__self__, "memory_guard_ratio", memory_guard_ratio)
-
-    @property
-    @pulumi.getter
-    def capacity(self) -> Optional[int]:
-        return pulumi.get(self, "capacity")
-
-    @property
-    @pulumi.getter
-    def enabled(self) -> Optional[bool]:
-        return pulumi.get(self, "enabled")
-
-    @property
-    @pulumi.getter(name="memory-guard-ratio")
-    def memory_guard_ratio(self) -> Optional[float]:
-        return pulumi.get(self, "memory_guard_ratio")
-
-    def _translate_property(self, prop):
-        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
-
-
-@pulumi.output_type
-class TidbClusterSpecTidbConfigProxy-Protocol(dict):
-    def __init__(__self__, *,
-                 header_timeout: Optional[int] = None,
-                 networks: Optional[str] = None):
-        if header_timeout is not None:
-            pulumi.set(__self__, "header_timeout", header_timeout)
-        if networks is not None:
-            pulumi.set(__self__, "networks", networks)
-
-    @property
-    @pulumi.getter(name="header-timeout")
-    def header_timeout(self) -> Optional[int]:
-        return pulumi.get(self, "header_timeout")
-
-    @property
-    @pulumi.getter
-    def networks(self) -> Optional[str]:
-        return pulumi.get(self, "networks")
-
-    def _translate_property(self, prop):
-        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
-
-
-@pulumi.output_type
-class TidbClusterSpecTidbConfigSecurity(dict):
-    def __init__(__self__, *,
-                 cluster_ssl_ca: Optional[str] = None,
-                 cluster_ssl_cert: Optional[str] = None,
-                 cluster_ssl_key: Optional[str] = None,
-                 skip_grant_table: Optional[bool] = None,
-                 ssl_ca: Optional[str] = None,
-                 ssl_cert: Optional[str] = None,
-                 ssl_key: Optional[str] = None):
-        if cluster_ssl_ca is not None:
-            pulumi.set(__self__, "cluster_ssl_ca", cluster_ssl_ca)
-        if cluster_ssl_cert is not None:
-            pulumi.set(__self__, "cluster_ssl_cert", cluster_ssl_cert)
-        if cluster_ssl_key is not None:
-            pulumi.set(__self__, "cluster_ssl_key", cluster_ssl_key)
-        if skip_grant_table is not None:
-            pulumi.set(__self__, "skip_grant_table", skip_grant_table)
-        if ssl_ca is not None:
-            pulumi.set(__self__, "ssl_ca", ssl_ca)
-        if ssl_cert is not None:
-            pulumi.set(__self__, "ssl_cert", ssl_cert)
-        if ssl_key is not None:
-            pulumi.set(__self__, "ssl_key", ssl_key)
-
-    @property
-    @pulumi.getter(name="cluster-ssl-ca")
-    def cluster_ssl_ca(self) -> Optional[str]:
-        return pulumi.get(self, "cluster_ssl_ca")
-
-    @property
-    @pulumi.getter(name="cluster-ssl-cert")
-    def cluster_ssl_cert(self) -> Optional[str]:
-        return pulumi.get(self, "cluster_ssl_cert")
-
-    @property
-    @pulumi.getter(name="cluster-ssl-key")
-    def cluster_ssl_key(self) -> Optional[str]:
-        return pulumi.get(self, "cluster_ssl_key")
-
-    @property
-    @pulumi.getter(name="skip-grant-table")
-    def skip_grant_table(self) -> Optional[bool]:
-        return pulumi.get(self, "skip_grant_table")
-
-    @property
-    @pulumi.getter(name="ssl-ca")
-    def ssl_ca(self) -> Optional[str]:
-        return pulumi.get(self, "ssl_ca")
-
-    @property
-    @pulumi.getter(name="ssl-cert")
-    def ssl_cert(self) -> Optional[str]:
-        return pulumi.get(self, "ssl_cert")
-
-    @property
-    @pulumi.getter(name="ssl-key")
-    def ssl_key(self) -> Optional[str]:
-        return pulumi.get(self, "ssl_key")
-
-    def _translate_property(self, prop):
-        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
-
-
-@pulumi.output_type
-class TidbClusterSpecTidbConfigStatus(dict):
-    def __init__(__self__, *,
-                 metrics_addr: Optional[str] = None,
-                 metrics_interval: Optional[int] = None,
-                 record_db_qps: Optional[bool] = None,
-                 report_status: Optional[bool] = None):
-        if metrics_addr is not None:
-            pulumi.set(__self__, "metrics_addr", metrics_addr)
-        if metrics_interval is not None:
-            pulumi.set(__self__, "metrics_interval", metrics_interval)
-        if record_db_qps is not None:
-            pulumi.set(__self__, "record_db_qps", record_db_qps)
-        if report_status is not None:
-            pulumi.set(__self__, "report_status", report_status)
-
-    @property
-    @pulumi.getter(name="metrics-addr")
-    def metrics_addr(self) -> Optional[str]:
-        return pulumi.get(self, "metrics_addr")
-
-    @property
-    @pulumi.getter(name="metrics-interval")
-    def metrics_interval(self) -> Optional[int]:
-        return pulumi.get(self, "metrics_interval")
-
-    @property
-    @pulumi.getter(name="record-db-qps")
-    def record_db_qps(self) -> Optional[bool]:
-        return pulumi.get(self, "record_db_qps")
-
-    @property
-    @pulumi.getter(name="report-status")
-    def report_status(self) -> Optional[bool]:
-        return pulumi.get(self, "report_status")
-
-    def _translate_property(self, prop):
-        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
-
-
-@pulumi.output_type
-class TidbClusterSpecTidbConfigStmt-Summary(dict):
-    def __init__(__self__, *,
-                 enable: Optional[bool] = None,
-                 enable_internal_query: Optional[bool] = None,
-                 history_size: Optional[int] = None,
-                 max_sql_length: Optional[int] = None,
-                 max_stmt_count: Optional[int] = None,
-                 refresh_interval: Optional[int] = None):
-        if enable is not None:
-            pulumi.set(__self__, "enable", enable)
-        if enable_internal_query is not None:
-            pulumi.set(__self__, "enable_internal_query", enable_internal_query)
-        if history_size is not None:
-            pulumi.set(__self__, "history_size", history_size)
-        if max_sql_length is not None:
-            pulumi.set(__self__, "max_sql_length", max_sql_length)
-        if max_stmt_count is not None:
-            pulumi.set(__self__, "max_stmt_count", max_stmt_count)
-        if refresh_interval is not None:
-            pulumi.set(__self__, "refresh_interval", refresh_interval)
-
-    @property
-    @pulumi.getter
-    def enable(self) -> Optional[bool]:
-        return pulumi.get(self, "enable")
-
-    @property
-    @pulumi.getter(name="enable-internal-query")
-    def enable_internal_query(self) -> Optional[bool]:
-        return pulumi.get(self, "enable_internal_query")
-
-    @property
-    @pulumi.getter(name="history-size")
-    def history_size(self) -> Optional[int]:
-        return pulumi.get(self, "history_size")
-
-    @property
-    @pulumi.getter(name="max-sql-length")
-    def max_sql_length(self) -> Optional[int]:
-        return pulumi.get(self, "max_sql_length")
-
-    @property
-    @pulumi.getter(name="max-stmt-count")
-    def max_stmt_count(self) -> Optional[int]:
-        return pulumi.get(self, "max_stmt_count")
-
-    @property
-    @pulumi.getter(name="refresh-interval")
-    def refresh_interval(self) -> Optional[int]:
-        return pulumi.get(self, "refresh_interval")
-
-    def _translate_property(self, prop):
-        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
-
-
-@pulumi.output_type
-class TidbClusterSpecTidbConfigTikv-Client(dict):
-    def __init__(__self__, *,
-                 batch_wait_size: Optional[int] = None,
-                 commit_timeout: Optional[str] = None,
-                 copr_cache: Optional[Any] = None,
-                 grpc_connection_count: Optional[int] = None,
-                 grpc_keepalive_time: Optional[int] = None,
-                 grpc_keepalive_timeout: Optional[int] = None,
-                 max_batch_size: Optional[int] = None,
-                 max_batch_wait_time: Optional[int] = None,
-                 max_txn_time_use: Optional[int] = None,
-                 overload_threshold: Optional[int] = None,
-                 region_cache_ttl: Optional[int] = None,
-                 store_limit: Optional[int] = None,
-                 store_liveness_timeout: Optional[str] = None):
-        if batch_wait_size is not None:
-            pulumi.set(__self__, "batch_wait_size", batch_wait_size)
-        if commit_timeout is not None:
-            pulumi.set(__self__, "commit_timeout", commit_timeout)
-        if copr_cache is not None:
-            pulumi.set(__self__, "copr_cache", copr_cache)
-        if grpc_connection_count is not None:
-            pulumi.set(__self__, "grpc_connection_count", grpc_connection_count)
-        if grpc_keepalive_time is not None:
-            pulumi.set(__self__, "grpc_keepalive_time", grpc_keepalive_time)
-        if grpc_keepalive_timeout is not None:
-            pulumi.set(__self__, "grpc_keepalive_timeout", grpc_keepalive_timeout)
-        if max_batch_size is not None:
-            pulumi.set(__self__, "max_batch_size", max_batch_size)
-        if max_batch_wait_time is not None:
-            pulumi.set(__self__, "max_batch_wait_time", max_batch_wait_time)
-        if max_txn_time_use is not None:
-            pulumi.set(__self__, "max_txn_time_use", max_txn_time_use)
-        if overload_threshold is not None:
-            pulumi.set(__self__, "overload_threshold", overload_threshold)
-        if region_cache_ttl is not None:
-            pulumi.set(__self__, "region_cache_ttl", region_cache_ttl)
-        if store_limit is not None:
-            pulumi.set(__self__, "store_limit", store_limit)
-        if store_liveness_timeout is not None:
-            pulumi.set(__self__, "store_liveness_timeout", store_liveness_timeout)
-
-    @property
-    @pulumi.getter(name="batch-wait-size")
-    def batch_wait_size(self) -> Optional[int]:
-        return pulumi.get(self, "batch_wait_size")
-
-    @property
-    @pulumi.getter(name="commit-timeout")
-    def commit_timeout(self) -> Optional[str]:
-        return pulumi.get(self, "commit_timeout")
-
-    @property
-    @pulumi.getter(name="copr-cache")
-    def copr_cache(self) -> Optional[Any]:
-        return pulumi.get(self, "copr_cache")
-
-    @property
-    @pulumi.getter(name="grpc-connection-count")
-    def grpc_connection_count(self) -> Optional[int]:
-        return pulumi.get(self, "grpc_connection_count")
-
-    @property
-    @pulumi.getter(name="grpc-keepalive-time")
-    def grpc_keepalive_time(self) -> Optional[int]:
-        return pulumi.get(self, "grpc_keepalive_time")
-
-    @property
-    @pulumi.getter(name="grpc-keepalive-timeout")
-    def grpc_keepalive_timeout(self) -> Optional[int]:
-        return pulumi.get(self, "grpc_keepalive_timeout")
-
-    @property
-    @pulumi.getter(name="max-batch-size")
-    def max_batch_size(self) -> Optional[int]:
-        return pulumi.get(self, "max_batch_size")
-
-    @property
-    @pulumi.getter(name="max-batch-wait-time")
-    def max_batch_wait_time(self) -> Optional[int]:
-        return pulumi.get(self, "max_batch_wait_time")
-
-    @property
-    @pulumi.getter(name="max-txn-time-use")
-    def max_txn_time_use(self) -> Optional[int]:
-        return pulumi.get(self, "max_txn_time_use")
-
-    @property
-    @pulumi.getter(name="overload-threshold")
-    def overload_threshold(self) -> Optional[int]:
-        return pulumi.get(self, "overload_threshold")
-
-    @property
-    @pulumi.getter(name="region-cache-ttl")
-    def region_cache_ttl(self) -> Optional[int]:
-        return pulumi.get(self, "region_cache_ttl")
-
-    @property
-    @pulumi.getter(name="store-limit")
-    def store_limit(self) -> Optional[int]:
-        return pulumi.get(self, "store_limit")
-
-    @property
-    @pulumi.getter(name="store-liveness-timeout")
-    def store_liveness_timeout(self) -> Optional[str]:
-        return pulumi.get(self, "store_liveness_timeout")
-
-    def _translate_property(self, prop):
-        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
-
-
-@pulumi.output_type
-class TidbClusterSpecTidbConfigTxn-Local-Latches(dict):
-    def __init__(__self__, *,
-                 capacity: Optional[int] = None,
-                 enabled: Optional[bool] = None):
-        if capacity is not None:
-            pulumi.set(__self__, "capacity", capacity)
-        if enabled is not None:
-            pulumi.set(__self__, "enabled", enabled)
-
-    @property
-    @pulumi.getter
-    def capacity(self) -> Optional[int]:
-        return pulumi.get(self, "capacity")
-
-    @property
-    @pulumi.getter
-    def enabled(self) -> Optional[bool]:
-        return pulumi.get(self, "enabled")
-
-    def _translate_property(self, prop):
-        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
-
-
-@pulumi.output_type
 class TidbClusterSpecTidbEnv(dict):
     def __init__(__self__, *,
                  name: str,
@@ -28990,14 +27156,36 @@ class TidbClusterSpecTidbPodSecurityContextWindowsOptions(dict):
 
 
 @pulumi.output_type
+class TidbClusterSpecTidbReadinessProbe(dict):
+    def __init__(__self__, *,
+                 type: Optional[str] = None):
+        if type is not None:
+            pulumi.set(__self__, "type", type)
+
+    @property
+    @pulumi.getter
+    def type(self) -> Optional[str]:
+        return pulumi.get(self, "type")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
 class TidbClusterSpecTidbService(dict):
     def __init__(__self__, *,
                  expose_status: Optional[bool] = None,
-                 external_traffic_policy: Optional[str] = None):
+                 external_traffic_policy: Optional[str] = None,
+                 mysql_node_port: Optional[int] = None,
+                 status_node_port: Optional[int] = None):
         if expose_status is not None:
             pulumi.set(__self__, "expose_status", expose_status)
         if external_traffic_policy is not None:
             pulumi.set(__self__, "external_traffic_policy", external_traffic_policy)
+        if mysql_node_port is not None:
+            pulumi.set(__self__, "mysql_node_port", mysql_node_port)
+        if status_node_port is not None:
+            pulumi.set(__self__, "status_node_port", status_node_port)
 
     @property
     @pulumi.getter(name="exposeStatus")
@@ -29008,6 +27196,16 @@ class TidbClusterSpecTidbService(dict):
     @pulumi.getter(name="externalTrafficPolicy")
     def external_traffic_policy(self) -> Optional[str]:
         return pulumi.get(self, "external_traffic_policy")
+
+    @property
+    @pulumi.getter(name="mysqlNodePort")
+    def mysql_node_port(self) -> Optional[int]:
+        return pulumi.get(self, "mysql_node_port")
+
+    @property
+    @pulumi.getter(name="statusNodePort")
+    def status_node_port(self) -> Optional[int]:
+        return pulumi.get(self, "status_node_port")
 
     def _translate_property(self, prop):
         return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
@@ -29095,7 +27293,7 @@ class TidbClusterSpecTiflash(dict):
                  affinity: Optional['outputs.TidbClusterSpecTiflashAffinity'] = None,
                  annotations: Optional[Mapping[str, Any]] = None,
                  base_image: Optional[str] = None,
-                 config: Optional['outputs.TidbClusterSpecTiflashConfig'] = None,
+                 config: Optional[Any] = None,
                  config_update_strategy: Optional[str] = None,
                  env: Optional[Sequence['outputs.TidbClusterSpecTiflashEnv']] = None,
                  host_network: Optional[bool] = None,
@@ -29108,9 +27306,11 @@ class TidbClusterSpecTiflash(dict):
                  pod_security_context: Optional['outputs.TidbClusterSpecTiflashPodSecurityContext'] = None,
                  priority_class_name: Optional[str] = None,
                  privileged: Optional[bool] = None,
+                 recover_failover: Optional[bool] = None,
                  requests: Optional[Mapping[str, Any]] = None,
                  scheduler_name: Optional[str] = None,
                  service_account: Optional[str] = None,
+                 stateful_set_update_strategy: Optional[str] = None,
                  termination_grace_period_seconds: Optional[int] = None,
                  tolerations: Optional[Sequence['outputs.TidbClusterSpecTiflashTolerations']] = None,
                  version: Optional[str] = None):
@@ -29152,12 +27352,16 @@ class TidbClusterSpecTiflash(dict):
             pulumi.set(__self__, "priority_class_name", priority_class_name)
         if privileged is not None:
             pulumi.set(__self__, "privileged", privileged)
+        if recover_failover is not None:
+            pulumi.set(__self__, "recover_failover", recover_failover)
         if requests is not None:
             pulumi.set(__self__, "requests", requests)
         if scheduler_name is not None:
             pulumi.set(__self__, "scheduler_name", scheduler_name)
         if service_account is not None:
             pulumi.set(__self__, "service_account", service_account)
+        if stateful_set_update_strategy is not None:
+            pulumi.set(__self__, "stateful_set_update_strategy", stateful_set_update_strategy)
         if termination_grace_period_seconds is not None:
             pulumi.set(__self__, "termination_grace_period_seconds", termination_grace_period_seconds)
         if tolerations is not None:
@@ -29202,7 +27406,7 @@ class TidbClusterSpecTiflash(dict):
 
     @property
     @pulumi.getter
-    def config(self) -> Optional['outputs.TidbClusterSpecTiflashConfig']:
+    def config(self) -> Optional[Any]:
         return pulumi.get(self, "config")
 
     @property
@@ -29266,6 +27470,11 @@ class TidbClusterSpecTiflash(dict):
         return pulumi.get(self, "privileged")
 
     @property
+    @pulumi.getter(name="recoverFailover")
+    def recover_failover(self) -> Optional[bool]:
+        return pulumi.get(self, "recover_failover")
+
+    @property
     @pulumi.getter
     def requests(self) -> Optional[Mapping[str, Any]]:
         return pulumi.get(self, "requests")
@@ -29279,6 +27488,11 @@ class TidbClusterSpecTiflash(dict):
     @pulumi.getter(name="serviceAccount")
     def service_account(self) -> Optional[str]:
         return pulumi.get(self, "service_account")
+
+    @property
+    @pulumi.getter(name="statefulSetUpdateStrategy")
+    def stateful_set_update_strategy(self) -> Optional[str]:
+        return pulumi.get(self, "stateful_set_update_strategy")
 
     @property
     @pulumi.getter(name="terminationGracePeriodSeconds")
@@ -33685,166 +31899,6 @@ class TidbClusterSpecTiflashAffinityPodAntiAffinityRequiredDuringSchedulingIgnor
 
 
 @pulumi.output_type
-class TidbClusterSpecTiflashConfig(dict):
-    def __init__(__self__, *,
-                 config: Optional['outputs.TidbClusterSpecTiflashConfigConfig'] = None):
-        if config is not None:
-            pulumi.set(__self__, "config", config)
-
-    @property
-    @pulumi.getter
-    def config(self) -> Optional['outputs.TidbClusterSpecTiflashConfigConfig']:
-        return pulumi.get(self, "config")
-
-    def _translate_property(self, prop):
-        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
-
-
-@pulumi.output_type
-class TidbClusterSpecTiflashConfigConfig(dict):
-    def __init__(__self__, *,
-                 flash: Optional['outputs.TidbClusterSpecTiflashConfigConfigFlash'] = None,
-                 logger: Optional['outputs.TidbClusterSpecTiflashConfigConfigLogger'] = None,
-                 mark_cache_size: Optional[int] = None,
-                 minmax_index_cache_size: Optional[int] = None,
-                 path_realtime_mode: Optional[bool] = None):
-        if flash is not None:
-            pulumi.set(__self__, "flash", flash)
-        if logger is not None:
-            pulumi.set(__self__, "logger", logger)
-        if mark_cache_size is not None:
-            pulumi.set(__self__, "mark_cache_size", mark_cache_size)
-        if minmax_index_cache_size is not None:
-            pulumi.set(__self__, "minmax_index_cache_size", minmax_index_cache_size)
-        if path_realtime_mode is not None:
-            pulumi.set(__self__, "path_realtime_mode", path_realtime_mode)
-
-    @property
-    @pulumi.getter
-    def flash(self) -> Optional['outputs.TidbClusterSpecTiflashConfigConfigFlash']:
-        return pulumi.get(self, "flash")
-
-    @property
-    @pulumi.getter
-    def logger(self) -> Optional['outputs.TidbClusterSpecTiflashConfigConfigLogger']:
-        return pulumi.get(self, "logger")
-
-    @property
-    @pulumi.getter
-    def mark_cache_size(self) -> Optional[int]:
-        return pulumi.get(self, "mark_cache_size")
-
-    @property
-    @pulumi.getter
-    def minmax_index_cache_size(self) -> Optional[int]:
-        return pulumi.get(self, "minmax_index_cache_size")
-
-    @property
-    @pulumi.getter
-    def path_realtime_mode(self) -> Optional[bool]:
-        return pulumi.get(self, "path_realtime_mode")
-
-    def _translate_property(self, prop):
-        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
-
-
-@pulumi.output_type
-class TidbClusterSpecTiflashConfigConfigFlash(dict):
-    def __init__(__self__, *,
-                 compact_log_min_period: Optional[int] = None,
-                 flash_cluster: Optional['outputs.TidbClusterSpecTiflashConfigConfigFlashFlash_cluster'] = None,
-                 overlap_threshold: Optional[float] = None):
-        if compact_log_min_period is not None:
-            pulumi.set(__self__, "compact_log_min_period", compact_log_min_period)
-        if flash_cluster is not None:
-            pulumi.set(__self__, "flash_cluster", flash_cluster)
-        if overlap_threshold is not None:
-            pulumi.set(__self__, "overlap_threshold", overlap_threshold)
-
-    @property
-    @pulumi.getter
-    def compact_log_min_period(self) -> Optional[int]:
-        return pulumi.get(self, "compact_log_min_period")
-
-    @property
-    @pulumi.getter
-    def flash_cluster(self) -> Optional['outputs.TidbClusterSpecTiflashConfigConfigFlashFlash_cluster']:
-        return pulumi.get(self, "flash_cluster")
-
-    @property
-    @pulumi.getter
-    def overlap_threshold(self) -> Optional[float]:
-        return pulumi.get(self, "overlap_threshold")
-
-    def _translate_property(self, prop):
-        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
-
-
-@pulumi.output_type
-class TidbClusterSpecTiflashConfigConfigFlashFlash_cluster(dict):
-    def __init__(__self__, *,
-                 master_ttl: Optional[int] = None,
-                 refresh_interval: Optional[int] = None,
-                 update_rule_interval: Optional[int] = None):
-        if master_ttl is not None:
-            pulumi.set(__self__, "master_ttl", master_ttl)
-        if refresh_interval is not None:
-            pulumi.set(__self__, "refresh_interval", refresh_interval)
-        if update_rule_interval is not None:
-            pulumi.set(__self__, "update_rule_interval", update_rule_interval)
-
-    @property
-    @pulumi.getter
-    def master_ttl(self) -> Optional[int]:
-        return pulumi.get(self, "master_ttl")
-
-    @property
-    @pulumi.getter
-    def refresh_interval(self) -> Optional[int]:
-        return pulumi.get(self, "refresh_interval")
-
-    @property
-    @pulumi.getter
-    def update_rule_interval(self) -> Optional[int]:
-        return pulumi.get(self, "update_rule_interval")
-
-    def _translate_property(self, prop):
-        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
-
-
-@pulumi.output_type
-class TidbClusterSpecTiflashConfigConfigLogger(dict):
-    def __init__(__self__, *,
-                 count: Optional[int] = None,
-                 level: Optional[str] = None,
-                 size: Optional[str] = None):
-        if count is not None:
-            pulumi.set(__self__, "count", count)
-        if level is not None:
-            pulumi.set(__self__, "level", level)
-        if size is not None:
-            pulumi.set(__self__, "size", size)
-
-    @property
-    @pulumi.getter
-    def count(self) -> Optional[int]:
-        return pulumi.get(self, "count")
-
-    @property
-    @pulumi.getter
-    def level(self) -> Optional[str]:
-        return pulumi.get(self, "level")
-
-    @property
-    @pulumi.getter
-    def size(self) -> Optional[str]:
-        return pulumi.get(self, "size")
-
-    def _translate_property(self, prop):
-        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
-
-
-@pulumi.output_type
 class TidbClusterSpecTiflashEnv(dict):
     def __init__(__self__, *,
                  name: str,
@@ -34342,23 +32396,28 @@ class TidbClusterSpecTikv(dict):
                  affinity: Optional['outputs.TidbClusterSpecTikvAffinity'] = None,
                  annotations: Optional[Mapping[str, Any]] = None,
                  base_image: Optional[str] = None,
-                 config: Optional['outputs.TidbClusterSpecTikvConfig'] = None,
+                 config: Optional[Any] = None,
                  config_update_strategy: Optional[str] = None,
                  data_sub_dir: Optional[str] = None,
                  env: Optional[Sequence['outputs.TidbClusterSpecTikvEnv']] = None,
+                 evict_leader_timeout: Optional[str] = None,
                  host_network: Optional[bool] = None,
                  image_pull_policy: Optional[str] = None,
                  image_pull_secrets: Optional[Sequence['outputs.TidbClusterSpecTikvImagePullSecrets']] = None,
                  limits: Optional[Mapping[str, Any]] = None,
                  max_failover_count: Optional[int] = None,
+                 mount_cluster_client_secret: Optional[bool] = None,
                  node_selector: Optional[Mapping[str, Any]] = None,
                  pod_security_context: Optional['outputs.TidbClusterSpecTikvPodSecurityContext'] = None,
                  priority_class_name: Optional[str] = None,
                  privileged: Optional[bool] = None,
+                 recover_failover: Optional[bool] = None,
                  requests: Optional[Mapping[str, Any]] = None,
                  scheduler_name: Optional[str] = None,
                  service_account: Optional[str] = None,
+                 stateful_set_update_strategy: Optional[str] = None,
                  storage_class_name: Optional[str] = None,
+                 storage_volumes: Optional[Sequence[Any]] = None,
                  termination_grace_period_seconds: Optional[int] = None,
                  tolerations: Optional[Sequence['outputs.TidbClusterSpecTikvTolerations']] = None,
                  version: Optional[str] = None):
@@ -34381,6 +32440,8 @@ class TidbClusterSpecTikv(dict):
             pulumi.set(__self__, "data_sub_dir", data_sub_dir)
         if env is not None:
             pulumi.set(__self__, "env", env)
+        if evict_leader_timeout is not None:
+            pulumi.set(__self__, "evict_leader_timeout", evict_leader_timeout)
         if host_network is not None:
             pulumi.set(__self__, "host_network", host_network)
         if image_pull_policy is not None:
@@ -34391,6 +32452,8 @@ class TidbClusterSpecTikv(dict):
             pulumi.set(__self__, "limits", limits)
         if max_failover_count is not None:
             pulumi.set(__self__, "max_failover_count", max_failover_count)
+        if mount_cluster_client_secret is not None:
+            pulumi.set(__self__, "mount_cluster_client_secret", mount_cluster_client_secret)
         if node_selector is not None:
             pulumi.set(__self__, "node_selector", node_selector)
         if pod_security_context is not None:
@@ -34399,14 +32462,20 @@ class TidbClusterSpecTikv(dict):
             pulumi.set(__self__, "priority_class_name", priority_class_name)
         if privileged is not None:
             pulumi.set(__self__, "privileged", privileged)
+        if recover_failover is not None:
+            pulumi.set(__self__, "recover_failover", recover_failover)
         if requests is not None:
             pulumi.set(__self__, "requests", requests)
         if scheduler_name is not None:
             pulumi.set(__self__, "scheduler_name", scheduler_name)
         if service_account is not None:
             pulumi.set(__self__, "service_account", service_account)
+        if stateful_set_update_strategy is not None:
+            pulumi.set(__self__, "stateful_set_update_strategy", stateful_set_update_strategy)
         if storage_class_name is not None:
             pulumi.set(__self__, "storage_class_name", storage_class_name)
+        if storage_volumes is not None:
+            pulumi.set(__self__, "storage_volumes", storage_volumes)
         if termination_grace_period_seconds is not None:
             pulumi.set(__self__, "termination_grace_period_seconds", termination_grace_period_seconds)
         if tolerations is not None:
@@ -34446,7 +32515,7 @@ class TidbClusterSpecTikv(dict):
 
     @property
     @pulumi.getter
-    def config(self) -> Optional['outputs.TidbClusterSpecTikvConfig']:
+    def config(self) -> Optional[Any]:
         return pulumi.get(self, "config")
 
     @property
@@ -34463,6 +32532,11 @@ class TidbClusterSpecTikv(dict):
     @pulumi.getter
     def env(self) -> Optional[Sequence['outputs.TidbClusterSpecTikvEnv']]:
         return pulumi.get(self, "env")
+
+    @property
+    @pulumi.getter(name="evictLeaderTimeout")
+    def evict_leader_timeout(self) -> Optional[str]:
+        return pulumi.get(self, "evict_leader_timeout")
 
     @property
     @pulumi.getter(name="hostNetwork")
@@ -34490,6 +32564,11 @@ class TidbClusterSpecTikv(dict):
         return pulumi.get(self, "max_failover_count")
 
     @property
+    @pulumi.getter(name="mountClusterClientSecret")
+    def mount_cluster_client_secret(self) -> Optional[bool]:
+        return pulumi.get(self, "mount_cluster_client_secret")
+
+    @property
     @pulumi.getter(name="nodeSelector")
     def node_selector(self) -> Optional[Mapping[str, Any]]:
         return pulumi.get(self, "node_selector")
@@ -34510,6 +32589,11 @@ class TidbClusterSpecTikv(dict):
         return pulumi.get(self, "privileged")
 
     @property
+    @pulumi.getter(name="recoverFailover")
+    def recover_failover(self) -> Optional[bool]:
+        return pulumi.get(self, "recover_failover")
+
+    @property
     @pulumi.getter
     def requests(self) -> Optional[Mapping[str, Any]]:
         return pulumi.get(self, "requests")
@@ -34525,9 +32609,19 @@ class TidbClusterSpecTikv(dict):
         return pulumi.get(self, "service_account")
 
     @property
+    @pulumi.getter(name="statefulSetUpdateStrategy")
+    def stateful_set_update_strategy(self) -> Optional[str]:
+        return pulumi.get(self, "stateful_set_update_strategy")
+
+    @property
     @pulumi.getter(name="storageClassName")
     def storage_class_name(self) -> Optional[str]:
         return pulumi.get(self, "storage_class_name")
+
+    @property
+    @pulumi.getter(name="storageVolumes")
+    def storage_volumes(self) -> Optional[Sequence[Any]]:
+        return pulumi.get(self, "storage_volumes")
 
     @property
     @pulumi.getter(name="terminationGracePeriodSeconds")
@@ -38934,3830 +37028,6 @@ class TidbClusterSpecTikvAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredD
 
 
 @pulumi.output_type
-class TidbClusterSpecTikvConfig(dict):
-    def __init__(__self__, *,
-                 coprocessor: Optional['outputs.TidbClusterSpecTikvConfigCoprocessor'] = None,
-                 gc: Optional['outputs.TidbClusterSpecTikvConfigGc'] = None,
-                 import_: Optional['outputs.TidbClusterSpecTikvConfigImport'] = None,
-                 log_file: Optional[str] = None,
-                 log_level: Optional[str] = None,
-                 log_rotation_size: Optional[str] = None,
-                 log_rotation_timespan: Optional[str] = None,
-                 panic_when_unexpected_key_or_data: Optional[bool] = None,
-                 pd: Optional['outputs.TidbClusterSpecTikvConfigPd'] = None,
-                 pessimistic_txn: Optional['outputs.TidbClusterSpecTikvConfigPessimistic-Txn'] = None,
-                 raftdb: Optional['outputs.TidbClusterSpecTikvConfigRaftdb'] = None,
-                 raftstore: Optional['outputs.TidbClusterSpecTikvConfigRaftstore'] = None,
-                 readpool: Optional['outputs.TidbClusterSpecTikvConfigReadpool'] = None,
-                 refresh_config_interval: Optional[str] = None,
-                 rocksdb: Optional['outputs.TidbClusterSpecTikvConfigRocksdb'] = None,
-                 security: Optional['outputs.TidbClusterSpecTikvConfigSecurity'] = None,
-                 server: Optional['outputs.TidbClusterSpecTikvConfigServer'] = None,
-                 slow_log_file: Optional[str] = None,
-                 slow_log_threshold: Optional[str] = None,
-                 storage: Optional['outputs.TidbClusterSpecTikvConfigStorage'] = None):
-        if coprocessor is not None:
-            pulumi.set(__self__, "coprocessor", coprocessor)
-        if gc is not None:
-            pulumi.set(__self__, "gc", gc)
-        if import_ is not None:
-            pulumi.set(__self__, "import_", import_)
-        if log_file is not None:
-            pulumi.set(__self__, "log_file", log_file)
-        if log_level is not None:
-            pulumi.set(__self__, "log_level", log_level)
-        if log_rotation_size is not None:
-            pulumi.set(__self__, "log_rotation_size", log_rotation_size)
-        if log_rotation_timespan is not None:
-            pulumi.set(__self__, "log_rotation_timespan", log_rotation_timespan)
-        if panic_when_unexpected_key_or_data is not None:
-            pulumi.set(__self__, "panic_when_unexpected_key_or_data", panic_when_unexpected_key_or_data)
-        if pd is not None:
-            pulumi.set(__self__, "pd", pd)
-        if pessimistic_txn is not None:
-            pulumi.set(__self__, "pessimistic_txn", pessimistic_txn)
-        if raftdb is not None:
-            pulumi.set(__self__, "raftdb", raftdb)
-        if raftstore is not None:
-            pulumi.set(__self__, "raftstore", raftstore)
-        if readpool is not None:
-            pulumi.set(__self__, "readpool", readpool)
-        if refresh_config_interval is not None:
-            pulumi.set(__self__, "refresh_config_interval", refresh_config_interval)
-        if rocksdb is not None:
-            pulumi.set(__self__, "rocksdb", rocksdb)
-        if security is not None:
-            pulumi.set(__self__, "security", security)
-        if server is not None:
-            pulumi.set(__self__, "server", server)
-        if slow_log_file is not None:
-            pulumi.set(__self__, "slow_log_file", slow_log_file)
-        if slow_log_threshold is not None:
-            pulumi.set(__self__, "slow_log_threshold", slow_log_threshold)
-        if storage is not None:
-            pulumi.set(__self__, "storage", storage)
-
-    @property
-    @pulumi.getter
-    def coprocessor(self) -> Optional['outputs.TidbClusterSpecTikvConfigCoprocessor']:
-        return pulumi.get(self, "coprocessor")
-
-    @property
-    @pulumi.getter
-    def gc(self) -> Optional['outputs.TidbClusterSpecTikvConfigGc']:
-        return pulumi.get(self, "gc")
-
-    @property
-    @pulumi.getter(name="import")
-    def import_(self) -> Optional['outputs.TidbClusterSpecTikvConfigImport']:
-        return pulumi.get(self, "import_")
-
-    @property
-    @pulumi.getter(name="log-file")
-    def log_file(self) -> Optional[str]:
-        return pulumi.get(self, "log_file")
-
-    @property
-    @pulumi.getter(name="log-level")
-    def log_level(self) -> Optional[str]:
-        return pulumi.get(self, "log_level")
-
-    @property
-    @pulumi.getter(name="log-rotation-size")
-    def log_rotation_size(self) -> Optional[str]:
-        return pulumi.get(self, "log_rotation_size")
-
-    @property
-    @pulumi.getter(name="log-rotation-timespan")
-    def log_rotation_timespan(self) -> Optional[str]:
-        return pulumi.get(self, "log_rotation_timespan")
-
-    @property
-    @pulumi.getter(name="panic-when-unexpected-key-or-data")
-    def panic_when_unexpected_key_or_data(self) -> Optional[bool]:
-        return pulumi.get(self, "panic_when_unexpected_key_or_data")
-
-    @property
-    @pulumi.getter
-    def pd(self) -> Optional['outputs.TidbClusterSpecTikvConfigPd']:
-        return pulumi.get(self, "pd")
-
-    @property
-    @pulumi.getter(name="pessimistic-txn")
-    def pessimistic_txn(self) -> Optional['outputs.TidbClusterSpecTikvConfigPessimistic-Txn']:
-        return pulumi.get(self, "pessimistic_txn")
-
-    @property
-    @pulumi.getter
-    def raftdb(self) -> Optional['outputs.TidbClusterSpecTikvConfigRaftdb']:
-        return pulumi.get(self, "raftdb")
-
-    @property
-    @pulumi.getter
-    def raftstore(self) -> Optional['outputs.TidbClusterSpecTikvConfigRaftstore']:
-        return pulumi.get(self, "raftstore")
-
-    @property
-    @pulumi.getter
-    def readpool(self) -> Optional['outputs.TidbClusterSpecTikvConfigReadpool']:
-        return pulumi.get(self, "readpool")
-
-    @property
-    @pulumi.getter(name="refresh-config-interval")
-    def refresh_config_interval(self) -> Optional[str]:
-        return pulumi.get(self, "refresh_config_interval")
-
-    @property
-    @pulumi.getter
-    def rocksdb(self) -> Optional['outputs.TidbClusterSpecTikvConfigRocksdb']:
-        return pulumi.get(self, "rocksdb")
-
-    @property
-    @pulumi.getter
-    def security(self) -> Optional['outputs.TidbClusterSpecTikvConfigSecurity']:
-        return pulumi.get(self, "security")
-
-    @property
-    @pulumi.getter
-    def server(self) -> Optional['outputs.TidbClusterSpecTikvConfigServer']:
-        return pulumi.get(self, "server")
-
-    @property
-    @pulumi.getter(name="slow-log-file")
-    def slow_log_file(self) -> Optional[str]:
-        return pulumi.get(self, "slow_log_file")
-
-    @property
-    @pulumi.getter(name="slow-log-threshold")
-    def slow_log_threshold(self) -> Optional[str]:
-        return pulumi.get(self, "slow_log_threshold")
-
-    @property
-    @pulumi.getter
-    def storage(self) -> Optional['outputs.TidbClusterSpecTikvConfigStorage']:
-        return pulumi.get(self, "storage")
-
-    def _translate_property(self, prop):
-        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
-
-
-@pulumi.output_type
-class TidbClusterSpecTikvConfigCoprocessor(dict):
-    def __init__(__self__, *,
-                 batch_split_limit: Optional[int] = None,
-                 region_max_keys: Optional[int] = None,
-                 region_max_size: Optional[str] = None,
-                 region_split_keys: Optional[int] = None,
-                 region_split_size: Optional[str] = None,
-                 split_region_on_table: Optional[bool] = None):
-        if batch_split_limit is not None:
-            pulumi.set(__self__, "batch_split_limit", batch_split_limit)
-        if region_max_keys is not None:
-            pulumi.set(__self__, "region_max_keys", region_max_keys)
-        if region_max_size is not None:
-            pulumi.set(__self__, "region_max_size", region_max_size)
-        if region_split_keys is not None:
-            pulumi.set(__self__, "region_split_keys", region_split_keys)
-        if region_split_size is not None:
-            pulumi.set(__self__, "region_split_size", region_split_size)
-        if split_region_on_table is not None:
-            pulumi.set(__self__, "split_region_on_table", split_region_on_table)
-
-    @property
-    @pulumi.getter(name="batch-split-limit")
-    def batch_split_limit(self) -> Optional[int]:
-        return pulumi.get(self, "batch_split_limit")
-
-    @property
-    @pulumi.getter(name="region-max-keys")
-    def region_max_keys(self) -> Optional[int]:
-        return pulumi.get(self, "region_max_keys")
-
-    @property
-    @pulumi.getter(name="region-max-size")
-    def region_max_size(self) -> Optional[str]:
-        return pulumi.get(self, "region_max_size")
-
-    @property
-    @pulumi.getter(name="region-split-keys")
-    def region_split_keys(self) -> Optional[int]:
-        return pulumi.get(self, "region_split_keys")
-
-    @property
-    @pulumi.getter(name="region-split-size")
-    def region_split_size(self) -> Optional[str]:
-        return pulumi.get(self, "region_split_size")
-
-    @property
-    @pulumi.getter(name="split-region-on-table")
-    def split_region_on_table(self) -> Optional[bool]:
-        return pulumi.get(self, "split_region_on_table")
-
-    def _translate_property(self, prop):
-        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
-
-
-@pulumi.output_type
-class TidbClusterSpecTikvConfigGc(dict):
-    def __init__(__self__, *,
-                 _batch_keys: Optional[int] = None,
-                 _max_write_bytes_per_sec: Optional[str] = None):
-        if _batch_keys is not None:
-            pulumi.set(__self__, "_batch_keys", _batch_keys)
-        if _max_write_bytes_per_sec is not None:
-            pulumi.set(__self__, "_max_write_bytes_per_sec", _max_write_bytes_per_sec)
-
-    @property
-    @pulumi.getter(name="\tbatch-keys")
-    def _batch_keys(self) -> Optional[int]:
-        return pulumi.get(self, "_batch_keys")
-
-    @property
-    @pulumi.getter(name="\tmax-write-bytes-per-sec")
-    def _max_write_bytes_per_sec(self) -> Optional[str]:
-        return pulumi.get(self, "_max_write_bytes_per_sec")
-
-    def _translate_property(self, prop):
-        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
-
-
-@pulumi.output_type
-class TidbClusterSpecTikvConfigImport(dict):
-    def __init__(__self__, *,
-                 import_dir: Optional[str] = None,
-                 max_open_engines: Optional[int] = None,
-                 max_prepare_duration: Optional[str] = None,
-                 num_import_jobs: Optional[int] = None,
-                 num_import_sst_jobs: Optional[int] = None,
-                 num_threads: Optional[int] = None,
-                 region_split_size: Optional[str] = None,
-                 stream_channel_window: Optional[int] = None,
-                 upload_speed_limit: Optional[str] = None):
-        if import_dir is not None:
-            pulumi.set(__self__, "import_dir", import_dir)
-        if max_open_engines is not None:
-            pulumi.set(__self__, "max_open_engines", max_open_engines)
-        if max_prepare_duration is not None:
-            pulumi.set(__self__, "max_prepare_duration", max_prepare_duration)
-        if num_import_jobs is not None:
-            pulumi.set(__self__, "num_import_jobs", num_import_jobs)
-        if num_import_sst_jobs is not None:
-            pulumi.set(__self__, "num_import_sst_jobs", num_import_sst_jobs)
-        if num_threads is not None:
-            pulumi.set(__self__, "num_threads", num_threads)
-        if region_split_size is not None:
-            pulumi.set(__self__, "region_split_size", region_split_size)
-        if stream_channel_window is not None:
-            pulumi.set(__self__, "stream_channel_window", stream_channel_window)
-        if upload_speed_limit is not None:
-            pulumi.set(__self__, "upload_speed_limit", upload_speed_limit)
-
-    @property
-    @pulumi.getter(name="import-dir")
-    def import_dir(self) -> Optional[str]:
-        return pulumi.get(self, "import_dir")
-
-    @property
-    @pulumi.getter(name="max-open-engines")
-    def max_open_engines(self) -> Optional[int]:
-        return pulumi.get(self, "max_open_engines")
-
-    @property
-    @pulumi.getter(name="max-prepare-duration")
-    def max_prepare_duration(self) -> Optional[str]:
-        return pulumi.get(self, "max_prepare_duration")
-
-    @property
-    @pulumi.getter(name="num-import-jobs")
-    def num_import_jobs(self) -> Optional[int]:
-        return pulumi.get(self, "num_import_jobs")
-
-    @property
-    @pulumi.getter(name="num-import-sst-jobs")
-    def num_import_sst_jobs(self) -> Optional[int]:
-        return pulumi.get(self, "num_import_sst_jobs")
-
-    @property
-    @pulumi.getter(name="num-threads")
-    def num_threads(self) -> Optional[int]:
-        return pulumi.get(self, "num_threads")
-
-    @property
-    @pulumi.getter(name="region-split-size")
-    def region_split_size(self) -> Optional[str]:
-        return pulumi.get(self, "region_split_size")
-
-    @property
-    @pulumi.getter(name="stream-channel-window")
-    def stream_channel_window(self) -> Optional[int]:
-        return pulumi.get(self, "stream_channel_window")
-
-    @property
-    @pulumi.getter(name="upload-speed-limit")
-    def upload_speed_limit(self) -> Optional[str]:
-        return pulumi.get(self, "upload_speed_limit")
-
-    def _translate_property(self, prop):
-        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
-
-
-@pulumi.output_type
-class TidbClusterSpecTikvConfigPd(dict):
-    def __init__(__self__, *,
-                 endpoints: Optional[Sequence[str]] = None,
-                 retry_interval: Optional[str] = None,
-                 retry_log_every: Optional[int] = None,
-                 retry_max_count: Optional[int] = None):
-        if endpoints is not None:
-            pulumi.set(__self__, "endpoints", endpoints)
-        if retry_interval is not None:
-            pulumi.set(__self__, "retry_interval", retry_interval)
-        if retry_log_every is not None:
-            pulumi.set(__self__, "retry_log_every", retry_log_every)
-        if retry_max_count is not None:
-            pulumi.set(__self__, "retry_max_count", retry_max_count)
-
-    @property
-    @pulumi.getter
-    def endpoints(self) -> Optional[Sequence[str]]:
-        return pulumi.get(self, "endpoints")
-
-    @property
-    @pulumi.getter(name="retry-interval")
-    def retry_interval(self) -> Optional[str]:
-        return pulumi.get(self, "retry_interval")
-
-    @property
-    @pulumi.getter(name="retry-log-every")
-    def retry_log_every(self) -> Optional[int]:
-        return pulumi.get(self, "retry_log_every")
-
-    @property
-    @pulumi.getter(name="retry-max-count")
-    def retry_max_count(self) -> Optional[int]:
-        return pulumi.get(self, "retry_max_count")
-
-    def _translate_property(self, prop):
-        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
-
-
-@pulumi.output_type
-class TidbClusterSpecTikvConfigPessimistic-Txn(dict):
-    def __init__(__self__, *,
-                 enabled: Optional[bool] = None,
-                 pipelined: Optional[bool] = None,
-                 wait_for_lock_timeout: Optional[str] = None,
-                 wake_up_delay_duration: Optional[str] = None):
-        if enabled is not None:
-            pulumi.set(__self__, "enabled", enabled)
-        if pipelined is not None:
-            pulumi.set(__self__, "pipelined", pipelined)
-        if wait_for_lock_timeout is not None:
-            pulumi.set(__self__, "wait_for_lock_timeout", wait_for_lock_timeout)
-        if wake_up_delay_duration is not None:
-            pulumi.set(__self__, "wake_up_delay_duration", wake_up_delay_duration)
-
-    @property
-    @pulumi.getter
-    def enabled(self) -> Optional[bool]:
-        return pulumi.get(self, "enabled")
-
-    @property
-    @pulumi.getter
-    def pipelined(self) -> Optional[bool]:
-        return pulumi.get(self, "pipelined")
-
-    @property
-    @pulumi.getter(name="wait-for-lock-timeout")
-    def wait_for_lock_timeout(self) -> Optional[str]:
-        return pulumi.get(self, "wait_for_lock_timeout")
-
-    @property
-    @pulumi.getter(name="wake-up-delay-duration")
-    def wake_up_delay_duration(self) -> Optional[str]:
-        return pulumi.get(self, "wake_up_delay_duration")
-
-    def _translate_property(self, prop):
-        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
-
-
-@pulumi.output_type
-class TidbClusterSpecTikvConfigRaftdb(dict):
-    def __init__(__self__, *,
-                 allow_concurrent_memtable_write: Optional[bool] = None,
-                 bytes_per_sync: Optional[str] = None,
-                 compaction_readahead_size: Optional[str] = None,
-                 create_if_missing: Optional[bool] = None,
-                 defaultcf: Optional['outputs.TidbClusterSpecTikvConfigRaftdbDefaultcf'] = None,
-                 enable_pipelined_write: Optional[bool] = None,
-                 enable_statistics: Optional[bool] = None,
-                 info_log_dir: Optional[str] = None,
-                 info_log_keep_log_file_num: Optional[int] = None,
-                 info_log_max_size: Optional[str] = None,
-                 info_log_roll_time: Optional[str] = None,
-                 max_background_jobs: Optional[int] = None,
-                 max_manifest_file_size: Optional[str] = None,
-                 max_open_files: Optional[int] = None,
-                 max_sub_compactions: Optional[int] = None,
-                 max_total_wal_size: Optional[str] = None,
-                 stats_dump_period: Optional[str] = None,
-                 use_direct_io_for_flush_and_compaction: Optional[bool] = None,
-                 wal_bytes_per_sync: Optional[str] = None,
-                 wal_dir: Optional[str] = None,
-                 wal_recovery_mode: Optional[str] = None,
-                 wal_size_limit: Optional[str] = None,
-                 wal_ttl_seconds: Optional[int] = None,
-                 writable_file_max_buffer_size: Optional[str] = None):
-        if allow_concurrent_memtable_write is not None:
-            pulumi.set(__self__, "allow_concurrent_memtable_write", allow_concurrent_memtable_write)
-        if bytes_per_sync is not None:
-            pulumi.set(__self__, "bytes_per_sync", bytes_per_sync)
-        if compaction_readahead_size is not None:
-            pulumi.set(__self__, "compaction_readahead_size", compaction_readahead_size)
-        if create_if_missing is not None:
-            pulumi.set(__self__, "create_if_missing", create_if_missing)
-        if defaultcf is not None:
-            pulumi.set(__self__, "defaultcf", defaultcf)
-        if enable_pipelined_write is not None:
-            pulumi.set(__self__, "enable_pipelined_write", enable_pipelined_write)
-        if enable_statistics is not None:
-            pulumi.set(__self__, "enable_statistics", enable_statistics)
-        if info_log_dir is not None:
-            pulumi.set(__self__, "info_log_dir", info_log_dir)
-        if info_log_keep_log_file_num is not None:
-            pulumi.set(__self__, "info_log_keep_log_file_num", info_log_keep_log_file_num)
-        if info_log_max_size is not None:
-            pulumi.set(__self__, "info_log_max_size", info_log_max_size)
-        if info_log_roll_time is not None:
-            pulumi.set(__self__, "info_log_roll_time", info_log_roll_time)
-        if max_background_jobs is not None:
-            pulumi.set(__self__, "max_background_jobs", max_background_jobs)
-        if max_manifest_file_size is not None:
-            pulumi.set(__self__, "max_manifest_file_size", max_manifest_file_size)
-        if max_open_files is not None:
-            pulumi.set(__self__, "max_open_files", max_open_files)
-        if max_sub_compactions is not None:
-            pulumi.set(__self__, "max_sub_compactions", max_sub_compactions)
-        if max_total_wal_size is not None:
-            pulumi.set(__self__, "max_total_wal_size", max_total_wal_size)
-        if stats_dump_period is not None:
-            pulumi.set(__self__, "stats_dump_period", stats_dump_period)
-        if use_direct_io_for_flush_and_compaction is not None:
-            pulumi.set(__self__, "use_direct_io_for_flush_and_compaction", use_direct_io_for_flush_and_compaction)
-        if wal_bytes_per_sync is not None:
-            pulumi.set(__self__, "wal_bytes_per_sync", wal_bytes_per_sync)
-        if wal_dir is not None:
-            pulumi.set(__self__, "wal_dir", wal_dir)
-        if wal_recovery_mode is not None:
-            pulumi.set(__self__, "wal_recovery_mode", wal_recovery_mode)
-        if wal_size_limit is not None:
-            pulumi.set(__self__, "wal_size_limit", wal_size_limit)
-        if wal_ttl_seconds is not None:
-            pulumi.set(__self__, "wal_ttl_seconds", wal_ttl_seconds)
-        if writable_file_max_buffer_size is not None:
-            pulumi.set(__self__, "writable_file_max_buffer_size", writable_file_max_buffer_size)
-
-    @property
-    @pulumi.getter(name="allow-concurrent-memtable-write")
-    def allow_concurrent_memtable_write(self) -> Optional[bool]:
-        return pulumi.get(self, "allow_concurrent_memtable_write")
-
-    @property
-    @pulumi.getter(name="bytes-per-sync")
-    def bytes_per_sync(self) -> Optional[str]:
-        return pulumi.get(self, "bytes_per_sync")
-
-    @property
-    @pulumi.getter(name="compaction-readahead-size")
-    def compaction_readahead_size(self) -> Optional[str]:
-        return pulumi.get(self, "compaction_readahead_size")
-
-    @property
-    @pulumi.getter(name="create-if-missing")
-    def create_if_missing(self) -> Optional[bool]:
-        return pulumi.get(self, "create_if_missing")
-
-    @property
-    @pulumi.getter
-    def defaultcf(self) -> Optional['outputs.TidbClusterSpecTikvConfigRaftdbDefaultcf']:
-        return pulumi.get(self, "defaultcf")
-
-    @property
-    @pulumi.getter(name="enable-pipelined-write")
-    def enable_pipelined_write(self) -> Optional[bool]:
-        return pulumi.get(self, "enable_pipelined_write")
-
-    @property
-    @pulumi.getter(name="enable-statistics")
-    def enable_statistics(self) -> Optional[bool]:
-        return pulumi.get(self, "enable_statistics")
-
-    @property
-    @pulumi.getter(name="info-log-dir")
-    def info_log_dir(self) -> Optional[str]:
-        return pulumi.get(self, "info_log_dir")
-
-    @property
-    @pulumi.getter(name="info-log-keep-log-file-num")
-    def info_log_keep_log_file_num(self) -> Optional[int]:
-        return pulumi.get(self, "info_log_keep_log_file_num")
-
-    @property
-    @pulumi.getter(name="info-log-max-size")
-    def info_log_max_size(self) -> Optional[str]:
-        return pulumi.get(self, "info_log_max_size")
-
-    @property
-    @pulumi.getter(name="info-log-roll-time")
-    def info_log_roll_time(self) -> Optional[str]:
-        return pulumi.get(self, "info_log_roll_time")
-
-    @property
-    @pulumi.getter(name="max-background-jobs")
-    def max_background_jobs(self) -> Optional[int]:
-        return pulumi.get(self, "max_background_jobs")
-
-    @property
-    @pulumi.getter(name="max-manifest-file-size")
-    def max_manifest_file_size(self) -> Optional[str]:
-        return pulumi.get(self, "max_manifest_file_size")
-
-    @property
-    @pulumi.getter(name="max-open-files")
-    def max_open_files(self) -> Optional[int]:
-        return pulumi.get(self, "max_open_files")
-
-    @property
-    @pulumi.getter(name="max-sub-compactions")
-    def max_sub_compactions(self) -> Optional[int]:
-        return pulumi.get(self, "max_sub_compactions")
-
-    @property
-    @pulumi.getter(name="max-total-wal-size")
-    def max_total_wal_size(self) -> Optional[str]:
-        return pulumi.get(self, "max_total_wal_size")
-
-    @property
-    @pulumi.getter(name="stats-dump-period")
-    def stats_dump_period(self) -> Optional[str]:
-        return pulumi.get(self, "stats_dump_period")
-
-    @property
-    @pulumi.getter(name="use-direct-io-for-flush-and-compaction")
-    def use_direct_io_for_flush_and_compaction(self) -> Optional[bool]:
-        return pulumi.get(self, "use_direct_io_for_flush_and_compaction")
-
-    @property
-    @pulumi.getter(name="wal-bytes-per-sync")
-    def wal_bytes_per_sync(self) -> Optional[str]:
-        return pulumi.get(self, "wal_bytes_per_sync")
-
-    @property
-    @pulumi.getter(name="wal-dir")
-    def wal_dir(self) -> Optional[str]:
-        return pulumi.get(self, "wal_dir")
-
-    @property
-    @pulumi.getter(name="wal-recovery-mode")
-    def wal_recovery_mode(self) -> Optional[str]:
-        return pulumi.get(self, "wal_recovery_mode")
-
-    @property
-    @pulumi.getter(name="wal-size-limit")
-    def wal_size_limit(self) -> Optional[str]:
-        return pulumi.get(self, "wal_size_limit")
-
-    @property
-    @pulumi.getter(name="wal-ttl-seconds")
-    def wal_ttl_seconds(self) -> Optional[int]:
-        return pulumi.get(self, "wal_ttl_seconds")
-
-    @property
-    @pulumi.getter(name="writable-file-max-buffer-size")
-    def writable_file_max_buffer_size(self) -> Optional[str]:
-        return pulumi.get(self, "writable_file_max_buffer_size")
-
-    def _translate_property(self, prop):
-        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
-
-
-@pulumi.output_type
-class TidbClusterSpecTikvConfigRaftdbDefaultcf(dict):
-    def __init__(__self__, *,
-                 block_based_bloom_filter: Optional[bool] = None,
-                 block_cache_size: Optional[str] = None,
-                 block_size: Optional[str] = None,
-                 bloom_filter_bits_per_key: Optional[int] = None,
-                 cache_index_and_filter_blocks: Optional[bool] = None,
-                 compaction_pri: Optional[int] = None,
-                 compaction_style: Optional[int] = None,
-                 compression_per_level: Optional[Sequence[str]] = None,
-                 disable_auto_compactions: Optional[bool] = None,
-                 disable_block_cache: Optional[bool] = None,
-                 dynamic_level_bytes: Optional[bool] = None,
-                 enable_doubly_skiplist: Optional[bool] = None,
-                 force_consistency_checks: Optional[bool] = None,
-                 hard_pending_compaction_bytes_limit: Optional[str] = None,
-                 level0_file_num_compaction_trigger: Optional[int] = None,
-                 level0_slowdown_writes_trigger: Optional[int] = None,
-                 level0_stop_writes_trigger: Optional[int] = None,
-                 max_bytes_for_level_base: Optional[str] = None,
-                 max_bytes_for_level_multiplier: Optional[int] = None,
-                 max_compaction_bytes: Optional[str] = None,
-                 max_write_buffer_number: Optional[int] = None,
-                 min_write_buffer_number_to_merge: Optional[int] = None,
-                 num_levels: Optional[int] = None,
-                 optimize_filters_for_hits: Optional[bool] = None,
-                 pin_l0_filter_and_index_blocks: Optional[bool] = None,
-                 prop_keys_index_distance: Optional[int] = None,
-                 prop_size_index_distance: Optional[int] = None,
-                 read_amp_bytes_per_bit: Optional[int] = None,
-                 soft_pending_compaction_bytes_limit: Optional[str] = None,
-                 target_file_size_base: Optional[str] = None,
-                 titan: Optional['outputs.TidbClusterSpecTikvConfigRaftdbDefaultcfTitan'] = None,
-                 use_bloom_filter: Optional[bool] = None,
-                 whole_key_filtering: Optional[bool] = None,
-                 write_buffer_size: Optional[str] = None):
-        if block_based_bloom_filter is not None:
-            pulumi.set(__self__, "block_based_bloom_filter", block_based_bloom_filter)
-        if block_cache_size is not None:
-            pulumi.set(__self__, "block_cache_size", block_cache_size)
-        if block_size is not None:
-            pulumi.set(__self__, "block_size", block_size)
-        if bloom_filter_bits_per_key is not None:
-            pulumi.set(__self__, "bloom_filter_bits_per_key", bloom_filter_bits_per_key)
-        if cache_index_and_filter_blocks is not None:
-            pulumi.set(__self__, "cache_index_and_filter_blocks", cache_index_and_filter_blocks)
-        if compaction_pri is not None:
-            pulumi.set(__self__, "compaction_pri", compaction_pri)
-        if compaction_style is not None:
-            pulumi.set(__self__, "compaction_style", compaction_style)
-        if compression_per_level is not None:
-            pulumi.set(__self__, "compression_per_level", compression_per_level)
-        if disable_auto_compactions is not None:
-            pulumi.set(__self__, "disable_auto_compactions", disable_auto_compactions)
-        if disable_block_cache is not None:
-            pulumi.set(__self__, "disable_block_cache", disable_block_cache)
-        if dynamic_level_bytes is not None:
-            pulumi.set(__self__, "dynamic_level_bytes", dynamic_level_bytes)
-        if enable_doubly_skiplist is not None:
-            pulumi.set(__self__, "enable_doubly_skiplist", enable_doubly_skiplist)
-        if force_consistency_checks is not None:
-            pulumi.set(__self__, "force_consistency_checks", force_consistency_checks)
-        if hard_pending_compaction_bytes_limit is not None:
-            pulumi.set(__self__, "hard_pending_compaction_bytes_limit", hard_pending_compaction_bytes_limit)
-        if level0_file_num_compaction_trigger is not None:
-            pulumi.set(__self__, "level0_file_num_compaction_trigger", level0_file_num_compaction_trigger)
-        if level0_slowdown_writes_trigger is not None:
-            pulumi.set(__self__, "level0_slowdown_writes_trigger", level0_slowdown_writes_trigger)
-        if level0_stop_writes_trigger is not None:
-            pulumi.set(__self__, "level0_stop_writes_trigger", level0_stop_writes_trigger)
-        if max_bytes_for_level_base is not None:
-            pulumi.set(__self__, "max_bytes_for_level_base", max_bytes_for_level_base)
-        if max_bytes_for_level_multiplier is not None:
-            pulumi.set(__self__, "max_bytes_for_level_multiplier", max_bytes_for_level_multiplier)
-        if max_compaction_bytes is not None:
-            pulumi.set(__self__, "max_compaction_bytes", max_compaction_bytes)
-        if max_write_buffer_number is not None:
-            pulumi.set(__self__, "max_write_buffer_number", max_write_buffer_number)
-        if min_write_buffer_number_to_merge is not None:
-            pulumi.set(__self__, "min_write_buffer_number_to_merge", min_write_buffer_number_to_merge)
-        if num_levels is not None:
-            pulumi.set(__self__, "num_levels", num_levels)
-        if optimize_filters_for_hits is not None:
-            pulumi.set(__self__, "optimize_filters_for_hits", optimize_filters_for_hits)
-        if pin_l0_filter_and_index_blocks is not None:
-            pulumi.set(__self__, "pin_l0_filter_and_index_blocks", pin_l0_filter_and_index_blocks)
-        if prop_keys_index_distance is not None:
-            pulumi.set(__self__, "prop_keys_index_distance", prop_keys_index_distance)
-        if prop_size_index_distance is not None:
-            pulumi.set(__self__, "prop_size_index_distance", prop_size_index_distance)
-        if read_amp_bytes_per_bit is not None:
-            pulumi.set(__self__, "read_amp_bytes_per_bit", read_amp_bytes_per_bit)
-        if soft_pending_compaction_bytes_limit is not None:
-            pulumi.set(__self__, "soft_pending_compaction_bytes_limit", soft_pending_compaction_bytes_limit)
-        if target_file_size_base is not None:
-            pulumi.set(__self__, "target_file_size_base", target_file_size_base)
-        if titan is not None:
-            pulumi.set(__self__, "titan", titan)
-        if use_bloom_filter is not None:
-            pulumi.set(__self__, "use_bloom_filter", use_bloom_filter)
-        if whole_key_filtering is not None:
-            pulumi.set(__self__, "whole_key_filtering", whole_key_filtering)
-        if write_buffer_size is not None:
-            pulumi.set(__self__, "write_buffer_size", write_buffer_size)
-
-    @property
-    @pulumi.getter(name="block-based-bloom-filter")
-    def block_based_bloom_filter(self) -> Optional[bool]:
-        return pulumi.get(self, "block_based_bloom_filter")
-
-    @property
-    @pulumi.getter(name="block-cache-size")
-    def block_cache_size(self) -> Optional[str]:
-        return pulumi.get(self, "block_cache_size")
-
-    @property
-    @pulumi.getter(name="block-size")
-    def block_size(self) -> Optional[str]:
-        return pulumi.get(self, "block_size")
-
-    @property
-    @pulumi.getter(name="bloom-filter-bits-per-key")
-    def bloom_filter_bits_per_key(self) -> Optional[int]:
-        return pulumi.get(self, "bloom_filter_bits_per_key")
-
-    @property
-    @pulumi.getter(name="cache-index-and-filter-blocks")
-    def cache_index_and_filter_blocks(self) -> Optional[bool]:
-        return pulumi.get(self, "cache_index_and_filter_blocks")
-
-    @property
-    @pulumi.getter(name="compaction-pri")
-    def compaction_pri(self) -> Optional[int]:
-        return pulumi.get(self, "compaction_pri")
-
-    @property
-    @pulumi.getter(name="compaction-style")
-    def compaction_style(self) -> Optional[int]:
-        return pulumi.get(self, "compaction_style")
-
-    @property
-    @pulumi.getter(name="compression-per-level")
-    def compression_per_level(self) -> Optional[Sequence[str]]:
-        return pulumi.get(self, "compression_per_level")
-
-    @property
-    @pulumi.getter(name="disable-auto-compactions")
-    def disable_auto_compactions(self) -> Optional[bool]:
-        return pulumi.get(self, "disable_auto_compactions")
-
-    @property
-    @pulumi.getter(name="disable-block-cache")
-    def disable_block_cache(self) -> Optional[bool]:
-        return pulumi.get(self, "disable_block_cache")
-
-    @property
-    @pulumi.getter(name="dynamic-level-bytes")
-    def dynamic_level_bytes(self) -> Optional[bool]:
-        return pulumi.get(self, "dynamic_level_bytes")
-
-    @property
-    @pulumi.getter(name="enable-doubly-skiplist")
-    def enable_doubly_skiplist(self) -> Optional[bool]:
-        return pulumi.get(self, "enable_doubly_skiplist")
-
-    @property
-    @pulumi.getter(name="force-consistency-checks")
-    def force_consistency_checks(self) -> Optional[bool]:
-        return pulumi.get(self, "force_consistency_checks")
-
-    @property
-    @pulumi.getter(name="hard-pending-compaction-bytes-limit")
-    def hard_pending_compaction_bytes_limit(self) -> Optional[str]:
-        return pulumi.get(self, "hard_pending_compaction_bytes_limit")
-
-    @property
-    @pulumi.getter(name="level0-file-num-compaction-trigger")
-    def level0_file_num_compaction_trigger(self) -> Optional[int]:
-        return pulumi.get(self, "level0_file_num_compaction_trigger")
-
-    @property
-    @pulumi.getter(name="level0-slowdown-writes-trigger")
-    def level0_slowdown_writes_trigger(self) -> Optional[int]:
-        return pulumi.get(self, "level0_slowdown_writes_trigger")
-
-    @property
-    @pulumi.getter(name="level0-stop-writes-trigger")
-    def level0_stop_writes_trigger(self) -> Optional[int]:
-        return pulumi.get(self, "level0_stop_writes_trigger")
-
-    @property
-    @pulumi.getter(name="max-bytes-for-level-base")
-    def max_bytes_for_level_base(self) -> Optional[str]:
-        return pulumi.get(self, "max_bytes_for_level_base")
-
-    @property
-    @pulumi.getter(name="max-bytes-for-level-multiplier")
-    def max_bytes_for_level_multiplier(self) -> Optional[int]:
-        return pulumi.get(self, "max_bytes_for_level_multiplier")
-
-    @property
-    @pulumi.getter(name="max-compaction-bytes")
-    def max_compaction_bytes(self) -> Optional[str]:
-        return pulumi.get(self, "max_compaction_bytes")
-
-    @property
-    @pulumi.getter(name="max-write-buffer-number")
-    def max_write_buffer_number(self) -> Optional[int]:
-        return pulumi.get(self, "max_write_buffer_number")
-
-    @property
-    @pulumi.getter(name="min-write-buffer-number-to-merge")
-    def min_write_buffer_number_to_merge(self) -> Optional[int]:
-        return pulumi.get(self, "min_write_buffer_number_to_merge")
-
-    @property
-    @pulumi.getter(name="num-levels")
-    def num_levels(self) -> Optional[int]:
-        return pulumi.get(self, "num_levels")
-
-    @property
-    @pulumi.getter(name="optimize-filters-for-hits")
-    def optimize_filters_for_hits(self) -> Optional[bool]:
-        return pulumi.get(self, "optimize_filters_for_hits")
-
-    @property
-    @pulumi.getter(name="pin-l0-filter-and-index-blocks")
-    def pin_l0_filter_and_index_blocks(self) -> Optional[bool]:
-        return pulumi.get(self, "pin_l0_filter_and_index_blocks")
-
-    @property
-    @pulumi.getter(name="prop-keys-index-distance")
-    def prop_keys_index_distance(self) -> Optional[int]:
-        return pulumi.get(self, "prop_keys_index_distance")
-
-    @property
-    @pulumi.getter(name="prop-size-index-distance")
-    def prop_size_index_distance(self) -> Optional[int]:
-        return pulumi.get(self, "prop_size_index_distance")
-
-    @property
-    @pulumi.getter(name="read-amp-bytes-per-bit")
-    def read_amp_bytes_per_bit(self) -> Optional[int]:
-        return pulumi.get(self, "read_amp_bytes_per_bit")
-
-    @property
-    @pulumi.getter(name="soft-pending-compaction-bytes-limit")
-    def soft_pending_compaction_bytes_limit(self) -> Optional[str]:
-        return pulumi.get(self, "soft_pending_compaction_bytes_limit")
-
-    @property
-    @pulumi.getter(name="target-file-size-base")
-    def target_file_size_base(self) -> Optional[str]:
-        return pulumi.get(self, "target_file_size_base")
-
-    @property
-    @pulumi.getter
-    def titan(self) -> Optional['outputs.TidbClusterSpecTikvConfigRaftdbDefaultcfTitan']:
-        return pulumi.get(self, "titan")
-
-    @property
-    @pulumi.getter(name="use-bloom-filter")
-    def use_bloom_filter(self) -> Optional[bool]:
-        return pulumi.get(self, "use_bloom_filter")
-
-    @property
-    @pulumi.getter(name="whole-key-filtering")
-    def whole_key_filtering(self) -> Optional[bool]:
-        return pulumi.get(self, "whole_key_filtering")
-
-    @property
-    @pulumi.getter(name="write-buffer-size")
-    def write_buffer_size(self) -> Optional[str]:
-        return pulumi.get(self, "write_buffer_size")
-
-    def _translate_property(self, prop):
-        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
-
-
-@pulumi.output_type
-class TidbClusterSpecTikvConfigRaftdbDefaultcfTitan(dict):
-    def __init__(__self__, *,
-                 blob_cache_size: Optional[str] = None,
-                 blob_file_compression: Optional[str] = None,
-                 blob_run_mode: Optional[str] = None,
-                 discardable_ratio: Optional[float] = None,
-                 gc_merge_rewrite: Optional[bool] = None,
-                 level_merge: Optional[bool] = None,
-                 max_gc_batch_size: Optional[str] = None,
-                 merge_small_file_threshold: Optional[str] = None,
-                 min_blob_size: Optional[str] = None,
-                 min_gc_batch_size: Optional[str] = None,
-                 sample_ratio: Optional[float] = None):
-        if blob_cache_size is not None:
-            pulumi.set(__self__, "blob_cache_size", blob_cache_size)
-        if blob_file_compression is not None:
-            pulumi.set(__self__, "blob_file_compression", blob_file_compression)
-        if blob_run_mode is not None:
-            pulumi.set(__self__, "blob_run_mode", blob_run_mode)
-        if discardable_ratio is not None:
-            pulumi.set(__self__, "discardable_ratio", discardable_ratio)
-        if gc_merge_rewrite is not None:
-            pulumi.set(__self__, "gc_merge_rewrite", gc_merge_rewrite)
-        if level_merge is not None:
-            pulumi.set(__self__, "level_merge", level_merge)
-        if max_gc_batch_size is not None:
-            pulumi.set(__self__, "max_gc_batch_size", max_gc_batch_size)
-        if merge_small_file_threshold is not None:
-            pulumi.set(__self__, "merge_small_file_threshold", merge_small_file_threshold)
-        if min_blob_size is not None:
-            pulumi.set(__self__, "min_blob_size", min_blob_size)
-        if min_gc_batch_size is not None:
-            pulumi.set(__self__, "min_gc_batch_size", min_gc_batch_size)
-        if sample_ratio is not None:
-            pulumi.set(__self__, "sample_ratio", sample_ratio)
-
-    @property
-    @pulumi.getter(name="blob-cache-size")
-    def blob_cache_size(self) -> Optional[str]:
-        return pulumi.get(self, "blob_cache_size")
-
-    @property
-    @pulumi.getter(name="blob-file-compression")
-    def blob_file_compression(self) -> Optional[str]:
-        return pulumi.get(self, "blob_file_compression")
-
-    @property
-    @pulumi.getter(name="blob-run-mode")
-    def blob_run_mode(self) -> Optional[str]:
-        return pulumi.get(self, "blob_run_mode")
-
-    @property
-    @pulumi.getter(name="discardable-ratio")
-    def discardable_ratio(self) -> Optional[float]:
-        return pulumi.get(self, "discardable_ratio")
-
-    @property
-    @pulumi.getter(name="gc-merge-rewrite")
-    def gc_merge_rewrite(self) -> Optional[bool]:
-        return pulumi.get(self, "gc_merge_rewrite")
-
-    @property
-    @pulumi.getter
-    def level_merge(self) -> Optional[bool]:
-        return pulumi.get(self, "level_merge")
-
-    @property
-    @pulumi.getter(name="max-gc-batch-size")
-    def max_gc_batch_size(self) -> Optional[str]:
-        return pulumi.get(self, "max_gc_batch_size")
-
-    @property
-    @pulumi.getter(name="merge-small-file-threshold")
-    def merge_small_file_threshold(self) -> Optional[str]:
-        return pulumi.get(self, "merge_small_file_threshold")
-
-    @property
-    @pulumi.getter(name="min-blob-size")
-    def min_blob_size(self) -> Optional[str]:
-        return pulumi.get(self, "min_blob_size")
-
-    @property
-    @pulumi.getter(name="min-gc-batch-size")
-    def min_gc_batch_size(self) -> Optional[str]:
-        return pulumi.get(self, "min_gc_batch_size")
-
-    @property
-    @pulumi.getter(name="sample-ratio")
-    def sample_ratio(self) -> Optional[float]:
-        return pulumi.get(self, "sample_ratio")
-
-    def _translate_property(self, prop):
-        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
-
-
-@pulumi.output_type
-class TidbClusterSpecTikvConfigRaftstore(dict):
-    def __init__(__self__, *,
-                 abnormal_leader_missing_duration: Optional[str] = None,
-                 allow_remove_leader: Optional[bool] = None,
-                 apply_early: Optional[bool] = None,
-                 apply_max_batch_size: Optional[int] = None,
-                 apply_pool_size: Optional[int] = None,
-                 apply_yield_duration: Optional[str] = None,
-                 clean_stale_peer_delay: Optional[str] = None,
-                 cleanup_import_sst_interval: Optional[str] = None,
-                 consistency_check_interval: Optional[str] = None,
-                 dev_assert: Optional[bool] = None,
-                 hibernate_regions: Optional[bool] = None,
-                 leader_transfer_max_log_lag: Optional[int] = None,
-                 lock_cf_compact_bytes_threshold: Optional[str] = None,
-                 lock_cf_compact_interval: Optional[str] = None,
-                 max_leader_missing_duration: Optional[str] = None,
-                 max_peer_down_duration: Optional[str] = None,
-                 merge_check_tick_interval: Optional[str] = None,
-                 merge_max_log_gap: Optional[int] = None,
-                 messages_per_tick: Optional[int] = None,
-                 notify_capacity: Optional[int] = None,
-                 pd_heartbeat_tick_interval: Optional[str] = None,
-                 pd_store_heartbeat_tick_interval: Optional[str] = None,
-                 peer_stale_state_check_interval: Optional[str] = None,
-                 perf_level: Optional[int] = None,
-                 prevote: Optional[bool] = None,
-                 raft_base_tick_interval: Optional[str] = None,
-                 raft_election_timeout_ticks: Optional[int] = None,
-                 raft_entry_cache_life_time: Optional[str] = None,
-                 raft_entry_max_size: Optional[str] = None,
-                 raft_heartbeat_ticks: Optional[int] = None,
-                 raft_log_gc_count_limit: Optional[int] = None,
-                 raft_log_gc_size_limit: Optional[str] = None,
-                 raft_log_gc_threshold: Optional[int] = None,
-                 raft_log_gc_tick_interval: Optional[str] = None,
-                 raft_max_inflight_msgs: Optional[int] = None,
-                 raft_max_size_per_msg: Optional[str] = None,
-                 raft_reject_transfer_leader_duration: Optional[str] = None,
-                 raft_store_max_leader_lease: Optional[str] = None,
-                 region_compact_check_interval: Optional[str] = None,
-                 region_compact_check_step: Optional[int] = None,
-                 region_compact_min_tombstones: Optional[int] = None,
-                 region_compact_tombstones_percent: Optional[int] = None,
-                 region_split_check_diff: Optional[str] = None,
-                 report_region_flow_interval: Optional[str] = None,
-                 right_derive_when_split: Optional[bool] = None,
-                 snap_apply_batch_size: Optional[str] = None,
-                 snap_gc_timeout: Optional[str] = None,
-                 snap_mgr_gc_tick_interval: Optional[str] = None,
-                 split_region_check_tick_interval: Optional[str] = None,
-                 store_max_batch_size: Optional[int] = None,
-                 store_pool_size: Optional[int] = None,
-                 store_reschedule_duration: Optional[str] = None,
-                 sync_log: Optional[bool] = None,
-                 use_delete_range: Optional[bool] = None):
-        if abnormal_leader_missing_duration is not None:
-            pulumi.set(__self__, "abnormal_leader_missing_duration", abnormal_leader_missing_duration)
-        if allow_remove_leader is not None:
-            pulumi.set(__self__, "allow_remove_leader", allow_remove_leader)
-        if apply_early is not None:
-            pulumi.set(__self__, "apply_early", apply_early)
-        if apply_max_batch_size is not None:
-            pulumi.set(__self__, "apply_max_batch_size", apply_max_batch_size)
-        if apply_pool_size is not None:
-            pulumi.set(__self__, "apply_pool_size", apply_pool_size)
-        if apply_yield_duration is not None:
-            pulumi.set(__self__, "apply_yield_duration", apply_yield_duration)
-        if clean_stale_peer_delay is not None:
-            pulumi.set(__self__, "clean_stale_peer_delay", clean_stale_peer_delay)
-        if cleanup_import_sst_interval is not None:
-            pulumi.set(__self__, "cleanup_import_sst_interval", cleanup_import_sst_interval)
-        if consistency_check_interval is not None:
-            pulumi.set(__self__, "consistency_check_interval", consistency_check_interval)
-        if dev_assert is not None:
-            pulumi.set(__self__, "dev_assert", dev_assert)
-        if hibernate_regions is not None:
-            pulumi.set(__self__, "hibernate_regions", hibernate_regions)
-        if leader_transfer_max_log_lag is not None:
-            pulumi.set(__self__, "leader_transfer_max_log_lag", leader_transfer_max_log_lag)
-        if lock_cf_compact_bytes_threshold is not None:
-            pulumi.set(__self__, "lock_cf_compact_bytes_threshold", lock_cf_compact_bytes_threshold)
-        if lock_cf_compact_interval is not None:
-            pulumi.set(__self__, "lock_cf_compact_interval", lock_cf_compact_interval)
-        if max_leader_missing_duration is not None:
-            pulumi.set(__self__, "max_leader_missing_duration", max_leader_missing_duration)
-        if max_peer_down_duration is not None:
-            pulumi.set(__self__, "max_peer_down_duration", max_peer_down_duration)
-        if merge_check_tick_interval is not None:
-            pulumi.set(__self__, "merge_check_tick_interval", merge_check_tick_interval)
-        if merge_max_log_gap is not None:
-            pulumi.set(__self__, "merge_max_log_gap", merge_max_log_gap)
-        if messages_per_tick is not None:
-            pulumi.set(__self__, "messages_per_tick", messages_per_tick)
-        if notify_capacity is not None:
-            pulumi.set(__self__, "notify_capacity", notify_capacity)
-        if pd_heartbeat_tick_interval is not None:
-            pulumi.set(__self__, "pd_heartbeat_tick_interval", pd_heartbeat_tick_interval)
-        if pd_store_heartbeat_tick_interval is not None:
-            pulumi.set(__self__, "pd_store_heartbeat_tick_interval", pd_store_heartbeat_tick_interval)
-        if peer_stale_state_check_interval is not None:
-            pulumi.set(__self__, "peer_stale_state_check_interval", peer_stale_state_check_interval)
-        if perf_level is not None:
-            pulumi.set(__self__, "perf_level", perf_level)
-        if prevote is not None:
-            pulumi.set(__self__, "prevote", prevote)
-        if raft_base_tick_interval is not None:
-            pulumi.set(__self__, "raft_base_tick_interval", raft_base_tick_interval)
-        if raft_election_timeout_ticks is not None:
-            pulumi.set(__self__, "raft_election_timeout_ticks", raft_election_timeout_ticks)
-        if raft_entry_cache_life_time is not None:
-            pulumi.set(__self__, "raft_entry_cache_life_time", raft_entry_cache_life_time)
-        if raft_entry_max_size is not None:
-            pulumi.set(__self__, "raft_entry_max_size", raft_entry_max_size)
-        if raft_heartbeat_ticks is not None:
-            pulumi.set(__self__, "raft_heartbeat_ticks", raft_heartbeat_ticks)
-        if raft_log_gc_count_limit is not None:
-            pulumi.set(__self__, "raft_log_gc_count_limit", raft_log_gc_count_limit)
-        if raft_log_gc_size_limit is not None:
-            pulumi.set(__self__, "raft_log_gc_size_limit", raft_log_gc_size_limit)
-        if raft_log_gc_threshold is not None:
-            pulumi.set(__self__, "raft_log_gc_threshold", raft_log_gc_threshold)
-        if raft_log_gc_tick_interval is not None:
-            pulumi.set(__self__, "raft_log_gc_tick_interval", raft_log_gc_tick_interval)
-        if raft_max_inflight_msgs is not None:
-            pulumi.set(__self__, "raft_max_inflight_msgs", raft_max_inflight_msgs)
-        if raft_max_size_per_msg is not None:
-            pulumi.set(__self__, "raft_max_size_per_msg", raft_max_size_per_msg)
-        if raft_reject_transfer_leader_duration is not None:
-            pulumi.set(__self__, "raft_reject_transfer_leader_duration", raft_reject_transfer_leader_duration)
-        if raft_store_max_leader_lease is not None:
-            pulumi.set(__self__, "raft_store_max_leader_lease", raft_store_max_leader_lease)
-        if region_compact_check_interval is not None:
-            pulumi.set(__self__, "region_compact_check_interval", region_compact_check_interval)
-        if region_compact_check_step is not None:
-            pulumi.set(__self__, "region_compact_check_step", region_compact_check_step)
-        if region_compact_min_tombstones is not None:
-            pulumi.set(__self__, "region_compact_min_tombstones", region_compact_min_tombstones)
-        if region_compact_tombstones_percent is not None:
-            pulumi.set(__self__, "region_compact_tombstones_percent", region_compact_tombstones_percent)
-        if region_split_check_diff is not None:
-            pulumi.set(__self__, "region_split_check_diff", region_split_check_diff)
-        if report_region_flow_interval is not None:
-            pulumi.set(__self__, "report_region_flow_interval", report_region_flow_interval)
-        if right_derive_when_split is not None:
-            pulumi.set(__self__, "right_derive_when_split", right_derive_when_split)
-        if snap_apply_batch_size is not None:
-            pulumi.set(__self__, "snap_apply_batch_size", snap_apply_batch_size)
-        if snap_gc_timeout is not None:
-            pulumi.set(__self__, "snap_gc_timeout", snap_gc_timeout)
-        if snap_mgr_gc_tick_interval is not None:
-            pulumi.set(__self__, "snap_mgr_gc_tick_interval", snap_mgr_gc_tick_interval)
-        if split_region_check_tick_interval is not None:
-            pulumi.set(__self__, "split_region_check_tick_interval", split_region_check_tick_interval)
-        if store_max_batch_size is not None:
-            pulumi.set(__self__, "store_max_batch_size", store_max_batch_size)
-        if store_pool_size is not None:
-            pulumi.set(__self__, "store_pool_size", store_pool_size)
-        if store_reschedule_duration is not None:
-            pulumi.set(__self__, "store_reschedule_duration", store_reschedule_duration)
-        if sync_log is not None:
-            pulumi.set(__self__, "sync_log", sync_log)
-        if use_delete_range is not None:
-            pulumi.set(__self__, "use_delete_range", use_delete_range)
-
-    @property
-    @pulumi.getter(name="abnormal-leader-missing-duration")
-    def abnormal_leader_missing_duration(self) -> Optional[str]:
-        return pulumi.get(self, "abnormal_leader_missing_duration")
-
-    @property
-    @pulumi.getter(name="allow-remove-leader")
-    def allow_remove_leader(self) -> Optional[bool]:
-        return pulumi.get(self, "allow_remove_leader")
-
-    @property
-    @pulumi.getter(name="apply-early")
-    def apply_early(self) -> Optional[bool]:
-        return pulumi.get(self, "apply_early")
-
-    @property
-    @pulumi.getter(name="apply-max-batch-size")
-    def apply_max_batch_size(self) -> Optional[int]:
-        return pulumi.get(self, "apply_max_batch_size")
-
-    @property
-    @pulumi.getter(name="apply-pool-size")
-    def apply_pool_size(self) -> Optional[int]:
-        return pulumi.get(self, "apply_pool_size")
-
-    @property
-    @pulumi.getter(name="apply-yield-duration")
-    def apply_yield_duration(self) -> Optional[str]:
-        return pulumi.get(self, "apply_yield_duration")
-
-    @property
-    @pulumi.getter(name="clean-stale-peer-delay")
-    def clean_stale_peer_delay(self) -> Optional[str]:
-        return pulumi.get(self, "clean_stale_peer_delay")
-
-    @property
-    @pulumi.getter(name="cleanup-import-sst-interval")
-    def cleanup_import_sst_interval(self) -> Optional[str]:
-        return pulumi.get(self, "cleanup_import_sst_interval")
-
-    @property
-    @pulumi.getter(name="consistency-check-interval")
-    def consistency_check_interval(self) -> Optional[str]:
-        return pulumi.get(self, "consistency_check_interval")
-
-    @property
-    @pulumi.getter(name="dev-assert")
-    def dev_assert(self) -> Optional[bool]:
-        return pulumi.get(self, "dev_assert")
-
-    @property
-    @pulumi.getter(name="hibernate-regions")
-    def hibernate_regions(self) -> Optional[bool]:
-        return pulumi.get(self, "hibernate_regions")
-
-    @property
-    @pulumi.getter(name="leader-transfer-max-log-lag")
-    def leader_transfer_max_log_lag(self) -> Optional[int]:
-        return pulumi.get(self, "leader_transfer_max_log_lag")
-
-    @property
-    @pulumi.getter(name="lock-cf-compact-bytes-threshold")
-    def lock_cf_compact_bytes_threshold(self) -> Optional[str]:
-        return pulumi.get(self, "lock_cf_compact_bytes_threshold")
-
-    @property
-    @pulumi.getter(name="lock-cf-compact-interval")
-    def lock_cf_compact_interval(self) -> Optional[str]:
-        return pulumi.get(self, "lock_cf_compact_interval")
-
-    @property
-    @pulumi.getter(name="max-leader-missing-duration")
-    def max_leader_missing_duration(self) -> Optional[str]:
-        return pulumi.get(self, "max_leader_missing_duration")
-
-    @property
-    @pulumi.getter(name="max-peer-down-duration")
-    def max_peer_down_duration(self) -> Optional[str]:
-        return pulumi.get(self, "max_peer_down_duration")
-
-    @property
-    @pulumi.getter(name="merge-check-tick-interval")
-    def merge_check_tick_interval(self) -> Optional[str]:
-        return pulumi.get(self, "merge_check_tick_interval")
-
-    @property
-    @pulumi.getter(name="merge-max-log-gap")
-    def merge_max_log_gap(self) -> Optional[int]:
-        return pulumi.get(self, "merge_max_log_gap")
-
-    @property
-    @pulumi.getter(name="messages-per-tick")
-    def messages_per_tick(self) -> Optional[int]:
-        return pulumi.get(self, "messages_per_tick")
-
-    @property
-    @pulumi.getter(name="notify-capacity")
-    def notify_capacity(self) -> Optional[int]:
-        return pulumi.get(self, "notify_capacity")
-
-    @property
-    @pulumi.getter(name="pd-heartbeat-tick-interval")
-    def pd_heartbeat_tick_interval(self) -> Optional[str]:
-        return pulumi.get(self, "pd_heartbeat_tick_interval")
-
-    @property
-    @pulumi.getter(name="pd-store-heartbeat-tick-interval")
-    def pd_store_heartbeat_tick_interval(self) -> Optional[str]:
-        return pulumi.get(self, "pd_store_heartbeat_tick_interval")
-
-    @property
-    @pulumi.getter(name="peer-stale-state-check-interval")
-    def peer_stale_state_check_interval(self) -> Optional[str]:
-        return pulumi.get(self, "peer_stale_state_check_interval")
-
-    @property
-    @pulumi.getter(name="perf-level")
-    def perf_level(self) -> Optional[int]:
-        return pulumi.get(self, "perf_level")
-
-    @property
-    @pulumi.getter
-    def prevote(self) -> Optional[bool]:
-        return pulumi.get(self, "prevote")
-
-    @property
-    @pulumi.getter(name="raft-base-tick-interval")
-    def raft_base_tick_interval(self) -> Optional[str]:
-        return pulumi.get(self, "raft_base_tick_interval")
-
-    @property
-    @pulumi.getter(name="raft-election-timeout-ticks")
-    def raft_election_timeout_ticks(self) -> Optional[int]:
-        return pulumi.get(self, "raft_election_timeout_ticks")
-
-    @property
-    @pulumi.getter(name="raft-entry-cache-life-time")
-    def raft_entry_cache_life_time(self) -> Optional[str]:
-        return pulumi.get(self, "raft_entry_cache_life_time")
-
-    @property
-    @pulumi.getter(name="raft-entry-max-size")
-    def raft_entry_max_size(self) -> Optional[str]:
-        return pulumi.get(self, "raft_entry_max_size")
-
-    @property
-    @pulumi.getter(name="raft-heartbeat-ticks")
-    def raft_heartbeat_ticks(self) -> Optional[int]:
-        return pulumi.get(self, "raft_heartbeat_ticks")
-
-    @property
-    @pulumi.getter(name="raft-log-gc-count-limit")
-    def raft_log_gc_count_limit(self) -> Optional[int]:
-        return pulumi.get(self, "raft_log_gc_count_limit")
-
-    @property
-    @pulumi.getter(name="raft-log-gc-size-limit")
-    def raft_log_gc_size_limit(self) -> Optional[str]:
-        return pulumi.get(self, "raft_log_gc_size_limit")
-
-    @property
-    @pulumi.getter(name="raft-log-gc-threshold")
-    def raft_log_gc_threshold(self) -> Optional[int]:
-        return pulumi.get(self, "raft_log_gc_threshold")
-
-    @property
-    @pulumi.getter(name="raft-log-gc-tick-interval")
-    def raft_log_gc_tick_interval(self) -> Optional[str]:
-        return pulumi.get(self, "raft_log_gc_tick_interval")
-
-    @property
-    @pulumi.getter(name="raft-max-inflight-msgs")
-    def raft_max_inflight_msgs(self) -> Optional[int]:
-        return pulumi.get(self, "raft_max_inflight_msgs")
-
-    @property
-    @pulumi.getter(name="raft-max-size-per-msg")
-    def raft_max_size_per_msg(self) -> Optional[str]:
-        return pulumi.get(self, "raft_max_size_per_msg")
-
-    @property
-    @pulumi.getter(name="raft-reject-transfer-leader-duration")
-    def raft_reject_transfer_leader_duration(self) -> Optional[str]:
-        return pulumi.get(self, "raft_reject_transfer_leader_duration")
-
-    @property
-    @pulumi.getter(name="raft-store-max-leader-lease")
-    def raft_store_max_leader_lease(self) -> Optional[str]:
-        return pulumi.get(self, "raft_store_max_leader_lease")
-
-    @property
-    @pulumi.getter(name="region-compact-check-interval")
-    def region_compact_check_interval(self) -> Optional[str]:
-        return pulumi.get(self, "region_compact_check_interval")
-
-    @property
-    @pulumi.getter(name="region-compact-check-step")
-    def region_compact_check_step(self) -> Optional[int]:
-        return pulumi.get(self, "region_compact_check_step")
-
-    @property
-    @pulumi.getter(name="region-compact-min-tombstones")
-    def region_compact_min_tombstones(self) -> Optional[int]:
-        return pulumi.get(self, "region_compact_min_tombstones")
-
-    @property
-    @pulumi.getter(name="region-compact-tombstones-percent")
-    def region_compact_tombstones_percent(self) -> Optional[int]:
-        return pulumi.get(self, "region_compact_tombstones_percent")
-
-    @property
-    @pulumi.getter(name="region-split-check-diff")
-    def region_split_check_diff(self) -> Optional[str]:
-        return pulumi.get(self, "region_split_check_diff")
-
-    @property
-    @pulumi.getter(name="report-region-flow-interval")
-    def report_region_flow_interval(self) -> Optional[str]:
-        return pulumi.get(self, "report_region_flow_interval")
-
-    @property
-    @pulumi.getter(name="right-derive-when-split")
-    def right_derive_when_split(self) -> Optional[bool]:
-        return pulumi.get(self, "right_derive_when_split")
-
-    @property
-    @pulumi.getter(name="snap-apply-batch-size")
-    def snap_apply_batch_size(self) -> Optional[str]:
-        return pulumi.get(self, "snap_apply_batch_size")
-
-    @property
-    @pulumi.getter(name="snap-gc-timeout")
-    def snap_gc_timeout(self) -> Optional[str]:
-        return pulumi.get(self, "snap_gc_timeout")
-
-    @property
-    @pulumi.getter(name="snap-mgr-gc-tick-interval")
-    def snap_mgr_gc_tick_interval(self) -> Optional[str]:
-        return pulumi.get(self, "snap_mgr_gc_tick_interval")
-
-    @property
-    @pulumi.getter(name="split-region-check-tick-interval")
-    def split_region_check_tick_interval(self) -> Optional[str]:
-        return pulumi.get(self, "split_region_check_tick_interval")
-
-    @property
-    @pulumi.getter(name="store-max-batch-size")
-    def store_max_batch_size(self) -> Optional[int]:
-        return pulumi.get(self, "store_max_batch_size")
-
-    @property
-    @pulumi.getter(name="store-pool-size")
-    def store_pool_size(self) -> Optional[int]:
-        return pulumi.get(self, "store_pool_size")
-
-    @property
-    @pulumi.getter(name="store-reschedule-duration")
-    def store_reschedule_duration(self) -> Optional[str]:
-        return pulumi.get(self, "store_reschedule_duration")
-
-    @property
-    @pulumi.getter(name="sync-log")
-    def sync_log(self) -> Optional[bool]:
-        return pulumi.get(self, "sync_log")
-
-    @property
-    @pulumi.getter(name="use-delete-range")
-    def use_delete_range(self) -> Optional[bool]:
-        return pulumi.get(self, "use_delete_range")
-
-    def _translate_property(self, prop):
-        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
-
-
-@pulumi.output_type
-class TidbClusterSpecTikvConfigReadpool(dict):
-    def __init__(__self__, *,
-                 coprocessor: Optional['outputs.TidbClusterSpecTikvConfigReadpoolCoprocessor'] = None,
-                 storage: Optional['outputs.TidbClusterSpecTikvConfigReadpoolStorage'] = None,
-                 unified: Optional['outputs.TidbClusterSpecTikvConfigReadpoolUnified'] = None):
-        if coprocessor is not None:
-            pulumi.set(__self__, "coprocessor", coprocessor)
-        if storage is not None:
-            pulumi.set(__self__, "storage", storage)
-        if unified is not None:
-            pulumi.set(__self__, "unified", unified)
-
-    @property
-    @pulumi.getter
-    def coprocessor(self) -> Optional['outputs.TidbClusterSpecTikvConfigReadpoolCoprocessor']:
-        return pulumi.get(self, "coprocessor")
-
-    @property
-    @pulumi.getter
-    def storage(self) -> Optional['outputs.TidbClusterSpecTikvConfigReadpoolStorage']:
-        return pulumi.get(self, "storage")
-
-    @property
-    @pulumi.getter
-    def unified(self) -> Optional['outputs.TidbClusterSpecTikvConfigReadpoolUnified']:
-        return pulumi.get(self, "unified")
-
-    def _translate_property(self, prop):
-        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
-
-
-@pulumi.output_type
-class TidbClusterSpecTikvConfigReadpoolCoprocessor(dict):
-    def __init__(__self__, *,
-                 high_concurrency: Optional[int] = None,
-                 low_concurrency: Optional[int] = None,
-                 max_tasks_per_worker_high: Optional[int] = None,
-                 max_tasks_per_worker_low: Optional[int] = None,
-                 max_tasks_per_worker_normal: Optional[int] = None,
-                 normal_concurrency: Optional[int] = None,
-                 stack_size: Optional[str] = None,
-                 use_unified_pool: Optional[bool] = None):
-        if high_concurrency is not None:
-            pulumi.set(__self__, "high_concurrency", high_concurrency)
-        if low_concurrency is not None:
-            pulumi.set(__self__, "low_concurrency", low_concurrency)
-        if max_tasks_per_worker_high is not None:
-            pulumi.set(__self__, "max_tasks_per_worker_high", max_tasks_per_worker_high)
-        if max_tasks_per_worker_low is not None:
-            pulumi.set(__self__, "max_tasks_per_worker_low", max_tasks_per_worker_low)
-        if max_tasks_per_worker_normal is not None:
-            pulumi.set(__self__, "max_tasks_per_worker_normal", max_tasks_per_worker_normal)
-        if normal_concurrency is not None:
-            pulumi.set(__self__, "normal_concurrency", normal_concurrency)
-        if stack_size is not None:
-            pulumi.set(__self__, "stack_size", stack_size)
-        if use_unified_pool is not None:
-            pulumi.set(__self__, "use_unified_pool", use_unified_pool)
-
-    @property
-    @pulumi.getter(name="high-concurrency")
-    def high_concurrency(self) -> Optional[int]:
-        return pulumi.get(self, "high_concurrency")
-
-    @property
-    @pulumi.getter(name="low-concurrency")
-    def low_concurrency(self) -> Optional[int]:
-        return pulumi.get(self, "low_concurrency")
-
-    @property
-    @pulumi.getter(name="max-tasks-per-worker-high")
-    def max_tasks_per_worker_high(self) -> Optional[int]:
-        return pulumi.get(self, "max_tasks_per_worker_high")
-
-    @property
-    @pulumi.getter(name="max-tasks-per-worker-low")
-    def max_tasks_per_worker_low(self) -> Optional[int]:
-        return pulumi.get(self, "max_tasks_per_worker_low")
-
-    @property
-    @pulumi.getter(name="max-tasks-per-worker-normal")
-    def max_tasks_per_worker_normal(self) -> Optional[int]:
-        return pulumi.get(self, "max_tasks_per_worker_normal")
-
-    @property
-    @pulumi.getter(name="normal-concurrency")
-    def normal_concurrency(self) -> Optional[int]:
-        return pulumi.get(self, "normal_concurrency")
-
-    @property
-    @pulumi.getter(name="stack-size")
-    def stack_size(self) -> Optional[str]:
-        return pulumi.get(self, "stack_size")
-
-    @property
-    @pulumi.getter(name="use-unified-pool")
-    def use_unified_pool(self) -> Optional[bool]:
-        return pulumi.get(self, "use_unified_pool")
-
-    def _translate_property(self, prop):
-        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
-
-
-@pulumi.output_type
-class TidbClusterSpecTikvConfigReadpoolStorage(dict):
-    def __init__(__self__, *,
-                 high_concurrency: Optional[int] = None,
-                 low_concurrency: Optional[int] = None,
-                 max_tasks_per_worker_high: Optional[int] = None,
-                 max_tasks_per_worker_low: Optional[int] = None,
-                 max_tasks_per_worker_normal: Optional[int] = None,
-                 normal_concurrency: Optional[int] = None,
-                 stack_size: Optional[str] = None,
-                 use_unified_pool: Optional[bool] = None):
-        if high_concurrency is not None:
-            pulumi.set(__self__, "high_concurrency", high_concurrency)
-        if low_concurrency is not None:
-            pulumi.set(__self__, "low_concurrency", low_concurrency)
-        if max_tasks_per_worker_high is not None:
-            pulumi.set(__self__, "max_tasks_per_worker_high", max_tasks_per_worker_high)
-        if max_tasks_per_worker_low is not None:
-            pulumi.set(__self__, "max_tasks_per_worker_low", max_tasks_per_worker_low)
-        if max_tasks_per_worker_normal is not None:
-            pulumi.set(__self__, "max_tasks_per_worker_normal", max_tasks_per_worker_normal)
-        if normal_concurrency is not None:
-            pulumi.set(__self__, "normal_concurrency", normal_concurrency)
-        if stack_size is not None:
-            pulumi.set(__self__, "stack_size", stack_size)
-        if use_unified_pool is not None:
-            pulumi.set(__self__, "use_unified_pool", use_unified_pool)
-
-    @property
-    @pulumi.getter(name="high-concurrency")
-    def high_concurrency(self) -> Optional[int]:
-        return pulumi.get(self, "high_concurrency")
-
-    @property
-    @pulumi.getter(name="low-concurrency")
-    def low_concurrency(self) -> Optional[int]:
-        return pulumi.get(self, "low_concurrency")
-
-    @property
-    @pulumi.getter(name="max-tasks-per-worker-high")
-    def max_tasks_per_worker_high(self) -> Optional[int]:
-        return pulumi.get(self, "max_tasks_per_worker_high")
-
-    @property
-    @pulumi.getter(name="max-tasks-per-worker-low")
-    def max_tasks_per_worker_low(self) -> Optional[int]:
-        return pulumi.get(self, "max_tasks_per_worker_low")
-
-    @property
-    @pulumi.getter(name="max-tasks-per-worker-normal")
-    def max_tasks_per_worker_normal(self) -> Optional[int]:
-        return pulumi.get(self, "max_tasks_per_worker_normal")
-
-    @property
-    @pulumi.getter(name="normal-concurrency")
-    def normal_concurrency(self) -> Optional[int]:
-        return pulumi.get(self, "normal_concurrency")
-
-    @property
-    @pulumi.getter(name="stack-size")
-    def stack_size(self) -> Optional[str]:
-        return pulumi.get(self, "stack_size")
-
-    @property
-    @pulumi.getter(name="use-unified-pool")
-    def use_unified_pool(self) -> Optional[bool]:
-        return pulumi.get(self, "use_unified_pool")
-
-    def _translate_property(self, prop):
-        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
-
-
-@pulumi.output_type
-class TidbClusterSpecTikvConfigReadpoolUnified(dict):
-    def __init__(__self__, *,
-                 max_tasks_per_worker: Optional[int] = None,
-                 max_thread_count: Optional[int] = None,
-                 min_thread_count: Optional[int] = None,
-                 stack_size: Optional[str] = None):
-        if max_tasks_per_worker is not None:
-            pulumi.set(__self__, "max_tasks_per_worker", max_tasks_per_worker)
-        if max_thread_count is not None:
-            pulumi.set(__self__, "max_thread_count", max_thread_count)
-        if min_thread_count is not None:
-            pulumi.set(__self__, "min_thread_count", min_thread_count)
-        if stack_size is not None:
-            pulumi.set(__self__, "stack_size", stack_size)
-
-    @property
-    @pulumi.getter(name="max-tasks-per-worker")
-    def max_tasks_per_worker(self) -> Optional[int]:
-        return pulumi.get(self, "max_tasks_per_worker")
-
-    @property
-    @pulumi.getter(name="max-thread-count")
-    def max_thread_count(self) -> Optional[int]:
-        return pulumi.get(self, "max_thread_count")
-
-    @property
-    @pulumi.getter(name="min-thread-count")
-    def min_thread_count(self) -> Optional[int]:
-        return pulumi.get(self, "min_thread_count")
-
-    @property
-    @pulumi.getter(name="stack-size")
-    def stack_size(self) -> Optional[str]:
-        return pulumi.get(self, "stack_size")
-
-    def _translate_property(self, prop):
-        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
-
-
-@pulumi.output_type
-class TidbClusterSpecTikvConfigRocksdb(dict):
-    def __init__(__self__, *,
-                 auto_tuned: Optional[bool] = None,
-                 bytes_per_sync: Optional[str] = None,
-                 compaction_readahead_size: Optional[str] = None,
-                 create_if_missing: Optional[bool] = None,
-                 defaultcf: Optional['outputs.TidbClusterSpecTikvConfigRocksdbDefaultcf'] = None,
-                 enable_pipelined_write: Optional[bool] = None,
-                 enable_statistics: Optional[bool] = None,
-                 info_log_dir: Optional[str] = None,
-                 info_log_keep_log_file_num: Optional[int] = None,
-                 info_log_max_size: Optional[str] = None,
-                 info_log_roll_time: Optional[str] = None,
-                 lockcf: Optional['outputs.TidbClusterSpecTikvConfigRocksdbLockcf'] = None,
-                 max_background_jobs: Optional[int] = None,
-                 max_manifest_file_size: Optional[str] = None,
-                 max_open_files: Optional[int] = None,
-                 max_sub_compactions: Optional[int] = None,
-                 max_total_wal_size: Optional[str] = None,
-                 raftcf: Optional['outputs.TidbClusterSpecTikvConfigRocksdbRaftcf'] = None,
-                 rate_bytes_per_sec: Optional[str] = None,
-                 rate_limiter_mode: Optional[int] = None,
-                 stats_dump_period: Optional[str] = None,
-                 titan: Optional['outputs.TidbClusterSpecTikvConfigRocksdbTitan'] = None,
-                 use_direct_io_for_flush_and_compaction: Optional[bool] = None,
-                 wal_bytes_per_sync: Optional[str] = None,
-                 wal_recovery_mode: Optional[int] = None,
-                 wal_size_limit: Optional[str] = None,
-                 wal_ttl_seconds: Optional[int] = None,
-                 writable_file_max_buffer_size: Optional[str] = None,
-                 writecf: Optional['outputs.TidbClusterSpecTikvConfigRocksdbWritecf'] = None):
-        if auto_tuned is not None:
-            pulumi.set(__self__, "auto_tuned", auto_tuned)
-        if bytes_per_sync is not None:
-            pulumi.set(__self__, "bytes_per_sync", bytes_per_sync)
-        if compaction_readahead_size is not None:
-            pulumi.set(__self__, "compaction_readahead_size", compaction_readahead_size)
-        if create_if_missing is not None:
-            pulumi.set(__self__, "create_if_missing", create_if_missing)
-        if defaultcf is not None:
-            pulumi.set(__self__, "defaultcf", defaultcf)
-        if enable_pipelined_write is not None:
-            pulumi.set(__self__, "enable_pipelined_write", enable_pipelined_write)
-        if enable_statistics is not None:
-            pulumi.set(__self__, "enable_statistics", enable_statistics)
-        if info_log_dir is not None:
-            pulumi.set(__self__, "info_log_dir", info_log_dir)
-        if info_log_keep_log_file_num is not None:
-            pulumi.set(__self__, "info_log_keep_log_file_num", info_log_keep_log_file_num)
-        if info_log_max_size is not None:
-            pulumi.set(__self__, "info_log_max_size", info_log_max_size)
-        if info_log_roll_time is not None:
-            pulumi.set(__self__, "info_log_roll_time", info_log_roll_time)
-        if lockcf is not None:
-            pulumi.set(__self__, "lockcf", lockcf)
-        if max_background_jobs is not None:
-            pulumi.set(__self__, "max_background_jobs", max_background_jobs)
-        if max_manifest_file_size is not None:
-            pulumi.set(__self__, "max_manifest_file_size", max_manifest_file_size)
-        if max_open_files is not None:
-            pulumi.set(__self__, "max_open_files", max_open_files)
-        if max_sub_compactions is not None:
-            pulumi.set(__self__, "max_sub_compactions", max_sub_compactions)
-        if max_total_wal_size is not None:
-            pulumi.set(__self__, "max_total_wal_size", max_total_wal_size)
-        if raftcf is not None:
-            pulumi.set(__self__, "raftcf", raftcf)
-        if rate_bytes_per_sec is not None:
-            pulumi.set(__self__, "rate_bytes_per_sec", rate_bytes_per_sec)
-        if rate_limiter_mode is not None:
-            pulumi.set(__self__, "rate_limiter_mode", rate_limiter_mode)
-        if stats_dump_period is not None:
-            pulumi.set(__self__, "stats_dump_period", stats_dump_period)
-        if titan is not None:
-            pulumi.set(__self__, "titan", titan)
-        if use_direct_io_for_flush_and_compaction is not None:
-            pulumi.set(__self__, "use_direct_io_for_flush_and_compaction", use_direct_io_for_flush_and_compaction)
-        if wal_bytes_per_sync is not None:
-            pulumi.set(__self__, "wal_bytes_per_sync", wal_bytes_per_sync)
-        if wal_recovery_mode is not None:
-            pulumi.set(__self__, "wal_recovery_mode", wal_recovery_mode)
-        if wal_size_limit is not None:
-            pulumi.set(__self__, "wal_size_limit", wal_size_limit)
-        if wal_ttl_seconds is not None:
-            pulumi.set(__self__, "wal_ttl_seconds", wal_ttl_seconds)
-        if writable_file_max_buffer_size is not None:
-            pulumi.set(__self__, "writable_file_max_buffer_size", writable_file_max_buffer_size)
-        if writecf is not None:
-            pulumi.set(__self__, "writecf", writecf)
-
-    @property
-    @pulumi.getter(name="auto-tuned")
-    def auto_tuned(self) -> Optional[bool]:
-        return pulumi.get(self, "auto_tuned")
-
-    @property
-    @pulumi.getter(name="bytes-per-sync")
-    def bytes_per_sync(self) -> Optional[str]:
-        return pulumi.get(self, "bytes_per_sync")
-
-    @property
-    @pulumi.getter(name="compaction-readahead-size")
-    def compaction_readahead_size(self) -> Optional[str]:
-        return pulumi.get(self, "compaction_readahead_size")
-
-    @property
-    @pulumi.getter(name="create-if-missing")
-    def create_if_missing(self) -> Optional[bool]:
-        return pulumi.get(self, "create_if_missing")
-
-    @property
-    @pulumi.getter
-    def defaultcf(self) -> Optional['outputs.TidbClusterSpecTikvConfigRocksdbDefaultcf']:
-        return pulumi.get(self, "defaultcf")
-
-    @property
-    @pulumi.getter(name="enable-pipelined-write")
-    def enable_pipelined_write(self) -> Optional[bool]:
-        return pulumi.get(self, "enable_pipelined_write")
-
-    @property
-    @pulumi.getter(name="enable-statistics")
-    def enable_statistics(self) -> Optional[bool]:
-        return pulumi.get(self, "enable_statistics")
-
-    @property
-    @pulumi.getter(name="info-log-dir")
-    def info_log_dir(self) -> Optional[str]:
-        return pulumi.get(self, "info_log_dir")
-
-    @property
-    @pulumi.getter(name="info-log-keep-log-file-num")
-    def info_log_keep_log_file_num(self) -> Optional[int]:
-        return pulumi.get(self, "info_log_keep_log_file_num")
-
-    @property
-    @pulumi.getter(name="info-log-max-size")
-    def info_log_max_size(self) -> Optional[str]:
-        return pulumi.get(self, "info_log_max_size")
-
-    @property
-    @pulumi.getter(name="info-log-roll-time")
-    def info_log_roll_time(self) -> Optional[str]:
-        return pulumi.get(self, "info_log_roll_time")
-
-    @property
-    @pulumi.getter
-    def lockcf(self) -> Optional['outputs.TidbClusterSpecTikvConfigRocksdbLockcf']:
-        return pulumi.get(self, "lockcf")
-
-    @property
-    @pulumi.getter(name="max-background-jobs")
-    def max_background_jobs(self) -> Optional[int]:
-        return pulumi.get(self, "max_background_jobs")
-
-    @property
-    @pulumi.getter(name="max-manifest-file-size")
-    def max_manifest_file_size(self) -> Optional[str]:
-        return pulumi.get(self, "max_manifest_file_size")
-
-    @property
-    @pulumi.getter(name="max-open-files")
-    def max_open_files(self) -> Optional[int]:
-        return pulumi.get(self, "max_open_files")
-
-    @property
-    @pulumi.getter(name="max-sub-compactions")
-    def max_sub_compactions(self) -> Optional[int]:
-        return pulumi.get(self, "max_sub_compactions")
-
-    @property
-    @pulumi.getter(name="max-total-wal-size")
-    def max_total_wal_size(self) -> Optional[str]:
-        return pulumi.get(self, "max_total_wal_size")
-
-    @property
-    @pulumi.getter
-    def raftcf(self) -> Optional['outputs.TidbClusterSpecTikvConfigRocksdbRaftcf']:
-        return pulumi.get(self, "raftcf")
-
-    @property
-    @pulumi.getter(name="rate-bytes-per-sec")
-    def rate_bytes_per_sec(self) -> Optional[str]:
-        return pulumi.get(self, "rate_bytes_per_sec")
-
-    @property
-    @pulumi.getter(name="rate-limiter-mode")
-    def rate_limiter_mode(self) -> Optional[int]:
-        return pulumi.get(self, "rate_limiter_mode")
-
-    @property
-    @pulumi.getter(name="stats-dump-period")
-    def stats_dump_period(self) -> Optional[str]:
-        return pulumi.get(self, "stats_dump_period")
-
-    @property
-    @pulumi.getter
-    def titan(self) -> Optional['outputs.TidbClusterSpecTikvConfigRocksdbTitan']:
-        return pulumi.get(self, "titan")
-
-    @property
-    @pulumi.getter(name="use-direct-io-for-flush-and-compaction")
-    def use_direct_io_for_flush_and_compaction(self) -> Optional[bool]:
-        return pulumi.get(self, "use_direct_io_for_flush_and_compaction")
-
-    @property
-    @pulumi.getter(name="wal-bytes-per-sync")
-    def wal_bytes_per_sync(self) -> Optional[str]:
-        return pulumi.get(self, "wal_bytes_per_sync")
-
-    @property
-    @pulumi.getter(name="wal-recovery-mode")
-    def wal_recovery_mode(self) -> Optional[int]:
-        return pulumi.get(self, "wal_recovery_mode")
-
-    @property
-    @pulumi.getter(name="wal-size-limit")
-    def wal_size_limit(self) -> Optional[str]:
-        return pulumi.get(self, "wal_size_limit")
-
-    @property
-    @pulumi.getter(name="wal-ttl-seconds")
-    def wal_ttl_seconds(self) -> Optional[int]:
-        return pulumi.get(self, "wal_ttl_seconds")
-
-    @property
-    @pulumi.getter(name="writable-file-max-buffer-size")
-    def writable_file_max_buffer_size(self) -> Optional[str]:
-        return pulumi.get(self, "writable_file_max_buffer_size")
-
-    @property
-    @pulumi.getter
-    def writecf(self) -> Optional['outputs.TidbClusterSpecTikvConfigRocksdbWritecf']:
-        return pulumi.get(self, "writecf")
-
-    def _translate_property(self, prop):
-        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
-
-
-@pulumi.output_type
-class TidbClusterSpecTikvConfigRocksdbDefaultcf(dict):
-    def __init__(__self__, *,
-                 block_based_bloom_filter: Optional[bool] = None,
-                 block_cache_size: Optional[str] = None,
-                 block_size: Optional[str] = None,
-                 bloom_filter_bits_per_key: Optional[int] = None,
-                 cache_index_and_filter_blocks: Optional[bool] = None,
-                 compaction_pri: Optional[int] = None,
-                 compaction_style: Optional[int] = None,
-                 compression_per_level: Optional[Sequence[str]] = None,
-                 disable_auto_compactions: Optional[bool] = None,
-                 disable_block_cache: Optional[bool] = None,
-                 dynamic_level_bytes: Optional[bool] = None,
-                 enable_doubly_skiplist: Optional[bool] = None,
-                 force_consistency_checks: Optional[bool] = None,
-                 hard_pending_compaction_bytes_limit: Optional[str] = None,
-                 level0_file_num_compaction_trigger: Optional[int] = None,
-                 level0_slowdown_writes_trigger: Optional[int] = None,
-                 level0_stop_writes_trigger: Optional[int] = None,
-                 max_bytes_for_level_base: Optional[str] = None,
-                 max_bytes_for_level_multiplier: Optional[int] = None,
-                 max_compaction_bytes: Optional[str] = None,
-                 max_write_buffer_number: Optional[int] = None,
-                 min_write_buffer_number_to_merge: Optional[int] = None,
-                 num_levels: Optional[int] = None,
-                 optimize_filters_for_hits: Optional[bool] = None,
-                 pin_l0_filter_and_index_blocks: Optional[bool] = None,
-                 prop_keys_index_distance: Optional[int] = None,
-                 prop_size_index_distance: Optional[int] = None,
-                 read_amp_bytes_per_bit: Optional[int] = None,
-                 soft_pending_compaction_bytes_limit: Optional[str] = None,
-                 target_file_size_base: Optional[str] = None,
-                 titan: Optional['outputs.TidbClusterSpecTikvConfigRocksdbDefaultcfTitan'] = None,
-                 use_bloom_filter: Optional[bool] = None,
-                 whole_key_filtering: Optional[bool] = None,
-                 write_buffer_size: Optional[str] = None):
-        if block_based_bloom_filter is not None:
-            pulumi.set(__self__, "block_based_bloom_filter", block_based_bloom_filter)
-        if block_cache_size is not None:
-            pulumi.set(__self__, "block_cache_size", block_cache_size)
-        if block_size is not None:
-            pulumi.set(__self__, "block_size", block_size)
-        if bloom_filter_bits_per_key is not None:
-            pulumi.set(__self__, "bloom_filter_bits_per_key", bloom_filter_bits_per_key)
-        if cache_index_and_filter_blocks is not None:
-            pulumi.set(__self__, "cache_index_and_filter_blocks", cache_index_and_filter_blocks)
-        if compaction_pri is not None:
-            pulumi.set(__self__, "compaction_pri", compaction_pri)
-        if compaction_style is not None:
-            pulumi.set(__self__, "compaction_style", compaction_style)
-        if compression_per_level is not None:
-            pulumi.set(__self__, "compression_per_level", compression_per_level)
-        if disable_auto_compactions is not None:
-            pulumi.set(__self__, "disable_auto_compactions", disable_auto_compactions)
-        if disable_block_cache is not None:
-            pulumi.set(__self__, "disable_block_cache", disable_block_cache)
-        if dynamic_level_bytes is not None:
-            pulumi.set(__self__, "dynamic_level_bytes", dynamic_level_bytes)
-        if enable_doubly_skiplist is not None:
-            pulumi.set(__self__, "enable_doubly_skiplist", enable_doubly_skiplist)
-        if force_consistency_checks is not None:
-            pulumi.set(__self__, "force_consistency_checks", force_consistency_checks)
-        if hard_pending_compaction_bytes_limit is not None:
-            pulumi.set(__self__, "hard_pending_compaction_bytes_limit", hard_pending_compaction_bytes_limit)
-        if level0_file_num_compaction_trigger is not None:
-            pulumi.set(__self__, "level0_file_num_compaction_trigger", level0_file_num_compaction_trigger)
-        if level0_slowdown_writes_trigger is not None:
-            pulumi.set(__self__, "level0_slowdown_writes_trigger", level0_slowdown_writes_trigger)
-        if level0_stop_writes_trigger is not None:
-            pulumi.set(__self__, "level0_stop_writes_trigger", level0_stop_writes_trigger)
-        if max_bytes_for_level_base is not None:
-            pulumi.set(__self__, "max_bytes_for_level_base", max_bytes_for_level_base)
-        if max_bytes_for_level_multiplier is not None:
-            pulumi.set(__self__, "max_bytes_for_level_multiplier", max_bytes_for_level_multiplier)
-        if max_compaction_bytes is not None:
-            pulumi.set(__self__, "max_compaction_bytes", max_compaction_bytes)
-        if max_write_buffer_number is not None:
-            pulumi.set(__self__, "max_write_buffer_number", max_write_buffer_number)
-        if min_write_buffer_number_to_merge is not None:
-            pulumi.set(__self__, "min_write_buffer_number_to_merge", min_write_buffer_number_to_merge)
-        if num_levels is not None:
-            pulumi.set(__self__, "num_levels", num_levels)
-        if optimize_filters_for_hits is not None:
-            pulumi.set(__self__, "optimize_filters_for_hits", optimize_filters_for_hits)
-        if pin_l0_filter_and_index_blocks is not None:
-            pulumi.set(__self__, "pin_l0_filter_and_index_blocks", pin_l0_filter_and_index_blocks)
-        if prop_keys_index_distance is not None:
-            pulumi.set(__self__, "prop_keys_index_distance", prop_keys_index_distance)
-        if prop_size_index_distance is not None:
-            pulumi.set(__self__, "prop_size_index_distance", prop_size_index_distance)
-        if read_amp_bytes_per_bit is not None:
-            pulumi.set(__self__, "read_amp_bytes_per_bit", read_amp_bytes_per_bit)
-        if soft_pending_compaction_bytes_limit is not None:
-            pulumi.set(__self__, "soft_pending_compaction_bytes_limit", soft_pending_compaction_bytes_limit)
-        if target_file_size_base is not None:
-            pulumi.set(__self__, "target_file_size_base", target_file_size_base)
-        if titan is not None:
-            pulumi.set(__self__, "titan", titan)
-        if use_bloom_filter is not None:
-            pulumi.set(__self__, "use_bloom_filter", use_bloom_filter)
-        if whole_key_filtering is not None:
-            pulumi.set(__self__, "whole_key_filtering", whole_key_filtering)
-        if write_buffer_size is not None:
-            pulumi.set(__self__, "write_buffer_size", write_buffer_size)
-
-    @property
-    @pulumi.getter(name="block-based-bloom-filter")
-    def block_based_bloom_filter(self) -> Optional[bool]:
-        return pulumi.get(self, "block_based_bloom_filter")
-
-    @property
-    @pulumi.getter(name="block-cache-size")
-    def block_cache_size(self) -> Optional[str]:
-        return pulumi.get(self, "block_cache_size")
-
-    @property
-    @pulumi.getter(name="block-size")
-    def block_size(self) -> Optional[str]:
-        return pulumi.get(self, "block_size")
-
-    @property
-    @pulumi.getter(name="bloom-filter-bits-per-key")
-    def bloom_filter_bits_per_key(self) -> Optional[int]:
-        return pulumi.get(self, "bloom_filter_bits_per_key")
-
-    @property
-    @pulumi.getter(name="cache-index-and-filter-blocks")
-    def cache_index_and_filter_blocks(self) -> Optional[bool]:
-        return pulumi.get(self, "cache_index_and_filter_blocks")
-
-    @property
-    @pulumi.getter(name="compaction-pri")
-    def compaction_pri(self) -> Optional[int]:
-        return pulumi.get(self, "compaction_pri")
-
-    @property
-    @pulumi.getter(name="compaction-style")
-    def compaction_style(self) -> Optional[int]:
-        return pulumi.get(self, "compaction_style")
-
-    @property
-    @pulumi.getter(name="compression-per-level")
-    def compression_per_level(self) -> Optional[Sequence[str]]:
-        return pulumi.get(self, "compression_per_level")
-
-    @property
-    @pulumi.getter(name="disable-auto-compactions")
-    def disable_auto_compactions(self) -> Optional[bool]:
-        return pulumi.get(self, "disable_auto_compactions")
-
-    @property
-    @pulumi.getter(name="disable-block-cache")
-    def disable_block_cache(self) -> Optional[bool]:
-        return pulumi.get(self, "disable_block_cache")
-
-    @property
-    @pulumi.getter(name="dynamic-level-bytes")
-    def dynamic_level_bytes(self) -> Optional[bool]:
-        return pulumi.get(self, "dynamic_level_bytes")
-
-    @property
-    @pulumi.getter(name="enable-doubly-skiplist")
-    def enable_doubly_skiplist(self) -> Optional[bool]:
-        return pulumi.get(self, "enable_doubly_skiplist")
-
-    @property
-    @pulumi.getter(name="force-consistency-checks")
-    def force_consistency_checks(self) -> Optional[bool]:
-        return pulumi.get(self, "force_consistency_checks")
-
-    @property
-    @pulumi.getter(name="hard-pending-compaction-bytes-limit")
-    def hard_pending_compaction_bytes_limit(self) -> Optional[str]:
-        return pulumi.get(self, "hard_pending_compaction_bytes_limit")
-
-    @property
-    @pulumi.getter(name="level0-file-num-compaction-trigger")
-    def level0_file_num_compaction_trigger(self) -> Optional[int]:
-        return pulumi.get(self, "level0_file_num_compaction_trigger")
-
-    @property
-    @pulumi.getter(name="level0-slowdown-writes-trigger")
-    def level0_slowdown_writes_trigger(self) -> Optional[int]:
-        return pulumi.get(self, "level0_slowdown_writes_trigger")
-
-    @property
-    @pulumi.getter(name="level0-stop-writes-trigger")
-    def level0_stop_writes_trigger(self) -> Optional[int]:
-        return pulumi.get(self, "level0_stop_writes_trigger")
-
-    @property
-    @pulumi.getter(name="max-bytes-for-level-base")
-    def max_bytes_for_level_base(self) -> Optional[str]:
-        return pulumi.get(self, "max_bytes_for_level_base")
-
-    @property
-    @pulumi.getter(name="max-bytes-for-level-multiplier")
-    def max_bytes_for_level_multiplier(self) -> Optional[int]:
-        return pulumi.get(self, "max_bytes_for_level_multiplier")
-
-    @property
-    @pulumi.getter(name="max-compaction-bytes")
-    def max_compaction_bytes(self) -> Optional[str]:
-        return pulumi.get(self, "max_compaction_bytes")
-
-    @property
-    @pulumi.getter(name="max-write-buffer-number")
-    def max_write_buffer_number(self) -> Optional[int]:
-        return pulumi.get(self, "max_write_buffer_number")
-
-    @property
-    @pulumi.getter(name="min-write-buffer-number-to-merge")
-    def min_write_buffer_number_to_merge(self) -> Optional[int]:
-        return pulumi.get(self, "min_write_buffer_number_to_merge")
-
-    @property
-    @pulumi.getter(name="num-levels")
-    def num_levels(self) -> Optional[int]:
-        return pulumi.get(self, "num_levels")
-
-    @property
-    @pulumi.getter(name="optimize-filters-for-hits")
-    def optimize_filters_for_hits(self) -> Optional[bool]:
-        return pulumi.get(self, "optimize_filters_for_hits")
-
-    @property
-    @pulumi.getter(name="pin-l0-filter-and-index-blocks")
-    def pin_l0_filter_and_index_blocks(self) -> Optional[bool]:
-        return pulumi.get(self, "pin_l0_filter_and_index_blocks")
-
-    @property
-    @pulumi.getter(name="prop-keys-index-distance")
-    def prop_keys_index_distance(self) -> Optional[int]:
-        return pulumi.get(self, "prop_keys_index_distance")
-
-    @property
-    @pulumi.getter(name="prop-size-index-distance")
-    def prop_size_index_distance(self) -> Optional[int]:
-        return pulumi.get(self, "prop_size_index_distance")
-
-    @property
-    @pulumi.getter(name="read-amp-bytes-per-bit")
-    def read_amp_bytes_per_bit(self) -> Optional[int]:
-        return pulumi.get(self, "read_amp_bytes_per_bit")
-
-    @property
-    @pulumi.getter(name="soft-pending-compaction-bytes-limit")
-    def soft_pending_compaction_bytes_limit(self) -> Optional[str]:
-        return pulumi.get(self, "soft_pending_compaction_bytes_limit")
-
-    @property
-    @pulumi.getter(name="target-file-size-base")
-    def target_file_size_base(self) -> Optional[str]:
-        return pulumi.get(self, "target_file_size_base")
-
-    @property
-    @pulumi.getter
-    def titan(self) -> Optional['outputs.TidbClusterSpecTikvConfigRocksdbDefaultcfTitan']:
-        return pulumi.get(self, "titan")
-
-    @property
-    @pulumi.getter(name="use-bloom-filter")
-    def use_bloom_filter(self) -> Optional[bool]:
-        return pulumi.get(self, "use_bloom_filter")
-
-    @property
-    @pulumi.getter(name="whole-key-filtering")
-    def whole_key_filtering(self) -> Optional[bool]:
-        return pulumi.get(self, "whole_key_filtering")
-
-    @property
-    @pulumi.getter(name="write-buffer-size")
-    def write_buffer_size(self) -> Optional[str]:
-        return pulumi.get(self, "write_buffer_size")
-
-    def _translate_property(self, prop):
-        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
-
-
-@pulumi.output_type
-class TidbClusterSpecTikvConfigRocksdbDefaultcfTitan(dict):
-    def __init__(__self__, *,
-                 blob_cache_size: Optional[str] = None,
-                 blob_file_compression: Optional[str] = None,
-                 blob_run_mode: Optional[str] = None,
-                 discardable_ratio: Optional[float] = None,
-                 gc_merge_rewrite: Optional[bool] = None,
-                 level_merge: Optional[bool] = None,
-                 max_gc_batch_size: Optional[str] = None,
-                 merge_small_file_threshold: Optional[str] = None,
-                 min_blob_size: Optional[str] = None,
-                 min_gc_batch_size: Optional[str] = None,
-                 sample_ratio: Optional[float] = None):
-        if blob_cache_size is not None:
-            pulumi.set(__self__, "blob_cache_size", blob_cache_size)
-        if blob_file_compression is not None:
-            pulumi.set(__self__, "blob_file_compression", blob_file_compression)
-        if blob_run_mode is not None:
-            pulumi.set(__self__, "blob_run_mode", blob_run_mode)
-        if discardable_ratio is not None:
-            pulumi.set(__self__, "discardable_ratio", discardable_ratio)
-        if gc_merge_rewrite is not None:
-            pulumi.set(__self__, "gc_merge_rewrite", gc_merge_rewrite)
-        if level_merge is not None:
-            pulumi.set(__self__, "level_merge", level_merge)
-        if max_gc_batch_size is not None:
-            pulumi.set(__self__, "max_gc_batch_size", max_gc_batch_size)
-        if merge_small_file_threshold is not None:
-            pulumi.set(__self__, "merge_small_file_threshold", merge_small_file_threshold)
-        if min_blob_size is not None:
-            pulumi.set(__self__, "min_blob_size", min_blob_size)
-        if min_gc_batch_size is not None:
-            pulumi.set(__self__, "min_gc_batch_size", min_gc_batch_size)
-        if sample_ratio is not None:
-            pulumi.set(__self__, "sample_ratio", sample_ratio)
-
-    @property
-    @pulumi.getter(name="blob-cache-size")
-    def blob_cache_size(self) -> Optional[str]:
-        return pulumi.get(self, "blob_cache_size")
-
-    @property
-    @pulumi.getter(name="blob-file-compression")
-    def blob_file_compression(self) -> Optional[str]:
-        return pulumi.get(self, "blob_file_compression")
-
-    @property
-    @pulumi.getter(name="blob-run-mode")
-    def blob_run_mode(self) -> Optional[str]:
-        return pulumi.get(self, "blob_run_mode")
-
-    @property
-    @pulumi.getter(name="discardable-ratio")
-    def discardable_ratio(self) -> Optional[float]:
-        return pulumi.get(self, "discardable_ratio")
-
-    @property
-    @pulumi.getter(name="gc-merge-rewrite")
-    def gc_merge_rewrite(self) -> Optional[bool]:
-        return pulumi.get(self, "gc_merge_rewrite")
-
-    @property
-    @pulumi.getter
-    def level_merge(self) -> Optional[bool]:
-        return pulumi.get(self, "level_merge")
-
-    @property
-    @pulumi.getter(name="max-gc-batch-size")
-    def max_gc_batch_size(self) -> Optional[str]:
-        return pulumi.get(self, "max_gc_batch_size")
-
-    @property
-    @pulumi.getter(name="merge-small-file-threshold")
-    def merge_small_file_threshold(self) -> Optional[str]:
-        return pulumi.get(self, "merge_small_file_threshold")
-
-    @property
-    @pulumi.getter(name="min-blob-size")
-    def min_blob_size(self) -> Optional[str]:
-        return pulumi.get(self, "min_blob_size")
-
-    @property
-    @pulumi.getter(name="min-gc-batch-size")
-    def min_gc_batch_size(self) -> Optional[str]:
-        return pulumi.get(self, "min_gc_batch_size")
-
-    @property
-    @pulumi.getter(name="sample-ratio")
-    def sample_ratio(self) -> Optional[float]:
-        return pulumi.get(self, "sample_ratio")
-
-    def _translate_property(self, prop):
-        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
-
-
-@pulumi.output_type
-class TidbClusterSpecTikvConfigRocksdbLockcf(dict):
-    def __init__(__self__, *,
-                 block_based_bloom_filter: Optional[bool] = None,
-                 block_cache_size: Optional[str] = None,
-                 block_size: Optional[str] = None,
-                 bloom_filter_bits_per_key: Optional[int] = None,
-                 cache_index_and_filter_blocks: Optional[bool] = None,
-                 compaction_pri: Optional[int] = None,
-                 compaction_style: Optional[int] = None,
-                 compression_per_level: Optional[Sequence[str]] = None,
-                 disable_auto_compactions: Optional[bool] = None,
-                 disable_block_cache: Optional[bool] = None,
-                 dynamic_level_bytes: Optional[bool] = None,
-                 enable_doubly_skiplist: Optional[bool] = None,
-                 force_consistency_checks: Optional[bool] = None,
-                 hard_pending_compaction_bytes_limit: Optional[str] = None,
-                 level0_file_num_compaction_trigger: Optional[int] = None,
-                 level0_slowdown_writes_trigger: Optional[int] = None,
-                 level0_stop_writes_trigger: Optional[int] = None,
-                 max_bytes_for_level_base: Optional[str] = None,
-                 max_bytes_for_level_multiplier: Optional[int] = None,
-                 max_compaction_bytes: Optional[str] = None,
-                 max_write_buffer_number: Optional[int] = None,
-                 min_write_buffer_number_to_merge: Optional[int] = None,
-                 num_levels: Optional[int] = None,
-                 optimize_filters_for_hits: Optional[bool] = None,
-                 pin_l0_filter_and_index_blocks: Optional[bool] = None,
-                 prop_keys_index_distance: Optional[int] = None,
-                 prop_size_index_distance: Optional[int] = None,
-                 read_amp_bytes_per_bit: Optional[int] = None,
-                 soft_pending_compaction_bytes_limit: Optional[str] = None,
-                 target_file_size_base: Optional[str] = None,
-                 titan: Optional['outputs.TidbClusterSpecTikvConfigRocksdbLockcfTitan'] = None,
-                 use_bloom_filter: Optional[bool] = None,
-                 whole_key_filtering: Optional[bool] = None,
-                 write_buffer_size: Optional[str] = None):
-        if block_based_bloom_filter is not None:
-            pulumi.set(__self__, "block_based_bloom_filter", block_based_bloom_filter)
-        if block_cache_size is not None:
-            pulumi.set(__self__, "block_cache_size", block_cache_size)
-        if block_size is not None:
-            pulumi.set(__self__, "block_size", block_size)
-        if bloom_filter_bits_per_key is not None:
-            pulumi.set(__self__, "bloom_filter_bits_per_key", bloom_filter_bits_per_key)
-        if cache_index_and_filter_blocks is not None:
-            pulumi.set(__self__, "cache_index_and_filter_blocks", cache_index_and_filter_blocks)
-        if compaction_pri is not None:
-            pulumi.set(__self__, "compaction_pri", compaction_pri)
-        if compaction_style is not None:
-            pulumi.set(__self__, "compaction_style", compaction_style)
-        if compression_per_level is not None:
-            pulumi.set(__self__, "compression_per_level", compression_per_level)
-        if disable_auto_compactions is not None:
-            pulumi.set(__self__, "disable_auto_compactions", disable_auto_compactions)
-        if disable_block_cache is not None:
-            pulumi.set(__self__, "disable_block_cache", disable_block_cache)
-        if dynamic_level_bytes is not None:
-            pulumi.set(__self__, "dynamic_level_bytes", dynamic_level_bytes)
-        if enable_doubly_skiplist is not None:
-            pulumi.set(__self__, "enable_doubly_skiplist", enable_doubly_skiplist)
-        if force_consistency_checks is not None:
-            pulumi.set(__self__, "force_consistency_checks", force_consistency_checks)
-        if hard_pending_compaction_bytes_limit is not None:
-            pulumi.set(__self__, "hard_pending_compaction_bytes_limit", hard_pending_compaction_bytes_limit)
-        if level0_file_num_compaction_trigger is not None:
-            pulumi.set(__self__, "level0_file_num_compaction_trigger", level0_file_num_compaction_trigger)
-        if level0_slowdown_writes_trigger is not None:
-            pulumi.set(__self__, "level0_slowdown_writes_trigger", level0_slowdown_writes_trigger)
-        if level0_stop_writes_trigger is not None:
-            pulumi.set(__self__, "level0_stop_writes_trigger", level0_stop_writes_trigger)
-        if max_bytes_for_level_base is not None:
-            pulumi.set(__self__, "max_bytes_for_level_base", max_bytes_for_level_base)
-        if max_bytes_for_level_multiplier is not None:
-            pulumi.set(__self__, "max_bytes_for_level_multiplier", max_bytes_for_level_multiplier)
-        if max_compaction_bytes is not None:
-            pulumi.set(__self__, "max_compaction_bytes", max_compaction_bytes)
-        if max_write_buffer_number is not None:
-            pulumi.set(__self__, "max_write_buffer_number", max_write_buffer_number)
-        if min_write_buffer_number_to_merge is not None:
-            pulumi.set(__self__, "min_write_buffer_number_to_merge", min_write_buffer_number_to_merge)
-        if num_levels is not None:
-            pulumi.set(__self__, "num_levels", num_levels)
-        if optimize_filters_for_hits is not None:
-            pulumi.set(__self__, "optimize_filters_for_hits", optimize_filters_for_hits)
-        if pin_l0_filter_and_index_blocks is not None:
-            pulumi.set(__self__, "pin_l0_filter_and_index_blocks", pin_l0_filter_and_index_blocks)
-        if prop_keys_index_distance is not None:
-            pulumi.set(__self__, "prop_keys_index_distance", prop_keys_index_distance)
-        if prop_size_index_distance is not None:
-            pulumi.set(__self__, "prop_size_index_distance", prop_size_index_distance)
-        if read_amp_bytes_per_bit is not None:
-            pulumi.set(__self__, "read_amp_bytes_per_bit", read_amp_bytes_per_bit)
-        if soft_pending_compaction_bytes_limit is not None:
-            pulumi.set(__self__, "soft_pending_compaction_bytes_limit", soft_pending_compaction_bytes_limit)
-        if target_file_size_base is not None:
-            pulumi.set(__self__, "target_file_size_base", target_file_size_base)
-        if titan is not None:
-            pulumi.set(__self__, "titan", titan)
-        if use_bloom_filter is not None:
-            pulumi.set(__self__, "use_bloom_filter", use_bloom_filter)
-        if whole_key_filtering is not None:
-            pulumi.set(__self__, "whole_key_filtering", whole_key_filtering)
-        if write_buffer_size is not None:
-            pulumi.set(__self__, "write_buffer_size", write_buffer_size)
-
-    @property
-    @pulumi.getter(name="block-based-bloom-filter")
-    def block_based_bloom_filter(self) -> Optional[bool]:
-        return pulumi.get(self, "block_based_bloom_filter")
-
-    @property
-    @pulumi.getter(name="block-cache-size")
-    def block_cache_size(self) -> Optional[str]:
-        return pulumi.get(self, "block_cache_size")
-
-    @property
-    @pulumi.getter(name="block-size")
-    def block_size(self) -> Optional[str]:
-        return pulumi.get(self, "block_size")
-
-    @property
-    @pulumi.getter(name="bloom-filter-bits-per-key")
-    def bloom_filter_bits_per_key(self) -> Optional[int]:
-        return pulumi.get(self, "bloom_filter_bits_per_key")
-
-    @property
-    @pulumi.getter(name="cache-index-and-filter-blocks")
-    def cache_index_and_filter_blocks(self) -> Optional[bool]:
-        return pulumi.get(self, "cache_index_and_filter_blocks")
-
-    @property
-    @pulumi.getter(name="compaction-pri")
-    def compaction_pri(self) -> Optional[int]:
-        return pulumi.get(self, "compaction_pri")
-
-    @property
-    @pulumi.getter(name="compaction-style")
-    def compaction_style(self) -> Optional[int]:
-        return pulumi.get(self, "compaction_style")
-
-    @property
-    @pulumi.getter(name="compression-per-level")
-    def compression_per_level(self) -> Optional[Sequence[str]]:
-        return pulumi.get(self, "compression_per_level")
-
-    @property
-    @pulumi.getter(name="disable-auto-compactions")
-    def disable_auto_compactions(self) -> Optional[bool]:
-        return pulumi.get(self, "disable_auto_compactions")
-
-    @property
-    @pulumi.getter(name="disable-block-cache")
-    def disable_block_cache(self) -> Optional[bool]:
-        return pulumi.get(self, "disable_block_cache")
-
-    @property
-    @pulumi.getter(name="dynamic-level-bytes")
-    def dynamic_level_bytes(self) -> Optional[bool]:
-        return pulumi.get(self, "dynamic_level_bytes")
-
-    @property
-    @pulumi.getter(name="enable-doubly-skiplist")
-    def enable_doubly_skiplist(self) -> Optional[bool]:
-        return pulumi.get(self, "enable_doubly_skiplist")
-
-    @property
-    @pulumi.getter(name="force-consistency-checks")
-    def force_consistency_checks(self) -> Optional[bool]:
-        return pulumi.get(self, "force_consistency_checks")
-
-    @property
-    @pulumi.getter(name="hard-pending-compaction-bytes-limit")
-    def hard_pending_compaction_bytes_limit(self) -> Optional[str]:
-        return pulumi.get(self, "hard_pending_compaction_bytes_limit")
-
-    @property
-    @pulumi.getter(name="level0-file-num-compaction-trigger")
-    def level0_file_num_compaction_trigger(self) -> Optional[int]:
-        return pulumi.get(self, "level0_file_num_compaction_trigger")
-
-    @property
-    @pulumi.getter(name="level0-slowdown-writes-trigger")
-    def level0_slowdown_writes_trigger(self) -> Optional[int]:
-        return pulumi.get(self, "level0_slowdown_writes_trigger")
-
-    @property
-    @pulumi.getter(name="level0-stop-writes-trigger")
-    def level0_stop_writes_trigger(self) -> Optional[int]:
-        return pulumi.get(self, "level0_stop_writes_trigger")
-
-    @property
-    @pulumi.getter(name="max-bytes-for-level-base")
-    def max_bytes_for_level_base(self) -> Optional[str]:
-        return pulumi.get(self, "max_bytes_for_level_base")
-
-    @property
-    @pulumi.getter(name="max-bytes-for-level-multiplier")
-    def max_bytes_for_level_multiplier(self) -> Optional[int]:
-        return pulumi.get(self, "max_bytes_for_level_multiplier")
-
-    @property
-    @pulumi.getter(name="max-compaction-bytes")
-    def max_compaction_bytes(self) -> Optional[str]:
-        return pulumi.get(self, "max_compaction_bytes")
-
-    @property
-    @pulumi.getter(name="max-write-buffer-number")
-    def max_write_buffer_number(self) -> Optional[int]:
-        return pulumi.get(self, "max_write_buffer_number")
-
-    @property
-    @pulumi.getter(name="min-write-buffer-number-to-merge")
-    def min_write_buffer_number_to_merge(self) -> Optional[int]:
-        return pulumi.get(self, "min_write_buffer_number_to_merge")
-
-    @property
-    @pulumi.getter(name="num-levels")
-    def num_levels(self) -> Optional[int]:
-        return pulumi.get(self, "num_levels")
-
-    @property
-    @pulumi.getter(name="optimize-filters-for-hits")
-    def optimize_filters_for_hits(self) -> Optional[bool]:
-        return pulumi.get(self, "optimize_filters_for_hits")
-
-    @property
-    @pulumi.getter(name="pin-l0-filter-and-index-blocks")
-    def pin_l0_filter_and_index_blocks(self) -> Optional[bool]:
-        return pulumi.get(self, "pin_l0_filter_and_index_blocks")
-
-    @property
-    @pulumi.getter(name="prop-keys-index-distance")
-    def prop_keys_index_distance(self) -> Optional[int]:
-        return pulumi.get(self, "prop_keys_index_distance")
-
-    @property
-    @pulumi.getter(name="prop-size-index-distance")
-    def prop_size_index_distance(self) -> Optional[int]:
-        return pulumi.get(self, "prop_size_index_distance")
-
-    @property
-    @pulumi.getter(name="read-amp-bytes-per-bit")
-    def read_amp_bytes_per_bit(self) -> Optional[int]:
-        return pulumi.get(self, "read_amp_bytes_per_bit")
-
-    @property
-    @pulumi.getter(name="soft-pending-compaction-bytes-limit")
-    def soft_pending_compaction_bytes_limit(self) -> Optional[str]:
-        return pulumi.get(self, "soft_pending_compaction_bytes_limit")
-
-    @property
-    @pulumi.getter(name="target-file-size-base")
-    def target_file_size_base(self) -> Optional[str]:
-        return pulumi.get(self, "target_file_size_base")
-
-    @property
-    @pulumi.getter
-    def titan(self) -> Optional['outputs.TidbClusterSpecTikvConfigRocksdbLockcfTitan']:
-        return pulumi.get(self, "titan")
-
-    @property
-    @pulumi.getter(name="use-bloom-filter")
-    def use_bloom_filter(self) -> Optional[bool]:
-        return pulumi.get(self, "use_bloom_filter")
-
-    @property
-    @pulumi.getter(name="whole-key-filtering")
-    def whole_key_filtering(self) -> Optional[bool]:
-        return pulumi.get(self, "whole_key_filtering")
-
-    @property
-    @pulumi.getter(name="write-buffer-size")
-    def write_buffer_size(self) -> Optional[str]:
-        return pulumi.get(self, "write_buffer_size")
-
-    def _translate_property(self, prop):
-        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
-
-
-@pulumi.output_type
-class TidbClusterSpecTikvConfigRocksdbLockcfTitan(dict):
-    def __init__(__self__, *,
-                 blob_cache_size: Optional[str] = None,
-                 blob_file_compression: Optional[str] = None,
-                 blob_run_mode: Optional[str] = None,
-                 discardable_ratio: Optional[float] = None,
-                 gc_merge_rewrite: Optional[bool] = None,
-                 level_merge: Optional[bool] = None,
-                 max_gc_batch_size: Optional[str] = None,
-                 merge_small_file_threshold: Optional[str] = None,
-                 min_blob_size: Optional[str] = None,
-                 min_gc_batch_size: Optional[str] = None,
-                 sample_ratio: Optional[float] = None):
-        if blob_cache_size is not None:
-            pulumi.set(__self__, "blob_cache_size", blob_cache_size)
-        if blob_file_compression is not None:
-            pulumi.set(__self__, "blob_file_compression", blob_file_compression)
-        if blob_run_mode is not None:
-            pulumi.set(__self__, "blob_run_mode", blob_run_mode)
-        if discardable_ratio is not None:
-            pulumi.set(__self__, "discardable_ratio", discardable_ratio)
-        if gc_merge_rewrite is not None:
-            pulumi.set(__self__, "gc_merge_rewrite", gc_merge_rewrite)
-        if level_merge is not None:
-            pulumi.set(__self__, "level_merge", level_merge)
-        if max_gc_batch_size is not None:
-            pulumi.set(__self__, "max_gc_batch_size", max_gc_batch_size)
-        if merge_small_file_threshold is not None:
-            pulumi.set(__self__, "merge_small_file_threshold", merge_small_file_threshold)
-        if min_blob_size is not None:
-            pulumi.set(__self__, "min_blob_size", min_blob_size)
-        if min_gc_batch_size is not None:
-            pulumi.set(__self__, "min_gc_batch_size", min_gc_batch_size)
-        if sample_ratio is not None:
-            pulumi.set(__self__, "sample_ratio", sample_ratio)
-
-    @property
-    @pulumi.getter(name="blob-cache-size")
-    def blob_cache_size(self) -> Optional[str]:
-        return pulumi.get(self, "blob_cache_size")
-
-    @property
-    @pulumi.getter(name="blob-file-compression")
-    def blob_file_compression(self) -> Optional[str]:
-        return pulumi.get(self, "blob_file_compression")
-
-    @property
-    @pulumi.getter(name="blob-run-mode")
-    def blob_run_mode(self) -> Optional[str]:
-        return pulumi.get(self, "blob_run_mode")
-
-    @property
-    @pulumi.getter(name="discardable-ratio")
-    def discardable_ratio(self) -> Optional[float]:
-        return pulumi.get(self, "discardable_ratio")
-
-    @property
-    @pulumi.getter(name="gc-merge-rewrite")
-    def gc_merge_rewrite(self) -> Optional[bool]:
-        return pulumi.get(self, "gc_merge_rewrite")
-
-    @property
-    @pulumi.getter
-    def level_merge(self) -> Optional[bool]:
-        return pulumi.get(self, "level_merge")
-
-    @property
-    @pulumi.getter(name="max-gc-batch-size")
-    def max_gc_batch_size(self) -> Optional[str]:
-        return pulumi.get(self, "max_gc_batch_size")
-
-    @property
-    @pulumi.getter(name="merge-small-file-threshold")
-    def merge_small_file_threshold(self) -> Optional[str]:
-        return pulumi.get(self, "merge_small_file_threshold")
-
-    @property
-    @pulumi.getter(name="min-blob-size")
-    def min_blob_size(self) -> Optional[str]:
-        return pulumi.get(self, "min_blob_size")
-
-    @property
-    @pulumi.getter(name="min-gc-batch-size")
-    def min_gc_batch_size(self) -> Optional[str]:
-        return pulumi.get(self, "min_gc_batch_size")
-
-    @property
-    @pulumi.getter(name="sample-ratio")
-    def sample_ratio(self) -> Optional[float]:
-        return pulumi.get(self, "sample_ratio")
-
-    def _translate_property(self, prop):
-        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
-
-
-@pulumi.output_type
-class TidbClusterSpecTikvConfigRocksdbRaftcf(dict):
-    def __init__(__self__, *,
-                 block_based_bloom_filter: Optional[bool] = None,
-                 block_cache_size: Optional[str] = None,
-                 block_size: Optional[str] = None,
-                 bloom_filter_bits_per_key: Optional[int] = None,
-                 cache_index_and_filter_blocks: Optional[bool] = None,
-                 compaction_pri: Optional[int] = None,
-                 compaction_style: Optional[int] = None,
-                 compression_per_level: Optional[Sequence[str]] = None,
-                 disable_auto_compactions: Optional[bool] = None,
-                 disable_block_cache: Optional[bool] = None,
-                 dynamic_level_bytes: Optional[bool] = None,
-                 enable_doubly_skiplist: Optional[bool] = None,
-                 force_consistency_checks: Optional[bool] = None,
-                 hard_pending_compaction_bytes_limit: Optional[str] = None,
-                 level0_file_num_compaction_trigger: Optional[int] = None,
-                 level0_slowdown_writes_trigger: Optional[int] = None,
-                 level0_stop_writes_trigger: Optional[int] = None,
-                 max_bytes_for_level_base: Optional[str] = None,
-                 max_bytes_for_level_multiplier: Optional[int] = None,
-                 max_compaction_bytes: Optional[str] = None,
-                 max_write_buffer_number: Optional[int] = None,
-                 min_write_buffer_number_to_merge: Optional[int] = None,
-                 num_levels: Optional[int] = None,
-                 optimize_filters_for_hits: Optional[bool] = None,
-                 pin_l0_filter_and_index_blocks: Optional[bool] = None,
-                 prop_keys_index_distance: Optional[int] = None,
-                 prop_size_index_distance: Optional[int] = None,
-                 read_amp_bytes_per_bit: Optional[int] = None,
-                 soft_pending_compaction_bytes_limit: Optional[str] = None,
-                 target_file_size_base: Optional[str] = None,
-                 titan: Optional['outputs.TidbClusterSpecTikvConfigRocksdbRaftcfTitan'] = None,
-                 use_bloom_filter: Optional[bool] = None,
-                 whole_key_filtering: Optional[bool] = None,
-                 write_buffer_size: Optional[str] = None):
-        if block_based_bloom_filter is not None:
-            pulumi.set(__self__, "block_based_bloom_filter", block_based_bloom_filter)
-        if block_cache_size is not None:
-            pulumi.set(__self__, "block_cache_size", block_cache_size)
-        if block_size is not None:
-            pulumi.set(__self__, "block_size", block_size)
-        if bloom_filter_bits_per_key is not None:
-            pulumi.set(__self__, "bloom_filter_bits_per_key", bloom_filter_bits_per_key)
-        if cache_index_and_filter_blocks is not None:
-            pulumi.set(__self__, "cache_index_and_filter_blocks", cache_index_and_filter_blocks)
-        if compaction_pri is not None:
-            pulumi.set(__self__, "compaction_pri", compaction_pri)
-        if compaction_style is not None:
-            pulumi.set(__self__, "compaction_style", compaction_style)
-        if compression_per_level is not None:
-            pulumi.set(__self__, "compression_per_level", compression_per_level)
-        if disable_auto_compactions is not None:
-            pulumi.set(__self__, "disable_auto_compactions", disable_auto_compactions)
-        if disable_block_cache is not None:
-            pulumi.set(__self__, "disable_block_cache", disable_block_cache)
-        if dynamic_level_bytes is not None:
-            pulumi.set(__self__, "dynamic_level_bytes", dynamic_level_bytes)
-        if enable_doubly_skiplist is not None:
-            pulumi.set(__self__, "enable_doubly_skiplist", enable_doubly_skiplist)
-        if force_consistency_checks is not None:
-            pulumi.set(__self__, "force_consistency_checks", force_consistency_checks)
-        if hard_pending_compaction_bytes_limit is not None:
-            pulumi.set(__self__, "hard_pending_compaction_bytes_limit", hard_pending_compaction_bytes_limit)
-        if level0_file_num_compaction_trigger is not None:
-            pulumi.set(__self__, "level0_file_num_compaction_trigger", level0_file_num_compaction_trigger)
-        if level0_slowdown_writes_trigger is not None:
-            pulumi.set(__self__, "level0_slowdown_writes_trigger", level0_slowdown_writes_trigger)
-        if level0_stop_writes_trigger is not None:
-            pulumi.set(__self__, "level0_stop_writes_trigger", level0_stop_writes_trigger)
-        if max_bytes_for_level_base is not None:
-            pulumi.set(__self__, "max_bytes_for_level_base", max_bytes_for_level_base)
-        if max_bytes_for_level_multiplier is not None:
-            pulumi.set(__self__, "max_bytes_for_level_multiplier", max_bytes_for_level_multiplier)
-        if max_compaction_bytes is not None:
-            pulumi.set(__self__, "max_compaction_bytes", max_compaction_bytes)
-        if max_write_buffer_number is not None:
-            pulumi.set(__self__, "max_write_buffer_number", max_write_buffer_number)
-        if min_write_buffer_number_to_merge is not None:
-            pulumi.set(__self__, "min_write_buffer_number_to_merge", min_write_buffer_number_to_merge)
-        if num_levels is not None:
-            pulumi.set(__self__, "num_levels", num_levels)
-        if optimize_filters_for_hits is not None:
-            pulumi.set(__self__, "optimize_filters_for_hits", optimize_filters_for_hits)
-        if pin_l0_filter_and_index_blocks is not None:
-            pulumi.set(__self__, "pin_l0_filter_and_index_blocks", pin_l0_filter_and_index_blocks)
-        if prop_keys_index_distance is not None:
-            pulumi.set(__self__, "prop_keys_index_distance", prop_keys_index_distance)
-        if prop_size_index_distance is not None:
-            pulumi.set(__self__, "prop_size_index_distance", prop_size_index_distance)
-        if read_amp_bytes_per_bit is not None:
-            pulumi.set(__self__, "read_amp_bytes_per_bit", read_amp_bytes_per_bit)
-        if soft_pending_compaction_bytes_limit is not None:
-            pulumi.set(__self__, "soft_pending_compaction_bytes_limit", soft_pending_compaction_bytes_limit)
-        if target_file_size_base is not None:
-            pulumi.set(__self__, "target_file_size_base", target_file_size_base)
-        if titan is not None:
-            pulumi.set(__self__, "titan", titan)
-        if use_bloom_filter is not None:
-            pulumi.set(__self__, "use_bloom_filter", use_bloom_filter)
-        if whole_key_filtering is not None:
-            pulumi.set(__self__, "whole_key_filtering", whole_key_filtering)
-        if write_buffer_size is not None:
-            pulumi.set(__self__, "write_buffer_size", write_buffer_size)
-
-    @property
-    @pulumi.getter(name="block-based-bloom-filter")
-    def block_based_bloom_filter(self) -> Optional[bool]:
-        return pulumi.get(self, "block_based_bloom_filter")
-
-    @property
-    @pulumi.getter(name="block-cache-size")
-    def block_cache_size(self) -> Optional[str]:
-        return pulumi.get(self, "block_cache_size")
-
-    @property
-    @pulumi.getter(name="block-size")
-    def block_size(self) -> Optional[str]:
-        return pulumi.get(self, "block_size")
-
-    @property
-    @pulumi.getter(name="bloom-filter-bits-per-key")
-    def bloom_filter_bits_per_key(self) -> Optional[int]:
-        return pulumi.get(self, "bloom_filter_bits_per_key")
-
-    @property
-    @pulumi.getter(name="cache-index-and-filter-blocks")
-    def cache_index_and_filter_blocks(self) -> Optional[bool]:
-        return pulumi.get(self, "cache_index_and_filter_blocks")
-
-    @property
-    @pulumi.getter(name="compaction-pri")
-    def compaction_pri(self) -> Optional[int]:
-        return pulumi.get(self, "compaction_pri")
-
-    @property
-    @pulumi.getter(name="compaction-style")
-    def compaction_style(self) -> Optional[int]:
-        return pulumi.get(self, "compaction_style")
-
-    @property
-    @pulumi.getter(name="compression-per-level")
-    def compression_per_level(self) -> Optional[Sequence[str]]:
-        return pulumi.get(self, "compression_per_level")
-
-    @property
-    @pulumi.getter(name="disable-auto-compactions")
-    def disable_auto_compactions(self) -> Optional[bool]:
-        return pulumi.get(self, "disable_auto_compactions")
-
-    @property
-    @pulumi.getter(name="disable-block-cache")
-    def disable_block_cache(self) -> Optional[bool]:
-        return pulumi.get(self, "disable_block_cache")
-
-    @property
-    @pulumi.getter(name="dynamic-level-bytes")
-    def dynamic_level_bytes(self) -> Optional[bool]:
-        return pulumi.get(self, "dynamic_level_bytes")
-
-    @property
-    @pulumi.getter(name="enable-doubly-skiplist")
-    def enable_doubly_skiplist(self) -> Optional[bool]:
-        return pulumi.get(self, "enable_doubly_skiplist")
-
-    @property
-    @pulumi.getter(name="force-consistency-checks")
-    def force_consistency_checks(self) -> Optional[bool]:
-        return pulumi.get(self, "force_consistency_checks")
-
-    @property
-    @pulumi.getter(name="hard-pending-compaction-bytes-limit")
-    def hard_pending_compaction_bytes_limit(self) -> Optional[str]:
-        return pulumi.get(self, "hard_pending_compaction_bytes_limit")
-
-    @property
-    @pulumi.getter(name="level0-file-num-compaction-trigger")
-    def level0_file_num_compaction_trigger(self) -> Optional[int]:
-        return pulumi.get(self, "level0_file_num_compaction_trigger")
-
-    @property
-    @pulumi.getter(name="level0-slowdown-writes-trigger")
-    def level0_slowdown_writes_trigger(self) -> Optional[int]:
-        return pulumi.get(self, "level0_slowdown_writes_trigger")
-
-    @property
-    @pulumi.getter(name="level0-stop-writes-trigger")
-    def level0_stop_writes_trigger(self) -> Optional[int]:
-        return pulumi.get(self, "level0_stop_writes_trigger")
-
-    @property
-    @pulumi.getter(name="max-bytes-for-level-base")
-    def max_bytes_for_level_base(self) -> Optional[str]:
-        return pulumi.get(self, "max_bytes_for_level_base")
-
-    @property
-    @pulumi.getter(name="max-bytes-for-level-multiplier")
-    def max_bytes_for_level_multiplier(self) -> Optional[int]:
-        return pulumi.get(self, "max_bytes_for_level_multiplier")
-
-    @property
-    @pulumi.getter(name="max-compaction-bytes")
-    def max_compaction_bytes(self) -> Optional[str]:
-        return pulumi.get(self, "max_compaction_bytes")
-
-    @property
-    @pulumi.getter(name="max-write-buffer-number")
-    def max_write_buffer_number(self) -> Optional[int]:
-        return pulumi.get(self, "max_write_buffer_number")
-
-    @property
-    @pulumi.getter(name="min-write-buffer-number-to-merge")
-    def min_write_buffer_number_to_merge(self) -> Optional[int]:
-        return pulumi.get(self, "min_write_buffer_number_to_merge")
-
-    @property
-    @pulumi.getter(name="num-levels")
-    def num_levels(self) -> Optional[int]:
-        return pulumi.get(self, "num_levels")
-
-    @property
-    @pulumi.getter(name="optimize-filters-for-hits")
-    def optimize_filters_for_hits(self) -> Optional[bool]:
-        return pulumi.get(self, "optimize_filters_for_hits")
-
-    @property
-    @pulumi.getter(name="pin-l0-filter-and-index-blocks")
-    def pin_l0_filter_and_index_blocks(self) -> Optional[bool]:
-        return pulumi.get(self, "pin_l0_filter_and_index_blocks")
-
-    @property
-    @pulumi.getter(name="prop-keys-index-distance")
-    def prop_keys_index_distance(self) -> Optional[int]:
-        return pulumi.get(self, "prop_keys_index_distance")
-
-    @property
-    @pulumi.getter(name="prop-size-index-distance")
-    def prop_size_index_distance(self) -> Optional[int]:
-        return pulumi.get(self, "prop_size_index_distance")
-
-    @property
-    @pulumi.getter(name="read-amp-bytes-per-bit")
-    def read_amp_bytes_per_bit(self) -> Optional[int]:
-        return pulumi.get(self, "read_amp_bytes_per_bit")
-
-    @property
-    @pulumi.getter(name="soft-pending-compaction-bytes-limit")
-    def soft_pending_compaction_bytes_limit(self) -> Optional[str]:
-        return pulumi.get(self, "soft_pending_compaction_bytes_limit")
-
-    @property
-    @pulumi.getter(name="target-file-size-base")
-    def target_file_size_base(self) -> Optional[str]:
-        return pulumi.get(self, "target_file_size_base")
-
-    @property
-    @pulumi.getter
-    def titan(self) -> Optional['outputs.TidbClusterSpecTikvConfigRocksdbRaftcfTitan']:
-        return pulumi.get(self, "titan")
-
-    @property
-    @pulumi.getter(name="use-bloom-filter")
-    def use_bloom_filter(self) -> Optional[bool]:
-        return pulumi.get(self, "use_bloom_filter")
-
-    @property
-    @pulumi.getter(name="whole-key-filtering")
-    def whole_key_filtering(self) -> Optional[bool]:
-        return pulumi.get(self, "whole_key_filtering")
-
-    @property
-    @pulumi.getter(name="write-buffer-size")
-    def write_buffer_size(self) -> Optional[str]:
-        return pulumi.get(self, "write_buffer_size")
-
-    def _translate_property(self, prop):
-        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
-
-
-@pulumi.output_type
-class TidbClusterSpecTikvConfigRocksdbRaftcfTitan(dict):
-    def __init__(__self__, *,
-                 blob_cache_size: Optional[str] = None,
-                 blob_file_compression: Optional[str] = None,
-                 blob_run_mode: Optional[str] = None,
-                 discardable_ratio: Optional[float] = None,
-                 gc_merge_rewrite: Optional[bool] = None,
-                 level_merge: Optional[bool] = None,
-                 max_gc_batch_size: Optional[str] = None,
-                 merge_small_file_threshold: Optional[str] = None,
-                 min_blob_size: Optional[str] = None,
-                 min_gc_batch_size: Optional[str] = None,
-                 sample_ratio: Optional[float] = None):
-        if blob_cache_size is not None:
-            pulumi.set(__self__, "blob_cache_size", blob_cache_size)
-        if blob_file_compression is not None:
-            pulumi.set(__self__, "blob_file_compression", blob_file_compression)
-        if blob_run_mode is not None:
-            pulumi.set(__self__, "blob_run_mode", blob_run_mode)
-        if discardable_ratio is not None:
-            pulumi.set(__self__, "discardable_ratio", discardable_ratio)
-        if gc_merge_rewrite is not None:
-            pulumi.set(__self__, "gc_merge_rewrite", gc_merge_rewrite)
-        if level_merge is not None:
-            pulumi.set(__self__, "level_merge", level_merge)
-        if max_gc_batch_size is not None:
-            pulumi.set(__self__, "max_gc_batch_size", max_gc_batch_size)
-        if merge_small_file_threshold is not None:
-            pulumi.set(__self__, "merge_small_file_threshold", merge_small_file_threshold)
-        if min_blob_size is not None:
-            pulumi.set(__self__, "min_blob_size", min_blob_size)
-        if min_gc_batch_size is not None:
-            pulumi.set(__self__, "min_gc_batch_size", min_gc_batch_size)
-        if sample_ratio is not None:
-            pulumi.set(__self__, "sample_ratio", sample_ratio)
-
-    @property
-    @pulumi.getter(name="blob-cache-size")
-    def blob_cache_size(self) -> Optional[str]:
-        return pulumi.get(self, "blob_cache_size")
-
-    @property
-    @pulumi.getter(name="blob-file-compression")
-    def blob_file_compression(self) -> Optional[str]:
-        return pulumi.get(self, "blob_file_compression")
-
-    @property
-    @pulumi.getter(name="blob-run-mode")
-    def blob_run_mode(self) -> Optional[str]:
-        return pulumi.get(self, "blob_run_mode")
-
-    @property
-    @pulumi.getter(name="discardable-ratio")
-    def discardable_ratio(self) -> Optional[float]:
-        return pulumi.get(self, "discardable_ratio")
-
-    @property
-    @pulumi.getter(name="gc-merge-rewrite")
-    def gc_merge_rewrite(self) -> Optional[bool]:
-        return pulumi.get(self, "gc_merge_rewrite")
-
-    @property
-    @pulumi.getter
-    def level_merge(self) -> Optional[bool]:
-        return pulumi.get(self, "level_merge")
-
-    @property
-    @pulumi.getter(name="max-gc-batch-size")
-    def max_gc_batch_size(self) -> Optional[str]:
-        return pulumi.get(self, "max_gc_batch_size")
-
-    @property
-    @pulumi.getter(name="merge-small-file-threshold")
-    def merge_small_file_threshold(self) -> Optional[str]:
-        return pulumi.get(self, "merge_small_file_threshold")
-
-    @property
-    @pulumi.getter(name="min-blob-size")
-    def min_blob_size(self) -> Optional[str]:
-        return pulumi.get(self, "min_blob_size")
-
-    @property
-    @pulumi.getter(name="min-gc-batch-size")
-    def min_gc_batch_size(self) -> Optional[str]:
-        return pulumi.get(self, "min_gc_batch_size")
-
-    @property
-    @pulumi.getter(name="sample-ratio")
-    def sample_ratio(self) -> Optional[float]:
-        return pulumi.get(self, "sample_ratio")
-
-    def _translate_property(self, prop):
-        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
-
-
-@pulumi.output_type
-class TidbClusterSpecTikvConfigRocksdbTitan(dict):
-    def __init__(__self__, *,
-                 dirname: Optional[str] = None,
-                 disable_gc: Optional[bool] = None,
-                 enabled: Optional[bool] = None,
-                 max_background_gc: Optional[int] = None,
-                 purge_obsolete_files_period: Optional[str] = None):
-        if dirname is not None:
-            pulumi.set(__self__, "dirname", dirname)
-        if disable_gc is not None:
-            pulumi.set(__self__, "disable_gc", disable_gc)
-        if enabled is not None:
-            pulumi.set(__self__, "enabled", enabled)
-        if max_background_gc is not None:
-            pulumi.set(__self__, "max_background_gc", max_background_gc)
-        if purge_obsolete_files_period is not None:
-            pulumi.set(__self__, "purge_obsolete_files_period", purge_obsolete_files_period)
-
-    @property
-    @pulumi.getter
-    def dirname(self) -> Optional[str]:
-        return pulumi.get(self, "dirname")
-
-    @property
-    @pulumi.getter(name="disable-gc")
-    def disable_gc(self) -> Optional[bool]:
-        return pulumi.get(self, "disable_gc")
-
-    @property
-    @pulumi.getter
-    def enabled(self) -> Optional[bool]:
-        return pulumi.get(self, "enabled")
-
-    @property
-    @pulumi.getter(name="max-background-gc")
-    def max_background_gc(self) -> Optional[int]:
-        return pulumi.get(self, "max_background_gc")
-
-    @property
-    @pulumi.getter(name="purge-obsolete-files-period")
-    def purge_obsolete_files_period(self) -> Optional[str]:
-        return pulumi.get(self, "purge_obsolete_files_period")
-
-    def _translate_property(self, prop):
-        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
-
-
-@pulumi.output_type
-class TidbClusterSpecTikvConfigRocksdbWritecf(dict):
-    def __init__(__self__, *,
-                 block_based_bloom_filter: Optional[bool] = None,
-                 block_cache_size: Optional[str] = None,
-                 block_size: Optional[str] = None,
-                 bloom_filter_bits_per_key: Optional[int] = None,
-                 cache_index_and_filter_blocks: Optional[bool] = None,
-                 compaction_pri: Optional[int] = None,
-                 compaction_style: Optional[int] = None,
-                 compression_per_level: Optional[Sequence[str]] = None,
-                 disable_auto_compactions: Optional[bool] = None,
-                 disable_block_cache: Optional[bool] = None,
-                 dynamic_level_bytes: Optional[bool] = None,
-                 enable_doubly_skiplist: Optional[bool] = None,
-                 force_consistency_checks: Optional[bool] = None,
-                 hard_pending_compaction_bytes_limit: Optional[str] = None,
-                 level0_file_num_compaction_trigger: Optional[int] = None,
-                 level0_slowdown_writes_trigger: Optional[int] = None,
-                 level0_stop_writes_trigger: Optional[int] = None,
-                 max_bytes_for_level_base: Optional[str] = None,
-                 max_bytes_for_level_multiplier: Optional[int] = None,
-                 max_compaction_bytes: Optional[str] = None,
-                 max_write_buffer_number: Optional[int] = None,
-                 min_write_buffer_number_to_merge: Optional[int] = None,
-                 num_levels: Optional[int] = None,
-                 optimize_filters_for_hits: Optional[bool] = None,
-                 pin_l0_filter_and_index_blocks: Optional[bool] = None,
-                 prop_keys_index_distance: Optional[int] = None,
-                 prop_size_index_distance: Optional[int] = None,
-                 read_amp_bytes_per_bit: Optional[int] = None,
-                 soft_pending_compaction_bytes_limit: Optional[str] = None,
-                 target_file_size_base: Optional[str] = None,
-                 titan: Optional['outputs.TidbClusterSpecTikvConfigRocksdbWritecfTitan'] = None,
-                 use_bloom_filter: Optional[bool] = None,
-                 whole_key_filtering: Optional[bool] = None,
-                 write_buffer_size: Optional[str] = None):
-        if block_based_bloom_filter is not None:
-            pulumi.set(__self__, "block_based_bloom_filter", block_based_bloom_filter)
-        if block_cache_size is not None:
-            pulumi.set(__self__, "block_cache_size", block_cache_size)
-        if block_size is not None:
-            pulumi.set(__self__, "block_size", block_size)
-        if bloom_filter_bits_per_key is not None:
-            pulumi.set(__self__, "bloom_filter_bits_per_key", bloom_filter_bits_per_key)
-        if cache_index_and_filter_blocks is not None:
-            pulumi.set(__self__, "cache_index_and_filter_blocks", cache_index_and_filter_blocks)
-        if compaction_pri is not None:
-            pulumi.set(__self__, "compaction_pri", compaction_pri)
-        if compaction_style is not None:
-            pulumi.set(__self__, "compaction_style", compaction_style)
-        if compression_per_level is not None:
-            pulumi.set(__self__, "compression_per_level", compression_per_level)
-        if disable_auto_compactions is not None:
-            pulumi.set(__self__, "disable_auto_compactions", disable_auto_compactions)
-        if disable_block_cache is not None:
-            pulumi.set(__self__, "disable_block_cache", disable_block_cache)
-        if dynamic_level_bytes is not None:
-            pulumi.set(__self__, "dynamic_level_bytes", dynamic_level_bytes)
-        if enable_doubly_skiplist is not None:
-            pulumi.set(__self__, "enable_doubly_skiplist", enable_doubly_skiplist)
-        if force_consistency_checks is not None:
-            pulumi.set(__self__, "force_consistency_checks", force_consistency_checks)
-        if hard_pending_compaction_bytes_limit is not None:
-            pulumi.set(__self__, "hard_pending_compaction_bytes_limit", hard_pending_compaction_bytes_limit)
-        if level0_file_num_compaction_trigger is not None:
-            pulumi.set(__self__, "level0_file_num_compaction_trigger", level0_file_num_compaction_trigger)
-        if level0_slowdown_writes_trigger is not None:
-            pulumi.set(__self__, "level0_slowdown_writes_trigger", level0_slowdown_writes_trigger)
-        if level0_stop_writes_trigger is not None:
-            pulumi.set(__self__, "level0_stop_writes_trigger", level0_stop_writes_trigger)
-        if max_bytes_for_level_base is not None:
-            pulumi.set(__self__, "max_bytes_for_level_base", max_bytes_for_level_base)
-        if max_bytes_for_level_multiplier is not None:
-            pulumi.set(__self__, "max_bytes_for_level_multiplier", max_bytes_for_level_multiplier)
-        if max_compaction_bytes is not None:
-            pulumi.set(__self__, "max_compaction_bytes", max_compaction_bytes)
-        if max_write_buffer_number is not None:
-            pulumi.set(__self__, "max_write_buffer_number", max_write_buffer_number)
-        if min_write_buffer_number_to_merge is not None:
-            pulumi.set(__self__, "min_write_buffer_number_to_merge", min_write_buffer_number_to_merge)
-        if num_levels is not None:
-            pulumi.set(__self__, "num_levels", num_levels)
-        if optimize_filters_for_hits is not None:
-            pulumi.set(__self__, "optimize_filters_for_hits", optimize_filters_for_hits)
-        if pin_l0_filter_and_index_blocks is not None:
-            pulumi.set(__self__, "pin_l0_filter_and_index_blocks", pin_l0_filter_and_index_blocks)
-        if prop_keys_index_distance is not None:
-            pulumi.set(__self__, "prop_keys_index_distance", prop_keys_index_distance)
-        if prop_size_index_distance is not None:
-            pulumi.set(__self__, "prop_size_index_distance", prop_size_index_distance)
-        if read_amp_bytes_per_bit is not None:
-            pulumi.set(__self__, "read_amp_bytes_per_bit", read_amp_bytes_per_bit)
-        if soft_pending_compaction_bytes_limit is not None:
-            pulumi.set(__self__, "soft_pending_compaction_bytes_limit", soft_pending_compaction_bytes_limit)
-        if target_file_size_base is not None:
-            pulumi.set(__self__, "target_file_size_base", target_file_size_base)
-        if titan is not None:
-            pulumi.set(__self__, "titan", titan)
-        if use_bloom_filter is not None:
-            pulumi.set(__self__, "use_bloom_filter", use_bloom_filter)
-        if whole_key_filtering is not None:
-            pulumi.set(__self__, "whole_key_filtering", whole_key_filtering)
-        if write_buffer_size is not None:
-            pulumi.set(__self__, "write_buffer_size", write_buffer_size)
-
-    @property
-    @pulumi.getter(name="block-based-bloom-filter")
-    def block_based_bloom_filter(self) -> Optional[bool]:
-        return pulumi.get(self, "block_based_bloom_filter")
-
-    @property
-    @pulumi.getter(name="block-cache-size")
-    def block_cache_size(self) -> Optional[str]:
-        return pulumi.get(self, "block_cache_size")
-
-    @property
-    @pulumi.getter(name="block-size")
-    def block_size(self) -> Optional[str]:
-        return pulumi.get(self, "block_size")
-
-    @property
-    @pulumi.getter(name="bloom-filter-bits-per-key")
-    def bloom_filter_bits_per_key(self) -> Optional[int]:
-        return pulumi.get(self, "bloom_filter_bits_per_key")
-
-    @property
-    @pulumi.getter(name="cache-index-and-filter-blocks")
-    def cache_index_and_filter_blocks(self) -> Optional[bool]:
-        return pulumi.get(self, "cache_index_and_filter_blocks")
-
-    @property
-    @pulumi.getter(name="compaction-pri")
-    def compaction_pri(self) -> Optional[int]:
-        return pulumi.get(self, "compaction_pri")
-
-    @property
-    @pulumi.getter(name="compaction-style")
-    def compaction_style(self) -> Optional[int]:
-        return pulumi.get(self, "compaction_style")
-
-    @property
-    @pulumi.getter(name="compression-per-level")
-    def compression_per_level(self) -> Optional[Sequence[str]]:
-        return pulumi.get(self, "compression_per_level")
-
-    @property
-    @pulumi.getter(name="disable-auto-compactions")
-    def disable_auto_compactions(self) -> Optional[bool]:
-        return pulumi.get(self, "disable_auto_compactions")
-
-    @property
-    @pulumi.getter(name="disable-block-cache")
-    def disable_block_cache(self) -> Optional[bool]:
-        return pulumi.get(self, "disable_block_cache")
-
-    @property
-    @pulumi.getter(name="dynamic-level-bytes")
-    def dynamic_level_bytes(self) -> Optional[bool]:
-        return pulumi.get(self, "dynamic_level_bytes")
-
-    @property
-    @pulumi.getter(name="enable-doubly-skiplist")
-    def enable_doubly_skiplist(self) -> Optional[bool]:
-        return pulumi.get(self, "enable_doubly_skiplist")
-
-    @property
-    @pulumi.getter(name="force-consistency-checks")
-    def force_consistency_checks(self) -> Optional[bool]:
-        return pulumi.get(self, "force_consistency_checks")
-
-    @property
-    @pulumi.getter(name="hard-pending-compaction-bytes-limit")
-    def hard_pending_compaction_bytes_limit(self) -> Optional[str]:
-        return pulumi.get(self, "hard_pending_compaction_bytes_limit")
-
-    @property
-    @pulumi.getter(name="level0-file-num-compaction-trigger")
-    def level0_file_num_compaction_trigger(self) -> Optional[int]:
-        return pulumi.get(self, "level0_file_num_compaction_trigger")
-
-    @property
-    @pulumi.getter(name="level0-slowdown-writes-trigger")
-    def level0_slowdown_writes_trigger(self) -> Optional[int]:
-        return pulumi.get(self, "level0_slowdown_writes_trigger")
-
-    @property
-    @pulumi.getter(name="level0-stop-writes-trigger")
-    def level0_stop_writes_trigger(self) -> Optional[int]:
-        return pulumi.get(self, "level0_stop_writes_trigger")
-
-    @property
-    @pulumi.getter(name="max-bytes-for-level-base")
-    def max_bytes_for_level_base(self) -> Optional[str]:
-        return pulumi.get(self, "max_bytes_for_level_base")
-
-    @property
-    @pulumi.getter(name="max-bytes-for-level-multiplier")
-    def max_bytes_for_level_multiplier(self) -> Optional[int]:
-        return pulumi.get(self, "max_bytes_for_level_multiplier")
-
-    @property
-    @pulumi.getter(name="max-compaction-bytes")
-    def max_compaction_bytes(self) -> Optional[str]:
-        return pulumi.get(self, "max_compaction_bytes")
-
-    @property
-    @pulumi.getter(name="max-write-buffer-number")
-    def max_write_buffer_number(self) -> Optional[int]:
-        return pulumi.get(self, "max_write_buffer_number")
-
-    @property
-    @pulumi.getter(name="min-write-buffer-number-to-merge")
-    def min_write_buffer_number_to_merge(self) -> Optional[int]:
-        return pulumi.get(self, "min_write_buffer_number_to_merge")
-
-    @property
-    @pulumi.getter(name="num-levels")
-    def num_levels(self) -> Optional[int]:
-        return pulumi.get(self, "num_levels")
-
-    @property
-    @pulumi.getter(name="optimize-filters-for-hits")
-    def optimize_filters_for_hits(self) -> Optional[bool]:
-        return pulumi.get(self, "optimize_filters_for_hits")
-
-    @property
-    @pulumi.getter(name="pin-l0-filter-and-index-blocks")
-    def pin_l0_filter_and_index_blocks(self) -> Optional[bool]:
-        return pulumi.get(self, "pin_l0_filter_and_index_blocks")
-
-    @property
-    @pulumi.getter(name="prop-keys-index-distance")
-    def prop_keys_index_distance(self) -> Optional[int]:
-        return pulumi.get(self, "prop_keys_index_distance")
-
-    @property
-    @pulumi.getter(name="prop-size-index-distance")
-    def prop_size_index_distance(self) -> Optional[int]:
-        return pulumi.get(self, "prop_size_index_distance")
-
-    @property
-    @pulumi.getter(name="read-amp-bytes-per-bit")
-    def read_amp_bytes_per_bit(self) -> Optional[int]:
-        return pulumi.get(self, "read_amp_bytes_per_bit")
-
-    @property
-    @pulumi.getter(name="soft-pending-compaction-bytes-limit")
-    def soft_pending_compaction_bytes_limit(self) -> Optional[str]:
-        return pulumi.get(self, "soft_pending_compaction_bytes_limit")
-
-    @property
-    @pulumi.getter(name="target-file-size-base")
-    def target_file_size_base(self) -> Optional[str]:
-        return pulumi.get(self, "target_file_size_base")
-
-    @property
-    @pulumi.getter
-    def titan(self) -> Optional['outputs.TidbClusterSpecTikvConfigRocksdbWritecfTitan']:
-        return pulumi.get(self, "titan")
-
-    @property
-    @pulumi.getter(name="use-bloom-filter")
-    def use_bloom_filter(self) -> Optional[bool]:
-        return pulumi.get(self, "use_bloom_filter")
-
-    @property
-    @pulumi.getter(name="whole-key-filtering")
-    def whole_key_filtering(self) -> Optional[bool]:
-        return pulumi.get(self, "whole_key_filtering")
-
-    @property
-    @pulumi.getter(name="write-buffer-size")
-    def write_buffer_size(self) -> Optional[str]:
-        return pulumi.get(self, "write_buffer_size")
-
-    def _translate_property(self, prop):
-        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
-
-
-@pulumi.output_type
-class TidbClusterSpecTikvConfigRocksdbWritecfTitan(dict):
-    def __init__(__self__, *,
-                 blob_cache_size: Optional[str] = None,
-                 blob_file_compression: Optional[str] = None,
-                 blob_run_mode: Optional[str] = None,
-                 discardable_ratio: Optional[float] = None,
-                 gc_merge_rewrite: Optional[bool] = None,
-                 level_merge: Optional[bool] = None,
-                 max_gc_batch_size: Optional[str] = None,
-                 merge_small_file_threshold: Optional[str] = None,
-                 min_blob_size: Optional[str] = None,
-                 min_gc_batch_size: Optional[str] = None,
-                 sample_ratio: Optional[float] = None):
-        if blob_cache_size is not None:
-            pulumi.set(__self__, "blob_cache_size", blob_cache_size)
-        if blob_file_compression is not None:
-            pulumi.set(__self__, "blob_file_compression", blob_file_compression)
-        if blob_run_mode is not None:
-            pulumi.set(__self__, "blob_run_mode", blob_run_mode)
-        if discardable_ratio is not None:
-            pulumi.set(__self__, "discardable_ratio", discardable_ratio)
-        if gc_merge_rewrite is not None:
-            pulumi.set(__self__, "gc_merge_rewrite", gc_merge_rewrite)
-        if level_merge is not None:
-            pulumi.set(__self__, "level_merge", level_merge)
-        if max_gc_batch_size is not None:
-            pulumi.set(__self__, "max_gc_batch_size", max_gc_batch_size)
-        if merge_small_file_threshold is not None:
-            pulumi.set(__self__, "merge_small_file_threshold", merge_small_file_threshold)
-        if min_blob_size is not None:
-            pulumi.set(__self__, "min_blob_size", min_blob_size)
-        if min_gc_batch_size is not None:
-            pulumi.set(__self__, "min_gc_batch_size", min_gc_batch_size)
-        if sample_ratio is not None:
-            pulumi.set(__self__, "sample_ratio", sample_ratio)
-
-    @property
-    @pulumi.getter(name="blob-cache-size")
-    def blob_cache_size(self) -> Optional[str]:
-        return pulumi.get(self, "blob_cache_size")
-
-    @property
-    @pulumi.getter(name="blob-file-compression")
-    def blob_file_compression(self) -> Optional[str]:
-        return pulumi.get(self, "blob_file_compression")
-
-    @property
-    @pulumi.getter(name="blob-run-mode")
-    def blob_run_mode(self) -> Optional[str]:
-        return pulumi.get(self, "blob_run_mode")
-
-    @property
-    @pulumi.getter(name="discardable-ratio")
-    def discardable_ratio(self) -> Optional[float]:
-        return pulumi.get(self, "discardable_ratio")
-
-    @property
-    @pulumi.getter(name="gc-merge-rewrite")
-    def gc_merge_rewrite(self) -> Optional[bool]:
-        return pulumi.get(self, "gc_merge_rewrite")
-
-    @property
-    @pulumi.getter
-    def level_merge(self) -> Optional[bool]:
-        return pulumi.get(self, "level_merge")
-
-    @property
-    @pulumi.getter(name="max-gc-batch-size")
-    def max_gc_batch_size(self) -> Optional[str]:
-        return pulumi.get(self, "max_gc_batch_size")
-
-    @property
-    @pulumi.getter(name="merge-small-file-threshold")
-    def merge_small_file_threshold(self) -> Optional[str]:
-        return pulumi.get(self, "merge_small_file_threshold")
-
-    @property
-    @pulumi.getter(name="min-blob-size")
-    def min_blob_size(self) -> Optional[str]:
-        return pulumi.get(self, "min_blob_size")
-
-    @property
-    @pulumi.getter(name="min-gc-batch-size")
-    def min_gc_batch_size(self) -> Optional[str]:
-        return pulumi.get(self, "min_gc_batch_size")
-
-    @property
-    @pulumi.getter(name="sample-ratio")
-    def sample_ratio(self) -> Optional[float]:
-        return pulumi.get(self, "sample_ratio")
-
-    def _translate_property(self, prop):
-        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
-
-
-@pulumi.output_type
-class TidbClusterSpecTikvConfigSecurity(dict):
-    def __init__(__self__, *,
-                 ca_path: Optional[str] = None,
-                 cert_path: Optional[str] = None,
-                 cipher_file: Optional[str] = None,
-                 encryption: Optional[Any] = None,
-                 key_path: Optional[str] = None,
-                 override_ssl_target: Optional[str] = None):
-        if ca_path is not None:
-            pulumi.set(__self__, "ca_path", ca_path)
-        if cert_path is not None:
-            pulumi.set(__self__, "cert_path", cert_path)
-        if cipher_file is not None:
-            pulumi.set(__self__, "cipher_file", cipher_file)
-        if encryption is not None:
-            pulumi.set(__self__, "encryption", encryption)
-        if key_path is not None:
-            pulumi.set(__self__, "key_path", key_path)
-        if override_ssl_target is not None:
-            pulumi.set(__self__, "override_ssl_target", override_ssl_target)
-
-    @property
-    @pulumi.getter(name="ca-path")
-    def ca_path(self) -> Optional[str]:
-        return pulumi.get(self, "ca_path")
-
-    @property
-    @pulumi.getter(name="cert-path")
-    def cert_path(self) -> Optional[str]:
-        return pulumi.get(self, "cert_path")
-
-    @property
-    @pulumi.getter(name="cipher-file")
-    def cipher_file(self) -> Optional[str]:
-        return pulumi.get(self, "cipher_file")
-
-    @property
-    @pulumi.getter
-    def encryption(self) -> Optional[Any]:
-        return pulumi.get(self, "encryption")
-
-    @property
-    @pulumi.getter(name="key-path")
-    def key_path(self) -> Optional[str]:
-        return pulumi.get(self, "key_path")
-
-    @property
-    @pulumi.getter(name="override-ssl-target")
-    def override_ssl_target(self) -> Optional[str]:
-        return pulumi.get(self, "override_ssl_target")
-
-    def _translate_property(self, prop):
-        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
-
-
-@pulumi.output_type
-class TidbClusterSpecTikvConfigServer(dict):
-    def __init__(__self__, *,
-                 concurrent_recv_snap_limit: Optional[int] = None,
-                 concurrent_send_snap_limit: Optional[int] = None,
-                 enable_request_batch: Optional[bool] = None,
-                 end_point_batch_row_limit: Optional[int] = None,
-                 end_point_enable_batch_if_possible: Optional[int] = None,
-                 end_point_recursion_limit: Optional[int] = None,
-                 end_point_request_max_handle_duration: Optional[str] = None,
-                 end_point_stream_batch_row_limit: Optional[int] = None,
-                 end_point_stream_channel_size: Optional[int] = None,
-                 grpc_compression_type: Optional[str] = None,
-                 grpc_concurrency: Optional[int] = None,
-                 grpc_concurrent_stream: Optional[int] = None,
-                 grpc_keepalive_time: Optional[str] = None,
-                 grpc_keepalive_timeout: Optional[str] = None,
-                 grpc_memory_pool_quota: Optional[str] = None,
-                 grpc_raft_conn_num: Optional[int] = None,
-                 grpc_stream_initial_window_size: Optional[str] = None,
-                 heavy_load_threshold: Optional[int] = None,
-                 heavy_load_wait_duration: Optional[str] = None,
-                 labels: Optional[Mapping[str, Any]] = None,
-                 request_batch_enable_cross_command: Optional[bool] = None,
-                 request_batch_wait_duration: Optional[str] = None,
-                 snap_max_total_size: Optional[str] = None,
-                 snap_max_write_bytes_per_sec: Optional[str] = None,
-                 stats_concurrency: Optional[int] = None,
-                 status_thread_pool_size: Optional[str] = None):
-        if concurrent_recv_snap_limit is not None:
-            pulumi.set(__self__, "concurrent_recv_snap_limit", concurrent_recv_snap_limit)
-        if concurrent_send_snap_limit is not None:
-            pulumi.set(__self__, "concurrent_send_snap_limit", concurrent_send_snap_limit)
-        if enable_request_batch is not None:
-            pulumi.set(__self__, "enable_request_batch", enable_request_batch)
-        if end_point_batch_row_limit is not None:
-            pulumi.set(__self__, "end_point_batch_row_limit", end_point_batch_row_limit)
-        if end_point_enable_batch_if_possible is not None:
-            pulumi.set(__self__, "end_point_enable_batch_if_possible", end_point_enable_batch_if_possible)
-        if end_point_recursion_limit is not None:
-            pulumi.set(__self__, "end_point_recursion_limit", end_point_recursion_limit)
-        if end_point_request_max_handle_duration is not None:
-            pulumi.set(__self__, "end_point_request_max_handle_duration", end_point_request_max_handle_duration)
-        if end_point_stream_batch_row_limit is not None:
-            pulumi.set(__self__, "end_point_stream_batch_row_limit", end_point_stream_batch_row_limit)
-        if end_point_stream_channel_size is not None:
-            pulumi.set(__self__, "end_point_stream_channel_size", end_point_stream_channel_size)
-        if grpc_compression_type is not None:
-            pulumi.set(__self__, "grpc_compression_type", grpc_compression_type)
-        if grpc_concurrency is not None:
-            pulumi.set(__self__, "grpc_concurrency", grpc_concurrency)
-        if grpc_concurrent_stream is not None:
-            pulumi.set(__self__, "grpc_concurrent_stream", grpc_concurrent_stream)
-        if grpc_keepalive_time is not None:
-            pulumi.set(__self__, "grpc_keepalive_time", grpc_keepalive_time)
-        if grpc_keepalive_timeout is not None:
-            pulumi.set(__self__, "grpc_keepalive_timeout", grpc_keepalive_timeout)
-        if grpc_memory_pool_quota is not None:
-            pulumi.set(__self__, "grpc_memory_pool_quota", grpc_memory_pool_quota)
-        if grpc_raft_conn_num is not None:
-            pulumi.set(__self__, "grpc_raft_conn_num", grpc_raft_conn_num)
-        if grpc_stream_initial_window_size is not None:
-            pulumi.set(__self__, "grpc_stream_initial_window_size", grpc_stream_initial_window_size)
-        if heavy_load_threshold is not None:
-            pulumi.set(__self__, "heavy_load_threshold", heavy_load_threshold)
-        if heavy_load_wait_duration is not None:
-            pulumi.set(__self__, "heavy_load_wait_duration", heavy_load_wait_duration)
-        if labels is not None:
-            pulumi.set(__self__, "labels", labels)
-        if request_batch_enable_cross_command is not None:
-            pulumi.set(__self__, "request_batch_enable_cross_command", request_batch_enable_cross_command)
-        if request_batch_wait_duration is not None:
-            pulumi.set(__self__, "request_batch_wait_duration", request_batch_wait_duration)
-        if snap_max_total_size is not None:
-            pulumi.set(__self__, "snap_max_total_size", snap_max_total_size)
-        if snap_max_write_bytes_per_sec is not None:
-            pulumi.set(__self__, "snap_max_write_bytes_per_sec", snap_max_write_bytes_per_sec)
-        if stats_concurrency is not None:
-            pulumi.set(__self__, "stats_concurrency", stats_concurrency)
-        if status_thread_pool_size is not None:
-            pulumi.set(__self__, "status_thread_pool_size", status_thread_pool_size)
-
-    @property
-    @pulumi.getter(name="concurrent-recv-snap-limit")
-    def concurrent_recv_snap_limit(self) -> Optional[int]:
-        return pulumi.get(self, "concurrent_recv_snap_limit")
-
-    @property
-    @pulumi.getter(name="concurrent-send-snap-limit")
-    def concurrent_send_snap_limit(self) -> Optional[int]:
-        return pulumi.get(self, "concurrent_send_snap_limit")
-
-    @property
-    @pulumi.getter(name="enable-request-batch")
-    def enable_request_batch(self) -> Optional[bool]:
-        return pulumi.get(self, "enable_request_batch")
-
-    @property
-    @pulumi.getter(name="end-point-batch-row-limit")
-    def end_point_batch_row_limit(self) -> Optional[int]:
-        return pulumi.get(self, "end_point_batch_row_limit")
-
-    @property
-    @pulumi.getter(name="end-point-enable-batch-if-possible")
-    def end_point_enable_batch_if_possible(self) -> Optional[int]:
-        return pulumi.get(self, "end_point_enable_batch_if_possible")
-
-    @property
-    @pulumi.getter(name="end-point-recursion-limit")
-    def end_point_recursion_limit(self) -> Optional[int]:
-        return pulumi.get(self, "end_point_recursion_limit")
-
-    @property
-    @pulumi.getter(name="end-point-request-max-handle-duration")
-    def end_point_request_max_handle_duration(self) -> Optional[str]:
-        return pulumi.get(self, "end_point_request_max_handle_duration")
-
-    @property
-    @pulumi.getter(name="end-point-stream-batch-row-limit")
-    def end_point_stream_batch_row_limit(self) -> Optional[int]:
-        return pulumi.get(self, "end_point_stream_batch_row_limit")
-
-    @property
-    @pulumi.getter(name="end-point-stream-channel-size")
-    def end_point_stream_channel_size(self) -> Optional[int]:
-        return pulumi.get(self, "end_point_stream_channel_size")
-
-    @property
-    @pulumi.getter(name="grpc-compression-type")
-    def grpc_compression_type(self) -> Optional[str]:
-        return pulumi.get(self, "grpc_compression_type")
-
-    @property
-    @pulumi.getter(name="grpc-concurrency")
-    def grpc_concurrency(self) -> Optional[int]:
-        return pulumi.get(self, "grpc_concurrency")
-
-    @property
-    @pulumi.getter(name="grpc-concurrent-stream")
-    def grpc_concurrent_stream(self) -> Optional[int]:
-        return pulumi.get(self, "grpc_concurrent_stream")
-
-    @property
-    @pulumi.getter(name="grpc-keepalive-time")
-    def grpc_keepalive_time(self) -> Optional[str]:
-        return pulumi.get(self, "grpc_keepalive_time")
-
-    @property
-    @pulumi.getter(name="grpc-keepalive-timeout")
-    def grpc_keepalive_timeout(self) -> Optional[str]:
-        return pulumi.get(self, "grpc_keepalive_timeout")
-
-    @property
-    @pulumi.getter(name="grpc-memory-pool-quota")
-    def grpc_memory_pool_quota(self) -> Optional[str]:
-        return pulumi.get(self, "grpc_memory_pool_quota")
-
-    @property
-    @pulumi.getter(name="grpc-raft-conn-num")
-    def grpc_raft_conn_num(self) -> Optional[int]:
-        return pulumi.get(self, "grpc_raft_conn_num")
-
-    @property
-    @pulumi.getter(name="grpc-stream-initial-window-size")
-    def grpc_stream_initial_window_size(self) -> Optional[str]:
-        return pulumi.get(self, "grpc_stream_initial_window_size")
-
-    @property
-    @pulumi.getter(name="heavy-load-threshold")
-    def heavy_load_threshold(self) -> Optional[int]:
-        return pulumi.get(self, "heavy_load_threshold")
-
-    @property
-    @pulumi.getter(name="heavy-load-wait-duration")
-    def heavy_load_wait_duration(self) -> Optional[str]:
-        return pulumi.get(self, "heavy_load_wait_duration")
-
-    @property
-    @pulumi.getter
-    def labels(self) -> Optional[Mapping[str, Any]]:
-        return pulumi.get(self, "labels")
-
-    @property
-    @pulumi.getter(name="request-batch-enable-cross-command")
-    def request_batch_enable_cross_command(self) -> Optional[bool]:
-        return pulumi.get(self, "request_batch_enable_cross_command")
-
-    @property
-    @pulumi.getter(name="request-batch-wait-duration")
-    def request_batch_wait_duration(self) -> Optional[str]:
-        return pulumi.get(self, "request_batch_wait_duration")
-
-    @property
-    @pulumi.getter(name="snap-max-total-size")
-    def snap_max_total_size(self) -> Optional[str]:
-        return pulumi.get(self, "snap_max_total_size")
-
-    @property
-    @pulumi.getter(name="snap-max-write-bytes-per-sec")
-    def snap_max_write_bytes_per_sec(self) -> Optional[str]:
-        return pulumi.get(self, "snap_max_write_bytes_per_sec")
-
-    @property
-    @pulumi.getter(name="stats-concurrency")
-    def stats_concurrency(self) -> Optional[int]:
-        return pulumi.get(self, "stats_concurrency")
-
-    @property
-    @pulumi.getter(name="status-thread-pool-size")
-    def status_thread_pool_size(self) -> Optional[str]:
-        return pulumi.get(self, "status_thread_pool_size")
-
-    def _translate_property(self, prop):
-        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
-
-
-@pulumi.output_type
-class TidbClusterSpecTikvConfigStorage(dict):
-    def __init__(__self__, *,
-                 block_cache: Optional['outputs.TidbClusterSpecTikvConfigStorageBlock-Cache'] = None,
-                 max_key_size: Optional[int] = None,
-                 reserve_space: Optional[str] = None,
-                 scheduler_concurrency: Optional[int] = None,
-                 scheduler_notify_capacity: Optional[int] = None,
-                 scheduler_pending_write_threshold: Optional[str] = None,
-                 scheduler_worker_pool_size: Optional[int] = None):
-        if block_cache is not None:
-            pulumi.set(__self__, "block_cache", block_cache)
-        if max_key_size is not None:
-            pulumi.set(__self__, "max_key_size", max_key_size)
-        if reserve_space is not None:
-            pulumi.set(__self__, "reserve_space", reserve_space)
-        if scheduler_concurrency is not None:
-            pulumi.set(__self__, "scheduler_concurrency", scheduler_concurrency)
-        if scheduler_notify_capacity is not None:
-            pulumi.set(__self__, "scheduler_notify_capacity", scheduler_notify_capacity)
-        if scheduler_pending_write_threshold is not None:
-            pulumi.set(__self__, "scheduler_pending_write_threshold", scheduler_pending_write_threshold)
-        if scheduler_worker_pool_size is not None:
-            pulumi.set(__self__, "scheduler_worker_pool_size", scheduler_worker_pool_size)
-
-    @property
-    @pulumi.getter(name="block-cache")
-    def block_cache(self) -> Optional['outputs.TidbClusterSpecTikvConfigStorageBlock-Cache']:
-        return pulumi.get(self, "block_cache")
-
-    @property
-    @pulumi.getter(name="max-key-size")
-    def max_key_size(self) -> Optional[int]:
-        return pulumi.get(self, "max_key_size")
-
-    @property
-    @pulumi.getter(name="reserve-space")
-    def reserve_space(self) -> Optional[str]:
-        return pulumi.get(self, "reserve_space")
-
-    @property
-    @pulumi.getter(name="scheduler-concurrency")
-    def scheduler_concurrency(self) -> Optional[int]:
-        return pulumi.get(self, "scheduler_concurrency")
-
-    @property
-    @pulumi.getter(name="scheduler-notify-capacity")
-    def scheduler_notify_capacity(self) -> Optional[int]:
-        return pulumi.get(self, "scheduler_notify_capacity")
-
-    @property
-    @pulumi.getter(name="scheduler-pending-write-threshold")
-    def scheduler_pending_write_threshold(self) -> Optional[str]:
-        return pulumi.get(self, "scheduler_pending_write_threshold")
-
-    @property
-    @pulumi.getter(name="scheduler-worker-pool-size")
-    def scheduler_worker_pool_size(self) -> Optional[int]:
-        return pulumi.get(self, "scheduler_worker_pool_size")
-
-    def _translate_property(self, prop):
-        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
-
-
-@pulumi.output_type
-class TidbClusterSpecTikvConfigStorageBlock-Cache(dict):
-    def __init__(__self__, *,
-                 capacity: Optional[str] = None,
-                 high_pri_pool_ratio: Optional[float] = None,
-                 memory_allocator: Optional[str] = None,
-                 num_shard_bits: Optional[int] = None,
-                 shared: Optional[bool] = None,
-                 strict_capacity_limit: Optional[bool] = None):
-        if capacity is not None:
-            pulumi.set(__self__, "capacity", capacity)
-        if high_pri_pool_ratio is not None:
-            pulumi.set(__self__, "high_pri_pool_ratio", high_pri_pool_ratio)
-        if memory_allocator is not None:
-            pulumi.set(__self__, "memory_allocator", memory_allocator)
-        if num_shard_bits is not None:
-            pulumi.set(__self__, "num_shard_bits", num_shard_bits)
-        if shared is not None:
-            pulumi.set(__self__, "shared", shared)
-        if strict_capacity_limit is not None:
-            pulumi.set(__self__, "strict_capacity_limit", strict_capacity_limit)
-
-    @property
-    @pulumi.getter
-    def capacity(self) -> Optional[str]:
-        return pulumi.get(self, "capacity")
-
-    @property
-    @pulumi.getter(name="high-pri-pool-ratio")
-    def high_pri_pool_ratio(self) -> Optional[float]:
-        return pulumi.get(self, "high_pri_pool_ratio")
-
-    @property
-    @pulumi.getter(name="memory-allocator")
-    def memory_allocator(self) -> Optional[str]:
-        return pulumi.get(self, "memory_allocator")
-
-    @property
-    @pulumi.getter(name="num-shard-bits")
-    def num_shard_bits(self) -> Optional[int]:
-        return pulumi.get(self, "num_shard_bits")
-
-    @property
-    @pulumi.getter
-    def shared(self) -> Optional[bool]:
-        return pulumi.get(self, "shared")
-
-    @property
-    @pulumi.getter(name="strict-capacity-limit")
-    def strict_capacity_limit(self) -> Optional[bool]:
-        return pulumi.get(self, "strict_capacity_limit")
-
-    def _translate_property(self, prop):
-        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
-
-
-@pulumi.output_type
 class TidbClusterSpecTikvEnv(dict):
     def __init__(__self__, *,
                  name: str,
@@ -43390,6 +37660,7 @@ class TidbMonitorSpec(dict):
                  alert_manager_rules_version: Optional[str] = None,
                  alertmanager_url: Optional[str] = None,
                  annotations: Optional[Mapping[str, Any]] = None,
+                 cluster_scoped: Optional[bool] = None,
                  grafana: Optional[Any] = None,
                  image_pull_policy: Optional[str] = None,
                  image_pull_secrets: Optional[Sequence['outputs.TidbMonitorSpecImagePullSecrets']] = None,
@@ -43412,6 +37683,8 @@ class TidbMonitorSpec(dict):
             pulumi.set(__self__, "alertmanager_url", alertmanager_url)
         if annotations is not None:
             pulumi.set(__self__, "annotations", annotations)
+        if cluster_scoped is not None:
+            pulumi.set(__self__, "cluster_scoped", cluster_scoped)
         if grafana is not None:
             pulumi.set(__self__, "grafana", grafana)
         if image_pull_policy is not None:
@@ -43472,6 +37745,11 @@ class TidbMonitorSpec(dict):
     @pulumi.getter
     def annotations(self) -> Optional[Mapping[str, Any]]:
         return pulumi.get(self, "annotations")
+
+    @property
+    @pulumi.getter(name="clusterScoped")
+    def cluster_scoped(self) -> Optional[bool]:
+        return pulumi.get(self, "cluster_scoped")
 
     @property
     @pulumi.getter

@@ -27,7 +27,7 @@ class BuildRun(pulumi.CustomResource):
                  __name__=None,
                  __opts__=None):
         """
-        BuildRun is the Schema for the buildruns API
+        BuildRun is the Schema representing an instance of build execution
 
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.

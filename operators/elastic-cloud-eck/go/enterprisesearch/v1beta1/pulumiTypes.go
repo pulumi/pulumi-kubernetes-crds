@@ -1511,6 +1511,8 @@ func (o EnterpriseSearchSpecHttpServiceSpecPtrOutput) Type() pulumi.StringPtrOut
 
 // ServicePort contains information on service's port.
 type EnterpriseSearchSpecHttpServiceSpecPorts struct {
+	// The application protocol for this port. This field follows standard Kubernetes label syntax. Un-prefixed names are reserved for IANA standard service names (as per RFC-6335 and http://www.iana.org/assignments/service-names). Non-standard protocols should use prefixed names such as mycompany.com/my-custom-protocol. Field can be enabled with ServiceAppProtocol feature gate.
+	AppProtocol *string `pulumi:"appProtocol"`
 	// The name of this port within the service. This must be a DNS_LABEL. All ports within a ServiceSpec must have unique names. When considering the endpoints for a Service, this must match the 'name' field in the EndpointPort. Optional if only one ServicePort is defined on this service.
 	Name *string `pulumi:"name"`
 	// The port on each node on which this service is exposed when type=NodePort or LoadBalancer. Usually assigned by the system. If specified, it will be allocated to the service if unused or else creation of the service will fail. Default is to auto-allocate a port if the ServiceType of this Service requires one. More info: https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport
@@ -1536,6 +1538,8 @@ type EnterpriseSearchSpecHttpServiceSpecPortsInput interface {
 
 // ServicePort contains information on service's port.
 type EnterpriseSearchSpecHttpServiceSpecPortsArgs struct {
+	// The application protocol for this port. This field follows standard Kubernetes label syntax. Un-prefixed names are reserved for IANA standard service names (as per RFC-6335 and http://www.iana.org/assignments/service-names). Non-standard protocols should use prefixed names such as mycompany.com/my-custom-protocol. Field can be enabled with ServiceAppProtocol feature gate.
+	AppProtocol pulumi.StringPtrInput `pulumi:"appProtocol"`
 	// The name of this port within the service. This must be a DNS_LABEL. All ports within a ServiceSpec must have unique names. When considering the endpoints for a Service, this must match the 'name' field in the EndpointPort. Optional if only one ServicePort is defined on this service.
 	Name pulumi.StringPtrInput `pulumi:"name"`
 	// The port on each node on which this service is exposed when type=NodePort or LoadBalancer. Usually assigned by the system. If specified, it will be allocated to the service if unused or else creation of the service will fail. Default is to auto-allocate a port if the ServiceType of this Service requires one. More info: https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport
@@ -1598,6 +1602,11 @@ func (o EnterpriseSearchSpecHttpServiceSpecPortsOutput) ToEnterpriseSearchSpecHt
 
 func (o EnterpriseSearchSpecHttpServiceSpecPortsOutput) ToEnterpriseSearchSpecHttpServiceSpecPortsOutputWithContext(ctx context.Context) EnterpriseSearchSpecHttpServiceSpecPortsOutput {
 	return o
+}
+
+// The application protocol for this port. This field follows standard Kubernetes label syntax. Un-prefixed names are reserved for IANA standard service names (as per RFC-6335 and http://www.iana.org/assignments/service-names). Non-standard protocols should use prefixed names such as mycompany.com/my-custom-protocol. Field can be enabled with ServiceAppProtocol feature gate.
+func (o EnterpriseSearchSpecHttpServiceSpecPortsOutput) AppProtocol() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v EnterpriseSearchSpecHttpServiceSpecPorts) *string { return v.AppProtocol }).(pulumi.StringPtrOutput)
 }
 
 // The name of this port within the service. This must be a DNS_LABEL. All ports within a ServiceSpec must have unique names. When considering the endpoints for a Service, this must match the 'name' field in the EndpointPort. Optional if only one ServicePort is defined on this service.
@@ -2693,11 +2702,14 @@ func (o EnterpriseSearchSpecPodTemplateOutput) ToEnterpriseSearchSpecPodTemplate
 type EnterpriseSearchStatus struct {
 	// Association is the status of any auto-linking to Elasticsearch clusters.
 	AssociationStatus *string `pulumi:"associationStatus"`
-	AvailableNodes    *int    `pulumi:"availableNodes"`
-	// EnterpriseSearchHealth expresses the health of the Enterprise Search instances.
+	// AvailableNodes is the number of available replicas in the deployment.
+	AvailableNodes *int `pulumi:"availableNodes"`
+	// Health of the deployment.
 	Health *string `pulumi:"health"`
 	// ExternalService is the name of the service associated to the Enterprise Search Pods.
 	Service *string `pulumi:"service"`
+	// Version of the stack resource currently running. During version upgrades, multiple versions may run in parallel: this value specifies the lowest version currently running.
+	Version *string `pulumi:"version"`
 }
 
 // EnterpriseSearchStatusInput is an input type that accepts EnterpriseSearchStatusArgs and EnterpriseSearchStatusOutput values.
@@ -2715,11 +2727,14 @@ type EnterpriseSearchStatusInput interface {
 type EnterpriseSearchStatusArgs struct {
 	// Association is the status of any auto-linking to Elasticsearch clusters.
 	AssociationStatus pulumi.StringPtrInput `pulumi:"associationStatus"`
-	AvailableNodes    pulumi.IntPtrInput    `pulumi:"availableNodes"`
-	// EnterpriseSearchHealth expresses the health of the Enterprise Search instances.
+	// AvailableNodes is the number of available replicas in the deployment.
+	AvailableNodes pulumi.IntPtrInput `pulumi:"availableNodes"`
+	// Health of the deployment.
 	Health pulumi.StringPtrInput `pulumi:"health"`
 	// ExternalService is the name of the service associated to the Enterprise Search Pods.
 	Service pulumi.StringPtrInput `pulumi:"service"`
+	// Version of the stack resource currently running. During version upgrades, multiple versions may run in parallel: this value specifies the lowest version currently running.
+	Version pulumi.StringPtrInput `pulumi:"version"`
 }
 
 func (EnterpriseSearchStatusArgs) ElementType() reflect.Type {
@@ -2805,11 +2820,12 @@ func (o EnterpriseSearchStatusOutput) AssociationStatus() pulumi.StringPtrOutput
 	return o.ApplyT(func(v EnterpriseSearchStatus) *string { return v.AssociationStatus }).(pulumi.StringPtrOutput)
 }
 
+// AvailableNodes is the number of available replicas in the deployment.
 func (o EnterpriseSearchStatusOutput) AvailableNodes() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v EnterpriseSearchStatus) *int { return v.AvailableNodes }).(pulumi.IntPtrOutput)
 }
 
-// EnterpriseSearchHealth expresses the health of the Enterprise Search instances.
+// Health of the deployment.
 func (o EnterpriseSearchStatusOutput) Health() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v EnterpriseSearchStatus) *string { return v.Health }).(pulumi.StringPtrOutput)
 }
@@ -2817,6 +2833,11 @@ func (o EnterpriseSearchStatusOutput) Health() pulumi.StringPtrOutput {
 // ExternalService is the name of the service associated to the Enterprise Search Pods.
 func (o EnterpriseSearchStatusOutput) Service() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v EnterpriseSearchStatus) *string { return v.Service }).(pulumi.StringPtrOutput)
+}
+
+// Version of the stack resource currently running. During version upgrades, multiple versions may run in parallel: this value specifies the lowest version currently running.
+func (o EnterpriseSearchStatusOutput) Version() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v EnterpriseSearchStatus) *string { return v.Version }).(pulumi.StringPtrOutput)
 }
 
 type EnterpriseSearchStatusPtrOutput struct{ *pulumi.OutputState }
@@ -2847,6 +2868,7 @@ func (o EnterpriseSearchStatusPtrOutput) AssociationStatus() pulumi.StringPtrOut
 	}).(pulumi.StringPtrOutput)
 }
 
+// AvailableNodes is the number of available replicas in the deployment.
 func (o EnterpriseSearchStatusPtrOutput) AvailableNodes() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v *EnterpriseSearchStatus) *int {
 		if v == nil {
@@ -2856,7 +2878,7 @@ func (o EnterpriseSearchStatusPtrOutput) AvailableNodes() pulumi.IntPtrOutput {
 	}).(pulumi.IntPtrOutput)
 }
 
-// EnterpriseSearchHealth expresses the health of the Enterprise Search instances.
+// Health of the deployment.
 func (o EnterpriseSearchStatusPtrOutput) Health() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *EnterpriseSearchStatus) *string {
 		if v == nil {
@@ -2873,6 +2895,16 @@ func (o EnterpriseSearchStatusPtrOutput) Service() pulumi.StringPtrOutput {
 			return nil
 		}
 		return v.Service
+	}).(pulumi.StringPtrOutput)
+}
+
+// Version of the stack resource currently running. During version upgrades, multiple versions may run in parallel: this value specifies the lowest version currently running.
+func (o EnterpriseSearchStatusPtrOutput) Version() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *EnterpriseSearchStatus) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Version
 	}).(pulumi.StringPtrOutput)
 }
 

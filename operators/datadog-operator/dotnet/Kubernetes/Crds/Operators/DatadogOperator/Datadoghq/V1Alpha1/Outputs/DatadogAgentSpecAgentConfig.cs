@@ -66,7 +66,7 @@ namespace Pulumi.Kubernetes.Types.Outputs.Datadoghq.V1Alpha1
         /// </summary>
         public readonly Pulumi.Kubernetes.Types.Outputs.Datadoghq.V1Alpha1.DatadogAgentSpecAgentConfigResources Resources;
         /// <summary>
-        /// You can modify the security context used to run the containers by modifying the label type
+        /// Pod-level SecurityContext
         /// </summary>
         public readonly Pulumi.Kubernetes.Types.Outputs.Datadoghq.V1Alpha1.DatadogAgentSpecAgentConfigSecurityContext SecurityContext;
         /// <summary>

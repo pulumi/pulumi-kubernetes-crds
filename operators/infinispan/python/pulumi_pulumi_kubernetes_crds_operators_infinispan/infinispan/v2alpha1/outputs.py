@@ -10,13 +10,230 @@ from ... import _utilities, _tables
 from . import outputs
 
 __all__ = [
+    'BackupSpec',
+    'BackupSpecContainer',
+    'BackupSpecResources',
+    'BackupSpecVolume',
+    'BackupStatus',
     'CacheSpec',
     'CacheSpecAdminAuth',
     'CacheSpecAdminAuthPassword',
     'CacheSpecAdminAuthUsername',
     'CacheStatus',
     'CacheStatusConditions',
+    'RestoreSpec',
+    'RestoreSpecContainer',
+    'RestoreSpecResources',
+    'RestoreStatus',
 ]
+
+@pulumi.output_type
+class BackupSpec(dict):
+    """
+    BackupSpec defines the desired state of Backup
+    """
+    def __init__(__self__, *,
+                 cluster: str,
+                 container: Optional['outputs.BackupSpecContainer'] = None,
+                 resources: Optional['outputs.BackupSpecResources'] = None,
+                 volume: Optional['outputs.BackupSpecVolume'] = None):
+        """
+        BackupSpec defines the desired state of Backup
+        :param 'BackupSpecContainerArgs' container: InfinispanContainerSpec specify resource requirements per container
+        """
+        pulumi.set(__self__, "cluster", cluster)
+        if container is not None:
+            pulumi.set(__self__, "container", container)
+        if resources is not None:
+            pulumi.set(__self__, "resources", resources)
+        if volume is not None:
+            pulumi.set(__self__, "volume", volume)
+
+    @property
+    @pulumi.getter
+    def cluster(self) -> str:
+        return pulumi.get(self, "cluster")
+
+    @property
+    @pulumi.getter
+    def container(self) -> Optional['outputs.BackupSpecContainer']:
+        """
+        InfinispanContainerSpec specify resource requirements per container
+        """
+        return pulumi.get(self, "container")
+
+    @property
+    @pulumi.getter
+    def resources(self) -> Optional['outputs.BackupSpecResources']:
+        return pulumi.get(self, "resources")
+
+    @property
+    @pulumi.getter
+    def volume(self) -> Optional['outputs.BackupSpecVolume']:
+        return pulumi.get(self, "volume")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class BackupSpecContainer(dict):
+    """
+    InfinispanContainerSpec specify resource requirements per container
+    """
+    def __init__(__self__, *,
+                 cpu: Optional[str] = None,
+                 extra_jvm_opts: Optional[str] = None,
+                 memory: Optional[str] = None):
+        """
+        InfinispanContainerSpec specify resource requirements per container
+        """
+        if cpu is not None:
+            pulumi.set(__self__, "cpu", cpu)
+        if extra_jvm_opts is not None:
+            pulumi.set(__self__, "extra_jvm_opts", extra_jvm_opts)
+        if memory is not None:
+            pulumi.set(__self__, "memory", memory)
+
+    @property
+    @pulumi.getter
+    def cpu(self) -> Optional[str]:
+        return pulumi.get(self, "cpu")
+
+    @property
+    @pulumi.getter(name="extraJvmOpts")
+    def extra_jvm_opts(self) -> Optional[str]:
+        return pulumi.get(self, "extra_jvm_opts")
+
+    @property
+    @pulumi.getter
+    def memory(self) -> Optional[str]:
+        return pulumi.get(self, "memory")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class BackupSpecResources(dict):
+    def __init__(__self__, *,
+                 cache_configs: Optional[Sequence[str]] = None,
+                 caches: Optional[Sequence[str]] = None,
+                 counters: Optional[Sequence[str]] = None,
+                 proto_schemas: Optional[Sequence[str]] = None,
+                 scripts: Optional[Sequence[str]] = None):
+        if cache_configs is not None:
+            pulumi.set(__self__, "cache_configs", cache_configs)
+        if caches is not None:
+            pulumi.set(__self__, "caches", caches)
+        if counters is not None:
+            pulumi.set(__self__, "counters", counters)
+        if proto_schemas is not None:
+            pulumi.set(__self__, "proto_schemas", proto_schemas)
+        if scripts is not None:
+            pulumi.set(__self__, "scripts", scripts)
+
+    @property
+    @pulumi.getter(name="cacheConfigs")
+    def cache_configs(self) -> Optional[Sequence[str]]:
+        return pulumi.get(self, "cache_configs")
+
+    @property
+    @pulumi.getter
+    def caches(self) -> Optional[Sequence[str]]:
+        return pulumi.get(self, "caches")
+
+    @property
+    @pulumi.getter
+    def counters(self) -> Optional[Sequence[str]]:
+        return pulumi.get(self, "counters")
+
+    @property
+    @pulumi.getter(name="protoSchemas")
+    def proto_schemas(self) -> Optional[Sequence[str]]:
+        return pulumi.get(self, "proto_schemas")
+
+    @property
+    @pulumi.getter
+    def scripts(self) -> Optional[Sequence[str]]:
+        return pulumi.get(self, "scripts")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class BackupSpecVolume(dict):
+    def __init__(__self__, *,
+                 storage: Optional[str] = None,
+                 storage_class_name: Optional[str] = None):
+        if storage is not None:
+            pulumi.set(__self__, "storage", storage)
+        if storage_class_name is not None:
+            pulumi.set(__self__, "storage_class_name", storage_class_name)
+
+    @property
+    @pulumi.getter
+    def storage(self) -> Optional[str]:
+        return pulumi.get(self, "storage")
+
+    @property
+    @pulumi.getter(name="storageClassName")
+    def storage_class_name(self) -> Optional[str]:
+        return pulumi.get(self, "storage_class_name")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class BackupStatus(dict):
+    """
+    BackupStatus defines the observed state of Backup
+    """
+    def __init__(__self__, *,
+                 phase: str,
+                 pvc: Optional[str] = None,
+                 reason: Optional[str] = None):
+        """
+        BackupStatus defines the observed state of Backup
+        :param str phase: State indicates the current state of the backup operation
+        :param str pvc: The name of the created PersistentVolumeClaim used to store the backup
+        :param str reason: Reason indicates the reason for any backup related failures.
+        """
+        pulumi.set(__self__, "phase", phase)
+        if pvc is not None:
+            pulumi.set(__self__, "pvc", pvc)
+        if reason is not None:
+            pulumi.set(__self__, "reason", reason)
+
+    @property
+    @pulumi.getter
+    def phase(self) -> str:
+        """
+        State indicates the current state of the backup operation
+        """
+        return pulumi.get(self, "phase")
+
+    @property
+    @pulumi.getter
+    def pvc(self) -> Optional[str]:
+        """
+        The name of the created PersistentVolumeClaim used to store the backup
+        """
+        return pulumi.get(self, "pvc")
+
+    @property
+    @pulumi.getter
+    def reason(self) -> Optional[str]:
+        """
+        Reason indicates the reason for any backup related failures.
+        """
+        return pulumi.get(self, "reason")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
 
 @pulumi.output_type
 class CacheSpec(dict):
@@ -321,6 +538,177 @@ class CacheStatusConditions(dict):
         Human-readable message indicating details about last transition.
         """
         return pulumi.get(self, "message")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class RestoreSpec(dict):
+    """
+    BackupSpec defines the desired state of Backup
+    """
+    def __init__(__self__, *,
+                 backup: str,
+                 cluster: str,
+                 container: Optional['outputs.RestoreSpecContainer'] = None,
+                 resources: Optional['outputs.RestoreSpecResources'] = None):
+        """
+        BackupSpec defines the desired state of Backup
+        :param 'RestoreSpecContainerArgs' container: InfinispanContainerSpec specify resource requirements per container
+        """
+        pulumi.set(__self__, "backup", backup)
+        pulumi.set(__self__, "cluster", cluster)
+        if container is not None:
+            pulumi.set(__self__, "container", container)
+        if resources is not None:
+            pulumi.set(__self__, "resources", resources)
+
+    @property
+    @pulumi.getter
+    def backup(self) -> str:
+        return pulumi.get(self, "backup")
+
+    @property
+    @pulumi.getter
+    def cluster(self) -> str:
+        return pulumi.get(self, "cluster")
+
+    @property
+    @pulumi.getter
+    def container(self) -> Optional['outputs.RestoreSpecContainer']:
+        """
+        InfinispanContainerSpec specify resource requirements per container
+        """
+        return pulumi.get(self, "container")
+
+    @property
+    @pulumi.getter
+    def resources(self) -> Optional['outputs.RestoreSpecResources']:
+        return pulumi.get(self, "resources")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class RestoreSpecContainer(dict):
+    """
+    InfinispanContainerSpec specify resource requirements per container
+    """
+    def __init__(__self__, *,
+                 cpu: Optional[str] = None,
+                 extra_jvm_opts: Optional[str] = None,
+                 memory: Optional[str] = None):
+        """
+        InfinispanContainerSpec specify resource requirements per container
+        """
+        if cpu is not None:
+            pulumi.set(__self__, "cpu", cpu)
+        if extra_jvm_opts is not None:
+            pulumi.set(__self__, "extra_jvm_opts", extra_jvm_opts)
+        if memory is not None:
+            pulumi.set(__self__, "memory", memory)
+
+    @property
+    @pulumi.getter
+    def cpu(self) -> Optional[str]:
+        return pulumi.get(self, "cpu")
+
+    @property
+    @pulumi.getter(name="extraJvmOpts")
+    def extra_jvm_opts(self) -> Optional[str]:
+        return pulumi.get(self, "extra_jvm_opts")
+
+    @property
+    @pulumi.getter
+    def memory(self) -> Optional[str]:
+        return pulumi.get(self, "memory")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class RestoreSpecResources(dict):
+    def __init__(__self__, *,
+                 cache_configs: Optional[Sequence[str]] = None,
+                 caches: Optional[Sequence[str]] = None,
+                 counters: Optional[Sequence[str]] = None,
+                 proto_schemas: Optional[Sequence[str]] = None,
+                 scripts: Optional[Sequence[str]] = None):
+        if cache_configs is not None:
+            pulumi.set(__self__, "cache_configs", cache_configs)
+        if caches is not None:
+            pulumi.set(__self__, "caches", caches)
+        if counters is not None:
+            pulumi.set(__self__, "counters", counters)
+        if proto_schemas is not None:
+            pulumi.set(__self__, "proto_schemas", proto_schemas)
+        if scripts is not None:
+            pulumi.set(__self__, "scripts", scripts)
+
+    @property
+    @pulumi.getter(name="cacheConfigs")
+    def cache_configs(self) -> Optional[Sequence[str]]:
+        return pulumi.get(self, "cache_configs")
+
+    @property
+    @pulumi.getter
+    def caches(self) -> Optional[Sequence[str]]:
+        return pulumi.get(self, "caches")
+
+    @property
+    @pulumi.getter
+    def counters(self) -> Optional[Sequence[str]]:
+        return pulumi.get(self, "counters")
+
+    @property
+    @pulumi.getter(name="protoSchemas")
+    def proto_schemas(self) -> Optional[Sequence[str]]:
+        return pulumi.get(self, "proto_schemas")
+
+    @property
+    @pulumi.getter
+    def scripts(self) -> Optional[Sequence[str]]:
+        return pulumi.get(self, "scripts")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class RestoreStatus(dict):
+    """
+    RestoreStatus defines the observed state of Restore
+    """
+    def __init__(__self__, *,
+                 phase: str,
+                 reason: Optional[str] = None):
+        """
+        RestoreStatus defines the observed state of Restore
+        :param str phase: State indicates the current state of the restore operation
+        :param str reason: Reason indicates the reason for any Restore related failures.
+        """
+        pulumi.set(__self__, "phase", phase)
+        if reason is not None:
+            pulumi.set(__self__, "reason", reason)
+
+    @property
+    @pulumi.getter
+    def phase(self) -> str:
+        """
+        State indicates the current state of the restore operation
+        """
+        return pulumi.get(self, "phase")
+
+    @property
+    @pulumi.getter
+    def reason(self) -> Optional[str]:
+        """
+        Reason indicates the reason for any Restore related failures.
+        """
+        return pulumi.get(self, "reason")
 
     def _translate_property(self, prop):
         return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop

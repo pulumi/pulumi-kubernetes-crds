@@ -11,18 +11,37 @@ from ... import _utilities, _tables
 __all__ = [
     'BuildRunSpecArgs',
     'BuildRunSpecBuildRefArgs',
-    'BuildRunSpecResourcesArgs',
+    'BuildRunSpecOutputArgs',
+    'BuildRunSpecOutputCredentialsArgs',
+    'BuildRunSpecServiceAccountArgs',
     'BuildRunStatusArgs',
+    'BuildRunStatusBuildSpecArgs',
+    'BuildRunStatusBuildSpecBuilderArgs',
+    'BuildRunStatusBuildSpecBuilderCredentialsArgs',
+    'BuildRunStatusBuildSpecOutputArgs',
+    'BuildRunStatusBuildSpecOutputCredentialsArgs',
+    'BuildRunStatusBuildSpecParametersArgs',
+    'BuildRunStatusBuildSpecRuntimeArgs',
+    'BuildRunStatusBuildSpecRuntimeBaseArgs',
+    'BuildRunStatusBuildSpecRuntimeBaseCredentialsArgs',
+    'BuildRunStatusBuildSpecRuntimeUserArgs',
+    'BuildRunStatusBuildSpecSourceArgs',
+    'BuildRunStatusBuildSpecSourceCredentialsArgs',
+    'BuildRunStatusBuildSpecStrategyArgs',
     'BuildSpecArgs',
     'BuildSpecBuilderArgs',
     'BuildSpecBuilderCredentialsArgs',
     'BuildSpecOutputArgs',
     'BuildSpecOutputCredentialsArgs',
     'BuildSpecParametersArgs',
-    'BuildSpecResourcesArgs',
+    'BuildSpecRuntimeArgs',
+    'BuildSpecRuntimeBaseArgs',
+    'BuildSpecRuntimeBaseCredentialsArgs',
+    'BuildSpecRuntimeUserArgs',
     'BuildSpecSourceArgs',
     'BuildSpecSourceCredentialsArgs',
     'BuildSpecStrategyArgs',
+    'BuildStatusArgs',
     'BuildStrategySpecArgs',
     'BuildStrategySpecBuildStepsArgs',
     'BuildStrategySpecBuildStepsEnvArgs',
@@ -33,6 +52,7 @@ __all__ = [
     'BuildStrategySpecBuildStepsEnvValueFromConfigMapKeyRefArgs',
     'BuildStrategySpecBuildStepsEnvValueFromFieldRefArgs',
     'BuildStrategySpecBuildStepsEnvValueFromResourceFieldRefArgs',
+    'BuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorArgs',
     'BuildStrategySpecBuildStepsEnvValueFromSecretKeyRefArgs',
     'BuildStrategySpecBuildStepsLifecycleArgs',
     'BuildStrategySpecBuildStepsLifecyclePostStartArgs',
@@ -65,6 +85,8 @@ __all__ = [
     'BuildStrategySpecBuildStepsReadinessProbeTcpSocketArgs',
     'BuildStrategySpecBuildStepsReadinessProbeTcpSocketPortArgs',
     'BuildStrategySpecBuildStepsResourcesArgs',
+    'BuildStrategySpecBuildStepsResourcesLimitsArgs',
+    'BuildStrategySpecBuildStepsResourcesRequestsArgs',
     'BuildStrategySpecBuildStepsSecurityContextArgs',
     'BuildStrategySpecBuildStepsSecurityContextCapabilitiesArgs',
     'BuildStrategySpecBuildStepsSecurityContextSeLinuxOptionsArgs',
@@ -88,6 +110,7 @@ __all__ = [
     'ClusterBuildStrategySpecBuildStepsEnvValueFromConfigMapKeyRefArgs',
     'ClusterBuildStrategySpecBuildStepsEnvValueFromFieldRefArgs',
     'ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefArgs',
+    'ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorArgs',
     'ClusterBuildStrategySpecBuildStepsEnvValueFromSecretKeyRefArgs',
     'ClusterBuildStrategySpecBuildStepsLifecycleArgs',
     'ClusterBuildStrategySpecBuildStepsLifecyclePostStartArgs',
@@ -120,6 +143,8 @@ __all__ = [
     'ClusterBuildStrategySpecBuildStepsReadinessProbeTcpSocketArgs',
     'ClusterBuildStrategySpecBuildStepsReadinessProbeTcpSocketPortArgs',
     'ClusterBuildStrategySpecBuildStepsResourcesArgs',
+    'ClusterBuildStrategySpecBuildStepsResourcesLimitsArgs',
+    'ClusterBuildStrategySpecBuildStepsResourcesRequestsArgs',
     'ClusterBuildStrategySpecBuildStepsSecurityContextArgs',
     'ClusterBuildStrategySpecBuildStepsSecurityContextCapabilitiesArgs',
     'ClusterBuildStrategySpecBuildStepsSecurityContextSeLinuxOptionsArgs',
@@ -139,19 +164,23 @@ __all__ = [
 class BuildRunSpecArgs:
     def __init__(__self__, *,
                  build_ref: pulumi.Input['BuildRunSpecBuildRefArgs'],
-                 resources: Optional[pulumi.Input['BuildRunSpecResourcesArgs']] = None,
-                 service_account: Optional[pulumi.Input[str]] = None):
+                 output: Optional[pulumi.Input['BuildRunSpecOutputArgs']] = None,
+                 service_account: Optional[pulumi.Input['BuildRunSpecServiceAccountArgs']] = None,
+                 timeout: Optional[pulumi.Input[str]] = None):
         """
         BuildRunSpec defines the desired state of BuildRun
         :param pulumi.Input['BuildRunSpecBuildRefArgs'] build_ref: BuildRef refers to the Build
-        :param pulumi.Input['BuildRunSpecResourcesArgs'] resources: Compute Resources required by the build container which can overwrite the configuration in Build. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-        :param pulumi.Input[str] service_account: ServiceAccount refers to the kubernetes serviceaccount which is used for resource control. Default serviceaccount will be set if it is empty
+        :param pulumi.Input['BuildRunSpecOutputArgs'] output: Output refers to the location where the generated image would be pushed to. It will overwrite the output image in build spec
+        :param pulumi.Input['BuildRunSpecServiceAccountArgs'] service_account: ServiceAccount refers to the kubernetes serviceaccount which is used for resource control. Default serviceaccount will be set if it is empty
+        :param pulumi.Input[str] timeout: Timeout defines the maximum run time of this build run.
         """
         pulumi.set(__self__, "build_ref", build_ref)
-        if resources is not None:
-            pulumi.set(__self__, "resources", resources)
+        if output is not None:
+            pulumi.set(__self__, "output", output)
         if service_account is not None:
             pulumi.set(__self__, "service_account", service_account)
+        if timeout is not None:
+            pulumi.set(__self__, "timeout", timeout)
 
     @property
     @pulumi.getter(name="buildRef")
@@ -167,43 +196,66 @@ class BuildRunSpecArgs:
 
     @property
     @pulumi.getter
-    def resources(self) -> Optional[pulumi.Input['BuildRunSpecResourcesArgs']]:
+    def output(self) -> Optional[pulumi.Input['BuildRunSpecOutputArgs']]:
         """
-        Compute Resources required by the build container which can overwrite the configuration in Build. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
+        Output refers to the location where the generated image would be pushed to. It will overwrite the output image in build spec
         """
-        return pulumi.get(self, "resources")
+        return pulumi.get(self, "output")
 
-    @resources.setter
-    def resources(self, value: Optional[pulumi.Input['BuildRunSpecResourcesArgs']]):
-        pulumi.set(self, "resources", value)
+    @output.setter
+    def output(self, value: Optional[pulumi.Input['BuildRunSpecOutputArgs']]):
+        pulumi.set(self, "output", value)
 
     @property
     @pulumi.getter(name="serviceAccount")
-    def service_account(self) -> Optional[pulumi.Input[str]]:
+    def service_account(self) -> Optional[pulumi.Input['BuildRunSpecServiceAccountArgs']]:
         """
         ServiceAccount refers to the kubernetes serviceaccount which is used for resource control. Default serviceaccount will be set if it is empty
         """
         return pulumi.get(self, "service_account")
 
     @service_account.setter
-    def service_account(self, value: Optional[pulumi.Input[str]]):
+    def service_account(self, value: Optional[pulumi.Input['BuildRunSpecServiceAccountArgs']]):
         pulumi.set(self, "service_account", value)
+
+    @property
+    @pulumi.getter
+    def timeout(self) -> Optional[pulumi.Input[str]]:
+        """
+        Timeout defines the maximum run time of this build run.
+        """
+        return pulumi.get(self, "timeout")
+
+    @timeout.setter
+    def timeout(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "timeout", value)
 
 
 @pulumi.input_type
 class BuildRunSpecBuildRefArgs:
     def __init__(__self__, *,
-                 api_version: Optional[pulumi.Input[str]] = None,
-                 name: Optional[pulumi.Input[str]] = None):
+                 name: pulumi.Input[str],
+                 api_version: Optional[pulumi.Input[str]] = None):
         """
         BuildRef refers to the Build
-        :param pulumi.Input[str] api_version: API version of the referent
         :param pulumi.Input[str] name: Name of the referent; More info: http://kubernetes.io/docs/user-guide/identifiers#names
+        :param pulumi.Input[str] api_version: API version of the referent
         """
+        pulumi.set(__self__, "name", name)
         if api_version is not None:
             pulumi.set(__self__, "api_version", api_version)
-        if name is not None:
-            pulumi.set(__self__, "name", name)
+
+    @property
+    @pulumi.getter
+    def name(self) -> pulumi.Input[str]:
+        """
+        Name of the referent; More info: http://kubernetes.io/docs/user-guide/identifiers#names
+        """
+        return pulumi.get(self, "name")
+
+    @name.setter
+    def name(self, value: pulumi.Input[str]):
+        pulumi.set(self, "name", value)
 
     @property
     @pulumi.getter(name="apiVersion")
@@ -216,6 +268,97 @@ class BuildRunSpecBuildRefArgs:
     @api_version.setter
     def api_version(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "api_version", value)
+
+
+@pulumi.input_type
+class BuildRunSpecOutputArgs:
+    def __init__(__self__, *,
+                 image: pulumi.Input[str],
+                 credentials: Optional[pulumi.Input['BuildRunSpecOutputCredentialsArgs']] = None):
+        """
+        Output refers to the location where the generated image would be pushed to. It will overwrite the output image in build spec
+        :param pulumi.Input[str] image: ImageURL is the URL where the image will be pushed to.
+        :param pulumi.Input['BuildRunSpecOutputCredentialsArgs'] credentials: SecretRef is a reference to the Secret containing the credentials to push the image to the registry
+        """
+        pulumi.set(__self__, "image", image)
+        if credentials is not None:
+            pulumi.set(__self__, "credentials", credentials)
+
+    @property
+    @pulumi.getter
+    def image(self) -> pulumi.Input[str]:
+        """
+        ImageURL is the URL where the image will be pushed to.
+        """
+        return pulumi.get(self, "image")
+
+    @image.setter
+    def image(self, value: pulumi.Input[str]):
+        pulumi.set(self, "image", value)
+
+    @property
+    @pulumi.getter
+    def credentials(self) -> Optional[pulumi.Input['BuildRunSpecOutputCredentialsArgs']]:
+        """
+        SecretRef is a reference to the Secret containing the credentials to push the image to the registry
+        """
+        return pulumi.get(self, "credentials")
+
+    @credentials.setter
+    def credentials(self, value: Optional[pulumi.Input['BuildRunSpecOutputCredentialsArgs']]):
+        pulumi.set(self, "credentials", value)
+
+
+@pulumi.input_type
+class BuildRunSpecOutputCredentialsArgs:
+    def __init__(__self__, *,
+                 name: Optional[pulumi.Input[str]] = None):
+        """
+        SecretRef is a reference to the Secret containing the credentials to push the image to the registry
+        :param pulumi.Input[str] name: Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+        """
+        if name is not None:
+            pulumi.set(__self__, "name", name)
+
+    @property
+    @pulumi.getter
+    def name(self) -> Optional[pulumi.Input[str]]:
+        """
+        Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+        """
+        return pulumi.get(self, "name")
+
+    @name.setter
+    def name(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "name", value)
+
+
+@pulumi.input_type
+class BuildRunSpecServiceAccountArgs:
+    def __init__(__self__, *,
+                 generate: Optional[pulumi.Input[bool]] = None,
+                 name: Optional[pulumi.Input[str]] = None):
+        """
+        ServiceAccount refers to the kubernetes serviceaccount which is used for resource control. Default serviceaccount will be set if it is empty
+        :param pulumi.Input[bool] generate: If generates a new ServiceAccount for the build
+        :param pulumi.Input[str] name: Name of the referent; More info: http://kubernetes.io/docs/user-guide/identifiers#names
+        """
+        if generate is not None:
+            pulumi.set(__self__, "generate", generate)
+        if name is not None:
+            pulumi.set(__self__, "name", name)
+
+    @property
+    @pulumi.getter
+    def generate(self) -> Optional[pulumi.Input[bool]]:
+        """
+        If generates a new ServiceAccount for the build
+        """
+        return pulumi.get(self, "generate")
+
+    @generate.setter
+    def generate(self, value: Optional[pulumi.Input[bool]]):
+        pulumi.set(self, "generate", value)
 
     @property
     @pulumi.getter
@@ -231,48 +374,9 @@ class BuildRunSpecBuildRefArgs:
 
 
 @pulumi.input_type
-class BuildRunSpecResourcesArgs:
-    def __init__(__self__, *,
-                 limits: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-                 requests: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None):
-        """
-        Compute Resources required by the build container which can overwrite the configuration in Build. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] limits: Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] requests: Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-        """
-        if limits is not None:
-            pulumi.set(__self__, "limits", limits)
-        if requests is not None:
-            pulumi.set(__self__, "requests", requests)
-
-    @property
-    @pulumi.getter
-    def limits(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
-        """
-        Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-        """
-        return pulumi.get(self, "limits")
-
-    @limits.setter
-    def limits(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
-        pulumi.set(self, "limits", value)
-
-    @property
-    @pulumi.getter
-    def requests(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
-        """
-        Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-        """
-        return pulumi.get(self, "requests")
-
-    @requests.setter
-    def requests(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
-        pulumi.set(self, "requests", value)
-
-
-@pulumi.input_type
 class BuildRunStatusArgs:
     def __init__(__self__, *,
+                 build_spec: Optional[pulumi.Input['BuildRunStatusBuildSpecArgs']] = None,
                  completion_time: Optional[pulumi.Input[str]] = None,
                  latest_task_run_ref: Optional[pulumi.Input[str]] = None,
                  reason: Optional[pulumi.Input[str]] = None,
@@ -280,12 +384,15 @@ class BuildRunStatusArgs:
                  succeeded: Optional[pulumi.Input[str]] = None):
         """
         BuildRunStatus defines the observed state of BuildRun
+        :param pulumi.Input['BuildRunStatusBuildSpecArgs'] build_spec: BuildSpec is the Build Spec of this BuildRun.
         :param pulumi.Input[str] completion_time: CompletionTime is the time the build completed.
         :param pulumi.Input[str] latest_task_run_ref: PodName is the name of the pod responsible for executing this task's steps.
         :param pulumi.Input[str] reason: The Succeeded reason of the TaskRun
         :param pulumi.Input[str] start_time: StartTime is the time the build is actually started.
         :param pulumi.Input[str] succeeded: The Succeeded status of the TaskRun
         """
+        if build_spec is not None:
+            pulumi.set(__self__, "build_spec", build_spec)
         if completion_time is not None:
             pulumi.set(__self__, "completion_time", completion_time)
         if latest_task_run_ref is not None:
@@ -296,6 +403,18 @@ class BuildRunStatusArgs:
             pulumi.set(__self__, "start_time", start_time)
         if succeeded is not None:
             pulumi.set(__self__, "succeeded", succeeded)
+
+    @property
+    @pulumi.getter(name="buildSpec")
+    def build_spec(self) -> Optional[pulumi.Input['BuildRunStatusBuildSpecArgs']]:
+        """
+        BuildSpec is the Build Spec of this BuildRun.
+        """
+        return pulumi.get(self, "build_spec")
+
+    @build_spec.setter
+    def build_spec(self, value: Optional[pulumi.Input['BuildRunStatusBuildSpecArgs']]):
+        pulumi.set(self, "build_spec", value)
 
     @property
     @pulumi.getter(name="completionTime")
@@ -359,24 +478,26 @@ class BuildRunStatusArgs:
 
 
 @pulumi.input_type
-class BuildSpecArgs:
+class BuildRunStatusBuildSpecArgs:
     def __init__(__self__, *,
-                 output: pulumi.Input['BuildSpecOutputArgs'],
-                 source: pulumi.Input['BuildSpecSourceArgs'],
-                 strategy: pulumi.Input['BuildSpecStrategyArgs'],
-                 builder: Optional[pulumi.Input['BuildSpecBuilderArgs']] = None,
+                 output: pulumi.Input['BuildRunStatusBuildSpecOutputArgs'],
+                 source: pulumi.Input['BuildRunStatusBuildSpecSourceArgs'],
+                 strategy: pulumi.Input['BuildRunStatusBuildSpecStrategyArgs'],
+                 builder: Optional[pulumi.Input['BuildRunStatusBuildSpecBuilderArgs']] = None,
                  dockerfile: Optional[pulumi.Input[str]] = None,
-                 parameters: Optional[pulumi.Input[Sequence[pulumi.Input['BuildSpecParametersArgs']]]] = None,
-                 resources: Optional[pulumi.Input['BuildSpecResourcesArgs']] = None):
+                 parameters: Optional[pulumi.Input[Sequence[pulumi.Input['BuildRunStatusBuildSpecParametersArgs']]]] = None,
+                 runtime: Optional[pulumi.Input['BuildRunStatusBuildSpecRuntimeArgs']] = None,
+                 timeout: Optional[pulumi.Input[str]] = None):
         """
-        BuildSpec defines the desired state of Build
-        :param pulumi.Input['BuildSpecOutputArgs'] output: Output refers to the location where the generated image would be pushed to.
-        :param pulumi.Input['BuildSpecSourceArgs'] source: Source refers to the Git repository containing the source code to be built.
-        :param pulumi.Input['BuildSpecStrategyArgs'] strategy: StrategyRef refers to the BuildStrategy to be used to build the container image. There are namespaced scope and cluster scope BuildStrategy
-        :param pulumi.Input['BuildSpecBuilderArgs'] builder: BuilderImage refers to the image containing the build tools inside which the source code would be built.
+        BuildSpec is the Build Spec of this BuildRun.
+        :param pulumi.Input['BuildRunStatusBuildSpecOutputArgs'] output: Output refers to the location where the generated image would be pushed to.
+        :param pulumi.Input['BuildRunStatusBuildSpecSourceArgs'] source: Source refers to the Git repository containing the source code to be built.
+        :param pulumi.Input['BuildRunStatusBuildSpecStrategyArgs'] strategy: StrategyRef refers to the BuildStrategy to be used to build the container image. There are namespaced scope and cluster scope BuildStrategy
+        :param pulumi.Input['BuildRunStatusBuildSpecBuilderArgs'] builder: BuilderImage refers to the image containing the build tools inside which the source code would be built.
         :param pulumi.Input[str] dockerfile: Dockerfile is the path to the Dockerfile to be used for build strategies which bank on the Dockerfile for building an image.
-        :param pulumi.Input[Sequence[pulumi.Input['BuildSpecParametersArgs']]] parameters: Parameters contains name-value that could be used to loosely type parameters in the BuildStrategy.
-        :param pulumi.Input['BuildSpecResourcesArgs'] resources: Compute Resources required by the build container. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
+        :param pulumi.Input[Sequence[pulumi.Input['BuildRunStatusBuildSpecParametersArgs']]] parameters: Parameters contains name-value that could be used to loosely type parameters in the BuildStrategy.
+        :param pulumi.Input['BuildRunStatusBuildSpecRuntimeArgs'] runtime: Runtime represents the runtime-image
+        :param pulumi.Input[str] timeout: Timeout defines the maximum run time of a build run.
         """
         pulumi.set(__self__, "output", output)
         pulumi.set(__self__, "source", source)
@@ -387,8 +508,751 @@ class BuildSpecArgs:
             pulumi.set(__self__, "dockerfile", dockerfile)
         if parameters is not None:
             pulumi.set(__self__, "parameters", parameters)
-        if resources is not None:
-            pulumi.set(__self__, "resources", resources)
+        if runtime is not None:
+            pulumi.set(__self__, "runtime", runtime)
+        if timeout is not None:
+            pulumi.set(__self__, "timeout", timeout)
+
+    @property
+    @pulumi.getter
+    def output(self) -> pulumi.Input['BuildRunStatusBuildSpecOutputArgs']:
+        """
+        Output refers to the location where the generated image would be pushed to.
+        """
+        return pulumi.get(self, "output")
+
+    @output.setter
+    def output(self, value: pulumi.Input['BuildRunStatusBuildSpecOutputArgs']):
+        pulumi.set(self, "output", value)
+
+    @property
+    @pulumi.getter
+    def source(self) -> pulumi.Input['BuildRunStatusBuildSpecSourceArgs']:
+        """
+        Source refers to the Git repository containing the source code to be built.
+        """
+        return pulumi.get(self, "source")
+
+    @source.setter
+    def source(self, value: pulumi.Input['BuildRunStatusBuildSpecSourceArgs']):
+        pulumi.set(self, "source", value)
+
+    @property
+    @pulumi.getter
+    def strategy(self) -> pulumi.Input['BuildRunStatusBuildSpecStrategyArgs']:
+        """
+        StrategyRef refers to the BuildStrategy to be used to build the container image. There are namespaced scope and cluster scope BuildStrategy
+        """
+        return pulumi.get(self, "strategy")
+
+    @strategy.setter
+    def strategy(self, value: pulumi.Input['BuildRunStatusBuildSpecStrategyArgs']):
+        pulumi.set(self, "strategy", value)
+
+    @property
+    @pulumi.getter
+    def builder(self) -> Optional[pulumi.Input['BuildRunStatusBuildSpecBuilderArgs']]:
+        """
+        BuilderImage refers to the image containing the build tools inside which the source code would be built.
+        """
+        return pulumi.get(self, "builder")
+
+    @builder.setter
+    def builder(self, value: Optional[pulumi.Input['BuildRunStatusBuildSpecBuilderArgs']]):
+        pulumi.set(self, "builder", value)
+
+    @property
+    @pulumi.getter
+    def dockerfile(self) -> Optional[pulumi.Input[str]]:
+        """
+        Dockerfile is the path to the Dockerfile to be used for build strategies which bank on the Dockerfile for building an image.
+        """
+        return pulumi.get(self, "dockerfile")
+
+    @dockerfile.setter
+    def dockerfile(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "dockerfile", value)
+
+    @property
+    @pulumi.getter
+    def parameters(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['BuildRunStatusBuildSpecParametersArgs']]]]:
+        """
+        Parameters contains name-value that could be used to loosely type parameters in the BuildStrategy.
+        """
+        return pulumi.get(self, "parameters")
+
+    @parameters.setter
+    def parameters(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['BuildRunStatusBuildSpecParametersArgs']]]]):
+        pulumi.set(self, "parameters", value)
+
+    @property
+    @pulumi.getter
+    def runtime(self) -> Optional[pulumi.Input['BuildRunStatusBuildSpecRuntimeArgs']]:
+        """
+        Runtime represents the runtime-image
+        """
+        return pulumi.get(self, "runtime")
+
+    @runtime.setter
+    def runtime(self, value: Optional[pulumi.Input['BuildRunStatusBuildSpecRuntimeArgs']]):
+        pulumi.set(self, "runtime", value)
+
+    @property
+    @pulumi.getter
+    def timeout(self) -> Optional[pulumi.Input[str]]:
+        """
+        Timeout defines the maximum run time of a build run.
+        """
+        return pulumi.get(self, "timeout")
+
+    @timeout.setter
+    def timeout(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "timeout", value)
+
+
+@pulumi.input_type
+class BuildRunStatusBuildSpecBuilderArgs:
+    def __init__(__self__, *,
+                 image: pulumi.Input[str],
+                 credentials: Optional[pulumi.Input['BuildRunStatusBuildSpecBuilderCredentialsArgs']] = None):
+        """
+        BuilderImage refers to the image containing the build tools inside which the source code would be built.
+        :param pulumi.Input[str] image: ImageURL is the URL where the image will be pushed to.
+        :param pulumi.Input['BuildRunStatusBuildSpecBuilderCredentialsArgs'] credentials: SecretRef is a reference to the Secret containing the credentials to push the image to the registry
+        """
+        pulumi.set(__self__, "image", image)
+        if credentials is not None:
+            pulumi.set(__self__, "credentials", credentials)
+
+    @property
+    @pulumi.getter
+    def image(self) -> pulumi.Input[str]:
+        """
+        ImageURL is the URL where the image will be pushed to.
+        """
+        return pulumi.get(self, "image")
+
+    @image.setter
+    def image(self, value: pulumi.Input[str]):
+        pulumi.set(self, "image", value)
+
+    @property
+    @pulumi.getter
+    def credentials(self) -> Optional[pulumi.Input['BuildRunStatusBuildSpecBuilderCredentialsArgs']]:
+        """
+        SecretRef is a reference to the Secret containing the credentials to push the image to the registry
+        """
+        return pulumi.get(self, "credentials")
+
+    @credentials.setter
+    def credentials(self, value: Optional[pulumi.Input['BuildRunStatusBuildSpecBuilderCredentialsArgs']]):
+        pulumi.set(self, "credentials", value)
+
+
+@pulumi.input_type
+class BuildRunStatusBuildSpecBuilderCredentialsArgs:
+    def __init__(__self__, *,
+                 name: Optional[pulumi.Input[str]] = None):
+        """
+        SecretRef is a reference to the Secret containing the credentials to push the image to the registry
+        :param pulumi.Input[str] name: Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+        """
+        if name is not None:
+            pulumi.set(__self__, "name", name)
+
+    @property
+    @pulumi.getter
+    def name(self) -> Optional[pulumi.Input[str]]:
+        """
+        Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+        """
+        return pulumi.get(self, "name")
+
+    @name.setter
+    def name(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "name", value)
+
+
+@pulumi.input_type
+class BuildRunStatusBuildSpecOutputArgs:
+    def __init__(__self__, *,
+                 image: pulumi.Input[str],
+                 credentials: Optional[pulumi.Input['BuildRunStatusBuildSpecOutputCredentialsArgs']] = None):
+        """
+        Output refers to the location where the generated image would be pushed to.
+        :param pulumi.Input[str] image: ImageURL is the URL where the image will be pushed to.
+        :param pulumi.Input['BuildRunStatusBuildSpecOutputCredentialsArgs'] credentials: SecretRef is a reference to the Secret containing the credentials to push the image to the registry
+        """
+        pulumi.set(__self__, "image", image)
+        if credentials is not None:
+            pulumi.set(__self__, "credentials", credentials)
+
+    @property
+    @pulumi.getter
+    def image(self) -> pulumi.Input[str]:
+        """
+        ImageURL is the URL where the image will be pushed to.
+        """
+        return pulumi.get(self, "image")
+
+    @image.setter
+    def image(self, value: pulumi.Input[str]):
+        pulumi.set(self, "image", value)
+
+    @property
+    @pulumi.getter
+    def credentials(self) -> Optional[pulumi.Input['BuildRunStatusBuildSpecOutputCredentialsArgs']]:
+        """
+        SecretRef is a reference to the Secret containing the credentials to push the image to the registry
+        """
+        return pulumi.get(self, "credentials")
+
+    @credentials.setter
+    def credentials(self, value: Optional[pulumi.Input['BuildRunStatusBuildSpecOutputCredentialsArgs']]):
+        pulumi.set(self, "credentials", value)
+
+
+@pulumi.input_type
+class BuildRunStatusBuildSpecOutputCredentialsArgs:
+    def __init__(__self__, *,
+                 name: Optional[pulumi.Input[str]] = None):
+        """
+        SecretRef is a reference to the Secret containing the credentials to push the image to the registry
+        :param pulumi.Input[str] name: Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+        """
+        if name is not None:
+            pulumi.set(__self__, "name", name)
+
+    @property
+    @pulumi.getter
+    def name(self) -> Optional[pulumi.Input[str]]:
+        """
+        Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+        """
+        return pulumi.get(self, "name")
+
+    @name.setter
+    def name(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "name", value)
+
+
+@pulumi.input_type
+class BuildRunStatusBuildSpecParametersArgs:
+    def __init__(__self__, *,
+                 name: pulumi.Input[str],
+                 value: pulumi.Input[str]):
+        """
+        Parameter defines the data structure that would be used for expressing arbitrary key/value pairs for the execution of a build
+        """
+        pulumi.set(__self__, "name", name)
+        pulumi.set(__self__, "value", value)
+
+    @property
+    @pulumi.getter
+    def name(self) -> pulumi.Input[str]:
+        return pulumi.get(self, "name")
+
+    @name.setter
+    def name(self, value: pulumi.Input[str]):
+        pulumi.set(self, "name", value)
+
+    @property
+    @pulumi.getter
+    def value(self) -> pulumi.Input[str]:
+        return pulumi.get(self, "value")
+
+    @value.setter
+    def value(self, value: pulumi.Input[str]):
+        pulumi.set(self, "value", value)
+
+
+@pulumi.input_type
+class BuildRunStatusBuildSpecRuntimeArgs:
+    def __init__(__self__, *,
+                 base: Optional[pulumi.Input['BuildRunStatusBuildSpecRuntimeBaseArgs']] = None,
+                 entrypoint: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
+                 env: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
+                 labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
+                 paths: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
+                 run: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
+                 user: Optional[pulumi.Input['BuildRunStatusBuildSpecRuntimeUserArgs']] = None,
+                 work_dir: Optional[pulumi.Input[str]] = None):
+        """
+        Runtime represents the runtime-image
+        :param pulumi.Input['BuildRunStatusBuildSpecRuntimeBaseArgs'] base: Base runtime base image.
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] entrypoint: Entrypoint runtime-image entrypoint.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] env: Env environment variables for runtime.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] labels: Labels map of additional labels to be applied on image.
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] paths: Paths list of directories/files to be copied into runtime-image, using colon ":" to split up source and destination paths.
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] run: Run arbitrary commands to run before copying data into runtime-image.
+        :param pulumi.Input['BuildRunStatusBuildSpecRuntimeUserArgs'] user: User definitions of user and group for runtime-image.
+        :param pulumi.Input[str] work_dir: WorkDir runtime image working directory `WORKDIR`.
+        """
+        if base is not None:
+            pulumi.set(__self__, "base", base)
+        if entrypoint is not None:
+            pulumi.set(__self__, "entrypoint", entrypoint)
+        if env is not None:
+            pulumi.set(__self__, "env", env)
+        if labels is not None:
+            pulumi.set(__self__, "labels", labels)
+        if paths is not None:
+            pulumi.set(__self__, "paths", paths)
+        if run is not None:
+            pulumi.set(__self__, "run", run)
+        if user is not None:
+            pulumi.set(__self__, "user", user)
+        if work_dir is not None:
+            pulumi.set(__self__, "work_dir", work_dir)
+
+    @property
+    @pulumi.getter
+    def base(self) -> Optional[pulumi.Input['BuildRunStatusBuildSpecRuntimeBaseArgs']]:
+        """
+        Base runtime base image.
+        """
+        return pulumi.get(self, "base")
+
+    @base.setter
+    def base(self, value: Optional[pulumi.Input['BuildRunStatusBuildSpecRuntimeBaseArgs']]):
+        pulumi.set(self, "base", value)
+
+    @property
+    @pulumi.getter
+    def entrypoint(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
+        """
+        Entrypoint runtime-image entrypoint.
+        """
+        return pulumi.get(self, "entrypoint")
+
+    @entrypoint.setter
+    def entrypoint(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]):
+        pulumi.set(self, "entrypoint", value)
+
+    @property
+    @pulumi.getter
+    def env(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+        """
+        Env environment variables for runtime.
+        """
+        return pulumi.get(self, "env")
+
+    @env.setter
+    def env(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
+        pulumi.set(self, "env", value)
+
+    @property
+    @pulumi.getter
+    def labels(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+        """
+        Labels map of additional labels to be applied on image.
+        """
+        return pulumi.get(self, "labels")
+
+    @labels.setter
+    def labels(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
+        pulumi.set(self, "labels", value)
+
+    @property
+    @pulumi.getter
+    def paths(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
+        """
+        Paths list of directories/files to be copied into runtime-image, using colon ":" to split up source and destination paths.
+        """
+        return pulumi.get(self, "paths")
+
+    @paths.setter
+    def paths(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]):
+        pulumi.set(self, "paths", value)
+
+    @property
+    @pulumi.getter
+    def run(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
+        """
+        Run arbitrary commands to run before copying data into runtime-image.
+        """
+        return pulumi.get(self, "run")
+
+    @run.setter
+    def run(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]):
+        pulumi.set(self, "run", value)
+
+    @property
+    @pulumi.getter
+    def user(self) -> Optional[pulumi.Input['BuildRunStatusBuildSpecRuntimeUserArgs']]:
+        """
+        User definitions of user and group for runtime-image.
+        """
+        return pulumi.get(self, "user")
+
+    @user.setter
+    def user(self, value: Optional[pulumi.Input['BuildRunStatusBuildSpecRuntimeUserArgs']]):
+        pulumi.set(self, "user", value)
+
+    @property
+    @pulumi.getter(name="workDir")
+    def work_dir(self) -> Optional[pulumi.Input[str]]:
+        """
+        WorkDir runtime image working directory `WORKDIR`.
+        """
+        return pulumi.get(self, "work_dir")
+
+    @work_dir.setter
+    def work_dir(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "work_dir", value)
+
+
+@pulumi.input_type
+class BuildRunStatusBuildSpecRuntimeBaseArgs:
+    def __init__(__self__, *,
+                 image: pulumi.Input[str],
+                 credentials: Optional[pulumi.Input['BuildRunStatusBuildSpecRuntimeBaseCredentialsArgs']] = None):
+        """
+        Base runtime base image.
+        :param pulumi.Input[str] image: ImageURL is the URL where the image will be pushed to.
+        :param pulumi.Input['BuildRunStatusBuildSpecRuntimeBaseCredentialsArgs'] credentials: SecretRef is a reference to the Secret containing the credentials to push the image to the registry
+        """
+        pulumi.set(__self__, "image", image)
+        if credentials is not None:
+            pulumi.set(__self__, "credentials", credentials)
+
+    @property
+    @pulumi.getter
+    def image(self) -> pulumi.Input[str]:
+        """
+        ImageURL is the URL where the image will be pushed to.
+        """
+        return pulumi.get(self, "image")
+
+    @image.setter
+    def image(self, value: pulumi.Input[str]):
+        pulumi.set(self, "image", value)
+
+    @property
+    @pulumi.getter
+    def credentials(self) -> Optional[pulumi.Input['BuildRunStatusBuildSpecRuntimeBaseCredentialsArgs']]:
+        """
+        SecretRef is a reference to the Secret containing the credentials to push the image to the registry
+        """
+        return pulumi.get(self, "credentials")
+
+    @credentials.setter
+    def credentials(self, value: Optional[pulumi.Input['BuildRunStatusBuildSpecRuntimeBaseCredentialsArgs']]):
+        pulumi.set(self, "credentials", value)
+
+
+@pulumi.input_type
+class BuildRunStatusBuildSpecRuntimeBaseCredentialsArgs:
+    def __init__(__self__, *,
+                 name: Optional[pulumi.Input[str]] = None):
+        """
+        SecretRef is a reference to the Secret containing the credentials to push the image to the registry
+        :param pulumi.Input[str] name: Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+        """
+        if name is not None:
+            pulumi.set(__self__, "name", name)
+
+    @property
+    @pulumi.getter
+    def name(self) -> Optional[pulumi.Input[str]]:
+        """
+        Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+        """
+        return pulumi.get(self, "name")
+
+    @name.setter
+    def name(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "name", value)
+
+
+@pulumi.input_type
+class BuildRunStatusBuildSpecRuntimeUserArgs:
+    def __init__(__self__, *,
+                 name: pulumi.Input[str],
+                 group: Optional[pulumi.Input[str]] = None):
+        """
+        User definitions of user and group for runtime-image.
+        :param pulumi.Input[str] name: Name user name to be employed in runtime-image.
+        :param pulumi.Input[str] group: Group group name or GID employed in runtime-image.
+        """
+        pulumi.set(__self__, "name", name)
+        if group is not None:
+            pulumi.set(__self__, "group", group)
+
+    @property
+    @pulumi.getter
+    def name(self) -> pulumi.Input[str]:
+        """
+        Name user name to be employed in runtime-image.
+        """
+        return pulumi.get(self, "name")
+
+    @name.setter
+    def name(self, value: pulumi.Input[str]):
+        pulumi.set(self, "name", value)
+
+    @property
+    @pulumi.getter
+    def group(self) -> Optional[pulumi.Input[str]]:
+        """
+        Group group name or GID employed in runtime-image.
+        """
+        return pulumi.get(self, "group")
+
+    @group.setter
+    def group(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "group", value)
+
+
+@pulumi.input_type
+class BuildRunStatusBuildSpecSourceArgs:
+    def __init__(__self__, *,
+                 url: pulumi.Input[str],
+                 context_dir: Optional[pulumi.Input[str]] = None,
+                 credentials: Optional[pulumi.Input['BuildRunStatusBuildSpecSourceCredentialsArgs']] = None,
+                 flavor: Optional[pulumi.Input[str]] = None,
+                 http_proxy: Optional[pulumi.Input[str]] = None,
+                 https_proxy: Optional[pulumi.Input[str]] = None,
+                 no_proxy: Optional[pulumi.Input[str]] = None,
+                 revision: Optional[pulumi.Input[str]] = None):
+        """
+        Source refers to the Git repository containing the source code to be built.
+        :param pulumi.Input[str] url: URL of the git repo
+        :param pulumi.Input[str] context_dir: ContextDir is a path to subfolder in the repo. Optional.
+        :param pulumi.Input['BuildRunStatusBuildSpecSourceCredentialsArgs'] credentials: SecretRef refers to the secret that contains credentials to access the git repo. Optional.
+        :param pulumi.Input[str] flavor: Flavor of the git provider like github, gitlab, bitbucket, generic, etc. Optional.
+        :param pulumi.Input[str] http_proxy: HTTPProxy is optional.
+        :param pulumi.Input[str] https_proxy: HTTPSProxy is optional.
+        :param pulumi.Input[str] no_proxy: NoProxy can be used to specify domains for which no proxying should be performed. Optional.
+        :param pulumi.Input[str] revision: Ref is a git reference. Optional. "master" is used by default.
+        """
+        pulumi.set(__self__, "url", url)
+        if context_dir is not None:
+            pulumi.set(__self__, "context_dir", context_dir)
+        if credentials is not None:
+            pulumi.set(__self__, "credentials", credentials)
+        if flavor is not None:
+            pulumi.set(__self__, "flavor", flavor)
+        if http_proxy is not None:
+            pulumi.set(__self__, "http_proxy", http_proxy)
+        if https_proxy is not None:
+            pulumi.set(__self__, "https_proxy", https_proxy)
+        if no_proxy is not None:
+            pulumi.set(__self__, "no_proxy", no_proxy)
+        if revision is not None:
+            pulumi.set(__self__, "revision", revision)
+
+    @property
+    @pulumi.getter
+    def url(self) -> pulumi.Input[str]:
+        """
+        URL of the git repo
+        """
+        return pulumi.get(self, "url")
+
+    @url.setter
+    def url(self, value: pulumi.Input[str]):
+        pulumi.set(self, "url", value)
+
+    @property
+    @pulumi.getter(name="contextDir")
+    def context_dir(self) -> Optional[pulumi.Input[str]]:
+        """
+        ContextDir is a path to subfolder in the repo. Optional.
+        """
+        return pulumi.get(self, "context_dir")
+
+    @context_dir.setter
+    def context_dir(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "context_dir", value)
+
+    @property
+    @pulumi.getter
+    def credentials(self) -> Optional[pulumi.Input['BuildRunStatusBuildSpecSourceCredentialsArgs']]:
+        """
+        SecretRef refers to the secret that contains credentials to access the git repo. Optional.
+        """
+        return pulumi.get(self, "credentials")
+
+    @credentials.setter
+    def credentials(self, value: Optional[pulumi.Input['BuildRunStatusBuildSpecSourceCredentialsArgs']]):
+        pulumi.set(self, "credentials", value)
+
+    @property
+    @pulumi.getter
+    def flavor(self) -> Optional[pulumi.Input[str]]:
+        """
+        Flavor of the git provider like github, gitlab, bitbucket, generic, etc. Optional.
+        """
+        return pulumi.get(self, "flavor")
+
+    @flavor.setter
+    def flavor(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "flavor", value)
+
+    @property
+    @pulumi.getter(name="httpProxy")
+    def http_proxy(self) -> Optional[pulumi.Input[str]]:
+        """
+        HTTPProxy is optional.
+        """
+        return pulumi.get(self, "http_proxy")
+
+    @http_proxy.setter
+    def http_proxy(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "http_proxy", value)
+
+    @property
+    @pulumi.getter(name="httpsProxy")
+    def https_proxy(self) -> Optional[pulumi.Input[str]]:
+        """
+        HTTPSProxy is optional.
+        """
+        return pulumi.get(self, "https_proxy")
+
+    @https_proxy.setter
+    def https_proxy(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "https_proxy", value)
+
+    @property
+    @pulumi.getter(name="noProxy")
+    def no_proxy(self) -> Optional[pulumi.Input[str]]:
+        """
+        NoProxy can be used to specify domains for which no proxying should be performed. Optional.
+        """
+        return pulumi.get(self, "no_proxy")
+
+    @no_proxy.setter
+    def no_proxy(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "no_proxy", value)
+
+    @property
+    @pulumi.getter
+    def revision(self) -> Optional[pulumi.Input[str]]:
+        """
+        Ref is a git reference. Optional. "master" is used by default.
+        """
+        return pulumi.get(self, "revision")
+
+    @revision.setter
+    def revision(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "revision", value)
+
+
+@pulumi.input_type
+class BuildRunStatusBuildSpecSourceCredentialsArgs:
+    def __init__(__self__, *,
+                 name: Optional[pulumi.Input[str]] = None):
+        """
+        SecretRef refers to the secret that contains credentials to access the git repo. Optional.
+        :param pulumi.Input[str] name: Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+        """
+        if name is not None:
+            pulumi.set(__self__, "name", name)
+
+    @property
+    @pulumi.getter
+    def name(self) -> Optional[pulumi.Input[str]]:
+        """
+        Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+        """
+        return pulumi.get(self, "name")
+
+    @name.setter
+    def name(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "name", value)
+
+
+@pulumi.input_type
+class BuildRunStatusBuildSpecStrategyArgs:
+    def __init__(__self__, *,
+                 name: pulumi.Input[str],
+                 api_version: Optional[pulumi.Input[str]] = None,
+                 kind: Optional[pulumi.Input[str]] = None):
+        """
+        StrategyRef refers to the BuildStrategy to be used to build the container image. There are namespaced scope and cluster scope BuildStrategy
+        :param pulumi.Input[str] name: Name of the referent; More info: http://kubernetes.io/docs/user-guide/identifiers#names
+        :param pulumi.Input[str] api_version: API version of the referent
+        :param pulumi.Input[str] kind: BuildStrategyKind indicates the kind of the buildstrategy, namespaced or cluster scoped.
+        """
+        pulumi.set(__self__, "name", name)
+        if api_version is not None:
+            pulumi.set(__self__, "api_version", api_version)
+        if kind is not None:
+            pulumi.set(__self__, "kind", kind)
+
+    @property
+    @pulumi.getter
+    def name(self) -> pulumi.Input[str]:
+        """
+        Name of the referent; More info: http://kubernetes.io/docs/user-guide/identifiers#names
+        """
+        return pulumi.get(self, "name")
+
+    @name.setter
+    def name(self, value: pulumi.Input[str]):
+        pulumi.set(self, "name", value)
+
+    @property
+    @pulumi.getter(name="apiVersion")
+    def api_version(self) -> Optional[pulumi.Input[str]]:
+        """
+        API version of the referent
+        """
+        return pulumi.get(self, "api_version")
+
+    @api_version.setter
+    def api_version(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "api_version", value)
+
+    @property
+    @pulumi.getter
+    def kind(self) -> Optional[pulumi.Input[str]]:
+        """
+        BuildStrategyKind indicates the kind of the buildstrategy, namespaced or cluster scoped.
+        """
+        return pulumi.get(self, "kind")
+
+    @kind.setter
+    def kind(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "kind", value)
+
+
+@pulumi.input_type
+class BuildSpecArgs:
+    def __init__(__self__, *,
+                 output: pulumi.Input['BuildSpecOutputArgs'],
+                 source: pulumi.Input['BuildSpecSourceArgs'],
+                 strategy: pulumi.Input['BuildSpecStrategyArgs'],
+                 builder: Optional[pulumi.Input['BuildSpecBuilderArgs']] = None,
+                 dockerfile: Optional[pulumi.Input[str]] = None,
+                 parameters: Optional[pulumi.Input[Sequence[pulumi.Input['BuildSpecParametersArgs']]]] = None,
+                 runtime: Optional[pulumi.Input['BuildSpecRuntimeArgs']] = None,
+                 timeout: Optional[pulumi.Input[str]] = None):
+        """
+        BuildSpec defines the desired state of Build
+        :param pulumi.Input['BuildSpecOutputArgs'] output: Output refers to the location where the generated image would be pushed to.
+        :param pulumi.Input['BuildSpecSourceArgs'] source: Source refers to the Git repository containing the source code to be built.
+        :param pulumi.Input['BuildSpecStrategyArgs'] strategy: StrategyRef refers to the BuildStrategy to be used to build the container image. There are namespaced scope and cluster scope BuildStrategy
+        :param pulumi.Input['BuildSpecBuilderArgs'] builder: BuilderImage refers to the image containing the build tools inside which the source code would be built.
+        :param pulumi.Input[str] dockerfile: Dockerfile is the path to the Dockerfile to be used for build strategies which bank on the Dockerfile for building an image.
+        :param pulumi.Input[Sequence[pulumi.Input['BuildSpecParametersArgs']]] parameters: Parameters contains name-value that could be used to loosely type parameters in the BuildStrategy.
+        :param pulumi.Input['BuildSpecRuntimeArgs'] runtime: Runtime represents the runtime-image
+        :param pulumi.Input[str] timeout: Timeout defines the maximum run time of a build run.
+        """
+        pulumi.set(__self__, "output", output)
+        pulumi.set(__self__, "source", source)
+        pulumi.set(__self__, "strategy", strategy)
+        if builder is not None:
+            pulumi.set(__self__, "builder", builder)
+        if dockerfile is not None:
+            pulumi.set(__self__, "dockerfile", dockerfile)
+        if parameters is not None:
+            pulumi.set(__self__, "parameters", parameters)
+        if runtime is not None:
+            pulumi.set(__self__, "runtime", runtime)
+        if timeout is not None:
+            pulumi.set(__self__, "timeout", timeout)
 
     @property
     @pulumi.getter
@@ -464,15 +1328,27 @@ class BuildSpecArgs:
 
     @property
     @pulumi.getter
-    def resources(self) -> Optional[pulumi.Input['BuildSpecResourcesArgs']]:
+    def runtime(self) -> Optional[pulumi.Input['BuildSpecRuntimeArgs']]:
         """
-        Compute Resources required by the build container. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
+        Runtime represents the runtime-image
         """
-        return pulumi.get(self, "resources")
+        return pulumi.get(self, "runtime")
 
-    @resources.setter
-    def resources(self, value: Optional[pulumi.Input['BuildSpecResourcesArgs']]):
-        pulumi.set(self, "resources", value)
+    @runtime.setter
+    def runtime(self, value: Optional[pulumi.Input['BuildSpecRuntimeArgs']]):
+        pulumi.set(self, "runtime", value)
+
+    @property
+    @pulumi.getter
+    def timeout(self) -> Optional[pulumi.Input[str]]:
+        """
+        Timeout defines the maximum run time of a build run.
+        """
+        return pulumi.get(self, "timeout")
+
+    @timeout.setter
+    def timeout(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "timeout", value)
 
 
 @pulumi.input_type
@@ -632,43 +1508,241 @@ class BuildSpecParametersArgs:
 
 
 @pulumi.input_type
-class BuildSpecResourcesArgs:
+class BuildSpecRuntimeArgs:
     def __init__(__self__, *,
-                 limits: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-                 requests: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None):
+                 base: Optional[pulumi.Input['BuildSpecRuntimeBaseArgs']] = None,
+                 entrypoint: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
+                 env: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
+                 labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
+                 paths: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
+                 run: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
+                 user: Optional[pulumi.Input['BuildSpecRuntimeUserArgs']] = None,
+                 work_dir: Optional[pulumi.Input[str]] = None):
         """
-        Compute Resources required by the build container. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] limits: Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] requests: Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
+        Runtime represents the runtime-image
+        :param pulumi.Input['BuildSpecRuntimeBaseArgs'] base: Base runtime base image.
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] entrypoint: Entrypoint runtime-image entrypoint.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] env: Env environment variables for runtime.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] labels: Labels map of additional labels to be applied on image.
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] paths: Paths list of directories/files to be copied into runtime-image, using colon ":" to split up source and destination paths.
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] run: Run arbitrary commands to run before copying data into runtime-image.
+        :param pulumi.Input['BuildSpecRuntimeUserArgs'] user: User definitions of user and group for runtime-image.
+        :param pulumi.Input[str] work_dir: WorkDir runtime image working directory `WORKDIR`.
         """
-        if limits is not None:
-            pulumi.set(__self__, "limits", limits)
-        if requests is not None:
-            pulumi.set(__self__, "requests", requests)
+        if base is not None:
+            pulumi.set(__self__, "base", base)
+        if entrypoint is not None:
+            pulumi.set(__self__, "entrypoint", entrypoint)
+        if env is not None:
+            pulumi.set(__self__, "env", env)
+        if labels is not None:
+            pulumi.set(__self__, "labels", labels)
+        if paths is not None:
+            pulumi.set(__self__, "paths", paths)
+        if run is not None:
+            pulumi.set(__self__, "run", run)
+        if user is not None:
+            pulumi.set(__self__, "user", user)
+        if work_dir is not None:
+            pulumi.set(__self__, "work_dir", work_dir)
 
     @property
     @pulumi.getter
-    def limits(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+    def base(self) -> Optional[pulumi.Input['BuildSpecRuntimeBaseArgs']]:
         """
-        Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
+        Base runtime base image.
         """
-        return pulumi.get(self, "limits")
+        return pulumi.get(self, "base")
 
-    @limits.setter
-    def limits(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
-        pulumi.set(self, "limits", value)
+    @base.setter
+    def base(self, value: Optional[pulumi.Input['BuildSpecRuntimeBaseArgs']]):
+        pulumi.set(self, "base", value)
 
     @property
     @pulumi.getter
-    def requests(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+    def entrypoint(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
         """
-        Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
+        Entrypoint runtime-image entrypoint.
         """
-        return pulumi.get(self, "requests")
+        return pulumi.get(self, "entrypoint")
 
-    @requests.setter
-    def requests(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
-        pulumi.set(self, "requests", value)
+    @entrypoint.setter
+    def entrypoint(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]):
+        pulumi.set(self, "entrypoint", value)
+
+    @property
+    @pulumi.getter
+    def env(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+        """
+        Env environment variables for runtime.
+        """
+        return pulumi.get(self, "env")
+
+    @env.setter
+    def env(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
+        pulumi.set(self, "env", value)
+
+    @property
+    @pulumi.getter
+    def labels(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+        """
+        Labels map of additional labels to be applied on image.
+        """
+        return pulumi.get(self, "labels")
+
+    @labels.setter
+    def labels(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
+        pulumi.set(self, "labels", value)
+
+    @property
+    @pulumi.getter
+    def paths(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
+        """
+        Paths list of directories/files to be copied into runtime-image, using colon ":" to split up source and destination paths.
+        """
+        return pulumi.get(self, "paths")
+
+    @paths.setter
+    def paths(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]):
+        pulumi.set(self, "paths", value)
+
+    @property
+    @pulumi.getter
+    def run(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
+        """
+        Run arbitrary commands to run before copying data into runtime-image.
+        """
+        return pulumi.get(self, "run")
+
+    @run.setter
+    def run(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]):
+        pulumi.set(self, "run", value)
+
+    @property
+    @pulumi.getter
+    def user(self) -> Optional[pulumi.Input['BuildSpecRuntimeUserArgs']]:
+        """
+        User definitions of user and group for runtime-image.
+        """
+        return pulumi.get(self, "user")
+
+    @user.setter
+    def user(self, value: Optional[pulumi.Input['BuildSpecRuntimeUserArgs']]):
+        pulumi.set(self, "user", value)
+
+    @property
+    @pulumi.getter(name="workDir")
+    def work_dir(self) -> Optional[pulumi.Input[str]]:
+        """
+        WorkDir runtime image working directory `WORKDIR`.
+        """
+        return pulumi.get(self, "work_dir")
+
+    @work_dir.setter
+    def work_dir(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "work_dir", value)
+
+
+@pulumi.input_type
+class BuildSpecRuntimeBaseArgs:
+    def __init__(__self__, *,
+                 image: pulumi.Input[str],
+                 credentials: Optional[pulumi.Input['BuildSpecRuntimeBaseCredentialsArgs']] = None):
+        """
+        Base runtime base image.
+        :param pulumi.Input[str] image: ImageURL is the URL where the image will be pushed to.
+        :param pulumi.Input['BuildSpecRuntimeBaseCredentialsArgs'] credentials: SecretRef is a reference to the Secret containing the credentials to push the image to the registry
+        """
+        pulumi.set(__self__, "image", image)
+        if credentials is not None:
+            pulumi.set(__self__, "credentials", credentials)
+
+    @property
+    @pulumi.getter
+    def image(self) -> pulumi.Input[str]:
+        """
+        ImageURL is the URL where the image will be pushed to.
+        """
+        return pulumi.get(self, "image")
+
+    @image.setter
+    def image(self, value: pulumi.Input[str]):
+        pulumi.set(self, "image", value)
+
+    @property
+    @pulumi.getter
+    def credentials(self) -> Optional[pulumi.Input['BuildSpecRuntimeBaseCredentialsArgs']]:
+        """
+        SecretRef is a reference to the Secret containing the credentials to push the image to the registry
+        """
+        return pulumi.get(self, "credentials")
+
+    @credentials.setter
+    def credentials(self, value: Optional[pulumi.Input['BuildSpecRuntimeBaseCredentialsArgs']]):
+        pulumi.set(self, "credentials", value)
+
+
+@pulumi.input_type
+class BuildSpecRuntimeBaseCredentialsArgs:
+    def __init__(__self__, *,
+                 name: Optional[pulumi.Input[str]] = None):
+        """
+        SecretRef is a reference to the Secret containing the credentials to push the image to the registry
+        :param pulumi.Input[str] name: Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+        """
+        if name is not None:
+            pulumi.set(__self__, "name", name)
+
+    @property
+    @pulumi.getter
+    def name(self) -> Optional[pulumi.Input[str]]:
+        """
+        Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+        """
+        return pulumi.get(self, "name")
+
+    @name.setter
+    def name(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "name", value)
+
+
+@pulumi.input_type
+class BuildSpecRuntimeUserArgs:
+    def __init__(__self__, *,
+                 name: pulumi.Input[str],
+                 group: Optional[pulumi.Input[str]] = None):
+        """
+        User definitions of user and group for runtime-image.
+        :param pulumi.Input[str] name: Name user name to be employed in runtime-image.
+        :param pulumi.Input[str] group: Group group name or GID employed in runtime-image.
+        """
+        pulumi.set(__self__, "name", name)
+        if group is not None:
+            pulumi.set(__self__, "group", group)
+
+    @property
+    @pulumi.getter
+    def name(self) -> pulumi.Input[str]:
+        """
+        Name user name to be employed in runtime-image.
+        """
+        return pulumi.get(self, "name")
+
+    @name.setter
+    def name(self, value: pulumi.Input[str]):
+        pulumi.set(self, "name", value)
+
+    @property
+    @pulumi.getter
+    def group(self) -> Optional[pulumi.Input[str]]:
+        """
+        Group group name or GID employed in runtime-image.
+        """
+        return pulumi.get(self, "group")
+
+    @group.setter
+    def group(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "group", value)
 
 
 @pulumi.input_type
@@ -883,6 +1957,46 @@ class BuildSpecStrategyArgs:
     @kind.setter
     def kind(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "kind", value)
+
+
+@pulumi.input_type
+class BuildStatusArgs:
+    def __init__(__self__, *,
+                 reason: Optional[pulumi.Input[str]] = None,
+                 registered: Optional[pulumi.Input[str]] = None):
+        """
+        BuildStatus defines the observed state of Build
+        :param pulumi.Input[str] reason: The reason of the registered Build, either an error or succeed message
+        :param pulumi.Input[str] registered: The Register status of the Build
+        """
+        if reason is not None:
+            pulumi.set(__self__, "reason", reason)
+        if registered is not None:
+            pulumi.set(__self__, "registered", registered)
+
+    @property
+    @pulumi.getter
+    def reason(self) -> Optional[pulumi.Input[str]]:
+        """
+        The reason of the registered Build, either an error or succeed message
+        """
+        return pulumi.get(self, "reason")
+
+    @reason.setter
+    def reason(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "reason", value)
+
+    @property
+    @pulumi.getter
+    def registered(self) -> Optional[pulumi.Input[str]]:
+        """
+        The Register status of the Build
+        """
+        return pulumi.get(self, "registered")
+
+    @registered.setter
+    def registered(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "registered", value)
 
 
 @pulumi.input_type
@@ -1465,7 +2579,7 @@ class BuildStrategySpecBuildStepsEnvValueFromArgs:
         """
         Source for the environment variable's value. Cannot be used if value is not empty.
         :param pulumi.Input['BuildStrategySpecBuildStepsEnvValueFromConfigMapKeyRefArgs'] config_map_key_ref: Selects a key of a ConfigMap.
-        :param pulumi.Input['BuildStrategySpecBuildStepsEnvValueFromFieldRefArgs'] field_ref: Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+        :param pulumi.Input['BuildStrategySpecBuildStepsEnvValueFromFieldRefArgs'] field_ref: Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
         :param pulumi.Input['BuildStrategySpecBuildStepsEnvValueFromResourceFieldRefArgs'] resource_field_ref: Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
         :param pulumi.Input['BuildStrategySpecBuildStepsEnvValueFromSecretKeyRefArgs'] secret_key_ref: Selects a key of a secret in the pod's namespace
         """
@@ -1494,7 +2608,7 @@ class BuildStrategySpecBuildStepsEnvValueFromArgs:
     @pulumi.getter(name="fieldRef")
     def field_ref(self) -> Optional[pulumi.Input['BuildStrategySpecBuildStepsEnvValueFromFieldRefArgs']]:
         """
-        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
         """
         return pulumi.get(self, "field_ref")
 
@@ -1588,7 +2702,7 @@ class BuildStrategySpecBuildStepsEnvValueFromFieldRefArgs:
                  field_path: pulumi.Input[str],
                  api_version: Optional[pulumi.Input[str]] = None):
         """
-        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
         :param pulumi.Input[str] field_path: Path of the field to select in the specified API version.
         :param pulumi.Input[str] api_version: Version of the schema the FieldPath is written in terms of, defaults to "v1".
         """
@@ -1626,12 +2740,12 @@ class BuildStrategySpecBuildStepsEnvValueFromResourceFieldRefArgs:
     def __init__(__self__, *,
                  resource: pulumi.Input[str],
                  container_name: Optional[pulumi.Input[str]] = None,
-                 divisor: Optional[pulumi.Input[str]] = None):
+                 divisor: Optional[pulumi.Input['BuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorArgs']] = None):
         """
         Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
         :param pulumi.Input[str] resource: Required: resource to select
         :param pulumi.Input[str] container_name: Container name: required for volumes, optional for env vars
-        :param pulumi.Input[str] divisor: Specifies the output format of the exposed resources, defaults to "1"
+        :param pulumi.Input['BuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorArgs'] divisor: Specifies the output format of the exposed resources, defaults to "1"
         """
         pulumi.set(__self__, "resource", resource)
         if container_name is not None:
@@ -1665,15 +2779,21 @@ class BuildStrategySpecBuildStepsEnvValueFromResourceFieldRefArgs:
 
     @property
     @pulumi.getter
-    def divisor(self) -> Optional[pulumi.Input[str]]:
+    def divisor(self) -> Optional[pulumi.Input['BuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorArgs']]:
         """
         Specifies the output format of the exposed resources, defaults to "1"
         """
         return pulumi.get(self, "divisor")
 
     @divisor.setter
-    def divisor(self, value: Optional[pulumi.Input[str]]):
+    def divisor(self, value: Optional[pulumi.Input['BuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorArgs']]):
         pulumi.set(self, "divisor", value)
+
+
+@pulumi.input_type
+class BuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorArgs:
+    def __init__(__self__):
+        pass
 
 
 @pulumi.input_type
@@ -2642,6 +3762,8 @@ class BuildStrategySpecBuildStepsPortsArgs:
             pulumi.set(__self__, "host_port", host_port)
         if name is not None:
             pulumi.set(__self__, "name", name)
+        if protocol is None:
+            protocol = 'TCP'
         if protocol is not None:
             pulumi.set(__self__, "protocol", protocol)
 
@@ -3045,12 +4167,12 @@ class BuildStrategySpecBuildStepsReadinessProbeTcpSocketPortArgs:
 @pulumi.input_type
 class BuildStrategySpecBuildStepsResourcesArgs:
     def __init__(__self__, *,
-                 limits: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-                 requests: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None):
+                 limits: Optional[pulumi.Input[Mapping[str, pulumi.Input['BuildStrategySpecBuildStepsResourcesLimitsArgs']]]] = None,
+                 requests: Optional[pulumi.Input[Mapping[str, pulumi.Input['BuildStrategySpecBuildStepsResourcesRequestsArgs']]]] = None):
         """
         Compute Resources required by this container. Cannot be updated. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] limits: Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] requests: Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
+        :param pulumi.Input[Mapping[str, pulumi.Input['BuildStrategySpecBuildStepsResourcesLimitsArgs']]] limits: Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
+        :param pulumi.Input[Mapping[str, pulumi.Input['BuildStrategySpecBuildStepsResourcesRequestsArgs']]] requests: Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
         """
         if limits is not None:
             pulumi.set(__self__, "limits", limits)
@@ -3059,27 +4181,39 @@ class BuildStrategySpecBuildStepsResourcesArgs:
 
     @property
     @pulumi.getter
-    def limits(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+    def limits(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input['BuildStrategySpecBuildStepsResourcesLimitsArgs']]]]:
         """
         Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
         """
         return pulumi.get(self, "limits")
 
     @limits.setter
-    def limits(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
+    def limits(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input['BuildStrategySpecBuildStepsResourcesLimitsArgs']]]]):
         pulumi.set(self, "limits", value)
 
     @property
     @pulumi.getter
-    def requests(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+    def requests(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input['BuildStrategySpecBuildStepsResourcesRequestsArgs']]]]:
         """
         Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
         """
         return pulumi.get(self, "requests")
 
     @requests.setter
-    def requests(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
+    def requests(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input['BuildStrategySpecBuildStepsResourcesRequestsArgs']]]]):
         pulumi.set(self, "requests", value)
+
+
+@pulumi.input_type
+class BuildStrategySpecBuildStepsResourcesLimitsArgs:
+    def __init__(__self__):
+        pass
+
+
+@pulumi.input_type
+class BuildStrategySpecBuildStepsResourcesRequestsArgs:
+    def __init__(__self__):
+        pass
 
 
 @pulumi.input_type
@@ -3372,7 +4506,7 @@ class BuildStrategySpecBuildStepsSecurityContextWindowsOptionsArgs:
         The Windows specific settings applied to all containers. If unspecified, the options from the PodSecurityContext will be used. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
         :param pulumi.Input[str] gmsa_credential_spec: GMSACredentialSpec is where the GMSA admission webhook (https://github.com/kubernetes-sigs/windows-gmsa) inlines the contents of the GMSA credential spec named by the GMSACredentialSpecName field. This field is alpha-level and is only honored by servers that enable the WindowsGMSA feature flag.
         :param pulumi.Input[str] gmsa_credential_spec_name: GMSACredentialSpecName is the name of the GMSA credential spec to use. This field is alpha-level and is only honored by servers that enable the WindowsGMSA feature flag.
-        :param pulumi.Input[str] run_as_user_name: The UserName in Windows to run the entrypoint of the container process. Defaults to the user specified in image metadata if unspecified. May also be set in PodSecurityContext. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence. This field is alpha-level and it is only honored by servers that enable the WindowsRunAsUserName feature flag.
+        :param pulumi.Input[str] run_as_user_name: The UserName in Windows to run the entrypoint of the container process. Defaults to the user specified in image metadata if unspecified. May also be set in PodSecurityContext. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence. This field is beta-level and may be disabled with the WindowsRunAsUserName feature flag.
         """
         if gmsa_credential_spec is not None:
             pulumi.set(__self__, "gmsa_credential_spec", gmsa_credential_spec)
@@ -3409,7 +4543,7 @@ class BuildStrategySpecBuildStepsSecurityContextWindowsOptionsArgs:
     @pulumi.getter(name="runAsUserName")
     def run_as_user_name(self) -> Optional[pulumi.Input[str]]:
         """
-        The UserName in Windows to run the entrypoint of the container process. Defaults to the user specified in image metadata if unspecified. May also be set in PodSecurityContext. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence. This field is alpha-level and it is only honored by servers that enable the WindowsRunAsUserName feature flag.
+        The UserName in Windows to run the entrypoint of the container process. Defaults to the user specified in image metadata if unspecified. May also be set in PodSecurityContext. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence. This field is beta-level and may be disabled with the WindowsRunAsUserName feature flag.
         """
         return pulumi.get(self, "run_as_user_name")
 
@@ -3808,7 +4942,7 @@ class BuildStrategySpecBuildStepsVolumeMountsArgs:
         :param pulumi.Input[str] mount_propagation: mountPropagation determines how mounts are propagated from the host to container and the other way around. When not set, MountPropagationNone is used. This field is beta in 1.10.
         :param pulumi.Input[bool] read_only: Mounted read-only if true, read-write otherwise (false or unspecified). Defaults to false.
         :param pulumi.Input[str] sub_path: Path within the volume from which the container's volume should be mounted. Defaults to "" (volume's root).
-        :param pulumi.Input[str] sub_path_expr: Expanded path within the volume from which the container's volume should be mounted. Behaves similarly to SubPath but environment variable references $(VAR_NAME) are expanded using the container's environment. Defaults to "" (volume's root). SubPathExpr and SubPath are mutually exclusive. This field is beta in 1.15.
+        :param pulumi.Input[str] sub_path_expr: Expanded path within the volume from which the container's volume should be mounted. Behaves similarly to SubPath but environment variable references $(VAR_NAME) are expanded using the container's environment. Defaults to "" (volume's root). SubPathExpr and SubPath are mutually exclusive.
         """
         pulumi.set(__self__, "mount_path", mount_path)
         pulumi.set(__self__, "name", name)
@@ -3885,7 +5019,7 @@ class BuildStrategySpecBuildStepsVolumeMountsArgs:
     @pulumi.getter(name="subPathExpr")
     def sub_path_expr(self) -> Optional[pulumi.Input[str]]:
         """
-        Expanded path within the volume from which the container's volume should be mounted. Behaves similarly to SubPath but environment variable references $(VAR_NAME) are expanded using the container's environment. Defaults to "" (volume's root). SubPathExpr and SubPath are mutually exclusive. This field is beta in 1.15.
+        Expanded path within the volume from which the container's volume should be mounted. Behaves similarly to SubPath but environment variable references $(VAR_NAME) are expanded using the container's environment. Defaults to "" (volume's root). SubPathExpr and SubPath are mutually exclusive.
         """
         return pulumi.get(self, "sub_path_expr")
 
@@ -4474,7 +5608,7 @@ class ClusterBuildStrategySpecBuildStepsEnvValueFromArgs:
         """
         Source for the environment variable's value. Cannot be used if value is not empty.
         :param pulumi.Input['ClusterBuildStrategySpecBuildStepsEnvValueFromConfigMapKeyRefArgs'] config_map_key_ref: Selects a key of a ConfigMap.
-        :param pulumi.Input['ClusterBuildStrategySpecBuildStepsEnvValueFromFieldRefArgs'] field_ref: Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+        :param pulumi.Input['ClusterBuildStrategySpecBuildStepsEnvValueFromFieldRefArgs'] field_ref: Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
         :param pulumi.Input['ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefArgs'] resource_field_ref: Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
         :param pulumi.Input['ClusterBuildStrategySpecBuildStepsEnvValueFromSecretKeyRefArgs'] secret_key_ref: Selects a key of a secret in the pod's namespace
         """
@@ -4503,7 +5637,7 @@ class ClusterBuildStrategySpecBuildStepsEnvValueFromArgs:
     @pulumi.getter(name="fieldRef")
     def field_ref(self) -> Optional[pulumi.Input['ClusterBuildStrategySpecBuildStepsEnvValueFromFieldRefArgs']]:
         """
-        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
         """
         return pulumi.get(self, "field_ref")
 
@@ -4597,7 +5731,7 @@ class ClusterBuildStrategySpecBuildStepsEnvValueFromFieldRefArgs:
                  field_path: pulumi.Input[str],
                  api_version: Optional[pulumi.Input[str]] = None):
         """
-        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
         :param pulumi.Input[str] field_path: Path of the field to select in the specified API version.
         :param pulumi.Input[str] api_version: Version of the schema the FieldPath is written in terms of, defaults to "v1".
         """
@@ -4635,12 +5769,12 @@ class ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefArgs:
     def __init__(__self__, *,
                  resource: pulumi.Input[str],
                  container_name: Optional[pulumi.Input[str]] = None,
-                 divisor: Optional[pulumi.Input[str]] = None):
+                 divisor: Optional[pulumi.Input['ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorArgs']] = None):
         """
         Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
         :param pulumi.Input[str] resource: Required: resource to select
         :param pulumi.Input[str] container_name: Container name: required for volumes, optional for env vars
-        :param pulumi.Input[str] divisor: Specifies the output format of the exposed resources, defaults to "1"
+        :param pulumi.Input['ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorArgs'] divisor: Specifies the output format of the exposed resources, defaults to "1"
         """
         pulumi.set(__self__, "resource", resource)
         if container_name is not None:
@@ -4674,15 +5808,21 @@ class ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefArgs:
 
     @property
     @pulumi.getter
-    def divisor(self) -> Optional[pulumi.Input[str]]:
+    def divisor(self) -> Optional[pulumi.Input['ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorArgs']]:
         """
         Specifies the output format of the exposed resources, defaults to "1"
         """
         return pulumi.get(self, "divisor")
 
     @divisor.setter
-    def divisor(self, value: Optional[pulumi.Input[str]]):
+    def divisor(self, value: Optional[pulumi.Input['ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorArgs']]):
         pulumi.set(self, "divisor", value)
+
+
+@pulumi.input_type
+class ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorArgs:
+    def __init__(__self__):
+        pass
 
 
 @pulumi.input_type
@@ -5651,6 +6791,8 @@ class ClusterBuildStrategySpecBuildStepsPortsArgs:
             pulumi.set(__self__, "host_port", host_port)
         if name is not None:
             pulumi.set(__self__, "name", name)
+        if protocol is None:
+            protocol = 'TCP'
         if protocol is not None:
             pulumi.set(__self__, "protocol", protocol)
 
@@ -6054,12 +7196,12 @@ class ClusterBuildStrategySpecBuildStepsReadinessProbeTcpSocketPortArgs:
 @pulumi.input_type
 class ClusterBuildStrategySpecBuildStepsResourcesArgs:
     def __init__(__self__, *,
-                 limits: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-                 requests: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None):
+                 limits: Optional[pulumi.Input[Mapping[str, pulumi.Input['ClusterBuildStrategySpecBuildStepsResourcesLimitsArgs']]]] = None,
+                 requests: Optional[pulumi.Input[Mapping[str, pulumi.Input['ClusterBuildStrategySpecBuildStepsResourcesRequestsArgs']]]] = None):
         """
         Compute Resources required by this container. Cannot be updated. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] limits: Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] requests: Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
+        :param pulumi.Input[Mapping[str, pulumi.Input['ClusterBuildStrategySpecBuildStepsResourcesLimitsArgs']]] limits: Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
+        :param pulumi.Input[Mapping[str, pulumi.Input['ClusterBuildStrategySpecBuildStepsResourcesRequestsArgs']]] requests: Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
         """
         if limits is not None:
             pulumi.set(__self__, "limits", limits)
@@ -6068,27 +7210,39 @@ class ClusterBuildStrategySpecBuildStepsResourcesArgs:
 
     @property
     @pulumi.getter
-    def limits(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+    def limits(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input['ClusterBuildStrategySpecBuildStepsResourcesLimitsArgs']]]]:
         """
         Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
         """
         return pulumi.get(self, "limits")
 
     @limits.setter
-    def limits(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
+    def limits(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input['ClusterBuildStrategySpecBuildStepsResourcesLimitsArgs']]]]):
         pulumi.set(self, "limits", value)
 
     @property
     @pulumi.getter
-    def requests(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+    def requests(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input['ClusterBuildStrategySpecBuildStepsResourcesRequestsArgs']]]]:
         """
         Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
         """
         return pulumi.get(self, "requests")
 
     @requests.setter
-    def requests(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
+    def requests(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input['ClusterBuildStrategySpecBuildStepsResourcesRequestsArgs']]]]):
         pulumi.set(self, "requests", value)
+
+
+@pulumi.input_type
+class ClusterBuildStrategySpecBuildStepsResourcesLimitsArgs:
+    def __init__(__self__):
+        pass
+
+
+@pulumi.input_type
+class ClusterBuildStrategySpecBuildStepsResourcesRequestsArgs:
+    def __init__(__self__):
+        pass
 
 
 @pulumi.input_type
@@ -6381,7 +7535,7 @@ class ClusterBuildStrategySpecBuildStepsSecurityContextWindowsOptionsArgs:
         The Windows specific settings applied to all containers. If unspecified, the options from the PodSecurityContext will be used. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
         :param pulumi.Input[str] gmsa_credential_spec: GMSACredentialSpec is where the GMSA admission webhook (https://github.com/kubernetes-sigs/windows-gmsa) inlines the contents of the GMSA credential spec named by the GMSACredentialSpecName field. This field is alpha-level and is only honored by servers that enable the WindowsGMSA feature flag.
         :param pulumi.Input[str] gmsa_credential_spec_name: GMSACredentialSpecName is the name of the GMSA credential spec to use. This field is alpha-level and is only honored by servers that enable the WindowsGMSA feature flag.
-        :param pulumi.Input[str] run_as_user_name: The UserName in Windows to run the entrypoint of the container process. Defaults to the user specified in image metadata if unspecified. May also be set in PodSecurityContext. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence. This field is alpha-level and it is only honored by servers that enable the WindowsRunAsUserName feature flag.
+        :param pulumi.Input[str] run_as_user_name: The UserName in Windows to run the entrypoint of the container process. Defaults to the user specified in image metadata if unspecified. May also be set in PodSecurityContext. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence. This field is beta-level and may be disabled with the WindowsRunAsUserName feature flag.
         """
         if gmsa_credential_spec is not None:
             pulumi.set(__self__, "gmsa_credential_spec", gmsa_credential_spec)
@@ -6418,7 +7572,7 @@ class ClusterBuildStrategySpecBuildStepsSecurityContextWindowsOptionsArgs:
     @pulumi.getter(name="runAsUserName")
     def run_as_user_name(self) -> Optional[pulumi.Input[str]]:
         """
-        The UserName in Windows to run the entrypoint of the container process. Defaults to the user specified in image metadata if unspecified. May also be set in PodSecurityContext. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence. This field is alpha-level and it is only honored by servers that enable the WindowsRunAsUserName feature flag.
+        The UserName in Windows to run the entrypoint of the container process. Defaults to the user specified in image metadata if unspecified. May also be set in PodSecurityContext. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence. This field is beta-level and may be disabled with the WindowsRunAsUserName feature flag.
         """
         return pulumi.get(self, "run_as_user_name")
 
@@ -6817,7 +7971,7 @@ class ClusterBuildStrategySpecBuildStepsVolumeMountsArgs:
         :param pulumi.Input[str] mount_propagation: mountPropagation determines how mounts are propagated from the host to container and the other way around. When not set, MountPropagationNone is used. This field is beta in 1.10.
         :param pulumi.Input[bool] read_only: Mounted read-only if true, read-write otherwise (false or unspecified). Defaults to false.
         :param pulumi.Input[str] sub_path: Path within the volume from which the container's volume should be mounted. Defaults to "" (volume's root).
-        :param pulumi.Input[str] sub_path_expr: Expanded path within the volume from which the container's volume should be mounted. Behaves similarly to SubPath but environment variable references $(VAR_NAME) are expanded using the container's environment. Defaults to "" (volume's root). SubPathExpr and SubPath are mutually exclusive. This field is beta in 1.15.
+        :param pulumi.Input[str] sub_path_expr: Expanded path within the volume from which the container's volume should be mounted. Behaves similarly to SubPath but environment variable references $(VAR_NAME) are expanded using the container's environment. Defaults to "" (volume's root). SubPathExpr and SubPath are mutually exclusive.
         """
         pulumi.set(__self__, "mount_path", mount_path)
         pulumi.set(__self__, "name", name)
@@ -6894,7 +8048,7 @@ class ClusterBuildStrategySpecBuildStepsVolumeMountsArgs:
     @pulumi.getter(name="subPathExpr")
     def sub_path_expr(self) -> Optional[pulumi.Input[str]]:
         """
-        Expanded path within the volume from which the container's volume should be mounted. Behaves similarly to SubPath but environment variable references $(VAR_NAME) are expanded using the container's environment. Defaults to "" (volume's root). SubPathExpr and SubPath are mutually exclusive. This field is beta in 1.15.
+        Expanded path within the volume from which the container's volume should be mounted. Behaves similarly to SubPath but environment variable references $(VAR_NAME) are expanded using the container's environment. Defaults to "" (volume's root). SubPathExpr and SubPath are mutually exclusive.
         """
         return pulumi.get(self, "sub_path_expr")
 

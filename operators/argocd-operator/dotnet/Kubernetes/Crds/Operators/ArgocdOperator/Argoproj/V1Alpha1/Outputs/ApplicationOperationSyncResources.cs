@@ -16,6 +16,7 @@ namespace Pulumi.Kubernetes.Types.Outputs.Argoproj.V1Alpha1
         public readonly string Group;
         public readonly string Kind;
         public readonly string Name;
+        public readonly string Namespace;
 
         [OutputConstructor]
         private ApplicationOperationSyncResources(
@@ -23,11 +24,14 @@ namespace Pulumi.Kubernetes.Types.Outputs.Argoproj.V1Alpha1
 
             string kind,
 
-            string name)
+            string name,
+
+            string @namespace)
         {
             Group = group;
             Kind = kind;
             Name = name;
+            Namespace = @namespace;
         }
     }
 }

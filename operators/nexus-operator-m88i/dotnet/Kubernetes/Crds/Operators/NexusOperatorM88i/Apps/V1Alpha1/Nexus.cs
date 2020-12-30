@@ -9,9 +9,6 @@ using Pulumi.Serialization;
 
 namespace Pulumi.Pulumi.Kubernetes.Crds.Operators.NexusOperatorM88i.Apps.V1Alpha1
 {
-    /// <summary>
-    /// Nexus custom resource to deploy the Nexus Server
-    /// </summary>
     public partial class Nexus : KubernetesResource
     {
         [Output("apiVersion")]

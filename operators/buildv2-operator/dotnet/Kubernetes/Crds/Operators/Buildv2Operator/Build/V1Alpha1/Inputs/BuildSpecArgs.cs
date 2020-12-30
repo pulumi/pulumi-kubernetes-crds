@@ -46,10 +46,10 @@ namespace Pulumi.Kubernetes.Types.Inputs.Build.V1Alpha1
         }
 
         /// <summary>
-        /// Compute Resources required by the build container. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
+        /// Runtime represents the runtime-image
         /// </summary>
-        [Input("resources")]
-        public Input<Pulumi.Kubernetes.Types.Inputs.Build.V1Alpha1.BuildSpecResourcesArgs>? Resources { get; set; }
+        [Input("runtime")]
+        public Input<Pulumi.Kubernetes.Types.Inputs.Build.V1Alpha1.BuildSpecRuntimeArgs>? Runtime { get; set; }
 
         /// <summary>
         /// Source refers to the Git repository containing the source code to be built.
@@ -62,6 +62,12 @@ namespace Pulumi.Kubernetes.Types.Inputs.Build.V1Alpha1
         /// </summary>
         [Input("strategy", required: true)]
         public Input<Pulumi.Kubernetes.Types.Inputs.Build.V1Alpha1.BuildSpecStrategyArgs> Strategy { get; set; } = null!;
+
+        /// <summary>
+        /// Timeout defines the maximum run time of a build run.
+        /// </summary>
+        [Input("timeout")]
+        public Input<string>? Timeout { get; set; }
 
         public BuildSpecArgs()
         {

@@ -10,6 +10,14 @@ from ... import _utilities, _tables
 from . import outputs
 
 __all__ = [
+    'MigAnalyticSpec',
+    'MigAnalyticStatus',
+    'MigAnalyticStatusAnalytics',
+    'MigAnalyticStatusAnalyticsNamespaces',
+    'MigAnalyticStatusAnalyticsNamespacesExcludedK8SResources',
+    'MigAnalyticStatusAnalyticsNamespacesImages',
+    'MigAnalyticStatusAnalyticsNamespacesIncompatibleK8SResources',
+    'MigAnalyticStatusAnalyticsNamespacesK8sResources',
     'MigClusterSpec',
     'MigClusterSpecStorageClasses',
     'MigClusterStatus',
@@ -33,12 +41,401 @@ __all__ = [
 ]
 
 @pulumi.output_type
+class MigAnalyticSpec(dict):
+    def __init__(__self__, *,
+                 analyze_image_count: bool,
+                 analyze_k8_s_resources: bool,
+                 analyze_pv_capacity: bool,
+                 mig_plan_ref: Mapping[str, Any],
+                 list_images: Optional[bool] = None,
+                 list_images_limit: Optional[int] = None):
+        pulumi.set(__self__, "analyze_image_count", analyze_image_count)
+        pulumi.set(__self__, "analyze_k8_s_resources", analyze_k8_s_resources)
+        pulumi.set(__self__, "analyze_pv_capacity", analyze_pv_capacity)
+        pulumi.set(__self__, "mig_plan_ref", mig_plan_ref)
+        if list_images is not None:
+            pulumi.set(__self__, "list_images", list_images)
+        if list_images_limit is not None:
+            pulumi.set(__self__, "list_images_limit", list_images_limit)
+
+    @property
+    @pulumi.getter(name="analyzeImageCount")
+    def analyze_image_count(self) -> bool:
+        return pulumi.get(self, "analyze_image_count")
+
+    @property
+    @pulumi.getter(name="analyzeK8SResources")
+    def analyze_k8_s_resources(self) -> bool:
+        return pulumi.get(self, "analyze_k8_s_resources")
+
+    @property
+    @pulumi.getter(name="analyzePVCapacity")
+    def analyze_pv_capacity(self) -> bool:
+        return pulumi.get(self, "analyze_pv_capacity")
+
+    @property
+    @pulumi.getter(name="migPlanRef")
+    def mig_plan_ref(self) -> Mapping[str, Any]:
+        return pulumi.get(self, "mig_plan_ref")
+
+    @property
+    @pulumi.getter(name="listImages")
+    def list_images(self) -> Optional[bool]:
+        return pulumi.get(self, "list_images")
+
+    @property
+    @pulumi.getter(name="listImagesLimit")
+    def list_images_limit(self) -> Optional[int]:
+        return pulumi.get(self, "list_images_limit")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class MigAnalyticStatus(dict):
+    def __init__(__self__, *,
+                 analytics: Optional['outputs.MigAnalyticStatusAnalytics'] = None,
+                 observed_generation: Optional[int] = None):
+        if analytics is not None:
+            pulumi.set(__self__, "analytics", analytics)
+        if observed_generation is not None:
+            pulumi.set(__self__, "observed_generation", observed_generation)
+
+    @property
+    @pulumi.getter
+    def analytics(self) -> Optional['outputs.MigAnalyticStatusAnalytics']:
+        return pulumi.get(self, "analytics")
+
+    @property
+    @pulumi.getter(name="observedGeneration")
+    def observed_generation(self) -> Optional[int]:
+        return pulumi.get(self, "observed_generation")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class MigAnalyticStatusAnalytics(dict):
+    def __init__(__self__, *,
+                 excludedk8s_resource_total: int,
+                 image_count: int,
+                 image_size_total: str,
+                 incompatiblek8s_resource_total: int,
+                 k8s_resource_total: int,
+                 percent_complete: int,
+                 plan: str,
+                 pv_capacity: str,
+                 pv_count: int,
+                 namespaces: Optional[Sequence['outputs.MigAnalyticStatusAnalyticsNamespaces']] = None):
+        pulumi.set(__self__, "excludedk8s_resource_total", excludedk8s_resource_total)
+        pulumi.set(__self__, "image_count", image_count)
+        pulumi.set(__self__, "image_size_total", image_size_total)
+        pulumi.set(__self__, "incompatiblek8s_resource_total", incompatiblek8s_resource_total)
+        pulumi.set(__self__, "k8s_resource_total", k8s_resource_total)
+        pulumi.set(__self__, "percent_complete", percent_complete)
+        pulumi.set(__self__, "plan", plan)
+        pulumi.set(__self__, "pv_capacity", pv_capacity)
+        pulumi.set(__self__, "pv_count", pv_count)
+        if namespaces is not None:
+            pulumi.set(__self__, "namespaces", namespaces)
+
+    @property
+    @pulumi.getter(name="excludedk8sResourceTotal")
+    def excludedk8s_resource_total(self) -> int:
+        return pulumi.get(self, "excludedk8s_resource_total")
+
+    @property
+    @pulumi.getter(name="imageCount")
+    def image_count(self) -> int:
+        return pulumi.get(self, "image_count")
+
+    @property
+    @pulumi.getter(name="imageSizeTotal")
+    def image_size_total(self) -> str:
+        return pulumi.get(self, "image_size_total")
+
+    @property
+    @pulumi.getter(name="incompatiblek8sResourceTotal")
+    def incompatiblek8s_resource_total(self) -> int:
+        return pulumi.get(self, "incompatiblek8s_resource_total")
+
+    @property
+    @pulumi.getter(name="k8sResourceTotal")
+    def k8s_resource_total(self) -> int:
+        return pulumi.get(self, "k8s_resource_total")
+
+    @property
+    @pulumi.getter(name="percentComplete")
+    def percent_complete(self) -> int:
+        return pulumi.get(self, "percent_complete")
+
+    @property
+    @pulumi.getter
+    def plan(self) -> str:
+        return pulumi.get(self, "plan")
+
+    @property
+    @pulumi.getter(name="pvCapacity")
+    def pv_capacity(self) -> str:
+        return pulumi.get(self, "pv_capacity")
+
+    @property
+    @pulumi.getter(name="pvCount")
+    def pv_count(self) -> int:
+        return pulumi.get(self, "pv_count")
+
+    @property
+    @pulumi.getter
+    def namespaces(self) -> Optional[Sequence['outputs.MigAnalyticStatusAnalyticsNamespaces']]:
+        return pulumi.get(self, "namespaces")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class MigAnalyticStatusAnalyticsNamespaces(dict):
+    def __init__(__self__, *,
+                 excluded_k8_s_resource_total: int,
+                 image_count: int,
+                 image_size_total: str,
+                 incompatible_k8_s_resource_total: int,
+                 k8s_resource_total: int,
+                 namespace: str,
+                 pv_capacity: str,
+                 pv_count: int,
+                 excluded_k8_s_resources: Optional[Sequence['outputs.MigAnalyticStatusAnalyticsNamespacesExcludedK8SResources']] = None,
+                 images: Optional[Sequence['outputs.MigAnalyticStatusAnalyticsNamespacesImages']] = None,
+                 incompatible_k8_s_resources: Optional[Sequence['outputs.MigAnalyticStatusAnalyticsNamespacesIncompatibleK8SResources']] = None,
+                 k8s_resources: Optional[Sequence['outputs.MigAnalyticStatusAnalyticsNamespacesK8sResources']] = None):
+        pulumi.set(__self__, "excluded_k8_s_resource_total", excluded_k8_s_resource_total)
+        pulumi.set(__self__, "image_count", image_count)
+        pulumi.set(__self__, "image_size_total", image_size_total)
+        pulumi.set(__self__, "incompatible_k8_s_resource_total", incompatible_k8_s_resource_total)
+        pulumi.set(__self__, "k8s_resource_total", k8s_resource_total)
+        pulumi.set(__self__, "namespace", namespace)
+        pulumi.set(__self__, "pv_capacity", pv_capacity)
+        pulumi.set(__self__, "pv_count", pv_count)
+        if excluded_k8_s_resources is not None:
+            pulumi.set(__self__, "excluded_k8_s_resources", excluded_k8_s_resources)
+        if images is not None:
+            pulumi.set(__self__, "images", images)
+        if incompatible_k8_s_resources is not None:
+            pulumi.set(__self__, "incompatible_k8_s_resources", incompatible_k8_s_resources)
+        if k8s_resources is not None:
+            pulumi.set(__self__, "k8s_resources", k8s_resources)
+
+    @property
+    @pulumi.getter(name="excludedK8SResourceTotal")
+    def excluded_k8_s_resource_total(self) -> int:
+        return pulumi.get(self, "excluded_k8_s_resource_total")
+
+    @property
+    @pulumi.getter(name="imageCount")
+    def image_count(self) -> int:
+        return pulumi.get(self, "image_count")
+
+    @property
+    @pulumi.getter(name="imageSizeTotal")
+    def image_size_total(self) -> str:
+        return pulumi.get(self, "image_size_total")
+
+    @property
+    @pulumi.getter(name="incompatibleK8SResourceTotal")
+    def incompatible_k8_s_resource_total(self) -> int:
+        return pulumi.get(self, "incompatible_k8_s_resource_total")
+
+    @property
+    @pulumi.getter(name="k8sResourceTotal")
+    def k8s_resource_total(self) -> int:
+        return pulumi.get(self, "k8s_resource_total")
+
+    @property
+    @pulumi.getter
+    def namespace(self) -> str:
+        return pulumi.get(self, "namespace")
+
+    @property
+    @pulumi.getter(name="pvCapacity")
+    def pv_capacity(self) -> str:
+        return pulumi.get(self, "pv_capacity")
+
+    @property
+    @pulumi.getter(name="pvCount")
+    def pv_count(self) -> int:
+        return pulumi.get(self, "pv_count")
+
+    @property
+    @pulumi.getter(name="excludedK8SResources")
+    def excluded_k8_s_resources(self) -> Optional[Sequence['outputs.MigAnalyticStatusAnalyticsNamespacesExcludedK8SResources']]:
+        return pulumi.get(self, "excluded_k8_s_resources")
+
+    @property
+    @pulumi.getter
+    def images(self) -> Optional[Sequence['outputs.MigAnalyticStatusAnalyticsNamespacesImages']]:
+        return pulumi.get(self, "images")
+
+    @property
+    @pulumi.getter(name="incompatibleK8SResources")
+    def incompatible_k8_s_resources(self) -> Optional[Sequence['outputs.MigAnalyticStatusAnalyticsNamespacesIncompatibleK8SResources']]:
+        return pulumi.get(self, "incompatible_k8_s_resources")
+
+    @property
+    @pulumi.getter(name="k8sResources")
+    def k8s_resources(self) -> Optional[Sequence['outputs.MigAnalyticStatusAnalyticsNamespacesK8sResources']]:
+        return pulumi.get(self, "k8s_resources")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class MigAnalyticStatusAnalyticsNamespacesExcludedK8SResources(dict):
+    def __init__(__self__, *,
+                 count: int,
+                 group: str,
+                 kind: str,
+                 version: str):
+        pulumi.set(__self__, "count", count)
+        pulumi.set(__self__, "group", group)
+        pulumi.set(__self__, "kind", kind)
+        pulumi.set(__self__, "version", version)
+
+    @property
+    @pulumi.getter
+    def count(self) -> int:
+        return pulumi.get(self, "count")
+
+    @property
+    @pulumi.getter
+    def group(self) -> str:
+        return pulumi.get(self, "group")
+
+    @property
+    @pulumi.getter
+    def kind(self) -> str:
+        return pulumi.get(self, "kind")
+
+    @property
+    @pulumi.getter
+    def version(self) -> str:
+        return pulumi.get(self, "version")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class MigAnalyticStatusAnalyticsNamespacesImages(dict):
+    def __init__(__self__, *,
+                 name: str,
+                 reference: str,
+                 size: str):
+        pulumi.set(__self__, "name", name)
+        pulumi.set(__self__, "reference", reference)
+        pulumi.set(__self__, "size", size)
+
+    @property
+    @pulumi.getter
+    def name(self) -> str:
+        return pulumi.get(self, "name")
+
+    @property
+    @pulumi.getter
+    def reference(self) -> str:
+        return pulumi.get(self, "reference")
+
+    @property
+    @pulumi.getter
+    def size(self) -> str:
+        return pulumi.get(self, "size")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class MigAnalyticStatusAnalyticsNamespacesIncompatibleK8SResources(dict):
+    def __init__(__self__, *,
+                 count: int,
+                 group: str,
+                 kind: str,
+                 version: str):
+        pulumi.set(__self__, "count", count)
+        pulumi.set(__self__, "group", group)
+        pulumi.set(__self__, "kind", kind)
+        pulumi.set(__self__, "version", version)
+
+    @property
+    @pulumi.getter
+    def count(self) -> int:
+        return pulumi.get(self, "count")
+
+    @property
+    @pulumi.getter
+    def group(self) -> str:
+        return pulumi.get(self, "group")
+
+    @property
+    @pulumi.getter
+    def kind(self) -> str:
+        return pulumi.get(self, "kind")
+
+    @property
+    @pulumi.getter
+    def version(self) -> str:
+        return pulumi.get(self, "version")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class MigAnalyticStatusAnalyticsNamespacesK8sResources(dict):
+    def __init__(__self__, *,
+                 count: int,
+                 group: str,
+                 kind: str,
+                 version: str):
+        pulumi.set(__self__, "count", count)
+        pulumi.set(__self__, "group", group)
+        pulumi.set(__self__, "kind", kind)
+        pulumi.set(__self__, "version", version)
+
+    @property
+    @pulumi.getter
+    def count(self) -> int:
+        return pulumi.get(self, "count")
+
+    @property
+    @pulumi.getter
+    def group(self) -> str:
+        return pulumi.get(self, "group")
+
+    @property
+    @pulumi.getter
+    def kind(self) -> str:
+        return pulumi.get(self, "kind")
+
+    @property
+    @pulumi.getter
+    def version(self) -> str:
+        return pulumi.get(self, "version")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
 class MigClusterSpec(dict):
     def __init__(__self__, *,
                  is_host_cluster: bool,
                  azure_resource_group: Optional[str] = None,
                  ca_bundle: Optional[str] = None,
                  insecure: Optional[bool] = None,
+                 restart_restic: Optional[bool] = None,
                  service_account_secret_ref: Optional[Mapping[str, Any]] = None,
                  storage_classes: Optional[Sequence['outputs.MigClusterSpecStorageClasses']] = None,
                  url: Optional[str] = None):
@@ -49,6 +446,8 @@ class MigClusterSpec(dict):
             pulumi.set(__self__, "ca_bundle", ca_bundle)
         if insecure is not None:
             pulumi.set(__self__, "insecure", insecure)
+        if restart_restic is not None:
+            pulumi.set(__self__, "restart_restic", restart_restic)
         if service_account_secret_ref is not None:
             pulumi.set(__self__, "service_account_secret_ref", service_account_secret_ref)
         if storage_classes is not None:
@@ -75,6 +474,11 @@ class MigClusterSpec(dict):
     @pulumi.getter
     def insecure(self) -> Optional[bool]:
         return pulumi.get(self, "insecure")
+
+    @property
+    @pulumi.getter(name="restartRestic")
+    def restart_restic(self) -> Optional[bool]:
+        return pulumi.get(self, "restart_restic")
 
     @property
     @pulumi.getter(name="serviceAccountSecretRef")
@@ -271,14 +675,14 @@ class MigMigrationSpec(dict):
 class MigMigrationStatus(dict):
     def __init__(__self__, *,
                  errors: Optional[Sequence[str]] = None,
-                 itenerary: Optional[str] = None,
+                 itinerary: Optional[str] = None,
                  observed_digest: Optional[str] = None,
                  phase: Optional[str] = None,
                  start_timestamp: Optional[str] = None):
         if errors is not None:
             pulumi.set(__self__, "errors", errors)
-        if itenerary is not None:
-            pulumi.set(__self__, "itenerary", itenerary)
+        if itinerary is not None:
+            pulumi.set(__self__, "itinerary", itinerary)
         if observed_digest is not None:
             pulumi.set(__self__, "observed_digest", observed_digest)
         if phase is not None:
@@ -293,8 +697,8 @@ class MigMigrationStatus(dict):
 
     @property
     @pulumi.getter
-    def itenerary(self) -> Optional[str]:
-        return pulumi.get(self, "itenerary")
+    def itinerary(self) -> Optional[str]:
+        return pulumi.get(self, "itinerary")
 
     @property
     @pulumi.getter(name="observedDigest")
@@ -473,10 +877,13 @@ class MigPlanSpecPersistentVolumes(dict):
 class MigPlanSpecPersistentVolumesPvc(dict):
     def __init__(__self__, *,
                  access_modes: Optional[Sequence[str]] = None,
+                 has_reference: Optional[bool] = None,
                  name: Optional[str] = None,
                  namespace: Optional[str] = None):
         if access_modes is not None:
             pulumi.set(__self__, "access_modes", access_modes)
+        if has_reference is not None:
+            pulumi.set(__self__, "has_reference", has_reference)
         if name is not None:
             pulumi.set(__self__, "name", name)
         if namespace is not None:
@@ -486,6 +893,11 @@ class MigPlanSpecPersistentVolumesPvc(dict):
     @pulumi.getter(name="accessModes")
     def access_modes(self) -> Optional[Sequence[str]]:
         return pulumi.get(self, "access_modes")
+
+    @property
+    @pulumi.getter(name="hasReference")
+    def has_reference(self) -> Optional[bool]:
+        return pulumi.get(self, "has_reference")
 
     @property
     @pulumi.getter
@@ -574,12 +986,20 @@ class MigPlanSpecPersistentVolumesSupported(dict):
 @pulumi.output_type
 class MigPlanStatus(dict):
     def __init__(__self__, *,
+                 excluded_resources: Optional[Sequence[str]] = None,
                  incompatible_namespaces: Optional[Sequence['outputs.MigPlanStatusIncompatibleNamespaces']] = None,
                  observed_digest: Optional[str] = None):
+        if excluded_resources is not None:
+            pulumi.set(__self__, "excluded_resources", excluded_resources)
         if incompatible_namespaces is not None:
             pulumi.set(__self__, "incompatible_namespaces", incompatible_namespaces)
         if observed_digest is not None:
             pulumi.set(__self__, "observed_digest", observed_digest)
+
+    @property
+    @pulumi.getter(name="excludedResources")
+    def excluded_resources(self) -> Optional[Sequence[str]]:
+        return pulumi.get(self, "excluded_resources")
 
     @property
     @pulumi.getter(name="incompatibleNamespaces")

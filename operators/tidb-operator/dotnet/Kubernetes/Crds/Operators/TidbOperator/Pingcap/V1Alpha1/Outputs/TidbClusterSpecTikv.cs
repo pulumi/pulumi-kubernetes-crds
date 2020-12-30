@@ -18,24 +18,29 @@ namespace Pulumi.Kubernetes.Types.Outputs.Pingcap.V1Alpha1
         public readonly Pulumi.Kubernetes.Types.Outputs.Pingcap.V1Alpha1.TidbClusterSpecTikvAffinity Affinity;
         public readonly ImmutableDictionary<string, object> Annotations;
         public readonly string BaseImage;
-        public readonly Pulumi.Kubernetes.Types.Outputs.Pingcap.V1Alpha1.TidbClusterSpecTikvConfig Config;
+        public readonly object Config;
         public readonly string ConfigUpdateStrategy;
         public readonly string DataSubDir;
         public readonly ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Pingcap.V1Alpha1.TidbClusterSpecTikvEnv> Env;
+        public readonly string EvictLeaderTimeout;
         public readonly bool HostNetwork;
         public readonly string ImagePullPolicy;
         public readonly ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Pingcap.V1Alpha1.TidbClusterSpecTikvImagePullSecrets> ImagePullSecrets;
         public readonly ImmutableDictionary<string, object> Limits;
         public readonly int MaxFailoverCount;
+        public readonly bool MountClusterClientSecret;
         public readonly ImmutableDictionary<string, object> NodeSelector;
         public readonly Pulumi.Kubernetes.Types.Outputs.Pingcap.V1Alpha1.TidbClusterSpecTikvPodSecurityContext PodSecurityContext;
         public readonly string PriorityClassName;
         public readonly bool Privileged;
+        public readonly bool RecoverFailover;
         public readonly int Replicas;
         public readonly ImmutableDictionary<string, object> Requests;
         public readonly string SchedulerName;
         public readonly string ServiceAccount;
+        public readonly string StatefulSetUpdateStrategy;
         public readonly string StorageClassName;
+        public readonly ImmutableArray<object> StorageVolumes;
         public readonly int TerminationGracePeriodSeconds;
         public readonly ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Pingcap.V1Alpha1.TidbClusterSpecTikvTolerations> Tolerations;
         public readonly string Version;
@@ -52,13 +57,15 @@ namespace Pulumi.Kubernetes.Types.Outputs.Pingcap.V1Alpha1
 
             string baseImage,
 
-            Pulumi.Kubernetes.Types.Outputs.Pingcap.V1Alpha1.TidbClusterSpecTikvConfig config,
+            object config,
 
             string configUpdateStrategy,
 
             string dataSubDir,
 
             ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Pingcap.V1Alpha1.TidbClusterSpecTikvEnv> env,
+
+            string evictLeaderTimeout,
 
             bool hostNetwork,
 
@@ -70,6 +77,8 @@ namespace Pulumi.Kubernetes.Types.Outputs.Pingcap.V1Alpha1
 
             int maxFailoverCount,
 
+            bool mountClusterClientSecret,
+
             ImmutableDictionary<string, object> nodeSelector,
 
             Pulumi.Kubernetes.Types.Outputs.Pingcap.V1Alpha1.TidbClusterSpecTikvPodSecurityContext podSecurityContext,
@@ -77,6 +86,8 @@ namespace Pulumi.Kubernetes.Types.Outputs.Pingcap.V1Alpha1
             string priorityClassName,
 
             bool privileged,
+
+            bool recoverFailover,
 
             int replicas,
 
@@ -86,7 +97,11 @@ namespace Pulumi.Kubernetes.Types.Outputs.Pingcap.V1Alpha1
 
             string serviceAccount,
 
+            string statefulSetUpdateStrategy,
+
             string storageClassName,
+
+            ImmutableArray<object> storageVolumes,
 
             int terminationGracePeriodSeconds,
 
@@ -103,20 +118,25 @@ namespace Pulumi.Kubernetes.Types.Outputs.Pingcap.V1Alpha1
             ConfigUpdateStrategy = configUpdateStrategy;
             DataSubDir = dataSubDir;
             Env = env;
+            EvictLeaderTimeout = evictLeaderTimeout;
             HostNetwork = hostNetwork;
             ImagePullPolicy = imagePullPolicy;
             ImagePullSecrets = imagePullSecrets;
             Limits = limits;
             MaxFailoverCount = maxFailoverCount;
+            MountClusterClientSecret = mountClusterClientSecret;
             NodeSelector = nodeSelector;
             PodSecurityContext = podSecurityContext;
             PriorityClassName = priorityClassName;
             Privileged = privileged;
+            RecoverFailover = recoverFailover;
             Replicas = replicas;
             Requests = requests;
             SchedulerName = schedulerName;
             ServiceAccount = serviceAccount;
+            StatefulSetUpdateStrategy = statefulSetUpdateStrategy;
             StorageClassName = storageClassName;
+            StorageVolumes = storageVolumes;
             TerminationGracePeriodSeconds = terminationGracePeriodSeconds;
             Tolerations = tolerations;
             Version = version;

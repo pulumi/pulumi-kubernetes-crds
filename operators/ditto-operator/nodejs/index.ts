@@ -3,3 +3,8 @@
 
 // Export members:
 export * from "./provider";
+
+// Export sub-modules:
+import * as iot from "./iot";
+import * as types from "./types";
+export {iot, types};

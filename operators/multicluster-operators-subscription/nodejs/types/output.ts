@@ -500,6 +500,10 @@ export namespace apps {
              */
             gates?: outputs.apps.v1.ChannelSpecGates;
             /**
+             * Skip server TLS certificate verification for Git or Helm channel.
+             */
+            insecureSkipVerify?: boolean;
+            /**
              * For a `namespace` channel, pathname is the name of the namespace; For a `helmrepo` or `github` channel, pathname is the remote URL for the channel contents; For a `objectbucket` channel, pathname is the URL and name of the bucket.
              */
             pathname: string;
@@ -799,6 +803,10 @@ export namespace apps {
              */
             configMapRef?: outputs.apps.v1.HelmReleaseRepoConfigMapRef;
             /**
+             * Used to skip repo server's TLS certificate verification
+             */
+            insecureSkipVerify?: boolean;
+            /**
              * Secret to use to access the helm-repo defined in the CatalogSource.
              */
             secretRef?: outputs.apps.v1.HelmReleaseRepoSecretRef;
@@ -1079,6 +1087,10 @@ export namespace apps {
         export interface SubscriptionSpec {
             channel: string;
             /**
+             * ObjectReference contains enough information to let you inspect or modify the referred object. --- New uses of this type are discouraged because of difficulty describing its usage when embedded in APIs.  1. Ignored fields.  It includes many fields which are not generally honored.  For instance, ResourceVersion and FieldPath are both very rarely valid in actual usage.  2. Invalid usage help.  It is impossible to add specific help for individual usage.  In most embedded usages, there are particular     restrictions like, "must refer only to types A and B" or "UID not honored" or "name must be restricted".     Those cannot be well described when embedded.  3. Inconsistent validation.  Because the usages are different, the validation rules are different by usage, which makes it hard for users to predict what will happen.  4. The fields are both imprecise and overly precise.  Kind is not a precise mapping to a URL. This can produce ambiguity     during interpretation and require a REST mapping.  In most cases, the dependency is on the group,resource tuple     and the version of the actual struct is irrelevant.  5. We cannot easily change it.  Because this type is embedded in many locations, updates to this type     will affect numerous schemas.  Don't make new APIs embed an underspecified API type they do not control. Instead of using this type, create a locally provided and used type that is well-focused on your reference. For example, ServiceReferences for admission registration: https://github.com/kubernetes/api/blob/release-1.17/admissionregistration/v1/types.go#L533 .
+             */
+            hooksecretref?: outputs.apps.v1.SubscriptionSpecHooksecretref;
+            /**
              * To specify 1 package in channel
              */
             name?: string;
@@ -1102,6 +1114,40 @@ export namespace apps {
              * help user control when the subscription will take affect
              */
             timewindow?: outputs.apps.v1.SubscriptionSpecTimewindow;
+        }
+
+        /**
+         * ObjectReference contains enough information to let you inspect or modify the referred object. --- New uses of this type are discouraged because of difficulty describing its usage when embedded in APIs.  1. Ignored fields.  It includes many fields which are not generally honored.  For instance, ResourceVersion and FieldPath are both very rarely valid in actual usage.  2. Invalid usage help.  It is impossible to add specific help for individual usage.  In most embedded usages, there are particular     restrictions like, "must refer only to types A and B" or "UID not honored" or "name must be restricted".     Those cannot be well described when embedded.  3. Inconsistent validation.  Because the usages are different, the validation rules are different by usage, which makes it hard for users to predict what will happen.  4. The fields are both imprecise and overly precise.  Kind is not a precise mapping to a URL. This can produce ambiguity     during interpretation and require a REST mapping.  In most cases, the dependency is on the group,resource tuple     and the version of the actual struct is irrelevant.  5. We cannot easily change it.  Because this type is embedded in many locations, updates to this type     will affect numerous schemas.  Don't make new APIs embed an underspecified API type they do not control. Instead of using this type, create a locally provided and used type that is well-focused on your reference. For example, ServiceReferences for admission registration: https://github.com/kubernetes/api/blob/release-1.17/admissionregistration/v1/types.go#L533 .
+         */
+        export interface SubscriptionSpecHooksecretref {
+            /**
+             * API version of the referent.
+             */
+            apiVersion?: string;
+            /**
+             * If referring to a piece of an object instead of an entire object, this string should contain a valid JSON/Go field access statement, such as desiredState.manifest.containers[2]. For example, if the object reference is to a container within a pod, this would take on a value like: "spec.containers{name}" (where "name" refers to the name of the container that triggered the event) or if no container name is specified "spec.containers[2]" (container with index 2 in this pod). This syntax is chosen only to have some well-defined way of referencing a part of an object. TODO: this design is not final and this field is subject to change in the future.
+             */
+            fieldPath?: string;
+            /**
+             * Kind of the referent. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+             */
+            kind?: string;
+            /**
+             * Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
+             */
+            name?: string;
+            /**
+             * Namespace of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/
+             */
+            namespace?: string;
+            /**
+             * Specific resourceVersion to which this reference is made, if any. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#concurrency-control-and-consistency
+             */
+            resourceVersion?: string;
+            /**
+             * UID of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#uids
+             */
+            uid?: string;
         }
 
         /**
@@ -1273,7 +1319,7 @@ export namespace apps {
          */
         export interface SubscriptionSpecTimewindow {
             /**
-             * Defines the day of the week for the subscription timewindow window https://golang.org/pkg/time/#Weekday
+             * weekdays defined the day of the week for this time window https://golang.org/pkg/time/#Weekday
              */
             daysofweek?: string[];
             hours?: outputs.apps.v1.SubscriptionSpecTimewindowHours[];
@@ -1299,6 +1345,7 @@ export namespace apps {
          * SubscriptionStatus defines the observed state of Subscription Examples - status of a subscription on hub Status: 	phase: Propagated 	statuses: 	  washdc: 		packages: 		  nginx: 			phase: Subscribed 		  mongodb: 			phase: Failed 			Reason: "not authorized" 			Message: "user xxx does not have permission to start pod" 			resourceStatus: {}    toronto: 		packages: 		  nginx: 			phase: Subscribed 		  mongodb: 			phase: Subscribed Status of a subscription on managed cluster will only have 1 cluster in the map.
          */
         export interface SubscriptionStatus {
+            ansiblejobs?: outputs.apps.v1.SubscriptionStatusAnsiblejobs;
             lastUpdateTime?: string;
             message?: string;
             /**
@@ -1309,7 +1356,36 @@ export namespace apps {
             /**
              * For endpoint, it is the status of subscription, key is packagename, For hub, it aggregates all status, key is cluster name
              */
-            statuses?: any;
+            statuses?: {[key: string]: outputs.apps.v1.SubscriptionStatusStatuses};
         }
+
+        export interface SubscriptionStatusAnsiblejobs {
+            lastposthookjob?: string;
+            lastprehookjob?: string;
+            posthookjobshistory?: string[];
+            prehookjobshistory?: string[];
+        }
+
+        /**
+         * SubscriptionPerClusterStatus defines status for subscription in each cluster, key is package name
+         */
+        export interface SubscriptionStatusStatuses {
+            packages?: {[key: string]: outputs.apps.v1.SubscriptionStatusStatusesPackages};
+        }
+
+        /**
+         * SubscriptionUnitStatus defines status of a unit (subscription or package)
+         */
+        export interface SubscriptionStatusStatusesPackages {
+            lastUpdateTime: string;
+            message?: string;
+            /**
+             * Phase are Propagated if it is in hub or Subscribed if it is in endpoint
+             */
+            phase?: string;
+            reason?: string;
+            resourceStatus?: {[key: string]: any};
+        }
+
     }
 }

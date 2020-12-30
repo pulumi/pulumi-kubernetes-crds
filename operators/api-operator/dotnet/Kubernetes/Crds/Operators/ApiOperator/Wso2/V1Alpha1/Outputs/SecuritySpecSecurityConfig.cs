@@ -19,6 +19,7 @@ namespace Pulumi.Kubernetes.Types.Outputs.Wso2.V1Alpha1
         public readonly string Credentials;
         public readonly string Endpoint;
         public readonly string Issuer;
+        public readonly bool ValidateAllowedAPIs;
         public readonly bool ValidateSubscription;
 
         [OutputConstructor]
@@ -35,6 +36,8 @@ namespace Pulumi.Kubernetes.Types.Outputs.Wso2.V1Alpha1
 
             string issuer,
 
+            bool validateAllowedAPIs,
+
             bool validateSubscription)
         {
             Alias = alias;
@@ -43,6 +46,7 @@ namespace Pulumi.Kubernetes.Types.Outputs.Wso2.V1Alpha1
             Credentials = credentials;
             Endpoint = endpoint;
             Issuer = issuer;
+            ValidateAllowedAPIs = validateAllowedAPIs;
             ValidateSubscription = validateSubscription;
         }
     }

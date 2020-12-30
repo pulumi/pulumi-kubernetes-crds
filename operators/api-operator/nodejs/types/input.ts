@@ -9,33 +9,104 @@ import {ObjectMeta} from "../meta/v1";
 
 export namespace wso2 {
     export namespace v1alpha1 {
+        /**
+         * APISpec defines the desired state of API
+         */
         export interface APISpec {
+            apiEndPoint?: pulumi.Input<string>;
+            /**
+             * Definition of the API.
+             */
             definition: pulumi.Input<inputs.wso2.v1alpha1.APISpecDefinition>;
             /**
-             * INSERT ADDITIONAL SPEC FIELDS - desired state of cluster Important: Run "operator-sdk generate k8s" to regenerate code after modifying this file Add custom validation using kubebuilder tags: https://book.kubebuilder.io/beyond_basics/generating_crd.html
+             * Environment variables to be added to the API deployment. Default value "<empty>".
+             */
+            environmentVariables?: pulumi.Input<pulumi.Input<string>[]>;
+            /**
+             * Docker image of the API to be deployed. If specified, ignores the values of `UpdateTimeStamp`, `Override`. Uses the given image for the deployment. Default value "<empty>".
+             */
+            image?: pulumi.Input<string>;
+            /**
+             * Ingress Hostname that the API is being exposed. Default value "<empty>".
+             */
+            ingressHostname?: pulumi.Input<string>;
+            /**
+             * Mode of the API. The mode from the swagger definition will be overridden by this value. Supports "privateJet", "sidecar", "<empty>". Default value "<empty>".
              */
             mode?: pulumi.Input<string>;
+            /**
+             * Override the exiting API docker image. Default value "false".
+             */
             override?: pulumi.Input<boolean>;
+            /**
+             * Replica count of the API.
+             */
             replicas: pulumi.Input<number>;
+            /**
+             * Update API definition creating a new docker image. Make a rolling update to the existing API. with prefixing the timestamp value. Default value "<empty>".
+             */
             updateTimeStamp?: pulumi.Input<string>;
+            /**
+             * Version of the API. The version from the swagger definition will be overridden by this value. Default value "<empty>".
+             */
             version?: pulumi.Input<string>;
         }
 
+        /**
+         * Definition of the API.
+         */
         export interface APISpecDefinition {
+            /**
+             * Interceptors for API. Default value "<empty>".
+             */
             interceptors?: pulumi.Input<inputs.wso2.v1alpha1.APISpecDefinitionInterceptors>;
+            /**
+             * Array of config map names of swagger definitions for the API.
+             */
             swaggerConfigmapNames: pulumi.Input<pulumi.Input<string>[]>;
             type?: pulumi.Input<string>;
         }
 
+        /**
+         * Interceptors for API. Default value "<empty>".
+         */
         export interface APISpecDefinitionInterceptors {
+            /**
+             * Ballerina interceptors. Default value "<empty>".
+             */
             ballerina?: pulumi.Input<pulumi.Input<string>[]>;
+            /**
+             * Java interceptors. Default value "<empty>".
+             */
             java?: pulumi.Input<pulumi.Input<string>[]>;
         }
 
+        /**
+         * APIStatus defines the observed state of API
+         */
+        export interface APIStatus {
+            /**
+             * replicas field in the status sub-resource will define the initial replica count allocated to the API.This will be the minimum replica count for a single API
+             */
+            replicas: pulumi.Input<number>;
+        }
+
+        /**
+         * RateLimitingSpec defines the desired state of RateLimiting
+         */
         export interface RateLimitingSpec {
+            /**
+             * Bandwidth is exported type in Ratelimiting Spec
+             */
             bandwidth?: pulumi.Input<inputs.wso2.v1alpha1.RateLimitingSpecBandwidth>;
+            /**
+             * Conditions is exported type in Ratelimiting Spec
+             */
             conditions?: pulumi.Input<inputs.wso2.v1alpha1.RateLimitingSpecConditions>;
             description?: pulumi.Input<string>;
+            /**
+             * RequestCount is exported type in Ratelimiting Spec
+             */
             requestCount: pulumi.Input<inputs.wso2.v1alpha1.RateLimitingSpecRequestCount>;
             stopOnQuotaReach?: pulumi.Input<boolean>;
             timeUnit: pulumi.Input<string>;
@@ -43,21 +114,39 @@ export namespace wso2 {
             unitTime: pulumi.Input<number>;
         }
 
+        /**
+         * Bandwidth is exported type in Ratelimiting Spec
+         */
         export interface RateLimitingSpecBandwidth {
             dataAmount: pulumi.Input<string>;
             dataUnit: pulumi.Input<string>;
         }
 
+        /**
+         * Conditions is exported type in Ratelimiting Spec
+         */
         export interface RateLimitingSpecConditions {
+            /**
+             * HeaderCondition is exported type in Ratelimiting Spec
+             */
             headerCondition: pulumi.Input<inputs.wso2.v1alpha1.RateLimitingSpecConditionsHeaderCondition>;
+            /**
+             * IPCondition is exported type in Ratelimiting Spec
+             */
             ipCondition: pulumi.Input<inputs.wso2.v1alpha1.RateLimitingSpecConditionsIpCondition>;
         }
 
+        /**
+         * HeaderCondition is exported type in Ratelimiting Spec
+         */
         export interface RateLimitingSpecConditionsHeaderCondition {
             headerName: pulumi.Input<string>;
             headerValue: pulumi.Input<string>;
         }
 
+        /**
+         * IPCondition is exported type in Ratelimiting Spec
+         */
         export interface RateLimitingSpecConditionsIpCondition {
             endIp: pulumi.Input<string>;
             negation: pulumi.Input<boolean>;
@@ -66,10 +155,16 @@ export namespace wso2 {
             type: pulumi.Input<string>;
         }
 
+        /**
+         * RequestCount is exported type in Ratelimiting Spec
+         */
         export interface RateLimitingSpecRequestCount {
             limit: pulumi.Input<number>;
         }
 
+        /**
+         * SecuritySpec defines the desired state of Security
+         */
         export interface SecuritySpec {
             securityConfig?: pulumi.Input<pulumi.Input<inputs.wso2.v1alpha1.SecuritySpecSecurityConfig>[]>;
             /**
@@ -85,24 +180,35 @@ export namespace wso2 {
             credentials?: pulumi.Input<string>;
             endpoint?: pulumi.Input<string>;
             issuer?: pulumi.Input<string>;
+            validateAllowedAPIs?: pulumi.Input<boolean>;
             validateSubscription?: pulumi.Input<boolean>;
         }
 
+        /**
+         * TargetEndpointSpec defines the desired state of TargetEndpoint
+         */
         export interface TargetEndpointSpec {
-            deploy: pulumi.Input<inputs.wso2.v1alpha1.TargetEndpointSpecDeploy>;
-            endpointName?: pulumi.Input<string>;
-            endpointSecurity?: pulumi.Input<inputs.wso2.v1alpha1.TargetEndpointSpecEndpointSecurity>;
-            hostname?: pulumi.Input<string>;
-            mode?: pulumi.Input<string>;
-            port: pulumi.Input<number>;
-            protocol: pulumi.Input<string>;
-            targetPort: pulumi.Input<number>;
             /**
-             * INSERT ADDITIONAL SPEC FIELDS - desired state of cluster Important: Run "operator-sdk generate k8s" to regenerate code after modifying this file Add custom validation using kubebuilder tags: https://book.kubebuilder.io/beyond_basics/generating_crd.html
+             * Protocol of the application. Supports "http" and "https".
              */
-            type?: pulumi.Input<string>;
+            applicationProtocol: pulumi.Input<string>;
+            /**
+             * Deployment details.
+             */
+            deploy: pulumi.Input<inputs.wso2.v1alpha1.TargetEndpointSpecDeploy>;
+            /**
+             * Mode of the Target Endpoint. Supports "privateJet", "sidecar", "serverless". Default value "privateJet"
+             */
+            mode?: pulumi.Input<string>;
+            /**
+             * List of optional ports of the target endpoint. First port should be the port of the target endpoint which is referred in swagger definition.
+             */
+            ports: pulumi.Input<pulumi.Input<inputs.wso2.v1alpha1.TargetEndpointSpecPorts>[]>;
         }
 
+        /**
+         * Deployment details.
+         */
         export interface TargetEndpointSpecDeploy {
             cpuLimit?: pulumi.Input<string>;
             dockerImage: pulumi.Input<string>;
@@ -114,10 +220,22 @@ export namespace wso2 {
             requestCPU?: pulumi.Input<string>;
         }
 
-        export interface TargetEndpointSpecEndpointSecurity {
-            password: pulumi.Input<string>;
-            type: pulumi.Input<string>;
-            username: pulumi.Input<string>;
+        /**
+         * Port represents ports of the Target Endpoint
+         */
+        export interface TargetEndpointSpecPorts {
+            /**
+             * The name of this port within the service. This must be a DNS_LABEL. All ports within a ServiceSpec must have unique names.
+             */
+            name: pulumi.Input<string>;
+            /**
+             * The port that will be exposed by this service.
+             */
+            port: pulumi.Input<number>;
+            /**
+             * Port that is targeted to expose.
+             */
+            targetPort: pulumi.Input<number>;
         }
 
     }

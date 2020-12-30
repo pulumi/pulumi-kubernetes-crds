@@ -20,6 +20,9 @@ namespace Pulumi.Kubernetes.Types.Inputs.Machinelearning.V1
             set => _env = value;
         }
 
+        [Input("replicas")]
+        public Input<int>? Replicas { get; set; }
+
         /// <summary>
         /// ResourceRequirements describes the compute resource requirements.
         /// </summary>

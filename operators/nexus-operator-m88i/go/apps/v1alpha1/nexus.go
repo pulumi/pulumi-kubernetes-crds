@@ -10,7 +10,6 @@ import (
 	"github.com/pulumi/pulumi/sdk/v2/go/pulumi"
 )
 
-// Nexus custom resource to deploy the Nexus Server
 type Nexus struct {
 	pulumi.CustomResourceState
 

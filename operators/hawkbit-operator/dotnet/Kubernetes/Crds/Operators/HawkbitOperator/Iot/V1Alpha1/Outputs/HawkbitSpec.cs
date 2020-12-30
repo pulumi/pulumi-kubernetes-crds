@@ -16,6 +16,7 @@ namespace Pulumi.Kubernetes.Types.Outputs.Iot.V1Alpha1
         public readonly object Database;
         public readonly ImmutableDictionary<string, Pulumi.Kubernetes.Types.Outputs.Iot.V1Alpha1.HawkbitSpecImageOverrides> ImageOverrides;
         public readonly object Rabbit;
+        public readonly Pulumi.Kubernetes.Types.Outputs.Iot.V1Alpha1.HawkbitSpecSignOn SignOn;
 
         [OutputConstructor]
         private HawkbitSpec(
@@ -23,11 +24,14 @@ namespace Pulumi.Kubernetes.Types.Outputs.Iot.V1Alpha1
 
             ImmutableDictionary<string, Pulumi.Kubernetes.Types.Outputs.Iot.V1Alpha1.HawkbitSpecImageOverrides> imageOverrides,
 
-            object rabbit)
+            object rabbit,
+
+            Pulumi.Kubernetes.Types.Outputs.Iot.V1Alpha1.HawkbitSpecSignOn signOn)
         {
             Database = database;
             ImageOverrides = imageOverrides;
             Rabbit = rabbit;
+            SignOn = signOn;
         }
     }
 }

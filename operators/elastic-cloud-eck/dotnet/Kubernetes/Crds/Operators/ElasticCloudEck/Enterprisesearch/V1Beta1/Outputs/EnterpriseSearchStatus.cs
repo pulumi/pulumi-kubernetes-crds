@@ -17,15 +17,22 @@ namespace Pulumi.Kubernetes.Types.Outputs.Enterprisesearch.V1Beta1
         /// Association is the status of any auto-linking to Elasticsearch clusters.
         /// </summary>
         public readonly string AssociationStatus;
+        /// <summary>
+        /// AvailableNodes is the number of available replicas in the deployment.
+        /// </summary>
         public readonly int AvailableNodes;
         /// <summary>
-        /// EnterpriseSearchHealth expresses the health of the Enterprise Search instances.
+        /// Health of the deployment.
         /// </summary>
         public readonly string Health;
         /// <summary>
         /// ExternalService is the name of the service associated to the Enterprise Search Pods.
         /// </summary>
         public readonly string Service;
+        /// <summary>
+        /// Version of the stack resource currently running. During version upgrades, multiple versions may run in parallel: this value specifies the lowest version currently running.
+        /// </summary>
+        public readonly string Version;
 
         [OutputConstructor]
         private EnterpriseSearchStatus(
@@ -35,12 +42,15 @@ namespace Pulumi.Kubernetes.Types.Outputs.Enterprisesearch.V1Beta1
 
             string health,
 
-            string service)
+            string service,
+
+            string version)
         {
             AssociationStatus = associationStatus;
             AvailableNodes = availableNodes;
             Health = health;
             Service = service;
+            Version = version;
         }
     }
 }

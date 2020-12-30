@@ -14,7 +14,7 @@ namespace Pulumi.Kubernetes.Types.Outputs.Apps.V1
     public sealed class SubscriptionSpecTimewindow
     {
         /// <summary>
-        /// Defines the day of the week for the subscription timewindow window https://golang.org/pkg/time/#Weekday
+        /// weekdays defined the day of the week for this time window https://golang.org/pkg/time/#Weekday
         /// </summary>
         public readonly ImmutableArray<string> Daysofweek;
         public readonly ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Apps.V1.SubscriptionSpecTimewindowHours> Hours;

@@ -14,6 +14,9 @@ namespace Pulumi.Kubernetes.Types.Outputs.Apps.V1Alpha1
     public sealed class APIManagerStatus
     {
         public readonly ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Apps.V1Alpha1.APIManagerStatusConditions> Conditions;
+        /// <summary>
+        /// APIManager Deployment Configs
+        /// </summary>
         public readonly Pulumi.Kubernetes.Types.Outputs.Apps.V1Alpha1.APIManagerStatusDeployments Deployments;
 
         [OutputConstructor]

@@ -13,19 +13,27 @@ namespace Pulumi.Kubernetes.Types.Outputs.Infinispan.V1
     [OutputType]
     public sealed class InfinispanSpecServiceSitesLocations
     {
+        public readonly string Host;
         public readonly string Name;
+        public readonly int Port;
         public readonly string SecretName;
         public readonly string Url;
 
         [OutputConstructor]
         private InfinispanSpecServiceSitesLocations(
+            string host,
+
             string name,
+
+            int port,
 
             string secretName,
 
             string url)
         {
+            Host = host;
             Name = name;
+            Port = port;
             SecretName = secretName;
             Url = url;
         }

@@ -2,8 +2,8 @@ package main
 
 import (
 	"github.com/pkg/errors"
-	"github.com/pulumi/pulumi/sdk/v2/go/common/util/contract"
 	"github.com/pulumi/pulumi/pkg/v2/codegen"
+	"github.com/pulumi/pulumi/sdk/v2/go/common/util/contract"
 	"gopkg.in/yaml.v2"
 	"io/ioutil"
 	"path/filepath"
@@ -17,14 +17,14 @@ var packagesWithV = codegen.NewStringSet(
 )
 
 type PackageInfo struct {
-	PackageName string `yaml:"packageName"`
-	DefaultChannel string `yaml:"defaultChannel"`
-	Channels []Channel `yaml:"channels"`
+	PackageName    string    `yaml:"packageName"`
+	DefaultChannel string    `yaml:"defaultChannel"`
+	Channels       []Channel `yaml:"channels"`
 }
 
 type Channel struct {
 	CurrentCSV string `yaml:"currentCSV"`
-	Name string `yaml:"name"`
+	Name       string `yaml:"name"`
 }
 
 // Returns the version of the default channel if the default is specified; otherwise returns the version of the first
@@ -54,7 +54,8 @@ func (pi PackageInfo) DefaultVersion() string {
 func (pi PackageInfo) DefaultVersionWithV() string {
 	getVersionSpecial := func(currentCSV string) string {
 		parts := strings.SplitN(currentCSV, ".", 2)
-		return parts[1]
+		part := strings.Replace(parts[1], "v", "", -1)
+		return part
 	}
 	if pi.DefaultChannel != "" {
 		for _, channel := range pi.Channels {
@@ -68,19 +69,22 @@ func (pi PackageInfo) DefaultVersionWithV() string {
 }
 
 // Returns the path of the first YAML file found within the given folder path.
-func findFirstYAML(path string) (string, error) {
+func findFirstYAML(path string) (string, bool, error) {
 	dir, err := ioutil.ReadDir(path)
 	if err != nil {
-		return "", err
+		return "", false, err
 	}
 
 	for _, file := range dir {
+		if file.Name() == "ci.yaml" {
+			continue
+		}
 		if extension := filepath.Ext(file.Name()); extension == ".yaml" || extension == ".yml" {
-			return filepath.Join(path, file.Name()), nil
+			return filepath.Join(path, file.Name()), true, nil
 		}
 	}
 
-	return "", errors.Errorf("could not find any YAML files in %s", path)
+	return "", false, nil
 }
 
 // Returns a map from package names to a slice of corresponding YAML CRD paths, given the path to the
@@ -91,9 +95,12 @@ func getPackageToYamlPaths(communityOperatorsPath string, packageNames []string)
 	packageToYamlPaths := map[string][]string{}
 	for _, packageName := range packageNames {
 		operatorPath := filepath.Join(communityOperatorsPath, packageName)
-		packageInfoPath, err := findFirstYAML(operatorPath)
+		packageInfoPath, exists, err := findFirstYAML(operatorPath)
 		if err != nil {
 			return nil, err
+		}
+		if !exists {
+			continue
 		}
 		packageInfoFile, err := ioutil.ReadFile(packageInfoPath)
 		if err != nil {
@@ -147,9 +154,12 @@ func getAllPackageToYAMLPaths(communityOperatorsPath string) (map[string][]strin
 		}
 
 		operatorPath := filepath.Join(communityOperatorsPath, operator.Name())
-		packageInfoPath, err := findFirstYAML(operatorPath)
+		packageInfoPath, exists, err := findFirstYAML(operatorPath)
 		if err != nil {
 			return nil, err
+		}
+		if !exists {
+			continue
 		}
 		packageInfoFile, err := ioutil.ReadFile(packageInfoPath)
 		if err != nil {

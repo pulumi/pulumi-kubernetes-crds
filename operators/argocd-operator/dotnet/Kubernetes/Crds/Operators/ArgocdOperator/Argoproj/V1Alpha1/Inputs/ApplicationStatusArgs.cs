@@ -39,7 +39,7 @@ namespace Pulumi.Kubernetes.Types.Inputs.Argoproj.V1Alpha1
         }
 
         /// <summary>
-        /// ObservedAt indicates when the application state was updated without querying latest git state
+        /// ObservedAt indicates when the application state was updated without querying latest git state Deprecated: controller no longer updates ObservedAt field
         /// </summary>
         [Input("observedAt")]
         public Input<string>? ObservedAt { get; set; }

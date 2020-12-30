@@ -28,6 +28,12 @@ namespace Pulumi.Kubernetes.Types.Inputs.Datadoghq.V1Alpha1
         public Input<bool>? BpfDebugEnabled { get; set; }
 
         /// <summary>
+        /// CollectDNSStats enables DNS stat collection
+        /// </summary>
+        [Input("collectDNSStats")]
+        public Input<bool>? CollectDNSStats { get; set; }
+
+        /// <summary>
         /// ConntrackEnabled enable the system-probe agent to connect to the netlink/conntrack subsystem to add NAT information to connection data Ref: http://conntrack-tools.netfilter.org/
         /// </summary>
         [Input("conntrackEnabled")]
@@ -38,6 +44,18 @@ namespace Pulumi.Kubernetes.Types.Inputs.Datadoghq.V1Alpha1
         /// </summary>
         [Input("debugPort")]
         public Input<int>? DebugPort { get; set; }
+
+        /// <summary>
+        /// EnableOOMKill enables the OOM kill eBPF-based check
+        /// </summary>
+        [Input("enableOOMKill")]
+        public Input<bool>? EnableOOMKill { get; set; }
+
+        /// <summary>
+        /// EnableTCPQueueLength enables the TCP queue length eBPF-based check
+        /// </summary>
+        [Input("enableTCPQueueLength")]
+        public Input<bool>? EnableTCPQueueLength { get; set; }
 
         /// <summary>
         /// Enable this to activate live process monitoring. Note: /etc/passwd is automatically mounted to allow username resolution. ref: https://docs.datadoghq.com/graphing/infrastructure/process/#kubernetes-daemonset

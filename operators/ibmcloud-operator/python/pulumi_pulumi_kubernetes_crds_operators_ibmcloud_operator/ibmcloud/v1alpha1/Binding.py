@@ -27,9 +27,12 @@ class Binding(pulumi.CustomResource):
                  __name__=None,
                  __opts__=None):
         """
-        Create a Binding resource with the given unique name, props, and options.
+        Binding is the Schema for the bindings API
+
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[pulumi.InputType['BindingSpecArgs']] spec: BindingSpec defines the desired state of Binding
+        :param pulumi.Input[pulumi.InputType['BindingStatusArgs']] status: BindingStatus defines the observed state of Binding
         """
         if __name__ is not None:
             warnings.warn("explicit use of __name__ is deprecated", DeprecationWarning)
@@ -95,11 +98,17 @@ class Binding(pulumi.CustomResource):
     @property
     @pulumi.getter
     def spec(self) -> pulumi.Output[Optional['outputs.BindingSpec']]:
+        """
+        BindingSpec defines the desired state of Binding
+        """
         return pulumi.get(self, "spec")
 
     @property
     @pulumi.getter
     def status(self) -> pulumi.Output[Optional['outputs.BindingStatus']]:
+        """
+        BindingStatus defines the observed state of Binding
+        """
         return pulumi.get(self, "status")
 
     def translate_output_property(self, prop):

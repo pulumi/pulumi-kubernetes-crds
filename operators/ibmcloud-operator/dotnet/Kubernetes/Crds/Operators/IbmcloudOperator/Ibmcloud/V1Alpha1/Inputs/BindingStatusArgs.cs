@@ -10,6 +10,9 @@ using Pulumi.Serialization;
 namespace Pulumi.Kubernetes.Types.Inputs.Ibmcloud.V1Alpha1
 {
 
+    /// <summary>
+    /// BindingStatus defines the observed state of Binding
+    /// </summary>
     public class BindingStatusArgs : Pulumi.ResourceArgs
     {
         [Input("generation")]

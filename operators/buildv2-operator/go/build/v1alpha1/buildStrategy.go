@@ -10,7 +10,7 @@ import (
 	"github.com/pulumi/pulumi/sdk/v2/go/pulumi"
 )
 
-// BuildStrategy is the Schema for the buildstrategies API
+// BuildStrategy is the Schema representing a strategy in the namespace scope to build images from source code.
 type BuildStrategy struct {
 	pulumi.CustomResourceState
 

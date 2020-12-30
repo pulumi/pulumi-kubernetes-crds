@@ -12,18 +12,37 @@ from . import outputs
 __all__ = [
     'BuildRunSpec',
     'BuildRunSpecBuildRef',
-    'BuildRunSpecResources',
+    'BuildRunSpecOutput',
+    'BuildRunSpecOutputCredentials',
+    'BuildRunSpecServiceAccount',
     'BuildRunStatus',
+    'BuildRunStatusBuildSpec',
+    'BuildRunStatusBuildSpecBuilder',
+    'BuildRunStatusBuildSpecBuilderCredentials',
+    'BuildRunStatusBuildSpecOutput',
+    'BuildRunStatusBuildSpecOutputCredentials',
+    'BuildRunStatusBuildSpecParameters',
+    'BuildRunStatusBuildSpecRuntime',
+    'BuildRunStatusBuildSpecRuntimeBase',
+    'BuildRunStatusBuildSpecRuntimeBaseCredentials',
+    'BuildRunStatusBuildSpecRuntimeUser',
+    'BuildRunStatusBuildSpecSource',
+    'BuildRunStatusBuildSpecSourceCredentials',
+    'BuildRunStatusBuildSpecStrategy',
     'BuildSpec',
     'BuildSpecBuilder',
     'BuildSpecBuilderCredentials',
     'BuildSpecOutput',
     'BuildSpecOutputCredentials',
     'BuildSpecParameters',
-    'BuildSpecResources',
+    'BuildSpecRuntime',
+    'BuildSpecRuntimeBase',
+    'BuildSpecRuntimeBaseCredentials',
+    'BuildSpecRuntimeUser',
     'BuildSpecSource',
     'BuildSpecSourceCredentials',
     'BuildSpecStrategy',
+    'BuildStatus',
     'BuildStrategySpec',
     'BuildStrategySpecBuildSteps',
     'BuildStrategySpecBuildStepsEnv',
@@ -34,6 +53,7 @@ __all__ = [
     'BuildStrategySpecBuildStepsEnvValueFromConfigMapKeyRef',
     'BuildStrategySpecBuildStepsEnvValueFromFieldRef',
     'BuildStrategySpecBuildStepsEnvValueFromResourceFieldRef',
+    'BuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisor',
     'BuildStrategySpecBuildStepsEnvValueFromSecretKeyRef',
     'BuildStrategySpecBuildStepsLifecycle',
     'BuildStrategySpecBuildStepsLifecyclePostStart',
@@ -66,6 +86,8 @@ __all__ = [
     'BuildStrategySpecBuildStepsReadinessProbeTcpSocket',
     'BuildStrategySpecBuildStepsReadinessProbeTcpSocketPort',
     'BuildStrategySpecBuildStepsResources',
+    'BuildStrategySpecBuildStepsResourcesLimits',
+    'BuildStrategySpecBuildStepsResourcesRequests',
     'BuildStrategySpecBuildStepsSecurityContext',
     'BuildStrategySpecBuildStepsSecurityContextCapabilities',
     'BuildStrategySpecBuildStepsSecurityContextSeLinuxOptions',
@@ -89,6 +111,7 @@ __all__ = [
     'ClusterBuildStrategySpecBuildStepsEnvValueFromConfigMapKeyRef',
     'ClusterBuildStrategySpecBuildStepsEnvValueFromFieldRef',
     'ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRef',
+    'ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisor',
     'ClusterBuildStrategySpecBuildStepsEnvValueFromSecretKeyRef',
     'ClusterBuildStrategySpecBuildStepsLifecycle',
     'ClusterBuildStrategySpecBuildStepsLifecyclePostStart',
@@ -121,6 +144,8 @@ __all__ = [
     'ClusterBuildStrategySpecBuildStepsReadinessProbeTcpSocket',
     'ClusterBuildStrategySpecBuildStepsReadinessProbeTcpSocketPort',
     'ClusterBuildStrategySpecBuildStepsResources',
+    'ClusterBuildStrategySpecBuildStepsResourcesLimits',
+    'ClusterBuildStrategySpecBuildStepsResourcesRequests',
     'ClusterBuildStrategySpecBuildStepsSecurityContext',
     'ClusterBuildStrategySpecBuildStepsSecurityContextCapabilities',
     'ClusterBuildStrategySpecBuildStepsSecurityContextSeLinuxOptions',
@@ -143,19 +168,23 @@ class BuildRunSpec(dict):
     """
     def __init__(__self__, *,
                  build_ref: 'outputs.BuildRunSpecBuildRef',
-                 resources: Optional['outputs.BuildRunSpecResources'] = None,
-                 service_account: Optional[str] = None):
+                 output: Optional['outputs.BuildRunSpecOutput'] = None,
+                 service_account: Optional['outputs.BuildRunSpecServiceAccount'] = None,
+                 timeout: Optional[str] = None):
         """
         BuildRunSpec defines the desired state of BuildRun
         :param 'BuildRunSpecBuildRefArgs' build_ref: BuildRef refers to the Build
-        :param 'BuildRunSpecResourcesArgs' resources: Compute Resources required by the build container which can overwrite the configuration in Build. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-        :param str service_account: ServiceAccount refers to the kubernetes serviceaccount which is used for resource control. Default serviceaccount will be set if it is empty
+        :param 'BuildRunSpecOutputArgs' output: Output refers to the location where the generated image would be pushed to. It will overwrite the output image in build spec
+        :param 'BuildRunSpecServiceAccountArgs' service_account: ServiceAccount refers to the kubernetes serviceaccount which is used for resource control. Default serviceaccount will be set if it is empty
+        :param str timeout: Timeout defines the maximum run time of this build run.
         """
         pulumi.set(__self__, "build_ref", build_ref)
-        if resources is not None:
-            pulumi.set(__self__, "resources", resources)
+        if output is not None:
+            pulumi.set(__self__, "output", output)
         if service_account is not None:
             pulumi.set(__self__, "service_account", service_account)
+        if timeout is not None:
+            pulumi.set(__self__, "timeout", timeout)
 
     @property
     @pulumi.getter(name="buildRef")
@@ -167,19 +196,27 @@ class BuildRunSpec(dict):
 
     @property
     @pulumi.getter
-    def resources(self) -> Optional['outputs.BuildRunSpecResources']:
+    def output(self) -> Optional['outputs.BuildRunSpecOutput']:
         """
-        Compute Resources required by the build container which can overwrite the configuration in Build. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
+        Output refers to the location where the generated image would be pushed to. It will overwrite the output image in build spec
         """
-        return pulumi.get(self, "resources")
+        return pulumi.get(self, "output")
 
     @property
     @pulumi.getter(name="serviceAccount")
-    def service_account(self) -> Optional[str]:
+    def service_account(self) -> Optional['outputs.BuildRunSpecServiceAccount']:
         """
         ServiceAccount refers to the kubernetes serviceaccount which is used for resource control. Default serviceaccount will be set if it is empty
         """
         return pulumi.get(self, "service_account")
+
+    @property
+    @pulumi.getter
+    def timeout(self) -> Optional[str]:
+        """
+        Timeout defines the maximum run time of this build run.
+        """
+        return pulumi.get(self, "timeout")
 
     def _translate_property(self, prop):
         return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
@@ -191,17 +228,24 @@ class BuildRunSpecBuildRef(dict):
     BuildRef refers to the Build
     """
     def __init__(__self__, *,
-                 api_version: Optional[str] = None,
-                 name: Optional[str] = None):
+                 name: str,
+                 api_version: Optional[str] = None):
         """
         BuildRef refers to the Build
-        :param str api_version: API version of the referent
         :param str name: Name of the referent; More info: http://kubernetes.io/docs/user-guide/identifiers#names
+        :param str api_version: API version of the referent
         """
+        pulumi.set(__self__, "name", name)
         if api_version is not None:
             pulumi.set(__self__, "api_version", api_version)
-        if name is not None:
-            pulumi.set(__self__, "name", name)
+
+    @property
+    @pulumi.getter
+    def name(self) -> str:
+        """
+        Name of the referent; More info: http://kubernetes.io/docs/user-guide/identifiers#names
+        """
+        return pulumi.get(self, "name")
 
     @property
     @pulumi.getter(name="apiVersion")
@@ -210,6 +254,99 @@ class BuildRunSpecBuildRef(dict):
         API version of the referent
         """
         return pulumi.get(self, "api_version")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class BuildRunSpecOutput(dict):
+    """
+    Output refers to the location where the generated image would be pushed to. It will overwrite the output image in build spec
+    """
+    def __init__(__self__, *,
+                 image: str,
+                 credentials: Optional['outputs.BuildRunSpecOutputCredentials'] = None):
+        """
+        Output refers to the location where the generated image would be pushed to. It will overwrite the output image in build spec
+        :param str image: ImageURL is the URL where the image will be pushed to.
+        :param 'BuildRunSpecOutputCredentialsArgs' credentials: SecretRef is a reference to the Secret containing the credentials to push the image to the registry
+        """
+        pulumi.set(__self__, "image", image)
+        if credentials is not None:
+            pulumi.set(__self__, "credentials", credentials)
+
+    @property
+    @pulumi.getter
+    def image(self) -> str:
+        """
+        ImageURL is the URL where the image will be pushed to.
+        """
+        return pulumi.get(self, "image")
+
+    @property
+    @pulumi.getter
+    def credentials(self) -> Optional['outputs.BuildRunSpecOutputCredentials']:
+        """
+        SecretRef is a reference to the Secret containing the credentials to push the image to the registry
+        """
+        return pulumi.get(self, "credentials")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class BuildRunSpecOutputCredentials(dict):
+    """
+    SecretRef is a reference to the Secret containing the credentials to push the image to the registry
+    """
+    def __init__(__self__, *,
+                 name: Optional[str] = None):
+        """
+        SecretRef is a reference to the Secret containing the credentials to push the image to the registry
+        :param str name: Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+        """
+        if name is not None:
+            pulumi.set(__self__, "name", name)
+
+    @property
+    @pulumi.getter
+    def name(self) -> Optional[str]:
+        """
+        Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+        """
+        return pulumi.get(self, "name")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class BuildRunSpecServiceAccount(dict):
+    """
+    ServiceAccount refers to the kubernetes serviceaccount which is used for resource control. Default serviceaccount will be set if it is empty
+    """
+    def __init__(__self__, *,
+                 generate: Optional[bool] = None,
+                 name: Optional[str] = None):
+        """
+        ServiceAccount refers to the kubernetes serviceaccount which is used for resource control. Default serviceaccount will be set if it is empty
+        :param bool generate: If generates a new ServiceAccount for the build
+        :param str name: Name of the referent; More info: http://kubernetes.io/docs/user-guide/identifiers#names
+        """
+        if generate is not None:
+            pulumi.set(__self__, "generate", generate)
+        if name is not None:
+            pulumi.set(__self__, "name", name)
+
+    @property
+    @pulumi.getter
+    def generate(self) -> Optional[bool]:
+        """
+        If generates a new ServiceAccount for the build
+        """
+        return pulumi.get(self, "generate")
 
     @property
     @pulumi.getter
@@ -224,49 +361,12 @@ class BuildRunSpecBuildRef(dict):
 
 
 @pulumi.output_type
-class BuildRunSpecResources(dict):
-    """
-    Compute Resources required by the build container which can overwrite the configuration in Build. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-    """
-    def __init__(__self__, *,
-                 limits: Optional[Mapping[str, str]] = None,
-                 requests: Optional[Mapping[str, str]] = None):
-        """
-        Compute Resources required by the build container which can overwrite the configuration in Build. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-        :param Mapping[str, str] limits: Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-        :param Mapping[str, str] requests: Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-        """
-        if limits is not None:
-            pulumi.set(__self__, "limits", limits)
-        if requests is not None:
-            pulumi.set(__self__, "requests", requests)
-
-    @property
-    @pulumi.getter
-    def limits(self) -> Optional[Mapping[str, str]]:
-        """
-        Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-        """
-        return pulumi.get(self, "limits")
-
-    @property
-    @pulumi.getter
-    def requests(self) -> Optional[Mapping[str, str]]:
-        """
-        Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-        """
-        return pulumi.get(self, "requests")
-
-    def _translate_property(self, prop):
-        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
-
-
-@pulumi.output_type
 class BuildRunStatus(dict):
     """
     BuildRunStatus defines the observed state of BuildRun
     """
     def __init__(__self__, *,
+                 build_spec: Optional['outputs.BuildRunStatusBuildSpec'] = None,
                  completion_time: Optional[str] = None,
                  latest_task_run_ref: Optional[str] = None,
                  reason: Optional[str] = None,
@@ -274,12 +374,15 @@ class BuildRunStatus(dict):
                  succeeded: Optional[str] = None):
         """
         BuildRunStatus defines the observed state of BuildRun
+        :param 'BuildRunStatusBuildSpecArgs' build_spec: BuildSpec is the Build Spec of this BuildRun.
         :param str completion_time: CompletionTime is the time the build completed.
         :param str latest_task_run_ref: PodName is the name of the pod responsible for executing this task's steps.
         :param str reason: The Succeeded reason of the TaskRun
         :param str start_time: StartTime is the time the build is actually started.
         :param str succeeded: The Succeeded status of the TaskRun
         """
+        if build_spec is not None:
+            pulumi.set(__self__, "build_spec", build_spec)
         if completion_time is not None:
             pulumi.set(__self__, "completion_time", completion_time)
         if latest_task_run_ref is not None:
@@ -290,6 +393,14 @@ class BuildRunStatus(dict):
             pulumi.set(__self__, "start_time", start_time)
         if succeeded is not None:
             pulumi.set(__self__, "succeeded", succeeded)
+
+    @property
+    @pulumi.getter(name="buildSpec")
+    def build_spec(self) -> Optional['outputs.BuildRunStatusBuildSpec']:
+        """
+        BuildSpec is the Build Spec of this BuildRun.
+        """
+        return pulumi.get(self, "build_spec")
 
     @property
     @pulumi.getter(name="completionTime")
@@ -336,6 +447,661 @@ class BuildRunStatus(dict):
 
 
 @pulumi.output_type
+class BuildRunStatusBuildSpec(dict):
+    """
+    BuildSpec is the Build Spec of this BuildRun.
+    """
+    def __init__(__self__, *,
+                 output: 'outputs.BuildRunStatusBuildSpecOutput',
+                 source: 'outputs.BuildRunStatusBuildSpecSource',
+                 strategy: 'outputs.BuildRunStatusBuildSpecStrategy',
+                 builder: Optional['outputs.BuildRunStatusBuildSpecBuilder'] = None,
+                 dockerfile: Optional[str] = None,
+                 parameters: Optional[Sequence['outputs.BuildRunStatusBuildSpecParameters']] = None,
+                 runtime: Optional['outputs.BuildRunStatusBuildSpecRuntime'] = None,
+                 timeout: Optional[str] = None):
+        """
+        BuildSpec is the Build Spec of this BuildRun.
+        :param 'BuildRunStatusBuildSpecOutputArgs' output: Output refers to the location where the generated image would be pushed to.
+        :param 'BuildRunStatusBuildSpecSourceArgs' source: Source refers to the Git repository containing the source code to be built.
+        :param 'BuildRunStatusBuildSpecStrategyArgs' strategy: StrategyRef refers to the BuildStrategy to be used to build the container image. There are namespaced scope and cluster scope BuildStrategy
+        :param 'BuildRunStatusBuildSpecBuilderArgs' builder: BuilderImage refers to the image containing the build tools inside which the source code would be built.
+        :param str dockerfile: Dockerfile is the path to the Dockerfile to be used for build strategies which bank on the Dockerfile for building an image.
+        :param Sequence['BuildRunStatusBuildSpecParametersArgs'] parameters: Parameters contains name-value that could be used to loosely type parameters in the BuildStrategy.
+        :param 'BuildRunStatusBuildSpecRuntimeArgs' runtime: Runtime represents the runtime-image
+        :param str timeout: Timeout defines the maximum run time of a build run.
+        """
+        pulumi.set(__self__, "output", output)
+        pulumi.set(__self__, "source", source)
+        pulumi.set(__self__, "strategy", strategy)
+        if builder is not None:
+            pulumi.set(__self__, "builder", builder)
+        if dockerfile is not None:
+            pulumi.set(__self__, "dockerfile", dockerfile)
+        if parameters is not None:
+            pulumi.set(__self__, "parameters", parameters)
+        if runtime is not None:
+            pulumi.set(__self__, "runtime", runtime)
+        if timeout is not None:
+            pulumi.set(__self__, "timeout", timeout)
+
+    @property
+    @pulumi.getter
+    def output(self) -> 'outputs.BuildRunStatusBuildSpecOutput':
+        """
+        Output refers to the location where the generated image would be pushed to.
+        """
+        return pulumi.get(self, "output")
+
+    @property
+    @pulumi.getter
+    def source(self) -> 'outputs.BuildRunStatusBuildSpecSource':
+        """
+        Source refers to the Git repository containing the source code to be built.
+        """
+        return pulumi.get(self, "source")
+
+    @property
+    @pulumi.getter
+    def strategy(self) -> 'outputs.BuildRunStatusBuildSpecStrategy':
+        """
+        StrategyRef refers to the BuildStrategy to be used to build the container image. There are namespaced scope and cluster scope BuildStrategy
+        """
+        return pulumi.get(self, "strategy")
+
+    @property
+    @pulumi.getter
+    def builder(self) -> Optional['outputs.BuildRunStatusBuildSpecBuilder']:
+        """
+        BuilderImage refers to the image containing the build tools inside which the source code would be built.
+        """
+        return pulumi.get(self, "builder")
+
+    @property
+    @pulumi.getter
+    def dockerfile(self) -> Optional[str]:
+        """
+        Dockerfile is the path to the Dockerfile to be used for build strategies which bank on the Dockerfile for building an image.
+        """
+        return pulumi.get(self, "dockerfile")
+
+    @property
+    @pulumi.getter
+    def parameters(self) -> Optional[Sequence['outputs.BuildRunStatusBuildSpecParameters']]:
+        """
+        Parameters contains name-value that could be used to loosely type parameters in the BuildStrategy.
+        """
+        return pulumi.get(self, "parameters")
+
+    @property
+    @pulumi.getter
+    def runtime(self) -> Optional['outputs.BuildRunStatusBuildSpecRuntime']:
+        """
+        Runtime represents the runtime-image
+        """
+        return pulumi.get(self, "runtime")
+
+    @property
+    @pulumi.getter
+    def timeout(self) -> Optional[str]:
+        """
+        Timeout defines the maximum run time of a build run.
+        """
+        return pulumi.get(self, "timeout")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class BuildRunStatusBuildSpecBuilder(dict):
+    """
+    BuilderImage refers to the image containing the build tools inside which the source code would be built.
+    """
+    def __init__(__self__, *,
+                 image: str,
+                 credentials: Optional['outputs.BuildRunStatusBuildSpecBuilderCredentials'] = None):
+        """
+        BuilderImage refers to the image containing the build tools inside which the source code would be built.
+        :param str image: ImageURL is the URL where the image will be pushed to.
+        :param 'BuildRunStatusBuildSpecBuilderCredentialsArgs' credentials: SecretRef is a reference to the Secret containing the credentials to push the image to the registry
+        """
+        pulumi.set(__self__, "image", image)
+        if credentials is not None:
+            pulumi.set(__self__, "credentials", credentials)
+
+    @property
+    @pulumi.getter
+    def image(self) -> str:
+        """
+        ImageURL is the URL where the image will be pushed to.
+        """
+        return pulumi.get(self, "image")
+
+    @property
+    @pulumi.getter
+    def credentials(self) -> Optional['outputs.BuildRunStatusBuildSpecBuilderCredentials']:
+        """
+        SecretRef is a reference to the Secret containing the credentials to push the image to the registry
+        """
+        return pulumi.get(self, "credentials")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class BuildRunStatusBuildSpecBuilderCredentials(dict):
+    """
+    SecretRef is a reference to the Secret containing the credentials to push the image to the registry
+    """
+    def __init__(__self__, *,
+                 name: Optional[str] = None):
+        """
+        SecretRef is a reference to the Secret containing the credentials to push the image to the registry
+        :param str name: Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+        """
+        if name is not None:
+            pulumi.set(__self__, "name", name)
+
+    @property
+    @pulumi.getter
+    def name(self) -> Optional[str]:
+        """
+        Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+        """
+        return pulumi.get(self, "name")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class BuildRunStatusBuildSpecOutput(dict):
+    """
+    Output refers to the location where the generated image would be pushed to.
+    """
+    def __init__(__self__, *,
+                 image: str,
+                 credentials: Optional['outputs.BuildRunStatusBuildSpecOutputCredentials'] = None):
+        """
+        Output refers to the location where the generated image would be pushed to.
+        :param str image: ImageURL is the URL where the image will be pushed to.
+        :param 'BuildRunStatusBuildSpecOutputCredentialsArgs' credentials: SecretRef is a reference to the Secret containing the credentials to push the image to the registry
+        """
+        pulumi.set(__self__, "image", image)
+        if credentials is not None:
+            pulumi.set(__self__, "credentials", credentials)
+
+    @property
+    @pulumi.getter
+    def image(self) -> str:
+        """
+        ImageURL is the URL where the image will be pushed to.
+        """
+        return pulumi.get(self, "image")
+
+    @property
+    @pulumi.getter
+    def credentials(self) -> Optional['outputs.BuildRunStatusBuildSpecOutputCredentials']:
+        """
+        SecretRef is a reference to the Secret containing the credentials to push the image to the registry
+        """
+        return pulumi.get(self, "credentials")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class BuildRunStatusBuildSpecOutputCredentials(dict):
+    """
+    SecretRef is a reference to the Secret containing the credentials to push the image to the registry
+    """
+    def __init__(__self__, *,
+                 name: Optional[str] = None):
+        """
+        SecretRef is a reference to the Secret containing the credentials to push the image to the registry
+        :param str name: Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+        """
+        if name is not None:
+            pulumi.set(__self__, "name", name)
+
+    @property
+    @pulumi.getter
+    def name(self) -> Optional[str]:
+        """
+        Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+        """
+        return pulumi.get(self, "name")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class BuildRunStatusBuildSpecParameters(dict):
+    """
+    Parameter defines the data structure that would be used for expressing arbitrary key/value pairs for the execution of a build
+    """
+    def __init__(__self__, *,
+                 name: str,
+                 value: str):
+        """
+        Parameter defines the data structure that would be used for expressing arbitrary key/value pairs for the execution of a build
+        """
+        pulumi.set(__self__, "name", name)
+        pulumi.set(__self__, "value", value)
+
+    @property
+    @pulumi.getter
+    def name(self) -> str:
+        return pulumi.get(self, "name")
+
+    @property
+    @pulumi.getter
+    def value(self) -> str:
+        return pulumi.get(self, "value")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class BuildRunStatusBuildSpecRuntime(dict):
+    """
+    Runtime represents the runtime-image
+    """
+    def __init__(__self__, *,
+                 base: Optional['outputs.BuildRunStatusBuildSpecRuntimeBase'] = None,
+                 entrypoint: Optional[Sequence[str]] = None,
+                 env: Optional[Mapping[str, str]] = None,
+                 labels: Optional[Mapping[str, str]] = None,
+                 paths: Optional[Sequence[str]] = None,
+                 run: Optional[Sequence[str]] = None,
+                 user: Optional['outputs.BuildRunStatusBuildSpecRuntimeUser'] = None,
+                 work_dir: Optional[str] = None):
+        """
+        Runtime represents the runtime-image
+        :param 'BuildRunStatusBuildSpecRuntimeBaseArgs' base: Base runtime base image.
+        :param Sequence[str] entrypoint: Entrypoint runtime-image entrypoint.
+        :param Mapping[str, str] env: Env environment variables for runtime.
+        :param Mapping[str, str] labels: Labels map of additional labels to be applied on image.
+        :param Sequence[str] paths: Paths list of directories/files to be copied into runtime-image, using colon ":" to split up source and destination paths.
+        :param Sequence[str] run: Run arbitrary commands to run before copying data into runtime-image.
+        :param 'BuildRunStatusBuildSpecRuntimeUserArgs' user: User definitions of user and group for runtime-image.
+        :param str work_dir: WorkDir runtime image working directory `WORKDIR`.
+        """
+        if base is not None:
+            pulumi.set(__self__, "base", base)
+        if entrypoint is not None:
+            pulumi.set(__self__, "entrypoint", entrypoint)
+        if env is not None:
+            pulumi.set(__self__, "env", env)
+        if labels is not None:
+            pulumi.set(__self__, "labels", labels)
+        if paths is not None:
+            pulumi.set(__self__, "paths", paths)
+        if run is not None:
+            pulumi.set(__self__, "run", run)
+        if user is not None:
+            pulumi.set(__self__, "user", user)
+        if work_dir is not None:
+            pulumi.set(__self__, "work_dir", work_dir)
+
+    @property
+    @pulumi.getter
+    def base(self) -> Optional['outputs.BuildRunStatusBuildSpecRuntimeBase']:
+        """
+        Base runtime base image.
+        """
+        return pulumi.get(self, "base")
+
+    @property
+    @pulumi.getter
+    def entrypoint(self) -> Optional[Sequence[str]]:
+        """
+        Entrypoint runtime-image entrypoint.
+        """
+        return pulumi.get(self, "entrypoint")
+
+    @property
+    @pulumi.getter
+    def env(self) -> Optional[Mapping[str, str]]:
+        """
+        Env environment variables for runtime.
+        """
+        return pulumi.get(self, "env")
+
+    @property
+    @pulumi.getter
+    def labels(self) -> Optional[Mapping[str, str]]:
+        """
+        Labels map of additional labels to be applied on image.
+        """
+        return pulumi.get(self, "labels")
+
+    @property
+    @pulumi.getter
+    def paths(self) -> Optional[Sequence[str]]:
+        """
+        Paths list of directories/files to be copied into runtime-image, using colon ":" to split up source and destination paths.
+        """
+        return pulumi.get(self, "paths")
+
+    @property
+    @pulumi.getter
+    def run(self) -> Optional[Sequence[str]]:
+        """
+        Run arbitrary commands to run before copying data into runtime-image.
+        """
+        return pulumi.get(self, "run")
+
+    @property
+    @pulumi.getter
+    def user(self) -> Optional['outputs.BuildRunStatusBuildSpecRuntimeUser']:
+        """
+        User definitions of user and group for runtime-image.
+        """
+        return pulumi.get(self, "user")
+
+    @property
+    @pulumi.getter(name="workDir")
+    def work_dir(self) -> Optional[str]:
+        """
+        WorkDir runtime image working directory `WORKDIR`.
+        """
+        return pulumi.get(self, "work_dir")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class BuildRunStatusBuildSpecRuntimeBase(dict):
+    """
+    Base runtime base image.
+    """
+    def __init__(__self__, *,
+                 image: str,
+                 credentials: Optional['outputs.BuildRunStatusBuildSpecRuntimeBaseCredentials'] = None):
+        """
+        Base runtime base image.
+        :param str image: ImageURL is the URL where the image will be pushed to.
+        :param 'BuildRunStatusBuildSpecRuntimeBaseCredentialsArgs' credentials: SecretRef is a reference to the Secret containing the credentials to push the image to the registry
+        """
+        pulumi.set(__self__, "image", image)
+        if credentials is not None:
+            pulumi.set(__self__, "credentials", credentials)
+
+    @property
+    @pulumi.getter
+    def image(self) -> str:
+        """
+        ImageURL is the URL where the image will be pushed to.
+        """
+        return pulumi.get(self, "image")
+
+    @property
+    @pulumi.getter
+    def credentials(self) -> Optional['outputs.BuildRunStatusBuildSpecRuntimeBaseCredentials']:
+        """
+        SecretRef is a reference to the Secret containing the credentials to push the image to the registry
+        """
+        return pulumi.get(self, "credentials")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class BuildRunStatusBuildSpecRuntimeBaseCredentials(dict):
+    """
+    SecretRef is a reference to the Secret containing the credentials to push the image to the registry
+    """
+    def __init__(__self__, *,
+                 name: Optional[str] = None):
+        """
+        SecretRef is a reference to the Secret containing the credentials to push the image to the registry
+        :param str name: Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+        """
+        if name is not None:
+            pulumi.set(__self__, "name", name)
+
+    @property
+    @pulumi.getter
+    def name(self) -> Optional[str]:
+        """
+        Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+        """
+        return pulumi.get(self, "name")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class BuildRunStatusBuildSpecRuntimeUser(dict):
+    """
+    User definitions of user and group for runtime-image.
+    """
+    def __init__(__self__, *,
+                 name: str,
+                 group: Optional[str] = None):
+        """
+        User definitions of user and group for runtime-image.
+        :param str name: Name user name to be employed in runtime-image.
+        :param str group: Group group name or GID employed in runtime-image.
+        """
+        pulumi.set(__self__, "name", name)
+        if group is not None:
+            pulumi.set(__self__, "group", group)
+
+    @property
+    @pulumi.getter
+    def name(self) -> str:
+        """
+        Name user name to be employed in runtime-image.
+        """
+        return pulumi.get(self, "name")
+
+    @property
+    @pulumi.getter
+    def group(self) -> Optional[str]:
+        """
+        Group group name or GID employed in runtime-image.
+        """
+        return pulumi.get(self, "group")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class BuildRunStatusBuildSpecSource(dict):
+    """
+    Source refers to the Git repository containing the source code to be built.
+    """
+    def __init__(__self__, *,
+                 url: str,
+                 context_dir: Optional[str] = None,
+                 credentials: Optional['outputs.BuildRunStatusBuildSpecSourceCredentials'] = None,
+                 flavor: Optional[str] = None,
+                 http_proxy: Optional[str] = None,
+                 https_proxy: Optional[str] = None,
+                 no_proxy: Optional[str] = None,
+                 revision: Optional[str] = None):
+        """
+        Source refers to the Git repository containing the source code to be built.
+        :param str url: URL of the git repo
+        :param str context_dir: ContextDir is a path to subfolder in the repo. Optional.
+        :param 'BuildRunStatusBuildSpecSourceCredentialsArgs' credentials: SecretRef refers to the secret that contains credentials to access the git repo. Optional.
+        :param str flavor: Flavor of the git provider like github, gitlab, bitbucket, generic, etc. Optional.
+        :param str http_proxy: HTTPProxy is optional.
+        :param str https_proxy: HTTPSProxy is optional.
+        :param str no_proxy: NoProxy can be used to specify domains for which no proxying should be performed. Optional.
+        :param str revision: Ref is a git reference. Optional. "master" is used by default.
+        """
+        pulumi.set(__self__, "url", url)
+        if context_dir is not None:
+            pulumi.set(__self__, "context_dir", context_dir)
+        if credentials is not None:
+            pulumi.set(__self__, "credentials", credentials)
+        if flavor is not None:
+            pulumi.set(__self__, "flavor", flavor)
+        if http_proxy is not None:
+            pulumi.set(__self__, "http_proxy", http_proxy)
+        if https_proxy is not None:
+            pulumi.set(__self__, "https_proxy", https_proxy)
+        if no_proxy is not None:
+            pulumi.set(__self__, "no_proxy", no_proxy)
+        if revision is not None:
+            pulumi.set(__self__, "revision", revision)
+
+    @property
+    @pulumi.getter
+    def url(self) -> str:
+        """
+        URL of the git repo
+        """
+        return pulumi.get(self, "url")
+
+    @property
+    @pulumi.getter(name="contextDir")
+    def context_dir(self) -> Optional[str]:
+        """
+        ContextDir is a path to subfolder in the repo. Optional.
+        """
+        return pulumi.get(self, "context_dir")
+
+    @property
+    @pulumi.getter
+    def credentials(self) -> Optional['outputs.BuildRunStatusBuildSpecSourceCredentials']:
+        """
+        SecretRef refers to the secret that contains credentials to access the git repo. Optional.
+        """
+        return pulumi.get(self, "credentials")
+
+    @property
+    @pulumi.getter
+    def flavor(self) -> Optional[str]:
+        """
+        Flavor of the git provider like github, gitlab, bitbucket, generic, etc. Optional.
+        """
+        return pulumi.get(self, "flavor")
+
+    @property
+    @pulumi.getter(name="httpProxy")
+    def http_proxy(self) -> Optional[str]:
+        """
+        HTTPProxy is optional.
+        """
+        return pulumi.get(self, "http_proxy")
+
+    @property
+    @pulumi.getter(name="httpsProxy")
+    def https_proxy(self) -> Optional[str]:
+        """
+        HTTPSProxy is optional.
+        """
+        return pulumi.get(self, "https_proxy")
+
+    @property
+    @pulumi.getter(name="noProxy")
+    def no_proxy(self) -> Optional[str]:
+        """
+        NoProxy can be used to specify domains for which no proxying should be performed. Optional.
+        """
+        return pulumi.get(self, "no_proxy")
+
+    @property
+    @pulumi.getter
+    def revision(self) -> Optional[str]:
+        """
+        Ref is a git reference. Optional. "master" is used by default.
+        """
+        return pulumi.get(self, "revision")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class BuildRunStatusBuildSpecSourceCredentials(dict):
+    """
+    SecretRef refers to the secret that contains credentials to access the git repo. Optional.
+    """
+    def __init__(__self__, *,
+                 name: Optional[str] = None):
+        """
+        SecretRef refers to the secret that contains credentials to access the git repo. Optional.
+        :param str name: Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+        """
+        if name is not None:
+            pulumi.set(__self__, "name", name)
+
+    @property
+    @pulumi.getter
+    def name(self) -> Optional[str]:
+        """
+        Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+        """
+        return pulumi.get(self, "name")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class BuildRunStatusBuildSpecStrategy(dict):
+    """
+    StrategyRef refers to the BuildStrategy to be used to build the container image. There are namespaced scope and cluster scope BuildStrategy
+    """
+    def __init__(__self__, *,
+                 name: str,
+                 api_version: Optional[str] = None,
+                 kind: Optional[str] = None):
+        """
+        StrategyRef refers to the BuildStrategy to be used to build the container image. There are namespaced scope and cluster scope BuildStrategy
+        :param str name: Name of the referent; More info: http://kubernetes.io/docs/user-guide/identifiers#names
+        :param str api_version: API version of the referent
+        :param str kind: BuildStrategyKind indicates the kind of the buildstrategy, namespaced or cluster scoped.
+        """
+        pulumi.set(__self__, "name", name)
+        if api_version is not None:
+            pulumi.set(__self__, "api_version", api_version)
+        if kind is not None:
+            pulumi.set(__self__, "kind", kind)
+
+    @property
+    @pulumi.getter
+    def name(self) -> str:
+        """
+        Name of the referent; More info: http://kubernetes.io/docs/user-guide/identifiers#names
+        """
+        return pulumi.get(self, "name")
+
+    @property
+    @pulumi.getter(name="apiVersion")
+    def api_version(self) -> Optional[str]:
+        """
+        API version of the referent
+        """
+        return pulumi.get(self, "api_version")
+
+    @property
+    @pulumi.getter
+    def kind(self) -> Optional[str]:
+        """
+        BuildStrategyKind indicates the kind of the buildstrategy, namespaced or cluster scoped.
+        """
+        return pulumi.get(self, "kind")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
 class BuildSpec(dict):
     """
     BuildSpec defines the desired state of Build
@@ -347,7 +1113,8 @@ class BuildSpec(dict):
                  builder: Optional['outputs.BuildSpecBuilder'] = None,
                  dockerfile: Optional[str] = None,
                  parameters: Optional[Sequence['outputs.BuildSpecParameters']] = None,
-                 resources: Optional['outputs.BuildSpecResources'] = None):
+                 runtime: Optional['outputs.BuildSpecRuntime'] = None,
+                 timeout: Optional[str] = None):
         """
         BuildSpec defines the desired state of Build
         :param 'BuildSpecOutputArgs' output: Output refers to the location where the generated image would be pushed to.
@@ -356,7 +1123,8 @@ class BuildSpec(dict):
         :param 'BuildSpecBuilderArgs' builder: BuilderImage refers to the image containing the build tools inside which the source code would be built.
         :param str dockerfile: Dockerfile is the path to the Dockerfile to be used for build strategies which bank on the Dockerfile for building an image.
         :param Sequence['BuildSpecParametersArgs'] parameters: Parameters contains name-value that could be used to loosely type parameters in the BuildStrategy.
-        :param 'BuildSpecResourcesArgs' resources: Compute Resources required by the build container. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
+        :param 'BuildSpecRuntimeArgs' runtime: Runtime represents the runtime-image
+        :param str timeout: Timeout defines the maximum run time of a build run.
         """
         pulumi.set(__self__, "output", output)
         pulumi.set(__self__, "source", source)
@@ -367,8 +1135,10 @@ class BuildSpec(dict):
             pulumi.set(__self__, "dockerfile", dockerfile)
         if parameters is not None:
             pulumi.set(__self__, "parameters", parameters)
-        if resources is not None:
-            pulumi.set(__self__, "resources", resources)
+        if runtime is not None:
+            pulumi.set(__self__, "runtime", runtime)
+        if timeout is not None:
+            pulumi.set(__self__, "timeout", timeout)
 
     @property
     @pulumi.getter
@@ -420,11 +1190,19 @@ class BuildSpec(dict):
 
     @property
     @pulumi.getter
-    def resources(self) -> Optional['outputs.BuildSpecResources']:
+    def runtime(self) -> Optional['outputs.BuildSpecRuntime']:
         """
-        Compute Resources required by the build container. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
+        Runtime represents the runtime-image
         """
-        return pulumi.get(self, "resources")
+        return pulumi.get(self, "runtime")
+
+    @property
+    @pulumi.getter
+    def timeout(self) -> Optional[str]:
+        """
+        Timeout defines the maximum run time of a build run.
+        """
+        return pulumi.get(self, "timeout")
 
     def _translate_property(self, prop):
         return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
@@ -585,38 +1363,210 @@ class BuildSpecParameters(dict):
 
 
 @pulumi.output_type
-class BuildSpecResources(dict):
+class BuildSpecRuntime(dict):
     """
-    Compute Resources required by the build container. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
+    Runtime represents the runtime-image
     """
     def __init__(__self__, *,
-                 limits: Optional[Mapping[str, str]] = None,
-                 requests: Optional[Mapping[str, str]] = None):
+                 base: Optional['outputs.BuildSpecRuntimeBase'] = None,
+                 entrypoint: Optional[Sequence[str]] = None,
+                 env: Optional[Mapping[str, str]] = None,
+                 labels: Optional[Mapping[str, str]] = None,
+                 paths: Optional[Sequence[str]] = None,
+                 run: Optional[Sequence[str]] = None,
+                 user: Optional['outputs.BuildSpecRuntimeUser'] = None,
+                 work_dir: Optional[str] = None):
         """
-        Compute Resources required by the build container. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-        :param Mapping[str, str] limits: Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-        :param Mapping[str, str] requests: Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
+        Runtime represents the runtime-image
+        :param 'BuildSpecRuntimeBaseArgs' base: Base runtime base image.
+        :param Sequence[str] entrypoint: Entrypoint runtime-image entrypoint.
+        :param Mapping[str, str] env: Env environment variables for runtime.
+        :param Mapping[str, str] labels: Labels map of additional labels to be applied on image.
+        :param Sequence[str] paths: Paths list of directories/files to be copied into runtime-image, using colon ":" to split up source and destination paths.
+        :param Sequence[str] run: Run arbitrary commands to run before copying data into runtime-image.
+        :param 'BuildSpecRuntimeUserArgs' user: User definitions of user and group for runtime-image.
+        :param str work_dir: WorkDir runtime image working directory `WORKDIR`.
         """
-        if limits is not None:
-            pulumi.set(__self__, "limits", limits)
-        if requests is not None:
-            pulumi.set(__self__, "requests", requests)
+        if base is not None:
+            pulumi.set(__self__, "base", base)
+        if entrypoint is not None:
+            pulumi.set(__self__, "entrypoint", entrypoint)
+        if env is not None:
+            pulumi.set(__self__, "env", env)
+        if labels is not None:
+            pulumi.set(__self__, "labels", labels)
+        if paths is not None:
+            pulumi.set(__self__, "paths", paths)
+        if run is not None:
+            pulumi.set(__self__, "run", run)
+        if user is not None:
+            pulumi.set(__self__, "user", user)
+        if work_dir is not None:
+            pulumi.set(__self__, "work_dir", work_dir)
 
     @property
     @pulumi.getter
-    def limits(self) -> Optional[Mapping[str, str]]:
+    def base(self) -> Optional['outputs.BuildSpecRuntimeBase']:
         """
-        Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
+        Base runtime base image.
         """
-        return pulumi.get(self, "limits")
+        return pulumi.get(self, "base")
 
     @property
     @pulumi.getter
-    def requests(self) -> Optional[Mapping[str, str]]:
+    def entrypoint(self) -> Optional[Sequence[str]]:
         """
-        Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
+        Entrypoint runtime-image entrypoint.
         """
-        return pulumi.get(self, "requests")
+        return pulumi.get(self, "entrypoint")
+
+    @property
+    @pulumi.getter
+    def env(self) -> Optional[Mapping[str, str]]:
+        """
+        Env environment variables for runtime.
+        """
+        return pulumi.get(self, "env")
+
+    @property
+    @pulumi.getter
+    def labels(self) -> Optional[Mapping[str, str]]:
+        """
+        Labels map of additional labels to be applied on image.
+        """
+        return pulumi.get(self, "labels")
+
+    @property
+    @pulumi.getter
+    def paths(self) -> Optional[Sequence[str]]:
+        """
+        Paths list of directories/files to be copied into runtime-image, using colon ":" to split up source and destination paths.
+        """
+        return pulumi.get(self, "paths")
+
+    @property
+    @pulumi.getter
+    def run(self) -> Optional[Sequence[str]]:
+        """
+        Run arbitrary commands to run before copying data into runtime-image.
+        """
+        return pulumi.get(self, "run")
+
+    @property
+    @pulumi.getter
+    def user(self) -> Optional['outputs.BuildSpecRuntimeUser']:
+        """
+        User definitions of user and group for runtime-image.
+        """
+        return pulumi.get(self, "user")
+
+    @property
+    @pulumi.getter(name="workDir")
+    def work_dir(self) -> Optional[str]:
+        """
+        WorkDir runtime image working directory `WORKDIR`.
+        """
+        return pulumi.get(self, "work_dir")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class BuildSpecRuntimeBase(dict):
+    """
+    Base runtime base image.
+    """
+    def __init__(__self__, *,
+                 image: str,
+                 credentials: Optional['outputs.BuildSpecRuntimeBaseCredentials'] = None):
+        """
+        Base runtime base image.
+        :param str image: ImageURL is the URL where the image will be pushed to.
+        :param 'BuildSpecRuntimeBaseCredentialsArgs' credentials: SecretRef is a reference to the Secret containing the credentials to push the image to the registry
+        """
+        pulumi.set(__self__, "image", image)
+        if credentials is not None:
+            pulumi.set(__self__, "credentials", credentials)
+
+    @property
+    @pulumi.getter
+    def image(self) -> str:
+        """
+        ImageURL is the URL where the image will be pushed to.
+        """
+        return pulumi.get(self, "image")
+
+    @property
+    @pulumi.getter
+    def credentials(self) -> Optional['outputs.BuildSpecRuntimeBaseCredentials']:
+        """
+        SecretRef is a reference to the Secret containing the credentials to push the image to the registry
+        """
+        return pulumi.get(self, "credentials")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class BuildSpecRuntimeBaseCredentials(dict):
+    """
+    SecretRef is a reference to the Secret containing the credentials to push the image to the registry
+    """
+    def __init__(__self__, *,
+                 name: Optional[str] = None):
+        """
+        SecretRef is a reference to the Secret containing the credentials to push the image to the registry
+        :param str name: Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+        """
+        if name is not None:
+            pulumi.set(__self__, "name", name)
+
+    @property
+    @pulumi.getter
+    def name(self) -> Optional[str]:
+        """
+        Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+        """
+        return pulumi.get(self, "name")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class BuildSpecRuntimeUser(dict):
+    """
+    User definitions of user and group for runtime-image.
+    """
+    def __init__(__self__, *,
+                 name: str,
+                 group: Optional[str] = None):
+        """
+        User definitions of user and group for runtime-image.
+        :param str name: Name user name to be employed in runtime-image.
+        :param str group: Group group name or GID employed in runtime-image.
+        """
+        pulumi.set(__self__, "name", name)
+        if group is not None:
+            pulumi.set(__self__, "group", group)
+
+    @property
+    @pulumi.getter
+    def name(self) -> str:
+        """
+        Name user name to be employed in runtime-image.
+        """
+        return pulumi.get(self, "name")
+
+    @property
+    @pulumi.getter
+    def group(self) -> Optional[str]:
+        """
+        Group group name or GID employed in runtime-image.
+        """
+        return pulumi.get(self, "group")
 
     def _translate_property(self, prop):
         return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
@@ -801,6 +1751,44 @@ class BuildSpecStrategy(dict):
         BuildStrategyKind indicates the kind of the buildstrategy, namespaced or cluster scoped.
         """
         return pulumi.get(self, "kind")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class BuildStatus(dict):
+    """
+    BuildStatus defines the observed state of Build
+    """
+    def __init__(__self__, *,
+                 reason: Optional[str] = None,
+                 registered: Optional[str] = None):
+        """
+        BuildStatus defines the observed state of Build
+        :param str reason: The reason of the registered Build, either an error or succeed message
+        :param str registered: The Register status of the Build
+        """
+        if reason is not None:
+            pulumi.set(__self__, "reason", reason)
+        if registered is not None:
+            pulumi.set(__self__, "registered", registered)
+
+    @property
+    @pulumi.getter
+    def reason(self) -> Optional[str]:
+        """
+        The reason of the registered Build, either an error or succeed message
+        """
+        return pulumi.get(self, "reason")
+
+    @property
+    @pulumi.getter
+    def registered(self) -> Optional[str]:
+        """
+        The Register status of the Build
+        """
+        return pulumi.get(self, "registered")
 
     def _translate_property(self, prop):
         return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
@@ -1293,7 +2281,7 @@ class BuildStrategySpecBuildStepsEnvValueFrom(dict):
         """
         Source for the environment variable's value. Cannot be used if value is not empty.
         :param 'BuildStrategySpecBuildStepsEnvValueFromConfigMapKeyRefArgs' config_map_key_ref: Selects a key of a ConfigMap.
-        :param 'BuildStrategySpecBuildStepsEnvValueFromFieldRefArgs' field_ref: Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+        :param 'BuildStrategySpecBuildStepsEnvValueFromFieldRefArgs' field_ref: Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
         :param 'BuildStrategySpecBuildStepsEnvValueFromResourceFieldRefArgs' resource_field_ref: Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
         :param 'BuildStrategySpecBuildStepsEnvValueFromSecretKeyRefArgs' secret_key_ref: Selects a key of a secret in the pod's namespace
         """
@@ -1318,7 +2306,7 @@ class BuildStrategySpecBuildStepsEnvValueFrom(dict):
     @pulumi.getter(name="fieldRef")
     def field_ref(self) -> Optional['outputs.BuildStrategySpecBuildStepsEnvValueFromFieldRef']:
         """
-        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
         """
         return pulumi.get(self, "field_ref")
 
@@ -1394,13 +2382,13 @@ class BuildStrategySpecBuildStepsEnvValueFromConfigMapKeyRef(dict):
 @pulumi.output_type
 class BuildStrategySpecBuildStepsEnvValueFromFieldRef(dict):
     """
-    Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+    Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
     """
     def __init__(__self__, *,
                  field_path: str,
                  api_version: Optional[str] = None):
         """
-        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
         :param str field_path: Path of the field to select in the specified API version.
         :param str api_version: Version of the schema the FieldPath is written in terms of, defaults to "v1".
         """
@@ -1436,12 +2424,12 @@ class BuildStrategySpecBuildStepsEnvValueFromResourceFieldRef(dict):
     def __init__(__self__, *,
                  resource: str,
                  container_name: Optional[str] = None,
-                 divisor: Optional[str] = None):
+                 divisor: Optional['outputs.BuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisor'] = None):
         """
         Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
         :param str resource: Required: resource to select
         :param str container_name: Container name: required for volumes, optional for env vars
-        :param str divisor: Specifies the output format of the exposed resources, defaults to "1"
+        :param 'BuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorArgs' divisor: Specifies the output format of the exposed resources, defaults to "1"
         """
         pulumi.set(__self__, "resource", resource)
         if container_name is not None:
@@ -1467,11 +2455,20 @@ class BuildStrategySpecBuildStepsEnvValueFromResourceFieldRef(dict):
 
     @property
     @pulumi.getter
-    def divisor(self) -> Optional[str]:
+    def divisor(self) -> Optional['outputs.BuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisor']:
         """
         Specifies the output format of the exposed resources, defaults to "1"
         """
         return pulumi.get(self, "divisor")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class BuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisor(dict):
+    def __init__(__self__):
+        pass
 
     def _translate_property(self, prop):
         return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
@@ -2370,6 +3367,8 @@ class BuildStrategySpecBuildStepsPorts(dict):
             pulumi.set(__self__, "host_port", host_port)
         if name is not None:
             pulumi.set(__self__, "name", name)
+        if protocol is None:
+            protocol = 'TCP'
         if protocol is not None:
             pulumi.set(__self__, "protocol", protocol)
 
@@ -2723,12 +3722,12 @@ class BuildStrategySpecBuildStepsResources(dict):
     Compute Resources required by this container. Cannot be updated. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
     """
     def __init__(__self__, *,
-                 limits: Optional[Mapping[str, str]] = None,
-                 requests: Optional[Mapping[str, str]] = None):
+                 limits: Optional[Mapping[str, 'outputs.BuildStrategySpecBuildStepsResourcesLimits']] = None,
+                 requests: Optional[Mapping[str, 'outputs.BuildStrategySpecBuildStepsResourcesRequests']] = None):
         """
         Compute Resources required by this container. Cannot be updated. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-        :param Mapping[str, str] limits: Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-        :param Mapping[str, str] requests: Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
+        :param Mapping[str, 'BuildStrategySpecBuildStepsResourcesLimitsArgs'] limits: Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
+        :param Mapping[str, 'BuildStrategySpecBuildStepsResourcesRequestsArgs'] requests: Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
         """
         if limits is not None:
             pulumi.set(__self__, "limits", limits)
@@ -2737,7 +3736,7 @@ class BuildStrategySpecBuildStepsResources(dict):
 
     @property
     @pulumi.getter
-    def limits(self) -> Optional[Mapping[str, str]]:
+    def limits(self) -> Optional[Mapping[str, 'outputs.BuildStrategySpecBuildStepsResourcesLimits']]:
         """
         Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
         """
@@ -2745,11 +3744,29 @@ class BuildStrategySpecBuildStepsResources(dict):
 
     @property
     @pulumi.getter
-    def requests(self) -> Optional[Mapping[str, str]]:
+    def requests(self) -> Optional[Mapping[str, 'outputs.BuildStrategySpecBuildStepsResourcesRequests']]:
         """
         Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
         """
         return pulumi.get(self, "requests")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class BuildStrategySpecBuildStepsResourcesLimits(dict):
+    def __init__(__self__):
+        pass
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class BuildStrategySpecBuildStepsResourcesRequests(dict):
+    def __init__(__self__):
+        pass
 
     def _translate_property(self, prop):
         return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
@@ -3002,7 +4019,7 @@ class BuildStrategySpecBuildStepsSecurityContextWindowsOptions(dict):
         The Windows specific settings applied to all containers. If unspecified, the options from the PodSecurityContext will be used. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
         :param str gmsa_credential_spec: GMSACredentialSpec is where the GMSA admission webhook (https://github.com/kubernetes-sigs/windows-gmsa) inlines the contents of the GMSA credential spec named by the GMSACredentialSpecName field. This field is alpha-level and is only honored by servers that enable the WindowsGMSA feature flag.
         :param str gmsa_credential_spec_name: GMSACredentialSpecName is the name of the GMSA credential spec to use. This field is alpha-level and is only honored by servers that enable the WindowsGMSA feature flag.
-        :param str run_as_user_name: The UserName in Windows to run the entrypoint of the container process. Defaults to the user specified in image metadata if unspecified. May also be set in PodSecurityContext. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence. This field is alpha-level and it is only honored by servers that enable the WindowsRunAsUserName feature flag.
+        :param str run_as_user_name: The UserName in Windows to run the entrypoint of the container process. Defaults to the user specified in image metadata if unspecified. May also be set in PodSecurityContext. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence. This field is beta-level and may be disabled with the WindowsRunAsUserName feature flag.
         """
         if gmsa_credential_spec is not None:
             pulumi.set(__self__, "gmsa_credential_spec", gmsa_credential_spec)
@@ -3031,7 +4048,7 @@ class BuildStrategySpecBuildStepsSecurityContextWindowsOptions(dict):
     @pulumi.getter(name="runAsUserName")
     def run_as_user_name(self) -> Optional[str]:
         """
-        The UserName in Windows to run the entrypoint of the container process. Defaults to the user specified in image metadata if unspecified. May also be set in PodSecurityContext. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence. This field is alpha-level and it is only honored by servers that enable the WindowsRunAsUserName feature flag.
+        The UserName in Windows to run the entrypoint of the container process. Defaults to the user specified in image metadata if unspecified. May also be set in PodSecurityContext. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence. This field is beta-level and may be disabled with the WindowsRunAsUserName feature flag.
         """
         return pulumi.get(self, "run_as_user_name")
 
@@ -3394,7 +4411,7 @@ class BuildStrategySpecBuildStepsVolumeMounts(dict):
         :param str mount_propagation: mountPropagation determines how mounts are propagated from the host to container and the other way around. When not set, MountPropagationNone is used. This field is beta in 1.10.
         :param bool read_only: Mounted read-only if true, read-write otherwise (false or unspecified). Defaults to false.
         :param str sub_path: Path within the volume from which the container's volume should be mounted. Defaults to "" (volume's root).
-        :param str sub_path_expr: Expanded path within the volume from which the container's volume should be mounted. Behaves similarly to SubPath but environment variable references $(VAR_NAME) are expanded using the container's environment. Defaults to "" (volume's root). SubPathExpr and SubPath are mutually exclusive. This field is beta in 1.15.
+        :param str sub_path_expr: Expanded path within the volume from which the container's volume should be mounted. Behaves similarly to SubPath but environment variable references $(VAR_NAME) are expanded using the container's environment. Defaults to "" (volume's root). SubPathExpr and SubPath are mutually exclusive.
         """
         pulumi.set(__self__, "mount_path", mount_path)
         pulumi.set(__self__, "name", name)
@@ -3451,7 +4468,7 @@ class BuildStrategySpecBuildStepsVolumeMounts(dict):
     @pulumi.getter(name="subPathExpr")
     def sub_path_expr(self) -> Optional[str]:
         """
-        Expanded path within the volume from which the container's volume should be mounted. Behaves similarly to SubPath but environment variable references $(VAR_NAME) are expanded using the container's environment. Defaults to "" (volume's root). SubPathExpr and SubPath are mutually exclusive. This field is beta in 1.15.
+        Expanded path within the volume from which the container's volume should be mounted. Behaves similarly to SubPath but environment variable references $(VAR_NAME) are expanded using the container's environment. Defaults to "" (volume's root). SubPathExpr and SubPath are mutually exclusive.
         """
         return pulumi.get(self, "sub_path_expr")
 
@@ -3946,7 +4963,7 @@ class ClusterBuildStrategySpecBuildStepsEnvValueFrom(dict):
         """
         Source for the environment variable's value. Cannot be used if value is not empty.
         :param 'ClusterBuildStrategySpecBuildStepsEnvValueFromConfigMapKeyRefArgs' config_map_key_ref: Selects a key of a ConfigMap.
-        :param 'ClusterBuildStrategySpecBuildStepsEnvValueFromFieldRefArgs' field_ref: Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+        :param 'ClusterBuildStrategySpecBuildStepsEnvValueFromFieldRefArgs' field_ref: Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
         :param 'ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefArgs' resource_field_ref: Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
         :param 'ClusterBuildStrategySpecBuildStepsEnvValueFromSecretKeyRefArgs' secret_key_ref: Selects a key of a secret in the pod's namespace
         """
@@ -3971,7 +4988,7 @@ class ClusterBuildStrategySpecBuildStepsEnvValueFrom(dict):
     @pulumi.getter(name="fieldRef")
     def field_ref(self) -> Optional['outputs.ClusterBuildStrategySpecBuildStepsEnvValueFromFieldRef']:
         """
-        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
         """
         return pulumi.get(self, "field_ref")
 
@@ -4047,13 +5064,13 @@ class ClusterBuildStrategySpecBuildStepsEnvValueFromConfigMapKeyRef(dict):
 @pulumi.output_type
 class ClusterBuildStrategySpecBuildStepsEnvValueFromFieldRef(dict):
     """
-    Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+    Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
     """
     def __init__(__self__, *,
                  field_path: str,
                  api_version: Optional[str] = None):
         """
-        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
         :param str field_path: Path of the field to select in the specified API version.
         :param str api_version: Version of the schema the FieldPath is written in terms of, defaults to "v1".
         """
@@ -4089,12 +5106,12 @@ class ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRef(dict):
     def __init__(__self__, *,
                  resource: str,
                  container_name: Optional[str] = None,
-                 divisor: Optional[str] = None):
+                 divisor: Optional['outputs.ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisor'] = None):
         """
         Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
         :param str resource: Required: resource to select
         :param str container_name: Container name: required for volumes, optional for env vars
-        :param str divisor: Specifies the output format of the exposed resources, defaults to "1"
+        :param 'ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisorArgs' divisor: Specifies the output format of the exposed resources, defaults to "1"
         """
         pulumi.set(__self__, "resource", resource)
         if container_name is not None:
@@ -4120,11 +5137,20 @@ class ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRef(dict):
 
     @property
     @pulumi.getter
-    def divisor(self) -> Optional[str]:
+    def divisor(self) -> Optional['outputs.ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisor']:
         """
         Specifies the output format of the exposed resources, defaults to "1"
         """
         return pulumi.get(self, "divisor")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisor(dict):
+    def __init__(__self__):
+        pass
 
     def _translate_property(self, prop):
         return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
@@ -5023,6 +6049,8 @@ class ClusterBuildStrategySpecBuildStepsPorts(dict):
             pulumi.set(__self__, "host_port", host_port)
         if name is not None:
             pulumi.set(__self__, "name", name)
+        if protocol is None:
+            protocol = 'TCP'
         if protocol is not None:
             pulumi.set(__self__, "protocol", protocol)
 
@@ -5376,12 +6404,12 @@ class ClusterBuildStrategySpecBuildStepsResources(dict):
     Compute Resources required by this container. Cannot be updated. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
     """
     def __init__(__self__, *,
-                 limits: Optional[Mapping[str, str]] = None,
-                 requests: Optional[Mapping[str, str]] = None):
+                 limits: Optional[Mapping[str, 'outputs.ClusterBuildStrategySpecBuildStepsResourcesLimits']] = None,
+                 requests: Optional[Mapping[str, 'outputs.ClusterBuildStrategySpecBuildStepsResourcesRequests']] = None):
         """
         Compute Resources required by this container. Cannot be updated. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-        :param Mapping[str, str] limits: Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-        :param Mapping[str, str] requests: Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
+        :param Mapping[str, 'ClusterBuildStrategySpecBuildStepsResourcesLimitsArgs'] limits: Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
+        :param Mapping[str, 'ClusterBuildStrategySpecBuildStepsResourcesRequestsArgs'] requests: Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
         """
         if limits is not None:
             pulumi.set(__self__, "limits", limits)
@@ -5390,7 +6418,7 @@ class ClusterBuildStrategySpecBuildStepsResources(dict):
 
     @property
     @pulumi.getter
-    def limits(self) -> Optional[Mapping[str, str]]:
+    def limits(self) -> Optional[Mapping[str, 'outputs.ClusterBuildStrategySpecBuildStepsResourcesLimits']]:
         """
         Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
         """
@@ -5398,11 +6426,29 @@ class ClusterBuildStrategySpecBuildStepsResources(dict):
 
     @property
     @pulumi.getter
-    def requests(self) -> Optional[Mapping[str, str]]:
+    def requests(self) -> Optional[Mapping[str, 'outputs.ClusterBuildStrategySpecBuildStepsResourcesRequests']]:
         """
         Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
         """
         return pulumi.get(self, "requests")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class ClusterBuildStrategySpecBuildStepsResourcesLimits(dict):
+    def __init__(__self__):
+        pass
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class ClusterBuildStrategySpecBuildStepsResourcesRequests(dict):
+    def __init__(__self__):
+        pass
 
     def _translate_property(self, prop):
         return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
@@ -5655,7 +6701,7 @@ class ClusterBuildStrategySpecBuildStepsSecurityContextWindowsOptions(dict):
         The Windows specific settings applied to all containers. If unspecified, the options from the PodSecurityContext will be used. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
         :param str gmsa_credential_spec: GMSACredentialSpec is where the GMSA admission webhook (https://github.com/kubernetes-sigs/windows-gmsa) inlines the contents of the GMSA credential spec named by the GMSACredentialSpecName field. This field is alpha-level and is only honored by servers that enable the WindowsGMSA feature flag.
         :param str gmsa_credential_spec_name: GMSACredentialSpecName is the name of the GMSA credential spec to use. This field is alpha-level and is only honored by servers that enable the WindowsGMSA feature flag.
-        :param str run_as_user_name: The UserName in Windows to run the entrypoint of the container process. Defaults to the user specified in image metadata if unspecified. May also be set in PodSecurityContext. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence. This field is alpha-level and it is only honored by servers that enable the WindowsRunAsUserName feature flag.
+        :param str run_as_user_name: The UserName in Windows to run the entrypoint of the container process. Defaults to the user specified in image metadata if unspecified. May also be set in PodSecurityContext. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence. This field is beta-level and may be disabled with the WindowsRunAsUserName feature flag.
         """
         if gmsa_credential_spec is not None:
             pulumi.set(__self__, "gmsa_credential_spec", gmsa_credential_spec)
@@ -5684,7 +6730,7 @@ class ClusterBuildStrategySpecBuildStepsSecurityContextWindowsOptions(dict):
     @pulumi.getter(name="runAsUserName")
     def run_as_user_name(self) -> Optional[str]:
         """
-        The UserName in Windows to run the entrypoint of the container process. Defaults to the user specified in image metadata if unspecified. May also be set in PodSecurityContext. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence. This field is alpha-level and it is only honored by servers that enable the WindowsRunAsUserName feature flag.
+        The UserName in Windows to run the entrypoint of the container process. Defaults to the user specified in image metadata if unspecified. May also be set in PodSecurityContext. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence. This field is beta-level and may be disabled with the WindowsRunAsUserName feature flag.
         """
         return pulumi.get(self, "run_as_user_name")
 
@@ -6047,7 +7093,7 @@ class ClusterBuildStrategySpecBuildStepsVolumeMounts(dict):
         :param str mount_propagation: mountPropagation determines how mounts are propagated from the host to container and the other way around. When not set, MountPropagationNone is used. This field is beta in 1.10.
         :param bool read_only: Mounted read-only if true, read-write otherwise (false or unspecified). Defaults to false.
         :param str sub_path: Path within the volume from which the container's volume should be mounted. Defaults to "" (volume's root).
-        :param str sub_path_expr: Expanded path within the volume from which the container's volume should be mounted. Behaves similarly to SubPath but environment variable references $(VAR_NAME) are expanded using the container's environment. Defaults to "" (volume's root). SubPathExpr and SubPath are mutually exclusive. This field is beta in 1.15.
+        :param str sub_path_expr: Expanded path within the volume from which the container's volume should be mounted. Behaves similarly to SubPath but environment variable references $(VAR_NAME) are expanded using the container's environment. Defaults to "" (volume's root). SubPathExpr and SubPath are mutually exclusive.
         """
         pulumi.set(__self__, "mount_path", mount_path)
         pulumi.set(__self__, "name", name)
@@ -6104,7 +7150,7 @@ class ClusterBuildStrategySpecBuildStepsVolumeMounts(dict):
     @pulumi.getter(name="subPathExpr")
     def sub_path_expr(self) -> Optional[str]:
         """
-        Expanded path within the volume from which the container's volume should be mounted. Behaves similarly to SubPath but environment variable references $(VAR_NAME) are expanded using the container's environment. Defaults to "" (volume's root). SubPathExpr and SubPath are mutually exclusive. This field is beta in 1.15.
+        Expanded path within the volume from which the container's volume should be mounted. Behaves similarly to SubPath but environment variable references $(VAR_NAME) are expanded using the container's environment. Defaults to "" (volume's root). SubPathExpr and SubPath are mutually exclusive.
         """
         return pulumi.get(self, "sub_path_expr")
 

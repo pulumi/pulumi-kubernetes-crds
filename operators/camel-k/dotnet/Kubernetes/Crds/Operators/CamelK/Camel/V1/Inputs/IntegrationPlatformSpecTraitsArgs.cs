@@ -15,11 +15,11 @@ namespace Pulumi.Kubernetes.Types.Inputs.Camel.V1
     /// </summary>
     public class IntegrationPlatformSpecTraitsArgs : Pulumi.ResourceArgs
     {
-        [Input("configuration")]
-        private InputMap<string>? _configuration;
-        public InputMap<string> Configuration
+        [Input("configuration", required: true)]
+        private InputMap<object>? _configuration;
+        public InputMap<object> Configuration
         {
-            get => _configuration ?? (_configuration = new InputMap<string>());
+            get => _configuration ?? (_configuration = new InputMap<object>());
             set => _configuration = value;
         }
 

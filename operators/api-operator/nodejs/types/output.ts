@@ -9,33 +9,104 @@ import {ObjectMeta} from "../meta/v1";
 
 export namespace wso2 {
     export namespace v1alpha1 {
+        /**
+         * APISpec defines the desired state of API
+         */
         export interface APISpec {
+            apiEndPoint?: string;
+            /**
+             * Definition of the API.
+             */
             definition: outputs.wso2.v1alpha1.APISpecDefinition;
             /**
-             * INSERT ADDITIONAL SPEC FIELDS - desired state of cluster Important: Run "operator-sdk generate k8s" to regenerate code after modifying this file Add custom validation using kubebuilder tags: https://book.kubebuilder.io/beyond_basics/generating_crd.html
+             * Environment variables to be added to the API deployment. Default value "<empty>".
+             */
+            environmentVariables?: string[];
+            /**
+             * Docker image of the API to be deployed. If specified, ignores the values of `UpdateTimeStamp`, `Override`. Uses the given image for the deployment. Default value "<empty>".
+             */
+            image?: string;
+            /**
+             * Ingress Hostname that the API is being exposed. Default value "<empty>".
+             */
+            ingressHostname?: string;
+            /**
+             * Mode of the API. The mode from the swagger definition will be overridden by this value. Supports "privateJet", "sidecar", "<empty>". Default value "<empty>".
              */
             mode?: string;
+            /**
+             * Override the exiting API docker image. Default value "false".
+             */
             override?: boolean;
+            /**
+             * Replica count of the API.
+             */
             replicas: number;
+            /**
+             * Update API definition creating a new docker image. Make a rolling update to the existing API. with prefixing the timestamp value. Default value "<empty>".
+             */
             updateTimeStamp?: string;
+            /**
+             * Version of the API. The version from the swagger definition will be overridden by this value. Default value "<empty>".
+             */
             version?: string;
         }
 
+        /**
+         * Definition of the API.
+         */
         export interface APISpecDefinition {
+            /**
+             * Interceptors for API. Default value "<empty>".
+             */
             interceptors?: outputs.wso2.v1alpha1.APISpecDefinitionInterceptors;
+            /**
+             * Array of config map names of swagger definitions for the API.
+             */
             swaggerConfigmapNames: string[];
             type?: string;
         }
 
+        /**
+         * Interceptors for API. Default value "<empty>".
+         */
         export interface APISpecDefinitionInterceptors {
+            /**
+             * Ballerina interceptors. Default value "<empty>".
+             */
             ballerina?: string[];
+            /**
+             * Java interceptors. Default value "<empty>".
+             */
             java?: string[];
         }
 
+        /**
+         * APIStatus defines the observed state of API
+         */
+        export interface APIStatus {
+            /**
+             * replicas field in the status sub-resource will define the initial replica count allocated to the API.This will be the minimum replica count for a single API
+             */
+            replicas: number;
+        }
+
+        /**
+         * RateLimitingSpec defines the desired state of RateLimiting
+         */
         export interface RateLimitingSpec {
+            /**
+             * Bandwidth is exported type in Ratelimiting Spec
+             */
             bandwidth?: outputs.wso2.v1alpha1.RateLimitingSpecBandwidth;
+            /**
+             * Conditions is exported type in Ratelimiting Spec
+             */
             conditions?: outputs.wso2.v1alpha1.RateLimitingSpecConditions;
             description?: string;
+            /**
+             * RequestCount is exported type in Ratelimiting Spec
+             */
             requestCount: outputs.wso2.v1alpha1.RateLimitingSpecRequestCount;
             stopOnQuotaReach?: boolean;
             timeUnit: string;
@@ -43,21 +114,39 @@ export namespace wso2 {
             unitTime: number;
         }
 
+        /**
+         * Bandwidth is exported type in Ratelimiting Spec
+         */
         export interface RateLimitingSpecBandwidth {
             dataAmount: string;
             dataUnit: string;
         }
 
+        /**
+         * Conditions is exported type in Ratelimiting Spec
+         */
         export interface RateLimitingSpecConditions {
+            /**
+             * HeaderCondition is exported type in Ratelimiting Spec
+             */
             headerCondition: outputs.wso2.v1alpha1.RateLimitingSpecConditionsHeaderCondition;
+            /**
+             * IPCondition is exported type in Ratelimiting Spec
+             */
             ipCondition: outputs.wso2.v1alpha1.RateLimitingSpecConditionsIpCondition;
         }
 
+        /**
+         * HeaderCondition is exported type in Ratelimiting Spec
+         */
         export interface RateLimitingSpecConditionsHeaderCondition {
             headerName: string;
             headerValue: string;
         }
 
+        /**
+         * IPCondition is exported type in Ratelimiting Spec
+         */
         export interface RateLimitingSpecConditionsIpCondition {
             endIp: string;
             negation: boolean;
@@ -66,10 +155,16 @@ export namespace wso2 {
             type: string;
         }
 
+        /**
+         * RequestCount is exported type in Ratelimiting Spec
+         */
         export interface RateLimitingSpecRequestCount {
             limit: number;
         }
 
+        /**
+         * SecuritySpec defines the desired state of Security
+         */
         export interface SecuritySpec {
             securityConfig?: outputs.wso2.v1alpha1.SecuritySpecSecurityConfig[];
             /**
@@ -85,24 +180,35 @@ export namespace wso2 {
             credentials?: string;
             endpoint?: string;
             issuer?: string;
+            validateAllowedAPIs?: boolean;
             validateSubscription?: boolean;
         }
 
+        /**
+         * TargetEndpointSpec defines the desired state of TargetEndpoint
+         */
         export interface TargetEndpointSpec {
-            deploy: outputs.wso2.v1alpha1.TargetEndpointSpecDeploy;
-            endpointName?: string;
-            endpointSecurity?: outputs.wso2.v1alpha1.TargetEndpointSpecEndpointSecurity;
-            hostname?: string;
-            mode?: string;
-            port: number;
-            protocol: string;
-            targetPort: number;
             /**
-             * INSERT ADDITIONAL SPEC FIELDS - desired state of cluster Important: Run "operator-sdk generate k8s" to regenerate code after modifying this file Add custom validation using kubebuilder tags: https://book.kubebuilder.io/beyond_basics/generating_crd.html
+             * Protocol of the application. Supports "http" and "https".
              */
-            type?: string;
+            applicationProtocol: string;
+            /**
+             * Deployment details.
+             */
+            deploy: outputs.wso2.v1alpha1.TargetEndpointSpecDeploy;
+            /**
+             * Mode of the Target Endpoint. Supports "privateJet", "sidecar", "serverless". Default value "privateJet"
+             */
+            mode?: string;
+            /**
+             * List of optional ports of the target endpoint. First port should be the port of the target endpoint which is referred in swagger definition.
+             */
+            ports: outputs.wso2.v1alpha1.TargetEndpointSpecPorts[];
         }
 
+        /**
+         * Deployment details.
+         */
         export interface TargetEndpointSpecDeploy {
             cpuLimit?: string;
             dockerImage: string;
@@ -114,10 +220,22 @@ export namespace wso2 {
             requestCPU?: string;
         }
 
-        export interface TargetEndpointSpecEndpointSecurity {
-            password: string;
-            type: string;
-            username: string;
+        /**
+         * Port represents ports of the Target Endpoint
+         */
+        export interface TargetEndpointSpecPorts {
+            /**
+             * The name of this port within the service. This must be a DNS_LABEL. All ports within a ServiceSpec must have unique names.
+             */
+            name: string;
+            /**
+             * The port that will be exposed by this service.
+             */
+            port: number;
+            /**
+             * Port that is targeted to expose.
+             */
+            targetPort: number;
         }
 
     }

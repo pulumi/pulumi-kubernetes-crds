@@ -55,11 +55,17 @@ namespace Pulumi.Kubernetes.Types.Inputs.Camel.V1
         [Input("profile")]
         public Input<string>? Profile { get; set; }
 
+        [Input("resources")]
+        private InputMap<object>? _resources;
+
         /// <summary>
         /// IntegrationPlatformResourcesSpec contains platform related resources
         /// </summary>
-        [Input("resources")]
-        public Input<Pulumi.Kubernetes.Types.Inputs.Camel.V1.IntegrationPlatformStatusResourcesArgs>? Resources { get; set; }
+        public InputMap<object> Resources
+        {
+            get => _resources ?? (_resources = new InputMap<object>());
+            set => _resources = value;
+        }
 
         [Input("traits")]
         private InputMap<Pulumi.Kubernetes.Types.Inputs.Camel.V1.IntegrationPlatformStatusTraitsArgs>? _traits;

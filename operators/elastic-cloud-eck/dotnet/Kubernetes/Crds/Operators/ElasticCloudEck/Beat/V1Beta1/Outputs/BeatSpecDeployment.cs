@@ -14,11 +14,19 @@ namespace Pulumi.Kubernetes.Types.Outputs.Beat.V1Beta1
     public sealed class BeatSpecDeployment
     {
         public readonly int Replicas;
+        /// <summary>
+        /// DeploymentStrategy describes how to replace existing pods with new ones.
+        /// </summary>
+        public readonly Pulumi.Kubernetes.Types.Outputs.Beat.V1Beta1.BeatSpecDeploymentStrategy Strategy;
 
         [OutputConstructor]
-        private BeatSpecDeployment(int replicas)
+        private BeatSpecDeployment(
+            int replicas,
+
+            Pulumi.Kubernetes.Types.Outputs.Beat.V1Beta1.BeatSpecDeploymentStrategy strategy)
         {
             Replicas = replicas;
+            Strategy = strategy;
         }
     }
 }

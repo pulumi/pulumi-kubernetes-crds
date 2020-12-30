@@ -13,31 +13,29 @@ namespace Pulumi.Kubernetes.Types.Outputs.Submariner.V1Alpha1
     [OutputType]
     public sealed class SubmarinerStatusGateways
     {
-        /// <summary>
-        /// APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#resources
-        /// </summary>
-        public readonly string ApiVersion;
-        /// <summary>
-        /// Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds
-        /// </summary>
-        public readonly string Kind;
-        public readonly ImmutableDictionary<string, object> Metadata;
-        public readonly Pulumi.Kubernetes.Types.Outputs.Submariner.V1Alpha1.SubmarinerStatusGatewaysStatus Status;
+        public readonly ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Submariner.V1Alpha1.SubmarinerStatusGatewaysConnections> Connections;
+        public readonly string HaStatus;
+        public readonly Pulumi.Kubernetes.Types.Outputs.Submariner.V1Alpha1.SubmarinerStatusGatewaysLocalEndpoint LocalEndpoint;
+        public readonly string StatusFailure;
+        public readonly string Version;
 
         [OutputConstructor]
         private SubmarinerStatusGateways(
-            string apiVersion,
+            ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Submariner.V1Alpha1.SubmarinerStatusGatewaysConnections> connections,
 
-            string kind,
+            string haStatus,
 
-            ImmutableDictionary<string, object> metadata,
+            Pulumi.Kubernetes.Types.Outputs.Submariner.V1Alpha1.SubmarinerStatusGatewaysLocalEndpoint localEndpoint,
 
-            Pulumi.Kubernetes.Types.Outputs.Submariner.V1Alpha1.SubmarinerStatusGatewaysStatus status)
+            string statusFailure,
+
+            string version)
         {
-            ApiVersion = apiVersion;
-            Kind = kind;
-            Metadata = metadata;
-            Status = status;
+            Connections = connections;
+            HaStatus = haStatus;
+            LocalEndpoint = localEndpoint;
+            StatusFailure = statusFailure;
+            Version = version;
         }
     }
 }

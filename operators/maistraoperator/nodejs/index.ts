@@ -3,3 +3,8 @@
 
 // Export members:
 export * from "./provider";
+
+// Export sub-modules:
+import * as maistra from "./maistra";
+import * as types from "./types";
+export {maistra, types};

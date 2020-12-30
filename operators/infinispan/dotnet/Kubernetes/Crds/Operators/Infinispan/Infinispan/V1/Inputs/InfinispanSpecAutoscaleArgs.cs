@@ -15,6 +15,9 @@ namespace Pulumi.Kubernetes.Types.Inputs.Infinispan.V1
     /// </summary>
     public class InfinispanSpecAutoscaleArgs : Pulumi.ResourceArgs
     {
+        [Input("disabled")]
+        public Input<bool>? Disabled { get; set; }
+
         [Input("maxMemUsagePercent", required: true)]
         public Input<int> MaxMemUsagePercent { get; set; } = null!;
 

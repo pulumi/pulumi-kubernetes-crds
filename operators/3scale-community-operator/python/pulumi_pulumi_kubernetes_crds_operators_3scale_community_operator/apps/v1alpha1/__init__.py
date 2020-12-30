@@ -4,5 +4,7 @@
 
 # Export this package's modules as members:
 from .APIManager import *
+from .APIManagerBackup import *
+from .APIManagerRestore import *
 from ._inputs import *
 from . import outputs

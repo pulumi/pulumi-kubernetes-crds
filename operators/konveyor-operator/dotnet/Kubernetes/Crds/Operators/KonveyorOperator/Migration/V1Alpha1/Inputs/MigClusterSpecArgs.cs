@@ -24,6 +24,9 @@ namespace Pulumi.Kubernetes.Types.Inputs.Migration.V1Alpha1
         [Input("isHostCluster", required: true)]
         public Input<bool> IsHostCluster { get; set; } = null!;
 
+        [Input("restartRestic")]
+        public Input<bool>? RestartRestic { get; set; }
+
         [Input("serviceAccountSecretRef")]
         private InputMap<object>? _serviceAccountSecretRef;
         public InputMap<object> ServiceAccountSecretRef

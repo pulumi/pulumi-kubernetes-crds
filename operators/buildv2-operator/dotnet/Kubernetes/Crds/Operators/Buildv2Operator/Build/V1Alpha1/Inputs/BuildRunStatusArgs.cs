@@ -16,6 +16,12 @@ namespace Pulumi.Kubernetes.Types.Inputs.Build.V1Alpha1
     public class BuildRunStatusArgs : Pulumi.ResourceArgs
     {
         /// <summary>
+        /// BuildSpec is the Build Spec of this BuildRun.
+        /// </summary>
+        [Input("buildSpec")]
+        public Input<Pulumi.Kubernetes.Types.Inputs.Build.V1Alpha1.BuildRunStatusBuildSpecArgs>? BuildSpec { get; set; }
+
+        /// <summary>
         /// CompletionTime is the time the build completed.
         /// </summary>
         [Input("completionTime")]

@@ -12,15 +12,21 @@ __all__ = [
     'BindingSpecArgs',
     'BindingSpecParametersArgs',
     'BindingSpecParametersValueFromArgs',
+    'BindingSpecParametersValueFromConfigMapKeyRefArgs',
+    'BindingSpecParametersValueFromSecretKeyRefArgs',
     'BindingStatusArgs',
     'ServiceSpecArgs',
     'ServiceSpecContextArgs',
     'ServiceSpecParametersArgs',
     'ServiceSpecParametersValueFromArgs',
+    'ServiceSpecParametersValueFromConfigMapKeyRefArgs',
+    'ServiceSpecParametersValueFromSecretKeyRefArgs',
     'ServiceStatusArgs',
     'ServiceStatusContextArgs',
     'ServiceStatusParametersArgs',
     'ServiceStatusParametersValueFromArgs',
+    'ServiceStatusParametersValueFromConfigMapKeyRefArgs',
+    'ServiceStatusParametersValueFromSecretKeyRefArgs',
 ]
 
 @pulumi.input_type
@@ -32,6 +38,9 @@ class BindingSpecArgs:
                  role: Optional[pulumi.Input[str]] = None,
                  secret_name: Optional[pulumi.Input[str]] = None,
                  service_namespace: Optional[pulumi.Input[str]] = None):
+        """
+        BindingSpec defines the desired state of Binding
+        """
         pulumi.set(__self__, "service_name", service_name)
         if alias is not None:
             pulumi.set(__self__, "alias", alias)
@@ -103,12 +112,13 @@ class BindingSpecArgs:
 class BindingSpecParametersArgs:
     def __init__(__self__, *,
                  name: pulumi.Input[str],
-                 attributes: Optional[pulumi.Input[Mapping[str, Any]]] = None,
+                 attributes: Optional[pulumi.Input[Mapping[str, pulumi.Input[Mapping[str, Any]]]]] = None,
                  value: Optional[Any] = None,
                  value_from: Optional[pulumi.Input['BindingSpecParametersValueFromArgs']] = None):
         """
+        Param represents a key-value pair
         :param pulumi.Input[str] name: Name representing the key.
-        :param pulumi.Input[Mapping[str, Any]] attributes: A parameter may have attributes (e.g. message hub topic might have partitions)
+        :param pulumi.Input[Mapping[str, pulumi.Input[Mapping[str, Any]]]] attributes: A parameter may have attributes (e.g. message hub topic might have partitions)
         :param Any value: Defaults to null.
         :param pulumi.Input['BindingSpecParametersValueFromArgs'] value_from: Source for the value. Cannot be used if value is not empty.
         """
@@ -134,14 +144,14 @@ class BindingSpecParametersArgs:
 
     @property
     @pulumi.getter
-    def attributes(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
+    def attributes(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[Mapping[str, Any]]]]]:
         """
         A parameter may have attributes (e.g. message hub topic might have partitions)
         """
         return pulumi.get(self, "attributes")
 
     @attributes.setter
-    def attributes(self, value: Optional[pulumi.Input[Mapping[str, Any]]]):
+    def attributes(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[Mapping[str, Any]]]]]):
         pulumi.set(self, "attributes", value)
 
     @property
@@ -172,12 +182,12 @@ class BindingSpecParametersArgs:
 @pulumi.input_type
 class BindingSpecParametersValueFromArgs:
     def __init__(__self__, *,
-                 config_map_key_ref: Optional[pulumi.Input[Mapping[str, Any]]] = None,
-                 secret_key_ref: Optional[pulumi.Input[Mapping[str, Any]]] = None):
+                 config_map_key_ref: Optional[pulumi.Input['BindingSpecParametersValueFromConfigMapKeyRefArgs']] = None,
+                 secret_key_ref: Optional[pulumi.Input['BindingSpecParametersValueFromSecretKeyRefArgs']] = None):
         """
         Source for the value. Cannot be used if value is not empty.
-        :param pulumi.Input[Mapping[str, Any]] config_map_key_ref: Selects a key of a ConfigMap.
-        :param pulumi.Input[Mapping[str, Any]] secret_key_ref: Selects a key of a secret in the resource namespace
+        :param pulumi.Input['BindingSpecParametersValueFromConfigMapKeyRefArgs'] config_map_key_ref: Selects a key of a ConfigMap.
+        :param pulumi.Input['BindingSpecParametersValueFromSecretKeyRefArgs'] secret_key_ref: Selects a key of a secret in the resource namespace
         """
         if config_map_key_ref is not None:
             pulumi.set(__self__, "config_map_key_ref", config_map_key_ref)
@@ -186,27 +196,137 @@ class BindingSpecParametersValueFromArgs:
 
     @property
     @pulumi.getter(name="configMapKeyRef")
-    def config_map_key_ref(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
+    def config_map_key_ref(self) -> Optional[pulumi.Input['BindingSpecParametersValueFromConfigMapKeyRefArgs']]:
         """
         Selects a key of a ConfigMap.
         """
         return pulumi.get(self, "config_map_key_ref")
 
     @config_map_key_ref.setter
-    def config_map_key_ref(self, value: Optional[pulumi.Input[Mapping[str, Any]]]):
+    def config_map_key_ref(self, value: Optional[pulumi.Input['BindingSpecParametersValueFromConfigMapKeyRefArgs']]):
         pulumi.set(self, "config_map_key_ref", value)
 
     @property
     @pulumi.getter(name="secretKeyRef")
-    def secret_key_ref(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
+    def secret_key_ref(self) -> Optional[pulumi.Input['BindingSpecParametersValueFromSecretKeyRefArgs']]:
         """
         Selects a key of a secret in the resource namespace
         """
         return pulumi.get(self, "secret_key_ref")
 
     @secret_key_ref.setter
-    def secret_key_ref(self, value: Optional[pulumi.Input[Mapping[str, Any]]]):
+    def secret_key_ref(self, value: Optional[pulumi.Input['BindingSpecParametersValueFromSecretKeyRefArgs']]):
         pulumi.set(self, "secret_key_ref", value)
+
+
+@pulumi.input_type
+class BindingSpecParametersValueFromConfigMapKeyRefArgs:
+    def __init__(__self__, *,
+                 key: pulumi.Input[str],
+                 name: Optional[pulumi.Input[str]] = None,
+                 optional: Optional[pulumi.Input[bool]] = None):
+        """
+        Selects a key of a ConfigMap.
+        :param pulumi.Input[str] key: The key to select.
+        :param pulumi.Input[str] name: Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+        :param pulumi.Input[bool] optional: Specify whether the ConfigMap or its key must be defined
+        """
+        pulumi.set(__self__, "key", key)
+        if name is not None:
+            pulumi.set(__self__, "name", name)
+        if optional is not None:
+            pulumi.set(__self__, "optional", optional)
+
+    @property
+    @pulumi.getter
+    def key(self) -> pulumi.Input[str]:
+        """
+        The key to select.
+        """
+        return pulumi.get(self, "key")
+
+    @key.setter
+    def key(self, value: pulumi.Input[str]):
+        pulumi.set(self, "key", value)
+
+    @property
+    @pulumi.getter
+    def name(self) -> Optional[pulumi.Input[str]]:
+        """
+        Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+        """
+        return pulumi.get(self, "name")
+
+    @name.setter
+    def name(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "name", value)
+
+    @property
+    @pulumi.getter
+    def optional(self) -> Optional[pulumi.Input[bool]]:
+        """
+        Specify whether the ConfigMap or its key must be defined
+        """
+        return pulumi.get(self, "optional")
+
+    @optional.setter
+    def optional(self, value: Optional[pulumi.Input[bool]]):
+        pulumi.set(self, "optional", value)
+
+
+@pulumi.input_type
+class BindingSpecParametersValueFromSecretKeyRefArgs:
+    def __init__(__self__, *,
+                 key: pulumi.Input[str],
+                 name: Optional[pulumi.Input[str]] = None,
+                 optional: Optional[pulumi.Input[bool]] = None):
+        """
+        Selects a key of a secret in the resource namespace
+        :param pulumi.Input[str] key: The key of the secret to select from.  Must be a valid secret key.
+        :param pulumi.Input[str] name: Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+        :param pulumi.Input[bool] optional: Specify whether the Secret or its key must be defined
+        """
+        pulumi.set(__self__, "key", key)
+        if name is not None:
+            pulumi.set(__self__, "name", name)
+        if optional is not None:
+            pulumi.set(__self__, "optional", optional)
+
+    @property
+    @pulumi.getter
+    def key(self) -> pulumi.Input[str]:
+        """
+        The key of the secret to select from.  Must be a valid secret key.
+        """
+        return pulumi.get(self, "key")
+
+    @key.setter
+    def key(self, value: pulumi.Input[str]):
+        pulumi.set(self, "key", value)
+
+    @property
+    @pulumi.getter
+    def name(self) -> Optional[pulumi.Input[str]]:
+        """
+        Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+        """
+        return pulumi.get(self, "name")
+
+    @name.setter
+    def name(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "name", value)
+
+    @property
+    @pulumi.getter
+    def optional(self) -> Optional[pulumi.Input[bool]]:
+        """
+        Specify whether the Secret or its key must be defined
+        """
+        return pulumi.get(self, "optional")
+
+    @optional.setter
+    def optional(self, value: Optional[pulumi.Input[bool]]):
+        pulumi.set(self, "optional", value)
 
 
 @pulumi.input_type
@@ -218,6 +338,9 @@ class BindingStatusArgs:
                  message: Optional[pulumi.Input[str]] = None,
                  secret_name: Optional[pulumi.Input[str]] = None,
                  state: Optional[pulumi.Input[str]] = None):
+        """
+        BindingStatus defines the observed state of Binding
+        """
         if generation is not None:
             pulumi.set(__self__, "generation", generation)
         if instance_id is not None:
@@ -296,6 +419,10 @@ class ServiceSpecArgs:
                  parameters: Optional[pulumi.Input[Sequence[pulumi.Input['ServiceSpecParametersArgs']]]] = None,
                  service_class_type: Optional[pulumi.Input[str]] = None,
                  tags: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None):
+        """
+        ServiceSpec defines the desired state of Service
+        :param pulumi.Input['ServiceSpecContextArgs'] context: ResourceContext defines the CloudFoundry context and resource group
+        """
         pulumi.set(__self__, "plan", plan)
         pulumi.set(__self__, "service_class", service_class)
         if context is not None:
@@ -330,6 +457,9 @@ class ServiceSpecArgs:
     @property
     @pulumi.getter
     def context(self) -> Optional[pulumi.Input['ServiceSpecContextArgs']]:
+        """
+        ResourceContext defines the CloudFoundry context and resource group
+        """
         return pulumi.get(self, "context")
 
     @context.setter
@@ -383,6 +513,9 @@ class ServiceSpecContextArgs:
                  resourcelocation: Optional[pulumi.Input[str]] = None,
                  space: Optional[pulumi.Input[str]] = None,
                  user: Optional[pulumi.Input[str]] = None):
+        """
+        ResourceContext defines the CloudFoundry context and resource group
+        """
         if org is not None:
             pulumi.set(__self__, "org", org)
         if region is not None:
@@ -466,12 +599,13 @@ class ServiceSpecContextArgs:
 class ServiceSpecParametersArgs:
     def __init__(__self__, *,
                  name: pulumi.Input[str],
-                 attributes: Optional[pulumi.Input[Mapping[str, Any]]] = None,
+                 attributes: Optional[pulumi.Input[Mapping[str, pulumi.Input[Mapping[str, Any]]]]] = None,
                  value: Optional[Any] = None,
                  value_from: Optional[pulumi.Input['ServiceSpecParametersValueFromArgs']] = None):
         """
+        Param represents a key-value pair
         :param pulumi.Input[str] name: Name representing the key.
-        :param pulumi.Input[Mapping[str, Any]] attributes: A parameter may have attributes (e.g. message hub topic might have partitions)
+        :param pulumi.Input[Mapping[str, pulumi.Input[Mapping[str, Any]]]] attributes: A parameter may have attributes (e.g. message hub topic might have partitions)
         :param Any value: Defaults to null.
         :param pulumi.Input['ServiceSpecParametersValueFromArgs'] value_from: Source for the value. Cannot be used if value is not empty.
         """
@@ -497,14 +631,14 @@ class ServiceSpecParametersArgs:
 
     @property
     @pulumi.getter
-    def attributes(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
+    def attributes(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[Mapping[str, Any]]]]]:
         """
         A parameter may have attributes (e.g. message hub topic might have partitions)
         """
         return pulumi.get(self, "attributes")
 
     @attributes.setter
-    def attributes(self, value: Optional[pulumi.Input[Mapping[str, Any]]]):
+    def attributes(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[Mapping[str, Any]]]]]):
         pulumi.set(self, "attributes", value)
 
     @property
@@ -535,12 +669,12 @@ class ServiceSpecParametersArgs:
 @pulumi.input_type
 class ServiceSpecParametersValueFromArgs:
     def __init__(__self__, *,
-                 config_map_key_ref: Optional[pulumi.Input[Mapping[str, Any]]] = None,
-                 secret_key_ref: Optional[pulumi.Input[Mapping[str, Any]]] = None):
+                 config_map_key_ref: Optional[pulumi.Input['ServiceSpecParametersValueFromConfigMapKeyRefArgs']] = None,
+                 secret_key_ref: Optional[pulumi.Input['ServiceSpecParametersValueFromSecretKeyRefArgs']] = None):
         """
         Source for the value. Cannot be used if value is not empty.
-        :param pulumi.Input[Mapping[str, Any]] config_map_key_ref: Selects a key of a ConfigMap.
-        :param pulumi.Input[Mapping[str, Any]] secret_key_ref: Selects a key of a secret in the resource namespace
+        :param pulumi.Input['ServiceSpecParametersValueFromConfigMapKeyRefArgs'] config_map_key_ref: Selects a key of a ConfigMap.
+        :param pulumi.Input['ServiceSpecParametersValueFromSecretKeyRefArgs'] secret_key_ref: Selects a key of a secret in the resource namespace
         """
         if config_map_key_ref is not None:
             pulumi.set(__self__, "config_map_key_ref", config_map_key_ref)
@@ -549,27 +683,137 @@ class ServiceSpecParametersValueFromArgs:
 
     @property
     @pulumi.getter(name="configMapKeyRef")
-    def config_map_key_ref(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
+    def config_map_key_ref(self) -> Optional[pulumi.Input['ServiceSpecParametersValueFromConfigMapKeyRefArgs']]:
         """
         Selects a key of a ConfigMap.
         """
         return pulumi.get(self, "config_map_key_ref")
 
     @config_map_key_ref.setter
-    def config_map_key_ref(self, value: Optional[pulumi.Input[Mapping[str, Any]]]):
+    def config_map_key_ref(self, value: Optional[pulumi.Input['ServiceSpecParametersValueFromConfigMapKeyRefArgs']]):
         pulumi.set(self, "config_map_key_ref", value)
 
     @property
     @pulumi.getter(name="secretKeyRef")
-    def secret_key_ref(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
+    def secret_key_ref(self) -> Optional[pulumi.Input['ServiceSpecParametersValueFromSecretKeyRefArgs']]:
         """
         Selects a key of a secret in the resource namespace
         """
         return pulumi.get(self, "secret_key_ref")
 
     @secret_key_ref.setter
-    def secret_key_ref(self, value: Optional[pulumi.Input[Mapping[str, Any]]]):
+    def secret_key_ref(self, value: Optional[pulumi.Input['ServiceSpecParametersValueFromSecretKeyRefArgs']]):
         pulumi.set(self, "secret_key_ref", value)
+
+
+@pulumi.input_type
+class ServiceSpecParametersValueFromConfigMapKeyRefArgs:
+    def __init__(__self__, *,
+                 key: pulumi.Input[str],
+                 name: Optional[pulumi.Input[str]] = None,
+                 optional: Optional[pulumi.Input[bool]] = None):
+        """
+        Selects a key of a ConfigMap.
+        :param pulumi.Input[str] key: The key to select.
+        :param pulumi.Input[str] name: Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+        :param pulumi.Input[bool] optional: Specify whether the ConfigMap or its key must be defined
+        """
+        pulumi.set(__self__, "key", key)
+        if name is not None:
+            pulumi.set(__self__, "name", name)
+        if optional is not None:
+            pulumi.set(__self__, "optional", optional)
+
+    @property
+    @pulumi.getter
+    def key(self) -> pulumi.Input[str]:
+        """
+        The key to select.
+        """
+        return pulumi.get(self, "key")
+
+    @key.setter
+    def key(self, value: pulumi.Input[str]):
+        pulumi.set(self, "key", value)
+
+    @property
+    @pulumi.getter
+    def name(self) -> Optional[pulumi.Input[str]]:
+        """
+        Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+        """
+        return pulumi.get(self, "name")
+
+    @name.setter
+    def name(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "name", value)
+
+    @property
+    @pulumi.getter
+    def optional(self) -> Optional[pulumi.Input[bool]]:
+        """
+        Specify whether the ConfigMap or its key must be defined
+        """
+        return pulumi.get(self, "optional")
+
+    @optional.setter
+    def optional(self, value: Optional[pulumi.Input[bool]]):
+        pulumi.set(self, "optional", value)
+
+
+@pulumi.input_type
+class ServiceSpecParametersValueFromSecretKeyRefArgs:
+    def __init__(__self__, *,
+                 key: pulumi.Input[str],
+                 name: Optional[pulumi.Input[str]] = None,
+                 optional: Optional[pulumi.Input[bool]] = None):
+        """
+        Selects a key of a secret in the resource namespace
+        :param pulumi.Input[str] key: The key of the secret to select from.  Must be a valid secret key.
+        :param pulumi.Input[str] name: Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+        :param pulumi.Input[bool] optional: Specify whether the Secret or its key must be defined
+        """
+        pulumi.set(__self__, "key", key)
+        if name is not None:
+            pulumi.set(__self__, "name", name)
+        if optional is not None:
+            pulumi.set(__self__, "optional", optional)
+
+    @property
+    @pulumi.getter
+    def key(self) -> pulumi.Input[str]:
+        """
+        The key of the secret to select from.  Must be a valid secret key.
+        """
+        return pulumi.get(self, "key")
+
+    @key.setter
+    def key(self, value: pulumi.Input[str]):
+        pulumi.set(self, "key", value)
+
+    @property
+    @pulumi.getter
+    def name(self) -> Optional[pulumi.Input[str]]:
+        """
+        Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+        """
+        return pulumi.get(self, "name")
+
+    @name.setter
+    def name(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "name", value)
+
+    @property
+    @pulumi.getter
+    def optional(self) -> Optional[pulumi.Input[bool]]:
+        """
+        Specify whether the Secret or its key must be defined
+        """
+        return pulumi.get(self, "optional")
+
+    @optional.setter
+    def optional(self, value: Optional[pulumi.Input[bool]]):
+        pulumi.set(self, "optional", value)
 
 
 @pulumi.input_type
@@ -587,6 +831,10 @@ class ServiceStatusArgs:
                  parameters: Optional[pulumi.Input[Sequence[pulumi.Input['ServiceStatusParametersArgs']]]] = None,
                  state: Optional[pulumi.Input[str]] = None,
                  tags: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None):
+        """
+        ServiceStatus defines the observed state of Service
+        :param pulumi.Input['ServiceStatusContextArgs'] context: ResourceContext defines the CloudFoundry context and resource group
+        """
         pulumi.set(__self__, "plan", plan)
         pulumi.set(__self__, "service_class", service_class)
         pulumi.set(__self__, "service_class_type", service_class_type)
@@ -639,6 +887,9 @@ class ServiceStatusArgs:
     @property
     @pulumi.getter
     def context(self) -> Optional[pulumi.Input['ServiceStatusContextArgs']]:
+        """
+        ResourceContext defines the CloudFoundry context and resource group
+        """
         return pulumi.get(self, "context")
 
     @context.setter
@@ -728,6 +979,9 @@ class ServiceStatusContextArgs:
                  resourcelocation: Optional[pulumi.Input[str]] = None,
                  space: Optional[pulumi.Input[str]] = None,
                  user: Optional[pulumi.Input[str]] = None):
+        """
+        ResourceContext defines the CloudFoundry context and resource group
+        """
         if org is not None:
             pulumi.set(__self__, "org", org)
         if region is not None:
@@ -811,12 +1065,13 @@ class ServiceStatusContextArgs:
 class ServiceStatusParametersArgs:
     def __init__(__self__, *,
                  name: pulumi.Input[str],
-                 attributes: Optional[pulumi.Input[Mapping[str, Any]]] = None,
+                 attributes: Optional[pulumi.Input[Mapping[str, pulumi.Input[Mapping[str, Any]]]]] = None,
                  value: Optional[Any] = None,
                  value_from: Optional[pulumi.Input['ServiceStatusParametersValueFromArgs']] = None):
         """
+        Param represents a key-value pair
         :param pulumi.Input[str] name: Name representing the key.
-        :param pulumi.Input[Mapping[str, Any]] attributes: A parameter may have attributes (e.g. message hub topic might have partitions)
+        :param pulumi.Input[Mapping[str, pulumi.Input[Mapping[str, Any]]]] attributes: A parameter may have attributes (e.g. message hub topic might have partitions)
         :param Any value: Defaults to null.
         :param pulumi.Input['ServiceStatusParametersValueFromArgs'] value_from: Source for the value. Cannot be used if value is not empty.
         """
@@ -842,14 +1097,14 @@ class ServiceStatusParametersArgs:
 
     @property
     @pulumi.getter
-    def attributes(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
+    def attributes(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[Mapping[str, Any]]]]]:
         """
         A parameter may have attributes (e.g. message hub topic might have partitions)
         """
         return pulumi.get(self, "attributes")
 
     @attributes.setter
-    def attributes(self, value: Optional[pulumi.Input[Mapping[str, Any]]]):
+    def attributes(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[Mapping[str, Any]]]]]):
         pulumi.set(self, "attributes", value)
 
     @property
@@ -880,12 +1135,12 @@ class ServiceStatusParametersArgs:
 @pulumi.input_type
 class ServiceStatusParametersValueFromArgs:
     def __init__(__self__, *,
-                 config_map_key_ref: Optional[pulumi.Input[Mapping[str, Any]]] = None,
-                 secret_key_ref: Optional[pulumi.Input[Mapping[str, Any]]] = None):
+                 config_map_key_ref: Optional[pulumi.Input['ServiceStatusParametersValueFromConfigMapKeyRefArgs']] = None,
+                 secret_key_ref: Optional[pulumi.Input['ServiceStatusParametersValueFromSecretKeyRefArgs']] = None):
         """
         Source for the value. Cannot be used if value is not empty.
-        :param pulumi.Input[Mapping[str, Any]] config_map_key_ref: Selects a key of a ConfigMap.
-        :param pulumi.Input[Mapping[str, Any]] secret_key_ref: Selects a key of a secret in the resource namespace
+        :param pulumi.Input['ServiceStatusParametersValueFromConfigMapKeyRefArgs'] config_map_key_ref: Selects a key of a ConfigMap.
+        :param pulumi.Input['ServiceStatusParametersValueFromSecretKeyRefArgs'] secret_key_ref: Selects a key of a secret in the resource namespace
         """
         if config_map_key_ref is not None:
             pulumi.set(__self__, "config_map_key_ref", config_map_key_ref)
@@ -894,26 +1149,136 @@ class ServiceStatusParametersValueFromArgs:
 
     @property
     @pulumi.getter(name="configMapKeyRef")
-    def config_map_key_ref(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
+    def config_map_key_ref(self) -> Optional[pulumi.Input['ServiceStatusParametersValueFromConfigMapKeyRefArgs']]:
         """
         Selects a key of a ConfigMap.
         """
         return pulumi.get(self, "config_map_key_ref")
 
     @config_map_key_ref.setter
-    def config_map_key_ref(self, value: Optional[pulumi.Input[Mapping[str, Any]]]):
+    def config_map_key_ref(self, value: Optional[pulumi.Input['ServiceStatusParametersValueFromConfigMapKeyRefArgs']]):
         pulumi.set(self, "config_map_key_ref", value)
 
     @property
     @pulumi.getter(name="secretKeyRef")
-    def secret_key_ref(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
+    def secret_key_ref(self) -> Optional[pulumi.Input['ServiceStatusParametersValueFromSecretKeyRefArgs']]:
         """
         Selects a key of a secret in the resource namespace
         """
         return pulumi.get(self, "secret_key_ref")
 
     @secret_key_ref.setter
-    def secret_key_ref(self, value: Optional[pulumi.Input[Mapping[str, Any]]]):
+    def secret_key_ref(self, value: Optional[pulumi.Input['ServiceStatusParametersValueFromSecretKeyRefArgs']]):
         pulumi.set(self, "secret_key_ref", value)
+
+
+@pulumi.input_type
+class ServiceStatusParametersValueFromConfigMapKeyRefArgs:
+    def __init__(__self__, *,
+                 key: pulumi.Input[str],
+                 name: Optional[pulumi.Input[str]] = None,
+                 optional: Optional[pulumi.Input[bool]] = None):
+        """
+        Selects a key of a ConfigMap.
+        :param pulumi.Input[str] key: The key to select.
+        :param pulumi.Input[str] name: Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+        :param pulumi.Input[bool] optional: Specify whether the ConfigMap or its key must be defined
+        """
+        pulumi.set(__self__, "key", key)
+        if name is not None:
+            pulumi.set(__self__, "name", name)
+        if optional is not None:
+            pulumi.set(__self__, "optional", optional)
+
+    @property
+    @pulumi.getter
+    def key(self) -> pulumi.Input[str]:
+        """
+        The key to select.
+        """
+        return pulumi.get(self, "key")
+
+    @key.setter
+    def key(self, value: pulumi.Input[str]):
+        pulumi.set(self, "key", value)
+
+    @property
+    @pulumi.getter
+    def name(self) -> Optional[pulumi.Input[str]]:
+        """
+        Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+        """
+        return pulumi.get(self, "name")
+
+    @name.setter
+    def name(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "name", value)
+
+    @property
+    @pulumi.getter
+    def optional(self) -> Optional[pulumi.Input[bool]]:
+        """
+        Specify whether the ConfigMap or its key must be defined
+        """
+        return pulumi.get(self, "optional")
+
+    @optional.setter
+    def optional(self, value: Optional[pulumi.Input[bool]]):
+        pulumi.set(self, "optional", value)
+
+
+@pulumi.input_type
+class ServiceStatusParametersValueFromSecretKeyRefArgs:
+    def __init__(__self__, *,
+                 key: pulumi.Input[str],
+                 name: Optional[pulumi.Input[str]] = None,
+                 optional: Optional[pulumi.Input[bool]] = None):
+        """
+        Selects a key of a secret in the resource namespace
+        :param pulumi.Input[str] key: The key of the secret to select from.  Must be a valid secret key.
+        :param pulumi.Input[str] name: Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+        :param pulumi.Input[bool] optional: Specify whether the Secret or its key must be defined
+        """
+        pulumi.set(__self__, "key", key)
+        if name is not None:
+            pulumi.set(__self__, "name", name)
+        if optional is not None:
+            pulumi.set(__self__, "optional", optional)
+
+    @property
+    @pulumi.getter
+    def key(self) -> pulumi.Input[str]:
+        """
+        The key of the secret to select from.  Must be a valid secret key.
+        """
+        return pulumi.get(self, "key")
+
+    @key.setter
+    def key(self, value: pulumi.Input[str]):
+        pulumi.set(self, "key", value)
+
+    @property
+    @pulumi.getter
+    def name(self) -> Optional[pulumi.Input[str]]:
+        """
+        Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+        """
+        return pulumi.get(self, "name")
+
+    @name.setter
+    def name(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "name", value)
+
+    @property
+    @pulumi.getter
+    def optional(self) -> Optional[pulumi.Input[bool]]:
+        """
+        Specify whether the Secret or its key must be defined
+        """
+        return pulumi.get(self, "optional")
+
+    @optional.setter
+    def optional(self, value: Optional[pulumi.Input[bool]]):
+        pulumi.set(self, "optional", value)
 
 

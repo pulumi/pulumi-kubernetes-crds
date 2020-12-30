@@ -14,9 +14,13 @@ export namespace operator {
          */
         export interface ClusterManagerSpec {
             /**
-             * RegistrationImagePullSpec represents the desired image of registration controller installed on hub.
+             * RegistrationImagePullSpec represents the desired image of registration controller/webhook installed on hub.
              */
             registrationImagePullSpec?: string;
+            /**
+             * WorkImagePullSpec represents the desired image configuration of work controller/webhook installed on hub.
+             */
+            workImagePullSpec?: string;
         }
 
         /**
@@ -42,29 +46,34 @@ export namespace operator {
         }
 
         /**
-         * StatusCondition contains condition information.
+         * Condition contains details for one aspect of the current state of this API Resource. --- This struct is intended for direct use as an array at the field path .status.conditions.  For example, type FooStatus struct{     // Represents the observations of a foo's current state.     // Known .status.conditions.type are: "Available", "Progressing", and "Degraded"     // +patchMergeKey=type     // +patchStrategy=merge     // +listType=map     // +listMapKey=type     Conditions []metav1.Condition `json:"conditions,omitempty" patchStrategy:"merge" patchMergeKey:"type" protobuf:"bytes,1,rep,name=conditions"` 
+         *      // other fields }
          */
         export interface ClusterManagerStatusConditions {
             /**
-             * LastTransitionTime is the last time the condition changed from one status to another.
+             * lastTransitionTime is the last time the condition transitioned from one status to another. This should be when the underlying condition changed.  If that is not known, then using the time when the API field changed is acceptable.
              */
-            lastTransitionTime?: string;
+            lastTransitionTime: string;
             /**
-             * Message is a human-readable message indicating details about the last status change.
+             * message is a human readable message indicating details about the transition. This may be an empty string.
              */
-            message?: string;
+            message: string;
             /**
-             * Reason is a (brief) reason for the condition's last status change.
+             * observedGeneration represents the .metadata.generation that the condition was set based upon. For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date with respect to the current state of the instance.
              */
-            reason?: string;
+            observedGeneration?: number;
             /**
-             * Status is the status of the condition. One of True, False, Unknown.
+             * reason contains a programmatic identifier indicating the reason for the condition's last transition. Producers of specific condition types may define expected values and meanings for this field, and whether the values are considered a guaranteed API. The value should be a CamelCase string. This field may not be empty.
              */
-            status?: string;
+            reason: string;
             /**
-             * Type is the type of the cluster condition.
+             * status of the condition, one of True, False, Unknown.
              */
-            type?: string;
+            status: string;
+            /**
+             * type of condition in CamelCase or in foo.example.com/CamelCase. --- Many .condition.type values are consistent across resources like Available, but because arbitrary conditions can be useful (see .node.status.conditions), the ability to deconflict is important. The regex it matches is (dns1123SubdomainFmt/)?(qualifiedNameFmt)
+             */
+            type: string;
         }
 
         /**

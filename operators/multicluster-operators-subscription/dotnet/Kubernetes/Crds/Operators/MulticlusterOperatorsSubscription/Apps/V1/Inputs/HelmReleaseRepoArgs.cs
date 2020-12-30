@@ -28,6 +28,12 @@ namespace Pulumi.Kubernetes.Types.Inputs.Apps.V1
         public Input<Pulumi.Kubernetes.Types.Inputs.Apps.V1.HelmReleaseRepoConfigMapRefArgs>? ConfigMapRef { get; set; }
 
         /// <summary>
+        /// Used to skip repo server's TLS certificate verification
+        /// </summary>
+        [Input("insecureSkipVerify")]
+        public Input<bool>? InsecureSkipVerify { get; set; }
+
+        /// <summary>
         /// Secret to use to access the helm-repo defined in the CatalogSource.
         /// </summary>
         [Input("secretRef")]

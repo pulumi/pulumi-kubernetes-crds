@@ -26,6 +26,10 @@ namespace Pulumi.Kubernetes.Types.Outputs.Kafka.V1Beta1
         /// </summary>
         public readonly Pulumi.Kubernetes.Types.Outputs.Kafka.V1Beta1.KafkaConnectS2ISpecTemplateDeployment Deployment;
         /// <summary>
+        /// Template for the Kafka init container.
+        /// </summary>
+        public readonly Pulumi.Kubernetes.Types.Outputs.Kafka.V1Beta1.KafkaConnectS2ISpecTemplateInitContainer InitContainer;
+        /// <summary>
         /// Template for Kafka Connect `Pods`.
         /// </summary>
         public readonly Pulumi.Kubernetes.Types.Outputs.Kafka.V1Beta1.KafkaConnectS2ISpecTemplatePod Pod;
@@ -42,6 +46,8 @@ namespace Pulumi.Kubernetes.Types.Outputs.Kafka.V1Beta1
 
             Pulumi.Kubernetes.Types.Outputs.Kafka.V1Beta1.KafkaConnectS2ISpecTemplateDeployment deployment,
 
+            Pulumi.Kubernetes.Types.Outputs.Kafka.V1Beta1.KafkaConnectS2ISpecTemplateInitContainer initContainer,
+
             Pulumi.Kubernetes.Types.Outputs.Kafka.V1Beta1.KafkaConnectS2ISpecTemplatePod pod,
 
             Pulumi.Kubernetes.Types.Outputs.Kafka.V1Beta1.KafkaConnectS2ISpecTemplatePodDisruptionBudget podDisruptionBudget)
@@ -49,6 +55,7 @@ namespace Pulumi.Kubernetes.Types.Outputs.Kafka.V1Beta1
             ApiService = apiService;
             ConnectContainer = connectContainer;
             Deployment = deployment;
+            InitContainer = initContainer;
             Pod = pod;
             PodDisruptionBudget = podDisruptionBudget;
         }

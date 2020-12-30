@@ -18,13 +18,17 @@ export namespace build {
              */
             buildRef: pulumi.Input<inputs.build.v1alpha1.BuildRunSpecBuildRef>;
             /**
-             * Compute Resources required by the build container which can overwrite the configuration in Build. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
+             * Output refers to the location where the generated image would be pushed to. It will overwrite the output image in build spec
              */
-            resources?: pulumi.Input<inputs.build.v1alpha1.BuildRunSpecResources>;
+            output?: pulumi.Input<inputs.build.v1alpha1.BuildRunSpecOutput>;
             /**
              * ServiceAccount refers to the kubernetes serviceaccount which is used for resource control. Default serviceaccount will be set if it is empty
              */
-            serviceAccount?: pulumi.Input<string>;
+            serviceAccount?: pulumi.Input<inputs.build.v1alpha1.BuildRunSpecServiceAccount>;
+            /**
+             * Timeout defines the maximum run time of this build run.
+             */
+            timeout?: pulumi.Input<string>;
         }
 
         /**
@@ -38,27 +42,55 @@ export namespace build {
             /**
              * Name of the referent; More info: http://kubernetes.io/docs/user-guide/identifiers#names
              */
+            name: pulumi.Input<string>;
+        }
+
+        /**
+         * Output refers to the location where the generated image would be pushed to. It will overwrite the output image in build spec
+         */
+        export interface BuildRunSpecOutput {
+            /**
+             * SecretRef is a reference to the Secret containing the credentials to push the image to the registry
+             */
+            credentials?: pulumi.Input<inputs.build.v1alpha1.BuildRunSpecOutputCredentials>;
+            /**
+             * ImageURL is the URL where the image will be pushed to.
+             */
+            image: pulumi.Input<string>;
+        }
+
+        /**
+         * SecretRef is a reference to the Secret containing the credentials to push the image to the registry
+         */
+        export interface BuildRunSpecOutputCredentials {
+            /**
+             * Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+             */
             name?: pulumi.Input<string>;
         }
 
         /**
-         * Compute Resources required by the build container which can overwrite the configuration in Build. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
+         * ServiceAccount refers to the kubernetes serviceaccount which is used for resource control. Default serviceaccount will be set if it is empty
          */
-        export interface BuildRunSpecResources {
+        export interface BuildRunSpecServiceAccount {
             /**
-             * Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
+             * If generates a new ServiceAccount for the build
              */
-            limits?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+            generate?: pulumi.Input<boolean>;
             /**
-             * Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
+             * Name of the referent; More info: http://kubernetes.io/docs/user-guide/identifiers#names
              */
-            requests?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+            name?: pulumi.Input<string>;
         }
 
         /**
          * BuildRunStatus defines the observed state of BuildRun
          */
         export interface BuildRunStatus {
+            /**
+             * BuildSpec is the Build Spec of this BuildRun.
+             */
+            buildSpec?: pulumi.Input<inputs.build.v1alpha1.BuildRunStatusBuildSpec>;
             /**
              * CompletionTime is the time the build completed.
              */
@@ -82,6 +114,242 @@ export namespace build {
         }
 
         /**
+         * BuildSpec is the Build Spec of this BuildRun.
+         */
+        export interface BuildRunStatusBuildSpec {
+            /**
+             * BuilderImage refers to the image containing the build tools inside which the source code would be built.
+             */
+            builder?: pulumi.Input<inputs.build.v1alpha1.BuildRunStatusBuildSpecBuilder>;
+            /**
+             * Dockerfile is the path to the Dockerfile to be used for build strategies which bank on the Dockerfile for building an image.
+             */
+            dockerfile?: pulumi.Input<string>;
+            /**
+             * Output refers to the location where the generated image would be pushed to.
+             */
+            output: pulumi.Input<inputs.build.v1alpha1.BuildRunStatusBuildSpecOutput>;
+            /**
+             * Parameters contains name-value that could be used to loosely type parameters in the BuildStrategy.
+             */
+            parameters?: pulumi.Input<pulumi.Input<inputs.build.v1alpha1.BuildRunStatusBuildSpecParameters>[]>;
+            /**
+             * Runtime represents the runtime-image
+             */
+            runtime?: pulumi.Input<inputs.build.v1alpha1.BuildRunStatusBuildSpecRuntime>;
+            /**
+             * Source refers to the Git repository containing the source code to be built.
+             */
+            source: pulumi.Input<inputs.build.v1alpha1.BuildRunStatusBuildSpecSource>;
+            /**
+             * StrategyRef refers to the BuildStrategy to be used to build the container image. There are namespaced scope and cluster scope BuildStrategy
+             */
+            strategy: pulumi.Input<inputs.build.v1alpha1.BuildRunStatusBuildSpecStrategy>;
+            /**
+             * Timeout defines the maximum run time of a build run.
+             */
+            timeout?: pulumi.Input<string>;
+        }
+
+        /**
+         * BuilderImage refers to the image containing the build tools inside which the source code would be built.
+         */
+        export interface BuildRunStatusBuildSpecBuilder {
+            /**
+             * SecretRef is a reference to the Secret containing the credentials to push the image to the registry
+             */
+            credentials?: pulumi.Input<inputs.build.v1alpha1.BuildRunStatusBuildSpecBuilderCredentials>;
+            /**
+             * ImageURL is the URL where the image will be pushed to.
+             */
+            image: pulumi.Input<string>;
+        }
+
+        /**
+         * SecretRef is a reference to the Secret containing the credentials to push the image to the registry
+         */
+        export interface BuildRunStatusBuildSpecBuilderCredentials {
+            /**
+             * Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+             */
+            name?: pulumi.Input<string>;
+        }
+
+        /**
+         * Output refers to the location where the generated image would be pushed to.
+         */
+        export interface BuildRunStatusBuildSpecOutput {
+            /**
+             * SecretRef is a reference to the Secret containing the credentials to push the image to the registry
+             */
+            credentials?: pulumi.Input<inputs.build.v1alpha1.BuildRunStatusBuildSpecOutputCredentials>;
+            /**
+             * ImageURL is the URL where the image will be pushed to.
+             */
+            image: pulumi.Input<string>;
+        }
+
+        /**
+         * SecretRef is a reference to the Secret containing the credentials to push the image to the registry
+         */
+        export interface BuildRunStatusBuildSpecOutputCredentials {
+            /**
+             * Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+             */
+            name?: pulumi.Input<string>;
+        }
+
+        /**
+         * Parameter defines the data structure that would be used for expressing arbitrary key/value pairs for the execution of a build
+         */
+        export interface BuildRunStatusBuildSpecParameters {
+            name: pulumi.Input<string>;
+            value: pulumi.Input<string>;
+        }
+
+        /**
+         * Runtime represents the runtime-image
+         */
+        export interface BuildRunStatusBuildSpecRuntime {
+            /**
+             * Base runtime base image.
+             */
+            base?: pulumi.Input<inputs.build.v1alpha1.BuildRunStatusBuildSpecRuntimeBase>;
+            /**
+             * Entrypoint runtime-image entrypoint.
+             */
+            entrypoint?: pulumi.Input<pulumi.Input<string>[]>;
+            /**
+             * Env environment variables for runtime.
+             */
+            env?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+            /**
+             * Labels map of additional labels to be applied on image.
+             */
+            labels?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+            /**
+             * Paths list of directories/files to be copied into runtime-image, using colon ":" to split up source and destination paths.
+             */
+            paths?: pulumi.Input<pulumi.Input<string>[]>;
+            /**
+             * Run arbitrary commands to run before copying data into runtime-image.
+             */
+            run?: pulumi.Input<pulumi.Input<string>[]>;
+            /**
+             * User definitions of user and group for runtime-image.
+             */
+            user?: pulumi.Input<inputs.build.v1alpha1.BuildRunStatusBuildSpecRuntimeUser>;
+            /**
+             * WorkDir runtime image working directory `WORKDIR`.
+             */
+            workDir?: pulumi.Input<string>;
+        }
+
+        /**
+         * Base runtime base image.
+         */
+        export interface BuildRunStatusBuildSpecRuntimeBase {
+            /**
+             * SecretRef is a reference to the Secret containing the credentials to push the image to the registry
+             */
+            credentials?: pulumi.Input<inputs.build.v1alpha1.BuildRunStatusBuildSpecRuntimeBaseCredentials>;
+            /**
+             * ImageURL is the URL where the image will be pushed to.
+             */
+            image: pulumi.Input<string>;
+        }
+
+        /**
+         * SecretRef is a reference to the Secret containing the credentials to push the image to the registry
+         */
+        export interface BuildRunStatusBuildSpecRuntimeBaseCredentials {
+            /**
+             * Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+             */
+            name?: pulumi.Input<string>;
+        }
+
+        /**
+         * User definitions of user and group for runtime-image.
+         */
+        export interface BuildRunStatusBuildSpecRuntimeUser {
+            /**
+             * Group group name or GID employed in runtime-image.
+             */
+            group?: pulumi.Input<string>;
+            /**
+             * Name user name to be employed in runtime-image.
+             */
+            name: pulumi.Input<string>;
+        }
+
+        /**
+         * Source refers to the Git repository containing the source code to be built.
+         */
+        export interface BuildRunStatusBuildSpecSource {
+            /**
+             * ContextDir is a path to subfolder in the repo. Optional.
+             */
+            contextDir?: pulumi.Input<string>;
+            /**
+             * SecretRef refers to the secret that contains credentials to access the git repo. Optional.
+             */
+            credentials?: pulumi.Input<inputs.build.v1alpha1.BuildRunStatusBuildSpecSourceCredentials>;
+            /**
+             * Flavor of the git provider like github, gitlab, bitbucket, generic, etc. Optional.
+             */
+            flavor?: pulumi.Input<string>;
+            /**
+             * HTTPProxy is optional.
+             */
+            httpProxy?: pulumi.Input<string>;
+            /**
+             * HTTPSProxy is optional.
+             */
+            httpsProxy?: pulumi.Input<string>;
+            /**
+             * NoProxy can be used to specify domains for which no proxying should be performed. Optional.
+             */
+            noProxy?: pulumi.Input<string>;
+            /**
+             * Ref is a git reference. Optional. "master" is used by default.
+             */
+            revision?: pulumi.Input<string>;
+            /**
+             * URL of the git repo
+             */
+            url: pulumi.Input<string>;
+        }
+
+        /**
+         * SecretRef refers to the secret that contains credentials to access the git repo. Optional.
+         */
+        export interface BuildRunStatusBuildSpecSourceCredentials {
+            /**
+             * Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+             */
+            name?: pulumi.Input<string>;
+        }
+
+        /**
+         * StrategyRef refers to the BuildStrategy to be used to build the container image. There are namespaced scope and cluster scope BuildStrategy
+         */
+        export interface BuildRunStatusBuildSpecStrategy {
+            /**
+             * API version of the referent
+             */
+            apiVersion?: pulumi.Input<string>;
+            /**
+             * BuildStrategyKind indicates the kind of the buildstrategy, namespaced or cluster scoped.
+             */
+            kind?: pulumi.Input<string>;
+            /**
+             * Name of the referent; More info: http://kubernetes.io/docs/user-guide/identifiers#names
+             */
+            name: pulumi.Input<string>;
+        }
+
+        /**
          * BuildSpec defines the desired state of Build
          */
         export interface BuildSpec {
@@ -102,9 +370,9 @@ export namespace build {
              */
             parameters?: pulumi.Input<pulumi.Input<inputs.build.v1alpha1.BuildSpecParameters>[]>;
             /**
-             * Compute Resources required by the build container. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
+             * Runtime represents the runtime-image
              */
-            resources?: pulumi.Input<inputs.build.v1alpha1.BuildSpecResources>;
+            runtime?: pulumi.Input<inputs.build.v1alpha1.BuildSpecRuntime>;
             /**
              * Source refers to the Git repository containing the source code to be built.
              */
@@ -113,6 +381,10 @@ export namespace build {
              * StrategyRef refers to the BuildStrategy to be used to build the container image. There are namespaced scope and cluster scope BuildStrategy
              */
             strategy: pulumi.Input<inputs.build.v1alpha1.BuildSpecStrategy>;
+            /**
+             * Timeout defines the maximum run time of a build run.
+             */
+            timeout?: pulumi.Input<string>;
         }
 
         /**
@@ -172,17 +444,79 @@ export namespace build {
         }
 
         /**
-         * Compute Resources required by the build container. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
+         * Runtime represents the runtime-image
          */
-        export interface BuildSpecResources {
+        export interface BuildSpecRuntime {
             /**
-             * Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
+             * Base runtime base image.
              */
-            limits?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+            base?: pulumi.Input<inputs.build.v1alpha1.BuildSpecRuntimeBase>;
             /**
-             * Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
+             * Entrypoint runtime-image entrypoint.
              */
-            requests?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+            entrypoint?: pulumi.Input<pulumi.Input<string>[]>;
+            /**
+             * Env environment variables for runtime.
+             */
+            env?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+            /**
+             * Labels map of additional labels to be applied on image.
+             */
+            labels?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+            /**
+             * Paths list of directories/files to be copied into runtime-image, using colon ":" to split up source and destination paths.
+             */
+            paths?: pulumi.Input<pulumi.Input<string>[]>;
+            /**
+             * Run arbitrary commands to run before copying data into runtime-image.
+             */
+            run?: pulumi.Input<pulumi.Input<string>[]>;
+            /**
+             * User definitions of user and group for runtime-image.
+             */
+            user?: pulumi.Input<inputs.build.v1alpha1.BuildSpecRuntimeUser>;
+            /**
+             * WorkDir runtime image working directory `WORKDIR`.
+             */
+            workDir?: pulumi.Input<string>;
+        }
+
+        /**
+         * Base runtime base image.
+         */
+        export interface BuildSpecRuntimeBase {
+            /**
+             * SecretRef is a reference to the Secret containing the credentials to push the image to the registry
+             */
+            credentials?: pulumi.Input<inputs.build.v1alpha1.BuildSpecRuntimeBaseCredentials>;
+            /**
+             * ImageURL is the URL where the image will be pushed to.
+             */
+            image: pulumi.Input<string>;
+        }
+
+        /**
+         * SecretRef is a reference to the Secret containing the credentials to push the image to the registry
+         */
+        export interface BuildSpecRuntimeBaseCredentials {
+            /**
+             * Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+             */
+            name?: pulumi.Input<string>;
+        }
+
+        /**
+         * User definitions of user and group for runtime-image.
+         */
+        export interface BuildSpecRuntimeUser {
+            /**
+             * Group group name or GID employed in runtime-image.
+             */
+            group?: pulumi.Input<string>;
+            /**
+             * Name user name to be employed in runtime-image.
+             */
+            name: pulumi.Input<string>;
         }
 
         /**
@@ -249,6 +583,20 @@ export namespace build {
              * Name of the referent; More info: http://kubernetes.io/docs/user-guide/identifiers#names
              */
             name: pulumi.Input<string>;
+        }
+
+        /**
+         * BuildStatus defines the observed state of Build
+         */
+        export interface BuildStatus {
+            /**
+             * The reason of the registered Build, either an error or succeed message
+             */
+            reason?: pulumi.Input<string>;
+            /**
+             * The Register status of the Build
+             */
+            registered?: pulumi.Input<string>;
         }
 
         /**
@@ -425,7 +773,7 @@ export namespace build {
              */
             configMapKeyRef?: pulumi.Input<inputs.build.v1alpha1.BuildStrategySpecBuildStepsEnvValueFromConfigMapKeyRef>;
             /**
-             * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+             * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
              */
             fieldRef?: pulumi.Input<inputs.build.v1alpha1.BuildStrategySpecBuildStepsEnvValueFromFieldRef>;
             /**
@@ -457,7 +805,7 @@ export namespace build {
         }
 
         /**
-         * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+         * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
          */
         export interface BuildStrategySpecBuildStepsEnvValueFromFieldRef {
             /**
@@ -481,11 +829,14 @@ export namespace build {
             /**
              * Specifies the output format of the exposed resources, defaults to "1"
              */
-            divisor?: pulumi.Input<string>;
+            divisor?: pulumi.Input<inputs.build.v1alpha1.BuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisor>;
             /**
              * Required: resource to select
              */
             resource: pulumi.Input<string>;
+        }
+
+        export interface BuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisor {
         }
 
         /**
@@ -945,11 +1296,17 @@ export namespace build {
             /**
              * Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
              */
-            limits?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+            limits?: pulumi.Input<{[key: string]: pulumi.Input<inputs.build.v1alpha1.BuildStrategySpecBuildStepsResourcesLimits>}>;
             /**
              * Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
              */
-            requests?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+            requests?: pulumi.Input<{[key: string]: pulumi.Input<inputs.build.v1alpha1.BuildStrategySpecBuildStepsResourcesRequests>}>;
+        }
+
+        export interface BuildStrategySpecBuildStepsResourcesLimits {
+        }
+
+        export interface BuildStrategySpecBuildStepsResourcesRequests {
         }
 
         /**
@@ -1047,7 +1404,7 @@ export namespace build {
              */
             gmsaCredentialSpecName?: pulumi.Input<string>;
             /**
-             * The UserName in Windows to run the entrypoint of the container process. Defaults to the user specified in image metadata if unspecified. May also be set in PodSecurityContext. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence. This field is alpha-level and it is only honored by servers that enable the WindowsRunAsUserName feature flag.
+             * The UserName in Windows to run the entrypoint of the container process. Defaults to the user specified in image metadata if unspecified. May also be set in PodSecurityContext. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence. This field is beta-level and may be disabled with the WindowsRunAsUserName feature flag.
              */
             runAsUserName?: pulumi.Input<string>;
         }
@@ -1199,7 +1556,7 @@ export namespace build {
              */
             subPath?: pulumi.Input<string>;
             /**
-             * Expanded path within the volume from which the container's volume should be mounted. Behaves similarly to SubPath but environment variable references $(VAR_NAME) are expanded using the container's environment. Defaults to "" (volume's root). SubPathExpr and SubPath are mutually exclusive. This field is beta in 1.15.
+             * Expanded path within the volume from which the container's volume should be mounted. Behaves similarly to SubPath but environment variable references $(VAR_NAME) are expanded using the container's environment. Defaults to "" (volume's root). SubPathExpr and SubPath are mutually exclusive.
              */
             subPathExpr?: pulumi.Input<string>;
         }
@@ -1378,7 +1735,7 @@ export namespace build {
              */
             configMapKeyRef?: pulumi.Input<inputs.build.v1alpha1.ClusterBuildStrategySpecBuildStepsEnvValueFromConfigMapKeyRef>;
             /**
-             * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+             * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
              */
             fieldRef?: pulumi.Input<inputs.build.v1alpha1.ClusterBuildStrategySpecBuildStepsEnvValueFromFieldRef>;
             /**
@@ -1410,7 +1767,7 @@ export namespace build {
         }
 
         /**
-         * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+         * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
          */
         export interface ClusterBuildStrategySpecBuildStepsEnvValueFromFieldRef {
             /**
@@ -1434,11 +1791,14 @@ export namespace build {
             /**
              * Specifies the output format of the exposed resources, defaults to "1"
              */
-            divisor?: pulumi.Input<string>;
+            divisor?: pulumi.Input<inputs.build.v1alpha1.ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisor>;
             /**
              * Required: resource to select
              */
             resource: pulumi.Input<string>;
+        }
+
+        export interface ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisor {
         }
 
         /**
@@ -1898,11 +2258,17 @@ export namespace build {
             /**
              * Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
              */
-            limits?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+            limits?: pulumi.Input<{[key: string]: pulumi.Input<inputs.build.v1alpha1.ClusterBuildStrategySpecBuildStepsResourcesLimits>}>;
             /**
              * Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
              */
-            requests?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+            requests?: pulumi.Input<{[key: string]: pulumi.Input<inputs.build.v1alpha1.ClusterBuildStrategySpecBuildStepsResourcesRequests>}>;
+        }
+
+        export interface ClusterBuildStrategySpecBuildStepsResourcesLimits {
+        }
+
+        export interface ClusterBuildStrategySpecBuildStepsResourcesRequests {
         }
 
         /**
@@ -2000,7 +2366,7 @@ export namespace build {
              */
             gmsaCredentialSpecName?: pulumi.Input<string>;
             /**
-             * The UserName in Windows to run the entrypoint of the container process. Defaults to the user specified in image metadata if unspecified. May also be set in PodSecurityContext. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence. This field is alpha-level and it is only honored by servers that enable the WindowsRunAsUserName feature flag.
+             * The UserName in Windows to run the entrypoint of the container process. Defaults to the user specified in image metadata if unspecified. May also be set in PodSecurityContext. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence. This field is beta-level and may be disabled with the WindowsRunAsUserName feature flag.
              */
             runAsUserName?: pulumi.Input<string>;
         }
@@ -2152,7 +2518,7 @@ export namespace build {
              */
             subPath?: pulumi.Input<string>;
             /**
-             * Expanded path within the volume from which the container's volume should be mounted. Behaves similarly to SubPath but environment variable references $(VAR_NAME) are expanded using the container's environment. Defaults to "" (volume's root). SubPathExpr and SubPath are mutually exclusive. This field is beta in 1.15.
+             * Expanded path within the volume from which the container's volume should be mounted. Behaves similarly to SubPath but environment variable references $(VAR_NAME) are expanded using the container's environment. Defaults to "" (volume's root). SubPathExpr and SubPath are mutually exclusive.
              */
             subPathExpr?: pulumi.Input<string>;
         }

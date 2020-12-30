@@ -7,4 +7,6 @@ from .provider import *
 
 # Make subpackages available:
 from . import (
+    charts,
+    meta_v1,
 )

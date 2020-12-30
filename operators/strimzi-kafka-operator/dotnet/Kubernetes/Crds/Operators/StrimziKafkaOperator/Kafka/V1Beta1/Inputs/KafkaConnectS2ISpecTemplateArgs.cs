@@ -34,6 +34,12 @@ namespace Pulumi.Kubernetes.Types.Inputs.Kafka.V1Beta1
         public Input<Pulumi.Kubernetes.Types.Inputs.Kafka.V1Beta1.KafkaConnectS2ISpecTemplateDeploymentArgs>? Deployment { get; set; }
 
         /// <summary>
+        /// Template for the Kafka init container.
+        /// </summary>
+        [Input("initContainer")]
+        public Input<Pulumi.Kubernetes.Types.Inputs.Kafka.V1Beta1.KafkaConnectS2ISpecTemplateInitContainerArgs>? InitContainer { get; set; }
+
+        /// <summary>
         /// Template for Kafka Connect `Pods`.
         /// </summary>
         [Input("pod")]

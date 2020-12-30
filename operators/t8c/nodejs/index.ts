@@ -3,3 +3,8 @@
 
 // Export members:
 export * from "./provider";
+
+// Export sub-modules:
+import * as charts from "./charts";
+import * as types from "./types";
+export {charts, types};

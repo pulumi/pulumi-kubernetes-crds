@@ -10,7 +10,7 @@ using Pulumi.Serialization;
 namespace Pulumi.Pulumi.Kubernetes.Crds.Operators.Buildv2Operator.Build.V1Alpha1
 {
     /// <summary>
-    /// BuildRun is the Schema for the buildruns API
+    /// BuildRun is the Schema representing an instance of build execution
     /// </summary>
     public partial class BuildRun : KubernetesResource
     {

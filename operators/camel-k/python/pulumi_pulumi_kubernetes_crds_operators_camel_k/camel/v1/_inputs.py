@@ -231,7 +231,6 @@ __all__ = [
     'IntegrationPlatformSpecBuildMavenSettingsSecretKeyRefArgs',
     'IntegrationPlatformSpecBuildRegistryArgs',
     'IntegrationPlatformSpecConfigurationArgs',
-    'IntegrationPlatformSpecResourcesArgs',
     'IntegrationPlatformSpecTraitsArgs',
     'IntegrationPlatformStatusArgs',
     'IntegrationPlatformStatusBuildArgs',
@@ -242,7 +241,6 @@ __all__ = [
     'IntegrationPlatformStatusBuildRegistryArgs',
     'IntegrationPlatformStatusConditionsArgs',
     'IntegrationPlatformStatusConfigurationArgs',
-    'IntegrationPlatformStatusResourcesArgs',
     'IntegrationPlatformStatusTraitsArgs',
     'IntegrationSpecArgs',
     'IntegrationSpecConfigurationArgs',
@@ -264,7 +262,6 @@ class BuildSpecArgs:
                  tasks: Optional[pulumi.Input[Sequence[pulumi.Input['BuildSpecTasksArgs']]]] = None):
         """
         BuildSpec defines the desired state of Build
-        :param pulumi.Input[Sequence[pulumi.Input['BuildSpecTasksArgs']]] tasks: INSERT ADDITIONAL SPEC FIELDS - desired state of cluster Important: Run "operator-sdk generate k8s" to regenerate code after modifying this file
         """
         if tasks is not None:
             pulumi.set(__self__, "tasks", tasks)
@@ -272,9 +269,6 @@ class BuildSpecArgs:
     @property
     @pulumi.getter
     def tasks(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['BuildSpecTasksArgs']]]]:
-        """
-        INSERT ADDITIONAL SPEC FIELDS - desired state of cluster Important: Run "operator-sdk generate k8s" to regenerate code after modifying this file
-        """
         return pulumi.get(self, "tasks")
 
     @tasks.setter
@@ -2242,12 +2236,16 @@ class BuildSpecTasksBuilderSourcesArgs:
                  interceptors: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  language: Optional[pulumi.Input[str]] = None,
                  loader: Optional[pulumi.Input[str]] = None,
-                 name: Optional[pulumi.Input[str]] = None):
+                 name: Optional[pulumi.Input[str]] = None,
+                 property_names: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
+                 type: Optional[pulumi.Input[str]] = None):
         """
         SourceSpec --
         :param pulumi.Input[Sequence[pulumi.Input[str]]] interceptors: Interceptors are optional identifiers the org.apache.camel.k.RoutesLoader uses to pre/post process sources
         :param pulumi.Input[str] language: Language --
         :param pulumi.Input[str] loader: Loader is an optional id of the org.apache.camel.k.RoutesLoader that will interpret this source at runtime
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] property_names: List of property names defined in the source (e.g. if type is "template")
+        :param pulumi.Input[str] type: Type defines the kind of source described by this object
         """
         if compression is not None:
             pulumi.set(__self__, "compression", compression)
@@ -2265,6 +2263,10 @@ class BuildSpecTasksBuilderSourcesArgs:
             pulumi.set(__self__, "loader", loader)
         if name is not None:
             pulumi.set(__self__, "name", name)
+        if property_names is not None:
+            pulumi.set(__self__, "property_names", property_names)
+        if type is not None:
+            pulumi.set(__self__, "type", type)
 
     @property
     @pulumi.getter
@@ -2346,6 +2348,30 @@ class BuildSpecTasksBuilderSourcesArgs:
     @name.setter
     def name(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "name", value)
+
+    @property
+    @pulumi.getter(name="property-names")
+    def property_names(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
+        """
+        List of property names defined in the source (e.g. if type is "template")
+        """
+        return pulumi.get(self, "property_names")
+
+    @property_names.setter
+    def property_names(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]):
+        pulumi.set(self, "property_names", value)
+
+    @property
+    @pulumi.getter
+    def type(self) -> Optional[pulumi.Input[str]]:
+        """
+        Type defines the kind of source described by this object
+        """
+        return pulumi.get(self, "type")
+
+    @type.setter
+    def type(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "type", value)
 
 
 @pulumi.input_type
@@ -12914,20 +12940,19 @@ class IntegrationKitSpecConfigurationArgs:
 @pulumi.input_type
 class IntegrationKitSpecTraitsArgs:
     def __init__(__self__, *,
-                 configuration: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None):
+                 configuration: pulumi.Input[Mapping[str, Any]]):
         """
         A TraitSpec contains the configuration of a trait
         """
-        if configuration is not None:
-            pulumi.set(__self__, "configuration", configuration)
+        pulumi.set(__self__, "configuration", configuration)
 
     @property
     @pulumi.getter
-    def configuration(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+    def configuration(self) -> pulumi.Input[Mapping[str, Any]]:
         return pulumi.get(self, "configuration")
 
     @configuration.setter
-    def configuration(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
+    def configuration(self, value: pulumi.Input[Mapping[str, Any]]):
         pulumi.set(self, "configuration", value)
 
 
@@ -13334,14 +13359,14 @@ class IntegrationPlatformSpecArgs:
                  cluster: Optional[pulumi.Input[str]] = None,
                  configuration: Optional[pulumi.Input[Sequence[pulumi.Input['IntegrationPlatformSpecConfigurationArgs']]]] = None,
                  profile: Optional[pulumi.Input[str]] = None,
-                 resources: Optional[pulumi.Input['IntegrationPlatformSpecResourcesArgs']] = None,
+                 resources: Optional[pulumi.Input[Mapping[str, Any]]] = None,
                  traits: Optional[pulumi.Input[Mapping[str, pulumi.Input['IntegrationPlatformSpecTraitsArgs']]]] = None):
         """
         IntegrationPlatformSpec defines the desired state of IntegrationPlatform
         :param pulumi.Input['IntegrationPlatformSpecBuildArgs'] build: IntegrationPlatformBuildSpec contains platform related build information
         :param pulumi.Input[str] cluster: IntegrationPlatformCluster is the kind of orchestration cluster the platform is installed into
         :param pulumi.Input[str] profile: TraitProfile represents lists of traits that are enabled for the specific installation/integration
-        :param pulumi.Input['IntegrationPlatformSpecResourcesArgs'] resources: IntegrationPlatformResourcesSpec contains platform related resources
+        :param pulumi.Input[Mapping[str, Any]] resources: IntegrationPlatformResourcesSpec contains platform related resources
         """
         if build is not None:
             pulumi.set(__self__, "build", build)
@@ -13403,14 +13428,14 @@ class IntegrationPlatformSpecArgs:
 
     @property
     @pulumi.getter
-    def resources(self) -> Optional[pulumi.Input['IntegrationPlatformSpecResourcesArgs']]:
+    def resources(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
         """
         IntegrationPlatformResourcesSpec contains platform related resources
         """
         return pulumi.get(self, "resources")
 
     @resources.setter
-    def resources(self, value: Optional[pulumi.Input['IntegrationPlatformSpecResourcesArgs']]):
+    def resources(self, value: Optional[pulumi.Input[Mapping[str, Any]]]):
         pulumi.set(self, "resources", value)
 
     @property
@@ -13892,42 +13917,21 @@ class IntegrationPlatformSpecConfigurationArgs:
 
 
 @pulumi.input_type
-class IntegrationPlatformSpecResourcesArgs:
-    def __init__(__self__, *,
-                 kits: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None):
-        """
-        IntegrationPlatformResourcesSpec contains platform related resources
-        """
-        if kits is not None:
-            pulumi.set(__self__, "kits", kits)
-
-    @property
-    @pulumi.getter
-    def kits(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
-        return pulumi.get(self, "kits")
-
-    @kits.setter
-    def kits(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]):
-        pulumi.set(self, "kits", value)
-
-
-@pulumi.input_type
 class IntegrationPlatformSpecTraitsArgs:
     def __init__(__self__, *,
-                 configuration: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None):
+                 configuration: pulumi.Input[Mapping[str, Any]]):
         """
         A TraitSpec contains the configuration of a trait
         """
-        if configuration is not None:
-            pulumi.set(__self__, "configuration", configuration)
+        pulumi.set(__self__, "configuration", configuration)
 
     @property
     @pulumi.getter
-    def configuration(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+    def configuration(self) -> pulumi.Input[Mapping[str, Any]]:
         return pulumi.get(self, "configuration")
 
     @configuration.setter
-    def configuration(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
+    def configuration(self, value: pulumi.Input[Mapping[str, Any]]):
         pulumi.set(self, "configuration", value)
 
 
@@ -13940,7 +13944,7 @@ class IntegrationPlatformStatusArgs:
                  configuration: Optional[pulumi.Input[Sequence[pulumi.Input['IntegrationPlatformStatusConfigurationArgs']]]] = None,
                  phase: Optional[pulumi.Input[str]] = None,
                  profile: Optional[pulumi.Input[str]] = None,
-                 resources: Optional[pulumi.Input['IntegrationPlatformStatusResourcesArgs']] = None,
+                 resources: Optional[pulumi.Input[Mapping[str, Any]]] = None,
                  traits: Optional[pulumi.Input[Mapping[str, pulumi.Input['IntegrationPlatformStatusTraitsArgs']]]] = None,
                  version: Optional[pulumi.Input[str]] = None):
         """
@@ -13949,7 +13953,7 @@ class IntegrationPlatformStatusArgs:
         :param pulumi.Input[str] cluster: IntegrationPlatformCluster is the kind of orchestration cluster the platform is installed into
         :param pulumi.Input[str] phase: IntegrationPlatformPhase --
         :param pulumi.Input[str] profile: TraitProfile represents lists of traits that are enabled for the specific installation/integration
-        :param pulumi.Input['IntegrationPlatformStatusResourcesArgs'] resources: IntegrationPlatformResourcesSpec contains platform related resources
+        :param pulumi.Input[Mapping[str, Any]] resources: IntegrationPlatformResourcesSpec contains platform related resources
         """
         if build is not None:
             pulumi.set(__self__, "build", build)
@@ -14038,14 +14042,14 @@ class IntegrationPlatformStatusArgs:
 
     @property
     @pulumi.getter
-    def resources(self) -> Optional[pulumi.Input['IntegrationPlatformStatusResourcesArgs']]:
+    def resources(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
         """
         IntegrationPlatformResourcesSpec contains platform related resources
         """
         return pulumi.get(self, "resources")
 
     @resources.setter
-    def resources(self, value: Optional[pulumi.Input['IntegrationPlatformStatusResourcesArgs']]):
+    def resources(self, value: Optional[pulumi.Input[Mapping[str, Any]]]):
         pulumi.set(self, "resources", value)
 
     @property
@@ -14638,42 +14642,21 @@ class IntegrationPlatformStatusConfigurationArgs:
 
 
 @pulumi.input_type
-class IntegrationPlatformStatusResourcesArgs:
-    def __init__(__self__, *,
-                 kits: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None):
-        """
-        IntegrationPlatformResourcesSpec contains platform related resources
-        """
-        if kits is not None:
-            pulumi.set(__self__, "kits", kits)
-
-    @property
-    @pulumi.getter
-    def kits(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
-        return pulumi.get(self, "kits")
-
-    @kits.setter
-    def kits(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]):
-        pulumi.set(self, "kits", value)
-
-
-@pulumi.input_type
 class IntegrationPlatformStatusTraitsArgs:
     def __init__(__self__, *,
-                 configuration: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None):
+                 configuration: pulumi.Input[Mapping[str, Any]]):
         """
         A TraitSpec contains the configuration of a trait
         """
-        if configuration is not None:
-            pulumi.set(__self__, "configuration", configuration)
+        pulumi.set(__self__, "configuration", configuration)
 
     @property
     @pulumi.getter
-    def configuration(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+    def configuration(self) -> pulumi.Input[Mapping[str, Any]]:
         return pulumi.get(self, "configuration")
 
     @configuration.setter
-    def configuration(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
+    def configuration(self, value: pulumi.Input[Mapping[str, Any]]):
         pulumi.set(self, "configuration", value)
 
 
@@ -14957,12 +14940,16 @@ class IntegrationSpecSourcesArgs:
                  interceptors: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  language: Optional[pulumi.Input[str]] = None,
                  loader: Optional[pulumi.Input[str]] = None,
-                 name: Optional[pulumi.Input[str]] = None):
+                 name: Optional[pulumi.Input[str]] = None,
+                 property_names: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
+                 type: Optional[pulumi.Input[str]] = None):
         """
         SourceSpec --
         :param pulumi.Input[Sequence[pulumi.Input[str]]] interceptors: Interceptors are optional identifiers the org.apache.camel.k.RoutesLoader uses to pre/post process sources
         :param pulumi.Input[str] language: Language --
         :param pulumi.Input[str] loader: Loader is an optional id of the org.apache.camel.k.RoutesLoader that will interpret this source at runtime
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] property_names: List of property names defined in the source (e.g. if type is "template")
+        :param pulumi.Input[str] type: Type defines the kind of source described by this object
         """
         if compression is not None:
             pulumi.set(__self__, "compression", compression)
@@ -14980,6 +14967,10 @@ class IntegrationSpecSourcesArgs:
             pulumi.set(__self__, "loader", loader)
         if name is not None:
             pulumi.set(__self__, "name", name)
+        if property_names is not None:
+            pulumi.set(__self__, "property_names", property_names)
+        if type is not None:
+            pulumi.set(__self__, "type", type)
 
     @property
     @pulumi.getter
@@ -15061,6 +15052,30 @@ class IntegrationSpecSourcesArgs:
     @name.setter
     def name(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "name", value)
+
+    @property
+    @pulumi.getter(name="property-names")
+    def property_names(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
+        """
+        List of property names defined in the source (e.g. if type is "template")
+        """
+        return pulumi.get(self, "property_names")
+
+    @property_names.setter
+    def property_names(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]):
+        pulumi.set(self, "property_names", value)
+
+    @property
+    @pulumi.getter
+    def type(self) -> Optional[pulumi.Input[str]]:
+        """
+        Type defines the kind of source described by this object
+        """
+        return pulumi.get(self, "type")
+
+    @type.setter
+    def type(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "type", value)
 
 
 @pulumi.input_type
@@ -15647,12 +15662,16 @@ class IntegrationStatusGeneratedSourcesArgs:
                  interceptors: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  language: Optional[pulumi.Input[str]] = None,
                  loader: Optional[pulumi.Input[str]] = None,
-                 name: Optional[pulumi.Input[str]] = None):
+                 name: Optional[pulumi.Input[str]] = None,
+                 property_names: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
+                 type: Optional[pulumi.Input[str]] = None):
         """
         SourceSpec --
         :param pulumi.Input[Sequence[pulumi.Input[str]]] interceptors: Interceptors are optional identifiers the org.apache.camel.k.RoutesLoader uses to pre/post process sources
         :param pulumi.Input[str] language: Language --
         :param pulumi.Input[str] loader: Loader is an optional id of the org.apache.camel.k.RoutesLoader that will interpret this source at runtime
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] property_names: List of property names defined in the source (e.g. if type is "template")
+        :param pulumi.Input[str] type: Type defines the kind of source described by this object
         """
         if compression is not None:
             pulumi.set(__self__, "compression", compression)
@@ -15670,6 +15689,10 @@ class IntegrationStatusGeneratedSourcesArgs:
             pulumi.set(__self__, "loader", loader)
         if name is not None:
             pulumi.set(__self__, "name", name)
+        if property_names is not None:
+            pulumi.set(__self__, "property_names", property_names)
+        if type is not None:
+            pulumi.set(__self__, "type", type)
 
     @property
     @pulumi.getter
@@ -15751,5 +15774,29 @@ class IntegrationStatusGeneratedSourcesArgs:
     @name.setter
     def name(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "name", value)
+
+    @property
+    @pulumi.getter(name="property-names")
+    def property_names(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
+        """
+        List of property names defined in the source (e.g. if type is "template")
+        """
+        return pulumi.get(self, "property_names")
+
+    @property_names.setter
+    def property_names(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]):
+        pulumi.set(self, "property_names", value)
+
+    @property
+    @pulumi.getter
+    def type(self) -> Optional[pulumi.Input[str]]:
+        """
+        Type defines the kind of source described by this object
+        """
+        return pulumi.get(self, "type")
+
+    @type.setter
+    def type(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "type", value)
 
 

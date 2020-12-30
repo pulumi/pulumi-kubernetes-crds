@@ -1396,6 +1396,8 @@ func (o ApmServerSpecHttpServiceSpecPtrOutput) Type() pulumi.StringPtrOutput {
 
 // ServicePort contains information on service's port.
 type ApmServerSpecHttpServiceSpecPorts struct {
+	// The application protocol for this port. This field follows standard Kubernetes label syntax. Un-prefixed names are reserved for IANA standard service names (as per RFC-6335 and http://www.iana.org/assignments/service-names). Non-standard protocols should use prefixed names such as mycompany.com/my-custom-protocol. Field can be enabled with ServiceAppProtocol feature gate.
+	AppProtocol *string `pulumi:"appProtocol"`
 	// The name of this port within the service. This must be a DNS_LABEL. All ports within a ServiceSpec must have unique names. When considering the endpoints for a Service, this must match the 'name' field in the EndpointPort. Optional if only one ServicePort is defined on this service.
 	Name *string `pulumi:"name"`
 	// The port on each node on which this service is exposed when type=NodePort or LoadBalancer. Usually assigned by the system. If specified, it will be allocated to the service if unused or else creation of the service will fail. Default is to auto-allocate a port if the ServiceType of this Service requires one. More info: https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport
@@ -1421,6 +1423,8 @@ type ApmServerSpecHttpServiceSpecPortsInput interface {
 
 // ServicePort contains information on service's port.
 type ApmServerSpecHttpServiceSpecPortsArgs struct {
+	// The application protocol for this port. This field follows standard Kubernetes label syntax. Un-prefixed names are reserved for IANA standard service names (as per RFC-6335 and http://www.iana.org/assignments/service-names). Non-standard protocols should use prefixed names such as mycompany.com/my-custom-protocol. Field can be enabled with ServiceAppProtocol feature gate.
+	AppProtocol pulumi.StringPtrInput `pulumi:"appProtocol"`
 	// The name of this port within the service. This must be a DNS_LABEL. All ports within a ServiceSpec must have unique names. When considering the endpoints for a Service, this must match the 'name' field in the EndpointPort. Optional if only one ServicePort is defined on this service.
 	Name pulumi.StringPtrInput `pulumi:"name"`
 	// The port on each node on which this service is exposed when type=NodePort or LoadBalancer. Usually assigned by the system. If specified, it will be allocated to the service if unused or else creation of the service will fail. Default is to auto-allocate a port if the ServiceType of this Service requires one. More info: https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport
@@ -1483,6 +1487,11 @@ func (o ApmServerSpecHttpServiceSpecPortsOutput) ToApmServerSpecHttpServiceSpecP
 
 func (o ApmServerSpecHttpServiceSpecPortsOutput) ToApmServerSpecHttpServiceSpecPortsOutputWithContext(ctx context.Context) ApmServerSpecHttpServiceSpecPortsOutput {
 	return o
+}
+
+// The application protocol for this port. This field follows standard Kubernetes label syntax. Un-prefixed names are reserved for IANA standard service names (as per RFC-6335 and http://www.iana.org/assignments/service-names). Non-standard protocols should use prefixed names such as mycompany.com/my-custom-protocol. Field can be enabled with ServiceAppProtocol feature gate.
+func (o ApmServerSpecHttpServiceSpecPortsOutput) AppProtocol() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v ApmServerSpecHttpServiceSpecPorts) *string { return v.AppProtocol }).(pulumi.StringPtrOutput)
 }
 
 // The name of this port within the service. This must be a DNS_LABEL. All ports within a ServiceSpec must have unique names. When considering the endpoints for a Service, this must match the 'name' field in the EndpointPort. Optional if only one ServicePort is defined on this service.
@@ -2947,10 +2956,11 @@ func (o ApmServerSpecSecureSettingsEntriesArrayOutput) Index(i pulumi.IntInput) 
 
 // ApmServerStatus defines the observed state of ApmServer
 type ApmServerStatus struct {
+	// AvailableNodes is the number of available replicas in the deployment.
 	AvailableNodes *int `pulumi:"availableNodes"`
 	// ElasticsearchAssociationStatus is the status of any auto-linking to Elasticsearch clusters.
 	ElasticsearchAssociationStatus *string `pulumi:"elasticsearchAssociationStatus"`
-	// ApmServerHealth expresses the status of the Apm Server instances.
+	// Health of the deployment.
 	Health *string `pulumi:"health"`
 	// KibanaAssociationStatus is the status of any auto-linking to Kibana.
 	KibanaAssociationStatus *string `pulumi:"kibanaAssociationStatus"`
@@ -2958,6 +2968,8 @@ type ApmServerStatus struct {
 	SecretTokenSecret *string `pulumi:"secretTokenSecret"`
 	// ExternalService is the name of the service the agents should connect to.
 	Service *string `pulumi:"service"`
+	// Version of the stack resource currently running. During version upgrades, multiple versions may run in parallel: this value specifies the lowest version currently running.
+	Version *string `pulumi:"version"`
 }
 
 // ApmServerStatusInput is an input type that accepts ApmServerStatusArgs and ApmServerStatusOutput values.
@@ -2973,10 +2985,11 @@ type ApmServerStatusInput interface {
 
 // ApmServerStatus defines the observed state of ApmServer
 type ApmServerStatusArgs struct {
+	// AvailableNodes is the number of available replicas in the deployment.
 	AvailableNodes pulumi.IntPtrInput `pulumi:"availableNodes"`
 	// ElasticsearchAssociationStatus is the status of any auto-linking to Elasticsearch clusters.
 	ElasticsearchAssociationStatus pulumi.StringPtrInput `pulumi:"elasticsearchAssociationStatus"`
-	// ApmServerHealth expresses the status of the Apm Server instances.
+	// Health of the deployment.
 	Health pulumi.StringPtrInput `pulumi:"health"`
 	// KibanaAssociationStatus is the status of any auto-linking to Kibana.
 	KibanaAssociationStatus pulumi.StringPtrInput `pulumi:"kibanaAssociationStatus"`
@@ -2984,6 +2997,8 @@ type ApmServerStatusArgs struct {
 	SecretTokenSecret pulumi.StringPtrInput `pulumi:"secretTokenSecret"`
 	// ExternalService is the name of the service the agents should connect to.
 	Service pulumi.StringPtrInput `pulumi:"service"`
+	// Version of the stack resource currently running. During version upgrades, multiple versions may run in parallel: this value specifies the lowest version currently running.
+	Version pulumi.StringPtrInput `pulumi:"version"`
 }
 
 func (ApmServerStatusArgs) ElementType() reflect.Type {
@@ -3063,6 +3078,8 @@ func (o ApmServerStatusOutput) ToApmServerStatusPtrOutputWithContext(ctx context
 		return &v
 	}).(ApmServerStatusPtrOutput)
 }
+
+// AvailableNodes is the number of available replicas in the deployment.
 func (o ApmServerStatusOutput) AvailableNodes() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v ApmServerStatus) *int { return v.AvailableNodes }).(pulumi.IntPtrOutput)
 }
@@ -3072,7 +3089,7 @@ func (o ApmServerStatusOutput) ElasticsearchAssociationStatus() pulumi.StringPtr
 	return o.ApplyT(func(v ApmServerStatus) *string { return v.ElasticsearchAssociationStatus }).(pulumi.StringPtrOutput)
 }
 
-// ApmServerHealth expresses the status of the Apm Server instances.
+// Health of the deployment.
 func (o ApmServerStatusOutput) Health() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v ApmServerStatus) *string { return v.Health }).(pulumi.StringPtrOutput)
 }
@@ -3090,6 +3107,11 @@ func (o ApmServerStatusOutput) SecretTokenSecret() pulumi.StringPtrOutput {
 // ExternalService is the name of the service the agents should connect to.
 func (o ApmServerStatusOutput) Service() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v ApmServerStatus) *string { return v.Service }).(pulumi.StringPtrOutput)
+}
+
+// Version of the stack resource currently running. During version upgrades, multiple versions may run in parallel: this value specifies the lowest version currently running.
+func (o ApmServerStatusOutput) Version() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v ApmServerStatus) *string { return v.Version }).(pulumi.StringPtrOutput)
 }
 
 type ApmServerStatusPtrOutput struct{ *pulumi.OutputState }
@@ -3110,6 +3132,7 @@ func (o ApmServerStatusPtrOutput) Elem() ApmServerStatusOutput {
 	return o.ApplyT(func(v *ApmServerStatus) ApmServerStatus { return *v }).(ApmServerStatusOutput)
 }
 
+// AvailableNodes is the number of available replicas in the deployment.
 func (o ApmServerStatusPtrOutput) AvailableNodes() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v *ApmServerStatus) *int {
 		if v == nil {
@@ -3129,7 +3152,7 @@ func (o ApmServerStatusPtrOutput) ElasticsearchAssociationStatus() pulumi.String
 	}).(pulumi.StringPtrOutput)
 }
 
-// ApmServerHealth expresses the status of the Apm Server instances.
+// Health of the deployment.
 func (o ApmServerStatusPtrOutput) Health() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *ApmServerStatus) *string {
 		if v == nil {
@@ -3166,6 +3189,16 @@ func (o ApmServerStatusPtrOutput) Service() pulumi.StringPtrOutput {
 			return nil
 		}
 		return v.Service
+	}).(pulumi.StringPtrOutput)
+}
+
+// Version of the stack resource currently running. During version upgrades, multiple versions may run in parallel: this value specifies the lowest version currently running.
+func (o ApmServerStatusPtrOutput) Version() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *ApmServerStatus) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Version
 	}).(pulumi.StringPtrOutput)
 }
 

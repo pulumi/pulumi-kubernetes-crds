@@ -19,4 +19,3 @@ export * from "./selectorSyncIdentityProvider";
 export * from "./selectorSyncSet";
 export * from "./syncIdentityProvider";
 export * from "./syncSet";
-export * from "./syncSetInstance";

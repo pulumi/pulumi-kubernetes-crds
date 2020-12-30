@@ -17,11 +17,19 @@ namespace Pulumi.Kubernetes.Types.Outputs.Hive.V1
         /// Completed is true when the uninstall has completed successfully
         /// </summary>
         public readonly bool Completed;
+        /// <summary>
+        /// Conditions includes more detailed status for the cluster deprovision
+        /// </summary>
+        public readonly ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Hive.V1.ClusterDeprovisionStatusConditions> Conditions;
 
         [OutputConstructor]
-        private ClusterDeprovisionStatus(bool completed)
+        private ClusterDeprovisionStatus(
+            bool completed,
+
+            ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Hive.V1.ClusterDeprovisionStatusConditions> conditions)
         {
             Completed = completed;
+            Conditions = conditions;
         }
     }
 }

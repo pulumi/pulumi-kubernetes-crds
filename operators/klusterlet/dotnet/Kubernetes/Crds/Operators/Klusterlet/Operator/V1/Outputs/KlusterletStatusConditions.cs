@@ -14,23 +14,27 @@ namespace Pulumi.Kubernetes.Types.Outputs.Operator.V1
     public sealed class KlusterletStatusConditions
     {
         /// <summary>
-        /// LastTransitionTime is the last time the condition changed from one status to another.
+        /// lastTransitionTime is the last time the condition transitioned from one status to another. This should be when the underlying condition changed.  If that is not known, then using the time when the API field changed is acceptable.
         /// </summary>
         public readonly string LastTransitionTime;
         /// <summary>
-        /// Message is a human-readable message indicating details about the last status change.
+        /// message is a human readable message indicating details about the transition. This may be an empty string.
         /// </summary>
         public readonly string Message;
         /// <summary>
-        /// Reason is a (brief) reason for the condition's last status change.
+        /// observedGeneration represents the .metadata.generation that the condition was set based upon. For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date with respect to the current state of the instance.
+        /// </summary>
+        public readonly int ObservedGeneration;
+        /// <summary>
+        /// reason contains a programmatic identifier indicating the reason for the condition's last transition. Producers of specific condition types may define expected values and meanings for this field, and whether the values are considered a guaranteed API. The value should be a CamelCase string. This field may not be empty.
         /// </summary>
         public readonly string Reason;
         /// <summary>
-        /// Status is the status of the condition. One of True, False, Unknown.
+        /// status of the condition, one of True, False, Unknown.
         /// </summary>
         public readonly string Status;
         /// <summary>
-        /// Type is the type of the cluster condition.
+        /// type of condition in CamelCase or in foo.example.com/CamelCase. --- Many .condition.type values are consistent across resources like Available, but because arbitrary conditions can be useful (see .node.status.conditions), the ability to deconflict is important. The regex it matches is (dns1123SubdomainFmt/)?(qualifiedNameFmt)
         /// </summary>
         public readonly string Type;
 
@@ -40,6 +44,8 @@ namespace Pulumi.Kubernetes.Types.Outputs.Operator.V1
 
             string message,
 
+            int observedGeneration,
+
             string reason,
 
             string status,
@@ -48,6 +54,7 @@ namespace Pulumi.Kubernetes.Types.Outputs.Operator.V1
         {
             LastTransitionTime = lastTransitionTime;
             Message = message;
+            ObservedGeneration = observedGeneration;
             Reason = reason;
             Status = status;
             Type = type;

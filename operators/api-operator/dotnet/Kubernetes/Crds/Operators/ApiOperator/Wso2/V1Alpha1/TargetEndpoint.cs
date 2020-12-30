@@ -9,6 +9,9 @@ using Pulumi.Serialization;
 
 namespace Pulumi.Pulumi.Kubernetes.Crds.Operators.ApiOperator.Wso2.V1Alpha1
 {
+    /// <summary>
+    /// TargetEndpoint is the Schema for the targetendpoints API
+    /// </summary>
     public partial class TargetEndpoint : KubernetesResource
     {
         [Output("apiVersion")]
@@ -20,9 +23,15 @@ namespace Pulumi.Pulumi.Kubernetes.Crds.Operators.ApiOperator.Wso2.V1Alpha1
         [Output("metadata")]
         public Output<Pulumi.Kubernetes.Types.Outputs.Meta.V1.ObjectMeta> Metadata { get; private set; } = null!;
 
+        /// <summary>
+        /// TargetEndpointSpec defines the desired state of TargetEndpoint
+        /// </summary>
         [Output("spec")]
         public Output<Pulumi.Kubernetes.Types.Outputs.Wso2.V1Alpha1.TargetEndpointSpec> Spec { get; private set; } = null!;
 
+        /// <summary>
+        /// TargetEndpointStatus defines the observed state of TargetEndpoint
+        /// </summary>
         [Output("status")]
         public Output<ImmutableDictionary<string, object>> Status { get; private set; } = null!;
 
@@ -95,11 +104,18 @@ namespace Pulumi.Kubernetes.Types.Inputs.Wso2.V1Alpha1
         [Input("metadata")]
         public Input<Pulumi.Kubernetes.Types.Inputs.Meta.V1.ObjectMetaArgs>? Metadata { get; set; }
 
+        /// <summary>
+        /// TargetEndpointSpec defines the desired state of TargetEndpoint
+        /// </summary>
         [Input("spec")]
         public Input<Pulumi.Kubernetes.Types.Inputs.Wso2.V1Alpha1.TargetEndpointSpecArgs>? Spec { get; set; }
 
         [Input("status")]
         private InputMap<object>? _status;
+
+        /// <summary>
+        /// TargetEndpointStatus defines the observed state of TargetEndpoint
+        /// </summary>
         public InputMap<object> Status
         {
             get => _status ?? (_status = new InputMap<object>());

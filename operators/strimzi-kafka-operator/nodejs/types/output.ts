@@ -495,6 +495,7 @@ export namespace kafka {
         export interface KafkaBridgeSpecTemplateBridgeContainerSecurityContextWindowsOptions {
             gmsaCredentialSpec?: string;
             gmsaCredentialSpecName?: string;
+            runAsUserName?: string;
         }
 
         /**
@@ -529,6 +530,10 @@ export namespace kafka {
              * The pod's affinity rules.
              */
             affinity?: outputs.kafka.v1alpha1.KafkaBridgeSpecTemplatePodAffinity;
+            /**
+             * The pod's HostAliases. HostAliases is an optional list of hosts and IPs that will be injected into the pod's hosts file if specified.
+             */
+            hostAliases?: outputs.kafka.v1alpha1.KafkaBridgeSpecTemplatePodHostAliases[];
             /**
              * List of references to secrets in the same namespace to use for pulling any of the images used by this Pod. When the `STRIMZI_IMAGE_PULL_SECRETS` environment variable in Cluster Operator and the `imagePullSecrets` option are specified, only the `imagePullSecrets` variable is used and the `STRIMZI_IMAGE_PULL_SECRETS` variable is ignored.
              */
@@ -732,6 +737,11 @@ export namespace kafka {
             labels?: {[key: string]: any};
         }
 
+        export interface KafkaBridgeSpecTemplatePodHostAliases {
+            hostnames?: string[];
+            ip?: string;
+        }
+
         export interface KafkaBridgeSpecTemplatePodImagePullSecrets {
             name?: string;
         }
@@ -755,6 +765,7 @@ export namespace kafka {
          */
         export interface KafkaBridgeSpecTemplatePodSecurityContext {
             fsGroup?: number;
+            fsGroupChangePolicy?: string;
             runAsGroup?: number;
             runAsNonRoot?: boolean;
             runAsUser?: number;
@@ -779,6 +790,7 @@ export namespace kafka {
         export interface KafkaBridgeSpecTemplatePodSecurityContextWindowsOptions {
             gmsaCredentialSpec?: string;
             gmsaCredentialSpecName?: string;
+            runAsUserName?: string;
         }
 
         export interface KafkaBridgeSpecTemplatePodTolerations {
@@ -829,13 +841,13 @@ export namespace kafka {
              */
             conditions?: outputs.kafka.v1alpha1.KafkaBridgeStatusConditions[];
             /**
+             * Label selector for pods providing this resource.
+             */
+            labelSelector?: string;
+            /**
              * The generation of the CRD that was last reconciled by the operator.
              */
             observedGeneration?: number;
-            /**
-             * Label selector for pods providing this resource.
-             */
-            podSelector?: outputs.kafka.v1alpha1.KafkaBridgeStatusPodSelector;
             /**
              * The current number of pods being used to provide this resource.
              */
@@ -867,20 +879,6 @@ export namespace kafka {
              * The unique identifier of a condition, used to distinguish between other conditions in the resource.
              */
             type?: string;
-        }
-
-        /**
-         * Label selector for pods providing this resource.
-         */
-        export interface KafkaBridgeStatusPodSelector {
-            matchExpressions?: outputs.kafka.v1alpha1.KafkaBridgeStatusPodSelectorMatchExpressions[];
-            matchLabels?: {[key: string]: any};
-        }
-
-        export interface KafkaBridgeStatusPodSelectorMatchExpressions {
-            key?: string;
-            operator?: string;
-            values?: string[];
         }
 
         /**
@@ -1689,6 +1687,10 @@ export namespace kafka {
              */
             deployment?: outputs.kafka.v1alpha1.KafkaMirrorMaker2SpecTemplateDeployment;
             /**
+             * Template for the Kafka init container.
+             */
+            initContainer?: outputs.kafka.v1alpha1.KafkaMirrorMaker2SpecTemplateInitContainer;
+            /**
              * Template for Kafka Connect `Pods`.
              */
             pod?: outputs.kafka.v1alpha1.KafkaMirrorMaker2SpecTemplatePod;
@@ -1778,6 +1780,7 @@ export namespace kafka {
         export interface KafkaMirrorMaker2SpecTemplateConnectContainerSecurityContextWindowsOptions {
             gmsaCredentialSpec?: string;
             gmsaCredentialSpecName?: string;
+            runAsUserName?: string;
         }
 
         /**
@@ -1805,6 +1808,65 @@ export namespace kafka {
         }
 
         /**
+         * Template for the Kafka init container.
+         */
+        export interface KafkaMirrorMaker2SpecTemplateInitContainer {
+            /**
+             * Environment variables which should be applied to the container.
+             */
+            env?: outputs.kafka.v1alpha1.KafkaMirrorMaker2SpecTemplateInitContainerEnv[];
+            /**
+             * Security context for the container.
+             */
+            securityContext?: outputs.kafka.v1alpha1.KafkaMirrorMaker2SpecTemplateInitContainerSecurityContext;
+        }
+
+        export interface KafkaMirrorMaker2SpecTemplateInitContainerEnv {
+            /**
+             * The environment variable key.
+             */
+            name?: string;
+            /**
+             * The environment variable value.
+             */
+            value?: string;
+        }
+
+        /**
+         * Security context for the container.
+         */
+        export interface KafkaMirrorMaker2SpecTemplateInitContainerSecurityContext {
+            allowPrivilegeEscalation?: boolean;
+            capabilities?: outputs.kafka.v1alpha1.KafkaMirrorMaker2SpecTemplateInitContainerSecurityContextCapabilities;
+            privileged?: boolean;
+            procMount?: string;
+            readOnlyRootFilesystem?: boolean;
+            runAsGroup?: number;
+            runAsNonRoot?: boolean;
+            runAsUser?: number;
+            seLinuxOptions?: outputs.kafka.v1alpha1.KafkaMirrorMaker2SpecTemplateInitContainerSecurityContextSeLinuxOptions;
+            windowsOptions?: outputs.kafka.v1alpha1.KafkaMirrorMaker2SpecTemplateInitContainerSecurityContextWindowsOptions;
+        }
+
+        export interface KafkaMirrorMaker2SpecTemplateInitContainerSecurityContextCapabilities {
+            add?: string[];
+            drop?: string[];
+        }
+
+        export interface KafkaMirrorMaker2SpecTemplateInitContainerSecurityContextSeLinuxOptions {
+            level?: string;
+            role?: string;
+            type?: string;
+            user?: string;
+        }
+
+        export interface KafkaMirrorMaker2SpecTemplateInitContainerSecurityContextWindowsOptions {
+            gmsaCredentialSpec?: string;
+            gmsaCredentialSpecName?: string;
+            runAsUserName?: string;
+        }
+
+        /**
          * Template for Kafka Connect `Pods`.
          */
         export interface KafkaMirrorMaker2SpecTemplatePod {
@@ -1812,6 +1874,10 @@ export namespace kafka {
              * The pod's affinity rules.
              */
             affinity?: outputs.kafka.v1alpha1.KafkaMirrorMaker2SpecTemplatePodAffinity;
+            /**
+             * The pod's HostAliases. HostAliases is an optional list of hosts and IPs that will be injected into the pod's hosts file if specified.
+             */
+            hostAliases?: outputs.kafka.v1alpha1.KafkaMirrorMaker2SpecTemplatePodHostAliases[];
             /**
              * List of references to secrets in the same namespace to use for pulling any of the images used by this Pod. When the `STRIMZI_IMAGE_PULL_SECRETS` environment variable in Cluster Operator and the `imagePullSecrets` option are specified, only the `imagePullSecrets` variable is used and the `STRIMZI_IMAGE_PULL_SECRETS` variable is ignored.
              */
@@ -2015,6 +2081,11 @@ export namespace kafka {
             labels?: {[key: string]: any};
         }
 
+        export interface KafkaMirrorMaker2SpecTemplatePodHostAliases {
+            hostnames?: string[];
+            ip?: string;
+        }
+
         export interface KafkaMirrorMaker2SpecTemplatePodImagePullSecrets {
             name?: string;
         }
@@ -2038,6 +2109,7 @@ export namespace kafka {
          */
         export interface KafkaMirrorMaker2SpecTemplatePodSecurityContext {
             fsGroup?: number;
+            fsGroupChangePolicy?: string;
             runAsGroup?: number;
             runAsNonRoot?: boolean;
             runAsUser?: number;
@@ -2062,6 +2134,7 @@ export namespace kafka {
         export interface KafkaMirrorMaker2SpecTemplatePodSecurityContextWindowsOptions {
             gmsaCredentialSpec?: string;
             gmsaCredentialSpecName?: string;
+            runAsUserName?: string;
         }
 
         export interface KafkaMirrorMaker2SpecTemplatePodTolerations {
@@ -2107,13 +2180,13 @@ export namespace kafka {
              */
             connectors?: {[key: string]: any}[];
             /**
+             * Label selector for pods providing this resource.
+             */
+            labelSelector?: string;
+            /**
              * The generation of the CRD that was last reconciled by the operator.
              */
             observedGeneration?: number;
-            /**
-             * Label selector for pods providing this resource.
-             */
-            podSelector?: outputs.kafka.v1alpha1.KafkaMirrorMaker2StatusPodSelector;
             /**
              * The current number of pods being used to provide this resource.
              */
@@ -2163,20 +2236,6 @@ export namespace kafka {
         }
 
         /**
-         * Label selector for pods providing this resource.
-         */
-        export interface KafkaMirrorMaker2StatusPodSelector {
-            matchExpressions?: outputs.kafka.v1alpha1.KafkaMirrorMaker2StatusPodSelectorMatchExpressions[];
-            matchLabels?: {[key: string]: any};
-        }
-
-        export interface KafkaMirrorMaker2StatusPodSelectorMatchExpressions {
-            key?: string;
-            operator?: string;
-            values?: string[];
-        }
-
-        /**
          * The specification of the Kafka rebalance.
          */
         export interface KafkaRebalanceSpec {
@@ -2200,6 +2259,10 @@ export namespace kafka {
              * A list of goals, ordered by decreasing priority, to use for generating and executing the rebalance proposal. The supported goals are available at https://github.com/linkedin/cruise-control#goals. If an empty goals list is provided, the goals declared in the default.goals Cruise Control configuration parameter are used.
              */
             goals?: string[];
+            /**
+             * A list of strategy class names used to determine the execution order for the replica movements in the generated optimization proposal. By default BaseReplicaMovementStrategy is used, which will execute the replica movements in the order that they were generated.
+             */
+            replicaMovementStrategies?: string[];
             /**
              * The upper bound, in bytes per second, on the bandwidth used to move replicas. There is no limit by default.
              */
@@ -2279,6 +2342,10 @@ export namespace kafka {
              */
             buildResources?: outputs.kafka.v1beta1.KafkaConnectS2ISpecBuildResources;
             /**
+             * The image of the init container used for initializing the `client.rack`.
+             */
+            clientRackInitImage?: string;
+            /**
              * The Kafka Connect configuration. Properties with the following prefixes cannot be set: ssl., sasl., security., listeners, plugin.path, rest., bootstrap.servers, consumer.interceptor.classes, producer.interceptor.classes (with the exception of: ssl.endpoint.identification.algorithm, ssl.cipher.suites, ssl.protocol, ssl.enabled.protocols).
              */
             config?: {[key: string]: any};
@@ -2310,6 +2377,10 @@ export namespace kafka {
              * The Prometheus JMX Exporter configuration. See https://github.com/prometheus/jmx_exporter for details of the structure of this configuration.
              */
             metrics?: {[key: string]: any};
+            /**
+             * Configuration of the node label which will be used as the client.rack consumer configuration.
+             */
+            rack?: outputs.kafka.v1beta1.KafkaConnectS2ISpecRack;
             /**
              * Pod readiness checking.
              */
@@ -2830,6 +2901,16 @@ export namespace kafka {
         }
 
         /**
+         * Configuration of the node label which will be used as the client.rack consumer configuration.
+         */
+        export interface KafkaConnectS2ISpecRack {
+            /**
+             * A key that matches labels assigned to the Kubernetes cluster nodes. The value of the label is used to set the broker's `broker.rack` config.
+             */
+            topologyKey: string;
+        }
+
+        /**
          * Pod readiness checking.
          */
         export interface KafkaConnectS2ISpecReadinessProbe {
@@ -2879,6 +2960,10 @@ export namespace kafka {
              * Template for Kafka Connect `Deployment`.
              */
             deployment?: outputs.kafka.v1beta1.KafkaConnectS2ISpecTemplateDeployment;
+            /**
+             * Template for the Kafka init container.
+             */
+            initContainer?: outputs.kafka.v1beta1.KafkaConnectS2ISpecTemplateInitContainer;
             /**
              * Template for Kafka Connect `Pods`.
              */
@@ -2969,6 +3054,7 @@ export namespace kafka {
         export interface KafkaConnectS2ISpecTemplateConnectContainerSecurityContextWindowsOptions {
             gmsaCredentialSpec?: string;
             gmsaCredentialSpecName?: string;
+            runAsUserName?: string;
         }
 
         /**
@@ -2996,6 +3082,65 @@ export namespace kafka {
         }
 
         /**
+         * Template for the Kafka init container.
+         */
+        export interface KafkaConnectS2ISpecTemplateInitContainer {
+            /**
+             * Environment variables which should be applied to the container.
+             */
+            env?: outputs.kafka.v1beta1.KafkaConnectS2ISpecTemplateInitContainerEnv[];
+            /**
+             * Security context for the container.
+             */
+            securityContext?: outputs.kafka.v1beta1.KafkaConnectS2ISpecTemplateInitContainerSecurityContext;
+        }
+
+        export interface KafkaConnectS2ISpecTemplateInitContainerEnv {
+            /**
+             * The environment variable key.
+             */
+            name?: string;
+            /**
+             * The environment variable value.
+             */
+            value?: string;
+        }
+
+        /**
+         * Security context for the container.
+         */
+        export interface KafkaConnectS2ISpecTemplateInitContainerSecurityContext {
+            allowPrivilegeEscalation?: boolean;
+            capabilities?: outputs.kafka.v1beta1.KafkaConnectS2ISpecTemplateInitContainerSecurityContextCapabilities;
+            privileged?: boolean;
+            procMount?: string;
+            readOnlyRootFilesystem?: boolean;
+            runAsGroup?: number;
+            runAsNonRoot?: boolean;
+            runAsUser?: number;
+            seLinuxOptions?: outputs.kafka.v1beta1.KafkaConnectS2ISpecTemplateInitContainerSecurityContextSeLinuxOptions;
+            windowsOptions?: outputs.kafka.v1beta1.KafkaConnectS2ISpecTemplateInitContainerSecurityContextWindowsOptions;
+        }
+
+        export interface KafkaConnectS2ISpecTemplateInitContainerSecurityContextCapabilities {
+            add?: string[];
+            drop?: string[];
+        }
+
+        export interface KafkaConnectS2ISpecTemplateInitContainerSecurityContextSeLinuxOptions {
+            level?: string;
+            role?: string;
+            type?: string;
+            user?: string;
+        }
+
+        export interface KafkaConnectS2ISpecTemplateInitContainerSecurityContextWindowsOptions {
+            gmsaCredentialSpec?: string;
+            gmsaCredentialSpecName?: string;
+            runAsUserName?: string;
+        }
+
+        /**
          * Template for Kafka Connect `Pods`.
          */
         export interface KafkaConnectS2ISpecTemplatePod {
@@ -3003,6 +3148,10 @@ export namespace kafka {
              * The pod's affinity rules.
              */
             affinity?: outputs.kafka.v1beta1.KafkaConnectS2ISpecTemplatePodAffinity;
+            /**
+             * The pod's HostAliases. HostAliases is an optional list of hosts and IPs that will be injected into the pod's hosts file if specified.
+             */
+            hostAliases?: outputs.kafka.v1beta1.KafkaConnectS2ISpecTemplatePodHostAliases[];
             /**
              * List of references to secrets in the same namespace to use for pulling any of the images used by this Pod. When the `STRIMZI_IMAGE_PULL_SECRETS` environment variable in Cluster Operator and the `imagePullSecrets` option are specified, only the `imagePullSecrets` variable is used and the `STRIMZI_IMAGE_PULL_SECRETS` variable is ignored.
              */
@@ -3206,6 +3355,11 @@ export namespace kafka {
             labels?: {[key: string]: any};
         }
 
+        export interface KafkaConnectS2ISpecTemplatePodHostAliases {
+            hostnames?: string[];
+            ip?: string;
+        }
+
         export interface KafkaConnectS2ISpecTemplatePodImagePullSecrets {
             name?: string;
         }
@@ -3229,6 +3383,7 @@ export namespace kafka {
          */
         export interface KafkaConnectS2ISpecTemplatePodSecurityContext {
             fsGroup?: number;
+            fsGroupChangePolicy?: string;
             runAsGroup?: number;
             runAsNonRoot?: boolean;
             runAsUser?: number;
@@ -3253,6 +3408,7 @@ export namespace kafka {
         export interface KafkaConnectS2ISpecTemplatePodSecurityContextWindowsOptions {
             gmsaCredentialSpec?: string;
             gmsaCredentialSpecName?: string;
+            runAsUserName?: string;
         }
 
         export interface KafkaConnectS2ISpecTemplatePodTolerations {
@@ -3319,13 +3475,13 @@ export namespace kafka {
              */
             connectorPlugins?: outputs.kafka.v1beta1.KafkaConnectS2IStatusConnectorPlugins[];
             /**
+             * Label selector for pods providing this resource.
+             */
+            labelSelector?: string;
+            /**
              * The generation of the CRD that was last reconciled by the operator.
              */
             observedGeneration?: number;
-            /**
-             * Label selector for pods providing this resource.
-             */
-            podSelector?: outputs.kafka.v1beta1.KafkaConnectS2IStatusPodSelector;
             /**
              * The current number of pods being used to provide this resource.
              */
@@ -3375,20 +3531,6 @@ export namespace kafka {
         }
 
         /**
-         * Label selector for pods providing this resource.
-         */
-        export interface KafkaConnectS2IStatusPodSelector {
-            matchExpressions?: outputs.kafka.v1beta1.KafkaConnectS2IStatusPodSelectorMatchExpressions[];
-            matchLabels?: {[key: string]: any};
-        }
-
-        export interface KafkaConnectS2IStatusPodSelectorMatchExpressions {
-            key?: string;
-            operator?: string;
-            values?: string[];
-        }
-
-        /**
          * The specification of the Kafka Connect cluster.
          */
         export interface KafkaConnectSpec {
@@ -3404,6 +3546,10 @@ export namespace kafka {
              * Bootstrap servers to connect to. This should be given as a comma separated list of _<hostname>_:‍_<port>_ pairs.
              */
             bootstrapServers: string;
+            /**
+             * The image of the init container used for initializing the `client.rack`.
+             */
+            clientRackInitImage?: string;
             /**
              * The Kafka Connect configuration. Properties with the following prefixes cannot be set: ssl., sasl., security., listeners, plugin.path, rest., bootstrap.servers, consumer.interceptor.classes, producer.interceptor.classes (with the exception of: ssl.endpoint.identification.algorithm, ssl.cipher.suites, ssl.protocol, ssl.enabled.protocols).
              */
@@ -3432,6 +3578,10 @@ export namespace kafka {
              * The Prometheus JMX Exporter configuration. See https://github.com/prometheus/jmx_exporter for details of the structure of this configuration.
              */
             metrics?: {[key: string]: any};
+            /**
+             * Configuration of the node label which will be used as the client.rack consumer configuration.
+             */
+            rack?: outputs.kafka.v1beta1.KafkaConnectSpecRack;
             /**
              * Pod readiness checking.
              */
@@ -3944,6 +4094,16 @@ export namespace kafka {
         }
 
         /**
+         * Configuration of the node label which will be used as the client.rack consumer configuration.
+         */
+        export interface KafkaConnectSpecRack {
+            /**
+             * A key that matches labels assigned to the Kubernetes cluster nodes. The value of the label is used to set the broker's `broker.rack` config.
+             */
+            topologyKey: string;
+        }
+
+        /**
          * Pod readiness checking.
          */
         export interface KafkaConnectSpecReadinessProbe {
@@ -3993,6 +4153,10 @@ export namespace kafka {
              * Template for Kafka Connect `Deployment`.
              */
             deployment?: outputs.kafka.v1beta1.KafkaConnectSpecTemplateDeployment;
+            /**
+             * Template for the Kafka init container.
+             */
+            initContainer?: outputs.kafka.v1beta1.KafkaConnectSpecTemplateInitContainer;
             /**
              * Template for Kafka Connect `Pods`.
              */
@@ -4083,6 +4247,7 @@ export namespace kafka {
         export interface KafkaConnectSpecTemplateConnectContainerSecurityContextWindowsOptions {
             gmsaCredentialSpec?: string;
             gmsaCredentialSpecName?: string;
+            runAsUserName?: string;
         }
 
         /**
@@ -4110,6 +4275,65 @@ export namespace kafka {
         }
 
         /**
+         * Template for the Kafka init container.
+         */
+        export interface KafkaConnectSpecTemplateInitContainer {
+            /**
+             * Environment variables which should be applied to the container.
+             */
+            env?: outputs.kafka.v1beta1.KafkaConnectSpecTemplateInitContainerEnv[];
+            /**
+             * Security context for the container.
+             */
+            securityContext?: outputs.kafka.v1beta1.KafkaConnectSpecTemplateInitContainerSecurityContext;
+        }
+
+        export interface KafkaConnectSpecTemplateInitContainerEnv {
+            /**
+             * The environment variable key.
+             */
+            name?: string;
+            /**
+             * The environment variable value.
+             */
+            value?: string;
+        }
+
+        /**
+         * Security context for the container.
+         */
+        export interface KafkaConnectSpecTemplateInitContainerSecurityContext {
+            allowPrivilegeEscalation?: boolean;
+            capabilities?: outputs.kafka.v1beta1.KafkaConnectSpecTemplateInitContainerSecurityContextCapabilities;
+            privileged?: boolean;
+            procMount?: string;
+            readOnlyRootFilesystem?: boolean;
+            runAsGroup?: number;
+            runAsNonRoot?: boolean;
+            runAsUser?: number;
+            seLinuxOptions?: outputs.kafka.v1beta1.KafkaConnectSpecTemplateInitContainerSecurityContextSeLinuxOptions;
+            windowsOptions?: outputs.kafka.v1beta1.KafkaConnectSpecTemplateInitContainerSecurityContextWindowsOptions;
+        }
+
+        export interface KafkaConnectSpecTemplateInitContainerSecurityContextCapabilities {
+            add?: string[];
+            drop?: string[];
+        }
+
+        export interface KafkaConnectSpecTemplateInitContainerSecurityContextSeLinuxOptions {
+            level?: string;
+            role?: string;
+            type?: string;
+            user?: string;
+        }
+
+        export interface KafkaConnectSpecTemplateInitContainerSecurityContextWindowsOptions {
+            gmsaCredentialSpec?: string;
+            gmsaCredentialSpecName?: string;
+            runAsUserName?: string;
+        }
+
+        /**
          * Template for Kafka Connect `Pods`.
          */
         export interface KafkaConnectSpecTemplatePod {
@@ -4117,6 +4341,10 @@ export namespace kafka {
              * The pod's affinity rules.
              */
             affinity?: outputs.kafka.v1beta1.KafkaConnectSpecTemplatePodAffinity;
+            /**
+             * The pod's HostAliases. HostAliases is an optional list of hosts and IPs that will be injected into the pod's hosts file if specified.
+             */
+            hostAliases?: outputs.kafka.v1beta1.KafkaConnectSpecTemplatePodHostAliases[];
             /**
              * List of references to secrets in the same namespace to use for pulling any of the images used by this Pod. When the `STRIMZI_IMAGE_PULL_SECRETS` environment variable in Cluster Operator and the `imagePullSecrets` option are specified, only the `imagePullSecrets` variable is used and the `STRIMZI_IMAGE_PULL_SECRETS` variable is ignored.
              */
@@ -4320,6 +4548,11 @@ export namespace kafka {
             labels?: {[key: string]: any};
         }
 
+        export interface KafkaConnectSpecTemplatePodHostAliases {
+            hostnames?: string[];
+            ip?: string;
+        }
+
         export interface KafkaConnectSpecTemplatePodImagePullSecrets {
             name?: string;
         }
@@ -4343,6 +4576,7 @@ export namespace kafka {
          */
         export interface KafkaConnectSpecTemplatePodSecurityContext {
             fsGroup?: number;
+            fsGroupChangePolicy?: string;
             runAsGroup?: number;
             runAsNonRoot?: boolean;
             runAsUser?: number;
@@ -4367,6 +4601,7 @@ export namespace kafka {
         export interface KafkaConnectSpecTemplatePodSecurityContextWindowsOptions {
             gmsaCredentialSpec?: string;
             gmsaCredentialSpecName?: string;
+            runAsUserName?: string;
         }
 
         export interface KafkaConnectSpecTemplatePodTolerations {
@@ -4429,13 +4664,13 @@ export namespace kafka {
              */
             connectorPlugins?: outputs.kafka.v1beta1.KafkaConnectStatusConnectorPlugins[];
             /**
+             * Label selector for pods providing this resource.
+             */
+            labelSelector?: string;
+            /**
              * The generation of the CRD that was last reconciled by the operator.
              */
             observedGeneration?: number;
-            /**
-             * Label selector for pods providing this resource.
-             */
-            podSelector?: outputs.kafka.v1beta1.KafkaConnectStatusPodSelector;
             /**
              * The current number of pods being used to provide this resource.
              */
@@ -4482,20 +4717,6 @@ export namespace kafka {
              * The version of the connector plugin.
              */
             version?: string;
-        }
-
-        /**
-         * Label selector for pods providing this resource.
-         */
-        export interface KafkaConnectStatusPodSelector {
-            matchExpressions?: outputs.kafka.v1beta1.KafkaConnectStatusPodSelectorMatchExpressions[];
-            matchLabels?: {[key: string]: any};
-        }
-
-        export interface KafkaConnectStatusPodSelectorMatchExpressions {
-            key?: string;
-            operator?: string;
-            values?: string[];
         }
 
         /**
@@ -5326,6 +5547,7 @@ export namespace kafka {
         export interface KafkaMirrorMakerSpecTemplateMirrorMakerContainerSecurityContextWindowsOptions {
             gmsaCredentialSpec?: string;
             gmsaCredentialSpecName?: string;
+            runAsUserName?: string;
         }
 
         /**
@@ -5336,6 +5558,10 @@ export namespace kafka {
              * The pod's affinity rules.
              */
             affinity?: outputs.kafka.v1beta1.KafkaMirrorMakerSpecTemplatePodAffinity;
+            /**
+             * The pod's HostAliases. HostAliases is an optional list of hosts and IPs that will be injected into the pod's hosts file if specified.
+             */
+            hostAliases?: outputs.kafka.v1beta1.KafkaMirrorMakerSpecTemplatePodHostAliases[];
             /**
              * List of references to secrets in the same namespace to use for pulling any of the images used by this Pod. When the `STRIMZI_IMAGE_PULL_SECRETS` environment variable in Cluster Operator and the `imagePullSecrets` option are specified, only the `imagePullSecrets` variable is used and the `STRIMZI_IMAGE_PULL_SECRETS` variable is ignored.
              */
@@ -5539,6 +5765,11 @@ export namespace kafka {
             labels?: {[key: string]: any};
         }
 
+        export interface KafkaMirrorMakerSpecTemplatePodHostAliases {
+            hostnames?: string[];
+            ip?: string;
+        }
+
         export interface KafkaMirrorMakerSpecTemplatePodImagePullSecrets {
             name?: string;
         }
@@ -5562,6 +5793,7 @@ export namespace kafka {
          */
         export interface KafkaMirrorMakerSpecTemplatePodSecurityContext {
             fsGroup?: number;
+            fsGroupChangePolicy?: string;
             runAsGroup?: number;
             runAsNonRoot?: boolean;
             runAsUser?: number;
@@ -5586,6 +5818,7 @@ export namespace kafka {
         export interface KafkaMirrorMakerSpecTemplatePodSecurityContextWindowsOptions {
             gmsaCredentialSpec?: string;
             gmsaCredentialSpecName?: string;
+            runAsUserName?: string;
         }
 
         export interface KafkaMirrorMakerSpecTemplatePodTolerations {
@@ -5623,13 +5856,13 @@ export namespace kafka {
              */
             conditions?: outputs.kafka.v1beta1.KafkaMirrorMakerStatusConditions[];
             /**
+             * Label selector for pods providing this resource.
+             */
+            labelSelector?: string;
+            /**
              * The generation of the CRD that was last reconciled by the operator.
              */
             observedGeneration?: number;
-            /**
-             * Label selector for pods providing this resource.
-             */
-            podSelector?: outputs.kafka.v1beta1.KafkaMirrorMakerStatusPodSelector;
             /**
              * The current number of pods being used to provide this resource.
              */
@@ -5657,20 +5890,6 @@ export namespace kafka {
              * The unique identifier of a condition, used to distinguish between other conditions in the resource.
              */
             type?: string;
-        }
-
-        /**
-         * Label selector for pods providing this resource.
-         */
-        export interface KafkaMirrorMakerStatusPodSelector {
-            matchExpressions?: outputs.kafka.v1beta1.KafkaMirrorMakerStatusPodSelectorMatchExpressions[];
-            matchLabels?: {[key: string]: any};
-        }
-
-        export interface KafkaMirrorMakerStatusPodSelectorMatchExpressions {
-            key?: string;
-            operator?: string;
-            values?: string[];
         }
 
         /**
@@ -5791,6 +6010,10 @@ export namespace kafka {
              * Logging configuration (log4j1) for Cruise Control.
              */
             logging?: outputs.kafka.v1beta1.KafkaSpecCruiseControlLogging;
+            /**
+             * The Prometheus JMX Exporter configuration. See https://github.com/prometheus/jmx_exporter for details of the structure of this configuration.
+             */
+            metrics?: {[key: string]: any};
             /**
              * Pod readiness checking for the Cruise Control container.
              */
@@ -6056,6 +6279,7 @@ export namespace kafka {
         export interface KafkaSpecCruiseControlTemplateCruiseControlContainerSecurityContextWindowsOptions {
             gmsaCredentialSpec?: string;
             gmsaCredentialSpecName?: string;
+            runAsUserName?: string;
         }
 
         /**
@@ -6090,6 +6314,10 @@ export namespace kafka {
              * The pod's affinity rules.
              */
             affinity?: outputs.kafka.v1beta1.KafkaSpecCruiseControlTemplatePodAffinity;
+            /**
+             * The pod's HostAliases. HostAliases is an optional list of hosts and IPs that will be injected into the pod's hosts file if specified.
+             */
+            hostAliases?: outputs.kafka.v1beta1.KafkaSpecCruiseControlTemplatePodHostAliases[];
             /**
              * List of references to secrets in the same namespace to use for pulling any of the images used by this Pod. When the `STRIMZI_IMAGE_PULL_SECRETS` environment variable in Cluster Operator and the `imagePullSecrets` option are specified, only the `imagePullSecrets` variable is used and the `STRIMZI_IMAGE_PULL_SECRETS` variable is ignored.
              */
@@ -6293,6 +6521,11 @@ export namespace kafka {
             labels?: {[key: string]: any};
         }
 
+        export interface KafkaSpecCruiseControlTemplatePodHostAliases {
+            hostnames?: string[];
+            ip?: string;
+        }
+
         export interface KafkaSpecCruiseControlTemplatePodImagePullSecrets {
             name?: string;
         }
@@ -6316,6 +6549,7 @@ export namespace kafka {
          */
         export interface KafkaSpecCruiseControlTemplatePodSecurityContext {
             fsGroup?: number;
+            fsGroupChangePolicy?: string;
             runAsGroup?: number;
             runAsNonRoot?: boolean;
             runAsUser?: number;
@@ -6340,6 +6574,7 @@ export namespace kafka {
         export interface KafkaSpecCruiseControlTemplatePodSecurityContextWindowsOptions {
             gmsaCredentialSpec?: string;
             gmsaCredentialSpecName?: string;
+            runAsUserName?: string;
         }
 
         export interface KafkaSpecCruiseControlTemplatePodTolerations {
@@ -6406,6 +6641,7 @@ export namespace kafka {
         export interface KafkaSpecCruiseControlTemplateTlsSidecarContainerSecurityContextWindowsOptions {
             gmsaCredentialSpec?: string;
             gmsaCredentialSpecName?: string;
+            runAsUserName?: string;
         }
 
         /**
@@ -6728,6 +6964,10 @@ export namespace kafka {
              */
             affinity?: outputs.kafka.v1beta1.KafkaSpecEntityOperatorTemplatePodAffinity;
             /**
+             * The pod's HostAliases. HostAliases is an optional list of hosts and IPs that will be injected into the pod's hosts file if specified.
+             */
+            hostAliases?: outputs.kafka.v1beta1.KafkaSpecEntityOperatorTemplatePodHostAliases[];
+            /**
              * List of references to secrets in the same namespace to use for pulling any of the images used by this Pod. When the `STRIMZI_IMAGE_PULL_SECRETS` environment variable in Cluster Operator and the `imagePullSecrets` option are specified, only the `imagePullSecrets` variable is used and the `STRIMZI_IMAGE_PULL_SECRETS` variable is ignored.
              */
             imagePullSecrets?: outputs.kafka.v1beta1.KafkaSpecEntityOperatorTemplatePodImagePullSecrets[];
@@ -6902,6 +7142,11 @@ export namespace kafka {
             values?: string[];
         }
 
+        export interface KafkaSpecEntityOperatorTemplatePodHostAliases {
+            hostnames?: string[];
+            ip?: string;
+        }
+
         export interface KafkaSpecEntityOperatorTemplatePodImagePullSecrets {
             name?: string;
         }
@@ -6925,6 +7170,7 @@ export namespace kafka {
          */
         export interface KafkaSpecEntityOperatorTemplatePodSecurityContext {
             fsGroup?: number;
+            fsGroupChangePolicy?: string;
             runAsGroup?: number;
             runAsNonRoot?: boolean;
             runAsUser?: number;
@@ -6949,6 +7195,7 @@ export namespace kafka {
         export interface KafkaSpecEntityOperatorTemplatePodSecurityContextWindowsOptions {
             gmsaCredentialSpec?: string;
             gmsaCredentialSpecName?: string;
+            runAsUserName?: string;
         }
 
         export interface KafkaSpecEntityOperatorTemplatePodTolerations {
@@ -7015,6 +7262,7 @@ export namespace kafka {
         export interface KafkaSpecEntityOperatorTemplateTlsSidecarContainerSecurityContextWindowsOptions {
             gmsaCredentialSpec?: string;
             gmsaCredentialSpecName?: string;
+            runAsUserName?: string;
         }
 
         /**
@@ -7073,6 +7321,7 @@ export namespace kafka {
         export interface KafkaSpecEntityOperatorTemplateTopicOperatorContainerSecurityContextWindowsOptions {
             gmsaCredentialSpec?: string;
             gmsaCredentialSpecName?: string;
+            runAsUserName?: string;
         }
 
         /**
@@ -7131,6 +7380,7 @@ export namespace kafka {
         export interface KafkaSpecEntityOperatorTemplateUserOperatorContainerSecurityContextWindowsOptions {
             gmsaCredentialSpec?: string;
             gmsaCredentialSpecName?: string;
+            runAsUserName?: string;
         }
 
         /**
@@ -7699,6 +7949,7 @@ export namespace kafka {
         export interface KafkaSpecJmxTransTemplateContainerSecurityContextWindowsOptions {
             gmsaCredentialSpec?: string;
             gmsaCredentialSpecName?: string;
+            runAsUserName?: string;
         }
 
         /**
@@ -7733,6 +7984,10 @@ export namespace kafka {
              * The pod's affinity rules.
              */
             affinity?: outputs.kafka.v1beta1.KafkaSpecJmxTransTemplatePodAffinity;
+            /**
+             * The pod's HostAliases. HostAliases is an optional list of hosts and IPs that will be injected into the pod's hosts file if specified.
+             */
+            hostAliases?: outputs.kafka.v1beta1.KafkaSpecJmxTransTemplatePodHostAliases[];
             /**
              * List of references to secrets in the same namespace to use for pulling any of the images used by this Pod. When the `STRIMZI_IMAGE_PULL_SECRETS` environment variable in Cluster Operator and the `imagePullSecrets` option are specified, only the `imagePullSecrets` variable is used and the `STRIMZI_IMAGE_PULL_SECRETS` variable is ignored.
              */
@@ -7908,6 +8163,11 @@ export namespace kafka {
             values?: string[];
         }
 
+        export interface KafkaSpecJmxTransTemplatePodHostAliases {
+            hostnames?: string[];
+            ip?: string;
+        }
+
         export interface KafkaSpecJmxTransTemplatePodImagePullSecrets {
             name?: string;
         }
@@ -7931,6 +8191,7 @@ export namespace kafka {
          */
         export interface KafkaSpecJmxTransTemplatePodSecurityContext {
             fsGroup?: number;
+            fsGroupChangePolicy?: string;
             runAsGroup?: number;
             runAsNonRoot?: boolean;
             runAsUser?: number;
@@ -7955,6 +8216,7 @@ export namespace kafka {
         export interface KafkaSpecJmxTransTemplatePodSecurityContextWindowsOptions {
             gmsaCredentialSpec?: string;
             gmsaCredentialSpecName?: string;
+            runAsUserName?: string;
         }
 
         export interface KafkaSpecJmxTransTemplatePodTolerations {
@@ -7982,7 +8244,7 @@ export namespace kafka {
              */
             brokerRackInitImage?: string;
             /**
-             * Kafka broker config properties with the following prefixes cannot be set: listeners, advertised., broker., listener., host.name, port, inter.broker.listener.name, sasl., ssl., security., password., principal.builder.class, log.dir, zookeeper.connect, zookeeper.set.acl, authorizer., super.user, cruise.control.metrics.topic, cruise.control.metrics.reporter.bootstrap.servers (with the exception of: zookeeper.connection.timeout.ms, ssl.cipher.suites, ssl.protocol, ssl.enabled.protocols,cruise.control.metrics.topic.num.partitions, cruise.control.metrics.topic.replication.factor, cruise.control.metrics.topic.retention.ms,cruise.control.metrics.topic.auto.create.retries, cruise.control.metrics.topic.auto.create.timeout.ms).
+             * Kafka broker config properties with the following prefixes cannot be set: listeners, advertised., broker., listener., host.name, port, inter.broker.listener.name, sasl., ssl., security., password., principal.builder.class, log.dir, zookeeper.connect, zookeeper.set.acl, zookeeper.ssl, zookeeper.clientCnxnSocket, authorizer., super.user, cruise.control.metrics.topic, cruise.control.metrics.reporter.bootstrap.servers (with the exception of: zookeeper.connection.timeout.ms, ssl.cipher.suites, ssl.protocol, ssl.enabled.protocols,cruise.control.metrics.topic.num.partitions, cruise.control.metrics.topic.replication.factor, cruise.control.metrics.topic.retention.ms,cruise.control.metrics.topic.auto.create.retries, cruise.control.metrics.topic.auto.create.timeout.ms).
              */
             config?: {[key: string]: any};
             /**
@@ -7997,10 +8259,7 @@ export namespace kafka {
              * JVM Options for pods.
              */
             jvmOptions?: outputs.kafka.v1beta1.KafkaSpecKafkaJvmOptions;
-            /**
-             * Configures listeners of Kafka brokers.
-             */
-            listeners: outputs.kafka.v1beta1.KafkaSpecKafkaListeners;
+            listeners: outputs.kafka.v1beta1.KafkaSpecKafkaListenersOneOf0[] | outputs.kafka.v1beta1.KafkaSpecKafkaListenersOneOf1;
             /**
              * Pod liveness checking.
              */
@@ -8209,7 +8468,7 @@ export namespace kafka {
              */
             clientId?: string;
             /**
-             * Whether authorization decision should be delegated to the 'Simple' authorizer if DENIED by Keycloak Authorization Services policies.Default value is `false`.
+             * Whether authorization decision should be delegated to the 'Simple' authorizer if DENIED by Keycloak Authorization Services policies. Default value is `false`.
              */
             delegateToKafkaAcls?: boolean;
             /**
@@ -8220,6 +8479,14 @@ export namespace kafka {
              * The expiration of the records kept in the local cache to avoid querying the Open Policy Agent for every request. Defines how often the cached authorization decisions are reloaded from the Open Policy Agent server. In milliseconds. Defaults to `3600000`.
              */
             expireAfterMs?: number;
+            /**
+             * The time between two consecutive grants refresh runs in seconds. The default value is 60.
+             */
+            grantsRefreshPeriodSeconds?: number;
+            /**
+             * The number of threads to use to refresh grants for active sessions. The more threads, the more parallelism, so the sooner the job completes. However, using more threads places a heavier load on the authorization server. The default value is 5.
+             */
+            grantsRefreshPoolSize?: number;
             /**
              * Initial capacity of the local cache used by the authorizer to avoid querying the Open Policy Agent for every request Defaults to `5000`.
              */
@@ -8241,7 +8508,7 @@ export namespace kafka {
              */
             tokenEndpointUri?: string;
             /**
-             * Authorization type. Currently, the supported types are `simple`, `keycloak`, and `opa`. `simple` authorization type uses Kafka's `kafka.security.auth.SimpleAclAuthorizer` class for authorization. `keycloak` authorization type uses Keycloak Authorization Services for authorization. `opa` authorization type uses Open Policy Agent based authorization.
+             * Authorization type. Currently, the supported types are `simple`, `keycloak`, and `opa`. `simple` authorization type uses Kafka's `kafka.security.authorizer.AclAuthorizer` class for authorization. `keycloak` authorization type uses Keycloak Authorization Services for authorization. `opa` authorization type uses Open Policy Agent based authorization.
              */
             type: string;
             /**
@@ -8441,6 +8708,7 @@ export namespace kafka {
         export interface KafkaSpecKafkaExporterTemplateContainerSecurityContextWindowsOptions {
             gmsaCredentialSpec?: string;
             gmsaCredentialSpecName?: string;
+            runAsUserName?: string;
         }
 
         /**
@@ -8475,6 +8743,10 @@ export namespace kafka {
              * The pod's affinity rules.
              */
             affinity?: outputs.kafka.v1beta1.KafkaSpecKafkaExporterTemplatePodAffinity;
+            /**
+             * The pod's HostAliases. HostAliases is an optional list of hosts and IPs that will be injected into the pod's hosts file if specified.
+             */
+            hostAliases?: outputs.kafka.v1beta1.KafkaSpecKafkaExporterTemplatePodHostAliases[];
             /**
              * List of references to secrets in the same namespace to use for pulling any of the images used by this Pod. When the `STRIMZI_IMAGE_PULL_SECRETS` environment variable in Cluster Operator and the `imagePullSecrets` option are specified, only the `imagePullSecrets` variable is used and the `STRIMZI_IMAGE_PULL_SECRETS` variable is ignored.
              */
@@ -8650,6 +8922,11 @@ export namespace kafka {
             values?: string[];
         }
 
+        export interface KafkaSpecKafkaExporterTemplatePodHostAliases {
+            hostnames?: string[];
+            ip?: string;
+        }
+
         export interface KafkaSpecKafkaExporterTemplatePodImagePullSecrets {
             name?: string;
         }
@@ -8673,6 +8950,7 @@ export namespace kafka {
          */
         export interface KafkaSpecKafkaExporterTemplatePodSecurityContext {
             fsGroup?: number;
+            fsGroupChangePolicy?: string;
             runAsGroup?: number;
             runAsNonRoot?: boolean;
             runAsUser?: number;
@@ -8697,6 +8975,7 @@ export namespace kafka {
         export interface KafkaSpecKafkaExporterTemplatePodSecurityContextWindowsOptions {
             gmsaCredentialSpec?: string;
             gmsaCredentialSpecName?: string;
+            runAsUserName?: string;
         }
 
         export interface KafkaSpecKafkaExporterTemplatePodTolerations {
@@ -8788,64 +9067,48 @@ export namespace kafka {
             value?: string;
         }
 
-        /**
-         * Configures listeners of Kafka brokers.
-         */
-        export interface KafkaSpecKafkaListeners {
+        export interface KafkaSpecKafkaListenersOneOf0 {
             /**
-             * Configures external listener on port 9094.
+             * Authentication configuration for this listener.
              */
-            external?: outputs.kafka.v1beta1.KafkaSpecKafkaListenersExternal;
+            authentication?: outputs.kafka.v1beta1.KafkaSpecKafkaListenersOneOf0Authentication;
             /**
-             * Configures plain listener on port 9092.
+             * Additional listener configuration.
              */
-            plain?: outputs.kafka.v1beta1.KafkaSpecKafkaListenersPlain;
+            configuration?: outputs.kafka.v1beta1.KafkaSpecKafkaListenersOneOf0Configuration;
             /**
-             * Configures TLS listener on port 9093.
+             * Name of the listener. The name will be used to identify the listener and the related Kubernetes objects. The name has to be unique within given a Kafka cluster. The name can consist of lowercase characters and numbers and be up to 11 characters long.
              */
-            tls?: outputs.kafka.v1beta1.KafkaSpecKafkaListenersTls;
-        }
-
-        /**
-         * Configures external listener on port 9094.
-         */
-        export interface KafkaSpecKafkaListenersExternal {
-            /**
-             * Authentication configuration for Kafka brokers.
-             */
-            authentication?: outputs.kafka.v1beta1.KafkaSpecKafkaListenersExternalAuthentication;
-            /**
-             * Configures the `Ingress` class that defines which `Ingress` controller will be used. If not set, the `Ingress` class is set to `nginx`.
-             */
-            class?: string;
-            /**
-             * External listener configuration.
-             */
-            configuration?: outputs.kafka.v1beta1.KafkaSpecKafkaListenersExternalConfiguration;
+            name: string;
             /**
              * List of peers which should be able to connect to this listener. Peers in this list are combined using a logical OR operation. If this field is empty or missing, all connections will be allowed for this listener. If this field is present and contains at least one item, the listener only allows the traffic which matches at least one item in this list.
              */
-            networkPolicyPeers?: outputs.kafka.v1beta1.KafkaSpecKafkaListenersExternalNetworkPolicyPeers[];
+            networkPolicyPeers?: outputs.kafka.v1beta1.KafkaSpecKafkaListenersOneOf0NetworkPolicyPeers[];
             /**
-             * Overrides for external bootstrap and broker services and externally advertised addresses.
+             * Port number used by the listener inside Kafka. The port number has to be unique within a given Kafka cluster. Allowed port numbers are 9092 and higher with the exception of ports 9404 and 9999, which are already used for Prometheus and JMX. Depending on the listener type, the port number might not be the same as the port number that connects Kafka clients.
              */
-            overrides?: outputs.kafka.v1beta1.KafkaSpecKafkaListenersExternalOverrides;
+            port: number;
             /**
-             * Enables TLS encryption on the listener. By default set to `true` for enabled TLS encryption.
+             * Enables TLS encryption on the listener. This is a required property.
              */
-            tls?: boolean;
+            tls: boolean;
             /**
-             * Type of the external listener. Currently the supported types are `route`, `loadbalancer`, and `nodeport`. 
+             * Type of the listener. Currently the supported types are `internal`, `route`, `loadbalancer`, `nodeport` and `ingress`. 
              *
-             * * `route` type uses OpenShift Routes to expose Kafka.* `loadbalancer` type uses LoadBalancer type services to expose Kafka.* `nodeport` type uses NodePort type services to expose Kafka..
+             * * `internal` type exposes Kafka internally only within the Kubernetes cluster.
+             * * `route` type uses OpenShift Routes to expose Kafka.
+             * * `loadbalancer` type uses LoadBalancer type services to expose Kafka.
+             * * `nodeport` type uses NodePort type services to expose Kafka.
+             * * `ingress` type uses Kubernetes Nginx Ingress to expose Kafka.
+             * .
              */
             type: string;
         }
 
         /**
-         * Authentication configuration for Kafka brokers.
+         * Authentication configuration for this listener.
          */
-        export interface KafkaSpecKafkaListenersExternalAuthentication {
+        export interface KafkaSpecKafkaListenersOneOf0Authentication {
             /**
              * Configure whether the access token is treated as JWT. This must be set to `false` if the authorization server returns opaque tokens. Defaults to `true`.
              */
@@ -8865,7 +9128,7 @@ export namespace kafka {
             /**
              * Link to Kubernetes Secret containing the OAuth client secret which the Kafka broker can use to authenticate against the authorization server and use the introspect endpoint URI.
              */
-            clientSecret?: outputs.kafka.v1beta1.KafkaSpecKafkaListenersExternalAuthenticationClientSecret;
+            clientSecret?: outputs.kafka.v1beta1.KafkaSpecKafkaListenersOneOf0AuthenticationClientSecret;
             /**
              * Enable or disable TLS hostname verification. Default value is `false`.
              */
@@ -8895,13 +9158,21 @@ export namespace kafka {
              */
             jwksExpirySeconds?: number;
             /**
+             * The minimum pause between two consecutive refreshes. When an unknown signing key is encountered the refresh is scheduled immediately, but will always wait for this minimum pause. Defaults to 1 second.
+             */
+            jwksMinRefreshPauseSeconds?: number;
+            /**
              * Configures how often are the JWKS certificates refreshed. The refresh interval has to be at least 60 seconds shorter then the expiry interval specified in `jwksExpirySeconds`. Defaults to 300 seconds.
              */
             jwksRefreshSeconds?: number;
             /**
+             * Maximum number of seconds the authenticated session remains valid without re-authentication. This enables Apache Kafka re-authentication feature, and causes sessions to expire when the access token expires. If the access token expires before max time or if max time is reached, the client has to re-authenticate, otherwise the server will drop the connection. Not set by default - the authenticated session does not expire when the access token expires.
+             */
+            maxSecondsWithoutReauthentication?: number;
+            /**
              * Trusted certificates for TLS connection to the OAuth server.
              */
-            tlsTrustedCertificates?: outputs.kafka.v1beta1.KafkaSpecKafkaListenersExternalAuthenticationTlsTrustedCertificates[];
+            tlsTrustedCertificates?: outputs.kafka.v1beta1.KafkaSpecKafkaListenersOneOf0AuthenticationTlsTrustedCertificates[];
             /**
              * Authentication type. `oauth` type uses SASL OAUTHBEARER Authentication. `scram-sha-512` type uses SASL SCRAM-SHA-512 Authentication. `tls` type uses TLS Client Authentication. `tls` type is supported only on TLS listeners.
              */
@@ -8927,7 +9198,7 @@ export namespace kafka {
         /**
          * Link to Kubernetes Secret containing the OAuth client secret which the Kafka broker can use to authenticate against the authorization server and use the introspect endpoint URI.
          */
-        export interface KafkaSpecKafkaListenersExternalAuthenticationClientSecret {
+        export interface KafkaSpecKafkaListenersOneOf0AuthenticationClientSecret {
             /**
              * The key under which the secret value is stored in the Kubernetes Secret.
              */
@@ -8938,7 +9209,326 @@ export namespace kafka {
             secretName: string;
         }
 
-        export interface KafkaSpecKafkaListenersExternalAuthenticationTlsTrustedCertificates {
+        export interface KafkaSpecKafkaListenersOneOf0AuthenticationTlsTrustedCertificates {
+            /**
+             * The name of the file certificate in the Secret.
+             */
+            certificate: string;
+            /**
+             * The name of the Secret containing the certificate.
+             */
+            secretName: string;
+        }
+
+        /**
+         * Additional listener configuration.
+         */
+        export interface KafkaSpecKafkaListenersOneOf0Configuration {
+            /**
+             * Bootstrap configuration.
+             */
+            bootstrap?: outputs.kafka.v1beta1.KafkaSpecKafkaListenersOneOf0ConfigurationBootstrap;
+            /**
+             * Reference to the `Secret` which holds the certificate and private key pair which will be used for this listener. The certificate can optionally contain the whole chain. This field can be used only with listeners with enabled TLS encryption.
+             */
+            brokerCertChainAndKey?: outputs.kafka.v1beta1.KafkaSpecKafkaListenersOneOf0ConfigurationBrokerCertChainAndKey;
+            /**
+             * Per-broker configurations.
+             */
+            brokers?: outputs.kafka.v1beta1.KafkaSpecKafkaListenersOneOf0ConfigurationBrokers[];
+            /**
+             * Configures the `Ingress` class that defines which `Ingress` controller will be used. If not set, the `Ingress` class is set to `nginx`. This field can be used only with `ingress` type listener.
+             */
+            class?: string;
+            /**
+             * Specifies whether the service routes external traffic to node-local or cluster-wide endpoints. `Cluster` may cause a second hop to another node and obscures the client source IP. `Local` avoids a second hop for LoadBalancer and Nodeport type services and preserves the client source IP (when supported by the infrastructure). If unspecified, Kubernetes will use `Cluster` as the default.This field can be used only with `loadbalancer` or `nodeport` type listener.
+             */
+            externalTrafficPolicy?: string;
+            /**
+             * A list of CIDR ranges (for example `10.0.0.0/8` or `130.211.204.1/32`) from which clients can connect to load balancer type listeners. If supported by the platform, traffic through the loadbalancer is restricted to the specified CIDR ranges. This field is applicable only for loadbalancer type services and is ignored if the cloud provider does not support the feature. For more information, see https://v1-17.docs.kubernetes.io/docs/tasks/access-application-cluster/configure-cloud-provider-firewall/. This field can be used only with `loadbalancer` type listener.
+             */
+            loadBalancerSourceRanges?: string[];
+            /**
+             * Defines which address type should be used as the node address. Available types are: `ExternalDNS`, `ExternalIP`, `InternalDNS`, `InternalIP` and `Hostname`. By default, the addresses will be used in the following order (the first one found will be used):
+             * * `ExternalDNS`
+             * * `ExternalIP`
+             * * `InternalDNS`
+             * * `InternalIP`
+             * * `Hostname`
+             *
+             * This field can be used to select the address type which will be used as the preferred type and checked first. In case no address will be found for this address type, the other types will be used in the default order.This field can be used only with `nodeport` type listener..
+             */
+            preferredNodePortAddressType?: string;
+            /**
+             * Configures whether the Kubernetes service DNS domain should be used or not. If set to `true`, the generated addresses with contain the service DNS domain suffix (by default `.cluster.local`, can be configured using environment variable `KUBERNETES_SERVICE_DNS_DOMAIN`). Defaults to `false`.This field can be used only with `internal` type listener.
+             */
+            useServiceDnsDomain?: boolean;
+        }
+
+        /**
+         * Bootstrap configuration.
+         */
+        export interface KafkaSpecKafkaListenersOneOf0ConfigurationBootstrap {
+            /**
+             * Additional alternative names for the bootstrap service. The alternative names will be added to the list of subject alternative names of the TLS certificates.
+             */
+            alternativeNames?: string[];
+            /**
+             * Annotations that will be added to the `Ingress` or `Service` resource. You can use this field to configure DNS providers such as External DNS. This field can be used only with `loadbalancer`, `nodeport`, or `ingress` type listeners.
+             */
+            annotations?: {[key: string]: any};
+            /**
+             * The bootstrap host. This field will be used in the Ingress resource or in the Route resource to specify the desired hostname. This field can be used only with `route` (optional) or `ingress` (required) type listeners.
+             */
+            host?: string;
+            /**
+             * The loadbalancer is requested with the IP address specified in this field. This feature depends on whether the underlying cloud provider supports specifying the `loadBalancerIP` when a load balancer is created. This field is ignored if the cloud provider does not support the feature.This field can be used only with `loadbalancer` type listener.
+             */
+            loadBalancerIP?: string;
+            /**
+             * Node port for the bootstrap service. This field can be used only with `nodeport` type listener.
+             */
+            nodePort?: number;
+        }
+
+        /**
+         * Reference to the `Secret` which holds the certificate and private key pair which will be used for this listener. The certificate can optionally contain the whole chain. This field can be used only with listeners with enabled TLS encryption.
+         */
+        export interface KafkaSpecKafkaListenersOneOf0ConfigurationBrokerCertChainAndKey {
+            /**
+             * The name of the file certificate in the Secret.
+             */
+            certificate: string;
+            /**
+             * The name of the private key in the Secret.
+             */
+            key: string;
+            /**
+             * The name of the Secret containing the certificate.
+             */
+            secretName: string;
+        }
+
+        export interface KafkaSpecKafkaListenersOneOf0ConfigurationBrokers {
+            /**
+             * The host name which will be used in the brokers' `advertised.brokers`.
+             */
+            advertisedHost?: string;
+            /**
+             * The port number which will be used in the brokers' `advertised.brokers`.
+             */
+            advertisedPort?: number;
+            /**
+             * Annotations that will be added to the `Ingress` or `Service` resource. You can use this field to configure DNS providers such as External DNS. This field can be used only with `loadbalancer`, `nodeport`, or `ingress` type listeners.
+             */
+            annotations?: {[key: string]: any};
+            /**
+             * ID of the kafka broker (broker identifier). Broker IDs start from 0 and correspond to the number of broker replicas.
+             */
+            broker: number;
+            /**
+             * The broker host. This field will be used in the Ingress resource or in the Route resource to specify the desired hostname. This field can be used only with `route` (optional) or `ingress` (required) type listeners.
+             */
+            host?: string;
+            /**
+             * The loadbalancer is requested with the IP address specified in this field. This feature depends on whether the underlying cloud provider supports specifying the `loadBalancerIP` when a load balancer is created. This field is ignored if the cloud provider does not support the feature.This field can be used only with `loadbalancer` type listener.
+             */
+            loadBalancerIP?: string;
+            /**
+             * Node port for the per-broker service. This field can be used only with `nodeport` type listener.
+             */
+            nodePort?: number;
+        }
+
+        export interface KafkaSpecKafkaListenersOneOf0NetworkPolicyPeers {
+            ipBlock?: outputs.kafka.v1beta1.KafkaSpecKafkaListenersOneOf0NetworkPolicyPeersIpBlock;
+            namespaceSelector?: outputs.kafka.v1beta1.KafkaSpecKafkaListenersOneOf0NetworkPolicyPeersNamespaceSelector;
+            podSelector?: outputs.kafka.v1beta1.KafkaSpecKafkaListenersOneOf0NetworkPolicyPeersPodSelector;
+        }
+
+        export interface KafkaSpecKafkaListenersOneOf0NetworkPolicyPeersIpBlock {
+            cidr?: string;
+            except?: string[];
+        }
+
+        export interface KafkaSpecKafkaListenersOneOf0NetworkPolicyPeersNamespaceSelector {
+            matchExpressions?: outputs.kafka.v1beta1.KafkaSpecKafkaListenersOneOf0NetworkPolicyPeersNamespaceSelectorMatchExpressions[];
+            matchLabels?: {[key: string]: any};
+        }
+
+        export interface KafkaSpecKafkaListenersOneOf0NetworkPolicyPeersNamespaceSelectorMatchExpressions {
+            key?: string;
+            operator?: string;
+            values?: string[];
+        }
+
+        export interface KafkaSpecKafkaListenersOneOf0NetworkPolicyPeersPodSelector {
+            matchExpressions?: outputs.kafka.v1beta1.KafkaSpecKafkaListenersOneOf0NetworkPolicyPeersPodSelectorMatchExpressions[];
+            matchLabels?: {[key: string]: any};
+        }
+
+        export interface KafkaSpecKafkaListenersOneOf0NetworkPolicyPeersPodSelectorMatchExpressions {
+            key?: string;
+            operator?: string;
+            values?: string[];
+        }
+
+        export interface KafkaSpecKafkaListenersOneOf1 {
+            /**
+             * Configures external listener on port 9094.
+             */
+            external?: outputs.kafka.v1beta1.KafkaSpecKafkaListenersOneOf1External;
+            /**
+             * Configures plain listener on port 9092.
+             */
+            plain?: outputs.kafka.v1beta1.KafkaSpecKafkaListenersOneOf1Plain;
+            /**
+             * Configures TLS listener on port 9093.
+             */
+            tls?: outputs.kafka.v1beta1.KafkaSpecKafkaListenersOneOf1Tls;
+        }
+
+        /**
+         * Configures external listener on port 9094.
+         */
+        export interface KafkaSpecKafkaListenersOneOf1External {
+            /**
+             * Authentication configuration for Kafka brokers.
+             */
+            authentication?: outputs.kafka.v1beta1.KafkaSpecKafkaListenersOneOf1ExternalAuthentication;
+            /**
+             * Configures the `Ingress` class that defines which `Ingress` controller will be used. If not set, the `Ingress` class is set to `nginx`.
+             */
+            class?: string;
+            /**
+             * External listener configuration.
+             */
+            configuration?: outputs.kafka.v1beta1.KafkaSpecKafkaListenersOneOf1ExternalConfiguration;
+            /**
+             * List of peers which should be able to connect to this listener. Peers in this list are combined using a logical OR operation. If this field is empty or missing, all connections will be allowed for this listener. If this field is present and contains at least one item, the listener only allows the traffic which matches at least one item in this list.
+             */
+            networkPolicyPeers?: outputs.kafka.v1beta1.KafkaSpecKafkaListenersOneOf1ExternalNetworkPolicyPeers[];
+            /**
+             * Overrides for external bootstrap and broker services and externally advertised addresses.
+             */
+            overrides?: outputs.kafka.v1beta1.KafkaSpecKafkaListenersOneOf1ExternalOverrides;
+            /**
+             * Enables TLS encryption on the listener. By default set to `true` for enabled TLS encryption.
+             */
+            tls?: boolean;
+            /**
+             * Type of the external listener. Currently the supported types are `route`, `loadbalancer`, and `nodeport`. 
+             *
+             * * `route` type uses OpenShift Routes to expose Kafka.* `loadbalancer` type uses LoadBalancer type services to expose Kafka.* `nodeport` type uses NodePort type services to expose Kafka..
+             */
+            type: string;
+        }
+
+        /**
+         * Authentication configuration for Kafka brokers.
+         */
+        export interface KafkaSpecKafkaListenersOneOf1ExternalAuthentication {
+            /**
+             * Configure whether the access token is treated as JWT. This must be set to `false` if the authorization server returns opaque tokens. Defaults to `true`.
+             */
+            accessTokenIsJwt?: boolean;
+            /**
+             * Configure whether the access token type check is performed or not. This should be set to `false` if the authorization server does not include 'typ' claim in JWT token. Defaults to `true`.
+             */
+            checkAccessTokenType?: boolean;
+            /**
+             * Enable or disable issuer checking. By default issuer is checked using the value configured by `validIssuerUri`. Default value is `true`.
+             */
+            checkIssuer?: boolean;
+            /**
+             * OAuth Client ID which the Kafka broker can use to authenticate against the authorization server and use the introspect endpoint URI.
+             */
+            clientId?: string;
+            /**
+             * Link to Kubernetes Secret containing the OAuth client secret which the Kafka broker can use to authenticate against the authorization server and use the introspect endpoint URI.
+             */
+            clientSecret?: outputs.kafka.v1beta1.KafkaSpecKafkaListenersOneOf1ExternalAuthenticationClientSecret;
+            /**
+             * Enable or disable TLS hostname verification. Default value is `false`.
+             */
+            disableTlsHostnameVerification?: boolean;
+            /**
+             * Enable or disable ECDSA support by installing BouncyCastle crypto provider. Default value is `false`.
+             */
+            enableECDSA?: boolean;
+            /**
+             * The fallback username claim to be used for the user id if the claim specified by `userNameClaim` is not present. This is useful when `client_credentials` authentication only results in the client id being provided in another claim. It only takes effect if `userNameClaim` is set.
+             */
+            fallbackUserNameClaim?: string;
+            /**
+             * The prefix to use with the value of `fallbackUserNameClaim` to construct the user id. This only takes effect if `fallbackUserNameClaim` is true, and the value is present for the claim. Mapping usernames and client ids into the same user id space is useful in preventing name collisions.
+             */
+            fallbackUserNamePrefix?: string;
+            /**
+             * URI of the token introspection endpoint which can be used to validate opaque non-JWT tokens.
+             */
+            introspectionEndpointUri?: string;
+            /**
+             * URI of the JWKS certificate endpoint, which can be used for local JWT validation.
+             */
+            jwksEndpointUri?: string;
+            /**
+             * Configures how often are the JWKS certificates considered valid. The expiry interval has to be at least 60 seconds longer then the refresh interval specified in `jwksRefreshSeconds`. Defaults to 360 seconds.
+             */
+            jwksExpirySeconds?: number;
+            /**
+             * The minimum pause between two consecutive refreshes. When an unknown signing key is encountered the refresh is scheduled immediately, but will always wait for this minimum pause. Defaults to 1 second.
+             */
+            jwksMinRefreshPauseSeconds?: number;
+            /**
+             * Configures how often are the JWKS certificates refreshed. The refresh interval has to be at least 60 seconds shorter then the expiry interval specified in `jwksExpirySeconds`. Defaults to 300 seconds.
+             */
+            jwksRefreshSeconds?: number;
+            /**
+             * Maximum number of seconds the authenticated session remains valid without re-authentication. This enables Apache Kafka re-authentication feature, and causes sessions to expire when the access token expires. If the access token expires before max time or if max time is reached, the client has to re-authenticate, otherwise the server will drop the connection. Not set by default - the authenticated session does not expire when the access token expires.
+             */
+            maxSecondsWithoutReauthentication?: number;
+            /**
+             * Trusted certificates for TLS connection to the OAuth server.
+             */
+            tlsTrustedCertificates?: outputs.kafka.v1beta1.KafkaSpecKafkaListenersOneOf1ExternalAuthenticationTlsTrustedCertificates[];
+            /**
+             * Authentication type. `oauth` type uses SASL OAUTHBEARER Authentication. `scram-sha-512` type uses SASL SCRAM-SHA-512 Authentication. `tls` type uses TLS Client Authentication. `tls` type is supported only on TLS listeners.
+             */
+            type: string;
+            /**
+             * URI of the User Info Endpoint to use as a fallback to obtaining the user id when the Introspection Endpoint does not return information that can be used for the user id. 
+             */
+            userInfoEndpointUri?: string;
+            /**
+             * Name of the claim from the JWT authentication token, Introspection Endpoint response or User Info Endpoint response which will be used to extract the user id. Defaults to `sub`.
+             */
+            userNameClaim?: string;
+            /**
+             * URI of the token issuer used for authentication.
+             */
+            validIssuerUri?: string;
+            /**
+             * Valid value for the `token_type` attribute returned by the Introspection Endpoint. No default value, and not checked by default.
+             */
+            validTokenType?: string;
+        }
+
+        /**
+         * Link to Kubernetes Secret containing the OAuth client secret which the Kafka broker can use to authenticate against the authorization server and use the introspect endpoint URI.
+         */
+        export interface KafkaSpecKafkaListenersOneOf1ExternalAuthenticationClientSecret {
+            /**
+             * The key under which the secret value is stored in the Kubernetes Secret.
+             */
+            key: string;
+            /**
+             * The name of the Kubernetes Secret containing the secret value.
+             */
+            secretName: string;
+        }
+
+        export interface KafkaSpecKafkaListenersOneOf1ExternalAuthenticationTlsTrustedCertificates {
             /**
              * The name of the file certificate in the Secret.
              */
@@ -8952,25 +9542,25 @@ export namespace kafka {
         /**
          * External listener configuration.
          */
-        export interface KafkaSpecKafkaListenersExternalConfiguration {
+        export interface KafkaSpecKafkaListenersOneOf1ExternalConfiguration {
             /**
              * External bootstrap ingress configuration.
              */
-            bootstrap?: outputs.kafka.v1beta1.KafkaSpecKafkaListenersExternalConfigurationBootstrap;
+            bootstrap?: outputs.kafka.v1beta1.KafkaSpecKafkaListenersOneOf1ExternalConfigurationBootstrap;
             /**
              * Reference to the `Secret` which holds the certificate and private key pair. The certificate can optionally contain the whole chain.
              */
-            brokerCertChainAndKey?: outputs.kafka.v1beta1.KafkaSpecKafkaListenersExternalConfigurationBrokerCertChainAndKey;
+            brokerCertChainAndKey?: outputs.kafka.v1beta1.KafkaSpecKafkaListenersOneOf1ExternalConfigurationBrokerCertChainAndKey;
             /**
              * External broker ingress configuration.
              */
-            brokers?: outputs.kafka.v1beta1.KafkaSpecKafkaListenersExternalConfigurationBrokers[];
+            brokers?: outputs.kafka.v1beta1.KafkaSpecKafkaListenersOneOf1ExternalConfigurationBrokers[];
         }
 
         /**
          * External bootstrap ingress configuration.
          */
-        export interface KafkaSpecKafkaListenersExternalConfigurationBootstrap {
+        export interface KafkaSpecKafkaListenersOneOf1ExternalConfigurationBootstrap {
             /**
              * Additional address name for the bootstrap service. The address will be added to the list of subject alternative names of the TLS certificates.
              */
@@ -8988,7 +9578,7 @@ export namespace kafka {
         /**
          * Reference to the `Secret` which holds the certificate and private key pair. The certificate can optionally contain the whole chain.
          */
-        export interface KafkaSpecKafkaListenersExternalConfigurationBrokerCertChainAndKey {
+        export interface KafkaSpecKafkaListenersOneOf1ExternalConfigurationBrokerCertChainAndKey {
             /**
              * The name of the file certificate in the Secret.
              */
@@ -9003,7 +9593,7 @@ export namespace kafka {
             secretName: string;
         }
 
-        export interface KafkaSpecKafkaListenersExternalConfigurationBrokers {
+        export interface KafkaSpecKafkaListenersOneOf1ExternalConfigurationBrokers {
             /**
              * The host name which will be used in the brokers' `advertised.brokers`.
              */
@@ -9026,34 +9616,34 @@ export namespace kafka {
             host: string;
         }
 
-        export interface KafkaSpecKafkaListenersExternalNetworkPolicyPeers {
-            ipBlock?: outputs.kafka.v1beta1.KafkaSpecKafkaListenersExternalNetworkPolicyPeersIpBlock;
-            namespaceSelector?: outputs.kafka.v1beta1.KafkaSpecKafkaListenersExternalNetworkPolicyPeersNamespaceSelector;
-            podSelector?: outputs.kafka.v1beta1.KafkaSpecKafkaListenersExternalNetworkPolicyPeersPodSelector;
+        export interface KafkaSpecKafkaListenersOneOf1ExternalNetworkPolicyPeers {
+            ipBlock?: outputs.kafka.v1beta1.KafkaSpecKafkaListenersOneOf1ExternalNetworkPolicyPeersIpBlock;
+            namespaceSelector?: outputs.kafka.v1beta1.KafkaSpecKafkaListenersOneOf1ExternalNetworkPolicyPeersNamespaceSelector;
+            podSelector?: outputs.kafka.v1beta1.KafkaSpecKafkaListenersOneOf1ExternalNetworkPolicyPeersPodSelector;
         }
 
-        export interface KafkaSpecKafkaListenersExternalNetworkPolicyPeersIpBlock {
+        export interface KafkaSpecKafkaListenersOneOf1ExternalNetworkPolicyPeersIpBlock {
             cidr?: string;
             except?: string[];
         }
 
-        export interface KafkaSpecKafkaListenersExternalNetworkPolicyPeersNamespaceSelector {
-            matchExpressions?: outputs.kafka.v1beta1.KafkaSpecKafkaListenersExternalNetworkPolicyPeersNamespaceSelectorMatchExpressions[];
+        export interface KafkaSpecKafkaListenersOneOf1ExternalNetworkPolicyPeersNamespaceSelector {
+            matchExpressions?: outputs.kafka.v1beta1.KafkaSpecKafkaListenersOneOf1ExternalNetworkPolicyPeersNamespaceSelectorMatchExpressions[];
             matchLabels?: {[key: string]: any};
         }
 
-        export interface KafkaSpecKafkaListenersExternalNetworkPolicyPeersNamespaceSelectorMatchExpressions {
+        export interface KafkaSpecKafkaListenersOneOf1ExternalNetworkPolicyPeersNamespaceSelectorMatchExpressions {
             key?: string;
             operator?: string;
             values?: string[];
         }
 
-        export interface KafkaSpecKafkaListenersExternalNetworkPolicyPeersPodSelector {
-            matchExpressions?: outputs.kafka.v1beta1.KafkaSpecKafkaListenersExternalNetworkPolicyPeersPodSelectorMatchExpressions[];
+        export interface KafkaSpecKafkaListenersOneOf1ExternalNetworkPolicyPeersPodSelector {
+            matchExpressions?: outputs.kafka.v1beta1.KafkaSpecKafkaListenersOneOf1ExternalNetworkPolicyPeersPodSelectorMatchExpressions[];
             matchLabels?: {[key: string]: any};
         }
 
-        export interface KafkaSpecKafkaListenersExternalNetworkPolicyPeersPodSelectorMatchExpressions {
+        export interface KafkaSpecKafkaListenersOneOf1ExternalNetworkPolicyPeersPodSelectorMatchExpressions {
             key?: string;
             operator?: string;
             values?: string[];
@@ -9062,21 +9652,21 @@ export namespace kafka {
         /**
          * Overrides for external bootstrap and broker services and externally advertised addresses.
          */
-        export interface KafkaSpecKafkaListenersExternalOverrides {
+        export interface KafkaSpecKafkaListenersOneOf1ExternalOverrides {
             /**
              * External bootstrap service configuration.
              */
-            bootstrap?: outputs.kafka.v1beta1.KafkaSpecKafkaListenersExternalOverridesBootstrap;
+            bootstrap?: outputs.kafka.v1beta1.KafkaSpecKafkaListenersOneOf1ExternalOverridesBootstrap;
             /**
              * External broker services configuration.
              */
-            brokers?: outputs.kafka.v1beta1.KafkaSpecKafkaListenersExternalOverridesBrokers[];
+            brokers?: outputs.kafka.v1beta1.KafkaSpecKafkaListenersOneOf1ExternalOverridesBrokers[];
         }
 
         /**
          * External bootstrap service configuration.
          */
-        export interface KafkaSpecKafkaListenersExternalOverridesBootstrap {
+        export interface KafkaSpecKafkaListenersOneOf1ExternalOverridesBootstrap {
             /**
              * Additional address name for the bootstrap service. The address will be added to the list of subject alternative names of the TLS certificates.
              */
@@ -9091,7 +9681,7 @@ export namespace kafka {
             nodePort?: number;
         }
 
-        export interface KafkaSpecKafkaListenersExternalOverridesBrokers {
+        export interface KafkaSpecKafkaListenersOneOf1ExternalOverridesBrokers {
             /**
              * The host name which will be used in the brokers' `advertised.brokers`.
              */
@@ -9117,21 +9707,21 @@ export namespace kafka {
         /**
          * Configures plain listener on port 9092.
          */
-        export interface KafkaSpecKafkaListenersPlain {
+        export interface KafkaSpecKafkaListenersOneOf1Plain {
             /**
              * Authentication configuration for this listener. Since this listener does not use TLS transport you cannot configure an authentication with `type: tls`.
              */
-            authentication?: outputs.kafka.v1beta1.KafkaSpecKafkaListenersPlainAuthentication;
+            authentication?: outputs.kafka.v1beta1.KafkaSpecKafkaListenersOneOf1PlainAuthentication;
             /**
              * List of peers which should be able to connect to this listener. Peers in this list are combined using a logical OR operation. If this field is empty or missing, all connections will be allowed for this listener. If this field is present and contains at least one item, the listener only allows the traffic which matches at least one item in this list.
              */
-            networkPolicyPeers?: outputs.kafka.v1beta1.KafkaSpecKafkaListenersPlainNetworkPolicyPeers[];
+            networkPolicyPeers?: outputs.kafka.v1beta1.KafkaSpecKafkaListenersOneOf1PlainNetworkPolicyPeers[];
         }
 
         /**
          * Authentication configuration for this listener. Since this listener does not use TLS transport you cannot configure an authentication with `type: tls`.
          */
-        export interface KafkaSpecKafkaListenersPlainAuthentication {
+        export interface KafkaSpecKafkaListenersOneOf1PlainAuthentication {
             /**
              * Configure whether the access token is treated as JWT. This must be set to `false` if the authorization server returns opaque tokens. Defaults to `true`.
              */
@@ -9151,7 +9741,7 @@ export namespace kafka {
             /**
              * Link to Kubernetes Secret containing the OAuth client secret which the Kafka broker can use to authenticate against the authorization server and use the introspect endpoint URI.
              */
-            clientSecret?: outputs.kafka.v1beta1.KafkaSpecKafkaListenersPlainAuthenticationClientSecret;
+            clientSecret?: outputs.kafka.v1beta1.KafkaSpecKafkaListenersOneOf1PlainAuthenticationClientSecret;
             /**
              * Enable or disable TLS hostname verification. Default value is `false`.
              */
@@ -9181,13 +9771,21 @@ export namespace kafka {
              */
             jwksExpirySeconds?: number;
             /**
+             * The minimum pause between two consecutive refreshes. When an unknown signing key is encountered the refresh is scheduled immediately, but will always wait for this minimum pause. Defaults to 1 second.
+             */
+            jwksMinRefreshPauseSeconds?: number;
+            /**
              * Configures how often are the JWKS certificates refreshed. The refresh interval has to be at least 60 seconds shorter then the expiry interval specified in `jwksExpirySeconds`. Defaults to 300 seconds.
              */
             jwksRefreshSeconds?: number;
             /**
+             * Maximum number of seconds the authenticated session remains valid without re-authentication. This enables Apache Kafka re-authentication feature, and causes sessions to expire when the access token expires. If the access token expires before max time or if max time is reached, the client has to re-authenticate, otherwise the server will drop the connection. Not set by default - the authenticated session does not expire when the access token expires.
+             */
+            maxSecondsWithoutReauthentication?: number;
+            /**
              * Trusted certificates for TLS connection to the OAuth server.
              */
-            tlsTrustedCertificates?: outputs.kafka.v1beta1.KafkaSpecKafkaListenersPlainAuthenticationTlsTrustedCertificates[];
+            tlsTrustedCertificates?: outputs.kafka.v1beta1.KafkaSpecKafkaListenersOneOf1PlainAuthenticationTlsTrustedCertificates[];
             /**
              * Authentication type. `oauth` type uses SASL OAUTHBEARER Authentication. `scram-sha-512` type uses SASL SCRAM-SHA-512 Authentication. `tls` type uses TLS Client Authentication. `tls` type is supported only on TLS listeners.
              */
@@ -9213,7 +9811,7 @@ export namespace kafka {
         /**
          * Link to Kubernetes Secret containing the OAuth client secret which the Kafka broker can use to authenticate against the authorization server and use the introspect endpoint URI.
          */
-        export interface KafkaSpecKafkaListenersPlainAuthenticationClientSecret {
+        export interface KafkaSpecKafkaListenersOneOf1PlainAuthenticationClientSecret {
             /**
              * The key under which the secret value is stored in the Kubernetes Secret.
              */
@@ -9224,7 +9822,7 @@ export namespace kafka {
             secretName: string;
         }
 
-        export interface KafkaSpecKafkaListenersPlainAuthenticationTlsTrustedCertificates {
+        export interface KafkaSpecKafkaListenersOneOf1PlainAuthenticationTlsTrustedCertificates {
             /**
              * The name of the file certificate in the Secret.
              */
@@ -9235,34 +9833,34 @@ export namespace kafka {
             secretName: string;
         }
 
-        export interface KafkaSpecKafkaListenersPlainNetworkPolicyPeers {
-            ipBlock?: outputs.kafka.v1beta1.KafkaSpecKafkaListenersPlainNetworkPolicyPeersIpBlock;
-            namespaceSelector?: outputs.kafka.v1beta1.KafkaSpecKafkaListenersPlainNetworkPolicyPeersNamespaceSelector;
-            podSelector?: outputs.kafka.v1beta1.KafkaSpecKafkaListenersPlainNetworkPolicyPeersPodSelector;
+        export interface KafkaSpecKafkaListenersOneOf1PlainNetworkPolicyPeers {
+            ipBlock?: outputs.kafka.v1beta1.KafkaSpecKafkaListenersOneOf1PlainNetworkPolicyPeersIpBlock;
+            namespaceSelector?: outputs.kafka.v1beta1.KafkaSpecKafkaListenersOneOf1PlainNetworkPolicyPeersNamespaceSelector;
+            podSelector?: outputs.kafka.v1beta1.KafkaSpecKafkaListenersOneOf1PlainNetworkPolicyPeersPodSelector;
         }
 
-        export interface KafkaSpecKafkaListenersPlainNetworkPolicyPeersIpBlock {
+        export interface KafkaSpecKafkaListenersOneOf1PlainNetworkPolicyPeersIpBlock {
             cidr?: string;
             except?: string[];
         }
 
-        export interface KafkaSpecKafkaListenersPlainNetworkPolicyPeersNamespaceSelector {
-            matchExpressions?: outputs.kafka.v1beta1.KafkaSpecKafkaListenersPlainNetworkPolicyPeersNamespaceSelectorMatchExpressions[];
+        export interface KafkaSpecKafkaListenersOneOf1PlainNetworkPolicyPeersNamespaceSelector {
+            matchExpressions?: outputs.kafka.v1beta1.KafkaSpecKafkaListenersOneOf1PlainNetworkPolicyPeersNamespaceSelectorMatchExpressions[];
             matchLabels?: {[key: string]: any};
         }
 
-        export interface KafkaSpecKafkaListenersPlainNetworkPolicyPeersNamespaceSelectorMatchExpressions {
+        export interface KafkaSpecKafkaListenersOneOf1PlainNetworkPolicyPeersNamespaceSelectorMatchExpressions {
             key?: string;
             operator?: string;
             values?: string[];
         }
 
-        export interface KafkaSpecKafkaListenersPlainNetworkPolicyPeersPodSelector {
-            matchExpressions?: outputs.kafka.v1beta1.KafkaSpecKafkaListenersPlainNetworkPolicyPeersPodSelectorMatchExpressions[];
+        export interface KafkaSpecKafkaListenersOneOf1PlainNetworkPolicyPeersPodSelector {
+            matchExpressions?: outputs.kafka.v1beta1.KafkaSpecKafkaListenersOneOf1PlainNetworkPolicyPeersPodSelectorMatchExpressions[];
             matchLabels?: {[key: string]: any};
         }
 
-        export interface KafkaSpecKafkaListenersPlainNetworkPolicyPeersPodSelectorMatchExpressions {
+        export interface KafkaSpecKafkaListenersOneOf1PlainNetworkPolicyPeersPodSelectorMatchExpressions {
             key?: string;
             operator?: string;
             values?: string[];
@@ -9271,25 +9869,25 @@ export namespace kafka {
         /**
          * Configures TLS listener on port 9093.
          */
-        export interface KafkaSpecKafkaListenersTls {
+        export interface KafkaSpecKafkaListenersOneOf1Tls {
             /**
              * Authentication configuration for this listener.
              */
-            authentication?: outputs.kafka.v1beta1.KafkaSpecKafkaListenersTlsAuthentication;
+            authentication?: outputs.kafka.v1beta1.KafkaSpecKafkaListenersOneOf1TlsAuthentication;
             /**
              * Configuration of TLS listener.
              */
-            configuration?: outputs.kafka.v1beta1.KafkaSpecKafkaListenersTlsConfiguration;
+            configuration?: outputs.kafka.v1beta1.KafkaSpecKafkaListenersOneOf1TlsConfiguration;
             /**
              * List of peers which should be able to connect to this listener. Peers in this list are combined using a logical OR operation. If this field is empty or missing, all connections will be allowed for this listener. If this field is present and contains at least one item, the listener only allows the traffic which matches at least one item in this list.
              */
-            networkPolicyPeers?: outputs.kafka.v1beta1.KafkaSpecKafkaListenersTlsNetworkPolicyPeers[];
+            networkPolicyPeers?: outputs.kafka.v1beta1.KafkaSpecKafkaListenersOneOf1TlsNetworkPolicyPeers[];
         }
 
         /**
          * Authentication configuration for this listener.
          */
-        export interface KafkaSpecKafkaListenersTlsAuthentication {
+        export interface KafkaSpecKafkaListenersOneOf1TlsAuthentication {
             /**
              * Configure whether the access token is treated as JWT. This must be set to `false` if the authorization server returns opaque tokens. Defaults to `true`.
              */
@@ -9309,7 +9907,7 @@ export namespace kafka {
             /**
              * Link to Kubernetes Secret containing the OAuth client secret which the Kafka broker can use to authenticate against the authorization server and use the introspect endpoint URI.
              */
-            clientSecret?: outputs.kafka.v1beta1.KafkaSpecKafkaListenersTlsAuthenticationClientSecret;
+            clientSecret?: outputs.kafka.v1beta1.KafkaSpecKafkaListenersOneOf1TlsAuthenticationClientSecret;
             /**
              * Enable or disable TLS hostname verification. Default value is `false`.
              */
@@ -9339,13 +9937,21 @@ export namespace kafka {
              */
             jwksExpirySeconds?: number;
             /**
+             * The minimum pause between two consecutive refreshes. When an unknown signing key is encountered the refresh is scheduled immediately, but will always wait for this minimum pause. Defaults to 1 second.
+             */
+            jwksMinRefreshPauseSeconds?: number;
+            /**
              * Configures how often are the JWKS certificates refreshed. The refresh interval has to be at least 60 seconds shorter then the expiry interval specified in `jwksExpirySeconds`. Defaults to 300 seconds.
              */
             jwksRefreshSeconds?: number;
             /**
+             * Maximum number of seconds the authenticated session remains valid without re-authentication. This enables Apache Kafka re-authentication feature, and causes sessions to expire when the access token expires. If the access token expires before max time or if max time is reached, the client has to re-authenticate, otherwise the server will drop the connection. Not set by default - the authenticated session does not expire when the access token expires.
+             */
+            maxSecondsWithoutReauthentication?: number;
+            /**
              * Trusted certificates for TLS connection to the OAuth server.
              */
-            tlsTrustedCertificates?: outputs.kafka.v1beta1.KafkaSpecKafkaListenersTlsAuthenticationTlsTrustedCertificates[];
+            tlsTrustedCertificates?: outputs.kafka.v1beta1.KafkaSpecKafkaListenersOneOf1TlsAuthenticationTlsTrustedCertificates[];
             /**
              * Authentication type. `oauth` type uses SASL OAUTHBEARER Authentication. `scram-sha-512` type uses SASL SCRAM-SHA-512 Authentication. `tls` type uses TLS Client Authentication. `tls` type is supported only on TLS listeners.
              */
@@ -9371,7 +9977,7 @@ export namespace kafka {
         /**
          * Link to Kubernetes Secret containing the OAuth client secret which the Kafka broker can use to authenticate against the authorization server and use the introspect endpoint URI.
          */
-        export interface KafkaSpecKafkaListenersTlsAuthenticationClientSecret {
+        export interface KafkaSpecKafkaListenersOneOf1TlsAuthenticationClientSecret {
             /**
              * The key under which the secret value is stored in the Kubernetes Secret.
              */
@@ -9382,7 +9988,7 @@ export namespace kafka {
             secretName: string;
         }
 
-        export interface KafkaSpecKafkaListenersTlsAuthenticationTlsTrustedCertificates {
+        export interface KafkaSpecKafkaListenersOneOf1TlsAuthenticationTlsTrustedCertificates {
             /**
              * The name of the file certificate in the Secret.
              */
@@ -9396,17 +10002,17 @@ export namespace kafka {
         /**
          * Configuration of TLS listener.
          */
-        export interface KafkaSpecKafkaListenersTlsConfiguration {
+        export interface KafkaSpecKafkaListenersOneOf1TlsConfiguration {
             /**
              * Reference to the `Secret` which holds the certificate and private key pair. The certificate can optionally contain the whole chain.
              */
-            brokerCertChainAndKey?: outputs.kafka.v1beta1.KafkaSpecKafkaListenersTlsConfigurationBrokerCertChainAndKey;
+            brokerCertChainAndKey?: outputs.kafka.v1beta1.KafkaSpecKafkaListenersOneOf1TlsConfigurationBrokerCertChainAndKey;
         }
 
         /**
          * Reference to the `Secret` which holds the certificate and private key pair. The certificate can optionally contain the whole chain.
          */
-        export interface KafkaSpecKafkaListenersTlsConfigurationBrokerCertChainAndKey {
+        export interface KafkaSpecKafkaListenersOneOf1TlsConfigurationBrokerCertChainAndKey {
             /**
              * The name of the file certificate in the Secret.
              */
@@ -9421,34 +10027,34 @@ export namespace kafka {
             secretName: string;
         }
 
-        export interface KafkaSpecKafkaListenersTlsNetworkPolicyPeers {
-            ipBlock?: outputs.kafka.v1beta1.KafkaSpecKafkaListenersTlsNetworkPolicyPeersIpBlock;
-            namespaceSelector?: outputs.kafka.v1beta1.KafkaSpecKafkaListenersTlsNetworkPolicyPeersNamespaceSelector;
-            podSelector?: outputs.kafka.v1beta1.KafkaSpecKafkaListenersTlsNetworkPolicyPeersPodSelector;
+        export interface KafkaSpecKafkaListenersOneOf1TlsNetworkPolicyPeers {
+            ipBlock?: outputs.kafka.v1beta1.KafkaSpecKafkaListenersOneOf1TlsNetworkPolicyPeersIpBlock;
+            namespaceSelector?: outputs.kafka.v1beta1.KafkaSpecKafkaListenersOneOf1TlsNetworkPolicyPeersNamespaceSelector;
+            podSelector?: outputs.kafka.v1beta1.KafkaSpecKafkaListenersOneOf1TlsNetworkPolicyPeersPodSelector;
         }
 
-        export interface KafkaSpecKafkaListenersTlsNetworkPolicyPeersIpBlock {
+        export interface KafkaSpecKafkaListenersOneOf1TlsNetworkPolicyPeersIpBlock {
             cidr?: string;
             except?: string[];
         }
 
-        export interface KafkaSpecKafkaListenersTlsNetworkPolicyPeersNamespaceSelector {
-            matchExpressions?: outputs.kafka.v1beta1.KafkaSpecKafkaListenersTlsNetworkPolicyPeersNamespaceSelectorMatchExpressions[];
+        export interface KafkaSpecKafkaListenersOneOf1TlsNetworkPolicyPeersNamespaceSelector {
+            matchExpressions?: outputs.kafka.v1beta1.KafkaSpecKafkaListenersOneOf1TlsNetworkPolicyPeersNamespaceSelectorMatchExpressions[];
             matchLabels?: {[key: string]: any};
         }
 
-        export interface KafkaSpecKafkaListenersTlsNetworkPolicyPeersNamespaceSelectorMatchExpressions {
+        export interface KafkaSpecKafkaListenersOneOf1TlsNetworkPolicyPeersNamespaceSelectorMatchExpressions {
             key?: string;
             operator?: string;
             values?: string[];
         }
 
-        export interface KafkaSpecKafkaListenersTlsNetworkPolicyPeersPodSelector {
-            matchExpressions?: outputs.kafka.v1beta1.KafkaSpecKafkaListenersTlsNetworkPolicyPeersPodSelectorMatchExpressions[];
+        export interface KafkaSpecKafkaListenersOneOf1TlsNetworkPolicyPeersPodSelector {
+            matchExpressions?: outputs.kafka.v1beta1.KafkaSpecKafkaListenersOneOf1TlsNetworkPolicyPeersPodSelectorMatchExpressions[];
             matchLabels?: {[key: string]: any};
         }
 
-        export interface KafkaSpecKafkaListenersTlsNetworkPolicyPeersPodSelectorMatchExpressions {
+        export interface KafkaSpecKafkaListenersOneOf1TlsNetworkPolicyPeersPodSelectorMatchExpressions {
             key?: string;
             operator?: string;
             values?: string[];
@@ -9812,7 +10418,7 @@ export namespace kafka {
              */
             externalTrafficPolicy?: string;
             /**
-             * A list of CIDR ranges (for example `10.0.0.0/8` or `130.211.204.1/32`) from which clients can connect to load balancer type listeners. If supported by the platform, traffic through the loadbalancer is restricted to the specified CIDR ranges. This field is applicable only for loadbalancer type services and is ignored if the cloud provider does not support the feature. For more information, see https://kubernetes.io/docs/tasks/access-application-cluster/configure-cloud-provider-firewall/.
+             * A list of CIDR ranges (for example `10.0.0.0/8` or `130.211.204.1/32`) from which clients can connect to load balancer type listeners. If supported by the platform, traffic through the loadbalancer is restricted to the specified CIDR ranges. This field is applicable only for loadbalancer type services and is ignored if the cloud provider does not support the feature. For more information, see https://v1-17.docs.kubernetes.io/docs/tasks/access-application-cluster/configure-cloud-provider-firewall/. 
              */
             loadBalancerSourceRanges?: string[];
             /**
@@ -9891,6 +10497,7 @@ export namespace kafka {
         export interface KafkaSpecKafkaTemplateInitContainerSecurityContextWindowsOptions {
             gmsaCredentialSpec?: string;
             gmsaCredentialSpecName?: string;
+            runAsUserName?: string;
         }
 
         /**
@@ -9949,6 +10556,7 @@ export namespace kafka {
         export interface KafkaSpecKafkaTemplateKafkaContainerSecurityContextWindowsOptions {
             gmsaCredentialSpec?: string;
             gmsaCredentialSpecName?: string;
+            runAsUserName?: string;
         }
 
         /**
@@ -10008,7 +10616,7 @@ export namespace kafka {
              */
             externalTrafficPolicy?: string;
             /**
-             * A list of CIDR ranges (for example `10.0.0.0/8` or `130.211.204.1/32`) from which clients can connect to load balancer type listeners. If supported by the platform, traffic through the loadbalancer is restricted to the specified CIDR ranges. This field is applicable only for loadbalancer type services and is ignored if the cloud provider does not support the feature. For more information, see https://kubernetes.io/docs/tasks/access-application-cluster/configure-cloud-provider-firewall/.
+             * A list of CIDR ranges (for example `10.0.0.0/8` or `130.211.204.1/32`) from which clients can connect to load balancer type listeners. If supported by the platform, traffic through the loadbalancer is restricted to the specified CIDR ranges. This field is applicable only for loadbalancer type services and is ignored if the cloud provider does not support the feature. For more information, see https://v1-17.docs.kubernetes.io/docs/tasks/access-application-cluster/configure-cloud-provider-firewall/. 
              */
             loadBalancerSourceRanges?: string[];
             /**
@@ -10063,6 +10671,10 @@ export namespace kafka {
              * The pod's affinity rules.
              */
             affinity?: outputs.kafka.v1beta1.KafkaSpecKafkaTemplatePodAffinity;
+            /**
+             * The pod's HostAliases. HostAliases is an optional list of hosts and IPs that will be injected into the pod's hosts file if specified.
+             */
+            hostAliases?: outputs.kafka.v1beta1.KafkaSpecKafkaTemplatePodHostAliases[];
             /**
              * List of references to secrets in the same namespace to use for pulling any of the images used by this Pod. When the `STRIMZI_IMAGE_PULL_SECRETS` environment variable in Cluster Operator and the `imagePullSecrets` option are specified, only the `imagePullSecrets` variable is used and the `STRIMZI_IMAGE_PULL_SECRETS` variable is ignored.
              */
@@ -10266,6 +10878,11 @@ export namespace kafka {
             labels?: {[key: string]: any};
         }
 
+        export interface KafkaSpecKafkaTemplatePodHostAliases {
+            hostnames?: string[];
+            ip?: string;
+        }
+
         export interface KafkaSpecKafkaTemplatePodImagePullSecrets {
             name?: string;
         }
@@ -10289,6 +10906,7 @@ export namespace kafka {
          */
         export interface KafkaSpecKafkaTemplatePodSecurityContext {
             fsGroup?: number;
+            fsGroupChangePolicy?: string;
             runAsGroup?: number;
             runAsNonRoot?: boolean;
             runAsUser?: number;
@@ -10313,6 +10931,7 @@ export namespace kafka {
         export interface KafkaSpecKafkaTemplatePodSecurityContextWindowsOptions {
             gmsaCredentialSpec?: string;
             gmsaCredentialSpecName?: string;
+            runAsUserName?: string;
         }
 
         export interface KafkaSpecKafkaTemplatePodTolerations {
@@ -10407,6 +11026,7 @@ export namespace kafka {
         export interface KafkaSpecKafkaTemplateTlsSidecarContainerSecurityContextWindowsOptions {
             gmsaCredentialSpec?: string;
             gmsaCredentialSpecName?: string;
+            runAsUserName?: string;
         }
 
         /**
@@ -11393,6 +12013,10 @@ export namespace kafka {
              */
             affinity?: outputs.kafka.v1beta1.KafkaSpecZookeeperTemplatePodAffinity;
             /**
+             * The pod's HostAliases. HostAliases is an optional list of hosts and IPs that will be injected into the pod's hosts file if specified.
+             */
+            hostAliases?: outputs.kafka.v1beta1.KafkaSpecZookeeperTemplatePodHostAliases[];
+            /**
              * List of references to secrets in the same namespace to use for pulling any of the images used by this Pod. When the `STRIMZI_IMAGE_PULL_SECRETS` environment variable in Cluster Operator and the `imagePullSecrets` option are specified, only the `imagePullSecrets` variable is used and the `STRIMZI_IMAGE_PULL_SECRETS` variable is ignored.
              */
             imagePullSecrets?: outputs.kafka.v1beta1.KafkaSpecZookeeperTemplatePodImagePullSecrets[];
@@ -11595,6 +12219,11 @@ export namespace kafka {
             labels?: {[key: string]: any};
         }
 
+        export interface KafkaSpecZookeeperTemplatePodHostAliases {
+            hostnames?: string[];
+            ip?: string;
+        }
+
         export interface KafkaSpecZookeeperTemplatePodImagePullSecrets {
             name?: string;
         }
@@ -11618,6 +12247,7 @@ export namespace kafka {
          */
         export interface KafkaSpecZookeeperTemplatePodSecurityContext {
             fsGroup?: number;
+            fsGroupChangePolicy?: string;
             runAsGroup?: number;
             runAsNonRoot?: boolean;
             runAsUser?: number;
@@ -11642,6 +12272,7 @@ export namespace kafka {
         export interface KafkaSpecZookeeperTemplatePodSecurityContextWindowsOptions {
             gmsaCredentialSpec?: string;
             gmsaCredentialSpecName?: string;
+            runAsUserName?: string;
         }
 
         export interface KafkaSpecZookeeperTemplatePodTolerations {
@@ -11736,6 +12367,7 @@ export namespace kafka {
         export interface KafkaSpecZookeeperTemplateTlsSidecarContainerSecurityContextWindowsOptions {
             gmsaCredentialSpec?: string;
             gmsaCredentialSpecName?: string;
+            runAsUserName?: string;
         }
 
         /**
@@ -11794,6 +12426,7 @@ export namespace kafka {
         export interface KafkaSpecZookeeperTemplateZookeeperContainerSecurityContextWindowsOptions {
             gmsaCredentialSpec?: string;
             gmsaCredentialSpecName?: string;
+            runAsUserName?: string;
         }
 
         /**
@@ -12061,7 +12694,7 @@ export namespace kafka {
              */
             acls: outputs.kafka.v1beta1.KafkaUserSpecAuthorizationAcls[];
             /**
-             * Authorization type. Currently the only supported type is `simple`. `simple` authorization type uses Kafka's `kafka.security.auth.SimpleAclAuthorizer` class for authorization.
+             * Authorization type. Currently the only supported type is `simple`. `simple` authorization type uses Kafka's `kafka.security.authorizer.AclAuthorizer` class for authorization.
              */
             type: string;
         }

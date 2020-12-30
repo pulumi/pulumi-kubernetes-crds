@@ -20,7 +20,7 @@ namespace Pulumi.Kubernetes.Types.Outputs.Machinelearning.V1
         /// <summary>
         /// Specifies the output format of the exposed resources, defaults to "1"
         /// </summary>
-        public readonly string Divisor;
+        public readonly Pulumi.Kubernetes.Types.Outputs.Machinelearning.V1.SeldonDeploymentSpecPredictorsSvcOrchSpecEnvValueFromResourceFieldRefDivisor Divisor;
         /// <summary>
         /// Required: resource to select
         /// </summary>
@@ -30,7 +30,7 @@ namespace Pulumi.Kubernetes.Types.Outputs.Machinelearning.V1
         private SeldonDeploymentSpecPredictorsSvcOrchSpecEnvValueFromResourceFieldRef(
             string containerName,
 
-            string divisor,
+            Pulumi.Kubernetes.Types.Outputs.Machinelearning.V1.SeldonDeploymentSpecPredictorsSvcOrchSpecEnvValueFromResourceFieldRefDivisor divisor,
 
             string resource)
         {

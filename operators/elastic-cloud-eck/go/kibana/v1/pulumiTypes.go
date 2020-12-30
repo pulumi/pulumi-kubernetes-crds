@@ -1377,6 +1377,8 @@ func (o KibanaSpecHttpServiceSpecPtrOutput) Type() pulumi.StringPtrOutput {
 
 // ServicePort contains information on service's port.
 type KibanaSpecHttpServiceSpecPorts struct {
+	// The application protocol for this port. This field follows standard Kubernetes label syntax. Un-prefixed names are reserved for IANA standard service names (as per RFC-6335 and http://www.iana.org/assignments/service-names). Non-standard protocols should use prefixed names such as mycompany.com/my-custom-protocol. Field can be enabled with ServiceAppProtocol feature gate.
+	AppProtocol *string `pulumi:"appProtocol"`
 	// The name of this port within the service. This must be a DNS_LABEL. All ports within a ServiceSpec must have unique names. When considering the endpoints for a Service, this must match the 'name' field in the EndpointPort. Optional if only one ServicePort is defined on this service.
 	Name *string `pulumi:"name"`
 	// The port on each node on which this service is exposed when type=NodePort or LoadBalancer. Usually assigned by the system. If specified, it will be allocated to the service if unused or else creation of the service will fail. Default is to auto-allocate a port if the ServiceType of this Service requires one. More info: https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport
@@ -1402,6 +1404,8 @@ type KibanaSpecHttpServiceSpecPortsInput interface {
 
 // ServicePort contains information on service's port.
 type KibanaSpecHttpServiceSpecPortsArgs struct {
+	// The application protocol for this port. This field follows standard Kubernetes label syntax. Un-prefixed names are reserved for IANA standard service names (as per RFC-6335 and http://www.iana.org/assignments/service-names). Non-standard protocols should use prefixed names such as mycompany.com/my-custom-protocol. Field can be enabled with ServiceAppProtocol feature gate.
+	AppProtocol pulumi.StringPtrInput `pulumi:"appProtocol"`
 	// The name of this port within the service. This must be a DNS_LABEL. All ports within a ServiceSpec must have unique names. When considering the endpoints for a Service, this must match the 'name' field in the EndpointPort. Optional if only one ServicePort is defined on this service.
 	Name pulumi.StringPtrInput `pulumi:"name"`
 	// The port on each node on which this service is exposed when type=NodePort or LoadBalancer. Usually assigned by the system. If specified, it will be allocated to the service if unused or else creation of the service will fail. Default is to auto-allocate a port if the ServiceType of this Service requires one. More info: https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport
@@ -1464,6 +1468,11 @@ func (o KibanaSpecHttpServiceSpecPortsOutput) ToKibanaSpecHttpServiceSpecPortsOu
 
 func (o KibanaSpecHttpServiceSpecPortsOutput) ToKibanaSpecHttpServiceSpecPortsOutputWithContext(ctx context.Context) KibanaSpecHttpServiceSpecPortsOutput {
 	return o
+}
+
+// The application protocol for this port. This field follows standard Kubernetes label syntax. Un-prefixed names are reserved for IANA standard service names (as per RFC-6335 and http://www.iana.org/assignments/service-names). Non-standard protocols should use prefixed names such as mycompany.com/my-custom-protocol. Field can be enabled with ServiceAppProtocol feature gate.
+func (o KibanaSpecHttpServiceSpecPortsOutput) AppProtocol() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v KibanaSpecHttpServiceSpecPorts) *string { return v.AppProtocol }).(pulumi.StringPtrOutput)
 }
 
 // The name of this port within the service. This must be a DNS_LABEL. All ports within a ServiceSpec must have unique names. When considering the endpoints for a Service, this must match the 'name' field in the EndpointPort. Optional if only one ServicePort is defined on this service.
@@ -2769,9 +2778,12 @@ func (o KibanaSpecSecureSettingsEntriesArrayOutput) Index(i pulumi.IntInput) Kib
 type KibanaStatus struct {
 	// AssociationStatus is the status of an association resource.
 	AssociationStatus *string `pulumi:"associationStatus"`
-	AvailableNodes    *int    `pulumi:"availableNodes"`
-	// KibanaHealth expresses the status of the Kibana instances.
+	// AvailableNodes is the number of available replicas in the deployment.
+	AvailableNodes *int `pulumi:"availableNodes"`
+	// Health of the deployment.
 	Health *string `pulumi:"health"`
+	// Version of the stack resource currently running. During version upgrades, multiple versions may run in parallel: this value specifies the lowest version currently running.
+	Version *string `pulumi:"version"`
 }
 
 // KibanaStatusInput is an input type that accepts KibanaStatusArgs and KibanaStatusOutput values.
@@ -2789,9 +2801,12 @@ type KibanaStatusInput interface {
 type KibanaStatusArgs struct {
 	// AssociationStatus is the status of an association resource.
 	AssociationStatus pulumi.StringPtrInput `pulumi:"associationStatus"`
-	AvailableNodes    pulumi.IntPtrInput    `pulumi:"availableNodes"`
-	// KibanaHealth expresses the status of the Kibana instances.
+	// AvailableNodes is the number of available replicas in the deployment.
+	AvailableNodes pulumi.IntPtrInput `pulumi:"availableNodes"`
+	// Health of the deployment.
 	Health pulumi.StringPtrInput `pulumi:"health"`
+	// Version of the stack resource currently running. During version upgrades, multiple versions may run in parallel: this value specifies the lowest version currently running.
+	Version pulumi.StringPtrInput `pulumi:"version"`
 }
 
 func (KibanaStatusArgs) ElementType() reflect.Type {
@@ -2877,13 +2892,19 @@ func (o KibanaStatusOutput) AssociationStatus() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v KibanaStatus) *string { return v.AssociationStatus }).(pulumi.StringPtrOutput)
 }
 
+// AvailableNodes is the number of available replicas in the deployment.
 func (o KibanaStatusOutput) AvailableNodes() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v KibanaStatus) *int { return v.AvailableNodes }).(pulumi.IntPtrOutput)
 }
 
-// KibanaHealth expresses the status of the Kibana instances.
+// Health of the deployment.
 func (o KibanaStatusOutput) Health() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v KibanaStatus) *string { return v.Health }).(pulumi.StringPtrOutput)
+}
+
+// Version of the stack resource currently running. During version upgrades, multiple versions may run in parallel: this value specifies the lowest version currently running.
+func (o KibanaStatusOutput) Version() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v KibanaStatus) *string { return v.Version }).(pulumi.StringPtrOutput)
 }
 
 type KibanaStatusPtrOutput struct{ *pulumi.OutputState }
@@ -2914,6 +2935,7 @@ func (o KibanaStatusPtrOutput) AssociationStatus() pulumi.StringPtrOutput {
 	}).(pulumi.StringPtrOutput)
 }
 
+// AvailableNodes is the number of available replicas in the deployment.
 func (o KibanaStatusPtrOutput) AvailableNodes() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v *KibanaStatus) *int {
 		if v == nil {
@@ -2923,13 +2945,23 @@ func (o KibanaStatusPtrOutput) AvailableNodes() pulumi.IntPtrOutput {
 	}).(pulumi.IntPtrOutput)
 }
 
-// KibanaHealth expresses the status of the Kibana instances.
+// Health of the deployment.
 func (o KibanaStatusPtrOutput) Health() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *KibanaStatus) *string {
 		if v == nil {
 			return nil
 		}
 		return v.Health
+	}).(pulumi.StringPtrOutput)
+}
+
+// Version of the stack resource currently running. During version upgrades, multiple versions may run in parallel: this value specifies the lowest version currently running.
+func (o KibanaStatusPtrOutput) Version() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *KibanaStatus) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Version
 	}).(pulumi.StringPtrOutput)
 }
 

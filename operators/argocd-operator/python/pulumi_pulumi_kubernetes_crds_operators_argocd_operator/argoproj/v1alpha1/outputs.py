@@ -11,17 +11,22 @@ from . import outputs
 
 __all__ = [
     'AppProjectSpec',
+    'AppProjectSpecClusterResourceBlacklist',
     'AppProjectSpecClusterResourceWhitelist',
     'AppProjectSpecDestinations',
     'AppProjectSpecNamespaceResourceBlacklist',
     'AppProjectSpecNamespaceResourceWhitelist',
     'AppProjectSpecOrphanedResources',
+    'AppProjectSpecOrphanedResourcesIgnore',
     'AppProjectSpecRoles',
     'AppProjectSpecRolesJwtTokens',
+    'AppProjectSpecSignatureKeys',
     'AppProjectSpecSyncWindows',
     'ApplicationOperation',
     'ApplicationOperationInfo',
     'ApplicationOperationInitiatedBy',
+    'ApplicationOperationRetry',
+    'ApplicationOperationRetryBackoff',
     'ApplicationOperationSync',
     'ApplicationOperationSyncResources',
     'ApplicationOperationSyncSource',
@@ -59,6 +64,8 @@ __all__ = [
     'ApplicationSpecSourcePluginEnv',
     'ApplicationSpecSyncPolicy',
     'ApplicationSpecSyncPolicyAutomated',
+    'ApplicationSpecSyncPolicyRetry',
+    'ApplicationSpecSyncPolicyRetryBackoff',
     'ApplicationStatus',
     'ApplicationStatusConditions',
     'ApplicationStatusHealth',
@@ -80,6 +87,8 @@ __all__ = [
     'ApplicationStatusOperationStateOperation',
     'ApplicationStatusOperationStateOperationInfo',
     'ApplicationStatusOperationStateOperationInitiatedBy',
+    'ApplicationStatusOperationStateOperationRetry',
+    'ApplicationStatusOperationStateOperationRetryBackoff',
     'ApplicationStatusOperationStateOperationSync',
     'ApplicationStatusOperationStateOperationSyncResources',
     'ApplicationStatusOperationStateOperationSyncSource',
@@ -162,6 +171,7 @@ __all__ = [
     'ArgoCDSpecGrafanaRouteTls',
     'ArgoCDSpecHa',
     'ArgoCDSpecImport',
+    'ArgoCDSpecInitialSSHKnownHosts',
     'ArgoCDSpecPrometheus',
     'ArgoCDSpecPrometheusIngress',
     'ArgoCDSpecPrometheusIngressTls',
@@ -202,6 +212,7 @@ class AppProjectSpec(dict):
     AppProjectSpec is the specification of an AppProject
     """
     def __init__(__self__, *,
+                 cluster_resource_blacklist: Optional[Sequence['outputs.AppProjectSpecClusterResourceBlacklist']] = None,
                  cluster_resource_whitelist: Optional[Sequence['outputs.AppProjectSpecClusterResourceWhitelist']] = None,
                  description: Optional[str] = None,
                  destinations: Optional[Sequence['outputs.AppProjectSpecDestinations']] = None,
@@ -209,10 +220,12 @@ class AppProjectSpec(dict):
                  namespace_resource_whitelist: Optional[Sequence['outputs.AppProjectSpecNamespaceResourceWhitelist']] = None,
                  orphaned_resources: Optional['outputs.AppProjectSpecOrphanedResources'] = None,
                  roles: Optional[Sequence['outputs.AppProjectSpecRoles']] = None,
+                 signature_keys: Optional[Sequence['outputs.AppProjectSpecSignatureKeys']] = None,
                  source_repos: Optional[Sequence[str]] = None,
                  sync_windows: Optional[Sequence['outputs.AppProjectSpecSyncWindows']] = None):
         """
         AppProjectSpec is the specification of an AppProject
+        :param Sequence['AppProjectSpecClusterResourceBlacklistArgs'] cluster_resource_blacklist: ClusterResourceBlacklist contains list of blacklisted cluster level resources
         :param Sequence['AppProjectSpecClusterResourceWhitelistArgs'] cluster_resource_whitelist: ClusterResourceWhitelist contains list of whitelisted cluster level resources
         :param str description: Description contains optional project description
         :param Sequence['AppProjectSpecDestinationsArgs'] destinations: Destinations contains list of destinations available for deployment
@@ -220,9 +233,12 @@ class AppProjectSpec(dict):
         :param Sequence['AppProjectSpecNamespaceResourceWhitelistArgs'] namespace_resource_whitelist: NamespaceResourceWhitelist contains list of whitelisted namespace level resources
         :param 'AppProjectSpecOrphanedResourcesArgs' orphaned_resources: OrphanedResources specifies if controller should monitor orphaned resources of apps in this project
         :param Sequence['AppProjectSpecRolesArgs'] roles: Roles are user defined RBAC roles associated with this project
+        :param Sequence['AppProjectSpecSignatureKeysArgs'] signature_keys: List of PGP key IDs that commits to be synced to must be signed with
         :param Sequence[str] source_repos: SourceRepos contains list of repository URLs which can be used for deployment
         :param Sequence['AppProjectSpecSyncWindowsArgs'] sync_windows: SyncWindows controls when syncs can be run for apps in this project
         """
+        if cluster_resource_blacklist is not None:
+            pulumi.set(__self__, "cluster_resource_blacklist", cluster_resource_blacklist)
         if cluster_resource_whitelist is not None:
             pulumi.set(__self__, "cluster_resource_whitelist", cluster_resource_whitelist)
         if description is not None:
@@ -237,10 +253,20 @@ class AppProjectSpec(dict):
             pulumi.set(__self__, "orphaned_resources", orphaned_resources)
         if roles is not None:
             pulumi.set(__self__, "roles", roles)
+        if signature_keys is not None:
+            pulumi.set(__self__, "signature_keys", signature_keys)
         if source_repos is not None:
             pulumi.set(__self__, "source_repos", source_repos)
         if sync_windows is not None:
             pulumi.set(__self__, "sync_windows", sync_windows)
+
+    @property
+    @pulumi.getter(name="clusterResourceBlacklist")
+    def cluster_resource_blacklist(self) -> Optional[Sequence['outputs.AppProjectSpecClusterResourceBlacklist']]:
+        """
+        ClusterResourceBlacklist contains list of blacklisted cluster level resources
+        """
+        return pulumi.get(self, "cluster_resource_blacklist")
 
     @property
     @pulumi.getter(name="clusterResourceWhitelist")
@@ -299,6 +325,14 @@ class AppProjectSpec(dict):
         return pulumi.get(self, "roles")
 
     @property
+    @pulumi.getter(name="signatureKeys")
+    def signature_keys(self) -> Optional[Sequence['outputs.AppProjectSpecSignatureKeys']]:
+        """
+        List of PGP key IDs that commits to be synced to must be signed with
+        """
+        return pulumi.get(self, "signature_keys")
+
+    @property
     @pulumi.getter(name="sourceRepos")
     def source_repos(self) -> Optional[Sequence[str]]:
         """
@@ -313,6 +347,34 @@ class AppProjectSpec(dict):
         SyncWindows controls when syncs can be run for apps in this project
         """
         return pulumi.get(self, "sync_windows")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class AppProjectSpecClusterResourceBlacklist(dict):
+    """
+    GroupKind specifies a Group and a Kind, but does not force a version.  This is useful for identifying concepts during lookup stages without having partially valid types
+    """
+    def __init__(__self__, *,
+                 group: str,
+                 kind: str):
+        """
+        GroupKind specifies a Group and a Kind, but does not force a version.  This is useful for identifying concepts during lookup stages without having partially valid types
+        """
+        pulumi.set(__self__, "group", group)
+        pulumi.set(__self__, "kind", kind)
+
+    @property
+    @pulumi.getter
+    def group(self) -> str:
+        return pulumi.get(self, "group")
+
+    @property
+    @pulumi.getter
+    def kind(self) -> str:
+        return pulumi.get(self, "kind")
 
     def _translate_property(self, prop):
         return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
@@ -352,17 +414,29 @@ class AppProjectSpecDestinations(dict):
     ApplicationDestination contains deployment destination information
     """
     def __init__(__self__, *,
+                 name: Optional[str] = None,
                  namespace: Optional[str] = None,
                  server: Optional[str] = None):
         """
         ApplicationDestination contains deployment destination information
+        :param str name: Name of the destination cluster which can be used instead of server (url) field
         :param str namespace: Namespace overrides the environment namespace value in the ksonnet app.yaml
         :param str server: Server overrides the environment server value in the ksonnet app.yaml
         """
+        if name is not None:
+            pulumi.set(__self__, "name", name)
         if namespace is not None:
             pulumi.set(__self__, "namespace", namespace)
         if server is not None:
             pulumi.set(__self__, "server", server)
+
+    @property
+    @pulumi.getter
+    def name(self) -> Optional[str]:
+        """
+        Name of the destination cluster which can be used instead of server (url) field
+        """
+        return pulumi.get(self, "name")
 
     @property
     @pulumi.getter
@@ -446,13 +520,21 @@ class AppProjectSpecOrphanedResources(dict):
     OrphanedResources specifies if controller should monitor orphaned resources of apps in this project
     """
     def __init__(__self__, *,
+                 ignore: Optional[Sequence['outputs.AppProjectSpecOrphanedResourcesIgnore']] = None,
                  warn: Optional[bool] = None):
         """
         OrphanedResources specifies if controller should monitor orphaned resources of apps in this project
         :param bool warn: Warn indicates if warning condition should be created for apps which have orphaned resources
         """
+        if ignore is not None:
+            pulumi.set(__self__, "ignore", ignore)
         if warn is not None:
             pulumi.set(__self__, "warn", warn)
+
+    @property
+    @pulumi.getter
+    def ignore(self) -> Optional[Sequence['outputs.AppProjectSpecOrphanedResourcesIgnore']]:
+        return pulumi.get(self, "ignore")
 
     @property
     @pulumi.getter
@@ -461,6 +543,38 @@ class AppProjectSpecOrphanedResources(dict):
         Warn indicates if warning condition should be created for apps which have orphaned resources
         """
         return pulumi.get(self, "warn")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class AppProjectSpecOrphanedResourcesIgnore(dict):
+    def __init__(__self__, *,
+                 group: Optional[str] = None,
+                 kind: Optional[str] = None,
+                 name: Optional[str] = None):
+        if group is not None:
+            pulumi.set(__self__, "group", group)
+        if kind is not None:
+            pulumi.set(__self__, "kind", kind)
+        if name is not None:
+            pulumi.set(__self__, "name", name)
+
+    @property
+    @pulumi.getter
+    def group(self) -> Optional[str]:
+        return pulumi.get(self, "group")
+
+    @property
+    @pulumi.getter
+    def kind(self) -> Optional[str]:
+        return pulumi.get(self, "kind")
+
+    @property
+    @pulumi.getter
+    def name(self) -> Optional[str]:
+        return pulumi.get(self, "name")
 
     def _translate_property(self, prop):
         return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
@@ -577,6 +691,31 @@ class AppProjectSpecRolesJwtTokens(dict):
 
 
 @pulumi.output_type
+class AppProjectSpecSignatureKeys(dict):
+    """
+    SignatureKey is the specification of a key required to verify commit signatures with
+    """
+    def __init__(__self__, *,
+                 key_id: str):
+        """
+        SignatureKey is the specification of a key required to verify commit signatures with
+        :param str key_id: The ID of the key in hexadecimal notation
+        """
+        pulumi.set(__self__, "key_id", key_id)
+
+    @property
+    @pulumi.getter(name="keyID")
+    def key_id(self) -> str:
+        """
+        The ID of the key in hexadecimal notation
+        """
+        return pulumi.get(self, "key_id")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
 class AppProjectSpecSyncWindows(dict):
     """
     SyncWindow contains the kind, time, duration and attributes that are used to assign the syncWindows to apps
@@ -682,16 +821,20 @@ class ApplicationOperation(dict):
     def __init__(__self__, *,
                  info: Optional[Sequence['outputs.ApplicationOperationInfo']] = None,
                  initiated_by: Optional['outputs.ApplicationOperationInitiatedBy'] = None,
+                 retry: Optional['outputs.ApplicationOperationRetry'] = None,
                  sync: Optional['outputs.ApplicationOperationSync'] = None):
         """
         Operation contains requested operation parameters.
         :param 'ApplicationOperationInitiatedByArgs' initiated_by: OperationInitiator holds information about the operation initiator
+        :param 'ApplicationOperationRetryArgs' retry: Retry controls failed sync retry behavior
         :param 'ApplicationOperationSyncArgs' sync: SyncOperation contains sync operation details.
         """
         if info is not None:
             pulumi.set(__self__, "info", info)
         if initiated_by is not None:
             pulumi.set(__self__, "initiated_by", initiated_by)
+        if retry is not None:
+            pulumi.set(__self__, "retry", retry)
         if sync is not None:
             pulumi.set(__self__, "sync", sync)
 
@@ -707,6 +850,14 @@ class ApplicationOperation(dict):
         OperationInitiator holds information about the operation initiator
         """
         return pulumi.get(self, "initiated_by")
+
+    @property
+    @pulumi.getter
+    def retry(self) -> Optional['outputs.ApplicationOperationRetry']:
+        """
+        Retry controls failed sync retry behavior
+        """
+        return pulumi.get(self, "retry")
 
     @property
     @pulumi.getter
@@ -775,6 +926,94 @@ class ApplicationOperationInitiatedBy(dict):
         Name of a user who started operation.
         """
         return pulumi.get(self, "username")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class ApplicationOperationRetry(dict):
+    """
+    Retry controls failed sync retry behavior
+    """
+    def __init__(__self__, *,
+                 backoff: Optional['outputs.ApplicationOperationRetryBackoff'] = None,
+                 limit: Optional[int] = None):
+        """
+        Retry controls failed sync retry behavior
+        :param 'ApplicationOperationRetryBackoffArgs' backoff: Backoff is a backoff strategy
+        :param int limit: Limit is the maximum number of attempts when retrying a container
+        """
+        if backoff is not None:
+            pulumi.set(__self__, "backoff", backoff)
+        if limit is not None:
+            pulumi.set(__self__, "limit", limit)
+
+    @property
+    @pulumi.getter
+    def backoff(self) -> Optional['outputs.ApplicationOperationRetryBackoff']:
+        """
+        Backoff is a backoff strategy
+        """
+        return pulumi.get(self, "backoff")
+
+    @property
+    @pulumi.getter
+    def limit(self) -> Optional[int]:
+        """
+        Limit is the maximum number of attempts when retrying a container
+        """
+        return pulumi.get(self, "limit")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class ApplicationOperationRetryBackoff(dict):
+    """
+    Backoff is a backoff strategy
+    """
+    def __init__(__self__, *,
+                 duration: Optional[str] = None,
+                 factor: Optional[int] = None,
+                 max_duration: Optional[str] = None):
+        """
+        Backoff is a backoff strategy
+        :param str duration: Duration is the amount to back off. Default unit is seconds, but could also be a duration (e.g. "2m", "1h")
+        :param int factor: Factor is a factor to multiply the base duration after each failed retry
+        :param str max_duration: MaxDuration is the maximum amount of time allowed for the backoff strategy
+        """
+        if duration is not None:
+            pulumi.set(__self__, "duration", duration)
+        if factor is not None:
+            pulumi.set(__self__, "factor", factor)
+        if max_duration is not None:
+            pulumi.set(__self__, "max_duration", max_duration)
+
+    @property
+    @pulumi.getter
+    def duration(self) -> Optional[str]:
+        """
+        Duration is the amount to back off. Default unit is seconds, but could also be a duration (e.g. "2m", "1h")
+        """
+        return pulumi.get(self, "duration")
+
+    @property
+    @pulumi.getter
+    def factor(self) -> Optional[int]:
+        """
+        Factor is a factor to multiply the base duration after each failed retry
+        """
+        return pulumi.get(self, "factor")
+
+    @property
+    @pulumi.getter(name="maxDuration")
+    def max_duration(self) -> Optional[str]:
+        """
+        MaxDuration is the maximum amount of time allowed for the backoff strategy
+        """
+        return pulumi.get(self, "max_duration")
 
     def _translate_property(self, prop):
         return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
@@ -898,7 +1137,8 @@ class ApplicationOperationSyncResources(dict):
     def __init__(__self__, *,
                  kind: str,
                  name: str,
-                 group: Optional[str] = None):
+                 group: Optional[str] = None,
+                 namespace: Optional[str] = None):
         """
         SyncOperationResource contains resources to sync.
         """
@@ -906,6 +1146,8 @@ class ApplicationOperationSyncResources(dict):
         pulumi.set(__self__, "name", name)
         if group is not None:
             pulumi.set(__self__, "group", group)
+        if namespace is not None:
+            pulumi.set(__self__, "namespace", namespace)
 
     @property
     @pulumi.getter
@@ -921,6 +1163,11 @@ class ApplicationOperationSyncResources(dict):
     @pulumi.getter
     def group(self) -> Optional[str]:
         return pulumi.get(self, "group")
+
+    @property
+    @pulumi.getter
+    def namespace(self) -> Optional[str]:
+        return pulumi.get(self, "namespace")
 
     def _translate_property(self, prop):
         return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
@@ -1088,14 +1335,18 @@ class ApplicationOperationSyncSourceDirectoryJsonnet(dict):
     """
     def __init__(__self__, *,
                  ext_vars: Optional[Sequence['outputs.ApplicationOperationSyncSourceDirectoryJsonnetExtVars']] = None,
+                 libs: Optional[Sequence[str]] = None,
                  tlas: Optional[Sequence['outputs.ApplicationOperationSyncSourceDirectoryJsonnetTlas']] = None):
         """
         ApplicationSourceJsonnet holds jsonnet specific options
         :param Sequence['ApplicationOperationSyncSourceDirectoryJsonnetExtVarsArgs'] ext_vars: ExtVars is a list of Jsonnet External Variables
+        :param Sequence[str] libs: Additional library search dirs
         :param Sequence['ApplicationOperationSyncSourceDirectoryJsonnetTlasArgs'] tlas: TLAS is a list of Jsonnet Top-level Arguments
         """
         if ext_vars is not None:
             pulumi.set(__self__, "ext_vars", ext_vars)
+        if libs is not None:
+            pulumi.set(__self__, "libs", libs)
         if tlas is not None:
             pulumi.set(__self__, "tlas", tlas)
 
@@ -1106,6 +1357,14 @@ class ApplicationOperationSyncSourceDirectoryJsonnet(dict):
         ExtVars is a list of Jsonnet External Variables
         """
         return pulumi.get(self, "ext_vars")
+
+    @property
+    @pulumi.getter
+    def libs(self) -> Optional[Sequence[str]]:
+        """
+        Additional library search dirs
+        """
+        return pulumi.get(self, "libs")
 
     @property
     @pulumi.getter
@@ -1754,17 +2013,29 @@ class ApplicationSpecDestination(dict):
     Destination overrides the kubernetes server and namespace defined in the environment ksonnet app.yaml
     """
     def __init__(__self__, *,
+                 name: Optional[str] = None,
                  namespace: Optional[str] = None,
                  server: Optional[str] = None):
         """
         Destination overrides the kubernetes server and namespace defined in the environment ksonnet app.yaml
+        :param str name: Name of the destination cluster which can be used instead of server (url) field
         :param str namespace: Namespace overrides the environment namespace value in the ksonnet app.yaml
         :param str server: Server overrides the environment server value in the ksonnet app.yaml
         """
+        if name is not None:
+            pulumi.set(__self__, "name", name)
         if namespace is not None:
             pulumi.set(__self__, "namespace", namespace)
         if server is not None:
             pulumi.set(__self__, "server", server)
+
+    @property
+    @pulumi.getter
+    def name(self) -> Optional[str]:
+        """
+        Name of the destination cluster which can be used instead of server (url) field
+        """
+        return pulumi.get(self, "name")
 
     @property
     @pulumi.getter
@@ -2022,14 +2293,18 @@ class ApplicationSpecSourceDirectoryJsonnet(dict):
     """
     def __init__(__self__, *,
                  ext_vars: Optional[Sequence['outputs.ApplicationSpecSourceDirectoryJsonnetExtVars']] = None,
+                 libs: Optional[Sequence[str]] = None,
                  tlas: Optional[Sequence['outputs.ApplicationSpecSourceDirectoryJsonnetTlas']] = None):
         """
         ApplicationSourceJsonnet holds jsonnet specific options
         :param Sequence['ApplicationSpecSourceDirectoryJsonnetExtVarsArgs'] ext_vars: ExtVars is a list of Jsonnet External Variables
+        :param Sequence[str] libs: Additional library search dirs
         :param Sequence['ApplicationSpecSourceDirectoryJsonnetTlasArgs'] tlas: TLAS is a list of Jsonnet Top-level Arguments
         """
         if ext_vars is not None:
             pulumi.set(__self__, "ext_vars", ext_vars)
+        if libs is not None:
+            pulumi.set(__self__, "libs", libs)
         if tlas is not None:
             pulumi.set(__self__, "tlas", tlas)
 
@@ -2040,6 +2315,14 @@ class ApplicationSpecSourceDirectoryJsonnet(dict):
         ExtVars is a list of Jsonnet External Variables
         """
         return pulumi.get(self, "ext_vars")
+
+    @property
+    @pulumi.getter
+    def libs(self) -> Optional[Sequence[str]]:
+        """
+        Additional library search dirs
+        """
+        return pulumi.get(self, "libs")
 
     @property
     @pulumi.getter
@@ -2504,14 +2787,18 @@ class ApplicationSpecSyncPolicy(dict):
     """
     def __init__(__self__, *,
                  automated: Optional['outputs.ApplicationSpecSyncPolicyAutomated'] = None,
+                 retry: Optional['outputs.ApplicationSpecSyncPolicyRetry'] = None,
                  sync_options: Optional[Sequence[str]] = None):
         """
         SyncPolicy controls when a sync will be performed
         :param 'ApplicationSpecSyncPolicyAutomatedArgs' automated: Automated will keep an application synced to the target revision
+        :param 'ApplicationSpecSyncPolicyRetryArgs' retry: Retry controls failed sync retry behavior
         :param Sequence[str] sync_options: Options allow you to specify whole app sync-options
         """
         if automated is not None:
             pulumi.set(__self__, "automated", automated)
+        if retry is not None:
+            pulumi.set(__self__, "retry", retry)
         if sync_options is not None:
             pulumi.set(__self__, "sync_options", sync_options)
 
@@ -2522,6 +2809,14 @@ class ApplicationSpecSyncPolicy(dict):
         Automated will keep an application synced to the target revision
         """
         return pulumi.get(self, "automated")
+
+    @property
+    @pulumi.getter
+    def retry(self) -> Optional['outputs.ApplicationSpecSyncPolicyRetry']:
+        """
+        Retry controls failed sync retry behavior
+        """
+        return pulumi.get(self, "retry")
 
     @property
     @pulumi.getter(name="syncOptions")
@@ -2574,6 +2869,94 @@ class ApplicationSpecSyncPolicyAutomated(dict):
 
 
 @pulumi.output_type
+class ApplicationSpecSyncPolicyRetry(dict):
+    """
+    Retry controls failed sync retry behavior
+    """
+    def __init__(__self__, *,
+                 backoff: Optional['outputs.ApplicationSpecSyncPolicyRetryBackoff'] = None,
+                 limit: Optional[int] = None):
+        """
+        Retry controls failed sync retry behavior
+        :param 'ApplicationSpecSyncPolicyRetryBackoffArgs' backoff: Backoff is a backoff strategy
+        :param int limit: Limit is the maximum number of attempts when retrying a container
+        """
+        if backoff is not None:
+            pulumi.set(__self__, "backoff", backoff)
+        if limit is not None:
+            pulumi.set(__self__, "limit", limit)
+
+    @property
+    @pulumi.getter
+    def backoff(self) -> Optional['outputs.ApplicationSpecSyncPolicyRetryBackoff']:
+        """
+        Backoff is a backoff strategy
+        """
+        return pulumi.get(self, "backoff")
+
+    @property
+    @pulumi.getter
+    def limit(self) -> Optional[int]:
+        """
+        Limit is the maximum number of attempts when retrying a container
+        """
+        return pulumi.get(self, "limit")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class ApplicationSpecSyncPolicyRetryBackoff(dict):
+    """
+    Backoff is a backoff strategy
+    """
+    def __init__(__self__, *,
+                 duration: Optional[str] = None,
+                 factor: Optional[int] = None,
+                 max_duration: Optional[str] = None):
+        """
+        Backoff is a backoff strategy
+        :param str duration: Duration is the amount to back off. Default unit is seconds, but could also be a duration (e.g. "2m", "1h")
+        :param int factor: Factor is a factor to multiply the base duration after each failed retry
+        :param str max_duration: MaxDuration is the maximum amount of time allowed for the backoff strategy
+        """
+        if duration is not None:
+            pulumi.set(__self__, "duration", duration)
+        if factor is not None:
+            pulumi.set(__self__, "factor", factor)
+        if max_duration is not None:
+            pulumi.set(__self__, "max_duration", max_duration)
+
+    @property
+    @pulumi.getter
+    def duration(self) -> Optional[str]:
+        """
+        Duration is the amount to back off. Default unit is seconds, but could also be a duration (e.g. "2m", "1h")
+        """
+        return pulumi.get(self, "duration")
+
+    @property
+    @pulumi.getter
+    def factor(self) -> Optional[int]:
+        """
+        Factor is a factor to multiply the base duration after each failed retry
+        """
+        return pulumi.get(self, "factor")
+
+    @property
+    @pulumi.getter(name="maxDuration")
+    def max_duration(self) -> Optional[str]:
+        """
+        MaxDuration is the maximum amount of time allowed for the backoff strategy
+        """
+        return pulumi.get(self, "max_duration")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
 class ApplicationStatus(dict):
     """
     ApplicationStatus contains information about application sync, health status
@@ -2592,7 +2975,7 @@ class ApplicationStatus(dict):
         """
         ApplicationStatus contains information about application sync, health status
         :param Sequence['ApplicationStatusHistoryArgs'] history: RevisionHistories is a array of history, oldest first and newest last
-        :param str observed_at: ObservedAt indicates when the application state was updated without querying latest git state
+        :param str observed_at: ObservedAt indicates when the application state was updated without querying latest git state Deprecated: controller no longer updates ObservedAt field
         :param 'ApplicationStatusOperationStateArgs' operation_state: OperationState contains information about state of currently performing operation on application.
         :param str reconciled_at: ReconciledAt indicates when the application state was reconciled using the latest git version
         :param 'ApplicationStatusSyncArgs' sync: SyncStatus is a comparison result of application spec and deployed application.
@@ -2640,7 +3023,7 @@ class ApplicationStatus(dict):
     @pulumi.getter(name="observedAt")
     def observed_at(self) -> Optional[str]:
         """
-        ObservedAt indicates when the application state was updated without querying latest git state
+        ObservedAt indicates when the application state was updated without querying latest git state Deprecated: controller no longer updates ObservedAt field
         """
         return pulumi.get(self, "observed_at")
 
@@ -2774,31 +3157,55 @@ class ApplicationStatusHistory(dict):
                  deployed_at: str,
                  id: int,
                  revision: str,
+                 deploy_started_at: Optional[str] = None,
                  source: Optional['outputs.ApplicationStatusHistorySource'] = None):
         """
         RevisionHistory contains information relevant to an application deployment
+        :param str deployed_at: DeployedAt holds the time the deployment completed
+        :param int id: ID is an auto incrementing identifier of the RevisionHistory
+        :param str revision: Revision holds the revision of the sync
+        :param str deploy_started_at: DeployStartedAt holds the time the deployment started
         :param 'ApplicationStatusHistorySourceArgs' source: ApplicationSource contains information about github repository, path within repository and target application environment.
         """
         pulumi.set(__self__, "deployed_at", deployed_at)
         pulumi.set(__self__, "id", id)
         pulumi.set(__self__, "revision", revision)
+        if deploy_started_at is not None:
+            pulumi.set(__self__, "deploy_started_at", deploy_started_at)
         if source is not None:
             pulumi.set(__self__, "source", source)
 
     @property
     @pulumi.getter(name="deployedAt")
     def deployed_at(self) -> str:
+        """
+        DeployedAt holds the time the deployment completed
+        """
         return pulumi.get(self, "deployed_at")
 
     @property
     @pulumi.getter
     def id(self) -> int:
+        """
+        ID is an auto incrementing identifier of the RevisionHistory
+        """
         return pulumi.get(self, "id")
 
     @property
     @pulumi.getter
     def revision(self) -> str:
+        """
+        Revision holds the revision of the sync
+        """
         return pulumi.get(self, "revision")
+
+    @property
+    @pulumi.getter(name="deployStartedAt")
+    def deploy_started_at(self) -> Optional[str]:
+        """
+        DeployStartedAt holds the time the deployment started
+        """
+        return pulumi.get(self, "deploy_started_at")
 
     @property
     @pulumi.getter
@@ -2974,14 +3381,18 @@ class ApplicationStatusHistorySourceDirectoryJsonnet(dict):
     """
     def __init__(__self__, *,
                  ext_vars: Optional[Sequence['outputs.ApplicationStatusHistorySourceDirectoryJsonnetExtVars']] = None,
+                 libs: Optional[Sequence[str]] = None,
                  tlas: Optional[Sequence['outputs.ApplicationStatusHistorySourceDirectoryJsonnetTlas']] = None):
         """
         ApplicationSourceJsonnet holds jsonnet specific options
         :param Sequence['ApplicationStatusHistorySourceDirectoryJsonnetExtVarsArgs'] ext_vars: ExtVars is a list of Jsonnet External Variables
+        :param Sequence[str] libs: Additional library search dirs
         :param Sequence['ApplicationStatusHistorySourceDirectoryJsonnetTlasArgs'] tlas: TLAS is a list of Jsonnet Top-level Arguments
         """
         if ext_vars is not None:
             pulumi.set(__self__, "ext_vars", ext_vars)
+        if libs is not None:
+            pulumi.set(__self__, "libs", libs)
         if tlas is not None:
             pulumi.set(__self__, "tlas", tlas)
 
@@ -2992,6 +3403,14 @@ class ApplicationStatusHistorySourceDirectoryJsonnet(dict):
         ExtVars is a list of Jsonnet External Variables
         """
         return pulumi.get(self, "ext_vars")
+
+    @property
+    @pulumi.getter
+    def libs(self) -> Optional[Sequence[str]]:
+        """
+        Additional library search dirs
+        """
+        return pulumi.get(self, "libs")
 
     @property
     @pulumi.getter
@@ -3460,6 +3879,7 @@ class ApplicationStatusOperationState(dict):
                  started_at: str,
                  finished_at: Optional[str] = None,
                  message: Optional[str] = None,
+                 retry_count: Optional[int] = None,
                  sync_result: Optional['outputs.ApplicationStatusOperationStateSyncResult'] = None):
         """
         OperationState contains information about state of currently performing operation on application.
@@ -3468,6 +3888,7 @@ class ApplicationStatusOperationState(dict):
         :param str started_at: StartedAt contains time of operation start
         :param str finished_at: FinishedAt contains time of operation completion
         :param str message: Message hold any pertinent messages when attempting to perform operation (typically errors).
+        :param int retry_count: RetryCount contains time of operation retries
         :param 'ApplicationStatusOperationStateSyncResultArgs' sync_result: SyncResult is the result of a Sync operation
         """
         pulumi.set(__self__, "operation", operation)
@@ -3477,6 +3898,8 @@ class ApplicationStatusOperationState(dict):
             pulumi.set(__self__, "finished_at", finished_at)
         if message is not None:
             pulumi.set(__self__, "message", message)
+        if retry_count is not None:
+            pulumi.set(__self__, "retry_count", retry_count)
         if sync_result is not None:
             pulumi.set(__self__, "sync_result", sync_result)
 
@@ -3521,6 +3944,14 @@ class ApplicationStatusOperationState(dict):
         return pulumi.get(self, "message")
 
     @property
+    @pulumi.getter(name="retryCount")
+    def retry_count(self) -> Optional[int]:
+        """
+        RetryCount contains time of operation retries
+        """
+        return pulumi.get(self, "retry_count")
+
+    @property
     @pulumi.getter(name="syncResult")
     def sync_result(self) -> Optional['outputs.ApplicationStatusOperationStateSyncResult']:
         """
@@ -3540,16 +3971,20 @@ class ApplicationStatusOperationStateOperation(dict):
     def __init__(__self__, *,
                  info: Optional[Sequence['outputs.ApplicationStatusOperationStateOperationInfo']] = None,
                  initiated_by: Optional['outputs.ApplicationStatusOperationStateOperationInitiatedBy'] = None,
+                 retry: Optional['outputs.ApplicationStatusOperationStateOperationRetry'] = None,
                  sync: Optional['outputs.ApplicationStatusOperationStateOperationSync'] = None):
         """
         Operation is the original requested operation
         :param 'ApplicationStatusOperationStateOperationInitiatedByArgs' initiated_by: OperationInitiator holds information about the operation initiator
+        :param 'ApplicationStatusOperationStateOperationRetryArgs' retry: Retry controls failed sync retry behavior
         :param 'ApplicationStatusOperationStateOperationSyncArgs' sync: SyncOperation contains sync operation details.
         """
         if info is not None:
             pulumi.set(__self__, "info", info)
         if initiated_by is not None:
             pulumi.set(__self__, "initiated_by", initiated_by)
+        if retry is not None:
+            pulumi.set(__self__, "retry", retry)
         if sync is not None:
             pulumi.set(__self__, "sync", sync)
 
@@ -3565,6 +4000,14 @@ class ApplicationStatusOperationStateOperation(dict):
         OperationInitiator holds information about the operation initiator
         """
         return pulumi.get(self, "initiated_by")
+
+    @property
+    @pulumi.getter
+    def retry(self) -> Optional['outputs.ApplicationStatusOperationStateOperationRetry']:
+        """
+        Retry controls failed sync retry behavior
+        """
+        return pulumi.get(self, "retry")
 
     @property
     @pulumi.getter
@@ -3633,6 +4076,94 @@ class ApplicationStatusOperationStateOperationInitiatedBy(dict):
         Name of a user who started operation.
         """
         return pulumi.get(self, "username")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class ApplicationStatusOperationStateOperationRetry(dict):
+    """
+    Retry controls failed sync retry behavior
+    """
+    def __init__(__self__, *,
+                 backoff: Optional['outputs.ApplicationStatusOperationStateOperationRetryBackoff'] = None,
+                 limit: Optional[int] = None):
+        """
+        Retry controls failed sync retry behavior
+        :param 'ApplicationStatusOperationStateOperationRetryBackoffArgs' backoff: Backoff is a backoff strategy
+        :param int limit: Limit is the maximum number of attempts when retrying a container
+        """
+        if backoff is not None:
+            pulumi.set(__self__, "backoff", backoff)
+        if limit is not None:
+            pulumi.set(__self__, "limit", limit)
+
+    @property
+    @pulumi.getter
+    def backoff(self) -> Optional['outputs.ApplicationStatusOperationStateOperationRetryBackoff']:
+        """
+        Backoff is a backoff strategy
+        """
+        return pulumi.get(self, "backoff")
+
+    @property
+    @pulumi.getter
+    def limit(self) -> Optional[int]:
+        """
+        Limit is the maximum number of attempts when retrying a container
+        """
+        return pulumi.get(self, "limit")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class ApplicationStatusOperationStateOperationRetryBackoff(dict):
+    """
+    Backoff is a backoff strategy
+    """
+    def __init__(__self__, *,
+                 duration: Optional[str] = None,
+                 factor: Optional[int] = None,
+                 max_duration: Optional[str] = None):
+        """
+        Backoff is a backoff strategy
+        :param str duration: Duration is the amount to back off. Default unit is seconds, but could also be a duration (e.g. "2m", "1h")
+        :param int factor: Factor is a factor to multiply the base duration after each failed retry
+        :param str max_duration: MaxDuration is the maximum amount of time allowed for the backoff strategy
+        """
+        if duration is not None:
+            pulumi.set(__self__, "duration", duration)
+        if factor is not None:
+            pulumi.set(__self__, "factor", factor)
+        if max_duration is not None:
+            pulumi.set(__self__, "max_duration", max_duration)
+
+    @property
+    @pulumi.getter
+    def duration(self) -> Optional[str]:
+        """
+        Duration is the amount to back off. Default unit is seconds, but could also be a duration (e.g. "2m", "1h")
+        """
+        return pulumi.get(self, "duration")
+
+    @property
+    @pulumi.getter
+    def factor(self) -> Optional[int]:
+        """
+        Factor is a factor to multiply the base duration after each failed retry
+        """
+        return pulumi.get(self, "factor")
+
+    @property
+    @pulumi.getter(name="maxDuration")
+    def max_duration(self) -> Optional[str]:
+        """
+        MaxDuration is the maximum amount of time allowed for the backoff strategy
+        """
+        return pulumi.get(self, "max_duration")
 
     def _translate_property(self, prop):
         return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
@@ -3756,7 +4287,8 @@ class ApplicationStatusOperationStateOperationSyncResources(dict):
     def __init__(__self__, *,
                  kind: str,
                  name: str,
-                 group: Optional[str] = None):
+                 group: Optional[str] = None,
+                 namespace: Optional[str] = None):
         """
         SyncOperationResource contains resources to sync.
         """
@@ -3764,6 +4296,8 @@ class ApplicationStatusOperationStateOperationSyncResources(dict):
         pulumi.set(__self__, "name", name)
         if group is not None:
             pulumi.set(__self__, "group", group)
+        if namespace is not None:
+            pulumi.set(__self__, "namespace", namespace)
 
     @property
     @pulumi.getter
@@ -3779,6 +4313,11 @@ class ApplicationStatusOperationStateOperationSyncResources(dict):
     @pulumi.getter
     def group(self) -> Optional[str]:
         return pulumi.get(self, "group")
+
+    @property
+    @pulumi.getter
+    def namespace(self) -> Optional[str]:
+        return pulumi.get(self, "namespace")
 
     def _translate_property(self, prop):
         return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
@@ -3946,14 +4485,18 @@ class ApplicationStatusOperationStateOperationSyncSourceDirectoryJsonnet(dict):
     """
     def __init__(__self__, *,
                  ext_vars: Optional[Sequence['outputs.ApplicationStatusOperationStateOperationSyncSourceDirectoryJsonnetExtVars']] = None,
+                 libs: Optional[Sequence[str]] = None,
                  tlas: Optional[Sequence['outputs.ApplicationStatusOperationStateOperationSyncSourceDirectoryJsonnetTlas']] = None):
         """
         ApplicationSourceJsonnet holds jsonnet specific options
         :param Sequence['ApplicationStatusOperationStateOperationSyncSourceDirectoryJsonnetExtVarsArgs'] ext_vars: ExtVars is a list of Jsonnet External Variables
+        :param Sequence[str] libs: Additional library search dirs
         :param Sequence['ApplicationStatusOperationStateOperationSyncSourceDirectoryJsonnetTlasArgs'] tlas: TLAS is a list of Jsonnet Top-level Arguments
         """
         if ext_vars is not None:
             pulumi.set(__self__, "ext_vars", ext_vars)
+        if libs is not None:
+            pulumi.set(__self__, "libs", libs)
         if tlas is not None:
             pulumi.set(__self__, "tlas", tlas)
 
@@ -3964,6 +4507,14 @@ class ApplicationStatusOperationStateOperationSyncSourceDirectoryJsonnet(dict):
         ExtVars is a list of Jsonnet External Variables
         """
         return pulumi.get(self, "ext_vars")
+
+    @property
+    @pulumi.getter
+    def libs(self) -> Optional[Sequence[str]]:
+        """
+        Additional library search dirs
+        """
+        return pulumi.get(self, "libs")
 
     @property
     @pulumi.getter
@@ -4831,14 +5382,18 @@ class ApplicationStatusOperationStateSyncResultSourceDirectoryJsonnet(dict):
     """
     def __init__(__self__, *,
                  ext_vars: Optional[Sequence['outputs.ApplicationStatusOperationStateSyncResultSourceDirectoryJsonnetExtVars']] = None,
+                 libs: Optional[Sequence[str]] = None,
                  tlas: Optional[Sequence['outputs.ApplicationStatusOperationStateSyncResultSourceDirectoryJsonnetTlas']] = None):
         """
         ApplicationSourceJsonnet holds jsonnet specific options
         :param Sequence['ApplicationStatusOperationStateSyncResultSourceDirectoryJsonnetExtVarsArgs'] ext_vars: ExtVars is a list of Jsonnet External Variables
+        :param Sequence[str] libs: Additional library search dirs
         :param Sequence['ApplicationStatusOperationStateSyncResultSourceDirectoryJsonnetTlasArgs'] tlas: TLAS is a list of Jsonnet Top-level Arguments
         """
         if ext_vars is not None:
             pulumi.set(__self__, "ext_vars", ext_vars)
+        if libs is not None:
+            pulumi.set(__self__, "libs", libs)
         if tlas is not None:
             pulumi.set(__self__, "tlas", tlas)
 
@@ -4849,6 +5404,14 @@ class ApplicationStatusOperationStateSyncResultSourceDirectoryJsonnet(dict):
         ExtVars is a list of Jsonnet External Variables
         """
         return pulumi.get(self, "ext_vars")
+
+    @property
+    @pulumi.getter
+    def libs(self) -> Optional[Sequence[str]]:
+        """
+        Additional library search dirs
+        """
+        return pulumi.get(self, "libs")
 
     @property
     @pulumi.getter
@@ -5547,17 +6110,29 @@ class ApplicationStatusSyncComparedToDestination(dict):
     ApplicationDestination contains deployment destination information
     """
     def __init__(__self__, *,
+                 name: Optional[str] = None,
                  namespace: Optional[str] = None,
                  server: Optional[str] = None):
         """
         ApplicationDestination contains deployment destination information
+        :param str name: Name of the destination cluster which can be used instead of server (url) field
         :param str namespace: Namespace overrides the environment namespace value in the ksonnet app.yaml
         :param str server: Server overrides the environment server value in the ksonnet app.yaml
         """
+        if name is not None:
+            pulumi.set(__self__, "name", name)
         if namespace is not None:
             pulumi.set(__self__, "namespace", namespace)
         if server is not None:
             pulumi.set(__self__, "server", server)
+
+    @property
+    @pulumi.getter
+    def name(self) -> Optional[str]:
+        """
+        Name of the destination cluster which can be used instead of server (url) field
+        """
+        return pulumi.get(self, "name")
 
     @property
     @pulumi.getter
@@ -5741,14 +6316,18 @@ class ApplicationStatusSyncComparedToSourceDirectoryJsonnet(dict):
     """
     def __init__(__self__, *,
                  ext_vars: Optional[Sequence['outputs.ApplicationStatusSyncComparedToSourceDirectoryJsonnetExtVars']] = None,
+                 libs: Optional[Sequence[str]] = None,
                  tlas: Optional[Sequence['outputs.ApplicationStatusSyncComparedToSourceDirectoryJsonnetTlas']] = None):
         """
         ApplicationSourceJsonnet holds jsonnet specific options
         :param Sequence['ApplicationStatusSyncComparedToSourceDirectoryJsonnetExtVarsArgs'] ext_vars: ExtVars is a list of Jsonnet External Variables
+        :param Sequence[str] libs: Additional library search dirs
         :param Sequence['ApplicationStatusSyncComparedToSourceDirectoryJsonnetTlasArgs'] tlas: TLAS is a list of Jsonnet Top-level Arguments
         """
         if ext_vars is not None:
             pulumi.set(__self__, "ext_vars", ext_vars)
+        if libs is not None:
+            pulumi.set(__self__, "libs", libs)
         if tlas is not None:
             pulumi.set(__self__, "tlas", tlas)
 
@@ -5759,6 +6338,14 @@ class ApplicationStatusSyncComparedToSourceDirectoryJsonnet(dict):
         ExtVars is a list of Jsonnet External Variables
         """
         return pulumi.get(self, "ext_vars")
+
+    @property
+    @pulumi.getter
+    def libs(self) -> Optional[Sequence[str]]:
+        """
+        Additional library search dirs
+        """
+        return pulumi.get(self, "libs")
 
     @property
     @pulumi.getter
@@ -6355,11 +6942,11 @@ class ArgoCDExportSpecStoragePvc(dict):
         """
         PVC is the desired characteristics for a PersistentVolumeClaim.
         :param Sequence[str] access_modes: AccessModes contains the desired access modes the volume should have. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#access-modes-1
-        :param 'ArgoCDExportSpecStoragePvcDataSourceArgs' data_source: This field requires the VolumeSnapshotDataSource alpha feature gate to be enabled and currently VolumeSnapshot is the only supported data source. If the provisioner can support VolumeSnapshot data source, it will create a new volume and data will be restored to the volume at the same time. If the provisioner does not support VolumeSnapshot data source, volume will not be created and the failure will be reported as an event. In the future, we plan to support more data source types and the behavior of the provisioner may change.
+        :param 'ArgoCDExportSpecStoragePvcDataSourceArgs' data_source: This field can be used to specify either: * An existing VolumeSnapshot object (snapshot.storage.k8s.io/VolumeSnapshot - Beta) * An existing PVC (PersistentVolumeClaim) * An existing custom resource/object that implements data population (Alpha) In order to use VolumeSnapshot object types, the appropriate feature gate must be enabled (VolumeSnapshotDataSource or AnyVolumeDataSource) If the provisioner or an external controller can support the specified data source, it will create a new volume based on the contents of the specified data source. If the specified data source is not supported, the volume will not be created and the failure will be reported as an event. In the future, we plan to support more data source types and the behavior of the provisioner may change.
         :param 'ArgoCDExportSpecStoragePvcResourcesArgs' resources: Resources represents the minimum resources the volume should have. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#resources
         :param 'ArgoCDExportSpecStoragePvcSelectorArgs' selector: A label query over volumes to consider for binding.
         :param str storage_class_name: Name of the StorageClass required by the claim. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#class-1
-        :param str volume_mode: volumeMode defines what type of volume is required by the claim. Value of Filesystem is implied when not included in claim spec. This is a beta feature.
+        :param str volume_mode: volumeMode defines what type of volume is required by the claim. Value of Filesystem is implied when not included in claim spec.
         :param str volume_name: VolumeName is the binding reference to the PersistentVolume backing this claim.
         """
         if access_modes is not None:
@@ -6389,7 +6976,7 @@ class ArgoCDExportSpecStoragePvc(dict):
     @pulumi.getter(name="dataSource")
     def data_source(self) -> Optional['outputs.ArgoCDExportSpecStoragePvcDataSource']:
         """
-        This field requires the VolumeSnapshotDataSource alpha feature gate to be enabled and currently VolumeSnapshot is the only supported data source. If the provisioner can support VolumeSnapshot data source, it will create a new volume and data will be restored to the volume at the same time. If the provisioner does not support VolumeSnapshot data source, volume will not be created and the failure will be reported as an event. In the future, we plan to support more data source types and the behavior of the provisioner may change.
+        This field can be used to specify either: * An existing VolumeSnapshot object (snapshot.storage.k8s.io/VolumeSnapshot - Beta) * An existing PVC (PersistentVolumeClaim) * An existing custom resource/object that implements data population (Alpha) In order to use VolumeSnapshot object types, the appropriate feature gate must be enabled (VolumeSnapshotDataSource or AnyVolumeDataSource) If the provisioner or an external controller can support the specified data source, it will create a new volume based on the contents of the specified data source. If the specified data source is not supported, the volume will not be created and the failure will be reported as an event. In the future, we plan to support more data source types and the behavior of the provisioner may change.
         """
         return pulumi.get(self, "data_source")
 
@@ -6421,7 +7008,7 @@ class ArgoCDExportSpecStoragePvc(dict):
     @pulumi.getter(name="volumeMode")
     def volume_mode(self) -> Optional[str]:
         """
-        volumeMode defines what type of volume is required by the claim. Value of Filesystem is implied when not included in claim spec. This is a beta feature.
+        volumeMode defines what type of volume is required by the claim. Value of Filesystem is implied when not included in claim spec.
         """
         return pulumi.get(self, "volume_mode")
 
@@ -6440,14 +7027,14 @@ class ArgoCDExportSpecStoragePvc(dict):
 @pulumi.output_type
 class ArgoCDExportSpecStoragePvcDataSource(dict):
     """
-    This field requires the VolumeSnapshotDataSource alpha feature gate to be enabled and currently VolumeSnapshot is the only supported data source. If the provisioner can support VolumeSnapshot data source, it will create a new volume and data will be restored to the volume at the same time. If the provisioner does not support VolumeSnapshot data source, volume will not be created and the failure will be reported as an event. In the future, we plan to support more data source types and the behavior of the provisioner may change.
+    This field can be used to specify either: * An existing VolumeSnapshot object (snapshot.storage.k8s.io/VolumeSnapshot - Beta) * An existing PVC (PersistentVolumeClaim) * An existing custom resource/object that implements data population (Alpha) In order to use VolumeSnapshot object types, the appropriate feature gate must be enabled (VolumeSnapshotDataSource or AnyVolumeDataSource) If the provisioner or an external controller can support the specified data source, it will create a new volume based on the contents of the specified data source. If the specified data source is not supported, the volume will not be created and the failure will be reported as an event. In the future, we plan to support more data source types and the behavior of the provisioner may change.
     """
     def __init__(__self__, *,
                  kind: str,
                  name: str,
                  api_group: Optional[str] = None):
         """
-        This field requires the VolumeSnapshotDataSource alpha feature gate to be enabled and currently VolumeSnapshot is the only supported data source. If the provisioner can support VolumeSnapshot data source, it will create a new volume and data will be restored to the volume at the same time. If the provisioner does not support VolumeSnapshot data source, volume will not be created and the failure will be reported as an event. In the future, we plan to support more data source types and the behavior of the provisioner may change.
+        This field can be used to specify either: * An existing VolumeSnapshot object (snapshot.storage.k8s.io/VolumeSnapshot - Beta) * An existing PVC (PersistentVolumeClaim) * An existing custom resource/object that implements data population (Alpha) In order to use VolumeSnapshot object types, the appropriate feature gate must be enabled (VolumeSnapshotDataSource or AnyVolumeDataSource) If the provisioner or an external controller can support the specified data source, it will create a new volume based on the contents of the specified data source. If the specified data source is not supported, the volume will not be created and the failure will be reported as an event. In the future, we plan to support more data source types and the behavior of the provisioner may change.
         :param str kind: Kind is the type of resource being referenced
         :param str name: Name is the name of resource being referenced
         :param str api_group: APIGroup is the group for the resource being referenced. If APIGroup is not specified, the specified Kind must be in the core API group. For any other third-party types, APIGroup is required.
@@ -6671,7 +7258,7 @@ class ArgoCDSpec(dict):
                  image: Optional[str] = None,
                  import_: Optional['outputs.ArgoCDSpecImport'] = None,
                  initial_repositories: Optional[str] = None,
-                 initial_ssh_known_hosts: Optional[str] = None,
+                 initial_ssh_known_hosts: Optional['outputs.ArgoCDSpecInitialSSHKnownHosts'] = None,
                  kustomize_build_options: Optional[str] = None,
                  oidc_config: Optional[str] = None,
                  prometheus: Optional['outputs.ArgoCDSpecPrometheus'] = None,
@@ -6681,6 +7268,7 @@ class ArgoCDSpec(dict):
                  repository_credentials: Optional[str] = None,
                  resource_customizations: Optional[str] = None,
                  resource_exclusions: Optional[str] = None,
+                 resource_inclusions: Optional[str] = None,
                  server: Optional['outputs.ArgoCDSpecServer'] = None,
                  status_badge_enabled: Optional[bool] = None,
                  tls: Optional['outputs.ArgoCDSpecTls'] = None,
@@ -6701,7 +7289,7 @@ class ArgoCDSpec(dict):
         :param str image: Image is the ArgoCD container image for all ArgoCD components.
         :param 'ArgoCDSpecImportArgs' import_: Import is the import/restore options for ArgoCD.
         :param str initial_repositories: InitialRepositories to configure Argo CD with upon creation of the cluster.
-        :param str initial_ssh_known_hosts: InitialSSHKnownHosts defines the SSH known hosts data upon creation of the cluster for connecting Git repositories via SSH.
+        :param 'ArgoCDSpecInitialSSHKnownHostsArgs' initial_ssh_known_hosts: InitialSSHKnownHosts defines the SSH known hosts data upon creation of the cluster for connecting Git repositories via SSH.
         :param str kustomize_build_options: KustomizeBuildOptions is used to specify build options/parameters to use with `kustomize build`.
         :param str oidc_config: OIDCConfig is the OIDC configuration as an alternative to dex.
         :param 'ArgoCDSpecPrometheusArgs' prometheus: Prometheus defines the Prometheus server options for ArgoCD.
@@ -6711,6 +7299,7 @@ class ArgoCDSpec(dict):
         :param str repository_credentials: RepositoryCredentials are the Git pull credentials to configure Argo CD with upon creation of the cluster.
         :param str resource_customizations: ResourceCustomizations customizes resource behavior. Keys are in the form: group/Kind.
         :param str resource_exclusions: ResourceExclusions is used to completely ignore entire classes of resource group/kinds.
+        :param str resource_inclusions: ResourceInclusions is used to only include specific group/kinds in the reconciliation process.
         :param 'ArgoCDSpecServerArgs' server: Server defines the options for the ArgoCD Server component.
         :param bool status_badge_enabled: StatusBadgeEnabled toggles application status badge feature.
         :param 'ArgoCDSpecTlsArgs' tls: TLS defines the TLS options for ArgoCD.
@@ -6763,6 +7352,8 @@ class ArgoCDSpec(dict):
             pulumi.set(__self__, "resource_customizations", resource_customizations)
         if resource_exclusions is not None:
             pulumi.set(__self__, "resource_exclusions", resource_exclusions)
+        if resource_inclusions is not None:
+            pulumi.set(__self__, "resource_inclusions", resource_inclusions)
         if server is not None:
             pulumi.set(__self__, "server", server)
         if status_badge_enabled is not None:
@@ -6880,7 +7471,7 @@ class ArgoCDSpec(dict):
 
     @property
     @pulumi.getter(name="initialSSHKnownHosts")
-    def initial_ssh_known_hosts(self) -> Optional[str]:
+    def initial_ssh_known_hosts(self) -> Optional['outputs.ArgoCDSpecInitialSSHKnownHosts']:
         """
         InitialSSHKnownHosts defines the SSH known hosts data upon creation of the cluster for connecting Git repositories via SSH.
         """
@@ -6959,6 +7550,14 @@ class ArgoCDSpec(dict):
         return pulumi.get(self, "resource_exclusions")
 
     @property
+    @pulumi.getter(name="resourceInclusions")
+    def resource_inclusions(self) -> Optional[str]:
+        """
+        ResourceInclusions is used to only include specific group/kinds in the reconciliation process.
+        """
+        return pulumi.get(self, "resource_inclusions")
+
+    @property
     @pulumi.getter
     def server(self) -> Optional['outputs.ArgoCDSpecServer']:
         """
@@ -7008,17 +7607,31 @@ class ArgoCDSpecController(dict):
     Controller defines the Application Controller options for ArgoCD.
     """
     def __init__(__self__, *,
+                 app_sync: Optional[str] = None,
                  processors: Optional['outputs.ArgoCDSpecControllerProcessors'] = None,
                  resources: Optional['outputs.ArgoCDSpecControllerResources'] = None):
         """
         Controller defines the Application Controller options for ArgoCD.
+        :param str app_sync: AppSync is used to control the sync frequency, by default the ArgoCD controller polls Git every 3m by default. 
+                Set this to a duration, e.g. 10m or 600s to control the synchronisation frequency.
         :param 'ArgoCDSpecControllerProcessorsArgs' processors: Processors contains the options for the Application Controller processors.
         :param 'ArgoCDSpecControllerResourcesArgs' resources: Resources defines the Compute Resources required by the container for the Application Controller.
         """
+        if app_sync is not None:
+            pulumi.set(__self__, "app_sync", app_sync)
         if processors is not None:
             pulumi.set(__self__, "processors", processors)
         if resources is not None:
             pulumi.set(__self__, "resources", resources)
+
+    @property
+    @pulumi.getter(name="appSync")
+    def app_sync(self) -> Optional[str]:
+        """
+        AppSync is used to control the sync frequency, by default the ArgoCD controller polls Git every 3m by default. 
+         Set this to a duration, e.g. 10m or 600s to control the synchronisation frequency.
+        """
+        return pulumi.get(self, "app_sync")
 
     @property
     @pulumi.getter
@@ -7694,12 +8307,20 @@ class ArgoCDSpecHa(dict):
     HA options for High Availability support for the Redis component.
     """
     def __init__(__self__, *,
-                 enabled: bool):
+                 enabled: bool,
+                 redis_proxy_image: Optional[str] = None,
+                 redis_proxy_version: Optional[str] = None):
         """
         HA options for High Availability support for the Redis component.
         :param bool enabled: Enabled will toggle HA support globally for Argo CD.
+        :param str redis_proxy_image: RedisProxyImage is the Redis HAProxy container image.
+        :param str redis_proxy_version: RedisProxyVersion is the Redis HAProxy container image tag.
         """
         pulumi.set(__self__, "enabled", enabled)
+        if redis_proxy_image is not None:
+            pulumi.set(__self__, "redis_proxy_image", redis_proxy_image)
+        if redis_proxy_version is not None:
+            pulumi.set(__self__, "redis_proxy_version", redis_proxy_version)
 
     @property
     @pulumi.getter
@@ -7708,6 +8329,22 @@ class ArgoCDSpecHa(dict):
         Enabled will toggle HA support globally for Argo CD.
         """
         return pulumi.get(self, "enabled")
+
+    @property
+    @pulumi.getter(name="redisProxyImage")
+    def redis_proxy_image(self) -> Optional[str]:
+        """
+        RedisProxyImage is the Redis HAProxy container image.
+        """
+        return pulumi.get(self, "redis_proxy_image")
+
+    @property
+    @pulumi.getter(name="redisProxyVersion")
+    def redis_proxy_version(self) -> Optional[str]:
+        """
+        RedisProxyVersion is the Redis HAProxy container image tag.
+        """
+        return pulumi.get(self, "redis_proxy_version")
 
     def _translate_property(self, prop):
         return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
@@ -7745,6 +8382,44 @@ class ArgoCDSpecImport(dict):
         Namespace for the ArgoCDExport, defaults to the same namespace as the ArgoCD.
         """
         return pulumi.get(self, "namespace")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class ArgoCDSpecInitialSSHKnownHosts(dict):
+    """
+    InitialSSHKnownHosts defines the SSH known hosts data upon creation of the cluster for connecting Git repositories via SSH.
+    """
+    def __init__(__self__, *,
+                 excludedefaulthosts: Optional[bool] = None,
+                 keys: Optional[str] = None):
+        """
+        InitialSSHKnownHosts defines the SSH known hosts data upon creation of the cluster for connecting Git repositories via SSH.
+        :param bool excludedefaulthosts: ExcludeDefaultHosts describes whether you would like to include the default list of SSH Known Hosts provided by ArgoCD.
+        :param str keys: Keys describes a custom set of SSH Known Hosts that you would like to have included in your ArgoCD server.
+        """
+        if excludedefaulthosts is not None:
+            pulumi.set(__self__, "excludedefaulthosts", excludedefaulthosts)
+        if keys is not None:
+            pulumi.set(__self__, "keys", keys)
+
+    @property
+    @pulumi.getter
+    def excludedefaulthosts(self) -> Optional[bool]:
+        """
+        ExcludeDefaultHosts describes whether you would like to include the default list of SSH Known Hosts provided by ArgoCD.
+        """
+        return pulumi.get(self, "excludedefaulthosts")
+
+    @property
+    @pulumi.getter
+    def keys(self) -> Optional[str]:
+        """
+        Keys describes a custom set of SSH Known Hosts that you would like to have included in your ArgoCD server.
+        """
+        return pulumi.get(self, "keys")
 
     def _translate_property(self, prop):
         return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop

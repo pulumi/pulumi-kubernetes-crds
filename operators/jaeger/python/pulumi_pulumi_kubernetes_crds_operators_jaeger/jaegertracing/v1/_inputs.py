@@ -63,11 +63,16 @@ __all__ = [
     'JaegerSpecAgentAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionArgs',
     'JaegerSpecAgentAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorArgs',
     'JaegerSpecAgentAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsArgs',
+    'JaegerSpecAgentImagePullSecretsArgs',
     'JaegerSpecAgentResourcesArgs',
     'JaegerSpecAgentSecurityContextArgs',
     'JaegerSpecAgentSecurityContextSeLinuxOptionsArgs',
     'JaegerSpecAgentSecurityContextSysctlsArgs',
     'JaegerSpecAgentSecurityContextWindowsOptionsArgs',
+    'JaegerSpecAgentSidecarSecurityContextArgs',
+    'JaegerSpecAgentSidecarSecurityContextCapabilitiesArgs',
+    'JaegerSpecAgentSidecarSecurityContextSeLinuxOptionsArgs',
+    'JaegerSpecAgentSidecarSecurityContextWindowsOptionsArgs',
     'JaegerSpecAgentTolerationsArgs',
     'JaegerSpecAgentVolumeMountsArgs',
     'JaegerSpecAgentVolumesArgs',
@@ -1992,11 +1997,13 @@ class JaegerSpecAgentArgs:
                  annotations: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  config: Optional[pulumi.Input[Mapping[str, Any]]] = None,
                  image: Optional[pulumi.Input[str]] = None,
+                 image_pull_secrets: Optional[pulumi.Input[Sequence[pulumi.Input['JaegerSpecAgentImagePullSecretsArgs']]]] = None,
                  labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  options: Optional[pulumi.Input[Mapping[str, Any]]] = None,
                  resources: Optional[pulumi.Input['JaegerSpecAgentResourcesArgs']] = None,
                  security_context: Optional[pulumi.Input['JaegerSpecAgentSecurityContextArgs']] = None,
                  service_account: Optional[pulumi.Input[str]] = None,
+                 sidecar_security_context: Optional[pulumi.Input['JaegerSpecAgentSidecarSecurityContextArgs']] = None,
                  strategy: Optional[pulumi.Input[str]] = None,
                  tolerations: Optional[pulumi.Input[Sequence[pulumi.Input['JaegerSpecAgentTolerationsArgs']]]] = None,
                  volume_mounts: Optional[pulumi.Input[Sequence[pulumi.Input['JaegerSpecAgentVolumeMountsArgs']]]] = None,
@@ -2009,6 +2016,8 @@ class JaegerSpecAgentArgs:
             pulumi.set(__self__, "config", config)
         if image is not None:
             pulumi.set(__self__, "image", image)
+        if image_pull_secrets is not None:
+            pulumi.set(__self__, "image_pull_secrets", image_pull_secrets)
         if labels is not None:
             pulumi.set(__self__, "labels", labels)
         if options is not None:
@@ -2019,6 +2028,8 @@ class JaegerSpecAgentArgs:
             pulumi.set(__self__, "security_context", security_context)
         if service_account is not None:
             pulumi.set(__self__, "service_account", service_account)
+        if sidecar_security_context is not None:
+            pulumi.set(__self__, "sidecar_security_context", sidecar_security_context)
         if strategy is not None:
             pulumi.set(__self__, "strategy", strategy)
         if tolerations is not None:
@@ -2065,6 +2076,15 @@ class JaegerSpecAgentArgs:
         pulumi.set(self, "image", value)
 
     @property
+    @pulumi.getter(name="imagePullSecrets")
+    def image_pull_secrets(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['JaegerSpecAgentImagePullSecretsArgs']]]]:
+        return pulumi.get(self, "image_pull_secrets")
+
+    @image_pull_secrets.setter
+    def image_pull_secrets(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['JaegerSpecAgentImagePullSecretsArgs']]]]):
+        pulumi.set(self, "image_pull_secrets", value)
+
+    @property
     @pulumi.getter
     def labels(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
         return pulumi.get(self, "labels")
@@ -2108,6 +2128,15 @@ class JaegerSpecAgentArgs:
     @service_account.setter
     def service_account(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "service_account", value)
+
+    @property
+    @pulumi.getter(name="sidecarSecurityContext")
+    def sidecar_security_context(self) -> Optional[pulumi.Input['JaegerSpecAgentSidecarSecurityContextArgs']]:
+        return pulumi.get(self, "sidecar_security_context")
+
+    @sidecar_security_context.setter
+    def sidecar_security_context(self, value: Optional[pulumi.Input['JaegerSpecAgentSidecarSecurityContextArgs']]):
+        pulumi.set(self, "sidecar_security_context", value)
 
     @property
     @pulumi.getter
@@ -3018,6 +3047,23 @@ class JaegerSpecAgentAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDurin
 
 
 @pulumi.input_type
+class JaegerSpecAgentImagePullSecretsArgs:
+    def __init__(__self__, *,
+                 name: Optional[pulumi.Input[str]] = None):
+        if name is not None:
+            pulumi.set(__self__, "name", name)
+
+    @property
+    @pulumi.getter
+    def name(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "name")
+
+    @name.setter
+    def name(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "name", value)
+
+
+@pulumi.input_type
 class JaegerSpecAgentResourcesArgs:
     def __init__(__self__, *,
                  limits: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
@@ -3050,6 +3096,7 @@ class JaegerSpecAgentResourcesArgs:
 class JaegerSpecAgentSecurityContextArgs:
     def __init__(__self__, *,
                  fs_group: Optional[pulumi.Input[int]] = None,
+                 fs_group_change_policy: Optional[pulumi.Input[str]] = None,
                  run_as_group: Optional[pulumi.Input[int]] = None,
                  run_as_non_root: Optional[pulumi.Input[bool]] = None,
                  run_as_user: Optional[pulumi.Input[int]] = None,
@@ -3059,6 +3106,8 @@ class JaegerSpecAgentSecurityContextArgs:
                  windows_options: Optional[pulumi.Input['JaegerSpecAgentSecurityContextWindowsOptionsArgs']] = None):
         if fs_group is not None:
             pulumi.set(__self__, "fs_group", fs_group)
+        if fs_group_change_policy is not None:
+            pulumi.set(__self__, "fs_group_change_policy", fs_group_change_policy)
         if run_as_group is not None:
             pulumi.set(__self__, "run_as_group", run_as_group)
         if run_as_non_root is not None:
@@ -3082,6 +3131,15 @@ class JaegerSpecAgentSecurityContextArgs:
     @fs_group.setter
     def fs_group(self, value: Optional[pulumi.Input[int]]):
         pulumi.set(self, "fs_group", value)
+
+    @property
+    @pulumi.getter(name="fsGroupChangePolicy")
+    def fs_group_change_policy(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "fs_group_change_policy")
+
+    @fs_group_change_policy.setter
+    def fs_group_change_policy(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "fs_group_change_policy", value)
 
     @property
     @pulumi.getter(name="runAsGroup")
@@ -3229,6 +3287,254 @@ class JaegerSpecAgentSecurityContextSysctlsArgs:
 
 @pulumi.input_type
 class JaegerSpecAgentSecurityContextWindowsOptionsArgs:
+    def __init__(__self__, *,
+                 gmsa_credential_spec: Optional[pulumi.Input[str]] = None,
+                 gmsa_credential_spec_name: Optional[pulumi.Input[str]] = None,
+                 run_as_user_name: Optional[pulumi.Input[str]] = None):
+        if gmsa_credential_spec is not None:
+            pulumi.set(__self__, "gmsa_credential_spec", gmsa_credential_spec)
+        if gmsa_credential_spec_name is not None:
+            pulumi.set(__self__, "gmsa_credential_spec_name", gmsa_credential_spec_name)
+        if run_as_user_name is not None:
+            pulumi.set(__self__, "run_as_user_name", run_as_user_name)
+
+    @property
+    @pulumi.getter(name="gmsaCredentialSpec")
+    def gmsa_credential_spec(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "gmsa_credential_spec")
+
+    @gmsa_credential_spec.setter
+    def gmsa_credential_spec(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "gmsa_credential_spec", value)
+
+    @property
+    @pulumi.getter(name="gmsaCredentialSpecName")
+    def gmsa_credential_spec_name(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "gmsa_credential_spec_name")
+
+    @gmsa_credential_spec_name.setter
+    def gmsa_credential_spec_name(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "gmsa_credential_spec_name", value)
+
+    @property
+    @pulumi.getter(name="runAsUserName")
+    def run_as_user_name(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "run_as_user_name")
+
+    @run_as_user_name.setter
+    def run_as_user_name(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "run_as_user_name", value)
+
+
+@pulumi.input_type
+class JaegerSpecAgentSidecarSecurityContextArgs:
+    def __init__(__self__, *,
+                 allow_privilege_escalation: Optional[pulumi.Input[bool]] = None,
+                 capabilities: Optional[pulumi.Input['JaegerSpecAgentSidecarSecurityContextCapabilitiesArgs']] = None,
+                 privileged: Optional[pulumi.Input[bool]] = None,
+                 proc_mount: Optional[pulumi.Input[str]] = None,
+                 read_only_root_filesystem: Optional[pulumi.Input[bool]] = None,
+                 run_as_group: Optional[pulumi.Input[int]] = None,
+                 run_as_non_root: Optional[pulumi.Input[bool]] = None,
+                 run_as_user: Optional[pulumi.Input[int]] = None,
+                 se_linux_options: Optional[pulumi.Input['JaegerSpecAgentSidecarSecurityContextSeLinuxOptionsArgs']] = None,
+                 windows_options: Optional[pulumi.Input['JaegerSpecAgentSidecarSecurityContextWindowsOptionsArgs']] = None):
+        if allow_privilege_escalation is not None:
+            pulumi.set(__self__, "allow_privilege_escalation", allow_privilege_escalation)
+        if capabilities is not None:
+            pulumi.set(__self__, "capabilities", capabilities)
+        if privileged is not None:
+            pulumi.set(__self__, "privileged", privileged)
+        if proc_mount is not None:
+            pulumi.set(__self__, "proc_mount", proc_mount)
+        if read_only_root_filesystem is not None:
+            pulumi.set(__self__, "read_only_root_filesystem", read_only_root_filesystem)
+        if run_as_group is not None:
+            pulumi.set(__self__, "run_as_group", run_as_group)
+        if run_as_non_root is not None:
+            pulumi.set(__self__, "run_as_non_root", run_as_non_root)
+        if run_as_user is not None:
+            pulumi.set(__self__, "run_as_user", run_as_user)
+        if se_linux_options is not None:
+            pulumi.set(__self__, "se_linux_options", se_linux_options)
+        if windows_options is not None:
+            pulumi.set(__self__, "windows_options", windows_options)
+
+    @property
+    @pulumi.getter(name="allowPrivilegeEscalation")
+    def allow_privilege_escalation(self) -> Optional[pulumi.Input[bool]]:
+        return pulumi.get(self, "allow_privilege_escalation")
+
+    @allow_privilege_escalation.setter
+    def allow_privilege_escalation(self, value: Optional[pulumi.Input[bool]]):
+        pulumi.set(self, "allow_privilege_escalation", value)
+
+    @property
+    @pulumi.getter
+    def capabilities(self) -> Optional[pulumi.Input['JaegerSpecAgentSidecarSecurityContextCapabilitiesArgs']]:
+        return pulumi.get(self, "capabilities")
+
+    @capabilities.setter
+    def capabilities(self, value: Optional[pulumi.Input['JaegerSpecAgentSidecarSecurityContextCapabilitiesArgs']]):
+        pulumi.set(self, "capabilities", value)
+
+    @property
+    @pulumi.getter
+    def privileged(self) -> Optional[pulumi.Input[bool]]:
+        return pulumi.get(self, "privileged")
+
+    @privileged.setter
+    def privileged(self, value: Optional[pulumi.Input[bool]]):
+        pulumi.set(self, "privileged", value)
+
+    @property
+    @pulumi.getter(name="procMount")
+    def proc_mount(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "proc_mount")
+
+    @proc_mount.setter
+    def proc_mount(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "proc_mount", value)
+
+    @property
+    @pulumi.getter(name="readOnlyRootFilesystem")
+    def read_only_root_filesystem(self) -> Optional[pulumi.Input[bool]]:
+        return pulumi.get(self, "read_only_root_filesystem")
+
+    @read_only_root_filesystem.setter
+    def read_only_root_filesystem(self, value: Optional[pulumi.Input[bool]]):
+        pulumi.set(self, "read_only_root_filesystem", value)
+
+    @property
+    @pulumi.getter(name="runAsGroup")
+    def run_as_group(self) -> Optional[pulumi.Input[int]]:
+        return pulumi.get(self, "run_as_group")
+
+    @run_as_group.setter
+    def run_as_group(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "run_as_group", value)
+
+    @property
+    @pulumi.getter(name="runAsNonRoot")
+    def run_as_non_root(self) -> Optional[pulumi.Input[bool]]:
+        return pulumi.get(self, "run_as_non_root")
+
+    @run_as_non_root.setter
+    def run_as_non_root(self, value: Optional[pulumi.Input[bool]]):
+        pulumi.set(self, "run_as_non_root", value)
+
+    @property
+    @pulumi.getter(name="runAsUser")
+    def run_as_user(self) -> Optional[pulumi.Input[int]]:
+        return pulumi.get(self, "run_as_user")
+
+    @run_as_user.setter
+    def run_as_user(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "run_as_user", value)
+
+    @property
+    @pulumi.getter(name="seLinuxOptions")
+    def se_linux_options(self) -> Optional[pulumi.Input['JaegerSpecAgentSidecarSecurityContextSeLinuxOptionsArgs']]:
+        return pulumi.get(self, "se_linux_options")
+
+    @se_linux_options.setter
+    def se_linux_options(self, value: Optional[pulumi.Input['JaegerSpecAgentSidecarSecurityContextSeLinuxOptionsArgs']]):
+        pulumi.set(self, "se_linux_options", value)
+
+    @property
+    @pulumi.getter(name="windowsOptions")
+    def windows_options(self) -> Optional[pulumi.Input['JaegerSpecAgentSidecarSecurityContextWindowsOptionsArgs']]:
+        return pulumi.get(self, "windows_options")
+
+    @windows_options.setter
+    def windows_options(self, value: Optional[pulumi.Input['JaegerSpecAgentSidecarSecurityContextWindowsOptionsArgs']]):
+        pulumi.set(self, "windows_options", value)
+
+
+@pulumi.input_type
+class JaegerSpecAgentSidecarSecurityContextCapabilitiesArgs:
+    def __init__(__self__, *,
+                 add: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
+                 drop: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None):
+        if add is not None:
+            pulumi.set(__self__, "add", add)
+        if drop is not None:
+            pulumi.set(__self__, "drop", drop)
+
+    @property
+    @pulumi.getter
+    def add(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
+        return pulumi.get(self, "add")
+
+    @add.setter
+    def add(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]):
+        pulumi.set(self, "add", value)
+
+    @property
+    @pulumi.getter
+    def drop(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
+        return pulumi.get(self, "drop")
+
+    @drop.setter
+    def drop(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]):
+        pulumi.set(self, "drop", value)
+
+
+@pulumi.input_type
+class JaegerSpecAgentSidecarSecurityContextSeLinuxOptionsArgs:
+    def __init__(__self__, *,
+                 level: Optional[pulumi.Input[str]] = None,
+                 role: Optional[pulumi.Input[str]] = None,
+                 type: Optional[pulumi.Input[str]] = None,
+                 user: Optional[pulumi.Input[str]] = None):
+        if level is not None:
+            pulumi.set(__self__, "level", level)
+        if role is not None:
+            pulumi.set(__self__, "role", role)
+        if type is not None:
+            pulumi.set(__self__, "type", type)
+        if user is not None:
+            pulumi.set(__self__, "user", user)
+
+    @property
+    @pulumi.getter
+    def level(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "level")
+
+    @level.setter
+    def level(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "level", value)
+
+    @property
+    @pulumi.getter
+    def role(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "role")
+
+    @role.setter
+    def role(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "role", value)
+
+    @property
+    @pulumi.getter
+    def type(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "type")
+
+    @type.setter
+    def type(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "type", value)
+
+    @property
+    @pulumi.getter
+    def user(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "user")
+
+    @user.setter
+    def user(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "user", value)
+
+
+@pulumi.input_type
+class JaegerSpecAgentSidecarSecurityContextWindowsOptionsArgs:
     def __init__(__self__, *,
                  gmsa_credential_spec: Optional[pulumi.Input[str]] = None,
                  gmsa_credential_spec_name: Optional[pulumi.Input[str]] = None,
@@ -7086,6 +7392,7 @@ class JaegerSpecAllInOneResourcesArgs:
 class JaegerSpecAllInOneSecurityContextArgs:
     def __init__(__self__, *,
                  fs_group: Optional[pulumi.Input[int]] = None,
+                 fs_group_change_policy: Optional[pulumi.Input[str]] = None,
                  run_as_group: Optional[pulumi.Input[int]] = None,
                  run_as_non_root: Optional[pulumi.Input[bool]] = None,
                  run_as_user: Optional[pulumi.Input[int]] = None,
@@ -7095,6 +7402,8 @@ class JaegerSpecAllInOneSecurityContextArgs:
                  windows_options: Optional[pulumi.Input['JaegerSpecAllInOneSecurityContextWindowsOptionsArgs']] = None):
         if fs_group is not None:
             pulumi.set(__self__, "fs_group", fs_group)
+        if fs_group_change_policy is not None:
+            pulumi.set(__self__, "fs_group_change_policy", fs_group_change_policy)
         if run_as_group is not None:
             pulumi.set(__self__, "run_as_group", run_as_group)
         if run_as_non_root is not None:
@@ -7118,6 +7427,15 @@ class JaegerSpecAllInOneSecurityContextArgs:
     @fs_group.setter
     def fs_group(self, value: Optional[pulumi.Input[int]]):
         pulumi.set(self, "fs_group", value)
+
+    @property
+    @pulumi.getter(name="fsGroupChangePolicy")
+    def fs_group_change_policy(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "fs_group_change_policy")
+
+    @fs_group_change_policy.setter
+    def fs_group_change_policy(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "fs_group_change_policy", value)
 
     @property
     @pulumi.getter(name="runAsGroup")
@@ -11170,6 +11488,7 @@ class JaegerSpecCollectorResourcesArgs:
 class JaegerSpecCollectorSecurityContextArgs:
     def __init__(__self__, *,
                  fs_group: Optional[pulumi.Input[int]] = None,
+                 fs_group_change_policy: Optional[pulumi.Input[str]] = None,
                  run_as_group: Optional[pulumi.Input[int]] = None,
                  run_as_non_root: Optional[pulumi.Input[bool]] = None,
                  run_as_user: Optional[pulumi.Input[int]] = None,
@@ -11179,6 +11498,8 @@ class JaegerSpecCollectorSecurityContextArgs:
                  windows_options: Optional[pulumi.Input['JaegerSpecCollectorSecurityContextWindowsOptionsArgs']] = None):
         if fs_group is not None:
             pulumi.set(__self__, "fs_group", fs_group)
+        if fs_group_change_policy is not None:
+            pulumi.set(__self__, "fs_group_change_policy", fs_group_change_policy)
         if run_as_group is not None:
             pulumi.set(__self__, "run_as_group", run_as_group)
         if run_as_non_root is not None:
@@ -11202,6 +11523,15 @@ class JaegerSpecCollectorSecurityContextArgs:
     @fs_group.setter
     def fs_group(self, value: Optional[pulumi.Input[int]]):
         pulumi.set(self, "fs_group", value)
+
+    @property
+    @pulumi.getter(name="fsGroupChangePolicy")
+    def fs_group_change_policy(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "fs_group_change_policy")
+
+    @fs_group_change_policy.setter
+    def fs_group_change_policy(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "fs_group_change_policy", value)
 
     @property
     @pulumi.getter(name="runAsGroup")
@@ -15254,6 +15584,7 @@ class JaegerSpecIngesterResourcesArgs:
 class JaegerSpecIngesterSecurityContextArgs:
     def __init__(__self__, *,
                  fs_group: Optional[pulumi.Input[int]] = None,
+                 fs_group_change_policy: Optional[pulumi.Input[str]] = None,
                  run_as_group: Optional[pulumi.Input[int]] = None,
                  run_as_non_root: Optional[pulumi.Input[bool]] = None,
                  run_as_user: Optional[pulumi.Input[int]] = None,
@@ -15263,6 +15594,8 @@ class JaegerSpecIngesterSecurityContextArgs:
                  windows_options: Optional[pulumi.Input['JaegerSpecIngesterSecurityContextWindowsOptionsArgs']] = None):
         if fs_group is not None:
             pulumi.set(__self__, "fs_group", fs_group)
+        if fs_group_change_policy is not None:
+            pulumi.set(__self__, "fs_group_change_policy", fs_group_change_policy)
         if run_as_group is not None:
             pulumi.set(__self__, "run_as_group", run_as_group)
         if run_as_non_root is not None:
@@ -15286,6 +15619,15 @@ class JaegerSpecIngesterSecurityContextArgs:
     @fs_group.setter
     def fs_group(self, value: Optional[pulumi.Input[int]]):
         pulumi.set(self, "fs_group", value)
+
+    @property
+    @pulumi.getter(name="fsGroupChangePolicy")
+    def fs_group_change_policy(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "fs_group_change_policy")
+
+    @fs_group_change_policy.setter
+    def fs_group_change_policy(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "fs_group_change_policy", value)
 
     @property
     @pulumi.getter(name="runAsGroup")
@@ -19391,6 +19733,7 @@ class JaegerSpecIngressResourcesArgs:
 class JaegerSpecIngressSecurityContextArgs:
     def __init__(__self__, *,
                  fs_group: Optional[pulumi.Input[int]] = None,
+                 fs_group_change_policy: Optional[pulumi.Input[str]] = None,
                  run_as_group: Optional[pulumi.Input[int]] = None,
                  run_as_non_root: Optional[pulumi.Input[bool]] = None,
                  run_as_user: Optional[pulumi.Input[int]] = None,
@@ -19400,6 +19743,8 @@ class JaegerSpecIngressSecurityContextArgs:
                  windows_options: Optional[pulumi.Input['JaegerSpecIngressSecurityContextWindowsOptionsArgs']] = None):
         if fs_group is not None:
             pulumi.set(__self__, "fs_group", fs_group)
+        if fs_group_change_policy is not None:
+            pulumi.set(__self__, "fs_group_change_policy", fs_group_change_policy)
         if run_as_group is not None:
             pulumi.set(__self__, "run_as_group", run_as_group)
         if run_as_non_root is not None:
@@ -19423,6 +19768,15 @@ class JaegerSpecIngressSecurityContextArgs:
     @fs_group.setter
     def fs_group(self, value: Optional[pulumi.Input[int]]):
         pulumi.set(self, "fs_group", value)
+
+    @property
+    @pulumi.getter(name="fsGroupChangePolicy")
+    def fs_group_change_policy(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "fs_group_change_policy")
+
+    @fs_group_change_policy.setter
+    def fs_group_change_policy(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "fs_group_change_policy", value)
 
     @property
     @pulumi.getter(name="runAsGroup")
@@ -22415,6 +22769,7 @@ class JaegerSpecQueryArgs:
                  resources: Optional[pulumi.Input['JaegerSpecQueryResourcesArgs']] = None,
                  security_context: Optional[pulumi.Input['JaegerSpecQuerySecurityContextArgs']] = None,
                  service_account: Optional[pulumi.Input[str]] = None,
+                 service_type: Optional[pulumi.Input[str]] = None,
                  tolerations: Optional[pulumi.Input[Sequence[pulumi.Input['JaegerSpecQueryTolerationsArgs']]]] = None,
                  volume_mounts: Optional[pulumi.Input[Sequence[pulumi.Input['JaegerSpecQueryVolumeMountsArgs']]]] = None,
                  volumes: Optional[pulumi.Input[Sequence[pulumi.Input['JaegerSpecQueryVolumesArgs']]]] = None):
@@ -22436,6 +22791,8 @@ class JaegerSpecQueryArgs:
             pulumi.set(__self__, "security_context", security_context)
         if service_account is not None:
             pulumi.set(__self__, "service_account", service_account)
+        if service_type is not None:
+            pulumi.set(__self__, "service_type", service_type)
         if tolerations is not None:
             pulumi.set(__self__, "tolerations", tolerations)
         if volume_mounts is not None:
@@ -22523,6 +22880,15 @@ class JaegerSpecQueryArgs:
     @service_account.setter
     def service_account(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "service_account", value)
+
+    @property
+    @pulumi.getter(name="serviceType")
+    def service_type(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "service_type")
+
+    @service_type.setter
+    def service_type(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "service_type", value)
 
     @property
     @pulumi.getter
@@ -23456,6 +23822,7 @@ class JaegerSpecQueryResourcesArgs:
 class JaegerSpecQuerySecurityContextArgs:
     def __init__(__self__, *,
                  fs_group: Optional[pulumi.Input[int]] = None,
+                 fs_group_change_policy: Optional[pulumi.Input[str]] = None,
                  run_as_group: Optional[pulumi.Input[int]] = None,
                  run_as_non_root: Optional[pulumi.Input[bool]] = None,
                  run_as_user: Optional[pulumi.Input[int]] = None,
@@ -23465,6 +23832,8 @@ class JaegerSpecQuerySecurityContextArgs:
                  windows_options: Optional[pulumi.Input['JaegerSpecQuerySecurityContextWindowsOptionsArgs']] = None):
         if fs_group is not None:
             pulumi.set(__self__, "fs_group", fs_group)
+        if fs_group_change_policy is not None:
+            pulumi.set(__self__, "fs_group_change_policy", fs_group_change_policy)
         if run_as_group is not None:
             pulumi.set(__self__, "run_as_group", run_as_group)
         if run_as_non_root is not None:
@@ -23488,6 +23857,15 @@ class JaegerSpecQuerySecurityContextArgs:
     @fs_group.setter
     def fs_group(self, value: Optional[pulumi.Input[int]]):
         pulumi.set(self, "fs_group", value)
+
+    @property
+    @pulumi.getter(name="fsGroupChangePolicy")
+    def fs_group_change_policy(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "fs_group_change_policy")
+
+    @fs_group_change_policy.setter
+    def fs_group_change_policy(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "fs_group_change_policy", value)
 
     @property
     @pulumi.getter(name="runAsGroup")
@@ -26489,6 +26867,7 @@ class JaegerSpecSamplingArgs:
 class JaegerSpecSecurityContextArgs:
     def __init__(__self__, *,
                  fs_group: Optional[pulumi.Input[int]] = None,
+                 fs_group_change_policy: Optional[pulumi.Input[str]] = None,
                  run_as_group: Optional[pulumi.Input[int]] = None,
                  run_as_non_root: Optional[pulumi.Input[bool]] = None,
                  run_as_user: Optional[pulumi.Input[int]] = None,
@@ -26498,6 +26877,8 @@ class JaegerSpecSecurityContextArgs:
                  windows_options: Optional[pulumi.Input['JaegerSpecSecurityContextWindowsOptionsArgs']] = None):
         if fs_group is not None:
             pulumi.set(__self__, "fs_group", fs_group)
+        if fs_group_change_policy is not None:
+            pulumi.set(__self__, "fs_group_change_policy", fs_group_change_policy)
         if run_as_group is not None:
             pulumi.set(__self__, "run_as_group", run_as_group)
         if run_as_non_root is not None:
@@ -26521,6 +26902,15 @@ class JaegerSpecSecurityContextArgs:
     @fs_group.setter
     def fs_group(self, value: Optional[pulumi.Input[int]]):
         pulumi.set(self, "fs_group", value)
+
+    @property
+    @pulumi.getter(name="fsGroupChangePolicy")
+    def fs_group_change_policy(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "fs_group_change_policy")
+
+    @fs_group_change_policy.setter
+    def fs_group_change_policy(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "fs_group_change_policy", value)
 
     @property
     @pulumi.getter(name="runAsGroup")
@@ -26816,6 +27206,7 @@ class JaegerSpecStorageCassandraCreateSchemaArgs:
                  image: Optional[pulumi.Input[str]] = None,
                  mode: Optional[pulumi.Input[str]] = None,
                  timeout: Optional[pulumi.Input[str]] = None,
+                 trace_ttl: Optional[pulumi.Input[str]] = None,
                  ttl_seconds_after_finished: Optional[pulumi.Input[int]] = None):
         if datacenter is not None:
             pulumi.set(__self__, "datacenter", datacenter)
@@ -26827,6 +27218,8 @@ class JaegerSpecStorageCassandraCreateSchemaArgs:
             pulumi.set(__self__, "mode", mode)
         if timeout is not None:
             pulumi.set(__self__, "timeout", timeout)
+        if trace_ttl is not None:
+            pulumi.set(__self__, "trace_ttl", trace_ttl)
         if ttl_seconds_after_finished is not None:
             pulumi.set(__self__, "ttl_seconds_after_finished", ttl_seconds_after_finished)
 
@@ -26874,6 +27267,15 @@ class JaegerSpecStorageCassandraCreateSchemaArgs:
     @timeout.setter
     def timeout(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "timeout", value)
+
+    @property
+    @pulumi.getter(name="traceTTL")
+    def trace_ttl(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "trace_ttl")
+
+    @trace_ttl.setter
+    def trace_ttl(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "trace_ttl", value)
 
     @property
     @pulumi.getter(name="ttlSecondsAfterFinished")
@@ -28022,6 +28424,7 @@ class JaegerSpecStorageDependenciesResourcesArgs:
 class JaegerSpecStorageDependenciesSecurityContextArgs:
     def __init__(__self__, *,
                  fs_group: Optional[pulumi.Input[int]] = None,
+                 fs_group_change_policy: Optional[pulumi.Input[str]] = None,
                  run_as_group: Optional[pulumi.Input[int]] = None,
                  run_as_non_root: Optional[pulumi.Input[bool]] = None,
                  run_as_user: Optional[pulumi.Input[int]] = None,
@@ -28031,6 +28434,8 @@ class JaegerSpecStorageDependenciesSecurityContextArgs:
                  windows_options: Optional[pulumi.Input['JaegerSpecStorageDependenciesSecurityContextWindowsOptionsArgs']] = None):
         if fs_group is not None:
             pulumi.set(__self__, "fs_group", fs_group)
+        if fs_group_change_policy is not None:
+            pulumi.set(__self__, "fs_group_change_policy", fs_group_change_policy)
         if run_as_group is not None:
             pulumi.set(__self__, "run_as_group", run_as_group)
         if run_as_non_root is not None:
@@ -28054,6 +28459,15 @@ class JaegerSpecStorageDependenciesSecurityContextArgs:
     @fs_group.setter
     def fs_group(self, value: Optional[pulumi.Input[int]]):
         pulumi.set(self, "fs_group", value)
+
+    @property
+    @pulumi.getter(name="fsGroupChangePolicy")
+    def fs_group_change_policy(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "fs_group_change_policy")
+
+    @fs_group_change_policy.setter
+    def fs_group_change_policy(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "fs_group_change_policy", value)
 
     @property
     @pulumi.getter(name="runAsGroup")
@@ -32229,6 +32643,7 @@ class JaegerSpecStorageEsIndexCleanerResourcesArgs:
 class JaegerSpecStorageEsIndexCleanerSecurityContextArgs:
     def __init__(__self__, *,
                  fs_group: Optional[pulumi.Input[int]] = None,
+                 fs_group_change_policy: Optional[pulumi.Input[str]] = None,
                  run_as_group: Optional[pulumi.Input[int]] = None,
                  run_as_non_root: Optional[pulumi.Input[bool]] = None,
                  run_as_user: Optional[pulumi.Input[int]] = None,
@@ -32238,6 +32653,8 @@ class JaegerSpecStorageEsIndexCleanerSecurityContextArgs:
                  windows_options: Optional[pulumi.Input['JaegerSpecStorageEsIndexCleanerSecurityContextWindowsOptionsArgs']] = None):
         if fs_group is not None:
             pulumi.set(__self__, "fs_group", fs_group)
+        if fs_group_change_policy is not None:
+            pulumi.set(__self__, "fs_group_change_policy", fs_group_change_policy)
         if run_as_group is not None:
             pulumi.set(__self__, "run_as_group", run_as_group)
         if run_as_non_root is not None:
@@ -32261,6 +32678,15 @@ class JaegerSpecStorageEsIndexCleanerSecurityContextArgs:
     @fs_group.setter
     def fs_group(self, value: Optional[pulumi.Input[int]]):
         pulumi.set(self, "fs_group", value)
+
+    @property
+    @pulumi.getter(name="fsGroupChangePolicy")
+    def fs_group_change_policy(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "fs_group_change_policy")
+
+    @fs_group_change_policy.setter
+    def fs_group_change_policy(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "fs_group_change_policy", value)
 
     @property
     @pulumi.getter(name="runAsGroup")
@@ -36301,6 +36727,7 @@ class JaegerSpecStorageEsRolloverResourcesArgs:
 class JaegerSpecStorageEsRolloverSecurityContextArgs:
     def __init__(__self__, *,
                  fs_group: Optional[pulumi.Input[int]] = None,
+                 fs_group_change_policy: Optional[pulumi.Input[str]] = None,
                  run_as_group: Optional[pulumi.Input[int]] = None,
                  run_as_non_root: Optional[pulumi.Input[bool]] = None,
                  run_as_user: Optional[pulumi.Input[int]] = None,
@@ -36310,6 +36737,8 @@ class JaegerSpecStorageEsRolloverSecurityContextArgs:
                  windows_options: Optional[pulumi.Input['JaegerSpecStorageEsRolloverSecurityContextWindowsOptionsArgs']] = None):
         if fs_group is not None:
             pulumi.set(__self__, "fs_group", fs_group)
+        if fs_group_change_policy is not None:
+            pulumi.set(__self__, "fs_group_change_policy", fs_group_change_policy)
         if run_as_group is not None:
             pulumi.set(__self__, "run_as_group", run_as_group)
         if run_as_non_root is not None:
@@ -36333,6 +36762,15 @@ class JaegerSpecStorageEsRolloverSecurityContextArgs:
     @fs_group.setter
     def fs_group(self, value: Optional[pulumi.Input[int]]):
         pulumi.set(self, "fs_group", value)
+
+    @property
+    @pulumi.getter(name="fsGroupChangePolicy")
+    def fs_group_change_policy(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "fs_group_change_policy")
+
+    @fs_group_change_policy.setter
+    def fs_group_change_policy(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "fs_group_change_policy", value)
 
     @property
     @pulumi.getter(name="runAsGroup")

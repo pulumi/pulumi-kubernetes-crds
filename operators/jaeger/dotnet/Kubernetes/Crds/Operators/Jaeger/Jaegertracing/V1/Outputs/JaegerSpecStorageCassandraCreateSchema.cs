@@ -18,6 +18,7 @@ namespace Pulumi.Kubernetes.Types.Outputs.Jaegertracing.V1
         public readonly string Image;
         public readonly string Mode;
         public readonly string Timeout;
+        public readonly string TraceTTL;
         public readonly int TtlSecondsAfterFinished;
 
         [OutputConstructor]
@@ -32,6 +33,8 @@ namespace Pulumi.Kubernetes.Types.Outputs.Jaegertracing.V1
 
             string timeout,
 
+            string traceTTL,
+
             int ttlSecondsAfterFinished)
         {
             Datacenter = datacenter;
@@ -39,6 +42,7 @@ namespace Pulumi.Kubernetes.Types.Outputs.Jaegertracing.V1
             Image = image;
             Mode = mode;
             Timeout = timeout;
+            TraceTTL = traceTTL;
             TtlSecondsAfterFinished = ttlSecondsAfterFinished;
         }
     }

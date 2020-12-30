@@ -16,20 +16,12 @@ namespace Pulumi.Kubernetes.Types.Outputs.Submariner.V1Alpha1
         public readonly string ClusterCIDR;
         public readonly string ClusterID;
         public readonly string ColorCodes;
-        /// <summary>
-        /// DaemonSetStatus represents the current status of a daemon set.
-        /// </summary>
         public readonly Pulumi.Kubernetes.Types.Outputs.Submariner.V1Alpha1.SubmarinerStatusEngineDaemonSetStatus EngineDaemonSetStatus;
         public readonly ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Submariner.V1Alpha1.SubmarinerStatusGateways> Gateways;
         public readonly string GlobalCIDR;
-        /// <summary>
-        /// DaemonSetStatus represents the current status of a daemon set.
-        /// </summary>
         public readonly Pulumi.Kubernetes.Types.Outputs.Submariner.V1Alpha1.SubmarinerStatusGlobalnetDaemonSetStatus GlobalnetDaemonSetStatus;
         public readonly bool NatEnabled;
-        /// <summary>
-        /// DaemonSetStatus represents the current status of a daemon set.
-        /// </summary>
+        public readonly string NetworkPlugin;
         public readonly Pulumi.Kubernetes.Types.Outputs.Submariner.V1Alpha1.SubmarinerStatusRouteAgentDaemonSetStatus RouteAgentDaemonSetStatus;
         public readonly string ServiceCIDR;
 
@@ -51,6 +43,8 @@ namespace Pulumi.Kubernetes.Types.Outputs.Submariner.V1Alpha1
 
             bool natEnabled,
 
+            string networkPlugin,
+
             Pulumi.Kubernetes.Types.Outputs.Submariner.V1Alpha1.SubmarinerStatusRouteAgentDaemonSetStatus routeAgentDaemonSetStatus,
 
             string serviceCIDR)
@@ -63,6 +57,7 @@ namespace Pulumi.Kubernetes.Types.Outputs.Submariner.V1Alpha1
             GlobalCIDR = globalCIDR;
             GlobalnetDaemonSetStatus = globalnetDaemonSetStatus;
             NatEnabled = natEnabled;
+            NetworkPlugin = networkPlugin;
             RouteAgentDaemonSetStatus = routeAgentDaemonSetStatus;
             ServiceCIDR = serviceCIDR;
         }

@@ -54,6 +54,24 @@ namespace Pulumi.Kubernetes.Types.Inputs.Camel.V1
         [Input("name")]
         public Input<string>? Name { get; set; }
 
+        [Input("property-names")]
+        private InputList<string>? _property-names;
+
+        /// <summary>
+        /// List of property names defined in the source (e.g. if type is "template")
+        /// </summary>
+        public InputList<string> Property-names
+        {
+            get => _property-names ?? (_property-names = new InputList<string>());
+            set => _property-names = value;
+        }
+
+        /// <summary>
+        /// Type defines the kind of source described by this object
+        /// </summary>
+        [Input("type")]
+        public Input<string>? Type { get; set; }
+
         public IntegrationSpecSourcesArgs()
         {
         }

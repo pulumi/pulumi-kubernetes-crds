@@ -16,6 +16,12 @@ namespace Pulumi.Kubernetes.Types.Inputs.Argoproj.V1Alpha1
     public class AppProjectSpecDestinationsArgs : Pulumi.ResourceArgs
     {
         /// <summary>
+        /// Name of the destination cluster which can be used instead of server (url) field
+        /// </summary>
+        [Input("name")]
+        public Input<string>? Name { get; set; }
+
+        /// <summary>
         /// Namespace overrides the environment namespace value in the ksonnet app.yaml
         /// </summary>
         [Input("namespace")]

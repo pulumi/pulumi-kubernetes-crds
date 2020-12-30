@@ -22,6 +22,10 @@ namespace Pulumi.Kubernetes.Types.Outputs.Apps.V1
         /// </summary>
         public readonly Pulumi.Kubernetes.Types.Outputs.Apps.V1.HelmReleaseRepoConfigMapRef ConfigMapRef;
         /// <summary>
+        /// Used to skip repo server's TLS certificate verification
+        /// </summary>
+        public readonly bool InsecureSkipVerify;
+        /// <summary>
         /// Secret to use to access the helm-repo defined in the CatalogSource.
         /// </summary>
         public readonly Pulumi.Kubernetes.Types.Outputs.Apps.V1.HelmReleaseRepoSecretRef SecretRef;
@@ -40,6 +44,8 @@ namespace Pulumi.Kubernetes.Types.Outputs.Apps.V1
 
             Pulumi.Kubernetes.Types.Outputs.Apps.V1.HelmReleaseRepoConfigMapRef configMapRef,
 
+            bool insecureSkipVerify,
+
             Pulumi.Kubernetes.Types.Outputs.Apps.V1.HelmReleaseRepoSecretRef secretRef,
 
             Pulumi.Kubernetes.Types.Outputs.Apps.V1.HelmReleaseRepoSource source,
@@ -48,6 +54,7 @@ namespace Pulumi.Kubernetes.Types.Outputs.Apps.V1
         {
             ChartName = chartName;
             ConfigMapRef = configMapRef;
+            InsecureSkipVerify = insecureSkipVerify;
             SecretRef = secretRef;
             Source = source;
             Version = version;

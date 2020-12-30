@@ -14,7 +14,13 @@ namespace Pulumi.Kubernetes.Types.Outputs.Machinelearning.V1
     public sealed class SeldonDeploymentSpecPredictorsComponentSpecs
     {
         public readonly Pulumi.Kubernetes.Types.Outputs.Machinelearning.V1.SeldonDeploymentSpecPredictorsComponentSpecsHpaSpec HpaSpec;
+        /// <summary>
+        /// SeldonScaledObjectSpec is the spec for a KEDA ScaledObject resource
+        /// </summary>
+        public readonly Pulumi.Kubernetes.Types.Outputs.Machinelearning.V1.SeldonDeploymentSpecPredictorsComponentSpecsKedaSpec KedaSpec;
         public readonly ImmutableDictionary<string, object> Metadata;
+        public readonly Pulumi.Kubernetes.Types.Outputs.Machinelearning.V1.SeldonDeploymentSpecPredictorsComponentSpecsPdbSpec PdbSpec;
+        public readonly int Replicas;
         /// <summary>
         /// PodSpec is a description of a pod.
         /// </summary>
@@ -24,12 +30,21 @@ namespace Pulumi.Kubernetes.Types.Outputs.Machinelearning.V1
         private SeldonDeploymentSpecPredictorsComponentSpecs(
             Pulumi.Kubernetes.Types.Outputs.Machinelearning.V1.SeldonDeploymentSpecPredictorsComponentSpecsHpaSpec hpaSpec,
 
+            Pulumi.Kubernetes.Types.Outputs.Machinelearning.V1.SeldonDeploymentSpecPredictorsComponentSpecsKedaSpec kedaSpec,
+
             ImmutableDictionary<string, object> metadata,
+
+            Pulumi.Kubernetes.Types.Outputs.Machinelearning.V1.SeldonDeploymentSpecPredictorsComponentSpecsPdbSpec pdbSpec,
+
+            int replicas,
 
             Pulumi.Kubernetes.Types.Outputs.Machinelearning.V1.SeldonDeploymentSpecPredictorsComponentSpecsSpec spec)
         {
             HpaSpec = hpaSpec;
+            KedaSpec = kedaSpec;
             Metadata = metadata;
+            PdbSpec = pdbSpec;
+            Replicas = replicas;
             Spec = spec;
         }
     }

@@ -23,12 +23,11 @@ namespace Pulumi.Kubernetes.Types.Outputs.Machinelearning.V1
         public readonly Pulumi.Kubernetes.Types.Outputs.Machinelearning.V1.SeldonDeploymentSpecPredictorsGraph Graph;
         public readonly ImmutableDictionary<string, string> Labels;
         public readonly string Name;
-        public readonly string Protocol;
         public readonly int Replicas;
         public readonly bool Shadow;
+        public readonly Pulumi.Kubernetes.Types.Outputs.Machinelearning.V1.SeldonDeploymentSpecPredictorsSsl Ssl;
         public readonly Pulumi.Kubernetes.Types.Outputs.Machinelearning.V1.SeldonDeploymentSpecPredictorsSvcOrchSpec SvcOrchSpec;
         public readonly int Traffic;
-        public readonly string Transport;
 
         [OutputConstructor]
         private SeldonDeploymentSpecPredictors(
@@ -46,17 +45,15 @@ namespace Pulumi.Kubernetes.Types.Outputs.Machinelearning.V1
 
             string name,
 
-            string protocol,
-
             int replicas,
 
             bool shadow,
 
+            Pulumi.Kubernetes.Types.Outputs.Machinelearning.V1.SeldonDeploymentSpecPredictorsSsl ssl,
+
             Pulumi.Kubernetes.Types.Outputs.Machinelearning.V1.SeldonDeploymentSpecPredictorsSvcOrchSpec svcOrchSpec,
 
-            int traffic,
-
-            string transport)
+            int traffic)
         {
             Annotations = annotations;
             ComponentSpecs = componentSpecs;
@@ -65,12 +62,11 @@ namespace Pulumi.Kubernetes.Types.Outputs.Machinelearning.V1
             Graph = graph;
             Labels = labels;
             Name = name;
-            Protocol = protocol;
             Replicas = replicas;
             Shadow = shadow;
+            Ssl = ssl;
             SvcOrchSpec = svcOrchSpec;
             Traffic = traffic;
-            Transport = transport;
         }
     }
 }

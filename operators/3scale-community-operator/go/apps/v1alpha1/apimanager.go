@@ -10,14 +10,17 @@ import (
 	"github.com/pulumi/pulumi/sdk/v2/go/pulumi"
 )
 
+// APIManager is the Schema for the apimanagers API
 type APIManager struct {
 	pulumi.CustomResourceState
 
 	ApiVersion pulumi.StringPtrOutput     `pulumi:"apiVersion"`
 	Kind       pulumi.StringPtrOutput     `pulumi:"kind"`
 	Metadata   metav1.ObjectMetaPtrOutput `pulumi:"metadata"`
-	Spec       APIManagerSpecPtrOutput    `pulumi:"spec"`
-	Status     APIManagerStatusPtrOutput  `pulumi:"status"`
+	// APIManagerSpec defines the desired state of APIManager
+	Spec APIManagerSpecPtrOutput `pulumi:"spec"`
+	// APIManagerStatus defines the observed state of APIManager
+	Status APIManagerStatusPtrOutput `pulumi:"status"`
 }
 
 // NewAPIManager registers a new resource with the given unique name, arguments, and options.
@@ -53,16 +56,20 @@ type apimanagerState struct {
 	ApiVersion *string            `pulumi:"apiVersion"`
 	Kind       *string            `pulumi:"kind"`
 	Metadata   *metav1.ObjectMeta `pulumi:"metadata"`
-	Spec       *APIManagerSpec    `pulumi:"spec"`
-	Status     *APIManagerStatus  `pulumi:"status"`
+	// APIManagerSpec defines the desired state of APIManager
+	Spec *APIManagerSpec `pulumi:"spec"`
+	// APIManagerStatus defines the observed state of APIManager
+	Status *APIManagerStatus `pulumi:"status"`
 }
 
 type APIManagerState struct {
 	ApiVersion pulumi.StringPtrInput
 	Kind       pulumi.StringPtrInput
 	Metadata   metav1.ObjectMetaPtrInput
-	Spec       APIManagerSpecPtrInput
-	Status     APIManagerStatusPtrInput
+	// APIManagerSpec defines the desired state of APIManager
+	Spec APIManagerSpecPtrInput
+	// APIManagerStatus defines the observed state of APIManager
+	Status APIManagerStatusPtrInput
 }
 
 func (APIManagerState) ElementType() reflect.Type {
@@ -73,8 +80,10 @@ type apimanagerArgs struct {
 	ApiVersion *string            `pulumi:"apiVersion"`
 	Kind       *string            `pulumi:"kind"`
 	Metadata   *metav1.ObjectMeta `pulumi:"metadata"`
-	Spec       *APIManagerSpec    `pulumi:"spec"`
-	Status     *APIManagerStatus  `pulumi:"status"`
+	// APIManagerSpec defines the desired state of APIManager
+	Spec *APIManagerSpec `pulumi:"spec"`
+	// APIManagerStatus defines the observed state of APIManager
+	Status *APIManagerStatus `pulumi:"status"`
 }
 
 // The set of arguments for constructing a APIManager resource.
@@ -82,8 +91,10 @@ type APIManagerArgs struct {
 	ApiVersion pulumi.StringPtrInput
 	Kind       pulumi.StringPtrInput
 	Metadata   metav1.ObjectMetaPtrInput
-	Spec       APIManagerSpecPtrInput
-	Status     APIManagerStatusPtrInput
+	// APIManagerSpec defines the desired state of APIManager
+	Spec APIManagerSpecPtrInput
+	// APIManagerStatus defines the observed state of APIManager
+	Status APIManagerStatusPtrInput
 }
 
 func (APIManagerArgs) ElementType() reflect.Type {

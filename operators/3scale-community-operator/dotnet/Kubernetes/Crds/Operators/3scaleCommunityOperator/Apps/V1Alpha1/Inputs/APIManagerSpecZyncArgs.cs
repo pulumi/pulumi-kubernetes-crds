@@ -15,6 +15,20 @@ namespace Pulumi.Kubernetes.Types.Inputs.Apps.V1Alpha1
         [Input("appSpec")]
         public Input<Pulumi.Kubernetes.Types.Inputs.Apps.V1Alpha1.APIManagerSpecZyncAppSpecArgs>? AppSpec { get; set; }
 
+        /// <summary>
+        /// Affinity is a group of affinity scheduling rules.
+        /// </summary>
+        [Input("databaseAffinity")]
+        public Input<Pulumi.Kubernetes.Types.Inputs.Apps.V1Alpha1.APIManagerSpecZyncDatabaseAffinityArgs>? DatabaseAffinity { get; set; }
+
+        [Input("databaseTolerations")]
+        private InputList<Pulumi.Kubernetes.Types.Inputs.Apps.V1Alpha1.APIManagerSpecZyncDatabaseTolerationsArgs>? _databaseTolerations;
+        public InputList<Pulumi.Kubernetes.Types.Inputs.Apps.V1Alpha1.APIManagerSpecZyncDatabaseTolerationsArgs> DatabaseTolerations
+        {
+            get => _databaseTolerations ?? (_databaseTolerations = new InputList<Pulumi.Kubernetes.Types.Inputs.Apps.V1Alpha1.APIManagerSpecZyncDatabaseTolerationsArgs>());
+            set => _databaseTolerations = value;
+        }
+
         [Input("image")]
         public Input<string>? Image { get; set; }
 

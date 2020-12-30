@@ -13,6 +13,7 @@ namespace Pulumi.Kubernetes.Types.Outputs.Apps.V1
     [OutputType]
     public sealed class SubscriptionStatus
     {
+        public readonly Pulumi.Kubernetes.Types.Outputs.Apps.V1.SubscriptionStatusAnsiblejobs Ansiblejobs;
         public readonly string LastUpdateTime;
         public readonly string Message;
         /// <summary>
@@ -23,10 +24,12 @@ namespace Pulumi.Kubernetes.Types.Outputs.Apps.V1
         /// <summary>
         /// For endpoint, it is the status of subscription, key is packagename, For hub, it aggregates all status, key is cluster name
         /// </summary>
-        public readonly object Statuses;
+        public readonly ImmutableDictionary<string, Pulumi.Kubernetes.Types.Outputs.Apps.V1.SubscriptionStatusStatuses> Statuses;
 
         [OutputConstructor]
         private SubscriptionStatus(
+            Pulumi.Kubernetes.Types.Outputs.Apps.V1.SubscriptionStatusAnsiblejobs ansiblejobs,
+
             string lastUpdateTime,
 
             string message,
@@ -35,8 +38,9 @@ namespace Pulumi.Kubernetes.Types.Outputs.Apps.V1
 
             string reason,
 
-            object statuses)
+            ImmutableDictionary<string, Pulumi.Kubernetes.Types.Outputs.Apps.V1.SubscriptionStatusStatuses> statuses)
         {
+            Ansiblejobs = ansiblejobs;
             LastUpdateTime = lastUpdateTime;
             Message = message;
             Phase = phase;

@@ -40,6 +40,10 @@ namespace Pulumi.Kubernetes.Types.Outputs.Hive.V1
         /// </summary>
         public readonly Pulumi.Kubernetes.Types.Outputs.Hive.V1.ClusterProvisionSpecPodSpecSecurityContextSeLinuxOptions SeLinuxOptions;
         /// <summary>
+        /// The seccomp options to use by the containers in this pod.
+        /// </summary>
+        public readonly Pulumi.Kubernetes.Types.Outputs.Hive.V1.ClusterProvisionSpecPodSpecSecurityContextSeccompProfile SeccompProfile;
+        /// <summary>
         /// A list of groups applied to the first process run in each container, in addition to the container's primary GID.  If unspecified, no groups will be added to any container.
         /// </summary>
         public readonly ImmutableArray<int> SupplementalGroups;
@@ -66,6 +70,8 @@ namespace Pulumi.Kubernetes.Types.Outputs.Hive.V1
 
             Pulumi.Kubernetes.Types.Outputs.Hive.V1.ClusterProvisionSpecPodSpecSecurityContextSeLinuxOptions seLinuxOptions,
 
+            Pulumi.Kubernetes.Types.Outputs.Hive.V1.ClusterProvisionSpecPodSpecSecurityContextSeccompProfile seccompProfile,
+
             ImmutableArray<int> supplementalGroups,
 
             ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Hive.V1.ClusterProvisionSpecPodSpecSecurityContextSysctls> sysctls,
@@ -78,6 +84,7 @@ namespace Pulumi.Kubernetes.Types.Outputs.Hive.V1
             RunAsNonRoot = runAsNonRoot;
             RunAsUser = runAsUser;
             SeLinuxOptions = seLinuxOptions;
+            SeccompProfile = seccompProfile;
             SupplementalGroups = supplementalGroups;
             Sysctls = sysctls;
             WindowsOptions = windowsOptions;

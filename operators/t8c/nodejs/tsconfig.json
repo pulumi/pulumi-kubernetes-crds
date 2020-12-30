@@ -13,8 +13,14 @@
         "strict": true
     },
     "files": [
+        "charts/index.ts",
+        "charts/v1/index.ts",
+        "charts/v1/xl.ts",
         "index.ts",
         "provider.ts",
+        "types/index.ts",
+        "types/input.ts",
+        "types/output.ts",
         "utilities.ts"
     ]
 }

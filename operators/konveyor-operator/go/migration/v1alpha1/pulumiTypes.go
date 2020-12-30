@@ -11,6 +11,1378 @@ import (
 	"github.com/pulumi/pulumi/sdk/v2/go/pulumi"
 )
 
+type MigAnalyticType struct {
+	ApiVersion *string            `pulumi:"apiVersion"`
+	Kind       *string            `pulumi:"kind"`
+	Metadata   *metav1.ObjectMeta `pulumi:"metadata"`
+	Spec       *MigAnalyticSpec   `pulumi:"spec"`
+	Status     *MigAnalyticStatus `pulumi:"status"`
+}
+
+// MigAnalyticTypeInput is an input type that accepts MigAnalyticTypeArgs and MigAnalyticTypeOutput values.
+// You can construct a concrete instance of `MigAnalyticTypeInput` via:
+//
+//          MigAnalyticTypeArgs{...}
+type MigAnalyticTypeInput interface {
+	pulumi.Input
+
+	ToMigAnalyticTypeOutput() MigAnalyticTypeOutput
+	ToMigAnalyticTypeOutputWithContext(context.Context) MigAnalyticTypeOutput
+}
+
+type MigAnalyticTypeArgs struct {
+	ApiVersion pulumi.StringPtrInput     `pulumi:"apiVersion"`
+	Kind       pulumi.StringPtrInput     `pulumi:"kind"`
+	Metadata   metav1.ObjectMetaPtrInput `pulumi:"metadata"`
+	Spec       MigAnalyticSpecPtrInput   `pulumi:"spec"`
+	Status     MigAnalyticStatusPtrInput `pulumi:"status"`
+}
+
+func (MigAnalyticTypeArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*MigAnalyticType)(nil)).Elem()
+}
+
+func (i MigAnalyticTypeArgs) ToMigAnalyticTypeOutput() MigAnalyticTypeOutput {
+	return i.ToMigAnalyticTypeOutputWithContext(context.Background())
+}
+
+func (i MigAnalyticTypeArgs) ToMigAnalyticTypeOutputWithContext(ctx context.Context) MigAnalyticTypeOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(MigAnalyticTypeOutput)
+}
+
+type MigAnalyticTypeOutput struct{ *pulumi.OutputState }
+
+func (MigAnalyticTypeOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*MigAnalyticType)(nil)).Elem()
+}
+
+func (o MigAnalyticTypeOutput) ToMigAnalyticTypeOutput() MigAnalyticTypeOutput {
+	return o
+}
+
+func (o MigAnalyticTypeOutput) ToMigAnalyticTypeOutputWithContext(ctx context.Context) MigAnalyticTypeOutput {
+	return o
+}
+
+func (o MigAnalyticTypeOutput) ApiVersion() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v MigAnalyticType) *string { return v.ApiVersion }).(pulumi.StringPtrOutput)
+}
+
+func (o MigAnalyticTypeOutput) Kind() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v MigAnalyticType) *string { return v.Kind }).(pulumi.StringPtrOutput)
+}
+
+func (o MigAnalyticTypeOutput) Metadata() metav1.ObjectMetaPtrOutput {
+	return o.ApplyT(func(v MigAnalyticType) *metav1.ObjectMeta { return v.Metadata }).(metav1.ObjectMetaPtrOutput)
+}
+
+func (o MigAnalyticTypeOutput) Spec() MigAnalyticSpecPtrOutput {
+	return o.ApplyT(func(v MigAnalyticType) *MigAnalyticSpec { return v.Spec }).(MigAnalyticSpecPtrOutput)
+}
+
+func (o MigAnalyticTypeOutput) Status() MigAnalyticStatusPtrOutput {
+	return o.ApplyT(func(v MigAnalyticType) *MigAnalyticStatus { return v.Status }).(MigAnalyticStatusPtrOutput)
+}
+
+type MigAnalyticMetadata struct {
+}
+
+// MigAnalyticMetadataInput is an input type that accepts MigAnalyticMetadataArgs and MigAnalyticMetadataOutput values.
+// You can construct a concrete instance of `MigAnalyticMetadataInput` via:
+//
+//          MigAnalyticMetadataArgs{...}
+type MigAnalyticMetadataInput interface {
+	pulumi.Input
+
+	ToMigAnalyticMetadataOutput() MigAnalyticMetadataOutput
+	ToMigAnalyticMetadataOutputWithContext(context.Context) MigAnalyticMetadataOutput
+}
+
+type MigAnalyticMetadataArgs struct {
+}
+
+func (MigAnalyticMetadataArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*MigAnalyticMetadata)(nil)).Elem()
+}
+
+func (i MigAnalyticMetadataArgs) ToMigAnalyticMetadataOutput() MigAnalyticMetadataOutput {
+	return i.ToMigAnalyticMetadataOutputWithContext(context.Background())
+}
+
+func (i MigAnalyticMetadataArgs) ToMigAnalyticMetadataOutputWithContext(ctx context.Context) MigAnalyticMetadataOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(MigAnalyticMetadataOutput)
+}
+
+type MigAnalyticMetadataOutput struct{ *pulumi.OutputState }
+
+func (MigAnalyticMetadataOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*MigAnalyticMetadata)(nil)).Elem()
+}
+
+func (o MigAnalyticMetadataOutput) ToMigAnalyticMetadataOutput() MigAnalyticMetadataOutput {
+	return o
+}
+
+func (o MigAnalyticMetadataOutput) ToMigAnalyticMetadataOutputWithContext(ctx context.Context) MigAnalyticMetadataOutput {
+	return o
+}
+
+type MigAnalyticSpec struct {
+	AnalyzeImageCount   bool                   `pulumi:"analyzeImageCount"`
+	AnalyzeK8SResources bool                   `pulumi:"analyzeK8SResources"`
+	AnalyzePVCapacity   bool                   `pulumi:"analyzePVCapacity"`
+	ListImages          *bool                  `pulumi:"listImages"`
+	ListImagesLimit     *int                   `pulumi:"listImagesLimit"`
+	MigPlanRef          map[string]interface{} `pulumi:"migPlanRef"`
+}
+
+// MigAnalyticSpecInput is an input type that accepts MigAnalyticSpecArgs and MigAnalyticSpecOutput values.
+// You can construct a concrete instance of `MigAnalyticSpecInput` via:
+//
+//          MigAnalyticSpecArgs{...}
+type MigAnalyticSpecInput interface {
+	pulumi.Input
+
+	ToMigAnalyticSpecOutput() MigAnalyticSpecOutput
+	ToMigAnalyticSpecOutputWithContext(context.Context) MigAnalyticSpecOutput
+}
+
+type MigAnalyticSpecArgs struct {
+	AnalyzeImageCount   pulumi.BoolInput    `pulumi:"analyzeImageCount"`
+	AnalyzeK8SResources pulumi.BoolInput    `pulumi:"analyzeK8SResources"`
+	AnalyzePVCapacity   pulumi.BoolInput    `pulumi:"analyzePVCapacity"`
+	ListImages          pulumi.BoolPtrInput `pulumi:"listImages"`
+	ListImagesLimit     pulumi.IntPtrInput  `pulumi:"listImagesLimit"`
+	MigPlanRef          pulumi.MapInput     `pulumi:"migPlanRef"`
+}
+
+func (MigAnalyticSpecArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*MigAnalyticSpec)(nil)).Elem()
+}
+
+func (i MigAnalyticSpecArgs) ToMigAnalyticSpecOutput() MigAnalyticSpecOutput {
+	return i.ToMigAnalyticSpecOutputWithContext(context.Background())
+}
+
+func (i MigAnalyticSpecArgs) ToMigAnalyticSpecOutputWithContext(ctx context.Context) MigAnalyticSpecOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(MigAnalyticSpecOutput)
+}
+
+func (i MigAnalyticSpecArgs) ToMigAnalyticSpecPtrOutput() MigAnalyticSpecPtrOutput {
+	return i.ToMigAnalyticSpecPtrOutputWithContext(context.Background())
+}
+
+func (i MigAnalyticSpecArgs) ToMigAnalyticSpecPtrOutputWithContext(ctx context.Context) MigAnalyticSpecPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(MigAnalyticSpecOutput).ToMigAnalyticSpecPtrOutputWithContext(ctx)
+}
+
+// MigAnalyticSpecPtrInput is an input type that accepts MigAnalyticSpecArgs, MigAnalyticSpecPtr and MigAnalyticSpecPtrOutput values.
+// You can construct a concrete instance of `MigAnalyticSpecPtrInput` via:
+//
+//          MigAnalyticSpecArgs{...}
+//
+//  or:
+//
+//          nil
+type MigAnalyticSpecPtrInput interface {
+	pulumi.Input
+
+	ToMigAnalyticSpecPtrOutput() MigAnalyticSpecPtrOutput
+	ToMigAnalyticSpecPtrOutputWithContext(context.Context) MigAnalyticSpecPtrOutput
+}
+
+type migAnalyticSpecPtrType MigAnalyticSpecArgs
+
+func MigAnalyticSpecPtr(v *MigAnalyticSpecArgs) MigAnalyticSpecPtrInput {
+	return (*migAnalyticSpecPtrType)(v)
+}
+
+func (*migAnalyticSpecPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**MigAnalyticSpec)(nil)).Elem()
+}
+
+func (i *migAnalyticSpecPtrType) ToMigAnalyticSpecPtrOutput() MigAnalyticSpecPtrOutput {
+	return i.ToMigAnalyticSpecPtrOutputWithContext(context.Background())
+}
+
+func (i *migAnalyticSpecPtrType) ToMigAnalyticSpecPtrOutputWithContext(ctx context.Context) MigAnalyticSpecPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(MigAnalyticSpecPtrOutput)
+}
+
+type MigAnalyticSpecOutput struct{ *pulumi.OutputState }
+
+func (MigAnalyticSpecOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*MigAnalyticSpec)(nil)).Elem()
+}
+
+func (o MigAnalyticSpecOutput) ToMigAnalyticSpecOutput() MigAnalyticSpecOutput {
+	return o
+}
+
+func (o MigAnalyticSpecOutput) ToMigAnalyticSpecOutputWithContext(ctx context.Context) MigAnalyticSpecOutput {
+	return o
+}
+
+func (o MigAnalyticSpecOutput) ToMigAnalyticSpecPtrOutput() MigAnalyticSpecPtrOutput {
+	return o.ToMigAnalyticSpecPtrOutputWithContext(context.Background())
+}
+
+func (o MigAnalyticSpecOutput) ToMigAnalyticSpecPtrOutputWithContext(ctx context.Context) MigAnalyticSpecPtrOutput {
+	return o.ApplyT(func(v MigAnalyticSpec) *MigAnalyticSpec {
+		return &v
+	}).(MigAnalyticSpecPtrOutput)
+}
+func (o MigAnalyticSpecOutput) AnalyzeImageCount() pulumi.BoolOutput {
+	return o.ApplyT(func(v MigAnalyticSpec) bool { return v.AnalyzeImageCount }).(pulumi.BoolOutput)
+}
+
+func (o MigAnalyticSpecOutput) AnalyzeK8SResources() pulumi.BoolOutput {
+	return o.ApplyT(func(v MigAnalyticSpec) bool { return v.AnalyzeK8SResources }).(pulumi.BoolOutput)
+}
+
+func (o MigAnalyticSpecOutput) AnalyzePVCapacity() pulumi.BoolOutput {
+	return o.ApplyT(func(v MigAnalyticSpec) bool { return v.AnalyzePVCapacity }).(pulumi.BoolOutput)
+}
+
+func (o MigAnalyticSpecOutput) ListImages() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v MigAnalyticSpec) *bool { return v.ListImages }).(pulumi.BoolPtrOutput)
+}
+
+func (o MigAnalyticSpecOutput) ListImagesLimit() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v MigAnalyticSpec) *int { return v.ListImagesLimit }).(pulumi.IntPtrOutput)
+}
+
+func (o MigAnalyticSpecOutput) MigPlanRef() pulumi.MapOutput {
+	return o.ApplyT(func(v MigAnalyticSpec) map[string]interface{} { return v.MigPlanRef }).(pulumi.MapOutput)
+}
+
+type MigAnalyticSpecPtrOutput struct{ *pulumi.OutputState }
+
+func (MigAnalyticSpecPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**MigAnalyticSpec)(nil)).Elem()
+}
+
+func (o MigAnalyticSpecPtrOutput) ToMigAnalyticSpecPtrOutput() MigAnalyticSpecPtrOutput {
+	return o
+}
+
+func (o MigAnalyticSpecPtrOutput) ToMigAnalyticSpecPtrOutputWithContext(ctx context.Context) MigAnalyticSpecPtrOutput {
+	return o
+}
+
+func (o MigAnalyticSpecPtrOutput) Elem() MigAnalyticSpecOutput {
+	return o.ApplyT(func(v *MigAnalyticSpec) MigAnalyticSpec { return *v }).(MigAnalyticSpecOutput)
+}
+
+func (o MigAnalyticSpecPtrOutput) AnalyzeImageCount() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *MigAnalyticSpec) *bool {
+		if v == nil {
+			return nil
+		}
+		return &v.AnalyzeImageCount
+	}).(pulumi.BoolPtrOutput)
+}
+
+func (o MigAnalyticSpecPtrOutput) AnalyzeK8SResources() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *MigAnalyticSpec) *bool {
+		if v == nil {
+			return nil
+		}
+		return &v.AnalyzeK8SResources
+	}).(pulumi.BoolPtrOutput)
+}
+
+func (o MigAnalyticSpecPtrOutput) AnalyzePVCapacity() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *MigAnalyticSpec) *bool {
+		if v == nil {
+			return nil
+		}
+		return &v.AnalyzePVCapacity
+	}).(pulumi.BoolPtrOutput)
+}
+
+func (o MigAnalyticSpecPtrOutput) ListImages() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *MigAnalyticSpec) *bool {
+		if v == nil {
+			return nil
+		}
+		return v.ListImages
+	}).(pulumi.BoolPtrOutput)
+}
+
+func (o MigAnalyticSpecPtrOutput) ListImagesLimit() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *MigAnalyticSpec) *int {
+		if v == nil {
+			return nil
+		}
+		return v.ListImagesLimit
+	}).(pulumi.IntPtrOutput)
+}
+
+func (o MigAnalyticSpecPtrOutput) MigPlanRef() pulumi.MapOutput {
+	return o.ApplyT(func(v *MigAnalyticSpec) map[string]interface{} {
+		if v == nil {
+			return nil
+		}
+		return v.MigPlanRef
+	}).(pulumi.MapOutput)
+}
+
+type MigAnalyticSpecMigPlanRef struct {
+}
+
+// MigAnalyticSpecMigPlanRefInput is an input type that accepts MigAnalyticSpecMigPlanRefArgs and MigAnalyticSpecMigPlanRefOutput values.
+// You can construct a concrete instance of `MigAnalyticSpecMigPlanRefInput` via:
+//
+//          MigAnalyticSpecMigPlanRefArgs{...}
+type MigAnalyticSpecMigPlanRefInput interface {
+	pulumi.Input
+
+	ToMigAnalyticSpecMigPlanRefOutput() MigAnalyticSpecMigPlanRefOutput
+	ToMigAnalyticSpecMigPlanRefOutputWithContext(context.Context) MigAnalyticSpecMigPlanRefOutput
+}
+
+type MigAnalyticSpecMigPlanRefArgs struct {
+}
+
+func (MigAnalyticSpecMigPlanRefArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*MigAnalyticSpecMigPlanRef)(nil)).Elem()
+}
+
+func (i MigAnalyticSpecMigPlanRefArgs) ToMigAnalyticSpecMigPlanRefOutput() MigAnalyticSpecMigPlanRefOutput {
+	return i.ToMigAnalyticSpecMigPlanRefOutputWithContext(context.Background())
+}
+
+func (i MigAnalyticSpecMigPlanRefArgs) ToMigAnalyticSpecMigPlanRefOutputWithContext(ctx context.Context) MigAnalyticSpecMigPlanRefOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(MigAnalyticSpecMigPlanRefOutput)
+}
+
+type MigAnalyticSpecMigPlanRefOutput struct{ *pulumi.OutputState }
+
+func (MigAnalyticSpecMigPlanRefOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*MigAnalyticSpecMigPlanRef)(nil)).Elem()
+}
+
+func (o MigAnalyticSpecMigPlanRefOutput) ToMigAnalyticSpecMigPlanRefOutput() MigAnalyticSpecMigPlanRefOutput {
+	return o
+}
+
+func (o MigAnalyticSpecMigPlanRefOutput) ToMigAnalyticSpecMigPlanRefOutputWithContext(ctx context.Context) MigAnalyticSpecMigPlanRefOutput {
+	return o
+}
+
+type MigAnalyticStatus struct {
+	Analytics          *MigAnalyticStatusAnalytics `pulumi:"analytics"`
+	ObservedGeneration *int                        `pulumi:"observedGeneration"`
+}
+
+// MigAnalyticStatusInput is an input type that accepts MigAnalyticStatusArgs and MigAnalyticStatusOutput values.
+// You can construct a concrete instance of `MigAnalyticStatusInput` via:
+//
+//          MigAnalyticStatusArgs{...}
+type MigAnalyticStatusInput interface {
+	pulumi.Input
+
+	ToMigAnalyticStatusOutput() MigAnalyticStatusOutput
+	ToMigAnalyticStatusOutputWithContext(context.Context) MigAnalyticStatusOutput
+}
+
+type MigAnalyticStatusArgs struct {
+	Analytics          MigAnalyticStatusAnalyticsPtrInput `pulumi:"analytics"`
+	ObservedGeneration pulumi.IntPtrInput                 `pulumi:"observedGeneration"`
+}
+
+func (MigAnalyticStatusArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*MigAnalyticStatus)(nil)).Elem()
+}
+
+func (i MigAnalyticStatusArgs) ToMigAnalyticStatusOutput() MigAnalyticStatusOutput {
+	return i.ToMigAnalyticStatusOutputWithContext(context.Background())
+}
+
+func (i MigAnalyticStatusArgs) ToMigAnalyticStatusOutputWithContext(ctx context.Context) MigAnalyticStatusOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(MigAnalyticStatusOutput)
+}
+
+func (i MigAnalyticStatusArgs) ToMigAnalyticStatusPtrOutput() MigAnalyticStatusPtrOutput {
+	return i.ToMigAnalyticStatusPtrOutputWithContext(context.Background())
+}
+
+func (i MigAnalyticStatusArgs) ToMigAnalyticStatusPtrOutputWithContext(ctx context.Context) MigAnalyticStatusPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(MigAnalyticStatusOutput).ToMigAnalyticStatusPtrOutputWithContext(ctx)
+}
+
+// MigAnalyticStatusPtrInput is an input type that accepts MigAnalyticStatusArgs, MigAnalyticStatusPtr and MigAnalyticStatusPtrOutput values.
+// You can construct a concrete instance of `MigAnalyticStatusPtrInput` via:
+//
+//          MigAnalyticStatusArgs{...}
+//
+//  or:
+//
+//          nil
+type MigAnalyticStatusPtrInput interface {
+	pulumi.Input
+
+	ToMigAnalyticStatusPtrOutput() MigAnalyticStatusPtrOutput
+	ToMigAnalyticStatusPtrOutputWithContext(context.Context) MigAnalyticStatusPtrOutput
+}
+
+type migAnalyticStatusPtrType MigAnalyticStatusArgs
+
+func MigAnalyticStatusPtr(v *MigAnalyticStatusArgs) MigAnalyticStatusPtrInput {
+	return (*migAnalyticStatusPtrType)(v)
+}
+
+func (*migAnalyticStatusPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**MigAnalyticStatus)(nil)).Elem()
+}
+
+func (i *migAnalyticStatusPtrType) ToMigAnalyticStatusPtrOutput() MigAnalyticStatusPtrOutput {
+	return i.ToMigAnalyticStatusPtrOutputWithContext(context.Background())
+}
+
+func (i *migAnalyticStatusPtrType) ToMigAnalyticStatusPtrOutputWithContext(ctx context.Context) MigAnalyticStatusPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(MigAnalyticStatusPtrOutput)
+}
+
+type MigAnalyticStatusOutput struct{ *pulumi.OutputState }
+
+func (MigAnalyticStatusOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*MigAnalyticStatus)(nil)).Elem()
+}
+
+func (o MigAnalyticStatusOutput) ToMigAnalyticStatusOutput() MigAnalyticStatusOutput {
+	return o
+}
+
+func (o MigAnalyticStatusOutput) ToMigAnalyticStatusOutputWithContext(ctx context.Context) MigAnalyticStatusOutput {
+	return o
+}
+
+func (o MigAnalyticStatusOutput) ToMigAnalyticStatusPtrOutput() MigAnalyticStatusPtrOutput {
+	return o.ToMigAnalyticStatusPtrOutputWithContext(context.Background())
+}
+
+func (o MigAnalyticStatusOutput) ToMigAnalyticStatusPtrOutputWithContext(ctx context.Context) MigAnalyticStatusPtrOutput {
+	return o.ApplyT(func(v MigAnalyticStatus) *MigAnalyticStatus {
+		return &v
+	}).(MigAnalyticStatusPtrOutput)
+}
+func (o MigAnalyticStatusOutput) Analytics() MigAnalyticStatusAnalyticsPtrOutput {
+	return o.ApplyT(func(v MigAnalyticStatus) *MigAnalyticStatusAnalytics { return v.Analytics }).(MigAnalyticStatusAnalyticsPtrOutput)
+}
+
+func (o MigAnalyticStatusOutput) ObservedGeneration() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v MigAnalyticStatus) *int { return v.ObservedGeneration }).(pulumi.IntPtrOutput)
+}
+
+type MigAnalyticStatusPtrOutput struct{ *pulumi.OutputState }
+
+func (MigAnalyticStatusPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**MigAnalyticStatus)(nil)).Elem()
+}
+
+func (o MigAnalyticStatusPtrOutput) ToMigAnalyticStatusPtrOutput() MigAnalyticStatusPtrOutput {
+	return o
+}
+
+func (o MigAnalyticStatusPtrOutput) ToMigAnalyticStatusPtrOutputWithContext(ctx context.Context) MigAnalyticStatusPtrOutput {
+	return o
+}
+
+func (o MigAnalyticStatusPtrOutput) Elem() MigAnalyticStatusOutput {
+	return o.ApplyT(func(v *MigAnalyticStatus) MigAnalyticStatus { return *v }).(MigAnalyticStatusOutput)
+}
+
+func (o MigAnalyticStatusPtrOutput) Analytics() MigAnalyticStatusAnalyticsPtrOutput {
+	return o.ApplyT(func(v *MigAnalyticStatus) *MigAnalyticStatusAnalytics {
+		if v == nil {
+			return nil
+		}
+		return v.Analytics
+	}).(MigAnalyticStatusAnalyticsPtrOutput)
+}
+
+func (o MigAnalyticStatusPtrOutput) ObservedGeneration() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *MigAnalyticStatus) *int {
+		if v == nil {
+			return nil
+		}
+		return v.ObservedGeneration
+	}).(pulumi.IntPtrOutput)
+}
+
+type MigAnalyticStatusAnalytics struct {
+	Excludedk8sResourceTotal     int                                    `pulumi:"excludedk8sResourceTotal"`
+	ImageCount                   int                                    `pulumi:"imageCount"`
+	ImageSizeTotal               string                                 `pulumi:"imageSizeTotal"`
+	Incompatiblek8sResourceTotal int                                    `pulumi:"incompatiblek8sResourceTotal"`
+	K8sResourceTotal             int                                    `pulumi:"k8sResourceTotal"`
+	Namespaces                   []MigAnalyticStatusAnalyticsNamespaces `pulumi:"namespaces"`
+	PercentComplete              int                                    `pulumi:"percentComplete"`
+	Plan                         string                                 `pulumi:"plan"`
+	PvCapacity                   string                                 `pulumi:"pvCapacity"`
+	PvCount                      int                                    `pulumi:"pvCount"`
+}
+
+// MigAnalyticStatusAnalyticsInput is an input type that accepts MigAnalyticStatusAnalyticsArgs and MigAnalyticStatusAnalyticsOutput values.
+// You can construct a concrete instance of `MigAnalyticStatusAnalyticsInput` via:
+//
+//          MigAnalyticStatusAnalyticsArgs{...}
+type MigAnalyticStatusAnalyticsInput interface {
+	pulumi.Input
+
+	ToMigAnalyticStatusAnalyticsOutput() MigAnalyticStatusAnalyticsOutput
+	ToMigAnalyticStatusAnalyticsOutputWithContext(context.Context) MigAnalyticStatusAnalyticsOutput
+}
+
+type MigAnalyticStatusAnalyticsArgs struct {
+	Excludedk8sResourceTotal     pulumi.IntInput                                `pulumi:"excludedk8sResourceTotal"`
+	ImageCount                   pulumi.IntInput                                `pulumi:"imageCount"`
+	ImageSizeTotal               pulumi.StringInput                             `pulumi:"imageSizeTotal"`
+	Incompatiblek8sResourceTotal pulumi.IntInput                                `pulumi:"incompatiblek8sResourceTotal"`
+	K8sResourceTotal             pulumi.IntInput                                `pulumi:"k8sResourceTotal"`
+	Namespaces                   MigAnalyticStatusAnalyticsNamespacesArrayInput `pulumi:"namespaces"`
+	PercentComplete              pulumi.IntInput                                `pulumi:"percentComplete"`
+	Plan                         pulumi.StringInput                             `pulumi:"plan"`
+	PvCapacity                   pulumi.StringInput                             `pulumi:"pvCapacity"`
+	PvCount                      pulumi.IntInput                                `pulumi:"pvCount"`
+}
+
+func (MigAnalyticStatusAnalyticsArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*MigAnalyticStatusAnalytics)(nil)).Elem()
+}
+
+func (i MigAnalyticStatusAnalyticsArgs) ToMigAnalyticStatusAnalyticsOutput() MigAnalyticStatusAnalyticsOutput {
+	return i.ToMigAnalyticStatusAnalyticsOutputWithContext(context.Background())
+}
+
+func (i MigAnalyticStatusAnalyticsArgs) ToMigAnalyticStatusAnalyticsOutputWithContext(ctx context.Context) MigAnalyticStatusAnalyticsOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(MigAnalyticStatusAnalyticsOutput)
+}
+
+func (i MigAnalyticStatusAnalyticsArgs) ToMigAnalyticStatusAnalyticsPtrOutput() MigAnalyticStatusAnalyticsPtrOutput {
+	return i.ToMigAnalyticStatusAnalyticsPtrOutputWithContext(context.Background())
+}
+
+func (i MigAnalyticStatusAnalyticsArgs) ToMigAnalyticStatusAnalyticsPtrOutputWithContext(ctx context.Context) MigAnalyticStatusAnalyticsPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(MigAnalyticStatusAnalyticsOutput).ToMigAnalyticStatusAnalyticsPtrOutputWithContext(ctx)
+}
+
+// MigAnalyticStatusAnalyticsPtrInput is an input type that accepts MigAnalyticStatusAnalyticsArgs, MigAnalyticStatusAnalyticsPtr and MigAnalyticStatusAnalyticsPtrOutput values.
+// You can construct a concrete instance of `MigAnalyticStatusAnalyticsPtrInput` via:
+//
+//          MigAnalyticStatusAnalyticsArgs{...}
+//
+//  or:
+//
+//          nil
+type MigAnalyticStatusAnalyticsPtrInput interface {
+	pulumi.Input
+
+	ToMigAnalyticStatusAnalyticsPtrOutput() MigAnalyticStatusAnalyticsPtrOutput
+	ToMigAnalyticStatusAnalyticsPtrOutputWithContext(context.Context) MigAnalyticStatusAnalyticsPtrOutput
+}
+
+type migAnalyticStatusAnalyticsPtrType MigAnalyticStatusAnalyticsArgs
+
+func MigAnalyticStatusAnalyticsPtr(v *MigAnalyticStatusAnalyticsArgs) MigAnalyticStatusAnalyticsPtrInput {
+	return (*migAnalyticStatusAnalyticsPtrType)(v)
+}
+
+func (*migAnalyticStatusAnalyticsPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**MigAnalyticStatusAnalytics)(nil)).Elem()
+}
+
+func (i *migAnalyticStatusAnalyticsPtrType) ToMigAnalyticStatusAnalyticsPtrOutput() MigAnalyticStatusAnalyticsPtrOutput {
+	return i.ToMigAnalyticStatusAnalyticsPtrOutputWithContext(context.Background())
+}
+
+func (i *migAnalyticStatusAnalyticsPtrType) ToMigAnalyticStatusAnalyticsPtrOutputWithContext(ctx context.Context) MigAnalyticStatusAnalyticsPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(MigAnalyticStatusAnalyticsPtrOutput)
+}
+
+type MigAnalyticStatusAnalyticsOutput struct{ *pulumi.OutputState }
+
+func (MigAnalyticStatusAnalyticsOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*MigAnalyticStatusAnalytics)(nil)).Elem()
+}
+
+func (o MigAnalyticStatusAnalyticsOutput) ToMigAnalyticStatusAnalyticsOutput() MigAnalyticStatusAnalyticsOutput {
+	return o
+}
+
+func (o MigAnalyticStatusAnalyticsOutput) ToMigAnalyticStatusAnalyticsOutputWithContext(ctx context.Context) MigAnalyticStatusAnalyticsOutput {
+	return o
+}
+
+func (o MigAnalyticStatusAnalyticsOutput) ToMigAnalyticStatusAnalyticsPtrOutput() MigAnalyticStatusAnalyticsPtrOutput {
+	return o.ToMigAnalyticStatusAnalyticsPtrOutputWithContext(context.Background())
+}
+
+func (o MigAnalyticStatusAnalyticsOutput) ToMigAnalyticStatusAnalyticsPtrOutputWithContext(ctx context.Context) MigAnalyticStatusAnalyticsPtrOutput {
+	return o.ApplyT(func(v MigAnalyticStatusAnalytics) *MigAnalyticStatusAnalytics {
+		return &v
+	}).(MigAnalyticStatusAnalyticsPtrOutput)
+}
+func (o MigAnalyticStatusAnalyticsOutput) Excludedk8sResourceTotal() pulumi.IntOutput {
+	return o.ApplyT(func(v MigAnalyticStatusAnalytics) int { return v.Excludedk8sResourceTotal }).(pulumi.IntOutput)
+}
+
+func (o MigAnalyticStatusAnalyticsOutput) ImageCount() pulumi.IntOutput {
+	return o.ApplyT(func(v MigAnalyticStatusAnalytics) int { return v.ImageCount }).(pulumi.IntOutput)
+}
+
+func (o MigAnalyticStatusAnalyticsOutput) ImageSizeTotal() pulumi.StringOutput {
+	return o.ApplyT(func(v MigAnalyticStatusAnalytics) string { return v.ImageSizeTotal }).(pulumi.StringOutput)
+}
+
+func (o MigAnalyticStatusAnalyticsOutput) Incompatiblek8sResourceTotal() pulumi.IntOutput {
+	return o.ApplyT(func(v MigAnalyticStatusAnalytics) int { return v.Incompatiblek8sResourceTotal }).(pulumi.IntOutput)
+}
+
+func (o MigAnalyticStatusAnalyticsOutput) K8sResourceTotal() pulumi.IntOutput {
+	return o.ApplyT(func(v MigAnalyticStatusAnalytics) int { return v.K8sResourceTotal }).(pulumi.IntOutput)
+}
+
+func (o MigAnalyticStatusAnalyticsOutput) Namespaces() MigAnalyticStatusAnalyticsNamespacesArrayOutput {
+	return o.ApplyT(func(v MigAnalyticStatusAnalytics) []MigAnalyticStatusAnalyticsNamespaces { return v.Namespaces }).(MigAnalyticStatusAnalyticsNamespacesArrayOutput)
+}
+
+func (o MigAnalyticStatusAnalyticsOutput) PercentComplete() pulumi.IntOutput {
+	return o.ApplyT(func(v MigAnalyticStatusAnalytics) int { return v.PercentComplete }).(pulumi.IntOutput)
+}
+
+func (o MigAnalyticStatusAnalyticsOutput) Plan() pulumi.StringOutput {
+	return o.ApplyT(func(v MigAnalyticStatusAnalytics) string { return v.Plan }).(pulumi.StringOutput)
+}
+
+func (o MigAnalyticStatusAnalyticsOutput) PvCapacity() pulumi.StringOutput {
+	return o.ApplyT(func(v MigAnalyticStatusAnalytics) string { return v.PvCapacity }).(pulumi.StringOutput)
+}
+
+func (o MigAnalyticStatusAnalyticsOutput) PvCount() pulumi.IntOutput {
+	return o.ApplyT(func(v MigAnalyticStatusAnalytics) int { return v.PvCount }).(pulumi.IntOutput)
+}
+
+type MigAnalyticStatusAnalyticsPtrOutput struct{ *pulumi.OutputState }
+
+func (MigAnalyticStatusAnalyticsPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**MigAnalyticStatusAnalytics)(nil)).Elem()
+}
+
+func (o MigAnalyticStatusAnalyticsPtrOutput) ToMigAnalyticStatusAnalyticsPtrOutput() MigAnalyticStatusAnalyticsPtrOutput {
+	return o
+}
+
+func (o MigAnalyticStatusAnalyticsPtrOutput) ToMigAnalyticStatusAnalyticsPtrOutputWithContext(ctx context.Context) MigAnalyticStatusAnalyticsPtrOutput {
+	return o
+}
+
+func (o MigAnalyticStatusAnalyticsPtrOutput) Elem() MigAnalyticStatusAnalyticsOutput {
+	return o.ApplyT(func(v *MigAnalyticStatusAnalytics) MigAnalyticStatusAnalytics { return *v }).(MigAnalyticStatusAnalyticsOutput)
+}
+
+func (o MigAnalyticStatusAnalyticsPtrOutput) Excludedk8sResourceTotal() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *MigAnalyticStatusAnalytics) *int {
+		if v == nil {
+			return nil
+		}
+		return &v.Excludedk8sResourceTotal
+	}).(pulumi.IntPtrOutput)
+}
+
+func (o MigAnalyticStatusAnalyticsPtrOutput) ImageCount() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *MigAnalyticStatusAnalytics) *int {
+		if v == nil {
+			return nil
+		}
+		return &v.ImageCount
+	}).(pulumi.IntPtrOutput)
+}
+
+func (o MigAnalyticStatusAnalyticsPtrOutput) ImageSizeTotal() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *MigAnalyticStatusAnalytics) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.ImageSizeTotal
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o MigAnalyticStatusAnalyticsPtrOutput) Incompatiblek8sResourceTotal() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *MigAnalyticStatusAnalytics) *int {
+		if v == nil {
+			return nil
+		}
+		return &v.Incompatiblek8sResourceTotal
+	}).(pulumi.IntPtrOutput)
+}
+
+func (o MigAnalyticStatusAnalyticsPtrOutput) K8sResourceTotal() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *MigAnalyticStatusAnalytics) *int {
+		if v == nil {
+			return nil
+		}
+		return &v.K8sResourceTotal
+	}).(pulumi.IntPtrOutput)
+}
+
+func (o MigAnalyticStatusAnalyticsPtrOutput) Namespaces() MigAnalyticStatusAnalyticsNamespacesArrayOutput {
+	return o.ApplyT(func(v *MigAnalyticStatusAnalytics) []MigAnalyticStatusAnalyticsNamespaces {
+		if v == nil {
+			return nil
+		}
+		return v.Namespaces
+	}).(MigAnalyticStatusAnalyticsNamespacesArrayOutput)
+}
+
+func (o MigAnalyticStatusAnalyticsPtrOutput) PercentComplete() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *MigAnalyticStatusAnalytics) *int {
+		if v == nil {
+			return nil
+		}
+		return &v.PercentComplete
+	}).(pulumi.IntPtrOutput)
+}
+
+func (o MigAnalyticStatusAnalyticsPtrOutput) Plan() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *MigAnalyticStatusAnalytics) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.Plan
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o MigAnalyticStatusAnalyticsPtrOutput) PvCapacity() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *MigAnalyticStatusAnalytics) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.PvCapacity
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o MigAnalyticStatusAnalyticsPtrOutput) PvCount() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *MigAnalyticStatusAnalytics) *int {
+		if v == nil {
+			return nil
+		}
+		return &v.PvCount
+	}).(pulumi.IntPtrOutput)
+}
+
+type MigAnalyticStatusAnalyticsNamespaces struct {
+	ExcludedK8SResourceTotal     int                                                            `pulumi:"excludedK8SResourceTotal"`
+	ExcludedK8SResources         []MigAnalyticStatusAnalyticsNamespacesExcludedK8SResources     `pulumi:"excludedK8SResources"`
+	ImageCount                   int                                                            `pulumi:"imageCount"`
+	ImageSizeTotal               string                                                         `pulumi:"imageSizeTotal"`
+	Images                       []MigAnalyticStatusAnalyticsNamespacesImages                   `pulumi:"images"`
+	IncompatibleK8SResourceTotal int                                                            `pulumi:"incompatibleK8SResourceTotal"`
+	IncompatibleK8SResources     []MigAnalyticStatusAnalyticsNamespacesIncompatibleK8SResources `pulumi:"incompatibleK8SResources"`
+	K8sResourceTotal             int                                                            `pulumi:"k8sResourceTotal"`
+	K8sResources                 []MigAnalyticStatusAnalyticsNamespacesK8sResources             `pulumi:"k8sResources"`
+	Namespace                    string                                                         `pulumi:"namespace"`
+	PvCapacity                   string                                                         `pulumi:"pvCapacity"`
+	PvCount                      int                                                            `pulumi:"pvCount"`
+}
+
+// MigAnalyticStatusAnalyticsNamespacesInput is an input type that accepts MigAnalyticStatusAnalyticsNamespacesArgs and MigAnalyticStatusAnalyticsNamespacesOutput values.
+// You can construct a concrete instance of `MigAnalyticStatusAnalyticsNamespacesInput` via:
+//
+//          MigAnalyticStatusAnalyticsNamespacesArgs{...}
+type MigAnalyticStatusAnalyticsNamespacesInput interface {
+	pulumi.Input
+
+	ToMigAnalyticStatusAnalyticsNamespacesOutput() MigAnalyticStatusAnalyticsNamespacesOutput
+	ToMigAnalyticStatusAnalyticsNamespacesOutputWithContext(context.Context) MigAnalyticStatusAnalyticsNamespacesOutput
+}
+
+type MigAnalyticStatusAnalyticsNamespacesArgs struct {
+	ExcludedK8SResourceTotal     pulumi.IntInput                                                        `pulumi:"excludedK8SResourceTotal"`
+	ExcludedK8SResources         MigAnalyticStatusAnalyticsNamespacesExcludedK8SResourcesArrayInput     `pulumi:"excludedK8SResources"`
+	ImageCount                   pulumi.IntInput                                                        `pulumi:"imageCount"`
+	ImageSizeTotal               pulumi.StringInput                                                     `pulumi:"imageSizeTotal"`
+	Images                       MigAnalyticStatusAnalyticsNamespacesImagesArrayInput                   `pulumi:"images"`
+	IncompatibleK8SResourceTotal pulumi.IntInput                                                        `pulumi:"incompatibleK8SResourceTotal"`
+	IncompatibleK8SResources     MigAnalyticStatusAnalyticsNamespacesIncompatibleK8SResourcesArrayInput `pulumi:"incompatibleK8SResources"`
+	K8sResourceTotal             pulumi.IntInput                                                        `pulumi:"k8sResourceTotal"`
+	K8sResources                 MigAnalyticStatusAnalyticsNamespacesK8sResourcesArrayInput             `pulumi:"k8sResources"`
+	Namespace                    pulumi.StringInput                                                     `pulumi:"namespace"`
+	PvCapacity                   pulumi.StringInput                                                     `pulumi:"pvCapacity"`
+	PvCount                      pulumi.IntInput                                                        `pulumi:"pvCount"`
+}
+
+func (MigAnalyticStatusAnalyticsNamespacesArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*MigAnalyticStatusAnalyticsNamespaces)(nil)).Elem()
+}
+
+func (i MigAnalyticStatusAnalyticsNamespacesArgs) ToMigAnalyticStatusAnalyticsNamespacesOutput() MigAnalyticStatusAnalyticsNamespacesOutput {
+	return i.ToMigAnalyticStatusAnalyticsNamespacesOutputWithContext(context.Background())
+}
+
+func (i MigAnalyticStatusAnalyticsNamespacesArgs) ToMigAnalyticStatusAnalyticsNamespacesOutputWithContext(ctx context.Context) MigAnalyticStatusAnalyticsNamespacesOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(MigAnalyticStatusAnalyticsNamespacesOutput)
+}
+
+// MigAnalyticStatusAnalyticsNamespacesArrayInput is an input type that accepts MigAnalyticStatusAnalyticsNamespacesArray and MigAnalyticStatusAnalyticsNamespacesArrayOutput values.
+// You can construct a concrete instance of `MigAnalyticStatusAnalyticsNamespacesArrayInput` via:
+//
+//          MigAnalyticStatusAnalyticsNamespacesArray{ MigAnalyticStatusAnalyticsNamespacesArgs{...} }
+type MigAnalyticStatusAnalyticsNamespacesArrayInput interface {
+	pulumi.Input
+
+	ToMigAnalyticStatusAnalyticsNamespacesArrayOutput() MigAnalyticStatusAnalyticsNamespacesArrayOutput
+	ToMigAnalyticStatusAnalyticsNamespacesArrayOutputWithContext(context.Context) MigAnalyticStatusAnalyticsNamespacesArrayOutput
+}
+
+type MigAnalyticStatusAnalyticsNamespacesArray []MigAnalyticStatusAnalyticsNamespacesInput
+
+func (MigAnalyticStatusAnalyticsNamespacesArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]MigAnalyticStatusAnalyticsNamespaces)(nil)).Elem()
+}
+
+func (i MigAnalyticStatusAnalyticsNamespacesArray) ToMigAnalyticStatusAnalyticsNamespacesArrayOutput() MigAnalyticStatusAnalyticsNamespacesArrayOutput {
+	return i.ToMigAnalyticStatusAnalyticsNamespacesArrayOutputWithContext(context.Background())
+}
+
+func (i MigAnalyticStatusAnalyticsNamespacesArray) ToMigAnalyticStatusAnalyticsNamespacesArrayOutputWithContext(ctx context.Context) MigAnalyticStatusAnalyticsNamespacesArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(MigAnalyticStatusAnalyticsNamespacesArrayOutput)
+}
+
+type MigAnalyticStatusAnalyticsNamespacesOutput struct{ *pulumi.OutputState }
+
+func (MigAnalyticStatusAnalyticsNamespacesOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*MigAnalyticStatusAnalyticsNamespaces)(nil)).Elem()
+}
+
+func (o MigAnalyticStatusAnalyticsNamespacesOutput) ToMigAnalyticStatusAnalyticsNamespacesOutput() MigAnalyticStatusAnalyticsNamespacesOutput {
+	return o
+}
+
+func (o MigAnalyticStatusAnalyticsNamespacesOutput) ToMigAnalyticStatusAnalyticsNamespacesOutputWithContext(ctx context.Context) MigAnalyticStatusAnalyticsNamespacesOutput {
+	return o
+}
+
+func (o MigAnalyticStatusAnalyticsNamespacesOutput) ExcludedK8SResourceTotal() pulumi.IntOutput {
+	return o.ApplyT(func(v MigAnalyticStatusAnalyticsNamespaces) int { return v.ExcludedK8SResourceTotal }).(pulumi.IntOutput)
+}
+
+func (o MigAnalyticStatusAnalyticsNamespacesOutput) ExcludedK8SResources() MigAnalyticStatusAnalyticsNamespacesExcludedK8SResourcesArrayOutput {
+	return o.ApplyT(func(v MigAnalyticStatusAnalyticsNamespaces) []MigAnalyticStatusAnalyticsNamespacesExcludedK8SResources {
+		return v.ExcludedK8SResources
+	}).(MigAnalyticStatusAnalyticsNamespacesExcludedK8SResourcesArrayOutput)
+}
+
+func (o MigAnalyticStatusAnalyticsNamespacesOutput) ImageCount() pulumi.IntOutput {
+	return o.ApplyT(func(v MigAnalyticStatusAnalyticsNamespaces) int { return v.ImageCount }).(pulumi.IntOutput)
+}
+
+func (o MigAnalyticStatusAnalyticsNamespacesOutput) ImageSizeTotal() pulumi.StringOutput {
+	return o.ApplyT(func(v MigAnalyticStatusAnalyticsNamespaces) string { return v.ImageSizeTotal }).(pulumi.StringOutput)
+}
+
+func (o MigAnalyticStatusAnalyticsNamespacesOutput) Images() MigAnalyticStatusAnalyticsNamespacesImagesArrayOutput {
+	return o.ApplyT(func(v MigAnalyticStatusAnalyticsNamespaces) []MigAnalyticStatusAnalyticsNamespacesImages {
+		return v.Images
+	}).(MigAnalyticStatusAnalyticsNamespacesImagesArrayOutput)
+}
+
+func (o MigAnalyticStatusAnalyticsNamespacesOutput) IncompatibleK8SResourceTotal() pulumi.IntOutput {
+	return o.ApplyT(func(v MigAnalyticStatusAnalyticsNamespaces) int { return v.IncompatibleK8SResourceTotal }).(pulumi.IntOutput)
+}
+
+func (o MigAnalyticStatusAnalyticsNamespacesOutput) IncompatibleK8SResources() MigAnalyticStatusAnalyticsNamespacesIncompatibleK8SResourcesArrayOutput {
+	return o.ApplyT(func(v MigAnalyticStatusAnalyticsNamespaces) []MigAnalyticStatusAnalyticsNamespacesIncompatibleK8SResources {
+		return v.IncompatibleK8SResources
+	}).(MigAnalyticStatusAnalyticsNamespacesIncompatibleK8SResourcesArrayOutput)
+}
+
+func (o MigAnalyticStatusAnalyticsNamespacesOutput) K8sResourceTotal() pulumi.IntOutput {
+	return o.ApplyT(func(v MigAnalyticStatusAnalyticsNamespaces) int { return v.K8sResourceTotal }).(pulumi.IntOutput)
+}
+
+func (o MigAnalyticStatusAnalyticsNamespacesOutput) K8sResources() MigAnalyticStatusAnalyticsNamespacesK8sResourcesArrayOutput {
+	return o.ApplyT(func(v MigAnalyticStatusAnalyticsNamespaces) []MigAnalyticStatusAnalyticsNamespacesK8sResources {
+		return v.K8sResources
+	}).(MigAnalyticStatusAnalyticsNamespacesK8sResourcesArrayOutput)
+}
+
+func (o MigAnalyticStatusAnalyticsNamespacesOutput) Namespace() pulumi.StringOutput {
+	return o.ApplyT(func(v MigAnalyticStatusAnalyticsNamespaces) string { return v.Namespace }).(pulumi.StringOutput)
+}
+
+func (o MigAnalyticStatusAnalyticsNamespacesOutput) PvCapacity() pulumi.StringOutput {
+	return o.ApplyT(func(v MigAnalyticStatusAnalyticsNamespaces) string { return v.PvCapacity }).(pulumi.StringOutput)
+}
+
+func (o MigAnalyticStatusAnalyticsNamespacesOutput) PvCount() pulumi.IntOutput {
+	return o.ApplyT(func(v MigAnalyticStatusAnalyticsNamespaces) int { return v.PvCount }).(pulumi.IntOutput)
+}
+
+type MigAnalyticStatusAnalyticsNamespacesArrayOutput struct{ *pulumi.OutputState }
+
+func (MigAnalyticStatusAnalyticsNamespacesArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]MigAnalyticStatusAnalyticsNamespaces)(nil)).Elem()
+}
+
+func (o MigAnalyticStatusAnalyticsNamespacesArrayOutput) ToMigAnalyticStatusAnalyticsNamespacesArrayOutput() MigAnalyticStatusAnalyticsNamespacesArrayOutput {
+	return o
+}
+
+func (o MigAnalyticStatusAnalyticsNamespacesArrayOutput) ToMigAnalyticStatusAnalyticsNamespacesArrayOutputWithContext(ctx context.Context) MigAnalyticStatusAnalyticsNamespacesArrayOutput {
+	return o
+}
+
+func (o MigAnalyticStatusAnalyticsNamespacesArrayOutput) Index(i pulumi.IntInput) MigAnalyticStatusAnalyticsNamespacesOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) MigAnalyticStatusAnalyticsNamespaces {
+		return vs[0].([]MigAnalyticStatusAnalyticsNamespaces)[vs[1].(int)]
+	}).(MigAnalyticStatusAnalyticsNamespacesOutput)
+}
+
+type MigAnalyticStatusAnalyticsNamespacesExcludedK8SResources struct {
+	Count   int    `pulumi:"count"`
+	Group   string `pulumi:"group"`
+	Kind    string `pulumi:"kind"`
+	Version string `pulumi:"version"`
+}
+
+// MigAnalyticStatusAnalyticsNamespacesExcludedK8SResourcesInput is an input type that accepts MigAnalyticStatusAnalyticsNamespacesExcludedK8SResourcesArgs and MigAnalyticStatusAnalyticsNamespacesExcludedK8SResourcesOutput values.
+// You can construct a concrete instance of `MigAnalyticStatusAnalyticsNamespacesExcludedK8SResourcesInput` via:
+//
+//          MigAnalyticStatusAnalyticsNamespacesExcludedK8SResourcesArgs{...}
+type MigAnalyticStatusAnalyticsNamespacesExcludedK8SResourcesInput interface {
+	pulumi.Input
+
+	ToMigAnalyticStatusAnalyticsNamespacesExcludedK8SResourcesOutput() MigAnalyticStatusAnalyticsNamespacesExcludedK8SResourcesOutput
+	ToMigAnalyticStatusAnalyticsNamespacesExcludedK8SResourcesOutputWithContext(context.Context) MigAnalyticStatusAnalyticsNamespacesExcludedK8SResourcesOutput
+}
+
+type MigAnalyticStatusAnalyticsNamespacesExcludedK8SResourcesArgs struct {
+	Count   pulumi.IntInput    `pulumi:"count"`
+	Group   pulumi.StringInput `pulumi:"group"`
+	Kind    pulumi.StringInput `pulumi:"kind"`
+	Version pulumi.StringInput `pulumi:"version"`
+}
+
+func (MigAnalyticStatusAnalyticsNamespacesExcludedK8SResourcesArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*MigAnalyticStatusAnalyticsNamespacesExcludedK8SResources)(nil)).Elem()
+}
+
+func (i MigAnalyticStatusAnalyticsNamespacesExcludedK8SResourcesArgs) ToMigAnalyticStatusAnalyticsNamespacesExcludedK8SResourcesOutput() MigAnalyticStatusAnalyticsNamespacesExcludedK8SResourcesOutput {
+	return i.ToMigAnalyticStatusAnalyticsNamespacesExcludedK8SResourcesOutputWithContext(context.Background())
+}
+
+func (i MigAnalyticStatusAnalyticsNamespacesExcludedK8SResourcesArgs) ToMigAnalyticStatusAnalyticsNamespacesExcludedK8SResourcesOutputWithContext(ctx context.Context) MigAnalyticStatusAnalyticsNamespacesExcludedK8SResourcesOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(MigAnalyticStatusAnalyticsNamespacesExcludedK8SResourcesOutput)
+}
+
+// MigAnalyticStatusAnalyticsNamespacesExcludedK8SResourcesArrayInput is an input type that accepts MigAnalyticStatusAnalyticsNamespacesExcludedK8SResourcesArray and MigAnalyticStatusAnalyticsNamespacesExcludedK8SResourcesArrayOutput values.
+// You can construct a concrete instance of `MigAnalyticStatusAnalyticsNamespacesExcludedK8SResourcesArrayInput` via:
+//
+//          MigAnalyticStatusAnalyticsNamespacesExcludedK8SResourcesArray{ MigAnalyticStatusAnalyticsNamespacesExcludedK8SResourcesArgs{...} }
+type MigAnalyticStatusAnalyticsNamespacesExcludedK8SResourcesArrayInput interface {
+	pulumi.Input
+
+	ToMigAnalyticStatusAnalyticsNamespacesExcludedK8SResourcesArrayOutput() MigAnalyticStatusAnalyticsNamespacesExcludedK8SResourcesArrayOutput
+	ToMigAnalyticStatusAnalyticsNamespacesExcludedK8SResourcesArrayOutputWithContext(context.Context) MigAnalyticStatusAnalyticsNamespacesExcludedK8SResourcesArrayOutput
+}
+
+type MigAnalyticStatusAnalyticsNamespacesExcludedK8SResourcesArray []MigAnalyticStatusAnalyticsNamespacesExcludedK8SResourcesInput
+
+func (MigAnalyticStatusAnalyticsNamespacesExcludedK8SResourcesArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]MigAnalyticStatusAnalyticsNamespacesExcludedK8SResources)(nil)).Elem()
+}
+
+func (i MigAnalyticStatusAnalyticsNamespacesExcludedK8SResourcesArray) ToMigAnalyticStatusAnalyticsNamespacesExcludedK8SResourcesArrayOutput() MigAnalyticStatusAnalyticsNamespacesExcludedK8SResourcesArrayOutput {
+	return i.ToMigAnalyticStatusAnalyticsNamespacesExcludedK8SResourcesArrayOutputWithContext(context.Background())
+}
+
+func (i MigAnalyticStatusAnalyticsNamespacesExcludedK8SResourcesArray) ToMigAnalyticStatusAnalyticsNamespacesExcludedK8SResourcesArrayOutputWithContext(ctx context.Context) MigAnalyticStatusAnalyticsNamespacesExcludedK8SResourcesArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(MigAnalyticStatusAnalyticsNamespacesExcludedK8SResourcesArrayOutput)
+}
+
+type MigAnalyticStatusAnalyticsNamespacesExcludedK8SResourcesOutput struct{ *pulumi.OutputState }
+
+func (MigAnalyticStatusAnalyticsNamespacesExcludedK8SResourcesOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*MigAnalyticStatusAnalyticsNamespacesExcludedK8SResources)(nil)).Elem()
+}
+
+func (o MigAnalyticStatusAnalyticsNamespacesExcludedK8SResourcesOutput) ToMigAnalyticStatusAnalyticsNamespacesExcludedK8SResourcesOutput() MigAnalyticStatusAnalyticsNamespacesExcludedK8SResourcesOutput {
+	return o
+}
+
+func (o MigAnalyticStatusAnalyticsNamespacesExcludedK8SResourcesOutput) ToMigAnalyticStatusAnalyticsNamespacesExcludedK8SResourcesOutputWithContext(ctx context.Context) MigAnalyticStatusAnalyticsNamespacesExcludedK8SResourcesOutput {
+	return o
+}
+
+func (o MigAnalyticStatusAnalyticsNamespacesExcludedK8SResourcesOutput) Count() pulumi.IntOutput {
+	return o.ApplyT(func(v MigAnalyticStatusAnalyticsNamespacesExcludedK8SResources) int { return v.Count }).(pulumi.IntOutput)
+}
+
+func (o MigAnalyticStatusAnalyticsNamespacesExcludedK8SResourcesOutput) Group() pulumi.StringOutput {
+	return o.ApplyT(func(v MigAnalyticStatusAnalyticsNamespacesExcludedK8SResources) string { return v.Group }).(pulumi.StringOutput)
+}
+
+func (o MigAnalyticStatusAnalyticsNamespacesExcludedK8SResourcesOutput) Kind() pulumi.StringOutput {
+	return o.ApplyT(func(v MigAnalyticStatusAnalyticsNamespacesExcludedK8SResources) string { return v.Kind }).(pulumi.StringOutput)
+}
+
+func (o MigAnalyticStatusAnalyticsNamespacesExcludedK8SResourcesOutput) Version() pulumi.StringOutput {
+	return o.ApplyT(func(v MigAnalyticStatusAnalyticsNamespacesExcludedK8SResources) string { return v.Version }).(pulumi.StringOutput)
+}
+
+type MigAnalyticStatusAnalyticsNamespacesExcludedK8SResourcesArrayOutput struct{ *pulumi.OutputState }
+
+func (MigAnalyticStatusAnalyticsNamespacesExcludedK8SResourcesArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]MigAnalyticStatusAnalyticsNamespacesExcludedK8SResources)(nil)).Elem()
+}
+
+func (o MigAnalyticStatusAnalyticsNamespacesExcludedK8SResourcesArrayOutput) ToMigAnalyticStatusAnalyticsNamespacesExcludedK8SResourcesArrayOutput() MigAnalyticStatusAnalyticsNamespacesExcludedK8SResourcesArrayOutput {
+	return o
+}
+
+func (o MigAnalyticStatusAnalyticsNamespacesExcludedK8SResourcesArrayOutput) ToMigAnalyticStatusAnalyticsNamespacesExcludedK8SResourcesArrayOutputWithContext(ctx context.Context) MigAnalyticStatusAnalyticsNamespacesExcludedK8SResourcesArrayOutput {
+	return o
+}
+
+func (o MigAnalyticStatusAnalyticsNamespacesExcludedK8SResourcesArrayOutput) Index(i pulumi.IntInput) MigAnalyticStatusAnalyticsNamespacesExcludedK8SResourcesOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) MigAnalyticStatusAnalyticsNamespacesExcludedK8SResources {
+		return vs[0].([]MigAnalyticStatusAnalyticsNamespacesExcludedK8SResources)[vs[1].(int)]
+	}).(MigAnalyticStatusAnalyticsNamespacesExcludedK8SResourcesOutput)
+}
+
+type MigAnalyticStatusAnalyticsNamespacesImages struct {
+	Name      string `pulumi:"name"`
+	Reference string `pulumi:"reference"`
+	Size      string `pulumi:"size"`
+}
+
+// MigAnalyticStatusAnalyticsNamespacesImagesInput is an input type that accepts MigAnalyticStatusAnalyticsNamespacesImagesArgs and MigAnalyticStatusAnalyticsNamespacesImagesOutput values.
+// You can construct a concrete instance of `MigAnalyticStatusAnalyticsNamespacesImagesInput` via:
+//
+//          MigAnalyticStatusAnalyticsNamespacesImagesArgs{...}
+type MigAnalyticStatusAnalyticsNamespacesImagesInput interface {
+	pulumi.Input
+
+	ToMigAnalyticStatusAnalyticsNamespacesImagesOutput() MigAnalyticStatusAnalyticsNamespacesImagesOutput
+	ToMigAnalyticStatusAnalyticsNamespacesImagesOutputWithContext(context.Context) MigAnalyticStatusAnalyticsNamespacesImagesOutput
+}
+
+type MigAnalyticStatusAnalyticsNamespacesImagesArgs struct {
+	Name      pulumi.StringInput `pulumi:"name"`
+	Reference pulumi.StringInput `pulumi:"reference"`
+	Size      pulumi.StringInput `pulumi:"size"`
+}
+
+func (MigAnalyticStatusAnalyticsNamespacesImagesArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*MigAnalyticStatusAnalyticsNamespacesImages)(nil)).Elem()
+}
+
+func (i MigAnalyticStatusAnalyticsNamespacesImagesArgs) ToMigAnalyticStatusAnalyticsNamespacesImagesOutput() MigAnalyticStatusAnalyticsNamespacesImagesOutput {
+	return i.ToMigAnalyticStatusAnalyticsNamespacesImagesOutputWithContext(context.Background())
+}
+
+func (i MigAnalyticStatusAnalyticsNamespacesImagesArgs) ToMigAnalyticStatusAnalyticsNamespacesImagesOutputWithContext(ctx context.Context) MigAnalyticStatusAnalyticsNamespacesImagesOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(MigAnalyticStatusAnalyticsNamespacesImagesOutput)
+}
+
+// MigAnalyticStatusAnalyticsNamespacesImagesArrayInput is an input type that accepts MigAnalyticStatusAnalyticsNamespacesImagesArray and MigAnalyticStatusAnalyticsNamespacesImagesArrayOutput values.
+// You can construct a concrete instance of `MigAnalyticStatusAnalyticsNamespacesImagesArrayInput` via:
+//
+//          MigAnalyticStatusAnalyticsNamespacesImagesArray{ MigAnalyticStatusAnalyticsNamespacesImagesArgs{...} }
+type MigAnalyticStatusAnalyticsNamespacesImagesArrayInput interface {
+	pulumi.Input
+
+	ToMigAnalyticStatusAnalyticsNamespacesImagesArrayOutput() MigAnalyticStatusAnalyticsNamespacesImagesArrayOutput
+	ToMigAnalyticStatusAnalyticsNamespacesImagesArrayOutputWithContext(context.Context) MigAnalyticStatusAnalyticsNamespacesImagesArrayOutput
+}
+
+type MigAnalyticStatusAnalyticsNamespacesImagesArray []MigAnalyticStatusAnalyticsNamespacesImagesInput
+
+func (MigAnalyticStatusAnalyticsNamespacesImagesArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]MigAnalyticStatusAnalyticsNamespacesImages)(nil)).Elem()
+}
+
+func (i MigAnalyticStatusAnalyticsNamespacesImagesArray) ToMigAnalyticStatusAnalyticsNamespacesImagesArrayOutput() MigAnalyticStatusAnalyticsNamespacesImagesArrayOutput {
+	return i.ToMigAnalyticStatusAnalyticsNamespacesImagesArrayOutputWithContext(context.Background())
+}
+
+func (i MigAnalyticStatusAnalyticsNamespacesImagesArray) ToMigAnalyticStatusAnalyticsNamespacesImagesArrayOutputWithContext(ctx context.Context) MigAnalyticStatusAnalyticsNamespacesImagesArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(MigAnalyticStatusAnalyticsNamespacesImagesArrayOutput)
+}
+
+type MigAnalyticStatusAnalyticsNamespacesImagesOutput struct{ *pulumi.OutputState }
+
+func (MigAnalyticStatusAnalyticsNamespacesImagesOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*MigAnalyticStatusAnalyticsNamespacesImages)(nil)).Elem()
+}
+
+func (o MigAnalyticStatusAnalyticsNamespacesImagesOutput) ToMigAnalyticStatusAnalyticsNamespacesImagesOutput() MigAnalyticStatusAnalyticsNamespacesImagesOutput {
+	return o
+}
+
+func (o MigAnalyticStatusAnalyticsNamespacesImagesOutput) ToMigAnalyticStatusAnalyticsNamespacesImagesOutputWithContext(ctx context.Context) MigAnalyticStatusAnalyticsNamespacesImagesOutput {
+	return o
+}
+
+func (o MigAnalyticStatusAnalyticsNamespacesImagesOutput) Name() pulumi.StringOutput {
+	return o.ApplyT(func(v MigAnalyticStatusAnalyticsNamespacesImages) string { return v.Name }).(pulumi.StringOutput)
+}
+
+func (o MigAnalyticStatusAnalyticsNamespacesImagesOutput) Reference() pulumi.StringOutput {
+	return o.ApplyT(func(v MigAnalyticStatusAnalyticsNamespacesImages) string { return v.Reference }).(pulumi.StringOutput)
+}
+
+func (o MigAnalyticStatusAnalyticsNamespacesImagesOutput) Size() pulumi.StringOutput {
+	return o.ApplyT(func(v MigAnalyticStatusAnalyticsNamespacesImages) string { return v.Size }).(pulumi.StringOutput)
+}
+
+type MigAnalyticStatusAnalyticsNamespacesImagesArrayOutput struct{ *pulumi.OutputState }
+
+func (MigAnalyticStatusAnalyticsNamespacesImagesArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]MigAnalyticStatusAnalyticsNamespacesImages)(nil)).Elem()
+}
+
+func (o MigAnalyticStatusAnalyticsNamespacesImagesArrayOutput) ToMigAnalyticStatusAnalyticsNamespacesImagesArrayOutput() MigAnalyticStatusAnalyticsNamespacesImagesArrayOutput {
+	return o
+}
+
+func (o MigAnalyticStatusAnalyticsNamespacesImagesArrayOutput) ToMigAnalyticStatusAnalyticsNamespacesImagesArrayOutputWithContext(ctx context.Context) MigAnalyticStatusAnalyticsNamespacesImagesArrayOutput {
+	return o
+}
+
+func (o MigAnalyticStatusAnalyticsNamespacesImagesArrayOutput) Index(i pulumi.IntInput) MigAnalyticStatusAnalyticsNamespacesImagesOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) MigAnalyticStatusAnalyticsNamespacesImages {
+		return vs[0].([]MigAnalyticStatusAnalyticsNamespacesImages)[vs[1].(int)]
+	}).(MigAnalyticStatusAnalyticsNamespacesImagesOutput)
+}
+
+type MigAnalyticStatusAnalyticsNamespacesIncompatibleK8SResources struct {
+	Count   int    `pulumi:"count"`
+	Group   string `pulumi:"group"`
+	Kind    string `pulumi:"kind"`
+	Version string `pulumi:"version"`
+}
+
+// MigAnalyticStatusAnalyticsNamespacesIncompatibleK8SResourcesInput is an input type that accepts MigAnalyticStatusAnalyticsNamespacesIncompatibleK8SResourcesArgs and MigAnalyticStatusAnalyticsNamespacesIncompatibleK8SResourcesOutput values.
+// You can construct a concrete instance of `MigAnalyticStatusAnalyticsNamespacesIncompatibleK8SResourcesInput` via:
+//
+//          MigAnalyticStatusAnalyticsNamespacesIncompatibleK8SResourcesArgs{...}
+type MigAnalyticStatusAnalyticsNamespacesIncompatibleK8SResourcesInput interface {
+	pulumi.Input
+
+	ToMigAnalyticStatusAnalyticsNamespacesIncompatibleK8SResourcesOutput() MigAnalyticStatusAnalyticsNamespacesIncompatibleK8SResourcesOutput
+	ToMigAnalyticStatusAnalyticsNamespacesIncompatibleK8SResourcesOutputWithContext(context.Context) MigAnalyticStatusAnalyticsNamespacesIncompatibleK8SResourcesOutput
+}
+
+type MigAnalyticStatusAnalyticsNamespacesIncompatibleK8SResourcesArgs struct {
+	Count   pulumi.IntInput    `pulumi:"count"`
+	Group   pulumi.StringInput `pulumi:"group"`
+	Kind    pulumi.StringInput `pulumi:"kind"`
+	Version pulumi.StringInput `pulumi:"version"`
+}
+
+func (MigAnalyticStatusAnalyticsNamespacesIncompatibleK8SResourcesArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*MigAnalyticStatusAnalyticsNamespacesIncompatibleK8SResources)(nil)).Elem()
+}
+
+func (i MigAnalyticStatusAnalyticsNamespacesIncompatibleK8SResourcesArgs) ToMigAnalyticStatusAnalyticsNamespacesIncompatibleK8SResourcesOutput() MigAnalyticStatusAnalyticsNamespacesIncompatibleK8SResourcesOutput {
+	return i.ToMigAnalyticStatusAnalyticsNamespacesIncompatibleK8SResourcesOutputWithContext(context.Background())
+}
+
+func (i MigAnalyticStatusAnalyticsNamespacesIncompatibleK8SResourcesArgs) ToMigAnalyticStatusAnalyticsNamespacesIncompatibleK8SResourcesOutputWithContext(ctx context.Context) MigAnalyticStatusAnalyticsNamespacesIncompatibleK8SResourcesOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(MigAnalyticStatusAnalyticsNamespacesIncompatibleK8SResourcesOutput)
+}
+
+// MigAnalyticStatusAnalyticsNamespacesIncompatibleK8SResourcesArrayInput is an input type that accepts MigAnalyticStatusAnalyticsNamespacesIncompatibleK8SResourcesArray and MigAnalyticStatusAnalyticsNamespacesIncompatibleK8SResourcesArrayOutput values.
+// You can construct a concrete instance of `MigAnalyticStatusAnalyticsNamespacesIncompatibleK8SResourcesArrayInput` via:
+//
+//          MigAnalyticStatusAnalyticsNamespacesIncompatibleK8SResourcesArray{ MigAnalyticStatusAnalyticsNamespacesIncompatibleK8SResourcesArgs{...} }
+type MigAnalyticStatusAnalyticsNamespacesIncompatibleK8SResourcesArrayInput interface {
+	pulumi.Input
+
+	ToMigAnalyticStatusAnalyticsNamespacesIncompatibleK8SResourcesArrayOutput() MigAnalyticStatusAnalyticsNamespacesIncompatibleK8SResourcesArrayOutput
+	ToMigAnalyticStatusAnalyticsNamespacesIncompatibleK8SResourcesArrayOutputWithContext(context.Context) MigAnalyticStatusAnalyticsNamespacesIncompatibleK8SResourcesArrayOutput
+}
+
+type MigAnalyticStatusAnalyticsNamespacesIncompatibleK8SResourcesArray []MigAnalyticStatusAnalyticsNamespacesIncompatibleK8SResourcesInput
+
+func (MigAnalyticStatusAnalyticsNamespacesIncompatibleK8SResourcesArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]MigAnalyticStatusAnalyticsNamespacesIncompatibleK8SResources)(nil)).Elem()
+}
+
+func (i MigAnalyticStatusAnalyticsNamespacesIncompatibleK8SResourcesArray) ToMigAnalyticStatusAnalyticsNamespacesIncompatibleK8SResourcesArrayOutput() MigAnalyticStatusAnalyticsNamespacesIncompatibleK8SResourcesArrayOutput {
+	return i.ToMigAnalyticStatusAnalyticsNamespacesIncompatibleK8SResourcesArrayOutputWithContext(context.Background())
+}
+
+func (i MigAnalyticStatusAnalyticsNamespacesIncompatibleK8SResourcesArray) ToMigAnalyticStatusAnalyticsNamespacesIncompatibleK8SResourcesArrayOutputWithContext(ctx context.Context) MigAnalyticStatusAnalyticsNamespacesIncompatibleK8SResourcesArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(MigAnalyticStatusAnalyticsNamespacesIncompatibleK8SResourcesArrayOutput)
+}
+
+type MigAnalyticStatusAnalyticsNamespacesIncompatibleK8SResourcesOutput struct{ *pulumi.OutputState }
+
+func (MigAnalyticStatusAnalyticsNamespacesIncompatibleK8SResourcesOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*MigAnalyticStatusAnalyticsNamespacesIncompatibleK8SResources)(nil)).Elem()
+}
+
+func (o MigAnalyticStatusAnalyticsNamespacesIncompatibleK8SResourcesOutput) ToMigAnalyticStatusAnalyticsNamespacesIncompatibleK8SResourcesOutput() MigAnalyticStatusAnalyticsNamespacesIncompatibleK8SResourcesOutput {
+	return o
+}
+
+func (o MigAnalyticStatusAnalyticsNamespacesIncompatibleK8SResourcesOutput) ToMigAnalyticStatusAnalyticsNamespacesIncompatibleK8SResourcesOutputWithContext(ctx context.Context) MigAnalyticStatusAnalyticsNamespacesIncompatibleK8SResourcesOutput {
+	return o
+}
+
+func (o MigAnalyticStatusAnalyticsNamespacesIncompatibleK8SResourcesOutput) Count() pulumi.IntOutput {
+	return o.ApplyT(func(v MigAnalyticStatusAnalyticsNamespacesIncompatibleK8SResources) int { return v.Count }).(pulumi.IntOutput)
+}
+
+func (o MigAnalyticStatusAnalyticsNamespacesIncompatibleK8SResourcesOutput) Group() pulumi.StringOutput {
+	return o.ApplyT(func(v MigAnalyticStatusAnalyticsNamespacesIncompatibleK8SResources) string { return v.Group }).(pulumi.StringOutput)
+}
+
+func (o MigAnalyticStatusAnalyticsNamespacesIncompatibleK8SResourcesOutput) Kind() pulumi.StringOutput {
+	return o.ApplyT(func(v MigAnalyticStatusAnalyticsNamespacesIncompatibleK8SResources) string { return v.Kind }).(pulumi.StringOutput)
+}
+
+func (o MigAnalyticStatusAnalyticsNamespacesIncompatibleK8SResourcesOutput) Version() pulumi.StringOutput {
+	return o.ApplyT(func(v MigAnalyticStatusAnalyticsNamespacesIncompatibleK8SResources) string { return v.Version }).(pulumi.StringOutput)
+}
+
+type MigAnalyticStatusAnalyticsNamespacesIncompatibleK8SResourcesArrayOutput struct{ *pulumi.OutputState }
+
+func (MigAnalyticStatusAnalyticsNamespacesIncompatibleK8SResourcesArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]MigAnalyticStatusAnalyticsNamespacesIncompatibleK8SResources)(nil)).Elem()
+}
+
+func (o MigAnalyticStatusAnalyticsNamespacesIncompatibleK8SResourcesArrayOutput) ToMigAnalyticStatusAnalyticsNamespacesIncompatibleK8SResourcesArrayOutput() MigAnalyticStatusAnalyticsNamespacesIncompatibleK8SResourcesArrayOutput {
+	return o
+}
+
+func (o MigAnalyticStatusAnalyticsNamespacesIncompatibleK8SResourcesArrayOutput) ToMigAnalyticStatusAnalyticsNamespacesIncompatibleK8SResourcesArrayOutputWithContext(ctx context.Context) MigAnalyticStatusAnalyticsNamespacesIncompatibleK8SResourcesArrayOutput {
+	return o
+}
+
+func (o MigAnalyticStatusAnalyticsNamespacesIncompatibleK8SResourcesArrayOutput) Index(i pulumi.IntInput) MigAnalyticStatusAnalyticsNamespacesIncompatibleK8SResourcesOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) MigAnalyticStatusAnalyticsNamespacesIncompatibleK8SResources {
+		return vs[0].([]MigAnalyticStatusAnalyticsNamespacesIncompatibleK8SResources)[vs[1].(int)]
+	}).(MigAnalyticStatusAnalyticsNamespacesIncompatibleK8SResourcesOutput)
+}
+
+type MigAnalyticStatusAnalyticsNamespacesK8sResources struct {
+	Count   int    `pulumi:"count"`
+	Group   string `pulumi:"group"`
+	Kind    string `pulumi:"kind"`
+	Version string `pulumi:"version"`
+}
+
+// MigAnalyticStatusAnalyticsNamespacesK8sResourcesInput is an input type that accepts MigAnalyticStatusAnalyticsNamespacesK8sResourcesArgs and MigAnalyticStatusAnalyticsNamespacesK8sResourcesOutput values.
+// You can construct a concrete instance of `MigAnalyticStatusAnalyticsNamespacesK8sResourcesInput` via:
+//
+//          MigAnalyticStatusAnalyticsNamespacesK8sResourcesArgs{...}
+type MigAnalyticStatusAnalyticsNamespacesK8sResourcesInput interface {
+	pulumi.Input
+
+	ToMigAnalyticStatusAnalyticsNamespacesK8sResourcesOutput() MigAnalyticStatusAnalyticsNamespacesK8sResourcesOutput
+	ToMigAnalyticStatusAnalyticsNamespacesK8sResourcesOutputWithContext(context.Context) MigAnalyticStatusAnalyticsNamespacesK8sResourcesOutput
+}
+
+type MigAnalyticStatusAnalyticsNamespacesK8sResourcesArgs struct {
+	Count   pulumi.IntInput    `pulumi:"count"`
+	Group   pulumi.StringInput `pulumi:"group"`
+	Kind    pulumi.StringInput `pulumi:"kind"`
+	Version pulumi.StringInput `pulumi:"version"`
+}
+
+func (MigAnalyticStatusAnalyticsNamespacesK8sResourcesArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*MigAnalyticStatusAnalyticsNamespacesK8sResources)(nil)).Elem()
+}
+
+func (i MigAnalyticStatusAnalyticsNamespacesK8sResourcesArgs) ToMigAnalyticStatusAnalyticsNamespacesK8sResourcesOutput() MigAnalyticStatusAnalyticsNamespacesK8sResourcesOutput {
+	return i.ToMigAnalyticStatusAnalyticsNamespacesK8sResourcesOutputWithContext(context.Background())
+}
+
+func (i MigAnalyticStatusAnalyticsNamespacesK8sResourcesArgs) ToMigAnalyticStatusAnalyticsNamespacesK8sResourcesOutputWithContext(ctx context.Context) MigAnalyticStatusAnalyticsNamespacesK8sResourcesOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(MigAnalyticStatusAnalyticsNamespacesK8sResourcesOutput)
+}
+
+// MigAnalyticStatusAnalyticsNamespacesK8sResourcesArrayInput is an input type that accepts MigAnalyticStatusAnalyticsNamespacesK8sResourcesArray and MigAnalyticStatusAnalyticsNamespacesK8sResourcesArrayOutput values.
+// You can construct a concrete instance of `MigAnalyticStatusAnalyticsNamespacesK8sResourcesArrayInput` via:
+//
+//          MigAnalyticStatusAnalyticsNamespacesK8sResourcesArray{ MigAnalyticStatusAnalyticsNamespacesK8sResourcesArgs{...} }
+type MigAnalyticStatusAnalyticsNamespacesK8sResourcesArrayInput interface {
+	pulumi.Input
+
+	ToMigAnalyticStatusAnalyticsNamespacesK8sResourcesArrayOutput() MigAnalyticStatusAnalyticsNamespacesK8sResourcesArrayOutput
+	ToMigAnalyticStatusAnalyticsNamespacesK8sResourcesArrayOutputWithContext(context.Context) MigAnalyticStatusAnalyticsNamespacesK8sResourcesArrayOutput
+}
+
+type MigAnalyticStatusAnalyticsNamespacesK8sResourcesArray []MigAnalyticStatusAnalyticsNamespacesK8sResourcesInput
+
+func (MigAnalyticStatusAnalyticsNamespacesK8sResourcesArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]MigAnalyticStatusAnalyticsNamespacesK8sResources)(nil)).Elem()
+}
+
+func (i MigAnalyticStatusAnalyticsNamespacesK8sResourcesArray) ToMigAnalyticStatusAnalyticsNamespacesK8sResourcesArrayOutput() MigAnalyticStatusAnalyticsNamespacesK8sResourcesArrayOutput {
+	return i.ToMigAnalyticStatusAnalyticsNamespacesK8sResourcesArrayOutputWithContext(context.Background())
+}
+
+func (i MigAnalyticStatusAnalyticsNamespacesK8sResourcesArray) ToMigAnalyticStatusAnalyticsNamespacesK8sResourcesArrayOutputWithContext(ctx context.Context) MigAnalyticStatusAnalyticsNamespacesK8sResourcesArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(MigAnalyticStatusAnalyticsNamespacesK8sResourcesArrayOutput)
+}
+
+type MigAnalyticStatusAnalyticsNamespacesK8sResourcesOutput struct{ *pulumi.OutputState }
+
+func (MigAnalyticStatusAnalyticsNamespacesK8sResourcesOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*MigAnalyticStatusAnalyticsNamespacesK8sResources)(nil)).Elem()
+}
+
+func (o MigAnalyticStatusAnalyticsNamespacesK8sResourcesOutput) ToMigAnalyticStatusAnalyticsNamespacesK8sResourcesOutput() MigAnalyticStatusAnalyticsNamespacesK8sResourcesOutput {
+	return o
+}
+
+func (o MigAnalyticStatusAnalyticsNamespacesK8sResourcesOutput) ToMigAnalyticStatusAnalyticsNamespacesK8sResourcesOutputWithContext(ctx context.Context) MigAnalyticStatusAnalyticsNamespacesK8sResourcesOutput {
+	return o
+}
+
+func (o MigAnalyticStatusAnalyticsNamespacesK8sResourcesOutput) Count() pulumi.IntOutput {
+	return o.ApplyT(func(v MigAnalyticStatusAnalyticsNamespacesK8sResources) int { return v.Count }).(pulumi.IntOutput)
+}
+
+func (o MigAnalyticStatusAnalyticsNamespacesK8sResourcesOutput) Group() pulumi.StringOutput {
+	return o.ApplyT(func(v MigAnalyticStatusAnalyticsNamespacesK8sResources) string { return v.Group }).(pulumi.StringOutput)
+}
+
+func (o MigAnalyticStatusAnalyticsNamespacesK8sResourcesOutput) Kind() pulumi.StringOutput {
+	return o.ApplyT(func(v MigAnalyticStatusAnalyticsNamespacesK8sResources) string { return v.Kind }).(pulumi.StringOutput)
+}
+
+func (o MigAnalyticStatusAnalyticsNamespacesK8sResourcesOutput) Version() pulumi.StringOutput {
+	return o.ApplyT(func(v MigAnalyticStatusAnalyticsNamespacesK8sResources) string { return v.Version }).(pulumi.StringOutput)
+}
+
+type MigAnalyticStatusAnalyticsNamespacesK8sResourcesArrayOutput struct{ *pulumi.OutputState }
+
+func (MigAnalyticStatusAnalyticsNamespacesK8sResourcesArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]MigAnalyticStatusAnalyticsNamespacesK8sResources)(nil)).Elem()
+}
+
+func (o MigAnalyticStatusAnalyticsNamespacesK8sResourcesArrayOutput) ToMigAnalyticStatusAnalyticsNamespacesK8sResourcesArrayOutput() MigAnalyticStatusAnalyticsNamespacesK8sResourcesArrayOutput {
+	return o
+}
+
+func (o MigAnalyticStatusAnalyticsNamespacesK8sResourcesArrayOutput) ToMigAnalyticStatusAnalyticsNamespacesK8sResourcesArrayOutputWithContext(ctx context.Context) MigAnalyticStatusAnalyticsNamespacesK8sResourcesArrayOutput {
+	return o
+}
+
+func (o MigAnalyticStatusAnalyticsNamespacesK8sResourcesArrayOutput) Index(i pulumi.IntInput) MigAnalyticStatusAnalyticsNamespacesK8sResourcesOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) MigAnalyticStatusAnalyticsNamespacesK8sResources {
+		return vs[0].([]MigAnalyticStatusAnalyticsNamespacesK8sResources)[vs[1].(int)]
+	}).(MigAnalyticStatusAnalyticsNamespacesK8sResourcesOutput)
+}
+
 type MigClusterType struct {
 	ApiVersion *string            `pulumi:"apiVersion"`
 	Kind       *string            `pulumi:"kind"`
@@ -132,6 +1504,7 @@ type MigClusterSpec struct {
 	CaBundle                *string                        `pulumi:"caBundle"`
 	Insecure                *bool                          `pulumi:"insecure"`
 	IsHostCluster           bool                           `pulumi:"isHostCluster"`
+	RestartRestic           *bool                          `pulumi:"restartRestic"`
 	ServiceAccountSecretRef map[string]interface{}         `pulumi:"serviceAccountSecretRef"`
 	StorageClasses          []MigClusterSpecStorageClasses `pulumi:"storageClasses"`
 	Url                     *string                        `pulumi:"url"`
@@ -153,6 +1526,7 @@ type MigClusterSpecArgs struct {
 	CaBundle                pulumi.StringPtrInput                  `pulumi:"caBundle"`
 	Insecure                pulumi.BoolPtrInput                    `pulumi:"insecure"`
 	IsHostCluster           pulumi.BoolInput                       `pulumi:"isHostCluster"`
+	RestartRestic           pulumi.BoolPtrInput                    `pulumi:"restartRestic"`
 	ServiceAccountSecretRef pulumi.MapInput                        `pulumi:"serviceAccountSecretRef"`
 	StorageClasses          MigClusterSpecStorageClassesArrayInput `pulumi:"storageClasses"`
 	Url                     pulumi.StringPtrInput                  `pulumi:"url"`
@@ -250,6 +1624,10 @@ func (o MigClusterSpecOutput) IsHostCluster() pulumi.BoolOutput {
 	return o.ApplyT(func(v MigClusterSpec) bool { return v.IsHostCluster }).(pulumi.BoolOutput)
 }
 
+func (o MigClusterSpecOutput) RestartRestic() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v MigClusterSpec) *bool { return v.RestartRestic }).(pulumi.BoolPtrOutput)
+}
+
 func (o MigClusterSpecOutput) ServiceAccountSecretRef() pulumi.MapOutput {
 	return o.ApplyT(func(v MigClusterSpec) map[string]interface{} { return v.ServiceAccountSecretRef }).(pulumi.MapOutput)
 }
@@ -313,6 +1691,15 @@ func (o MigClusterSpecPtrOutput) IsHostCluster() pulumi.BoolPtrOutput {
 			return nil
 		}
 		return &v.IsHostCluster
+	}).(pulumi.BoolPtrOutput)
+}
+
+func (o MigClusterSpecPtrOutput) RestartRestic() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *MigClusterSpec) *bool {
+		if v == nil {
+			return nil
+		}
+		return v.RestartRestic
 	}).(pulumi.BoolPtrOutput)
 }
 
@@ -1414,7 +2801,7 @@ func (o MigMigrationSpecMigPlanRefOutput) ToMigMigrationSpecMigPlanRefOutputWith
 
 type MigMigrationStatus struct {
 	Errors         []string `pulumi:"errors"`
-	Itenerary      *string  `pulumi:"itenerary"`
+	Itinerary      *string  `pulumi:"itinerary"`
 	ObservedDigest *string  `pulumi:"observedDigest"`
 	Phase          *string  `pulumi:"phase"`
 	StartTimestamp *string  `pulumi:"startTimestamp"`
@@ -1433,7 +2820,7 @@ type MigMigrationStatusInput interface {
 
 type MigMigrationStatusArgs struct {
 	Errors         pulumi.StringArrayInput `pulumi:"errors"`
-	Itenerary      pulumi.StringPtrInput   `pulumi:"itenerary"`
+	Itinerary      pulumi.StringPtrInput   `pulumi:"itinerary"`
 	ObservedDigest pulumi.StringPtrInput   `pulumi:"observedDigest"`
 	Phase          pulumi.StringPtrInput   `pulumi:"phase"`
 	StartTimestamp pulumi.StringPtrInput   `pulumi:"startTimestamp"`
@@ -1519,8 +2906,8 @@ func (o MigMigrationStatusOutput) Errors() pulumi.StringArrayOutput {
 	return o.ApplyT(func(v MigMigrationStatus) []string { return v.Errors }).(pulumi.StringArrayOutput)
 }
 
-func (o MigMigrationStatusOutput) Itenerary() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v MigMigrationStatus) *string { return v.Itenerary }).(pulumi.StringPtrOutput)
+func (o MigMigrationStatusOutput) Itinerary() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v MigMigrationStatus) *string { return v.Itinerary }).(pulumi.StringPtrOutput)
 }
 
 func (o MigMigrationStatusOutput) ObservedDigest() pulumi.StringPtrOutput {
@@ -1562,12 +2949,12 @@ func (o MigMigrationStatusPtrOutput) Errors() pulumi.StringArrayOutput {
 	}).(pulumi.StringArrayOutput)
 }
 
-func (o MigMigrationStatusPtrOutput) Itenerary() pulumi.StringPtrOutput {
+func (o MigMigrationStatusPtrOutput) Itinerary() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *MigMigrationStatus) *string {
 		if v == nil {
 			return nil
 		}
-		return v.Itenerary
+		return v.Itinerary
 	}).(pulumi.StringPtrOutput)
 }
 
@@ -2296,9 +3683,10 @@ func (o MigPlanSpecPersistentVolumesArrayOutput) Index(i pulumi.IntInput) MigPla
 }
 
 type MigPlanSpecPersistentVolumesPvc struct {
-	AccessModes []string `pulumi:"accessModes"`
-	Name        *string  `pulumi:"name"`
-	Namespace   *string  `pulumi:"namespace"`
+	AccessModes  []string `pulumi:"accessModes"`
+	HasReference *bool    `pulumi:"hasReference"`
+	Name         *string  `pulumi:"name"`
+	Namespace    *string  `pulumi:"namespace"`
 }
 
 // MigPlanSpecPersistentVolumesPvcInput is an input type that accepts MigPlanSpecPersistentVolumesPvcArgs and MigPlanSpecPersistentVolumesPvcOutput values.
@@ -2313,9 +3701,10 @@ type MigPlanSpecPersistentVolumesPvcInput interface {
 }
 
 type MigPlanSpecPersistentVolumesPvcArgs struct {
-	AccessModes pulumi.StringArrayInput `pulumi:"accessModes"`
-	Name        pulumi.StringPtrInput   `pulumi:"name"`
-	Namespace   pulumi.StringPtrInput   `pulumi:"namespace"`
+	AccessModes  pulumi.StringArrayInput `pulumi:"accessModes"`
+	HasReference pulumi.BoolPtrInput     `pulumi:"hasReference"`
+	Name         pulumi.StringPtrInput   `pulumi:"name"`
+	Namespace    pulumi.StringPtrInput   `pulumi:"namespace"`
 }
 
 func (MigPlanSpecPersistentVolumesPvcArgs) ElementType() reflect.Type {
@@ -2398,6 +3787,10 @@ func (o MigPlanSpecPersistentVolumesPvcOutput) AccessModes() pulumi.StringArrayO
 	return o.ApplyT(func(v MigPlanSpecPersistentVolumesPvc) []string { return v.AccessModes }).(pulumi.StringArrayOutput)
 }
 
+func (o MigPlanSpecPersistentVolumesPvcOutput) HasReference() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v MigPlanSpecPersistentVolumesPvc) *bool { return v.HasReference }).(pulumi.BoolPtrOutput)
+}
+
 func (o MigPlanSpecPersistentVolumesPvcOutput) Name() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v MigPlanSpecPersistentVolumesPvc) *string { return v.Name }).(pulumi.StringPtrOutput)
 }
@@ -2431,6 +3824,15 @@ func (o MigPlanSpecPersistentVolumesPvcPtrOutput) AccessModes() pulumi.StringArr
 		}
 		return v.AccessModes
 	}).(pulumi.StringArrayOutput)
+}
+
+func (o MigPlanSpecPersistentVolumesPvcPtrOutput) HasReference() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *MigPlanSpecPersistentVolumesPvc) *bool {
+		if v == nil {
+			return nil
+		}
+		return v.HasReference
+	}).(pulumi.BoolPtrOutput)
 }
 
 func (o MigPlanSpecPersistentVolumesPvcPtrOutput) Name() pulumi.StringPtrOutput {
@@ -2623,6 +4025,7 @@ func (o MigPlanSpecSrcMigClusterRefOutput) ToMigPlanSpecSrcMigClusterRefOutputWi
 }
 
 type MigPlanStatus struct {
+	ExcludedResources      []string                              `pulumi:"excludedResources"`
 	IncompatibleNamespaces []MigPlanStatusIncompatibleNamespaces `pulumi:"incompatibleNamespaces"`
 	ObservedDigest         *string                               `pulumi:"observedDigest"`
 }
@@ -2639,6 +4042,7 @@ type MigPlanStatusInput interface {
 }
 
 type MigPlanStatusArgs struct {
+	ExcludedResources      pulumi.StringArrayInput                       `pulumi:"excludedResources"`
 	IncompatibleNamespaces MigPlanStatusIncompatibleNamespacesArrayInput `pulumi:"incompatibleNamespaces"`
 	ObservedDigest         pulumi.StringPtrInput                         `pulumi:"observedDigest"`
 }
@@ -2719,6 +4123,10 @@ func (o MigPlanStatusOutput) ToMigPlanStatusPtrOutputWithContext(ctx context.Con
 		return &v
 	}).(MigPlanStatusPtrOutput)
 }
+func (o MigPlanStatusOutput) ExcludedResources() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v MigPlanStatus) []string { return v.ExcludedResources }).(pulumi.StringArrayOutput)
+}
+
 func (o MigPlanStatusOutput) IncompatibleNamespaces() MigPlanStatusIncompatibleNamespacesArrayOutput {
 	return o.ApplyT(func(v MigPlanStatus) []MigPlanStatusIncompatibleNamespaces { return v.IncompatibleNamespaces }).(MigPlanStatusIncompatibleNamespacesArrayOutput)
 }
@@ -2743,6 +4151,15 @@ func (o MigPlanStatusPtrOutput) ToMigPlanStatusPtrOutputWithContext(ctx context.
 
 func (o MigPlanStatusPtrOutput) Elem() MigPlanStatusOutput {
 	return o.ApplyT(func(v *MigPlanStatus) MigPlanStatus { return *v }).(MigPlanStatusOutput)
+}
+
+func (o MigPlanStatusPtrOutput) ExcludedResources() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v *MigPlanStatus) []string {
+		if v == nil {
+			return nil
+		}
+		return v.ExcludedResources
+	}).(pulumi.StringArrayOutput)
 }
 
 func (o MigPlanStatusPtrOutput) IncompatibleNamespaces() MigPlanStatusIncompatibleNamespacesArrayOutput {
@@ -3976,6 +5393,25 @@ func (o MigStorageStatusPtrOutput) ObservedDigest() pulumi.StringPtrOutput {
 }
 
 func init() {
+	pulumi.RegisterOutputType(MigAnalyticTypeOutput{})
+	pulumi.RegisterOutputType(MigAnalyticMetadataOutput{})
+	pulumi.RegisterOutputType(MigAnalyticSpecOutput{})
+	pulumi.RegisterOutputType(MigAnalyticSpecPtrOutput{})
+	pulumi.RegisterOutputType(MigAnalyticSpecMigPlanRefOutput{})
+	pulumi.RegisterOutputType(MigAnalyticStatusOutput{})
+	pulumi.RegisterOutputType(MigAnalyticStatusPtrOutput{})
+	pulumi.RegisterOutputType(MigAnalyticStatusAnalyticsOutput{})
+	pulumi.RegisterOutputType(MigAnalyticStatusAnalyticsPtrOutput{})
+	pulumi.RegisterOutputType(MigAnalyticStatusAnalyticsNamespacesOutput{})
+	pulumi.RegisterOutputType(MigAnalyticStatusAnalyticsNamespacesArrayOutput{})
+	pulumi.RegisterOutputType(MigAnalyticStatusAnalyticsNamespacesExcludedK8SResourcesOutput{})
+	pulumi.RegisterOutputType(MigAnalyticStatusAnalyticsNamespacesExcludedK8SResourcesArrayOutput{})
+	pulumi.RegisterOutputType(MigAnalyticStatusAnalyticsNamespacesImagesOutput{})
+	pulumi.RegisterOutputType(MigAnalyticStatusAnalyticsNamespacesImagesArrayOutput{})
+	pulumi.RegisterOutputType(MigAnalyticStatusAnalyticsNamespacesIncompatibleK8SResourcesOutput{})
+	pulumi.RegisterOutputType(MigAnalyticStatusAnalyticsNamespacesIncompatibleK8SResourcesArrayOutput{})
+	pulumi.RegisterOutputType(MigAnalyticStatusAnalyticsNamespacesK8sResourcesOutput{})
+	pulumi.RegisterOutputType(MigAnalyticStatusAnalyticsNamespacesK8sResourcesArrayOutput{})
 	pulumi.RegisterOutputType(MigClusterTypeOutput{})
 	pulumi.RegisterOutputType(MigClusterMetadataOutput{})
 	pulumi.RegisterOutputType(MigClusterSpecOutput{})

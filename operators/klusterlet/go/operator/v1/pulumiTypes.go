@@ -646,18 +646,21 @@ func (o KlusterletStatusPtrOutput) RelatedResources() KlusterletStatusRelatedRes
 	}).(KlusterletStatusRelatedResourcesArrayOutput)
 }
 
-// StatusCondition contains condition information.
+// Condition contains details for one aspect of the current state of this API Resource. --- This struct is intended for direct use as an array at the field path .status.conditions.  For example, type FooStatus struct{     // Represents the observations of a foo's current state.     // Known .status.conditions.type are: "Available", "Progressing", and "Degraded"     // +patchMergeKey=type     // +patchStrategy=merge     // +listType=map     // +listMapKey=type     Conditions []metav1.Condition `json:"conditions,omitempty" patchStrategy:"merge" patchMergeKey:"type" protobuf:"bytes,1,rep,name=conditions"`
+//      // other fields }
 type KlusterletStatusConditions struct {
-	// LastTransitionTime is the last time the condition changed from one status to another.
-	LastTransitionTime *string `pulumi:"lastTransitionTime"`
-	// Message is a human-readable message indicating details about the last status change.
-	Message *string `pulumi:"message"`
-	// Reason is a (brief) reason for the condition's last status change.
-	Reason *string `pulumi:"reason"`
-	// Status is the status of the condition. One of True, False, Unknown.
-	Status *string `pulumi:"status"`
-	// Type is the type of the cluster condition.
-	Type *string `pulumi:"type"`
+	// lastTransitionTime is the last time the condition transitioned from one status to another. This should be when the underlying condition changed.  If that is not known, then using the time when the API field changed is acceptable.
+	LastTransitionTime string `pulumi:"lastTransitionTime"`
+	// message is a human readable message indicating details about the transition. This may be an empty string.
+	Message string `pulumi:"message"`
+	// observedGeneration represents the .metadata.generation that the condition was set based upon. For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date with respect to the current state of the instance.
+	ObservedGeneration *int `pulumi:"observedGeneration"`
+	// reason contains a programmatic identifier indicating the reason for the condition's last transition. Producers of specific condition types may define expected values and meanings for this field, and whether the values are considered a guaranteed API. The value should be a CamelCase string. This field may not be empty.
+	Reason string `pulumi:"reason"`
+	// status of the condition, one of True, False, Unknown.
+	Status string `pulumi:"status"`
+	// type of condition in CamelCase or in foo.example.com/CamelCase. --- Many .condition.type values are consistent across resources like Available, but because arbitrary conditions can be useful (see .node.status.conditions), the ability to deconflict is important. The regex it matches is (dns1123SubdomainFmt/)?(qualifiedNameFmt)
+	Type string `pulumi:"type"`
 }
 
 // KlusterletStatusConditionsInput is an input type that accepts KlusterletStatusConditionsArgs and KlusterletStatusConditionsOutput values.
@@ -671,18 +674,21 @@ type KlusterletStatusConditionsInput interface {
 	ToKlusterletStatusConditionsOutputWithContext(context.Context) KlusterletStatusConditionsOutput
 }
 
-// StatusCondition contains condition information.
+// Condition contains details for one aspect of the current state of this API Resource. --- This struct is intended for direct use as an array at the field path .status.conditions.  For example, type FooStatus struct{     // Represents the observations of a foo's current state.     // Known .status.conditions.type are: "Available", "Progressing", and "Degraded"     // +patchMergeKey=type     // +patchStrategy=merge     // +listType=map     // +listMapKey=type     Conditions []metav1.Condition `json:"conditions,omitempty" patchStrategy:"merge" patchMergeKey:"type" protobuf:"bytes,1,rep,name=conditions"`
+//      // other fields }
 type KlusterletStatusConditionsArgs struct {
-	// LastTransitionTime is the last time the condition changed from one status to another.
-	LastTransitionTime pulumi.StringPtrInput `pulumi:"lastTransitionTime"`
-	// Message is a human-readable message indicating details about the last status change.
-	Message pulumi.StringPtrInput `pulumi:"message"`
-	// Reason is a (brief) reason for the condition's last status change.
-	Reason pulumi.StringPtrInput `pulumi:"reason"`
-	// Status is the status of the condition. One of True, False, Unknown.
-	Status pulumi.StringPtrInput `pulumi:"status"`
-	// Type is the type of the cluster condition.
-	Type pulumi.StringPtrInput `pulumi:"type"`
+	// lastTransitionTime is the last time the condition transitioned from one status to another. This should be when the underlying condition changed.  If that is not known, then using the time when the API field changed is acceptable.
+	LastTransitionTime pulumi.StringInput `pulumi:"lastTransitionTime"`
+	// message is a human readable message indicating details about the transition. This may be an empty string.
+	Message pulumi.StringInput `pulumi:"message"`
+	// observedGeneration represents the .metadata.generation that the condition was set based upon. For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date with respect to the current state of the instance.
+	ObservedGeneration pulumi.IntPtrInput `pulumi:"observedGeneration"`
+	// reason contains a programmatic identifier indicating the reason for the condition's last transition. Producers of specific condition types may define expected values and meanings for this field, and whether the values are considered a guaranteed API. The value should be a CamelCase string. This field may not be empty.
+	Reason pulumi.StringInput `pulumi:"reason"`
+	// status of the condition, one of True, False, Unknown.
+	Status pulumi.StringInput `pulumi:"status"`
+	// type of condition in CamelCase or in foo.example.com/CamelCase. --- Many .condition.type values are consistent across resources like Available, but because arbitrary conditions can be useful (see .node.status.conditions), the ability to deconflict is important. The regex it matches is (dns1123SubdomainFmt/)?(qualifiedNameFmt)
+	Type pulumi.StringInput `pulumi:"type"`
 }
 
 func (KlusterletStatusConditionsArgs) ElementType() reflect.Type {
@@ -722,7 +728,8 @@ func (i KlusterletStatusConditionsArray) ToKlusterletStatusConditionsArrayOutput
 	return pulumi.ToOutputWithContext(ctx, i).(KlusterletStatusConditionsArrayOutput)
 }
 
-// StatusCondition contains condition information.
+// Condition contains details for one aspect of the current state of this API Resource. --- This struct is intended for direct use as an array at the field path .status.conditions.  For example, type FooStatus struct{     // Represents the observations of a foo's current state.     // Known .status.conditions.type are: "Available", "Progressing", and "Degraded"     // +patchMergeKey=type     // +patchStrategy=merge     // +listType=map     // +listMapKey=type     Conditions []metav1.Condition `json:"conditions,omitempty" patchStrategy:"merge" patchMergeKey:"type" protobuf:"bytes,1,rep,name=conditions"`
+//      // other fields }
 type KlusterletStatusConditionsOutput struct{ *pulumi.OutputState }
 
 func (KlusterletStatusConditionsOutput) ElementType() reflect.Type {
@@ -737,29 +744,34 @@ func (o KlusterletStatusConditionsOutput) ToKlusterletStatusConditionsOutputWith
 	return o
 }
 
-// LastTransitionTime is the last time the condition changed from one status to another.
-func (o KlusterletStatusConditionsOutput) LastTransitionTime() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v KlusterletStatusConditions) *string { return v.LastTransitionTime }).(pulumi.StringPtrOutput)
+// lastTransitionTime is the last time the condition transitioned from one status to another. This should be when the underlying condition changed.  If that is not known, then using the time when the API field changed is acceptable.
+func (o KlusterletStatusConditionsOutput) LastTransitionTime() pulumi.StringOutput {
+	return o.ApplyT(func(v KlusterletStatusConditions) string { return v.LastTransitionTime }).(pulumi.StringOutput)
 }
 
-// Message is a human-readable message indicating details about the last status change.
-func (o KlusterletStatusConditionsOutput) Message() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v KlusterletStatusConditions) *string { return v.Message }).(pulumi.StringPtrOutput)
+// message is a human readable message indicating details about the transition. This may be an empty string.
+func (o KlusterletStatusConditionsOutput) Message() pulumi.StringOutput {
+	return o.ApplyT(func(v KlusterletStatusConditions) string { return v.Message }).(pulumi.StringOutput)
 }
 
-// Reason is a (brief) reason for the condition's last status change.
-func (o KlusterletStatusConditionsOutput) Reason() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v KlusterletStatusConditions) *string { return v.Reason }).(pulumi.StringPtrOutput)
+// observedGeneration represents the .metadata.generation that the condition was set based upon. For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date with respect to the current state of the instance.
+func (o KlusterletStatusConditionsOutput) ObservedGeneration() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v KlusterletStatusConditions) *int { return v.ObservedGeneration }).(pulumi.IntPtrOutput)
 }
 
-// Status is the status of the condition. One of True, False, Unknown.
-func (o KlusterletStatusConditionsOutput) Status() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v KlusterletStatusConditions) *string { return v.Status }).(pulumi.StringPtrOutput)
+// reason contains a programmatic identifier indicating the reason for the condition's last transition. Producers of specific condition types may define expected values and meanings for this field, and whether the values are considered a guaranteed API. The value should be a CamelCase string. This field may not be empty.
+func (o KlusterletStatusConditionsOutput) Reason() pulumi.StringOutput {
+	return o.ApplyT(func(v KlusterletStatusConditions) string { return v.Reason }).(pulumi.StringOutput)
 }
 
-// Type is the type of the cluster condition.
-func (o KlusterletStatusConditionsOutput) Type() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v KlusterletStatusConditions) *string { return v.Type }).(pulumi.StringPtrOutput)
+// status of the condition, one of True, False, Unknown.
+func (o KlusterletStatusConditionsOutput) Status() pulumi.StringOutput {
+	return o.ApplyT(func(v KlusterletStatusConditions) string { return v.Status }).(pulumi.StringOutput)
+}
+
+// type of condition in CamelCase or in foo.example.com/CamelCase. --- Many .condition.type values are consistent across resources like Available, but because arbitrary conditions can be useful (see .node.status.conditions), the ability to deconflict is important. The regex it matches is (dns1123SubdomainFmt/)?(qualifiedNameFmt)
+func (o KlusterletStatusConditionsOutput) Type() pulumi.StringOutput {
+	return o.ApplyT(func(v KlusterletStatusConditions) string { return v.Type }).(pulumi.StringOutput)
 }
 
 type KlusterletStatusConditionsArrayOutput struct{ *pulumi.OutputState }

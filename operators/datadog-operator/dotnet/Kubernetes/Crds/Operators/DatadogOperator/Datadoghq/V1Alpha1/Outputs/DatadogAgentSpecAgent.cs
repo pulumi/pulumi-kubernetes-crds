@@ -70,6 +70,10 @@ namespace Pulumi.Kubernetes.Types.Outputs.Datadoghq.V1Alpha1
         /// </summary>
         public readonly Pulumi.Kubernetes.Types.Outputs.Datadoghq.V1Alpha1.DatadogAgentSpecAgentLog Log;
         /// <summary>
+        /// Provide Agent Network Policy configuration
+        /// </summary>
+        public readonly Pulumi.Kubernetes.Types.Outputs.Datadoghq.V1Alpha1.DatadogAgentSpecAgentNetworkPolicy NetworkPolicy;
+        /// <summary>
         /// If specified, indicates the pod's priority. "system-node-critical" and "system-cluster-critical" are two special keywords which indicate the highest priorities with the former being the highest priority. Any other name must be defined by creating a PriorityClass object with that name. If not specified, the pod priority will be default or zero if there is no default.
         /// </summary>
         public readonly string PriorityClassName;
@@ -81,6 +85,10 @@ namespace Pulumi.Kubernetes.Types.Outputs.Datadoghq.V1Alpha1
         /// RBAC configuration of the Agent
         /// </summary>
         public readonly Pulumi.Kubernetes.Types.Outputs.Datadoghq.V1Alpha1.DatadogAgentSpecAgentRbac Rbac;
+        /// <summary>
+        /// Security Agent configuration
+        /// </summary>
+        public readonly Pulumi.Kubernetes.Types.Outputs.Datadoghq.V1Alpha1.DatadogAgentSpecAgentSecurity Security;
         /// <summary>
         /// SystemProbe configuration
         /// </summary>
@@ -120,11 +128,15 @@ namespace Pulumi.Kubernetes.Types.Outputs.Datadoghq.V1Alpha1
 
             Pulumi.Kubernetes.Types.Outputs.Datadoghq.V1Alpha1.DatadogAgentSpecAgentLog log,
 
+            Pulumi.Kubernetes.Types.Outputs.Datadoghq.V1Alpha1.DatadogAgentSpecAgentNetworkPolicy networkPolicy,
+
             string priorityClassName,
 
             Pulumi.Kubernetes.Types.Outputs.Datadoghq.V1Alpha1.DatadogAgentSpecAgentProcess process,
 
             Pulumi.Kubernetes.Types.Outputs.Datadoghq.V1Alpha1.DatadogAgentSpecAgentRbac rbac,
+
+            Pulumi.Kubernetes.Types.Outputs.Datadoghq.V1Alpha1.DatadogAgentSpecAgentSecurity security,
 
             Pulumi.Kubernetes.Types.Outputs.Datadoghq.V1Alpha1.DatadogAgentSpecAgentSystemProbe systemProbe,
 
@@ -144,9 +156,11 @@ namespace Pulumi.Kubernetes.Types.Outputs.Datadoghq.V1Alpha1
             HostPID = hostPID;
             Image = image;
             Log = log;
+            NetworkPolicy = networkPolicy;
             PriorityClassName = priorityClassName;
             Process = process;
             Rbac = rbac;
+            Security = security;
             SystemProbe = systemProbe;
             UseExtendedDaemonset = useExtendedDaemonset;
         }

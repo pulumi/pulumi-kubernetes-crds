@@ -17,6 +17,7 @@ namespace Pulumi.Kubernetes.Types.Outputs.Pingcap.V1Alpha1
         public readonly string AlertManagerRulesVersion;
         public readonly string AlertmanagerURL;
         public readonly ImmutableDictionary<string, object> Annotations;
+        public readonly bool ClusterScoped;
         public readonly ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Pingcap.V1Alpha1.TidbMonitorSpecClusters> Clusters;
         public readonly object Grafana;
         public readonly string ImagePullPolicy;
@@ -41,6 +42,8 @@ namespace Pulumi.Kubernetes.Types.Outputs.Pingcap.V1Alpha1
             string alertmanagerURL,
 
             ImmutableDictionary<string, object> annotations,
+
+            bool clusterScoped,
 
             ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Pingcap.V1Alpha1.TidbMonitorSpecClusters> clusters,
 
@@ -74,6 +77,7 @@ namespace Pulumi.Kubernetes.Types.Outputs.Pingcap.V1Alpha1
             AlertManagerRulesVersion = alertManagerRulesVersion;
             AlertmanagerURL = alertmanagerURL;
             Annotations = annotations;
+            ClusterScoped = clusterScoped;
             Clusters = clusters;
             Grafana = grafana;
             ImagePullPolicy = imagePullPolicy;

@@ -13,6 +13,9 @@ namespace Pulumi.Kubernetes.Types.Outputs.Ibmcloud.V1Alpha1
     [OutputType]
     public sealed class ServiceSpec
     {
+        /// <summary>
+        /// ResourceContext defines the CloudFoundry context and resource group
+        /// </summary>
         public readonly Pulumi.Kubernetes.Types.Outputs.Ibmcloud.V1Alpha1.ServiceSpecContext Context;
         public readonly string ExternalName;
         public readonly ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Ibmcloud.V1Alpha1.ServiceSpecParameters> Parameters;

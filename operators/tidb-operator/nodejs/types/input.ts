@@ -24,7 +24,7 @@ export namespace pingcap {
             affinity?: pulumi.Input<inputs.pingcap.v1alpha1.BackupScheduleSpecBackupTemplateAffinity>;
             backupType?: pulumi.Input<string>;
             br?: pulumi.Input<inputs.pingcap.v1alpha1.BackupScheduleSpecBackupTemplateBr>;
-            cleanData?: pulumi.Input<boolean>;
+            cleanPolicy?: pulumi.Input<string>;
             dumpling?: pulumi.Input<inputs.pingcap.v1alpha1.BackupScheduleSpecBackupTemplateDumpling>;
             from?: pulumi.Input<inputs.pingcap.v1alpha1.BackupScheduleSpecBackupTemplateFrom>;
             gcs?: pulumi.Input<inputs.pingcap.v1alpha1.BackupScheduleSpecBackupTemplateGcs>;
@@ -34,8 +34,10 @@ export namespace pingcap {
             serviceAccount?: pulumi.Input<string>;
             storageClassName?: pulumi.Input<string>;
             storageSize?: pulumi.Input<string>;
+            tableFilter?: pulumi.Input<pulumi.Input<string>[]>;
             tikvGCLifeTime?: pulumi.Input<string>;
             tolerations?: pulumi.Input<pulumi.Input<inputs.pingcap.v1alpha1.BackupScheduleSpecBackupTemplateTolerations>[]>;
+            toolImage?: pulumi.Input<string>;
             useKMS?: pulumi.Input<boolean>;
         }
 
@@ -189,6 +191,7 @@ export namespace pingcap {
             db?: pulumi.Input<string>;
             logLevel?: pulumi.Input<string>;
             onLine?: pulumi.Input<boolean>;
+            options?: pulumi.Input<pulumi.Input<string>[]>;
             rateLimit?: pulumi.Input<number>;
             sendCredToTikv?: pulumi.Input<boolean>;
             statusAddr?: pulumi.Input<string>;
@@ -260,7 +263,7 @@ export namespace pingcap {
             affinity?: pulumi.Input<inputs.pingcap.v1alpha1.BackupSpecAffinity>;
             backupType?: pulumi.Input<string>;
             br?: pulumi.Input<inputs.pingcap.v1alpha1.BackupSpecBr>;
-            cleanData?: pulumi.Input<boolean>;
+            cleanPolicy?: pulumi.Input<string>;
             dumpling?: pulumi.Input<inputs.pingcap.v1alpha1.BackupSpecDumpling>;
             from?: pulumi.Input<inputs.pingcap.v1alpha1.BackupSpecFrom>;
             gcs?: pulumi.Input<inputs.pingcap.v1alpha1.BackupSpecGcs>;
@@ -270,8 +273,10 @@ export namespace pingcap {
             serviceAccount?: pulumi.Input<string>;
             storageClassName?: pulumi.Input<string>;
             storageSize?: pulumi.Input<string>;
+            tableFilter?: pulumi.Input<pulumi.Input<string>[]>;
             tikvGCLifeTime?: pulumi.Input<string>;
             tolerations?: pulumi.Input<pulumi.Input<inputs.pingcap.v1alpha1.BackupSpecTolerations>[]>;
+            toolImage?: pulumi.Input<string>;
             useKMS?: pulumi.Input<boolean>;
         }
 
@@ -425,6 +430,7 @@ export namespace pingcap {
             db?: pulumi.Input<string>;
             logLevel?: pulumi.Input<string>;
             onLine?: pulumi.Input<boolean>;
+            options?: pulumi.Input<pulumi.Input<string>[]>;
             rateLimit?: pulumi.Input<number>;
             sendCredToTikv?: pulumi.Input<boolean>;
             statusAddr?: pulumi.Input<string>;
@@ -499,9 +505,11 @@ export namespace pingcap {
             serviceAccount?: pulumi.Input<string>;
             storageClassName?: pulumi.Input<string>;
             storageSize?: pulumi.Input<string>;
+            tableFilter?: pulumi.Input<pulumi.Input<string>[]>;
             tikvGCLifeTime?: pulumi.Input<string>;
             to?: pulumi.Input<inputs.pingcap.v1alpha1.RestoreSpecTo>;
             tolerations?: pulumi.Input<pulumi.Input<inputs.pingcap.v1alpha1.RestoreSpecTolerations>[]>;
+            toolImage?: pulumi.Input<string>;
             useKMS?: pulumi.Input<boolean>;
         }
 
@@ -655,6 +663,7 @@ export namespace pingcap {
             db?: pulumi.Input<string>;
             logLevel?: pulumi.Input<string>;
             onLine?: pulumi.Input<boolean>;
+            options?: pulumi.Input<pulumi.Input<string>[]>;
             rateLimit?: pulumi.Input<number>;
             sendCredToTikv?: pulumi.Input<boolean>;
             statusAddr?: pulumi.Input<string>;
@@ -820,6 +829,7 @@ export namespace pingcap {
         export interface TidbClusterSpec {
             affinity?: pulumi.Input<inputs.pingcap.v1alpha1.TidbClusterSpecAffinity>;
             annotations?: pulumi.Input<{[key: string]: any}>;
+            cluster?: pulumi.Input<inputs.pingcap.v1alpha1.TidbClusterSpecCluster>;
             configUpdateStrategy?: pulumi.Input<string>;
             discovery?: pulumi.Input<inputs.pingcap.v1alpha1.TidbClusterSpecDiscovery>;
             enableDynamicConfiguration?: pulumi.Input<boolean>;
@@ -830,15 +840,18 @@ export namespace pingcap {
             imagePullSecrets?: pulumi.Input<pulumi.Input<inputs.pingcap.v1alpha1.TidbClusterSpecImagePullSecrets>[]>;
             nodeSelector?: pulumi.Input<{[key: string]: any}>;
             paused?: pulumi.Input<boolean>;
-            pd: pulumi.Input<inputs.pingcap.v1alpha1.TidbClusterSpecPd>;
+            pd?: pulumi.Input<inputs.pingcap.v1alpha1.TidbClusterSpecPd>;
+            pdAddresses?: pulumi.Input<pulumi.Input<string>[]>;
             priorityClassName?: pulumi.Input<string>;
             pump?: pulumi.Input<inputs.pingcap.v1alpha1.TidbClusterSpecPump>;
             pvReclaimPolicy?: pulumi.Input<string>;
             schedulerName?: pulumi.Input<string>;
+            serviceAccount?: pulumi.Input<string>;
+            statefulSetUpdateStrategy?: pulumi.Input<string>;
             ticdc?: pulumi.Input<inputs.pingcap.v1alpha1.TidbClusterSpecTicdc>;
-            tidb: pulumi.Input<inputs.pingcap.v1alpha1.TidbClusterSpecTidb>;
+            tidb?: pulumi.Input<inputs.pingcap.v1alpha1.TidbClusterSpecTidb>;
             tiflash?: pulumi.Input<inputs.pingcap.v1alpha1.TidbClusterSpecTiflash>;
-            tikv: pulumi.Input<inputs.pingcap.v1alpha1.TidbClusterSpecTikv>;
+            tikv?: pulumi.Input<inputs.pingcap.v1alpha1.TidbClusterSpecTikv>;
             timezone?: pulumi.Input<string>;
             tlsCluster?: any;
             tolerations?: pulumi.Input<pulumi.Input<inputs.pingcap.v1alpha1.TidbClusterSpecTolerations>[]>;
@@ -987,6 +1000,11 @@ export namespace pingcap {
             values?: pulumi.Input<pulumi.Input<string>[]>;
         }
 
+        export interface TidbClusterSpecCluster {
+            name: pulumi.Input<string>;
+            namespace?: pulumi.Input<string>;
+        }
+
         export interface TidbClusterSpecDiscovery {
             limits?: pulumi.Input<{[key: string]: any}>;
             requests?: pulumi.Input<{[key: string]: any}>;
@@ -1007,7 +1025,7 @@ export namespace pingcap {
             affinity?: pulumi.Input<inputs.pingcap.v1alpha1.TidbClusterSpecPdAffinity>;
             annotations?: pulumi.Input<{[key: string]: any}>;
             baseImage?: pulumi.Input<string>;
-            config?: pulumi.Input<inputs.pingcap.v1alpha1.TidbClusterSpecPdConfig>;
+            config?: any;
             configUpdateStrategy?: pulumi.Input<string>;
             dataSubDir?: pulumi.Input<string>;
             enableDashboardInternalProxy?: pulumi.Input<boolean>;
@@ -1017,6 +1035,7 @@ export namespace pingcap {
             imagePullSecrets?: pulumi.Input<pulumi.Input<inputs.pingcap.v1alpha1.TidbClusterSpecPdImagePullSecrets>[]>;
             limits?: pulumi.Input<{[key: string]: any}>;
             maxFailoverCount?: pulumi.Input<number>;
+            mountClusterClientSecret?: pulumi.Input<boolean>;
             nodeSelector?: pulumi.Input<{[key: string]: any}>;
             podSecurityContext?: pulumi.Input<inputs.pingcap.v1alpha1.TidbClusterSpecPdPodSecurityContext>;
             priorityClassName?: pulumi.Input<string>;
@@ -1024,7 +1043,10 @@ export namespace pingcap {
             requests?: pulumi.Input<{[key: string]: any}>;
             schedulerName?: pulumi.Input<string>;
             service?: pulumi.Input<inputs.pingcap.v1alpha1.TidbClusterSpecPdService>;
+            serviceAccount?: pulumi.Input<string>;
+            statefulSetUpdateStrategy?: pulumi.Input<string>;
             storageClassName?: pulumi.Input<string>;
+            storageVolumes?: pulumi.Input<any[]>;
             terminationGracePeriodSeconds?: pulumi.Input<number>;
             tlsClientSecretName?: pulumi.Input<string>;
             tolerations?: pulumi.Input<pulumi.Input<inputs.pingcap.v1alpha1.TidbClusterSpecPdTolerations>[]>;
@@ -1855,119 +1877,6 @@ export namespace pingcap {
             values?: pulumi.Input<pulumi.Input<string>[]>;
         }
 
-        export interface TidbClusterSpecPdConfig {
-            auto-compaction-mode?: pulumi.Input<string>;
-            auto-compaction-retention-v2?: pulumi.Input<string>;
-            cluster-version?: pulumi.Input<string>;
-            dashboard?: pulumi.Input<inputs.pingcap.v1alpha1.TidbClusterSpecPdConfigDashboard>;
-            election-interval?: pulumi.Input<string>;
-            enable-grpc-gateway?: pulumi.Input<boolean>;
-            enable-prevote?: pulumi.Input<boolean>;
-            force-new-cluster?: pulumi.Input<boolean>;
-            label-property?: pulumi.Input<{[key: string]: any}>;
-            lease?: pulumi.Input<number>;
-            log?: pulumi.Input<inputs.pingcap.v1alpha1.TidbClusterSpecPdConfigLog>;
-            log-file?: pulumi.Input<string>;
-            log-level?: pulumi.Input<string>;
-            metric?: pulumi.Input<inputs.pingcap.v1alpha1.TidbClusterSpecPdConfigMetric>;
-            namespace?: pulumi.Input<{[key: string]: any}>;
-            namespace-classifier?: pulumi.Input<string>;
-            pd-server?: pulumi.Input<inputs.pingcap.v1alpha1.TidbClusterSpecPdConfigPd-Server>;
-            quota-backend-bytes?: pulumi.Input<string>;
-            replication?: pulumi.Input<inputs.pingcap.v1alpha1.TidbClusterSpecPdConfigReplication>;
-            schedule?: pulumi.Input<inputs.pingcap.v1alpha1.TidbClusterSpecPdConfigSchedule>;
-            security?: pulumi.Input<inputs.pingcap.v1alpha1.TidbClusterSpecPdConfigSecurity>;
-            tikv-interval?: pulumi.Input<string>;
-            tso-save-interval?: pulumi.Input<string>;
-        }
-
-        export interface TidbClusterSpecPdConfigDashboard {
-            disable-telemetry?: pulumi.Input<boolean>;
-            internal-proxy?: pulumi.Input<boolean>;
-            public-path-prefix?: pulumi.Input<string>;
-            tidb-cacert-path?: pulumi.Input<string>;
-            tidb-cert-path?: pulumi.Input<string>;
-            tidb-key-path?: pulumi.Input<string>;
-        }
-
-        export interface TidbClusterSpecPdConfigLog {
-            development?: pulumi.Input<boolean>;
-            disable-caller?: pulumi.Input<boolean>;
-            disable-error-verbose?: pulumi.Input<boolean>;
-            disable-stacktrace?: pulumi.Input<boolean>;
-            disable-timestamp?: pulumi.Input<boolean>;
-            file?: pulumi.Input<inputs.pingcap.v1alpha1.TidbClusterSpecPdConfigLogFile>;
-            format?: pulumi.Input<string>;
-            level?: pulumi.Input<string>;
-        }
-
-        export interface TidbClusterSpecPdConfigLogFile {
-            filename?: pulumi.Input<string>;
-            log-rotate?: pulumi.Input<boolean>;
-            max-backups?: pulumi.Input<number>;
-            max-days?: pulumi.Input<number>;
-            max-size?: pulumi.Input<number>;
-        }
-
-        export interface TidbClusterSpecPdConfigMetric {
-            address?: pulumi.Input<string>;
-            interval?: pulumi.Input<string>;
-            job?: pulumi.Input<string>;
-        }
-
-        export interface TidbClusterSpecPdConfigPd-Server {
-            metric-storage?: pulumi.Input<string>;
-            use-region-storage?: pulumi.Input<string>;
-        }
-
-        export interface TidbClusterSpecPdConfigReplication {
-            enable-placement-rules?: pulumi.Input<string>;
-            max-replicas?: pulumi.Input<number>;
-            strictly-match-label?: pulumi.Input<string>;
-        }
-
-        export interface TidbClusterSpecPdConfigSchedule {
-            disable-location-replacement?: pulumi.Input<string>;
-            disable-make-up-replica?: pulumi.Input<string>;
-            disable-namespace-relocation?: pulumi.Input<string>;
-            disable-raft-learner?: pulumi.Input<string>;
-            disable-remove-down-replica?: pulumi.Input<string>;
-            disable-remove-extra-replica?: pulumi.Input<string>;
-            disable-replace-offline-replica?: pulumi.Input<string>;
-            enable-cross-table-merge?: pulumi.Input<string>;
-            enable-one-way-merge?: pulumi.Input<string>;
-            high-space-ratio?: pulumi.Input<number>;
-            hot-region-cache-hits-threshold?: pulumi.Input<number>;
-            hot-region-schedule-limit?: pulumi.Input<number>;
-            leader-schedule-limit?: pulumi.Input<number>;
-            low-space-ratio?: pulumi.Input<number>;
-            max-merge-region-keys?: pulumi.Input<number>;
-            max-merge-region-size?: pulumi.Input<number>;
-            max-pending-peer-count?: pulumi.Input<number>;
-            max-snapshot-count?: pulumi.Input<number>;
-            max-store-down-time?: pulumi.Input<string>;
-            merge-schedule-limit?: pulumi.Input<number>;
-            patrol-region-interval?: pulumi.Input<string>;
-            region-schedule-limit?: pulumi.Input<number>;
-            replica-schedule-limit?: pulumi.Input<number>;
-            schedulers-payload?: pulumi.Input<{[key: string]: any}>;
-            schedulers-v2?: pulumi.Input<pulumi.Input<inputs.pingcap.v1alpha1.TidbClusterSpecPdConfigScheduleSchedulers-V2>[]>;
-            split-merge-interval?: pulumi.Input<string>;
-            tolerant-size-ratio?: pulumi.Input<number>;
-        }
-
-        export interface TidbClusterSpecPdConfigScheduleSchedulers-V2 {
-            args?: pulumi.Input<pulumi.Input<string>[]>;
-            disable?: pulumi.Input<boolean>;
-            type?: pulumi.Input<string>;
-        }
-
-        export interface TidbClusterSpecPdConfigSecurity {
-            cacert-path?: pulumi.Input<string>;
-            cert-path?: pulumi.Input<string>;
-            key-path?: pulumi.Input<string>;
-        }
-
         export interface TidbClusterSpecPdEnv {
             name: pulumi.Input<string>;
             value?: pulumi.Input<string>;
@@ -2060,7 +1969,7 @@ export namespace pingcap {
             affinity?: pulumi.Input<inputs.pingcap.v1alpha1.TidbClusterSpecPumpAffinity>;
             annotations?: pulumi.Input<{[key: string]: any}>;
             baseImage?: pulumi.Input<string>;
-            config?: pulumi.Input<{[key: string]: any}>;
+            config?: any;
             configUpdateStrategy?: pulumi.Input<string>;
             env?: pulumi.Input<pulumi.Input<inputs.pingcap.v1alpha1.TidbClusterSpecPumpEnv>[]>;
             hostNetwork?: pulumi.Input<boolean>;
@@ -2073,6 +1982,8 @@ export namespace pingcap {
             replicas: pulumi.Input<number>;
             requests?: pulumi.Input<{[key: string]: any}>;
             schedulerName?: pulumi.Input<string>;
+            serviceAccount?: pulumi.Input<string>;
+            statefulSetUpdateStrategy?: pulumi.Input<string>;
             storageClassName?: pulumi.Input<string>;
             terminationGracePeriodSeconds?: pulumi.Input<number>;
             tolerations?: pulumi.Input<pulumi.Input<inputs.pingcap.v1alpha1.TidbClusterSpecPumpTolerations>[]>;
@@ -3000,6 +2911,7 @@ export namespace pingcap {
             requests?: pulumi.Input<{[key: string]: any}>;
             schedulerName?: pulumi.Input<string>;
             serviceAccount?: pulumi.Input<string>;
+            statefulSetUpdateStrategy?: pulumi.Input<string>;
             terminationGracePeriodSeconds?: pulumi.Input<number>;
             tolerations?: pulumi.Input<pulumi.Input<inputs.pingcap.v1alpha1.TidbClusterSpecTicdcTolerations>[]>;
             version?: pulumi.Input<string>;
@@ -3920,7 +3832,7 @@ export namespace pingcap {
             annotations?: pulumi.Input<{[key: string]: any}>;
             baseImage?: pulumi.Input<string>;
             binlogEnabled?: pulumi.Input<boolean>;
-            config?: pulumi.Input<inputs.pingcap.v1alpha1.TidbClusterSpecTidbConfig>;
+            config?: any;
             configUpdateStrategy?: pulumi.Input<string>;
             env?: pulumi.Input<pulumi.Input<inputs.pingcap.v1alpha1.TidbClusterSpecTidbEnv>[]>;
             hostNetwork?: pulumi.Input<boolean>;
@@ -3933,12 +3845,17 @@ export namespace pingcap {
             plugins?: pulumi.Input<pulumi.Input<string>[]>;
             podSecurityContext?: pulumi.Input<inputs.pingcap.v1alpha1.TidbClusterSpecTidbPodSecurityContext>;
             priorityClassName?: pulumi.Input<string>;
+            readinessProbe?: pulumi.Input<inputs.pingcap.v1alpha1.TidbClusterSpecTidbReadinessProbe>;
             replicas: pulumi.Input<number>;
             requests?: pulumi.Input<{[key: string]: any}>;
             schedulerName?: pulumi.Input<string>;
             separateSlowLog?: pulumi.Input<boolean>;
             service?: pulumi.Input<inputs.pingcap.v1alpha1.TidbClusterSpecTidbService>;
+            serviceAccount?: pulumi.Input<string>;
             slowLogTailer?: pulumi.Input<inputs.pingcap.v1alpha1.TidbClusterSpecTidbSlowLogTailer>;
+            statefulSetUpdateStrategy?: pulumi.Input<string>;
+            storageClassName?: pulumi.Input<string>;
+            storageVolumes?: pulumi.Input<any[]>;
             terminationGracePeriodSeconds?: pulumi.Input<number>;
             tlsClient?: any;
             tolerations?: pulumi.Input<pulumi.Input<inputs.pingcap.v1alpha1.TidbClusterSpecTidbTolerations>[]>;
@@ -4769,201 +4686,6 @@ export namespace pingcap {
             values?: pulumi.Input<pulumi.Input<string>[]>;
         }
 
-        export interface TidbClusterSpecTidbConfig {
-            alter-primary-key?: pulumi.Input<boolean>;
-            binlog?: pulumi.Input<inputs.pingcap.v1alpha1.TidbClusterSpecTidbConfigBinlog>;
-            check-mb4-value-in-utf8?: pulumi.Input<boolean>;
-            compatible-kill-query?: pulumi.Input<boolean>;
-            cors?: pulumi.Input<string>;
-            delay-clean-table-lock?: pulumi.Input<number>;
-            enable-batch-dml?: pulumi.Input<boolean>;
-            enable-dynamic-config?: pulumi.Input<boolean>;
-            enable-streaming?: pulumi.Input<boolean>;
-            enable-table-lock?: pulumi.Input<boolean>;
-            enable-telemetry?: pulumi.Input<boolean>;
-            experimental?: pulumi.Input<inputs.pingcap.v1alpha1.TidbClusterSpecTidbConfigExperimental>;
-            isolation-read?: pulumi.Input<inputs.pingcap.v1alpha1.TidbClusterSpecTidbConfigIsolation-Read>;
-            lease?: pulumi.Input<string>;
-            log?: pulumi.Input<inputs.pingcap.v1alpha1.TidbClusterSpecTidbConfigLog>;
-            lower-case-table-names?: pulumi.Input<number>;
-            max-server-connections?: pulumi.Input<number>;
-            mem-quota-query?: pulumi.Input<number>;
-            new_collations_enabled_on_first_bootstrap?: pulumi.Input<boolean>;
-            oom-action?: pulumi.Input<string>;
-            oom-use-tmp-storage?: pulumi.Input<boolean>;
-            opentracing?: pulumi.Input<inputs.pingcap.v1alpha1.TidbClusterSpecTidbConfigOpentracing>;
-            performance?: pulumi.Input<inputs.pingcap.v1alpha1.TidbClusterSpecTidbConfigPerformance>;
-            pessimistic-txn?: pulumi.Input<inputs.pingcap.v1alpha1.TidbClusterSpecTidbConfigPessimistic-Txn>;
-            plugin?: pulumi.Input<inputs.pingcap.v1alpha1.TidbClusterSpecTidbConfigPlugin>;
-            prepared-plan-cache?: pulumi.Input<inputs.pingcap.v1alpha1.TidbClusterSpecTidbConfigPrepared-Plan-Cache>;
-            proxy-protocol?: pulumi.Input<inputs.pingcap.v1alpha1.TidbClusterSpecTidbConfigProxy-Protocol>;
-            repair-mode?: pulumi.Input<boolean>;
-            repair-table-list?: pulumi.Input<pulumi.Input<string>[]>;
-            run-ddl?: pulumi.Input<boolean>;
-            security?: pulumi.Input<inputs.pingcap.v1alpha1.TidbClusterSpecTidbConfigSecurity>;
-            socket?: pulumi.Input<string>;
-            split-region-max-num?: pulumi.Input<number>;
-            split-table?: pulumi.Input<boolean>;
-            status?: pulumi.Input<inputs.pingcap.v1alpha1.TidbClusterSpecTidbConfigStatus>;
-            stmt-summary?: pulumi.Input<inputs.pingcap.v1alpha1.TidbClusterSpecTidbConfigStmt-Summary>;
-            tikv-client?: pulumi.Input<inputs.pingcap.v1alpha1.TidbClusterSpecTidbConfigTikv-Client>;
-            tmp-storage-path?: pulumi.Input<string>;
-            tmp-storage-quota?: pulumi.Input<number>;
-            token-limit?: pulumi.Input<number>;
-            treat-old-version-utf8-as-utf8mb4?: pulumi.Input<boolean>;
-            txn-local-latches?: pulumi.Input<inputs.pingcap.v1alpha1.TidbClusterSpecTidbConfigTxn-Local-Latches>;
-        }
-
-        export interface TidbClusterSpecTidbConfigBinlog {
-            binlog-socket?: pulumi.Input<string>;
-            enable?: pulumi.Input<boolean>;
-            ignore-error?: pulumi.Input<boolean>;
-            strategy?: pulumi.Input<string>;
-            write-timeout?: pulumi.Input<string>;
-        }
-
-        export interface TidbClusterSpecTidbConfigExperimental {
-            allow-auto-random?: pulumi.Input<boolean>;
-            allow-expression-index?: pulumi.Input<boolean>;
-        }
-
-        export interface TidbClusterSpecTidbConfigIsolation-Read {
-            engines?: pulumi.Input<pulumi.Input<string>[]>;
-        }
-
-        export interface TidbClusterSpecTidbConfigLog {
-            disable-timestamp?: pulumi.Input<boolean>;
-            enable-error-stack?: pulumi.Input<boolean>;
-            enable-slow-log?: pulumi.Input<boolean>;
-            enable-timestamp?: pulumi.Input<boolean>;
-            expensive-threshold?: pulumi.Input<number>;
-            file?: pulumi.Input<inputs.pingcap.v1alpha1.TidbClusterSpecTidbConfigLogFile>;
-            format?: pulumi.Input<string>;
-            level?: pulumi.Input<string>;
-            query-log-max-len?: pulumi.Input<number>;
-            record-plan-in-slow-log?: pulumi.Input<number>;
-            slow-query-file?: pulumi.Input<string>;
-            slow-threshold?: pulumi.Input<number>;
-        }
-
-        export interface TidbClusterSpecTidbConfigLogFile {
-            filename?: pulumi.Input<string>;
-            log-rotate?: pulumi.Input<boolean>;
-            max-backups?: pulumi.Input<number>;
-            max-days?: pulumi.Input<number>;
-            max-size?: pulumi.Input<number>;
-        }
-
-        export interface TidbClusterSpecTidbConfigOpentracing {
-            enable?: pulumi.Input<boolean>;
-            reporter?: pulumi.Input<inputs.pingcap.v1alpha1.TidbClusterSpecTidbConfigOpentracingReporter>;
-            rpc-metrics?: pulumi.Input<boolean>;
-            sampler?: pulumi.Input<inputs.pingcap.v1alpha1.TidbClusterSpecTidbConfigOpentracingSampler>;
-        }
-
-        export interface TidbClusterSpecTidbConfigOpentracingReporter {
-            buffer-flush-interval?: pulumi.Input<number>;
-            local-agent-host-port?: pulumi.Input<string>;
-            log-spans?: pulumi.Input<boolean>;
-            queue-size?: pulumi.Input<number>;
-        }
-
-        export interface TidbClusterSpecTidbConfigOpentracingSampler {
-            max-operations?: pulumi.Input<number>;
-            param?: pulumi.Input<number>;
-            sampling-refresh-interval?: pulumi.Input<number>;
-            sampling-server-url?: pulumi.Input<string>;
-            type?: pulumi.Input<string>;
-        }
-
-        export interface TidbClusterSpecTidbConfigPerformance {
-            agg-push-down-join?: pulumi.Input<boolean>;
-            bind-info-lease?: pulumi.Input<string>;
-            committer-concurrency?: pulumi.Input<number>;
-            cross-join?: pulumi.Input<boolean>;
-            feedback-probability?: pulumi.Input<number>;
-            force-priority?: pulumi.Input<string>;
-            max-memory?: pulumi.Input<number>;
-            max-procs?: pulumi.Input<number>;
-            max-txn-ttl?: pulumi.Input<number>;
-            pseudo-estimate-ratio?: pulumi.Input<number>;
-            query-feedback-limit?: pulumi.Input<number>;
-            run-auto-analyze?: pulumi.Input<boolean>;
-            stats-lease?: pulumi.Input<string>;
-            stmt-count-limit?: pulumi.Input<number>;
-            tcp-keep-alive?: pulumi.Input<boolean>;
-            txn-entry-count-limit?: pulumi.Input<number>;
-            txn-total-size-limit?: pulumi.Input<number>;
-        }
-
-        export interface TidbClusterSpecTidbConfigPessimistic-Txn {
-            enable?: pulumi.Input<boolean>;
-            max-retry-count?: pulumi.Input<number>;
-        }
-
-        export interface TidbClusterSpecTidbConfigPlugin {
-            dir?: pulumi.Input<string>;
-            load?: pulumi.Input<string>;
-        }
-
-        export interface TidbClusterSpecTidbConfigPrepared-Plan-Cache {
-            capacity?: pulumi.Input<number>;
-            enabled?: pulumi.Input<boolean>;
-            memory-guard-ratio?: pulumi.Input<number>;
-        }
-
-        export interface TidbClusterSpecTidbConfigProxy-Protocol {
-            header-timeout?: pulumi.Input<number>;
-            networks?: pulumi.Input<string>;
-        }
-
-        export interface TidbClusterSpecTidbConfigSecurity {
-            cluster-ssl-ca?: pulumi.Input<string>;
-            cluster-ssl-cert?: pulumi.Input<string>;
-            cluster-ssl-key?: pulumi.Input<string>;
-            skip-grant-table?: pulumi.Input<boolean>;
-            ssl-ca?: pulumi.Input<string>;
-            ssl-cert?: pulumi.Input<string>;
-            ssl-key?: pulumi.Input<string>;
-        }
-
-        export interface TidbClusterSpecTidbConfigStatus {
-            metrics-addr?: pulumi.Input<string>;
-            metrics-interval?: pulumi.Input<number>;
-            record-db-qps?: pulumi.Input<boolean>;
-            report-status?: pulumi.Input<boolean>;
-        }
-
-        export interface TidbClusterSpecTidbConfigStmt-Summary {
-            enable?: pulumi.Input<boolean>;
-            enable-internal-query?: pulumi.Input<boolean>;
-            history-size?: pulumi.Input<number>;
-            max-sql-length?: pulumi.Input<number>;
-            max-stmt-count?: pulumi.Input<number>;
-            refresh-interval?: pulumi.Input<number>;
-        }
-
-        export interface TidbClusterSpecTidbConfigTikv-Client {
-            batch-wait-size?: pulumi.Input<number>;
-            commit-timeout?: pulumi.Input<string>;
-            copr-cache?: any;
-            grpc-connection-count?: pulumi.Input<number>;
-            grpc-keepalive-time?: pulumi.Input<number>;
-            grpc-keepalive-timeout?: pulumi.Input<number>;
-            max-batch-size?: pulumi.Input<number>;
-            max-batch-wait-time?: pulumi.Input<number>;
-            max-txn-time-use?: pulumi.Input<number>;
-            overload-threshold?: pulumi.Input<number>;
-            region-cache-ttl?: pulumi.Input<number>;
-            store-limit?: pulumi.Input<number>;
-            store-liveness-timeout?: pulumi.Input<string>;
-        }
-
-        export interface TidbClusterSpecTidbConfigTxn-Local-Latches {
-            capacity?: pulumi.Input<number>;
-            enabled?: pulumi.Input<boolean>;
-        }
-
         export interface TidbClusterSpecTidbEnv {
             name: pulumi.Input<string>;
             value?: pulumi.Input<string>;
@@ -5106,9 +4828,15 @@ export namespace pingcap {
             runAsUserName?: pulumi.Input<string>;
         }
 
+        export interface TidbClusterSpecTidbReadinessProbe {
+            type?: pulumi.Input<string>;
+        }
+
         export interface TidbClusterSpecTidbService {
             exposeStatus?: pulumi.Input<boolean>;
             externalTrafficPolicy?: pulumi.Input<string>;
+            mysqlNodePort?: pulumi.Input<number>;
+            statusNodePort?: pulumi.Input<number>;
         }
 
         export interface TidbClusterSpecTidbSlowLogTailer {
@@ -5130,7 +4858,7 @@ export namespace pingcap {
             affinity?: pulumi.Input<inputs.pingcap.v1alpha1.TidbClusterSpecTiflashAffinity>;
             annotations?: pulumi.Input<{[key: string]: any}>;
             baseImage?: pulumi.Input<string>;
-            config?: pulumi.Input<inputs.pingcap.v1alpha1.TidbClusterSpecTiflashConfig>;
+            config?: any;
             configUpdateStrategy?: pulumi.Input<string>;
             env?: pulumi.Input<pulumi.Input<inputs.pingcap.v1alpha1.TidbClusterSpecTiflashEnv>[]>;
             hostNetwork?: pulumi.Input<boolean>;
@@ -5143,10 +4871,12 @@ export namespace pingcap {
             podSecurityContext?: pulumi.Input<inputs.pingcap.v1alpha1.TidbClusterSpecTiflashPodSecurityContext>;
             priorityClassName?: pulumi.Input<string>;
             privileged?: pulumi.Input<boolean>;
+            recoverFailover?: pulumi.Input<boolean>;
             replicas: pulumi.Input<number>;
             requests?: pulumi.Input<{[key: string]: any}>;
             schedulerName?: pulumi.Input<string>;
             serviceAccount?: pulumi.Input<string>;
+            statefulSetUpdateStrategy?: pulumi.Input<string>;
             storageClaims: pulumi.Input<pulumi.Input<inputs.pingcap.v1alpha1.TidbClusterSpecTiflashStorageClaims>[]>;
             terminationGracePeriodSeconds?: pulumi.Input<number>;
             tolerations?: pulumi.Input<pulumi.Input<inputs.pingcap.v1alpha1.TidbClusterSpecTiflashTolerations>[]>;
@@ -5977,36 +5707,6 @@ export namespace pingcap {
             values?: pulumi.Input<pulumi.Input<string>[]>;
         }
 
-        export interface TidbClusterSpecTiflashConfig {
-            config?: pulumi.Input<inputs.pingcap.v1alpha1.TidbClusterSpecTiflashConfigConfig>;
-        }
-
-        export interface TidbClusterSpecTiflashConfigConfig {
-            flash?: pulumi.Input<inputs.pingcap.v1alpha1.TidbClusterSpecTiflashConfigConfigFlash>;
-            logger?: pulumi.Input<inputs.pingcap.v1alpha1.TidbClusterSpecTiflashConfigConfigLogger>;
-            mark_cache_size?: pulumi.Input<number>;
-            minmax_index_cache_size?: pulumi.Input<number>;
-            path_realtime_mode?: pulumi.Input<boolean>;
-        }
-
-        export interface TidbClusterSpecTiflashConfigConfigFlash {
-            compact_log_min_period?: pulumi.Input<number>;
-            flash_cluster?: pulumi.Input<inputs.pingcap.v1alpha1.TidbClusterSpecTiflashConfigConfigFlashFlash_cluster>;
-            overlap_threshold?: pulumi.Input<number>;
-        }
-
-        export interface TidbClusterSpecTiflashConfigConfigFlashFlash_cluster {
-            master_ttl?: pulumi.Input<number>;
-            refresh_interval?: pulumi.Input<number>;
-            update_rule_interval?: pulumi.Input<number>;
-        }
-
-        export interface TidbClusterSpecTiflashConfigConfigLogger {
-            count?: pulumi.Input<number>;
-            level?: pulumi.Input<string>;
-            size?: pulumi.Input<string>;
-        }
-
         export interface TidbClusterSpecTiflashEnv {
             name: pulumi.Input<string>;
             value?: pulumi.Input<string>;
@@ -6105,24 +5805,29 @@ export namespace pingcap {
             affinity?: pulumi.Input<inputs.pingcap.v1alpha1.TidbClusterSpecTikvAffinity>;
             annotations?: pulumi.Input<{[key: string]: any}>;
             baseImage?: pulumi.Input<string>;
-            config?: pulumi.Input<inputs.pingcap.v1alpha1.TidbClusterSpecTikvConfig>;
+            config?: any;
             configUpdateStrategy?: pulumi.Input<string>;
             dataSubDir?: pulumi.Input<string>;
             env?: pulumi.Input<pulumi.Input<inputs.pingcap.v1alpha1.TidbClusterSpecTikvEnv>[]>;
+            evictLeaderTimeout?: pulumi.Input<string>;
             hostNetwork?: pulumi.Input<boolean>;
             imagePullPolicy?: pulumi.Input<string>;
             imagePullSecrets?: pulumi.Input<pulumi.Input<inputs.pingcap.v1alpha1.TidbClusterSpecTikvImagePullSecrets>[]>;
             limits?: pulumi.Input<{[key: string]: any}>;
             maxFailoverCount?: pulumi.Input<number>;
+            mountClusterClientSecret?: pulumi.Input<boolean>;
             nodeSelector?: pulumi.Input<{[key: string]: any}>;
             podSecurityContext?: pulumi.Input<inputs.pingcap.v1alpha1.TidbClusterSpecTikvPodSecurityContext>;
             priorityClassName?: pulumi.Input<string>;
             privileged?: pulumi.Input<boolean>;
+            recoverFailover?: pulumi.Input<boolean>;
             replicas: pulumi.Input<number>;
             requests?: pulumi.Input<{[key: string]: any}>;
             schedulerName?: pulumi.Input<string>;
             serviceAccount?: pulumi.Input<string>;
+            statefulSetUpdateStrategy?: pulumi.Input<string>;
             storageClassName?: pulumi.Input<string>;
+            storageVolumes?: pulumi.Input<any[]>;
             terminationGracePeriodSeconds?: pulumi.Input<number>;
             tolerations?: pulumi.Input<pulumi.Input<inputs.pingcap.v1alpha1.TidbClusterSpecTikvTolerations>[]>;
             version?: pulumi.Input<string>;
@@ -6952,540 +6657,6 @@ export namespace pingcap {
             values?: pulumi.Input<pulumi.Input<string>[]>;
         }
 
-        export interface TidbClusterSpecTikvConfig {
-            coprocessor?: pulumi.Input<inputs.pingcap.v1alpha1.TidbClusterSpecTikvConfigCoprocessor>;
-            gc?: pulumi.Input<inputs.pingcap.v1alpha1.TidbClusterSpecTikvConfigGc>;
-            import?: pulumi.Input<inputs.pingcap.v1alpha1.TidbClusterSpecTikvConfigImport>;
-            log-file?: pulumi.Input<string>;
-            log-level?: pulumi.Input<string>;
-            log-rotation-size?: pulumi.Input<string>;
-            log-rotation-timespan?: pulumi.Input<string>;
-            panic-when-unexpected-key-or-data?: pulumi.Input<boolean>;
-            pd?: pulumi.Input<inputs.pingcap.v1alpha1.TidbClusterSpecTikvConfigPd>;
-            pessimistic-txn?: pulumi.Input<inputs.pingcap.v1alpha1.TidbClusterSpecTikvConfigPessimistic-Txn>;
-            raftdb?: pulumi.Input<inputs.pingcap.v1alpha1.TidbClusterSpecTikvConfigRaftdb>;
-            raftstore?: pulumi.Input<inputs.pingcap.v1alpha1.TidbClusterSpecTikvConfigRaftstore>;
-            readpool?: pulumi.Input<inputs.pingcap.v1alpha1.TidbClusterSpecTikvConfigReadpool>;
-            refresh-config-interval?: pulumi.Input<string>;
-            rocksdb?: pulumi.Input<inputs.pingcap.v1alpha1.TidbClusterSpecTikvConfigRocksdb>;
-            security?: pulumi.Input<inputs.pingcap.v1alpha1.TidbClusterSpecTikvConfigSecurity>;
-            server?: pulumi.Input<inputs.pingcap.v1alpha1.TidbClusterSpecTikvConfigServer>;
-            slow-log-file?: pulumi.Input<string>;
-            slow-log-threshold?: pulumi.Input<string>;
-            storage?: pulumi.Input<inputs.pingcap.v1alpha1.TidbClusterSpecTikvConfigStorage>;
-        }
-
-        export interface TidbClusterSpecTikvConfigCoprocessor {
-            batch-split-limit?: pulumi.Input<number>;
-            region-max-keys?: pulumi.Input<number>;
-            region-max-size?: pulumi.Input<string>;
-            region-split-keys?: pulumi.Input<number>;
-            region-split-size?: pulumi.Input<string>;
-            split-region-on-table?: pulumi.Input<boolean>;
-        }
-
-        export interface TidbClusterSpecTikvConfigGc {
-            	batch-keys?: pulumi.Input<number>;
-            	max-write-bytes-per-sec?: pulumi.Input<string>;
-        }
-
-        export interface TidbClusterSpecTikvConfigImport {
-            import-dir?: pulumi.Input<string>;
-            max-open-engines?: pulumi.Input<number>;
-            max-prepare-duration?: pulumi.Input<string>;
-            num-import-jobs?: pulumi.Input<number>;
-            num-import-sst-jobs?: pulumi.Input<number>;
-            num-threads?: pulumi.Input<number>;
-            region-split-size?: pulumi.Input<string>;
-            stream-channel-window?: pulumi.Input<number>;
-            upload-speed-limit?: pulumi.Input<string>;
-        }
-
-        export interface TidbClusterSpecTikvConfigPd {
-            endpoints?: pulumi.Input<pulumi.Input<string>[]>;
-            retry-interval?: pulumi.Input<string>;
-            retry-log-every?: pulumi.Input<number>;
-            retry-max-count?: pulumi.Input<number>;
-        }
-
-        export interface TidbClusterSpecTikvConfigPessimistic-Txn {
-            enabled?: pulumi.Input<boolean>;
-            pipelined?: pulumi.Input<boolean>;
-            wait-for-lock-timeout?: pulumi.Input<string>;
-            wake-up-delay-duration?: pulumi.Input<string>;
-        }
-
-        export interface TidbClusterSpecTikvConfigRaftdb {
-            allow-concurrent-memtable-write?: pulumi.Input<boolean>;
-            bytes-per-sync?: pulumi.Input<string>;
-            compaction-readahead-size?: pulumi.Input<string>;
-            create-if-missing?: pulumi.Input<boolean>;
-            defaultcf?: pulumi.Input<inputs.pingcap.v1alpha1.TidbClusterSpecTikvConfigRaftdbDefaultcf>;
-            enable-pipelined-write?: pulumi.Input<boolean>;
-            enable-statistics?: pulumi.Input<boolean>;
-            info-log-dir?: pulumi.Input<string>;
-            info-log-keep-log-file-num?: pulumi.Input<number>;
-            info-log-max-size?: pulumi.Input<string>;
-            info-log-roll-time?: pulumi.Input<string>;
-            max-background-jobs?: pulumi.Input<number>;
-            max-manifest-file-size?: pulumi.Input<string>;
-            max-open-files?: pulumi.Input<number>;
-            max-sub-compactions?: pulumi.Input<number>;
-            max-total-wal-size?: pulumi.Input<string>;
-            stats-dump-period?: pulumi.Input<string>;
-            use-direct-io-for-flush-and-compaction?: pulumi.Input<boolean>;
-            wal-bytes-per-sync?: pulumi.Input<string>;
-            wal-dir?: pulumi.Input<string>;
-            wal-recovery-mode?: pulumi.Input<string>;
-            wal-size-limit?: pulumi.Input<string>;
-            wal-ttl-seconds?: pulumi.Input<number>;
-            writable-file-max-buffer-size?: pulumi.Input<string>;
-        }
-
-        export interface TidbClusterSpecTikvConfigRaftdbDefaultcf {
-            block-based-bloom-filter?: pulumi.Input<boolean>;
-            block-cache-size?: pulumi.Input<string>;
-            block-size?: pulumi.Input<string>;
-            bloom-filter-bits-per-key?: pulumi.Input<number>;
-            cache-index-and-filter-blocks?: pulumi.Input<boolean>;
-            compaction-pri?: pulumi.Input<number>;
-            compaction-style?: pulumi.Input<number>;
-            compression-per-level?: pulumi.Input<pulumi.Input<string>[]>;
-            disable-auto-compactions?: pulumi.Input<boolean>;
-            disable-block-cache?: pulumi.Input<boolean>;
-            dynamic-level-bytes?: pulumi.Input<boolean>;
-            enable-doubly-skiplist?: pulumi.Input<boolean>;
-            force-consistency-checks?: pulumi.Input<boolean>;
-            hard-pending-compaction-bytes-limit?: pulumi.Input<string>;
-            level0-file-num-compaction-trigger?: pulumi.Input<number>;
-            level0-slowdown-writes-trigger?: pulumi.Input<number>;
-            level0-stop-writes-trigger?: pulumi.Input<number>;
-            max-bytes-for-level-base?: pulumi.Input<string>;
-            max-bytes-for-level-multiplier?: pulumi.Input<number>;
-            max-compaction-bytes?: pulumi.Input<string>;
-            max-write-buffer-number?: pulumi.Input<number>;
-            min-write-buffer-number-to-merge?: pulumi.Input<number>;
-            num-levels?: pulumi.Input<number>;
-            optimize-filters-for-hits?: pulumi.Input<boolean>;
-            pin-l0-filter-and-index-blocks?: pulumi.Input<boolean>;
-            prop-keys-index-distance?: pulumi.Input<number>;
-            prop-size-index-distance?: pulumi.Input<number>;
-            read-amp-bytes-per-bit?: pulumi.Input<number>;
-            soft-pending-compaction-bytes-limit?: pulumi.Input<string>;
-            target-file-size-base?: pulumi.Input<string>;
-            titan?: pulumi.Input<inputs.pingcap.v1alpha1.TidbClusterSpecTikvConfigRaftdbDefaultcfTitan>;
-            use-bloom-filter?: pulumi.Input<boolean>;
-            whole-key-filtering?: pulumi.Input<boolean>;
-            write-buffer-size?: pulumi.Input<string>;
-        }
-
-        export interface TidbClusterSpecTikvConfigRaftdbDefaultcfTitan {
-            blob-cache-size?: pulumi.Input<string>;
-            blob-file-compression?: pulumi.Input<string>;
-            blob-run-mode?: pulumi.Input<string>;
-            discardable-ratio?: pulumi.Input<number>;
-            gc-merge-rewrite?: pulumi.Input<boolean>;
-            level_merge?: pulumi.Input<boolean>;
-            max-gc-batch-size?: pulumi.Input<string>;
-            merge-small-file-threshold?: pulumi.Input<string>;
-            min-blob-size?: pulumi.Input<string>;
-            min-gc-batch-size?: pulumi.Input<string>;
-            sample-ratio?: pulumi.Input<number>;
-        }
-
-        export interface TidbClusterSpecTikvConfigRaftstore {
-            abnormal-leader-missing-duration?: pulumi.Input<string>;
-            allow-remove-leader?: pulumi.Input<boolean>;
-            apply-early?: pulumi.Input<boolean>;
-            apply-max-batch-size?: pulumi.Input<number>;
-            apply-pool-size?: pulumi.Input<number>;
-            apply-yield-duration?: pulumi.Input<string>;
-            clean-stale-peer-delay?: pulumi.Input<string>;
-            cleanup-import-sst-interval?: pulumi.Input<string>;
-            consistency-check-interval?: pulumi.Input<string>;
-            dev-assert?: pulumi.Input<boolean>;
-            hibernate-regions?: pulumi.Input<boolean>;
-            leader-transfer-max-log-lag?: pulumi.Input<number>;
-            lock-cf-compact-bytes-threshold?: pulumi.Input<string>;
-            lock-cf-compact-interval?: pulumi.Input<string>;
-            max-leader-missing-duration?: pulumi.Input<string>;
-            max-peer-down-duration?: pulumi.Input<string>;
-            merge-check-tick-interval?: pulumi.Input<string>;
-            merge-max-log-gap?: pulumi.Input<number>;
-            messages-per-tick?: pulumi.Input<number>;
-            notify-capacity?: pulumi.Input<number>;
-            pd-heartbeat-tick-interval?: pulumi.Input<string>;
-            pd-store-heartbeat-tick-interval?: pulumi.Input<string>;
-            peer-stale-state-check-interval?: pulumi.Input<string>;
-            perf-level?: pulumi.Input<number>;
-            prevote?: pulumi.Input<boolean>;
-            raft-base-tick-interval?: pulumi.Input<string>;
-            raft-election-timeout-ticks?: pulumi.Input<number>;
-            raft-entry-cache-life-time?: pulumi.Input<string>;
-            raft-entry-max-size?: pulumi.Input<string>;
-            raft-heartbeat-ticks?: pulumi.Input<number>;
-            raft-log-gc-count-limit?: pulumi.Input<number>;
-            raft-log-gc-size-limit?: pulumi.Input<string>;
-            raft-log-gc-threshold?: pulumi.Input<number>;
-            raft-log-gc-tick-interval?: pulumi.Input<string>;
-            raft-max-inflight-msgs?: pulumi.Input<number>;
-            raft-max-size-per-msg?: pulumi.Input<string>;
-            raft-reject-transfer-leader-duration?: pulumi.Input<string>;
-            raft-store-max-leader-lease?: pulumi.Input<string>;
-            region-compact-check-interval?: pulumi.Input<string>;
-            region-compact-check-step?: pulumi.Input<number>;
-            region-compact-min-tombstones?: pulumi.Input<number>;
-            region-compact-tombstones-percent?: pulumi.Input<number>;
-            region-split-check-diff?: pulumi.Input<string>;
-            report-region-flow-interval?: pulumi.Input<string>;
-            right-derive-when-split?: pulumi.Input<boolean>;
-            snap-apply-batch-size?: pulumi.Input<string>;
-            snap-gc-timeout?: pulumi.Input<string>;
-            snap-mgr-gc-tick-interval?: pulumi.Input<string>;
-            split-region-check-tick-interval?: pulumi.Input<string>;
-            store-max-batch-size?: pulumi.Input<number>;
-            store-pool-size?: pulumi.Input<number>;
-            store-reschedule-duration?: pulumi.Input<string>;
-            sync-log?: pulumi.Input<boolean>;
-            use-delete-range?: pulumi.Input<boolean>;
-        }
-
-        export interface TidbClusterSpecTikvConfigReadpool {
-            coprocessor?: pulumi.Input<inputs.pingcap.v1alpha1.TidbClusterSpecTikvConfigReadpoolCoprocessor>;
-            storage?: pulumi.Input<inputs.pingcap.v1alpha1.TidbClusterSpecTikvConfigReadpoolStorage>;
-            unified?: pulumi.Input<inputs.pingcap.v1alpha1.TidbClusterSpecTikvConfigReadpoolUnified>;
-        }
-
-        export interface TidbClusterSpecTikvConfigReadpoolCoprocessor {
-            high-concurrency?: pulumi.Input<number>;
-            low-concurrency?: pulumi.Input<number>;
-            max-tasks-per-worker-high?: pulumi.Input<number>;
-            max-tasks-per-worker-low?: pulumi.Input<number>;
-            max-tasks-per-worker-normal?: pulumi.Input<number>;
-            normal-concurrency?: pulumi.Input<number>;
-            stack-size?: pulumi.Input<string>;
-            use-unified-pool?: pulumi.Input<boolean>;
-        }
-
-        export interface TidbClusterSpecTikvConfigReadpoolStorage {
-            high-concurrency?: pulumi.Input<number>;
-            low-concurrency?: pulumi.Input<number>;
-            max-tasks-per-worker-high?: pulumi.Input<number>;
-            max-tasks-per-worker-low?: pulumi.Input<number>;
-            max-tasks-per-worker-normal?: pulumi.Input<number>;
-            normal-concurrency?: pulumi.Input<number>;
-            stack-size?: pulumi.Input<string>;
-            use-unified-pool?: pulumi.Input<boolean>;
-        }
-
-        export interface TidbClusterSpecTikvConfigReadpoolUnified {
-            max-tasks-per-worker?: pulumi.Input<number>;
-            max-thread-count?: pulumi.Input<number>;
-            min-thread-count?: pulumi.Input<number>;
-            stack-size?: pulumi.Input<string>;
-        }
-
-        export interface TidbClusterSpecTikvConfigRocksdb {
-            auto-tuned?: pulumi.Input<boolean>;
-            bytes-per-sync?: pulumi.Input<string>;
-            compaction-readahead-size?: pulumi.Input<string>;
-            create-if-missing?: pulumi.Input<boolean>;
-            defaultcf?: pulumi.Input<inputs.pingcap.v1alpha1.TidbClusterSpecTikvConfigRocksdbDefaultcf>;
-            enable-pipelined-write?: pulumi.Input<boolean>;
-            enable-statistics?: pulumi.Input<boolean>;
-            info-log-dir?: pulumi.Input<string>;
-            info-log-keep-log-file-num?: pulumi.Input<number>;
-            info-log-max-size?: pulumi.Input<string>;
-            info-log-roll-time?: pulumi.Input<string>;
-            lockcf?: pulumi.Input<inputs.pingcap.v1alpha1.TidbClusterSpecTikvConfigRocksdbLockcf>;
-            max-background-jobs?: pulumi.Input<number>;
-            max-manifest-file-size?: pulumi.Input<string>;
-            max-open-files?: pulumi.Input<number>;
-            max-sub-compactions?: pulumi.Input<number>;
-            max-total-wal-size?: pulumi.Input<string>;
-            raftcf?: pulumi.Input<inputs.pingcap.v1alpha1.TidbClusterSpecTikvConfigRocksdbRaftcf>;
-            rate-bytes-per-sec?: pulumi.Input<string>;
-            rate-limiter-mode?: pulumi.Input<number>;
-            stats-dump-period?: pulumi.Input<string>;
-            titan?: pulumi.Input<inputs.pingcap.v1alpha1.TidbClusterSpecTikvConfigRocksdbTitan>;
-            use-direct-io-for-flush-and-compaction?: pulumi.Input<boolean>;
-            wal-bytes-per-sync?: pulumi.Input<string>;
-            wal-recovery-mode?: pulumi.Input<number>;
-            wal-size-limit?: pulumi.Input<string>;
-            wal-ttl-seconds?: pulumi.Input<number>;
-            writable-file-max-buffer-size?: pulumi.Input<string>;
-            writecf?: pulumi.Input<inputs.pingcap.v1alpha1.TidbClusterSpecTikvConfigRocksdbWritecf>;
-        }
-
-        export interface TidbClusterSpecTikvConfigRocksdbDefaultcf {
-            block-based-bloom-filter?: pulumi.Input<boolean>;
-            block-cache-size?: pulumi.Input<string>;
-            block-size?: pulumi.Input<string>;
-            bloom-filter-bits-per-key?: pulumi.Input<number>;
-            cache-index-and-filter-blocks?: pulumi.Input<boolean>;
-            compaction-pri?: pulumi.Input<number>;
-            compaction-style?: pulumi.Input<number>;
-            compression-per-level?: pulumi.Input<pulumi.Input<string>[]>;
-            disable-auto-compactions?: pulumi.Input<boolean>;
-            disable-block-cache?: pulumi.Input<boolean>;
-            dynamic-level-bytes?: pulumi.Input<boolean>;
-            enable-doubly-skiplist?: pulumi.Input<boolean>;
-            force-consistency-checks?: pulumi.Input<boolean>;
-            hard-pending-compaction-bytes-limit?: pulumi.Input<string>;
-            level0-file-num-compaction-trigger?: pulumi.Input<number>;
-            level0-slowdown-writes-trigger?: pulumi.Input<number>;
-            level0-stop-writes-trigger?: pulumi.Input<number>;
-            max-bytes-for-level-base?: pulumi.Input<string>;
-            max-bytes-for-level-multiplier?: pulumi.Input<number>;
-            max-compaction-bytes?: pulumi.Input<string>;
-            max-write-buffer-number?: pulumi.Input<number>;
-            min-write-buffer-number-to-merge?: pulumi.Input<number>;
-            num-levels?: pulumi.Input<number>;
-            optimize-filters-for-hits?: pulumi.Input<boolean>;
-            pin-l0-filter-and-index-blocks?: pulumi.Input<boolean>;
-            prop-keys-index-distance?: pulumi.Input<number>;
-            prop-size-index-distance?: pulumi.Input<number>;
-            read-amp-bytes-per-bit?: pulumi.Input<number>;
-            soft-pending-compaction-bytes-limit?: pulumi.Input<string>;
-            target-file-size-base?: pulumi.Input<string>;
-            titan?: pulumi.Input<inputs.pingcap.v1alpha1.TidbClusterSpecTikvConfigRocksdbDefaultcfTitan>;
-            use-bloom-filter?: pulumi.Input<boolean>;
-            whole-key-filtering?: pulumi.Input<boolean>;
-            write-buffer-size?: pulumi.Input<string>;
-        }
-
-        export interface TidbClusterSpecTikvConfigRocksdbDefaultcfTitan {
-            blob-cache-size?: pulumi.Input<string>;
-            blob-file-compression?: pulumi.Input<string>;
-            blob-run-mode?: pulumi.Input<string>;
-            discardable-ratio?: pulumi.Input<number>;
-            gc-merge-rewrite?: pulumi.Input<boolean>;
-            level_merge?: pulumi.Input<boolean>;
-            max-gc-batch-size?: pulumi.Input<string>;
-            merge-small-file-threshold?: pulumi.Input<string>;
-            min-blob-size?: pulumi.Input<string>;
-            min-gc-batch-size?: pulumi.Input<string>;
-            sample-ratio?: pulumi.Input<number>;
-        }
-
-        export interface TidbClusterSpecTikvConfigRocksdbLockcf {
-            block-based-bloom-filter?: pulumi.Input<boolean>;
-            block-cache-size?: pulumi.Input<string>;
-            block-size?: pulumi.Input<string>;
-            bloom-filter-bits-per-key?: pulumi.Input<number>;
-            cache-index-and-filter-blocks?: pulumi.Input<boolean>;
-            compaction-pri?: pulumi.Input<number>;
-            compaction-style?: pulumi.Input<number>;
-            compression-per-level?: pulumi.Input<pulumi.Input<string>[]>;
-            disable-auto-compactions?: pulumi.Input<boolean>;
-            disable-block-cache?: pulumi.Input<boolean>;
-            dynamic-level-bytes?: pulumi.Input<boolean>;
-            enable-doubly-skiplist?: pulumi.Input<boolean>;
-            force-consistency-checks?: pulumi.Input<boolean>;
-            hard-pending-compaction-bytes-limit?: pulumi.Input<string>;
-            level0-file-num-compaction-trigger?: pulumi.Input<number>;
-            level0-slowdown-writes-trigger?: pulumi.Input<number>;
-            level0-stop-writes-trigger?: pulumi.Input<number>;
-            max-bytes-for-level-base?: pulumi.Input<string>;
-            max-bytes-for-level-multiplier?: pulumi.Input<number>;
-            max-compaction-bytes?: pulumi.Input<string>;
-            max-write-buffer-number?: pulumi.Input<number>;
-            min-write-buffer-number-to-merge?: pulumi.Input<number>;
-            num-levels?: pulumi.Input<number>;
-            optimize-filters-for-hits?: pulumi.Input<boolean>;
-            pin-l0-filter-and-index-blocks?: pulumi.Input<boolean>;
-            prop-keys-index-distance?: pulumi.Input<number>;
-            prop-size-index-distance?: pulumi.Input<number>;
-            read-amp-bytes-per-bit?: pulumi.Input<number>;
-            soft-pending-compaction-bytes-limit?: pulumi.Input<string>;
-            target-file-size-base?: pulumi.Input<string>;
-            titan?: pulumi.Input<inputs.pingcap.v1alpha1.TidbClusterSpecTikvConfigRocksdbLockcfTitan>;
-            use-bloom-filter?: pulumi.Input<boolean>;
-            whole-key-filtering?: pulumi.Input<boolean>;
-            write-buffer-size?: pulumi.Input<string>;
-        }
-
-        export interface TidbClusterSpecTikvConfigRocksdbLockcfTitan {
-            blob-cache-size?: pulumi.Input<string>;
-            blob-file-compression?: pulumi.Input<string>;
-            blob-run-mode?: pulumi.Input<string>;
-            discardable-ratio?: pulumi.Input<number>;
-            gc-merge-rewrite?: pulumi.Input<boolean>;
-            level_merge?: pulumi.Input<boolean>;
-            max-gc-batch-size?: pulumi.Input<string>;
-            merge-small-file-threshold?: pulumi.Input<string>;
-            min-blob-size?: pulumi.Input<string>;
-            min-gc-batch-size?: pulumi.Input<string>;
-            sample-ratio?: pulumi.Input<number>;
-        }
-
-        export interface TidbClusterSpecTikvConfigRocksdbRaftcf {
-            block-based-bloom-filter?: pulumi.Input<boolean>;
-            block-cache-size?: pulumi.Input<string>;
-            block-size?: pulumi.Input<string>;
-            bloom-filter-bits-per-key?: pulumi.Input<number>;
-            cache-index-and-filter-blocks?: pulumi.Input<boolean>;
-            compaction-pri?: pulumi.Input<number>;
-            compaction-style?: pulumi.Input<number>;
-            compression-per-level?: pulumi.Input<pulumi.Input<string>[]>;
-            disable-auto-compactions?: pulumi.Input<boolean>;
-            disable-block-cache?: pulumi.Input<boolean>;
-            dynamic-level-bytes?: pulumi.Input<boolean>;
-            enable-doubly-skiplist?: pulumi.Input<boolean>;
-            force-consistency-checks?: pulumi.Input<boolean>;
-            hard-pending-compaction-bytes-limit?: pulumi.Input<string>;
-            level0-file-num-compaction-trigger?: pulumi.Input<number>;
-            level0-slowdown-writes-trigger?: pulumi.Input<number>;
-            level0-stop-writes-trigger?: pulumi.Input<number>;
-            max-bytes-for-level-base?: pulumi.Input<string>;
-            max-bytes-for-level-multiplier?: pulumi.Input<number>;
-            max-compaction-bytes?: pulumi.Input<string>;
-            max-write-buffer-number?: pulumi.Input<number>;
-            min-write-buffer-number-to-merge?: pulumi.Input<number>;
-            num-levels?: pulumi.Input<number>;
-            optimize-filters-for-hits?: pulumi.Input<boolean>;
-            pin-l0-filter-and-index-blocks?: pulumi.Input<boolean>;
-            prop-keys-index-distance?: pulumi.Input<number>;
-            prop-size-index-distance?: pulumi.Input<number>;
-            read-amp-bytes-per-bit?: pulumi.Input<number>;
-            soft-pending-compaction-bytes-limit?: pulumi.Input<string>;
-            target-file-size-base?: pulumi.Input<string>;
-            titan?: pulumi.Input<inputs.pingcap.v1alpha1.TidbClusterSpecTikvConfigRocksdbRaftcfTitan>;
-            use-bloom-filter?: pulumi.Input<boolean>;
-            whole-key-filtering?: pulumi.Input<boolean>;
-            write-buffer-size?: pulumi.Input<string>;
-        }
-
-        export interface TidbClusterSpecTikvConfigRocksdbRaftcfTitan {
-            blob-cache-size?: pulumi.Input<string>;
-            blob-file-compression?: pulumi.Input<string>;
-            blob-run-mode?: pulumi.Input<string>;
-            discardable-ratio?: pulumi.Input<number>;
-            gc-merge-rewrite?: pulumi.Input<boolean>;
-            level_merge?: pulumi.Input<boolean>;
-            max-gc-batch-size?: pulumi.Input<string>;
-            merge-small-file-threshold?: pulumi.Input<string>;
-            min-blob-size?: pulumi.Input<string>;
-            min-gc-batch-size?: pulumi.Input<string>;
-            sample-ratio?: pulumi.Input<number>;
-        }
-
-        export interface TidbClusterSpecTikvConfigRocksdbTitan {
-            dirname?: pulumi.Input<string>;
-            disable-gc?: pulumi.Input<boolean>;
-            enabled?: pulumi.Input<boolean>;
-            max-background-gc?: pulumi.Input<number>;
-            purge-obsolete-files-period?: pulumi.Input<string>;
-        }
-
-        export interface TidbClusterSpecTikvConfigRocksdbWritecf {
-            block-based-bloom-filter?: pulumi.Input<boolean>;
-            block-cache-size?: pulumi.Input<string>;
-            block-size?: pulumi.Input<string>;
-            bloom-filter-bits-per-key?: pulumi.Input<number>;
-            cache-index-and-filter-blocks?: pulumi.Input<boolean>;
-            compaction-pri?: pulumi.Input<number>;
-            compaction-style?: pulumi.Input<number>;
-            compression-per-level?: pulumi.Input<pulumi.Input<string>[]>;
-            disable-auto-compactions?: pulumi.Input<boolean>;
-            disable-block-cache?: pulumi.Input<boolean>;
-            dynamic-level-bytes?: pulumi.Input<boolean>;
-            enable-doubly-skiplist?: pulumi.Input<boolean>;
-            force-consistency-checks?: pulumi.Input<boolean>;
-            hard-pending-compaction-bytes-limit?: pulumi.Input<string>;
-            level0-file-num-compaction-trigger?: pulumi.Input<number>;
-            level0-slowdown-writes-trigger?: pulumi.Input<number>;
-            level0-stop-writes-trigger?: pulumi.Input<number>;
-            max-bytes-for-level-base?: pulumi.Input<string>;
-            max-bytes-for-level-multiplier?: pulumi.Input<number>;
-            max-compaction-bytes?: pulumi.Input<string>;
-            max-write-buffer-number?: pulumi.Input<number>;
-            min-write-buffer-number-to-merge?: pulumi.Input<number>;
-            num-levels?: pulumi.Input<number>;
-            optimize-filters-for-hits?: pulumi.Input<boolean>;
-            pin-l0-filter-and-index-blocks?: pulumi.Input<boolean>;
-            prop-keys-index-distance?: pulumi.Input<number>;
-            prop-size-index-distance?: pulumi.Input<number>;
-            read-amp-bytes-per-bit?: pulumi.Input<number>;
-            soft-pending-compaction-bytes-limit?: pulumi.Input<string>;
-            target-file-size-base?: pulumi.Input<string>;
-            titan?: pulumi.Input<inputs.pingcap.v1alpha1.TidbClusterSpecTikvConfigRocksdbWritecfTitan>;
-            use-bloom-filter?: pulumi.Input<boolean>;
-            whole-key-filtering?: pulumi.Input<boolean>;
-            write-buffer-size?: pulumi.Input<string>;
-        }
-
-        export interface TidbClusterSpecTikvConfigRocksdbWritecfTitan {
-            blob-cache-size?: pulumi.Input<string>;
-            blob-file-compression?: pulumi.Input<string>;
-            blob-run-mode?: pulumi.Input<string>;
-            discardable-ratio?: pulumi.Input<number>;
-            gc-merge-rewrite?: pulumi.Input<boolean>;
-            level_merge?: pulumi.Input<boolean>;
-            max-gc-batch-size?: pulumi.Input<string>;
-            merge-small-file-threshold?: pulumi.Input<string>;
-            min-blob-size?: pulumi.Input<string>;
-            min-gc-batch-size?: pulumi.Input<string>;
-            sample-ratio?: pulumi.Input<number>;
-        }
-
-        export interface TidbClusterSpecTikvConfigSecurity {
-            ca-path?: pulumi.Input<string>;
-            cert-path?: pulumi.Input<string>;
-            cipher-file?: pulumi.Input<string>;
-            encryption?: any;
-            key-path?: pulumi.Input<string>;
-            override-ssl-target?: pulumi.Input<string>;
-        }
-
-        export interface TidbClusterSpecTikvConfigServer {
-            concurrent-recv-snap-limit?: pulumi.Input<number>;
-            concurrent-send-snap-limit?: pulumi.Input<number>;
-            enable-request-batch?: pulumi.Input<boolean>;
-            end-point-batch-row-limit?: pulumi.Input<number>;
-            end-point-enable-batch-if-possible?: pulumi.Input<number>;
-            end-point-recursion-limit?: pulumi.Input<number>;
-            end-point-request-max-handle-duration?: pulumi.Input<string>;
-            end-point-stream-batch-row-limit?: pulumi.Input<number>;
-            end-point-stream-channel-size?: pulumi.Input<number>;
-            grpc-compression-type?: pulumi.Input<string>;
-            grpc-concurrency?: pulumi.Input<number>;
-            grpc-concurrent-stream?: pulumi.Input<number>;
-            grpc-keepalive-time?: pulumi.Input<string>;
-            grpc-keepalive-timeout?: pulumi.Input<string>;
-            grpc-memory-pool-quota?: pulumi.Input<string>;
-            grpc-raft-conn-num?: pulumi.Input<number>;
-            grpc-stream-initial-window-size?: pulumi.Input<string>;
-            heavy-load-threshold?: pulumi.Input<number>;
-            heavy-load-wait-duration?: pulumi.Input<string>;
-            labels?: pulumi.Input<{[key: string]: any}>;
-            request-batch-enable-cross-command?: pulumi.Input<boolean>;
-            request-batch-wait-duration?: pulumi.Input<string>;
-            snap-max-total-size?: pulumi.Input<string>;
-            snap-max-write-bytes-per-sec?: pulumi.Input<string>;
-            stats-concurrency?: pulumi.Input<number>;
-            status-thread-pool-size?: pulumi.Input<string>;
-        }
-
-        export interface TidbClusterSpecTikvConfigStorage {
-            block-cache?: pulumi.Input<inputs.pingcap.v1alpha1.TidbClusterSpecTikvConfigStorageBlock-Cache>;
-            max-key-size?: pulumi.Input<number>;
-            reserve-space?: pulumi.Input<string>;
-            scheduler-concurrency?: pulumi.Input<number>;
-            scheduler-notify-capacity?: pulumi.Input<number>;
-            scheduler-pending-write-threshold?: pulumi.Input<string>;
-            scheduler-worker-pool-size?: pulumi.Input<number>;
-        }
-
-        export interface TidbClusterSpecTikvConfigStorageBlock-Cache {
-            capacity?: pulumi.Input<string>;
-            high-pri-pool-ratio?: pulumi.Input<number>;
-            memory-allocator?: pulumi.Input<string>;
-            num-shard-bits?: pulumi.Input<number>;
-            shared?: pulumi.Input<boolean>;
-            strict-capacity-limit?: pulumi.Input<boolean>;
-        }
-
         export interface TidbClusterSpecTikvEnv {
             name: pulumi.Input<string>;
             value?: pulumi.Input<string>;
@@ -7604,6 +6775,7 @@ export namespace pingcap {
             alertManagerRulesVersion?: pulumi.Input<string>;
             alertmanagerURL?: pulumi.Input<string>;
             annotations?: pulumi.Input<{[key: string]: any}>;
+            clusterScoped?: pulumi.Input<boolean>;
             clusters: pulumi.Input<pulumi.Input<inputs.pingcap.v1alpha1.TidbMonitorSpecClusters>[]>;
             grafana?: any;
             imagePullPolicy?: pulumi.Input<string>;

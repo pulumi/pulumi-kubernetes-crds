@@ -15,6 +15,12 @@ namespace Pulumi.Kubernetes.Types.Inputs.Machinelearning.V1
         [Input("hpaSpec")]
         public Input<Pulumi.Kubernetes.Types.Inputs.Machinelearning.V1.SeldonDeploymentSpecPredictorsComponentSpecsHpaSpecArgs>? HpaSpec { get; set; }
 
+        /// <summary>
+        /// SeldonScaledObjectSpec is the spec for a KEDA ScaledObject resource
+        /// </summary>
+        [Input("kedaSpec")]
+        public Input<Pulumi.Kubernetes.Types.Inputs.Machinelearning.V1.SeldonDeploymentSpecPredictorsComponentSpecsKedaSpecArgs>? KedaSpec { get; set; }
+
         [Input("metadata")]
         private InputMap<object>? _metadata;
         public InputMap<object> Metadata
@@ -22,6 +28,12 @@ namespace Pulumi.Kubernetes.Types.Inputs.Machinelearning.V1
             get => _metadata ?? (_metadata = new InputMap<object>());
             set => _metadata = value;
         }
+
+        [Input("pdbSpec")]
+        public Input<Pulumi.Kubernetes.Types.Inputs.Machinelearning.V1.SeldonDeploymentSpecPredictorsComponentSpecsPdbSpecArgs>? PdbSpec { get; set; }
+
+        [Input("replicas")]
+        public Input<int>? Replicas { get; set; }
 
         /// <summary>
         /// PodSpec is a description of a pod.

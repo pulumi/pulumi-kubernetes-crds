@@ -27,9 +27,12 @@ class Tenant(pulumi.CustomResource):
                  __name__=None,
                  __opts__=None):
         """
-        Create a Tenant resource with the given unique name, props, and options.
+        Tenant is the Schema for the tenants API
+
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[pulumi.InputType['TenantSpecArgs']] spec: TenantSpec defines the desired state of Tenant
+        :param pulumi.Input[pulumi.InputType['TenantStatusArgs']] status: TenantStatus defines the observed state of Tenant
         """
         if __name__ is not None:
             warnings.warn("explicit use of __name__ is deprecated", DeprecationWarning)
@@ -95,11 +98,17 @@ class Tenant(pulumi.CustomResource):
     @property
     @pulumi.getter
     def spec(self) -> pulumi.Output[Optional['outputs.TenantSpec']]:
+        """
+        TenantSpec defines the desired state of Tenant
+        """
         return pulumi.get(self, "spec")
 
     @property
     @pulumi.getter
     def status(self) -> pulumi.Output[Optional['outputs.TenantStatus']]:
+        """
+        TenantStatus defines the observed state of Tenant
+        """
         return pulumi.get(self, "status")
 
     def translate_output_property(self, prop):

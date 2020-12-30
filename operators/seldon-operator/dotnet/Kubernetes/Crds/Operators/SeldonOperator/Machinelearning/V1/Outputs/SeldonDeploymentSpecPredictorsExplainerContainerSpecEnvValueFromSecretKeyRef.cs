@@ -22,7 +22,7 @@ namespace Pulumi.Kubernetes.Types.Outputs.Machinelearning.V1
         /// </summary>
         public readonly string Name;
         /// <summary>
-        /// Specify whether the Secret or it's key must be defined
+        /// Specify whether the Secret or its key must be defined
         /// </summary>
         public readonly bool Optional;
 

@@ -10,14 +10,17 @@ import (
 	"github.com/pulumi/pulumi/sdk/v2/go/pulumi"
 )
 
+// Security is the Schema for the securities API
 type Security struct {
 	pulumi.CustomResourceState
 
 	ApiVersion pulumi.StringPtrOutput     `pulumi:"apiVersion"`
 	Kind       pulumi.StringPtrOutput     `pulumi:"kind"`
 	Metadata   metav1.ObjectMetaPtrOutput `pulumi:"metadata"`
-	Spec       SecuritySpecPtrOutput      `pulumi:"spec"`
-	Status     pulumi.MapOutput           `pulumi:"status"`
+	// SecuritySpec defines the desired state of Security
+	Spec SecuritySpecPtrOutput `pulumi:"spec"`
+	// SecurityStatus defines the observed state of Security
+	Status pulumi.MapOutput `pulumi:"status"`
 }
 
 // NewSecurity registers a new resource with the given unique name, arguments, and options.
@@ -50,19 +53,23 @@ func GetSecurity(ctx *pulumi.Context,
 
 // Input properties used for looking up and filtering Security resources.
 type securityState struct {
-	ApiVersion *string                `pulumi:"apiVersion"`
-	Kind       *string                `pulumi:"kind"`
-	Metadata   *metav1.ObjectMeta     `pulumi:"metadata"`
-	Spec       *SecuritySpec          `pulumi:"spec"`
-	Status     map[string]interface{} `pulumi:"status"`
+	ApiVersion *string            `pulumi:"apiVersion"`
+	Kind       *string            `pulumi:"kind"`
+	Metadata   *metav1.ObjectMeta `pulumi:"metadata"`
+	// SecuritySpec defines the desired state of Security
+	Spec *SecuritySpec `pulumi:"spec"`
+	// SecurityStatus defines the observed state of Security
+	Status map[string]interface{} `pulumi:"status"`
 }
 
 type SecurityState struct {
 	ApiVersion pulumi.StringPtrInput
 	Kind       pulumi.StringPtrInput
 	Metadata   metav1.ObjectMetaPtrInput
-	Spec       SecuritySpecPtrInput
-	Status     pulumi.MapInput
+	// SecuritySpec defines the desired state of Security
+	Spec SecuritySpecPtrInput
+	// SecurityStatus defines the observed state of Security
+	Status pulumi.MapInput
 }
 
 func (SecurityState) ElementType() reflect.Type {
@@ -70,11 +77,13 @@ func (SecurityState) ElementType() reflect.Type {
 }
 
 type securityArgs struct {
-	ApiVersion *string                `pulumi:"apiVersion"`
-	Kind       *string                `pulumi:"kind"`
-	Metadata   *metav1.ObjectMeta     `pulumi:"metadata"`
-	Spec       *SecuritySpec          `pulumi:"spec"`
-	Status     map[string]interface{} `pulumi:"status"`
+	ApiVersion *string            `pulumi:"apiVersion"`
+	Kind       *string            `pulumi:"kind"`
+	Metadata   *metav1.ObjectMeta `pulumi:"metadata"`
+	// SecuritySpec defines the desired state of Security
+	Spec *SecuritySpec `pulumi:"spec"`
+	// SecurityStatus defines the observed state of Security
+	Status map[string]interface{} `pulumi:"status"`
 }
 
 // The set of arguments for constructing a Security resource.
@@ -82,8 +91,10 @@ type SecurityArgs struct {
 	ApiVersion pulumi.StringPtrInput
 	Kind       pulumi.StringPtrInput
 	Metadata   metav1.ObjectMetaPtrInput
-	Spec       SecuritySpecPtrInput
-	Status     pulumi.MapInput
+	// SecuritySpec defines the desired state of Security
+	Spec SecuritySpecPtrInput
+	// SecurityStatus defines the observed state of Security
+	Status pulumi.MapInput
 }
 
 func (SecurityArgs) ElementType() reflect.Type {

@@ -21,6 +21,18 @@ namespace Pulumi.Kubernetes.Types.Inputs.Argoproj.V1Alpha1
         [Input("enabled", required: true)]
         public Input<bool> Enabled { get; set; } = null!;
 
+        /// <summary>
+        /// RedisProxyImage is the Redis HAProxy container image.
+        /// </summary>
+        [Input("redisProxyImage")]
+        public Input<string>? RedisProxyImage { get; set; }
+
+        /// <summary>
+        /// RedisProxyVersion is the Redis HAProxy container image tag.
+        /// </summary>
+        [Input("redisProxyVersion")]
+        public Input<string>? RedisProxyVersion { get; set; }
+
         public ArgoCDSpecHaArgs()
         {
         }

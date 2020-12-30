@@ -14,9 +14,25 @@ export namespace apps {
          */
         export interface NexusSpec {
             /**
-             * Full image tag name for this specific deployment Default: docker.io/sonatype/nexus3:latest
+             * Automatic updates configuration
+             */
+            automaticUpdate?: pulumi.Input<inputs.apps.v1alpha1.NexusSpecAutomaticUpdate>;
+            /**
+             * GenerateRandomAdminPassword enables the random password generation. Defaults to `false`: the default password for a newly created instance is 'admin123', which should be changed in the first login. If set to `true`, you must use the automatically generated 'admin' password, stored in the container's file system at `/nexus-data/admin.password`. The operator uses the default credentials to create a user for itself to create default repositories. If set to `true`, the repositories won't be created since the operator won't fetch for the random password.
+             */
+            generateRandomAdminPassword?: pulumi.Input<boolean>;
+            /**
+             * Full image tag name for this specific deployment. Will be ignored if `spec.useRedHatImage` is set to `true`. Default: docker.io/sonatype/nexus3:latest
              */
             image?: pulumi.Input<string>;
+            /**
+             * The image pull policy for the Nexus image. If left blank behavior will be determined by the image tag (`Always` if "latest" and `IfNotPresent` otherwise). Possible values: `Always`, `IfNotPresent` or `Never`.
+             */
+            imagePullPolicy?: pulumi.Input<string>;
+            /**
+             * LivenessProbe describes how the Nexus container liveness probe should work
+             */
+            livenessProbe?: pulumi.Input<inputs.apps.v1alpha1.NexusSpecLivenessProbe>;
             /**
              * Networking definition
              */
@@ -26,7 +42,11 @@ export namespace apps {
              */
             persistence: pulumi.Input<inputs.apps.v1alpha1.NexusSpecPersistence>;
             /**
-             * Number of pods replicas desired Default: 1
+             * ReadinessProbe describes how the Nexus container readiness probe should work
+             */
+            readinessProbe?: pulumi.Input<inputs.apps.v1alpha1.NexusSpecReadinessProbe>;
+            /**
+             * Number of pod replicas desired. Defaults to 0.
              */
             replicas: pulumi.Input<number>;
             /**
@@ -34,13 +54,57 @@ export namespace apps {
              */
             resources?: pulumi.Input<inputs.apps.v1alpha1.NexusSpecResources>;
             /**
-             * ServiceAccountName is the name of the ServiceAccount used to run the Pods. If left blank, a default ServiceAccount is created with the same name as the Nexus CR.
+             * ServerOperations describes the options for the operations performed on the deployed server instance
+             */
+            serverOperations?: pulumi.Input<inputs.apps.v1alpha1.NexusSpecServerOperations>;
+            /**
+             * ServiceAccountName is the name of the ServiceAccount used to run the Pods. If left blank, a default ServiceAccount is created with the same name as the Nexus CR (`metadata.name`).
              */
             serviceAccountName?: pulumi.Input<string>;
             /**
-             * If you have access to Red Hat Container Catalog, turn this to true to use the certified image provided by Sonatype Default: false
+             * If you have access to Red Hat Container Catalog, set this to `true` to use the certified image provided by Sonatype Defaults to `false`
              */
             useRedHatImage: pulumi.Input<boolean>;
+        }
+
+        /**
+         * Automatic updates configuration
+         */
+        export interface NexusSpecAutomaticUpdate {
+            /**
+             * Whether or not the Operator should perform automatic updates. Defaults to `false` (auto updates are enabled). Is set to `false` if `spec.image` is not empty and is different from the default community image.
+             */
+            disabled?: pulumi.Input<boolean>;
+            /**
+             * The Nexus image minor version the deployment should stay in. If left blank and automatic updates are enabled the latest minor is set.
+             */
+            minorVersion?: pulumi.Input<number>;
+        }
+
+        /**
+         * LivenessProbe describes how the Nexus container liveness probe should work
+         */
+        export interface NexusSpecLivenessProbe {
+            /**
+             * Minimum consecutive failures for the probe to be considered failed after having succeeded. Defaults to 3. Minimum value is 1.
+             */
+            failureThreshold?: pulumi.Input<number>;
+            /**
+             * Number of seconds after the container has started before probes are initiated. Defaults to 240 seconds. Minimum value is 0.
+             */
+            initialDelaySeconds?: pulumi.Input<number>;
+            /**
+             * How often (in seconds) to perform the probe. Defaults to 10 seconds. Minimum value is 1.
+             */
+            periodSeconds?: pulumi.Input<number>;
+            /**
+             * Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1. Must be 1 for liveness and startup. Minimum value is 1.
+             */
+            successThreshold?: pulumi.Input<number>;
+            /**
+             * Number of seconds after which the probe times out. Defaults to 15 seconds. Minimum value is 1.
+             */
+            timeoutSeconds?: pulumi.Input<number>;
         }
 
         /**
@@ -48,11 +112,11 @@ export namespace apps {
          */
         export interface NexusSpecNetworking {
             /**
-             * Set to `true` to expose the Nexus application. Default to false.
+             * Set to `true` to expose the Nexus application. Defaults to `false`.
              */
             expose?: pulumi.Input<boolean>;
             /**
-             * Type of networking exposure: NodePort, Route or Ingress. Default to Route on OpenShift and Ingress on Kubernetes.
+             * Type of networking exposure: NodePort, Route or Ingress. Defaults to Route on OpenShift and Ingress on Kubernetes. Routes are only available on Openshift and Ingresses are only available on Kubernetes.
              */
             exposeAs?: pulumi.Input<string>;
             /**
@@ -74,7 +138,7 @@ export namespace apps {
          */
         export interface NexusSpecNetworkingTls {
             /**
-             * When exposing via Route, set to `true` to only allow encrypted traffic using TLS (disables HTTP in favor of HTTPS). Defaults to false.
+             * When exposing via Route, set to `true` to only allow encrypted traffic using TLS (disables HTTP in favor of HTTPS). Defaults to `false`.
              */
             mandatory?: pulumi.Input<boolean>;
             /**
@@ -102,6 +166,32 @@ export namespace apps {
         }
 
         /**
+         * ReadinessProbe describes how the Nexus container readiness probe should work
+         */
+        export interface NexusSpecReadinessProbe {
+            /**
+             * Minimum consecutive failures for the probe to be considered failed after having succeeded. Defaults to 3. Minimum value is 1.
+             */
+            failureThreshold?: pulumi.Input<number>;
+            /**
+             * Number of seconds after the container has started before probes are initiated. Defaults to 240 seconds. Minimum value is 0.
+             */
+            initialDelaySeconds?: pulumi.Input<number>;
+            /**
+             * How often (in seconds) to perform the probe. Defaults to 10 seconds. Minimum value is 1.
+             */
+            periodSeconds?: pulumi.Input<number>;
+            /**
+             * Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1. Must be 1 for liveness and startup. Minimum value is 1.
+             */
+            successThreshold?: pulumi.Input<number>;
+            /**
+             * Number of seconds after which the probe times out. Defaults to 15 seconds. Minimum value is 1.
+             */
+            timeoutSeconds?: pulumi.Input<number>;
+        }
+
+        /**
          * Defined Resources for the Nexus instance
          */
         export interface NexusSpecResources {
@@ -122,6 +212,20 @@ export namespace apps {
         }
 
         /**
+         * ServerOperations describes the options for the operations performed on the deployed server instance
+         */
+        export interface NexusSpecServerOperations {
+            /**
+             * DisableOperatorUserCreation disables the auto-creation of the `nexus-operator` user on the deployed server. This user performs all the operations on the server (such as creating the community repos). If disabled, the Operator will use the default `admin` user. Defaults to `false` (always create the user). Setting this to `true` is not recommended as it grants the Operator more privileges than it needs and it would not be possible to tell apart operations performed by the `admin` and the Operator.
+             */
+            disableOperatorUserCreation?: pulumi.Input<boolean>;
+            /**
+             * DisableRepositoryCreation disables the auto-creation of Apache, JBoss and Red Hat repositories and their addition to the Maven Public group in this Nexus instance. Defaults to `false` (always try to create the repos). Set this to `true` to not create them. Only works if `spec.generateRandomAdminPassword` is `false`.
+             */
+            disableRepositoryCreation?: pulumi.Input<boolean>;
+        }
+
+        /**
          * NexusStatus defines the observed state of Nexus
          */
         export interface NexusStatus {
@@ -134,9 +238,21 @@ export namespace apps {
              */
             nexusRoute?: pulumi.Input<string>;
             /**
-             * Will be "OK" when all objects are created successfully
+             * Will be "OK" when this Nexus instance is up
              */
             nexusStatus?: pulumi.Input<string>;
+            /**
+             * Gives more information about a failure status
+             */
+            reason?: pulumi.Input<string>;
+            /**
+             * ServerOperationsStatus describes the general status for the operations performed in the Nexus server instance
+             */
+            serverOperationsStatus?: pulumi.Input<inputs.apps.v1alpha1.NexusStatusServerOperationsStatus>;
+            /**
+             * Conditions reached during an update
+             */
+            updateConditions?: pulumi.Input<pulumi.Input<string>[]>;
         }
 
         /**
@@ -205,6 +321,18 @@ export namespace apps {
              * Type of deployment condition.
              */
             type: pulumi.Input<string>;
+        }
+
+        /**
+         * ServerOperationsStatus describes the general status for the operations performed in the Nexus server instance
+         */
+        export interface NexusStatusServerOperationsStatus {
+            communityRepositoriesCreated?: pulumi.Input<boolean>;
+            mavenCentralUpdated?: pulumi.Input<boolean>;
+            mavenPublicURL?: pulumi.Input<string>;
+            operatorUserCreated?: pulumi.Input<boolean>;
+            reason?: pulumi.Input<string>;
+            serverReady?: pulumi.Input<boolean>;
         }
     }
 }

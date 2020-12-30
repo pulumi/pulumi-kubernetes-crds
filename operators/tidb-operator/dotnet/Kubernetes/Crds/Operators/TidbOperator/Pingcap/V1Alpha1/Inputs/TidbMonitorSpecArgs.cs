@@ -34,6 +34,9 @@ namespace Pulumi.Kubernetes.Types.Inputs.Pingcap.V1Alpha1
             set => _annotations = value;
         }
 
+        [Input("clusterScoped")]
+        public Input<bool>? ClusterScoped { get; set; }
+
         [Input("clusters", required: true)]
         private InputList<Pulumi.Kubernetes.Types.Inputs.Pingcap.V1Alpha1.TidbMonitorSpecClustersArgs>? _clusters;
         public InputList<Pulumi.Kubernetes.Types.Inputs.Pingcap.V1Alpha1.TidbMonitorSpecClustersArgs> Clusters

@@ -17,7 +17,6 @@
         "provider.ts",
         "submariner/index.ts",
         "submariner/v1alpha1/index.ts",
-        "submariner/v1alpha1/serviceDiscovery.ts",
         "submariner/v1alpha1/submariner.ts",
         "types/index.ts",
         "types/input.ts",

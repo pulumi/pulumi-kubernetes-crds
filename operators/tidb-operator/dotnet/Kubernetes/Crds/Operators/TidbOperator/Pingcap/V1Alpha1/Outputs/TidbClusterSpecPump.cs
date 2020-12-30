@@ -18,7 +18,7 @@ namespace Pulumi.Kubernetes.Types.Outputs.Pingcap.V1Alpha1
         public readonly Pulumi.Kubernetes.Types.Outputs.Pingcap.V1Alpha1.TidbClusterSpecPumpAffinity Affinity;
         public readonly ImmutableDictionary<string, object> Annotations;
         public readonly string BaseImage;
-        public readonly ImmutableDictionary<string, object> Config;
+        public readonly object Config;
         public readonly string ConfigUpdateStrategy;
         public readonly ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Pingcap.V1Alpha1.TidbClusterSpecPumpEnv> Env;
         public readonly bool HostNetwork;
@@ -31,6 +31,8 @@ namespace Pulumi.Kubernetes.Types.Outputs.Pingcap.V1Alpha1
         public readonly int Replicas;
         public readonly ImmutableDictionary<string, object> Requests;
         public readonly string SchedulerName;
+        public readonly string ServiceAccount;
+        public readonly string StatefulSetUpdateStrategy;
         public readonly string StorageClassName;
         public readonly int TerminationGracePeriodSeconds;
         public readonly ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Pingcap.V1Alpha1.TidbClusterSpecPumpTolerations> Tolerations;
@@ -48,7 +50,7 @@ namespace Pulumi.Kubernetes.Types.Outputs.Pingcap.V1Alpha1
 
             string baseImage,
 
-            ImmutableDictionary<string, object> config,
+            object config,
 
             string configUpdateStrategy,
 
@@ -73,6 +75,10 @@ namespace Pulumi.Kubernetes.Types.Outputs.Pingcap.V1Alpha1
             ImmutableDictionary<string, object> requests,
 
             string schedulerName,
+
+            string serviceAccount,
+
+            string statefulSetUpdateStrategy,
 
             string storageClassName,
 
@@ -100,6 +106,8 @@ namespace Pulumi.Kubernetes.Types.Outputs.Pingcap.V1Alpha1
             Replicas = replicas;
             Requests = requests;
             SchedulerName = schedulerName;
+            ServiceAccount = serviceAccount;
+            StatefulSetUpdateStrategy = statefulSetUpdateStrategy;
             StorageClassName = storageClassName;
             TerminationGracePeriodSeconds = terminationGracePeriodSeconds;
             Tolerations = tolerations;

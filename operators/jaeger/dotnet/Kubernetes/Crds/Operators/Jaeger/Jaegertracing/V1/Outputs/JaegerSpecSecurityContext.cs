@@ -14,6 +14,7 @@ namespace Pulumi.Kubernetes.Types.Outputs.Jaegertracing.V1
     public sealed class JaegerSpecSecurityContext
     {
         public readonly int FsGroup;
+        public readonly string FsGroupChangePolicy;
         public readonly int RunAsGroup;
         public readonly bool RunAsNonRoot;
         public readonly int RunAsUser;
@@ -25,6 +26,8 @@ namespace Pulumi.Kubernetes.Types.Outputs.Jaegertracing.V1
         [OutputConstructor]
         private JaegerSpecSecurityContext(
             int fsGroup,
+
+            string fsGroupChangePolicy,
 
             int runAsGroup,
 
@@ -41,6 +44,7 @@ namespace Pulumi.Kubernetes.Types.Outputs.Jaegertracing.V1
             Pulumi.Kubernetes.Types.Outputs.Jaegertracing.V1.JaegerSpecSecurityContextWindowsOptions windowsOptions)
         {
             FsGroup = fsGroup;
+            FsGroupChangePolicy = fsGroupChangePolicy;
             RunAsGroup = runAsGroup;
             RunAsNonRoot = runAsNonRoot;
             RunAsUser = runAsUser;

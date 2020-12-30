@@ -14,6 +14,7 @@ namespace Pulumi.Kubernetes.Types.Outputs.Machinelearning.V1
     public sealed class SeldonDeploymentSpecPredictorsSvcOrchSpec
     {
         public readonly ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Machinelearning.V1.SeldonDeploymentSpecPredictorsSvcOrchSpecEnv> Env;
+        public readonly int Replicas;
         /// <summary>
         /// ResourceRequirements describes the compute resource requirements.
         /// </summary>
@@ -23,9 +24,12 @@ namespace Pulumi.Kubernetes.Types.Outputs.Machinelearning.V1
         private SeldonDeploymentSpecPredictorsSvcOrchSpec(
             ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Machinelearning.V1.SeldonDeploymentSpecPredictorsSvcOrchSpecEnv> env,
 
+            int replicas,
+
             Pulumi.Kubernetes.Types.Outputs.Machinelearning.V1.SeldonDeploymentSpecPredictorsSvcOrchSpecResources resources)
         {
             Env = env;
+            Replicas = replicas;
             Resources = resources;
         }
     }

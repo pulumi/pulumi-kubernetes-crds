@@ -14,9 +14,9 @@
     },
     "files": [
         "core/index.ts",
-        "core/v1alpha1/index.ts",
-        "core/v1alpha1/storageCluster.ts",
-        "core/v1alpha1/storageNode.ts",
+        "core/v1/index.ts",
+        "core/v1/storageCluster.ts",
+        "core/v1/storageNode.ts",
         "index.ts",
         "provider.ts",
         "types/index.ts",

@@ -28,10 +28,34 @@ namespace Pulumi.Kubernetes.Types.Inputs.Apps.V1Alpha1
         public Input<string>? NexusRoute { get; set; }
 
         /// <summary>
-        /// Will be "OK" when all objects are created successfully
+        /// Will be "OK" when this Nexus instance is up
         /// </summary>
         [Input("nexusStatus")]
         public Input<string>? NexusStatus { get; set; }
+
+        /// <summary>
+        /// Gives more information about a failure status
+        /// </summary>
+        [Input("reason")]
+        public Input<string>? Reason { get; set; }
+
+        /// <summary>
+        /// ServerOperationsStatus describes the general status for the operations performed in the Nexus server instance
+        /// </summary>
+        [Input("serverOperationsStatus")]
+        public Input<Pulumi.Kubernetes.Types.Inputs.Apps.V1Alpha1.NexusStatusServerOperationsStatusArgs>? ServerOperationsStatus { get; set; }
+
+        [Input("updateConditions")]
+        private InputList<string>? _updateConditions;
+
+        /// <summary>
+        /// Conditions reached during an update
+        /// </summary>
+        public InputList<string> UpdateConditions
+        {
+            get => _updateConditions ?? (_updateConditions = new InputList<string>());
+            set => _updateConditions = value;
+        }
 
         public NexusStatusArgs()
         {

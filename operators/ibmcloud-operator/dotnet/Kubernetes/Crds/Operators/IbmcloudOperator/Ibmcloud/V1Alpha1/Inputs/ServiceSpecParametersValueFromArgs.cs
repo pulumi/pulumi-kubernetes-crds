@@ -15,29 +15,17 @@ namespace Pulumi.Kubernetes.Types.Inputs.Ibmcloud.V1Alpha1
     /// </summary>
     public class ServiceSpecParametersValueFromArgs : Pulumi.ResourceArgs
     {
-        [Input("configMapKeyRef")]
-        private InputMap<object>? _configMapKeyRef;
-
         /// <summary>
         /// Selects a key of a ConfigMap.
         /// </summary>
-        public InputMap<object> ConfigMapKeyRef
-        {
-            get => _configMapKeyRef ?? (_configMapKeyRef = new InputMap<object>());
-            set => _configMapKeyRef = value;
-        }
-
-        [Input("secretKeyRef")]
-        private InputMap<object>? _secretKeyRef;
+        [Input("configMapKeyRef")]
+        public Input<Pulumi.Kubernetes.Types.Inputs.Ibmcloud.V1Alpha1.ServiceSpecParametersValueFromConfigMapKeyRefArgs>? ConfigMapKeyRef { get; set; }
 
         /// <summary>
         /// Selects a key of a secret in the resource namespace
         /// </summary>
-        public InputMap<object> SecretKeyRef
-        {
-            get => _secretKeyRef ?? (_secretKeyRef = new InputMap<object>());
-            set => _secretKeyRef = value;
-        }
+        [Input("secretKeyRef")]
+        public Input<Pulumi.Kubernetes.Types.Inputs.Ibmcloud.V1Alpha1.ServiceSpecParametersValueFromSecretKeyRefArgs>? SecretKeyRef { get; set; }
 
         public ServiceSpecParametersValueFromArgs()
         {

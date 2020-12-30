@@ -14,7 +14,13 @@
     },
     "files": [
         "index.ts",
+        "iot/index.ts",
+        "iot/v1alpha1/ditto.ts",
+        "iot/v1alpha1/index.ts",
         "provider.ts",
+        "types/index.ts",
+        "types/input.ts",
+        "types/output.ts",
         "utilities.ts"
     ]
 }

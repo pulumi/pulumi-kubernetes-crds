@@ -9,6 +9,9 @@ using Pulumi.Serialization;
 
 namespace Pulumi.Pulumi.Kubernetes.Crds.Operators.EclipseChe.Org.V1
 {
+    /// <summary>
+    /// The `CheCluster` custom resource allows defining and managing a Che server installation
+    /// </summary>
     public partial class CheCluster : KubernetesResource
     {
         [Output("apiVersion")]

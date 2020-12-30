@@ -14,7 +14,7 @@ namespace Pulumi.Kubernetes.Types.Outputs.Apps.V1Alpha1
     public sealed class NexusSpecNetworkingTls
     {
         /// <summary>
-        /// When exposing via Route, set to `true` to only allow encrypted traffic using TLS (disables HTTP in favor of HTTPS). Defaults to false.
+        /// When exposing via Route, set to `true` to only allow encrypted traffic using TLS (disables HTTP in favor of HTTPS). Defaults to `false`.
         /// </summary>
         public readonly bool Mandatory;
         /// <summary>

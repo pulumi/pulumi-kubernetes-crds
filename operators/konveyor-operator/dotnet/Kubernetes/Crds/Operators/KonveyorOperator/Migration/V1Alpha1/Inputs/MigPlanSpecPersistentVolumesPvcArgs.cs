@@ -20,6 +20,9 @@ namespace Pulumi.Kubernetes.Types.Inputs.Migration.V1Alpha1
             set => _accessModes = value;
         }
 
+        [Input("hasReference")]
+        public Input<bool>? HasReference { get; set; }
+
         [Input("name")]
         public Input<string>? Name { get; set; }
 

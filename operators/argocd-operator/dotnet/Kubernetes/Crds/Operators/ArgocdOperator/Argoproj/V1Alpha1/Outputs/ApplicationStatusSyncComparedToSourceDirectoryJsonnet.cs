@@ -18,6 +18,10 @@ namespace Pulumi.Kubernetes.Types.Outputs.Argoproj.V1Alpha1
         /// </summary>
         public readonly ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Argoproj.V1Alpha1.ApplicationStatusSyncComparedToSourceDirectoryJsonnetExtVars> ExtVars;
         /// <summary>
+        /// Additional library search dirs
+        /// </summary>
+        public readonly ImmutableArray<string> Libs;
+        /// <summary>
         /// TLAS is a list of Jsonnet Top-level Arguments
         /// </summary>
         public readonly ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Argoproj.V1Alpha1.ApplicationStatusSyncComparedToSourceDirectoryJsonnetTlas> Tlas;
@@ -26,9 +30,12 @@ namespace Pulumi.Kubernetes.Types.Outputs.Argoproj.V1Alpha1
         private ApplicationStatusSyncComparedToSourceDirectoryJsonnet(
             ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Argoproj.V1Alpha1.ApplicationStatusSyncComparedToSourceDirectoryJsonnetExtVars> extVars,
 
+            ImmutableArray<string> libs,
+
             ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Argoproj.V1Alpha1.ApplicationStatusSyncComparedToSourceDirectoryJsonnetTlas> tlas)
         {
             ExtVars = extVars;
+            Libs = libs;
             Tlas = tlas;
         }
     }

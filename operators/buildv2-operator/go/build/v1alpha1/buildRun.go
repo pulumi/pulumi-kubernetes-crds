@@ -10,7 +10,7 @@ import (
 	"github.com/pulumi/pulumi/sdk/v2/go/pulumi"
 )
 
-// BuildRun is the Schema for the buildruns API
+// BuildRun is the Schema representing an instance of build execution
 type BuildRun struct {
 	pulumi.CustomResourceState
 

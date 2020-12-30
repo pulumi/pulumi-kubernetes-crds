@@ -17,10 +17,6 @@ namespace Pulumi.Kubernetes.Types.Inputs.Infinispan.V1
     {
         [Input("conditions")]
         private InputList<Pulumi.Kubernetes.Types.Inputs.Infinispan.V1.InfinispanStatusConditionsArgs>? _conditions;
-
-        /// <summary>
-        /// Important: Run "operator-sdk generate k8s" to regenerate code after modifying this file
-        /// </summary>
         public InputList<Pulumi.Kubernetes.Types.Inputs.Infinispan.V1.InfinispanStatusConditionsArgs> Conditions
         {
             get => _conditions ?? (_conditions = new InputList<Pulumi.Kubernetes.Types.Inputs.Infinispan.V1.InfinispanStatusConditionsArgs>());
@@ -36,8 +32,8 @@ namespace Pulumi.Kubernetes.Types.Inputs.Infinispan.V1
         [Input("security", required: true)]
         public Input<Pulumi.Kubernetes.Types.Inputs.Infinispan.V1.InfinispanStatusSecurityArgs> Security { get; set; } = null!;
 
-        [Input("statefulSetName", required: true)]
-        public Input<string> StatefulSetName { get; set; } = null!;
+        [Input("statefulSetName")]
+        public Input<string>? StatefulSetName { get; set; }
 
         public InfinispanStatusArgs()
         {

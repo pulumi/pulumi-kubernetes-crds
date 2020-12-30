@@ -20,7 +20,7 @@ namespace Pulumi.Kubernetes.Types.Outputs.Build.V1Alpha1
         /// <summary>
         /// Specifies the output format of the exposed resources, defaults to "1"
         /// </summary>
-        public readonly string Divisor;
+        public readonly Pulumi.Kubernetes.Types.Outputs.Build.V1Alpha1.ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisor Divisor;
         /// <summary>
         /// Required: resource to select
         /// </summary>
@@ -30,7 +30,7 @@ namespace Pulumi.Kubernetes.Types.Outputs.Build.V1Alpha1
         private ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRef(
             string containerName,
 
-            string divisor,
+            Pulumi.Kubernetes.Types.Outputs.Build.V1Alpha1.ClusterBuildStrategySpecBuildStepsEnvValueFromResourceFieldRefDivisor divisor,
 
             string resource)
         {

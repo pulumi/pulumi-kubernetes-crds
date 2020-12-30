@@ -17,11 +17,26 @@ namespace Pulumi.Kubernetes.Types.Outputs.Argoproj.V1Alpha1
         /// Enabled will toggle HA support globally for Argo CD.
         /// </summary>
         public readonly bool Enabled;
+        /// <summary>
+        /// RedisProxyImage is the Redis HAProxy container image.
+        /// </summary>
+        public readonly string RedisProxyImage;
+        /// <summary>
+        /// RedisProxyVersion is the Redis HAProxy container image tag.
+        /// </summary>
+        public readonly string RedisProxyVersion;
 
         [OutputConstructor]
-        private ArgoCDSpecHa(bool enabled)
+        private ArgoCDSpecHa(
+            bool enabled,
+
+            string redisProxyImage,
+
+            string redisProxyVersion)
         {
             Enabled = enabled;
+            RedisProxyImage = redisProxyImage;
+            RedisProxyVersion = redisProxyVersion;
         }
     }
 }

@@ -14,6 +14,7 @@ namespace Pulumi.Kubernetes.Types.Outputs.Migration.V1Alpha1
     public sealed class MigPlanSpecPersistentVolumesPvc
     {
         public readonly ImmutableArray<string> AccessModes;
+        public readonly bool HasReference;
         public readonly string Name;
         public readonly string Namespace;
 
@@ -21,11 +22,14 @@ namespace Pulumi.Kubernetes.Types.Outputs.Migration.V1Alpha1
         private MigPlanSpecPersistentVolumesPvc(
             ImmutableArray<string> accessModes,
 
+            bool hasReference,
+
             string name,
 
             string @namespace)
         {
             AccessModes = accessModes;
+            HasReference = hasReference;
             Name = name;
             Namespace = @namespace;
         }

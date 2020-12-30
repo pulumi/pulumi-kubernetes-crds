@@ -30,6 +30,10 @@ namespace Pulumi.Kubernetes.Types.Outputs.Argoproj.V1Alpha1
         /// </summary>
         public readonly string Phase;
         /// <summary>
+        /// RetryCount contains time of operation retries
+        /// </summary>
+        public readonly int RetryCount;
+        /// <summary>
         /// StartedAt contains time of operation start
         /// </summary>
         public readonly string StartedAt;
@@ -48,6 +52,8 @@ namespace Pulumi.Kubernetes.Types.Outputs.Argoproj.V1Alpha1
 
             string phase,
 
+            int retryCount,
+
             string startedAt,
 
             Pulumi.Kubernetes.Types.Outputs.Argoproj.V1Alpha1.ApplicationStatusOperationStateSyncResult syncResult)
@@ -56,6 +62,7 @@ namespace Pulumi.Kubernetes.Types.Outputs.Argoproj.V1Alpha1
             Message = message;
             Operation = operation;
             Phase = phase;
+            RetryCount = retryCount;
             StartedAt = startedAt;
             SyncResult = syncResult;
         }

@@ -53,6 +53,12 @@ namespace Pulumi.Kubernetes.Types.Inputs.Hive.V1
         [Input("seLinuxOptions")]
         public Input<Pulumi.Kubernetes.Types.Inputs.Hive.V1.ClusterProvisionSpecPodSpecSecurityContextSeLinuxOptionsArgs>? SeLinuxOptions { get; set; }
 
+        /// <summary>
+        /// The seccomp options to use by the containers in this pod.
+        /// </summary>
+        [Input("seccompProfile")]
+        public Input<Pulumi.Kubernetes.Types.Inputs.Hive.V1.ClusterProvisionSpecPodSpecSecurityContextSeccompProfileArgs>? SeccompProfile { get; set; }
+
         [Input("supplementalGroups")]
         private InputList<int>? _supplementalGroups;
 

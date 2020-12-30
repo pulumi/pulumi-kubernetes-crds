@@ -36,6 +36,12 @@ namespace Pulumi.Kubernetes.Types.Inputs.Beat.V1Beta1
         [Input("kibanaAssociationStatus")]
         public Input<string>? KibanaAssociationStatus { get; set; }
 
+        /// <summary>
+        /// Version of the stack resource currently running. During version upgrades, multiple versions may run in parallel: this value specifies the lowest version currently running.
+        /// </summary>
+        [Input("version")]
+        public Input<string>? Version { get; set; }
+
         public BeatStatusArgs()
         {
         }

@@ -27,7 +27,8 @@ class CheCluster(pulumi.CustomResource):
                  __name__=None,
                  __opts__=None):
         """
-        Create a CheCluster resource with the given unique name, props, and options.
+        The `CheCluster` custom resource allows defining and managing a Che server installation
+
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[pulumi.InputType['CheClusterSpecArgs']] spec: Desired configuration of the Che installation. Based on these settings, the operator automatically creates and maintains several config maps that will contain the appropriate environment variables the various components of the Che installation. These generated config maps should NOT be updated manually.

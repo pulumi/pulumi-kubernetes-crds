@@ -30,9 +30,9 @@ namespace Pulumi.Kubernetes.Types.Outputs.Build.V1Alpha1
         /// </summary>
         public readonly ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Build.V1Alpha1.BuildSpecParameters> Parameters;
         /// <summary>
-        /// Compute Resources required by the build container. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
+        /// Runtime represents the runtime-image
         /// </summary>
-        public readonly Pulumi.Kubernetes.Types.Outputs.Build.V1Alpha1.BuildSpecResources Resources;
+        public readonly Pulumi.Kubernetes.Types.Outputs.Build.V1Alpha1.BuildSpecRuntime Runtime;
         /// <summary>
         /// Source refers to the Git repository containing the source code to be built.
         /// </summary>
@@ -41,6 +41,10 @@ namespace Pulumi.Kubernetes.Types.Outputs.Build.V1Alpha1
         /// StrategyRef refers to the BuildStrategy to be used to build the container image. There are namespaced scope and cluster scope BuildStrategy
         /// </summary>
         public readonly Pulumi.Kubernetes.Types.Outputs.Build.V1Alpha1.BuildSpecStrategy Strategy;
+        /// <summary>
+        /// Timeout defines the maximum run time of a build run.
+        /// </summary>
+        public readonly string Timeout;
 
         [OutputConstructor]
         private BuildSpec(
@@ -52,19 +56,22 @@ namespace Pulumi.Kubernetes.Types.Outputs.Build.V1Alpha1
 
             ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Build.V1Alpha1.BuildSpecParameters> parameters,
 
-            Pulumi.Kubernetes.Types.Outputs.Build.V1Alpha1.BuildSpecResources resources,
+            Pulumi.Kubernetes.Types.Outputs.Build.V1Alpha1.BuildSpecRuntime runtime,
 
             Pulumi.Kubernetes.Types.Outputs.Build.V1Alpha1.BuildSpecSource source,
 
-            Pulumi.Kubernetes.Types.Outputs.Build.V1Alpha1.BuildSpecStrategy strategy)
+            Pulumi.Kubernetes.Types.Outputs.Build.V1Alpha1.BuildSpecStrategy strategy,
+
+            string timeout)
         {
             Builder = builder;
             Dockerfile = dockerfile;
             Output = output;
             Parameters = parameters;
-            Resources = resources;
+            Runtime = runtime;
             Source = source;
             Strategy = strategy;
+            Timeout = timeout;
         }
     }
 }

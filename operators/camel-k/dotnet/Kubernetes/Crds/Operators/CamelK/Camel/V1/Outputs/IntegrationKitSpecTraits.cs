@@ -13,10 +13,10 @@ namespace Pulumi.Kubernetes.Types.Outputs.Camel.V1
     [OutputType]
     public sealed class IntegrationKitSpecTraits
     {
-        public readonly ImmutableDictionary<string, string> Configuration;
+        public readonly ImmutableDictionary<string, object> Configuration;
 
         [OutputConstructor]
-        private IntegrationKitSpecTraits(ImmutableDictionary<string, string> configuration)
+        private IntegrationKitSpecTraits(ImmutableDictionary<string, object> configuration)
         {
             Configuration = configuration;
         }

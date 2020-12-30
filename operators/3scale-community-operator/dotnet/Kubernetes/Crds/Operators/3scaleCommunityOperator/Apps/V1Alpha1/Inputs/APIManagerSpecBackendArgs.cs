@@ -21,8 +21,25 @@ namespace Pulumi.Kubernetes.Types.Inputs.Apps.V1Alpha1
         [Input("listenerSpec")]
         public Input<Pulumi.Kubernetes.Types.Inputs.Apps.V1Alpha1.APIManagerSpecBackendListenerSpecArgs>? ListenerSpec { get; set; }
 
+        /// <summary>
+        /// Affinity is a group of affinity scheduling rules.
+        /// </summary>
+        [Input("redisAffinity")]
+        public Input<Pulumi.Kubernetes.Types.Inputs.Apps.V1Alpha1.APIManagerSpecBackendRedisAffinityArgs>? RedisAffinity { get; set; }
+
         [Input("redisImage")]
         public Input<string>? RedisImage { get; set; }
+
+        [Input("redisPersistentVolumeClaim")]
+        public Input<Pulumi.Kubernetes.Types.Inputs.Apps.V1Alpha1.APIManagerSpecBackendRedisPersistentVolumeClaimArgs>? RedisPersistentVolumeClaim { get; set; }
+
+        [Input("redisTolerations")]
+        private InputList<Pulumi.Kubernetes.Types.Inputs.Apps.V1Alpha1.APIManagerSpecBackendRedisTolerationsArgs>? _redisTolerations;
+        public InputList<Pulumi.Kubernetes.Types.Inputs.Apps.V1Alpha1.APIManagerSpecBackendRedisTolerationsArgs> RedisTolerations
+        {
+            get => _redisTolerations ?? (_redisTolerations = new InputList<Pulumi.Kubernetes.Types.Inputs.Apps.V1Alpha1.APIManagerSpecBackendRedisTolerationsArgs>());
+            set => _redisTolerations = value;
+        }
 
         [Input("workerSpec")]
         public Input<Pulumi.Kubernetes.Types.Inputs.Apps.V1Alpha1.APIManagerSpecBackendWorkerSpecArgs>? WorkerSpec { get; set; }

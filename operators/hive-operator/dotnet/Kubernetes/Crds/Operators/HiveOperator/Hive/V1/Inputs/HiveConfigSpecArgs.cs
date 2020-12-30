@@ -34,6 +34,12 @@ namespace Pulumi.Kubernetes.Types.Inputs.Hive.V1
         public Input<Pulumi.Kubernetes.Types.Inputs.Hive.V1.HiveConfigSpecBackupArgs>? Backup { get; set; }
 
         /// <summary>
+        /// ControllersConfig is used to configure different hive controllers
+        /// </summary>
+        [Input("controllersConfig")]
+        public Input<Pulumi.Kubernetes.Types.Inputs.Hive.V1.HiveConfigSpecControllersConfigArgs>? ControllersConfig { get; set; }
+
+        /// <summary>
         /// DeleteProtection can be set to "enabled" to turn on automatic delete protection for ClusterDeployments. When enabled, Hive will add the "hive.openshift.io/protected-delete" annotation to new ClusterDeployments. Once a ClusterDeployment has been installed, a user must remove the annotation from a ClusterDeployment prior to deleting it.
         /// </summary>
         [Input("deleteProtection")]
@@ -68,12 +74,6 @@ namespace Pulumi.Kubernetes.Types.Inputs.Hive.V1
         /// </summary>
         [Input("globalPullSecretRef")]
         public Input<Pulumi.Kubernetes.Types.Inputs.Hive.V1.HiveConfigSpecGlobalPullSecretRefArgs>? GlobalPullSecretRef { get; set; }
-
-        /// <summary>
-        /// HiveAPIEnabled is a boolean controlling whether or not the Hive operator will start up the v1alpha1 aggregated API server.
-        /// </summary>
-        [Input("hiveAPIEnabled")]
-        public Input<bool>? HiveAPIEnabled { get; set; }
 
         /// <summary>
         /// LogLevel is the level of logging to use for the Hive controllers. Acceptable levels, from coarsest to finest, are panic, fatal, error, warn, info, debug, and trace. The default level is info.

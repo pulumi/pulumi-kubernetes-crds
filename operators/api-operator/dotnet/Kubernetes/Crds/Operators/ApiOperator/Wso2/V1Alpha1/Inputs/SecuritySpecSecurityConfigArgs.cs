@@ -30,6 +30,9 @@ namespace Pulumi.Kubernetes.Types.Inputs.Wso2.V1Alpha1
         [Input("issuer")]
         public Input<string>? Issuer { get; set; }
 
+        [Input("validateAllowedAPIs")]
+        public Input<bool>? ValidateAllowedAPIs { get; set; }
+
         [Input("validateSubscription")]
         public Input<bool>? ValidateSubscription { get; set; }
 

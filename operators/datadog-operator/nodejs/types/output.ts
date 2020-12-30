@@ -100,6 +100,10 @@ export namespace datadoghq {
              */
             log?: outputs.datadoghq.v1alpha1.DatadogAgentSpecAgentLog;
             /**
+             * Provide Agent Network Policy configuration
+             */
+            networkPolicy?: outputs.datadoghq.v1alpha1.DatadogAgentSpecAgentNetworkPolicy;
+            /**
              * If specified, indicates the pod's priority. "system-node-critical" and "system-cluster-critical" are two special keywords which indicate the highest priorities with the former being the highest priority. Any other name must be defined by creating a PriorityClass object with that name. If not specified, the pod priority will be default or zero if there is no default.
              */
             priorityClassName?: string;
@@ -111,6 +115,10 @@ export namespace datadoghq {
              * RBAC configuration of the Agent
              */
             rbac?: outputs.datadoghq.v1alpha1.DatadogAgentSpecAgentRbac;
+            /**
+             * Security Agent configuration
+             */
+            security?: outputs.datadoghq.v1alpha1.DatadogAgentSpecAgentSecurity;
             /**
              * SystemProbe configuration
              */
@@ -331,7 +339,7 @@ export namespace datadoghq {
              */
             resources?: outputs.datadoghq.v1alpha1.DatadogAgentSpecAgentConfigResources;
             /**
-             * You can modify the security context used to run the containers by modifying the label type
+             * Pod-level SecurityContext
              */
             securityContext?: outputs.datadoghq.v1alpha1.DatadogAgentSpecAgentConfigSecurityContext;
             /**
@@ -532,67 +540,51 @@ export namespace datadoghq {
         }
 
         /**
-         * You can modify the security context used to run the containers by modifying the label type
+         * Pod-level SecurityContext
          */
         export interface DatadogAgentSpecAgentConfigSecurityContext {
             /**
-             * AllowPrivilegeEscalation controls whether a process can gain more privileges than its parent process. This bool directly controls if the no_new_privs flag will be set on the container process. AllowPrivilegeEscalation is true always when the container is: 1) run as Privileged 2) has CAP_SYS_ADMIN
+             * A special supplemental group that applies to all containers in a pod. Some volume types allow the Kubelet to change the ownership of that volume to be owned by the pod: 
+             *  1. The owning GID will be the FSGroup 2. The setgid bit is set (new files created in the volume will be owned by FSGroup) 3. The permission bits are OR'd with rw-rw---- 
+             *  If unset, the Kubelet will not modify the ownership and permissions of any volume.
              */
-            allowPrivilegeEscalation?: boolean;
+            fsGroup?: number;
             /**
-             * The capabilities to add/drop when running containers. Defaults to the default set of capabilities granted by the container runtime.
+             * fsGroupChangePolicy defines behavior of changing ownership and permission of the volume before being exposed inside Pod. This field will only apply to volume types which support fsGroup based ownership(and permissions). It will have no effect on ephemeral volume types such as: secret, configmaps and emptydir. Valid values are "OnRootMismatch" and "Always". If not specified defaults to "Always".
              */
-            capabilities?: outputs.datadoghq.v1alpha1.DatadogAgentSpecAgentConfigSecurityContextCapabilities;
+            fsGroupChangePolicy?: string;
             /**
-             * Run container in privileged mode. Processes in privileged containers are essentially equivalent to root on the host. Defaults to false.
-             */
-            privileged?: boolean;
-            /**
-             * procMount denotes the type of proc mount to use for the containers. The default is DefaultProcMount which uses the container runtime defaults for readonly paths and masked paths. This requires the ProcMountType feature flag to be enabled.
-             */
-            procMount?: string;
-            /**
-             * Whether this container has a read-only root filesystem. Default is false.
-             */
-            readOnlyRootFilesystem?: boolean;
-            /**
-             * The GID to run the entrypoint of the container process. Uses runtime default if unset. May also be set in PodSecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
+             * The GID to run the entrypoint of the container process. Uses runtime default if unset. May also be set in SecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence for that container.
              */
             runAsGroup?: number;
             /**
-             * Indicates that the container must run as a non-root user. If true, the Kubelet will validate the image at runtime to ensure that it does not run as UID 0 (root) and fail to start the container if it does. If unset or false, no such validation will be performed. May also be set in PodSecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
+             * Indicates that the container must run as a non-root user. If true, the Kubelet will validate the image at runtime to ensure that it does not run as UID 0 (root) and fail to start the container if it does. If unset or false, no such validation will be performed. May also be set in SecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
              */
             runAsNonRoot?: boolean;
             /**
-             * The UID to run the entrypoint of the container process. Defaults to user specified in image metadata if unspecified. May also be set in PodSecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
+             * The UID to run the entrypoint of the container process. Defaults to user specified in image metadata if unspecified. May also be set in SecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence for that container.
              */
             runAsUser?: number;
             /**
-             * The SELinux context to be applied to the container. If unspecified, the container runtime will allocate a random SELinux context for each container.  May also be set in PodSecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
+             * The SELinux context to be applied to all containers. If unspecified, the container runtime will allocate a random SELinux context for each container.  May also be set in SecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence for that container.
              */
             seLinuxOptions?: outputs.datadoghq.v1alpha1.DatadogAgentSpecAgentConfigSecurityContextSeLinuxOptions;
             /**
-             * The Windows specific settings applied to all containers. If unspecified, the options from the PodSecurityContext will be used. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
+             * A list of groups applied to the first process run in each container, in addition to the container's primary GID.  If unspecified, no groups will be added to any container.
+             */
+            supplementalGroups?: number[];
+            /**
+             * Sysctls hold a list of namespaced sysctls used for the pod. Pods with unsupported sysctls (by the container runtime) might fail to launch.
+             */
+            sysctls?: outputs.datadoghq.v1alpha1.DatadogAgentSpecAgentConfigSecurityContextSysctls[];
+            /**
+             * The Windows specific settings applied to all containers. If unspecified, the options within a container's SecurityContext will be used. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
              */
             windowsOptions?: outputs.datadoghq.v1alpha1.DatadogAgentSpecAgentConfigSecurityContextWindowsOptions;
         }
 
         /**
-         * The capabilities to add/drop when running containers. Defaults to the default set of capabilities granted by the container runtime.
-         */
-        export interface DatadogAgentSpecAgentConfigSecurityContextCapabilities {
-            /**
-             * Added capabilities
-             */
-            add?: string[];
-            /**
-             * Removed capabilities
-             */
-            drop?: string[];
-        }
-
-        /**
-         * The SELinux context to be applied to the container. If unspecified, the container runtime will allocate a random SELinux context for each container.  May also be set in PodSecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
+         * The SELinux context to be applied to all containers. If unspecified, the container runtime will allocate a random SELinux context for each container.  May also be set in SecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence for that container.
          */
         export interface DatadogAgentSpecAgentConfigSecurityContextSeLinuxOptions {
             /**
@@ -614,7 +606,21 @@ export namespace datadoghq {
         }
 
         /**
-         * The Windows specific settings applied to all containers. If unspecified, the options from the PodSecurityContext will be used. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
+         * Sysctl defines a kernel parameter to be set
+         */
+        export interface DatadogAgentSpecAgentConfigSecurityContextSysctls {
+            /**
+             * Name of a property to set
+             */
+            name: string;
+            /**
+             * Value of a property to set
+             */
+            value: string;
+        }
+
+        /**
+         * The Windows specific settings applied to all containers. If unspecified, the options within a container's SecurityContext will be used. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
          */
         export interface DatadogAgentSpecAgentConfigSecurityContextWindowsOptions {
             /**
@@ -1867,8 +1873,44 @@ export namespace datadoghq {
          */
         export interface DatadogAgentSpecAgentDeploymentStrategyCanary {
             duration?: string;
-            paused?: boolean;
+            nodeAntiAffinityKeys?: string[];
+            /**
+             * A label selector is a label query over a set of resources. The result of matchLabels and matchExpressions are ANDed. An empty label selector matches all objects. A null label selector matches no objects.
+             */
+            nodeSelector?: outputs.datadoghq.v1alpha1.DatadogAgentSpecAgentDeploymentStrategyCanaryNodeSelector;
             replicas?: outputs.datadoghq.v1alpha1.DatadogAgentSpecAgentDeploymentStrategyCanaryReplicas;
+        }
+
+        /**
+         * A label selector is a label query over a set of resources. The result of matchLabels and matchExpressions are ANDed. An empty label selector matches all objects. A null label selector matches no objects.
+         */
+        export interface DatadogAgentSpecAgentDeploymentStrategyCanaryNodeSelector {
+            /**
+             * matchExpressions is a list of label selector requirements. The requirements are ANDed.
+             */
+            matchExpressions?: outputs.datadoghq.v1alpha1.DatadogAgentSpecAgentDeploymentStrategyCanaryNodeSelectorMatchExpressions[];
+            /**
+             * matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+             */
+            matchLabels?: {[key: string]: string};
+        }
+
+        /**
+         * A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface DatadogAgentSpecAgentDeploymentStrategyCanaryNodeSelectorMatchExpressions {
+            /**
+             * key is the label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+             */
+            operator: string;
+            /**
+             * values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
         }
 
         export interface DatadogAgentSpecAgentDeploymentStrategyCanaryReplicas {
@@ -2112,6 +2154,16 @@ export namespace datadoghq {
         }
 
         /**
+         * Provide Agent Network Policy configuration
+         */
+        export interface DatadogAgentSpecAgentNetworkPolicy {
+            /**
+             * If true, create a NetworkPolicy for the current agent
+             */
+            create?: boolean;
+        }
+
+        /**
          * Process Agent configuration
          */
         export interface DatadogAgentSpecAgentProcess {
@@ -2275,6 +2327,225 @@ export namespace datadoghq {
         }
 
         /**
+         * Security Agent configuration
+         */
+        export interface DatadogAgentSpecAgentSecurity {
+            /**
+             * Compliance configuration
+             */
+            compliance?: outputs.datadoghq.v1alpha1.DatadogAgentSpecAgentSecurityCompliance;
+            /**
+             * The Datadog Security Agent supports many environment variables Ref: https://docs.datadoghq.com/agent/docker/?tab=standard#environment-variables
+             */
+            env?: outputs.datadoghq.v1alpha1.DatadogAgentSpecAgentSecurityEnv[];
+            /**
+             * Datadog Security Agent resource requests and limits Make sure to keep requests and limits equal to keep the pods in the Guaranteed QoS class Ref: http://kubernetes.io/docs/user-guide/compute-resources/
+             */
+            resources?: outputs.datadoghq.v1alpha1.DatadogAgentSpecAgentSecurityResources;
+            /**
+             * Runtime security configuration
+             */
+            runtime?: outputs.datadoghq.v1alpha1.DatadogAgentSpecAgentSecurityRuntime;
+        }
+
+        /**
+         * Compliance configuration
+         */
+        export interface DatadogAgentSpecAgentSecurityCompliance {
+            /**
+             * Check interval
+             */
+            checkInterval?: string;
+            /**
+             * Config dir containing compliance benchmarks
+             */
+            configDir?: outputs.datadoghq.v1alpha1.DatadogAgentSpecAgentSecurityComplianceConfigDir;
+            /**
+             * Enables continuous compliance monitoring
+             */
+            enabled?: boolean;
+        }
+
+        /**
+         * Config dir containing compliance benchmarks
+         */
+        export interface DatadogAgentSpecAgentSecurityComplianceConfigDir {
+            /**
+             * ConfigMapName name of a ConfigMap used to mount a directory
+             */
+            configMapName?: string;
+        }
+
+        /**
+         * EnvVar represents an environment variable present in a Container.
+         */
+        export interface DatadogAgentSpecAgentSecurityEnv {
+            /**
+             * Name of the environment variable. Must be a C_IDENTIFIER.
+             */
+            name: string;
+            /**
+             * Variable references $(VAR_NAME) are expanded using the previous defined environment variables in the container and any service environment variables. If a variable cannot be resolved, the reference in the input string will be unchanged. The $(VAR_NAME) syntax can be escaped with a double $$, ie: $$(VAR_NAME). Escaped references will never be expanded, regardless of whether the variable exists or not. Defaults to "".
+             */
+            value?: string;
+            /**
+             * Source for the environment variable's value. Cannot be used if value is not empty.
+             */
+            valueFrom?: outputs.datadoghq.v1alpha1.DatadogAgentSpecAgentSecurityEnvValueFrom;
+        }
+
+        /**
+         * Source for the environment variable's value. Cannot be used if value is not empty.
+         */
+        export interface DatadogAgentSpecAgentSecurityEnvValueFrom {
+            /**
+             * Selects a key of a ConfigMap.
+             */
+            configMapKeyRef?: outputs.datadoghq.v1alpha1.DatadogAgentSpecAgentSecurityEnvValueFromConfigMapKeyRef;
+            /**
+             * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
+             */
+            fieldRef?: outputs.datadoghq.v1alpha1.DatadogAgentSpecAgentSecurityEnvValueFromFieldRef;
+            /**
+             * Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
+             */
+            resourceFieldRef?: outputs.datadoghq.v1alpha1.DatadogAgentSpecAgentSecurityEnvValueFromResourceFieldRef;
+            /**
+             * Selects a key of a secret in the pod's namespace
+             */
+            secretKeyRef?: outputs.datadoghq.v1alpha1.DatadogAgentSpecAgentSecurityEnvValueFromSecretKeyRef;
+        }
+
+        /**
+         * Selects a key of a ConfigMap.
+         */
+        export interface DatadogAgentSpecAgentSecurityEnvValueFromConfigMapKeyRef {
+            /**
+             * The key to select.
+             */
+            key: string;
+            /**
+             * Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+             */
+            name?: string;
+            /**
+             * Specify whether the ConfigMap or its key must be defined
+             */
+            optional?: boolean;
+        }
+
+        /**
+         * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
+         */
+        export interface DatadogAgentSpecAgentSecurityEnvValueFromFieldRef {
+            /**
+             * Version of the schema the FieldPath is written in terms of, defaults to "v1".
+             */
+            apiVersion?: string;
+            /**
+             * Path of the field to select in the specified API version.
+             */
+            fieldPath: string;
+        }
+
+        /**
+         * Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
+         */
+        export interface DatadogAgentSpecAgentSecurityEnvValueFromResourceFieldRef {
+            /**
+             * Container name: required for volumes, optional for env vars
+             */
+            containerName?: string;
+            /**
+             * Specifies the output format of the exposed resources, defaults to "1"
+             */
+            divisor?: outputs.datadoghq.v1alpha1.DatadogAgentSpecAgentSecurityEnvValueFromResourceFieldRefDivisor;
+            /**
+             * Required: resource to select
+             */
+            resource: string;
+        }
+
+        export interface DatadogAgentSpecAgentSecurityEnvValueFromResourceFieldRefDivisor {
+        }
+
+        /**
+         * Selects a key of a secret in the pod's namespace
+         */
+        export interface DatadogAgentSpecAgentSecurityEnvValueFromSecretKeyRef {
+            /**
+             * The key of the secret to select from.  Must be a valid secret key.
+             */
+            key: string;
+            /**
+             * Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+             */
+            name?: string;
+            /**
+             * Specify whether the Secret or its key must be defined
+             */
+            optional?: boolean;
+        }
+
+        /**
+         * Datadog Security Agent resource requests and limits Make sure to keep requests and limits equal to keep the pods in the Guaranteed QoS class Ref: http://kubernetes.io/docs/user-guide/compute-resources/
+         */
+        export interface DatadogAgentSpecAgentSecurityResources {
+            /**
+             * Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
+             */
+            limits?: {[key: string]: outputs.datadoghq.v1alpha1.DatadogAgentSpecAgentSecurityResourcesLimits};
+            /**
+             * Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
+             */
+            requests?: {[key: string]: outputs.datadoghq.v1alpha1.DatadogAgentSpecAgentSecurityResourcesRequests};
+        }
+
+        export interface DatadogAgentSpecAgentSecurityResourcesLimits {
+        }
+
+        export interface DatadogAgentSpecAgentSecurityResourcesRequests {
+        }
+
+        /**
+         * Runtime security configuration
+         */
+        export interface DatadogAgentSpecAgentSecurityRuntime {
+            /**
+             * Enables runtime security features
+             */
+            enabled?: boolean;
+            /**
+             * ConfigDir containing security policies
+             */
+            policiesDir?: outputs.datadoghq.v1alpha1.DatadogAgentSpecAgentSecurityRuntimePoliciesDir;
+            /**
+             * Syscall monitor configuration
+             */
+            syscallMonitor?: outputs.datadoghq.v1alpha1.DatadogAgentSpecAgentSecurityRuntimeSyscallMonitor;
+        }
+
+        /**
+         * ConfigDir containing security policies
+         */
+        export interface DatadogAgentSpecAgentSecurityRuntimePoliciesDir {
+            /**
+             * ConfigMapName name of a ConfigMap used to mount a directory
+             */
+            configMapName?: string;
+        }
+
+        /**
+         * Syscall monitor configuration
+         */
+        export interface DatadogAgentSpecAgentSecurityRuntimeSyscallMonitor {
+            /**
+             * Enabled enables syscall monitor
+             */
+            enabled?: boolean;
+        }
+
+        /**
          * SystemProbe configuration
          */
         export interface DatadogAgentSpecAgentSystemProbe {
@@ -2287,6 +2558,10 @@ export namespace datadoghq {
              */
             bpfDebugEnabled?: boolean;
             /**
+             * CollectDNSStats enables DNS stat collection
+             */
+            collectDNSStats?: boolean;
+            /**
              * ConntrackEnabled enable the system-probe agent to connect to the netlink/conntrack subsystem to add NAT information to connection data Ref: http://conntrack-tools.netfilter.org/
              */
             conntrackEnabled?: boolean;
@@ -2294,6 +2569,14 @@ export namespace datadoghq {
              * DebugPort Specify the port to expose pprof and expvar for system-probe agent
              */
             debugPort?: number;
+            /**
+             * EnableOOMKill enables the OOM kill eBPF-based check
+             */
+            enableOOMKill?: boolean;
+            /**
+             * EnableTCPQueueLength enables the TCP queue length eBPF-based check
+             */
+            enableTCPQueueLength?: boolean;
             /**
              * Enable this to activate live process monitoring. Note: /etc/passwd is automatically mounted to allow username resolution. ref: https://docs.datadoghq.com/graphing/infrastructure/process/#kubernetes-daemonset
              */
@@ -2587,6 +2870,10 @@ export namespace datadoghq {
              * The container image of the Datadog Cluster Agent
              */
             image: outputs.datadoghq.v1alpha1.DatadogAgentSpecClusterAgentImage;
+            /**
+             * Provide Cluster Agent Network Policy configuration
+             */
+            networkPolicy?: outputs.datadoghq.v1alpha1.DatadogAgentSpecClusterAgentNetworkPolicy;
             /**
              * NodeSelector is a selector which must be true for the pod to fit on a node. Selector which must match a node's labels for the pod to be scheduled on that node. More info: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
              */
@@ -3034,6 +3321,10 @@ export namespace datadoghq {
              */
             clusterChecksEnabled?: boolean;
             /**
+             * Enables this to start event collection from the kubernetes API ref: https://docs.datadoghq.com/agent/cluster_agent/event_collection/
+             */
+            collectEvents?: boolean;
+            /**
              * Confd Provide additional cluster check configurations. Each key will become a file in /conf.d see https://docs.datadoghq.com/agent/autodiscovery/ for more details.
              */
             confd?: outputs.datadoghq.v1alpha1.DatadogAgentSpecClusterAgentConfigConfd;
@@ -3211,6 +3502,10 @@ export namespace datadoghq {
              */
             enabled?: boolean;
             /**
+             * Override the API endpoint for the external metrics server. Defaults to .spec.agent.config.ddUrl or "https://app.datadoghq.com" if that's empty.
+             */
+            endpoint?: string;
+            /**
              * If specified configures the metricsProvider external metrics service port
              */
             port?: number;
@@ -3218,6 +3513,10 @@ export namespace datadoghq {
              * Enable usage of DatadogMetrics CRD (allow to scale on arbitrary queries)
              */
             useDatadogMetrics?: boolean;
+            /**
+             * Enable informer and controller of the watermark pod autoscaler NOTE: The WatermarkPodAutoscaler controller needs to be installed see https://github.com/DataDog/watermarkpodautoscaler for more details.
+             */
+            wpaController?: boolean;
         }
 
         /**
@@ -4452,6 +4751,16 @@ export namespace datadoghq {
         }
 
         /**
+         * Provide Cluster Agent Network Policy configuration
+         */
+        export interface DatadogAgentSpecClusterAgentNetworkPolicy {
+            /**
+             * If true, create a NetworkPolicy for the current agent
+             */
+            create?: boolean;
+        }
+
+        /**
          * RBAC configuration of the Datadog Cluster Agent
          */
         export interface DatadogAgentSpecClusterAgentRbac {
@@ -4523,6 +4832,10 @@ export namespace datadoghq {
              * The container image of the Datadog Cluster Checks Runner
              */
             image: outputs.datadoghq.v1alpha1.DatadogAgentSpecClusterChecksRunnerImage;
+            /**
+             * Provide Cluster Checks Runner Network Policy configuration
+             */
+            networkPolicy?: outputs.datadoghq.v1alpha1.DatadogAgentSpecClusterChecksRunnerNetworkPolicy;
             /**
              * NodeSelector is a selector which must be true for the pod to fit on a node. Selector which must match a node's labels for the pod to be scheduled on that node. More info: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
              */
@@ -6323,6 +6636,16 @@ export namespace datadoghq {
              * Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
              */
             name?: string;
+        }
+
+        /**
+         * Provide Cluster Checks Runner Network Policy configuration
+         */
+        export interface DatadogAgentSpecClusterChecksRunnerNetworkPolicy {
+            /**
+             * If true, create a NetworkPolicy for the current agent
+             */
+            create?: boolean;
         }
 
         /**

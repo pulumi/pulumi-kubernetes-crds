@@ -11,7 +11,7 @@ namespace Pulumi.Kubernetes.Types.Inputs.Storage.V1
 {
 
     /// <summary>
-    /// Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+    /// Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
     /// </summary>
     public class CSIVXFlexOSSpecDriverCommonEnvsValueFromFieldRefArgs : Pulumi.ResourceArgs
     {

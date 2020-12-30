@@ -24,6 +24,10 @@ namespace Pulumi.Kubernetes.Types.Outputs.Beat.V1Beta1
         /// AssociationStatus is the status of an association resource.
         /// </summary>
         public readonly string KibanaAssociationStatus;
+        /// <summary>
+        /// Version of the stack resource currently running. During version upgrades, multiple versions may run in parallel: this value specifies the lowest version currently running.
+        /// </summary>
+        public readonly string Version;
 
         [OutputConstructor]
         private BeatStatus(
@@ -35,13 +39,16 @@ namespace Pulumi.Kubernetes.Types.Outputs.Beat.V1Beta1
 
             string health,
 
-            string kibanaAssociationStatus)
+            string kibanaAssociationStatus,
+
+            string version)
         {
             AvailableNodes = availableNodes;
             ElasticsearchAssociationStatus = elasticsearchAssociationStatus;
             ExpectedNodes = expectedNodes;
             Health = health;
             KibanaAssociationStatus = kibanaAssociationStatus;
+            Version = version;
         }
     }
 }

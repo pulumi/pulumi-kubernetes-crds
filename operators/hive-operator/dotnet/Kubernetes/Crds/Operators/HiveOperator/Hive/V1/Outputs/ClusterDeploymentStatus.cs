@@ -26,10 +26,6 @@ namespace Pulumi.Kubernetes.Types.Outputs.Hive.V1
         /// </summary>
         public readonly string CliImage;
         /// <summary>
-        /// ClusterVersionStatus will hold a copy of the remote cluster's ClusterVersion.Status
-        /// </summary>
-        public readonly Pulumi.Kubernetes.Types.Outputs.Hive.V1.ClusterDeploymentStatusClusterVersionStatus ClusterVersionStatus;
-        /// <summary>
         /// Conditions includes more detailed status for the cluster deployment
         /// </summary>
         public readonly ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Hive.V1.ClusterDeploymentStatusConditions> Conditions;
@@ -62,8 +58,6 @@ namespace Pulumi.Kubernetes.Types.Outputs.Hive.V1
 
             string cliImage,
 
-            Pulumi.Kubernetes.Types.Outputs.Hive.V1.ClusterDeploymentStatusClusterVersionStatus clusterVersionStatus,
-
             ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Hive.V1.ClusterDeploymentStatusConditions> conditions,
 
             int installRestarts,
@@ -79,7 +73,6 @@ namespace Pulumi.Kubernetes.Types.Outputs.Hive.V1
             ApiURL = apiURL;
             CertificateBundles = certificateBundles;
             CliImage = cliImage;
-            ClusterVersionStatus = clusterVersionStatus;
             Conditions = conditions;
             InstallRestarts = installRestarts;
             InstalledTimestamp = installedTimestamp;

@@ -1569,6 +1569,8 @@ func (o ElasticsearchSpecHttpServiceSpecPtrOutput) Type() pulumi.StringPtrOutput
 
 // ServicePort contains information on service's port.
 type ElasticsearchSpecHttpServiceSpecPorts struct {
+	// The application protocol for this port. This field follows standard Kubernetes label syntax. Un-prefixed names are reserved for IANA standard service names (as per RFC-6335 and http://www.iana.org/assignments/service-names). Non-standard protocols should use prefixed names such as mycompany.com/my-custom-protocol. Field can be enabled with ServiceAppProtocol feature gate.
+	AppProtocol *string `pulumi:"appProtocol"`
 	// The name of this port within the service. This must be a DNS_LABEL. All ports within a ServiceSpec must have unique names. When considering the endpoints for a Service, this must match the 'name' field in the EndpointPort. Optional if only one ServicePort is defined on this service.
 	Name *string `pulumi:"name"`
 	// The port on each node on which this service is exposed when type=NodePort or LoadBalancer. Usually assigned by the system. If specified, it will be allocated to the service if unused or else creation of the service will fail. Default is to auto-allocate a port if the ServiceType of this Service requires one. More info: https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport
@@ -1594,6 +1596,8 @@ type ElasticsearchSpecHttpServiceSpecPortsInput interface {
 
 // ServicePort contains information on service's port.
 type ElasticsearchSpecHttpServiceSpecPortsArgs struct {
+	// The application protocol for this port. This field follows standard Kubernetes label syntax. Un-prefixed names are reserved for IANA standard service names (as per RFC-6335 and http://www.iana.org/assignments/service-names). Non-standard protocols should use prefixed names such as mycompany.com/my-custom-protocol. Field can be enabled with ServiceAppProtocol feature gate.
+	AppProtocol pulumi.StringPtrInput `pulumi:"appProtocol"`
 	// The name of this port within the service. This must be a DNS_LABEL. All ports within a ServiceSpec must have unique names. When considering the endpoints for a Service, this must match the 'name' field in the EndpointPort. Optional if only one ServicePort is defined on this service.
 	Name pulumi.StringPtrInput `pulumi:"name"`
 	// The port on each node on which this service is exposed when type=NodePort or LoadBalancer. Usually assigned by the system. If specified, it will be allocated to the service if unused or else creation of the service will fail. Default is to auto-allocate a port if the ServiceType of this Service requires one. More info: https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport
@@ -1656,6 +1660,11 @@ func (o ElasticsearchSpecHttpServiceSpecPortsOutput) ToElasticsearchSpecHttpServ
 
 func (o ElasticsearchSpecHttpServiceSpecPortsOutput) ToElasticsearchSpecHttpServiceSpecPortsOutputWithContext(ctx context.Context) ElasticsearchSpecHttpServiceSpecPortsOutput {
 	return o
+}
+
+// The application protocol for this port. This field follows standard Kubernetes label syntax. Un-prefixed names are reserved for IANA standard service names (as per RFC-6335 and http://www.iana.org/assignments/service-names). Non-standard protocols should use prefixed names such as mycompany.com/my-custom-protocol. Field can be enabled with ServiceAppProtocol feature gate.
+func (o ElasticsearchSpecHttpServiceSpecPortsOutput) AppProtocol() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v ElasticsearchSpecHttpServiceSpecPorts) *string { return v.AppProtocol }).(pulumi.StringPtrOutput)
 }
 
 // The name of this port within the service. This must be a DNS_LABEL. All ports within a ServiceSpec must have unique names. When considering the endpoints for a Service, this must match the 'name' field in the EndpointPort. Optional if only one ServicePort is defined on this service.
@@ -3121,7 +3130,7 @@ func (o ElasticsearchSpecNodeSetsVolumeClaimTemplatesMetadataOutput) ToElasticse
 type ElasticsearchSpecNodeSetsVolumeClaimTemplatesSpec struct {
 	// AccessModes contains the desired access modes the volume should have. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#access-modes-1
 	AccessModes []string `pulumi:"accessModes"`
-	// This field requires the VolumeSnapshotDataSource alpha feature gate to be enabled and currently VolumeSnapshot is the only supported data source. If the provisioner can support VolumeSnapshot data source, it will create a new volume and data will be restored to the volume at the same time. If the provisioner does not support VolumeSnapshot data source, volume will not be created and the failure will be reported as an event. In the future, we plan to support more data source types and the behavior of the provisioner may change.
+	// This field can be used to specify either: * An existing VolumeSnapshot object (snapshot.storage.k8s.io/VolumeSnapshot - Beta) * An existing PVC (PersistentVolumeClaim) * An existing custom resource/object that implements data population (Alpha) In order to use VolumeSnapshot object types, the appropriate feature gate must be enabled (VolumeSnapshotDataSource or AnyVolumeDataSource) If the provisioner or an external controller can support the specified data source, it will create a new volume based on the contents of the specified data source. If the specified data source is not supported, the volume will not be created and the failure will be reported as an event. In the future, we plan to support more data source types and the behavior of the provisioner may change.
 	DataSource *ElasticsearchSpecNodeSetsVolumeClaimTemplatesSpecDataSource `pulumi:"dataSource"`
 	// Resources represents the minimum resources the volume should have. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#resources
 	Resources *ElasticsearchSpecNodeSetsVolumeClaimTemplatesSpecResources `pulumi:"resources"`
@@ -3129,7 +3138,7 @@ type ElasticsearchSpecNodeSetsVolumeClaimTemplatesSpec struct {
 	Selector *ElasticsearchSpecNodeSetsVolumeClaimTemplatesSpecSelector `pulumi:"selector"`
 	// Name of the StorageClass required by the claim. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#class-1
 	StorageClassName *string `pulumi:"storageClassName"`
-	// volumeMode defines what type of volume is required by the claim. Value of Filesystem is implied when not included in claim spec. This is a beta feature.
+	// volumeMode defines what type of volume is required by the claim. Value of Filesystem is implied when not included in claim spec.
 	VolumeMode *string `pulumi:"volumeMode"`
 	// VolumeName is the binding reference to the PersistentVolume backing this claim.
 	VolumeName *string `pulumi:"volumeName"`
@@ -3150,7 +3159,7 @@ type ElasticsearchSpecNodeSetsVolumeClaimTemplatesSpecInput interface {
 type ElasticsearchSpecNodeSetsVolumeClaimTemplatesSpecArgs struct {
 	// AccessModes contains the desired access modes the volume should have. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#access-modes-1
 	AccessModes pulumi.StringArrayInput `pulumi:"accessModes"`
-	// This field requires the VolumeSnapshotDataSource alpha feature gate to be enabled and currently VolumeSnapshot is the only supported data source. If the provisioner can support VolumeSnapshot data source, it will create a new volume and data will be restored to the volume at the same time. If the provisioner does not support VolumeSnapshot data source, volume will not be created and the failure will be reported as an event. In the future, we plan to support more data source types and the behavior of the provisioner may change.
+	// This field can be used to specify either: * An existing VolumeSnapshot object (snapshot.storage.k8s.io/VolumeSnapshot - Beta) * An existing PVC (PersistentVolumeClaim) * An existing custom resource/object that implements data population (Alpha) In order to use VolumeSnapshot object types, the appropriate feature gate must be enabled (VolumeSnapshotDataSource or AnyVolumeDataSource) If the provisioner or an external controller can support the specified data source, it will create a new volume based on the contents of the specified data source. If the specified data source is not supported, the volume will not be created and the failure will be reported as an event. In the future, we plan to support more data source types and the behavior of the provisioner may change.
 	DataSource ElasticsearchSpecNodeSetsVolumeClaimTemplatesSpecDataSourcePtrInput `pulumi:"dataSource"`
 	// Resources represents the minimum resources the volume should have. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#resources
 	Resources ElasticsearchSpecNodeSetsVolumeClaimTemplatesSpecResourcesPtrInput `pulumi:"resources"`
@@ -3158,7 +3167,7 @@ type ElasticsearchSpecNodeSetsVolumeClaimTemplatesSpecArgs struct {
 	Selector ElasticsearchSpecNodeSetsVolumeClaimTemplatesSpecSelectorPtrInput `pulumi:"selector"`
 	// Name of the StorageClass required by the claim. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#class-1
 	StorageClassName pulumi.StringPtrInput `pulumi:"storageClassName"`
-	// volumeMode defines what type of volume is required by the claim. Value of Filesystem is implied when not included in claim spec. This is a beta feature.
+	// volumeMode defines what type of volume is required by the claim. Value of Filesystem is implied when not included in claim spec.
 	VolumeMode pulumi.StringPtrInput `pulumi:"volumeMode"`
 	// VolumeName is the binding reference to the PersistentVolume backing this claim.
 	VolumeName pulumi.StringPtrInput `pulumi:"volumeName"`
@@ -3247,7 +3256,7 @@ func (o ElasticsearchSpecNodeSetsVolumeClaimTemplatesSpecOutput) AccessModes() p
 	return o.ApplyT(func(v ElasticsearchSpecNodeSetsVolumeClaimTemplatesSpec) []string { return v.AccessModes }).(pulumi.StringArrayOutput)
 }
 
-// This field requires the VolumeSnapshotDataSource alpha feature gate to be enabled and currently VolumeSnapshot is the only supported data source. If the provisioner can support VolumeSnapshot data source, it will create a new volume and data will be restored to the volume at the same time. If the provisioner does not support VolumeSnapshot data source, volume will not be created and the failure will be reported as an event. In the future, we plan to support more data source types and the behavior of the provisioner may change.
+// This field can be used to specify either: * An existing VolumeSnapshot object (snapshot.storage.k8s.io/VolumeSnapshot - Beta) * An existing PVC (PersistentVolumeClaim) * An existing custom resource/object that implements data population (Alpha) In order to use VolumeSnapshot object types, the appropriate feature gate must be enabled (VolumeSnapshotDataSource or AnyVolumeDataSource) If the provisioner or an external controller can support the specified data source, it will create a new volume based on the contents of the specified data source. If the specified data source is not supported, the volume will not be created and the failure will be reported as an event. In the future, we plan to support more data source types and the behavior of the provisioner may change.
 func (o ElasticsearchSpecNodeSetsVolumeClaimTemplatesSpecOutput) DataSource() ElasticsearchSpecNodeSetsVolumeClaimTemplatesSpecDataSourcePtrOutput {
 	return o.ApplyT(func(v ElasticsearchSpecNodeSetsVolumeClaimTemplatesSpec) *ElasticsearchSpecNodeSetsVolumeClaimTemplatesSpecDataSource {
 		return v.DataSource
@@ -3273,7 +3282,7 @@ func (o ElasticsearchSpecNodeSetsVolumeClaimTemplatesSpecOutput) StorageClassNam
 	return o.ApplyT(func(v ElasticsearchSpecNodeSetsVolumeClaimTemplatesSpec) *string { return v.StorageClassName }).(pulumi.StringPtrOutput)
 }
 
-// volumeMode defines what type of volume is required by the claim. Value of Filesystem is implied when not included in claim spec. This is a beta feature.
+// volumeMode defines what type of volume is required by the claim. Value of Filesystem is implied when not included in claim spec.
 func (o ElasticsearchSpecNodeSetsVolumeClaimTemplatesSpecOutput) VolumeMode() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v ElasticsearchSpecNodeSetsVolumeClaimTemplatesSpec) *string { return v.VolumeMode }).(pulumi.StringPtrOutput)
 }
@@ -3313,7 +3322,7 @@ func (o ElasticsearchSpecNodeSetsVolumeClaimTemplatesSpecPtrOutput) AccessModes(
 	}).(pulumi.StringArrayOutput)
 }
 
-// This field requires the VolumeSnapshotDataSource alpha feature gate to be enabled and currently VolumeSnapshot is the only supported data source. If the provisioner can support VolumeSnapshot data source, it will create a new volume and data will be restored to the volume at the same time. If the provisioner does not support VolumeSnapshot data source, volume will not be created and the failure will be reported as an event. In the future, we plan to support more data source types and the behavior of the provisioner may change.
+// This field can be used to specify either: * An existing VolumeSnapshot object (snapshot.storage.k8s.io/VolumeSnapshot - Beta) * An existing PVC (PersistentVolumeClaim) * An existing custom resource/object that implements data population (Alpha) In order to use VolumeSnapshot object types, the appropriate feature gate must be enabled (VolumeSnapshotDataSource or AnyVolumeDataSource) If the provisioner or an external controller can support the specified data source, it will create a new volume based on the contents of the specified data source. If the specified data source is not supported, the volume will not be created and the failure will be reported as an event. In the future, we plan to support more data source types and the behavior of the provisioner may change.
 func (o ElasticsearchSpecNodeSetsVolumeClaimTemplatesSpecPtrOutput) DataSource() ElasticsearchSpecNodeSetsVolumeClaimTemplatesSpecDataSourcePtrOutput {
 	return o.ApplyT(func(v *ElasticsearchSpecNodeSetsVolumeClaimTemplatesSpec) *ElasticsearchSpecNodeSetsVolumeClaimTemplatesSpecDataSource {
 		if v == nil {
@@ -3353,7 +3362,7 @@ func (o ElasticsearchSpecNodeSetsVolumeClaimTemplatesSpecPtrOutput) StorageClass
 	}).(pulumi.StringPtrOutput)
 }
 
-// volumeMode defines what type of volume is required by the claim. Value of Filesystem is implied when not included in claim spec. This is a beta feature.
+// volumeMode defines what type of volume is required by the claim. Value of Filesystem is implied when not included in claim spec.
 func (o ElasticsearchSpecNodeSetsVolumeClaimTemplatesSpecPtrOutput) VolumeMode() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *ElasticsearchSpecNodeSetsVolumeClaimTemplatesSpec) *string {
 		if v == nil {
@@ -3373,7 +3382,7 @@ func (o ElasticsearchSpecNodeSetsVolumeClaimTemplatesSpecPtrOutput) VolumeName()
 	}).(pulumi.StringPtrOutput)
 }
 
-// This field requires the VolumeSnapshotDataSource alpha feature gate to be enabled and currently VolumeSnapshot is the only supported data source. If the provisioner can support VolumeSnapshot data source, it will create a new volume and data will be restored to the volume at the same time. If the provisioner does not support VolumeSnapshot data source, volume will not be created and the failure will be reported as an event. In the future, we plan to support more data source types and the behavior of the provisioner may change.
+// This field can be used to specify either: * An existing VolumeSnapshot object (snapshot.storage.k8s.io/VolumeSnapshot - Beta) * An existing PVC (PersistentVolumeClaim) * An existing custom resource/object that implements data population (Alpha) In order to use VolumeSnapshot object types, the appropriate feature gate must be enabled (VolumeSnapshotDataSource or AnyVolumeDataSource) If the provisioner or an external controller can support the specified data source, it will create a new volume based on the contents of the specified data source. If the specified data source is not supported, the volume will not be created and the failure will be reported as an event. In the future, we plan to support more data source types and the behavior of the provisioner may change.
 type ElasticsearchSpecNodeSetsVolumeClaimTemplatesSpecDataSource struct {
 	// APIGroup is the group for the resource being referenced. If APIGroup is not specified, the specified Kind must be in the core API group. For any other third-party types, APIGroup is required.
 	ApiGroup *string `pulumi:"apiGroup"`
@@ -3394,7 +3403,7 @@ type ElasticsearchSpecNodeSetsVolumeClaimTemplatesSpecDataSourceInput interface 
 	ToElasticsearchSpecNodeSetsVolumeClaimTemplatesSpecDataSourceOutputWithContext(context.Context) ElasticsearchSpecNodeSetsVolumeClaimTemplatesSpecDataSourceOutput
 }
 
-// This field requires the VolumeSnapshotDataSource alpha feature gate to be enabled and currently VolumeSnapshot is the only supported data source. If the provisioner can support VolumeSnapshot data source, it will create a new volume and data will be restored to the volume at the same time. If the provisioner does not support VolumeSnapshot data source, volume will not be created and the failure will be reported as an event. In the future, we plan to support more data source types and the behavior of the provisioner may change.
+// This field can be used to specify either: * An existing VolumeSnapshot object (snapshot.storage.k8s.io/VolumeSnapshot - Beta) * An existing PVC (PersistentVolumeClaim) * An existing custom resource/object that implements data population (Alpha) In order to use VolumeSnapshot object types, the appropriate feature gate must be enabled (VolumeSnapshotDataSource or AnyVolumeDataSource) If the provisioner or an external controller can support the specified data source, it will create a new volume based on the contents of the specified data source. If the specified data source is not supported, the volume will not be created and the failure will be reported as an event. In the future, we plan to support more data source types and the behavior of the provisioner may change.
 type ElasticsearchSpecNodeSetsVolumeClaimTemplatesSpecDataSourceArgs struct {
 	// APIGroup is the group for the resource being referenced. If APIGroup is not specified, the specified Kind must be in the core API group. For any other third-party types, APIGroup is required.
 	ApiGroup pulumi.StringPtrInput `pulumi:"apiGroup"`
@@ -3457,7 +3466,7 @@ func (i *elasticsearchSpecNodeSetsVolumeClaimTemplatesSpecDataSourcePtrType) ToE
 	return pulumi.ToOutputWithContext(ctx, i).(ElasticsearchSpecNodeSetsVolumeClaimTemplatesSpecDataSourcePtrOutput)
 }
 
-// This field requires the VolumeSnapshotDataSource alpha feature gate to be enabled and currently VolumeSnapshot is the only supported data source. If the provisioner can support VolumeSnapshot data source, it will create a new volume and data will be restored to the volume at the same time. If the provisioner does not support VolumeSnapshot data source, volume will not be created and the failure will be reported as an event. In the future, we plan to support more data source types and the behavior of the provisioner may change.
+// This field can be used to specify either: * An existing VolumeSnapshot object (snapshot.storage.k8s.io/VolumeSnapshot - Beta) * An existing PVC (PersistentVolumeClaim) * An existing custom resource/object that implements data population (Alpha) In order to use VolumeSnapshot object types, the appropriate feature gate must be enabled (VolumeSnapshotDataSource or AnyVolumeDataSource) If the provisioner or an external controller can support the specified data source, it will create a new volume based on the contents of the specified data source. If the specified data source is not supported, the volume will not be created and the failure will be reported as an event. In the future, we plan to support more data source types and the behavior of the provisioner may change.
 type ElasticsearchSpecNodeSetsVolumeClaimTemplatesSpecDataSourceOutput struct{ *pulumi.OutputState }
 
 func (ElasticsearchSpecNodeSetsVolumeClaimTemplatesSpecDataSourceOutput) ElementType() reflect.Type {
@@ -6787,6 +6796,8 @@ func (o ElasticsearchSpecTransportServiceSpecPtrOutput) Type() pulumi.StringPtrO
 
 // ServicePort contains information on service's port.
 type ElasticsearchSpecTransportServiceSpecPorts struct {
+	// The application protocol for this port. This field follows standard Kubernetes label syntax. Un-prefixed names are reserved for IANA standard service names (as per RFC-6335 and http://www.iana.org/assignments/service-names). Non-standard protocols should use prefixed names such as mycompany.com/my-custom-protocol. Field can be enabled with ServiceAppProtocol feature gate.
+	AppProtocol *string `pulumi:"appProtocol"`
 	// The name of this port within the service. This must be a DNS_LABEL. All ports within a ServiceSpec must have unique names. When considering the endpoints for a Service, this must match the 'name' field in the EndpointPort. Optional if only one ServicePort is defined on this service.
 	Name *string `pulumi:"name"`
 	// The port on each node on which this service is exposed when type=NodePort or LoadBalancer. Usually assigned by the system. If specified, it will be allocated to the service if unused or else creation of the service will fail. Default is to auto-allocate a port if the ServiceType of this Service requires one. More info: https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport
@@ -6812,6 +6823,8 @@ type ElasticsearchSpecTransportServiceSpecPortsInput interface {
 
 // ServicePort contains information on service's port.
 type ElasticsearchSpecTransportServiceSpecPortsArgs struct {
+	// The application protocol for this port. This field follows standard Kubernetes label syntax. Un-prefixed names are reserved for IANA standard service names (as per RFC-6335 and http://www.iana.org/assignments/service-names). Non-standard protocols should use prefixed names such as mycompany.com/my-custom-protocol. Field can be enabled with ServiceAppProtocol feature gate.
+	AppProtocol pulumi.StringPtrInput `pulumi:"appProtocol"`
 	// The name of this port within the service. This must be a DNS_LABEL. All ports within a ServiceSpec must have unique names. When considering the endpoints for a Service, this must match the 'name' field in the EndpointPort. Optional if only one ServicePort is defined on this service.
 	Name pulumi.StringPtrInput `pulumi:"name"`
 	// The port on each node on which this service is exposed when type=NodePort or LoadBalancer. Usually assigned by the system. If specified, it will be allocated to the service if unused or else creation of the service will fail. Default is to auto-allocate a port if the ServiceType of this Service requires one. More info: https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport
@@ -6874,6 +6887,11 @@ func (o ElasticsearchSpecTransportServiceSpecPortsOutput) ToElasticsearchSpecTra
 
 func (o ElasticsearchSpecTransportServiceSpecPortsOutput) ToElasticsearchSpecTransportServiceSpecPortsOutputWithContext(ctx context.Context) ElasticsearchSpecTransportServiceSpecPortsOutput {
 	return o
+}
+
+// The application protocol for this port. This field follows standard Kubernetes label syntax. Un-prefixed names are reserved for IANA standard service names (as per RFC-6335 and http://www.iana.org/assignments/service-names). Non-standard protocols should use prefixed names such as mycompany.com/my-custom-protocol. Field can be enabled with ServiceAppProtocol feature gate.
+func (o ElasticsearchSpecTransportServiceSpecPortsOutput) AppProtocol() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v ElasticsearchSpecTransportServiceSpecPorts) *string { return v.AppProtocol }).(pulumi.StringPtrOutput)
 }
 
 // The name of this port within the service. This must be a DNS_LABEL. All ports within a ServiceSpec must have unique names. When considering the endpoints for a Service, this must match the 'name' field in the EndpointPort. Optional if only one ServicePort is defined on this service.
@@ -7652,11 +7670,14 @@ func (o ElasticsearchSpecUpdateStrategyChangeBudgetPtrOutput) MaxUnavailable() p
 
 // ElasticsearchStatus defines the observed state of Elasticsearch
 type ElasticsearchStatus struct {
+	// AvailableNodes is the number of available instances.
 	AvailableNodes *int `pulumi:"availableNodes"`
 	// ElasticsearchHealth is the health of the cluster as returned by the health API.
 	Health *string `pulumi:"health"`
 	// ElasticsearchOrchestrationPhase is the phase Elasticsearch is in from the controller point of view.
 	Phase *string `pulumi:"phase"`
+	// Version of the stack resource currently running. During version upgrades, multiple versions may run in parallel: this value specifies the lowest version currently running.
+	Version *string `pulumi:"version"`
 }
 
 // ElasticsearchStatusInput is an input type that accepts ElasticsearchStatusArgs and ElasticsearchStatusOutput values.
@@ -7672,11 +7693,14 @@ type ElasticsearchStatusInput interface {
 
 // ElasticsearchStatus defines the observed state of Elasticsearch
 type ElasticsearchStatusArgs struct {
+	// AvailableNodes is the number of available instances.
 	AvailableNodes pulumi.IntPtrInput `pulumi:"availableNodes"`
 	// ElasticsearchHealth is the health of the cluster as returned by the health API.
 	Health pulumi.StringPtrInput `pulumi:"health"`
 	// ElasticsearchOrchestrationPhase is the phase Elasticsearch is in from the controller point of view.
 	Phase pulumi.StringPtrInput `pulumi:"phase"`
+	// Version of the stack resource currently running. During version upgrades, multiple versions may run in parallel: this value specifies the lowest version currently running.
+	Version pulumi.StringPtrInput `pulumi:"version"`
 }
 
 func (ElasticsearchStatusArgs) ElementType() reflect.Type {
@@ -7756,6 +7780,8 @@ func (o ElasticsearchStatusOutput) ToElasticsearchStatusPtrOutputWithContext(ctx
 		return &v
 	}).(ElasticsearchStatusPtrOutput)
 }
+
+// AvailableNodes is the number of available instances.
 func (o ElasticsearchStatusOutput) AvailableNodes() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v ElasticsearchStatus) *int { return v.AvailableNodes }).(pulumi.IntPtrOutput)
 }
@@ -7768,6 +7794,11 @@ func (o ElasticsearchStatusOutput) Health() pulumi.StringPtrOutput {
 // ElasticsearchOrchestrationPhase is the phase Elasticsearch is in from the controller point of view.
 func (o ElasticsearchStatusOutput) Phase() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v ElasticsearchStatus) *string { return v.Phase }).(pulumi.StringPtrOutput)
+}
+
+// Version of the stack resource currently running. During version upgrades, multiple versions may run in parallel: this value specifies the lowest version currently running.
+func (o ElasticsearchStatusOutput) Version() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v ElasticsearchStatus) *string { return v.Version }).(pulumi.StringPtrOutput)
 }
 
 type ElasticsearchStatusPtrOutput struct{ *pulumi.OutputState }
@@ -7788,6 +7819,7 @@ func (o ElasticsearchStatusPtrOutput) Elem() ElasticsearchStatusOutput {
 	return o.ApplyT(func(v *ElasticsearchStatus) ElasticsearchStatus { return *v }).(ElasticsearchStatusOutput)
 }
 
+// AvailableNodes is the number of available instances.
 func (o ElasticsearchStatusPtrOutput) AvailableNodes() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v *ElasticsearchStatus) *int {
 		if v == nil {
@@ -7814,6 +7846,16 @@ func (o ElasticsearchStatusPtrOutput) Phase() pulumi.StringPtrOutput {
 			return nil
 		}
 		return v.Phase
+	}).(pulumi.StringPtrOutput)
+}
+
+// Version of the stack resource currently running. During version upgrades, multiple versions may run in parallel: this value specifies the lowest version currently running.
+func (o ElasticsearchStatusPtrOutput) Version() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *ElasticsearchStatus) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Version
 	}).(pulumi.StringPtrOutput)
 }
 

@@ -15,6 +15,14 @@ namespace Pulumi.Kubernetes.Types.Inputs.Infinispan.V1
     /// </summary>
     public class InfinispanSpecExposeArgs : Pulumi.ResourceArgs
     {
+        [Input("annotations")]
+        private InputMap<string>? _annotations;
+        public InputMap<string> Annotations
+        {
+            get => _annotations ?? (_annotations = new InputMap<string>());
+            set => _annotations = value;
+        }
+
         [Input("host")]
         public Input<string>? Host { get; set; }
 
@@ -22,7 +30,7 @@ namespace Pulumi.Kubernetes.Types.Inputs.Infinispan.V1
         public Input<int>? NodePort { get; set; }
 
         /// <summary>
-        /// Type specifies different exposition methods for datagrid
+        /// Type specifies different exposition methods for data grid
         /// </summary>
         [Input("type", required: true)]
         public Input<string> Type { get; set; } = null!;

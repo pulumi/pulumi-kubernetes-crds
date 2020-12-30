@@ -40,6 +40,7 @@ __all__ = [
     'ClusterDeploymentSpecPlatformGcpArgs',
     'ClusterDeploymentSpecPlatformGcpCredentialsSecretRefArgs',
     'ClusterDeploymentSpecPlatformOpenstackArgs',
+    'ClusterDeploymentSpecPlatformOpenstackCertificatesSecretRefArgs',
     'ClusterDeploymentSpecPlatformOpenstackCredentialsSecretRefArgs',
     'ClusterDeploymentSpecPlatformOvirtArgs',
     'ClusterDeploymentSpecPlatformOvirtCertificatesSecretRefArgs',
@@ -61,11 +62,6 @@ __all__ = [
     'ClusterDeploymentSpecPullSecretRefArgs',
     'ClusterDeploymentStatusArgs',
     'ClusterDeploymentStatusCertificateBundlesArgs',
-    'ClusterDeploymentStatusClusterVersionStatusArgs',
-    'ClusterDeploymentStatusClusterVersionStatusAvailableUpdatesArgs',
-    'ClusterDeploymentStatusClusterVersionStatusConditionsArgs',
-    'ClusterDeploymentStatusClusterVersionStatusDesiredArgs',
-    'ClusterDeploymentStatusClusterVersionStatusHistoryArgs',
     'ClusterDeploymentStatusConditionsArgs',
     'ClusterDeploymentStatusProvisionRefArgs',
     'ClusterDeprovisionSpecArgs',
@@ -77,6 +73,7 @@ __all__ = [
     'ClusterDeprovisionSpecPlatformGcpArgs',
     'ClusterDeprovisionSpecPlatformGcpCredentialsSecretRefArgs',
     'ClusterDeprovisionSpecPlatformOpenstackArgs',
+    'ClusterDeprovisionSpecPlatformOpenstackCertificatesSecretRefArgs',
     'ClusterDeprovisionSpecPlatformOpenstackCredentialsSecretRefArgs',
     'ClusterDeprovisionSpecPlatformOvirtArgs',
     'ClusterDeprovisionSpecPlatformOvirtCertificatesSecretRefArgs',
@@ -85,9 +82,11 @@ __all__ = [
     'ClusterDeprovisionSpecPlatformVsphereCertificatesSecretRefArgs',
     'ClusterDeprovisionSpecPlatformVsphereCredentialsSecretRefArgs',
     'ClusterDeprovisionStatusArgs',
+    'ClusterDeprovisionStatusConditionsArgs',
     'ClusterImageSetSpecArgs',
     'ClusterPoolSpecArgs',
     'ClusterPoolSpecImageSetRefArgs',
+    'ClusterPoolSpecInstallConfigSecretTemplateRefArgs',
     'ClusterPoolSpecPlatformArgs',
     'ClusterPoolSpecPlatformAwsArgs',
     'ClusterPoolSpecPlatformAwsCredentialsSecretRefArgs',
@@ -98,6 +97,7 @@ __all__ = [
     'ClusterPoolSpecPlatformGcpArgs',
     'ClusterPoolSpecPlatformGcpCredentialsSecretRefArgs',
     'ClusterPoolSpecPlatformOpenstackArgs',
+    'ClusterPoolSpecPlatformOpenstackCertificatesSecretRefArgs',
     'ClusterPoolSpecPlatformOpenstackCredentialsSecretRefArgs',
     'ClusterPoolSpecPlatformOvirtArgs',
     'ClusterPoolSpecPlatformOvirtCertificatesSecretRefArgs',
@@ -183,6 +183,7 @@ __all__ = [
     'ClusterProvisionSpecPodSpecContainersSecurityContextArgs',
     'ClusterProvisionSpecPodSpecContainersSecurityContextCapabilitiesArgs',
     'ClusterProvisionSpecPodSpecContainersSecurityContextSeLinuxOptionsArgs',
+    'ClusterProvisionSpecPodSpecContainersSecurityContextSeccompProfileArgs',
     'ClusterProvisionSpecPodSpecContainersSecurityContextWindowsOptionsArgs',
     'ClusterProvisionSpecPodSpecContainersStartupProbeArgs',
     'ClusterProvisionSpecPodSpecContainersStartupProbeExecArgs',
@@ -239,6 +240,7 @@ __all__ = [
     'ClusterProvisionSpecPodSpecEphemeralContainersSecurityContextArgs',
     'ClusterProvisionSpecPodSpecEphemeralContainersSecurityContextCapabilitiesArgs',
     'ClusterProvisionSpecPodSpecEphemeralContainersSecurityContextSeLinuxOptionsArgs',
+    'ClusterProvisionSpecPodSpecEphemeralContainersSecurityContextSeccompProfileArgs',
     'ClusterProvisionSpecPodSpecEphemeralContainersSecurityContextWindowsOptionsArgs',
     'ClusterProvisionSpecPodSpecEphemeralContainersStartupProbeArgs',
     'ClusterProvisionSpecPodSpecEphemeralContainersStartupProbeExecArgs',
@@ -295,6 +297,7 @@ __all__ = [
     'ClusterProvisionSpecPodSpecInitContainersSecurityContextArgs',
     'ClusterProvisionSpecPodSpecInitContainersSecurityContextCapabilitiesArgs',
     'ClusterProvisionSpecPodSpecInitContainersSecurityContextSeLinuxOptionsArgs',
+    'ClusterProvisionSpecPodSpecInitContainersSecurityContextSeccompProfileArgs',
     'ClusterProvisionSpecPodSpecInitContainersSecurityContextWindowsOptionsArgs',
     'ClusterProvisionSpecPodSpecInitContainersStartupProbeArgs',
     'ClusterProvisionSpecPodSpecInitContainersStartupProbeExecArgs',
@@ -308,6 +311,7 @@ __all__ = [
     'ClusterProvisionSpecPodSpecReadinessGatesArgs',
     'ClusterProvisionSpecPodSpecSecurityContextArgs',
     'ClusterProvisionSpecPodSpecSecurityContextSeLinuxOptionsArgs',
+    'ClusterProvisionSpecPodSpecSecurityContextSeccompProfileArgs',
     'ClusterProvisionSpecPodSpecSecurityContextSysctlsArgs',
     'ClusterProvisionSpecPodSpecSecurityContextWindowsOptionsArgs',
     'ClusterProvisionSpecPodSpecTolerationsArgs',
@@ -331,6 +335,13 @@ __all__ = [
     'ClusterProvisionSpecPodSpecVolumesDownwardAPIItemsFieldRefArgs',
     'ClusterProvisionSpecPodSpecVolumesDownwardAPIItemsResourceFieldRefArgs',
     'ClusterProvisionSpecPodSpecVolumesEmptyDirArgs',
+    'ClusterProvisionSpecPodSpecVolumesEphemeralArgs',
+    'ClusterProvisionSpecPodSpecVolumesEphemeralVolumeClaimTemplateArgs',
+    'ClusterProvisionSpecPodSpecVolumesEphemeralVolumeClaimTemplateSpecArgs',
+    'ClusterProvisionSpecPodSpecVolumesEphemeralVolumeClaimTemplateSpecDataSourceArgs',
+    'ClusterProvisionSpecPodSpecVolumesEphemeralVolumeClaimTemplateSpecResourcesArgs',
+    'ClusterProvisionSpecPodSpecVolumesEphemeralVolumeClaimTemplateSpecSelectorArgs',
+    'ClusterProvisionSpecPodSpecVolumesEphemeralVolumeClaimTemplateSpecSelectorMatchExpressionsArgs',
     'ClusterProvisionSpecPodSpecVolumesFcArgs',
     'ClusterProvisionSpecPodSpecVolumesFlexVolumeArgs',
     'ClusterProvisionSpecPodSpecVolumesFlexVolumeSecretRefArgs',
@@ -392,7 +403,13 @@ __all__ = [
     'HiveConfigSpecAdditionalCertificateAuthoritiesSecretRefArgs',
     'HiveConfigSpecBackupArgs',
     'HiveConfigSpecBackupVeleroArgs',
+    'HiveConfigSpecControllersConfigArgs',
+    'HiveConfigSpecControllersConfigControllersArgs',
+    'HiveConfigSpecControllersConfigControllersConfigArgs',
+    'HiveConfigSpecControllersConfigDefaultArgs',
     'HiveConfigSpecFailedProvisionConfigArgs',
+    'HiveConfigSpecFailedProvisionConfigAwsArgs',
+    'HiveConfigSpecFailedProvisionConfigAwsCredentialsSecretRefArgs',
     'HiveConfigSpecGlobalPullSecretRefArgs',
     'HiveConfigSpecManagedDomainsArgs',
     'HiveConfigSpecManagedDomainsAwsArgs',
@@ -493,18 +510,6 @@ __all__ = [
     'SyncIdentityProviderSpecIdentityProvidersOpenIDClientSecretArgs',
     'SyncIdentityProviderSpecIdentityProvidersRequestHeaderArgs',
     'SyncIdentityProviderSpecIdentityProvidersRequestHeaderCaArgs',
-    'SyncSetInstanceSpecArgs',
-    'SyncSetInstanceSpecClusterDeploymentRefArgs',
-    'SyncSetInstanceSpecSelectorSyncSetRefArgs',
-    'SyncSetInstanceSpecSyncSetRefArgs',
-    'SyncSetInstanceStatusArgs',
-    'SyncSetInstanceStatusConditionsArgs',
-    'SyncSetInstanceStatusPatchesArgs',
-    'SyncSetInstanceStatusPatchesConditionsArgs',
-    'SyncSetInstanceStatusResourcesArgs',
-    'SyncSetInstanceStatusResourcesConditionsArgs',
-    'SyncSetInstanceStatusSecretReferencesArgs',
-    'SyncSetInstanceStatusSecretReferencesConditionsArgs',
     'SyncSetSpecArgs',
     'SyncSetSpecClusterDeploymentRefsArgs',
     'SyncSetSpecPatchesArgs',
@@ -600,15 +605,19 @@ class CheckpointSpecLastBackupRefArgs:
 class ClusterClaimSpecArgs:
     def __init__(__self__, *,
                  cluster_pool_name: pulumi.Input[str],
+                 lifetime: Optional[pulumi.Input[str]] = None,
                  namespace: Optional[pulumi.Input[str]] = None,
                  subjects: Optional[pulumi.Input[Sequence[pulumi.Input['ClusterClaimSpecSubjectsArgs']]]] = None):
         """
         ClusterClaimSpec defines the desired state of the ClusterClaim.
         :param pulumi.Input[str] cluster_pool_name: ClusterPoolName is the name of the cluster pool from which to claim a cluster.
-        :param pulumi.Input[str] namespace: Namespace is the namespace containing the ClusterDeployment of the claimed cluster. This field will be set by the ClusterPool when the claim is assigned a cluster.
+        :param pulumi.Input[str] lifetime: Lifetime is the maximum lifetime of the claim after it is assigned a cluster. If the claim still exists when the lifetime has elapsed, the claim will be deleted by Hive.
+        :param pulumi.Input[str] namespace: Namespace is the namespace containing the ClusterDeployment (name will match the namespace) of the claimed cluster. This field will be set as soon as a suitable cluster can be found, however that cluster may still be resuming and not yet ready for use. Wait for the ClusterRunning condition to be true to avoid this issue.
         :param pulumi.Input[Sequence[pulumi.Input['ClusterClaimSpecSubjectsArgs']]] subjects: Subjects hold references to which to authorize access to the claimed cluster.
         """
         pulumi.set(__self__, "cluster_pool_name", cluster_pool_name)
+        if lifetime is not None:
+            pulumi.set(__self__, "lifetime", lifetime)
         if namespace is not None:
             pulumi.set(__self__, "namespace", namespace)
         if subjects is not None:
@@ -628,9 +637,21 @@ class ClusterClaimSpecArgs:
 
     @property
     @pulumi.getter
+    def lifetime(self) -> Optional[pulumi.Input[str]]:
+        """
+        Lifetime is the maximum lifetime of the claim after it is assigned a cluster. If the claim still exists when the lifetime has elapsed, the claim will be deleted by Hive.
+        """
+        return pulumi.get(self, "lifetime")
+
+    @lifetime.setter
+    def lifetime(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "lifetime", value)
+
+    @property
+    @pulumi.getter
     def namespace(self) -> Optional[pulumi.Input[str]]:
         """
-        Namespace is the namespace containing the ClusterDeployment of the claimed cluster. This field will be set by the ClusterPool when the claim is assigned a cluster.
+        Namespace is the namespace containing the ClusterDeployment (name will match the namespace) of the claimed cluster. This field will be set as soon as a suitable cluster can be found, however that cluster may still be resuming and not yet ready for use. Wait for the ClusterRunning condition to be true to avoid this issue.
         """
         return pulumi.get(self, "namespace")
 
@@ -857,7 +878,9 @@ class ClusterDeploymentSpecArgs:
                  cluster_metadata: Optional[pulumi.Input['ClusterDeploymentSpecClusterMetadataArgs']] = None,
                  cluster_pool_ref: Optional[pulumi.Input['ClusterDeploymentSpecClusterPoolRefArgs']] = None,
                  control_plane_config: Optional[pulumi.Input['ClusterDeploymentSpecControlPlaneConfigArgs']] = None,
+                 hibernate_after: Optional[pulumi.Input[str]] = None,
                  ingress: Optional[pulumi.Input[Sequence[pulumi.Input['ClusterDeploymentSpecIngressArgs']]]] = None,
+                 install_attempts_limit: Optional[pulumi.Input[int]] = None,
                  installed: Optional[pulumi.Input[bool]] = None,
                  manage_dns: Optional[pulumi.Input[bool]] = None,
                  power_state: Optional[pulumi.Input[str]] = None,
@@ -873,7 +896,9 @@ class ClusterDeploymentSpecArgs:
         :param pulumi.Input['ClusterDeploymentSpecClusterMetadataArgs'] cluster_metadata: ClusterMetadata contains metadata information about the installed cluster.
         :param pulumi.Input['ClusterDeploymentSpecClusterPoolRefArgs'] cluster_pool_ref: ClusterPoolRef is a reference to the ClusterPool that this ClusterDeployment originated from.
         :param pulumi.Input['ClusterDeploymentSpecControlPlaneConfigArgs'] control_plane_config: ControlPlaneConfig contains additional configuration for the target cluster's control plane
+        :param pulumi.Input[str] hibernate_after: HibernateAfter will transition a cluster to hibernating power state after it has been running for the given duration. The time that a cluster has been running is the time since the cluster was installed or the time since the cluster last came out of hibernation.
         :param pulumi.Input[Sequence[pulumi.Input['ClusterDeploymentSpecIngressArgs']]] ingress: Ingress allows defining desired clusteringress/shards to be configured on the cluster.
+        :param pulumi.Input[int] install_attempts_limit: InstallAttemptsLimit is the maximum number of times Hive will attempt to install the cluster.
         :param pulumi.Input[bool] installed: Installed is true if the cluster has been installed
         :param pulumi.Input[bool] manage_dns: ManageDNS specifies whether a DNSZone should be created and managed automatically for this ClusterDeployment
         :param pulumi.Input[str] power_state: PowerState indicates whether a cluster should be running or hibernating. When omitted, PowerState defaults to the Running state.
@@ -892,8 +917,12 @@ class ClusterDeploymentSpecArgs:
             pulumi.set(__self__, "cluster_pool_ref", cluster_pool_ref)
         if control_plane_config is not None:
             pulumi.set(__self__, "control_plane_config", control_plane_config)
+        if hibernate_after is not None:
+            pulumi.set(__self__, "hibernate_after", hibernate_after)
         if ingress is not None:
             pulumi.set(__self__, "ingress", ingress)
+        if install_attempts_limit is not None:
+            pulumi.set(__self__, "install_attempts_limit", install_attempts_limit)
         if installed is not None:
             pulumi.set(__self__, "installed", installed)
         if manage_dns is not None:
@@ -992,6 +1021,18 @@ class ClusterDeploymentSpecArgs:
         pulumi.set(self, "control_plane_config", value)
 
     @property
+    @pulumi.getter(name="hibernateAfter")
+    def hibernate_after(self) -> Optional[pulumi.Input[str]]:
+        """
+        HibernateAfter will transition a cluster to hibernating power state after it has been running for the given duration. The time that a cluster has been running is the time since the cluster was installed or the time since the cluster last came out of hibernation.
+        """
+        return pulumi.get(self, "hibernate_after")
+
+    @hibernate_after.setter
+    def hibernate_after(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "hibernate_after", value)
+
+    @property
     @pulumi.getter
     def ingress(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['ClusterDeploymentSpecIngressArgs']]]]:
         """
@@ -1002,6 +1043,18 @@ class ClusterDeploymentSpecArgs:
     @ingress.setter
     def ingress(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['ClusterDeploymentSpecIngressArgs']]]]):
         pulumi.set(self, "ingress", value)
+
+    @property
+    @pulumi.getter(name="installAttemptsLimit")
+    def install_attempts_limit(self) -> Optional[pulumi.Input[int]]:
+        """
+        InstallAttemptsLimit is the maximum number of times Hive will attempt to install the cluster.
+        """
+        return pulumi.get(self, "install_attempts_limit")
+
+    @install_attempts_limit.setter
+    def install_attempts_limit(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "install_attempts_limit", value)
 
     @property
     @pulumi.getter
@@ -2106,15 +2159,20 @@ class ClusterDeploymentSpecPlatformOpenstackArgs:
     def __init__(__self__, *,
                  cloud: pulumi.Input[str],
                  credentials_secret_ref: pulumi.Input['ClusterDeploymentSpecPlatformOpenstackCredentialsSecretRefArgs'],
+                 certificates_secret_ref: Optional[pulumi.Input['ClusterDeploymentSpecPlatformOpenstackCertificatesSecretRefArgs']] = None,
                  trunk_support: Optional[pulumi.Input[bool]] = None):
         """
         OpenStack is the configuration used when installing on OpenStack
-        :param pulumi.Input[str] cloud: Cloud will be used to indicate the OS_CLOUD value to use the right section from the cloud.yaml in the CredentialsSecretRef.
+        :param pulumi.Input[str] cloud: Cloud will be used to indicate the OS_CLOUD value to use the right section from the clouds.yaml in the CredentialsSecretRef.
         :param pulumi.Input['ClusterDeploymentSpecPlatformOpenstackCredentialsSecretRefArgs'] credentials_secret_ref: CredentialsSecretRef refers to a secret that contains the OpenStack account access credentials.
+        :param pulumi.Input['ClusterDeploymentSpecPlatformOpenstackCertificatesSecretRefArgs'] certificates_secret_ref: CertificatesSecretRef refers to a secret that contains CA certificates necessary for communicating with the OpenStack. There is additional configuration required for the OpenShift cluster to trust the certificates provided in this secret. The "clouds.yaml" file included in the credentialsSecretRef Secret must also include a reference to the certificate bundle file for the OpenShift cluster being created to trust the OpenStack endpoints. The "clouds.yaml" file must set the "cacert" field to either "/etc/openstack-ca/<key name containing the trust bundle in credentialsSecretRef Secret>" or "/etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem". 
+                For example, \"\"\"clouds.yaml clouds:   shiftstack:     auth: ...     cacert: "/etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem" \"\"\"
         :param pulumi.Input[bool] trunk_support: TrunkSupport indicates whether or not to use trunk ports in your OpenShift cluster.
         """
         pulumi.set(__self__, "cloud", cloud)
         pulumi.set(__self__, "credentials_secret_ref", credentials_secret_ref)
+        if certificates_secret_ref is not None:
+            pulumi.set(__self__, "certificates_secret_ref", certificates_secret_ref)
         if trunk_support is not None:
             pulumi.set(__self__, "trunk_support", trunk_support)
 
@@ -2122,7 +2180,7 @@ class ClusterDeploymentSpecPlatformOpenstackArgs:
     @pulumi.getter
     def cloud(self) -> pulumi.Input[str]:
         """
-        Cloud will be used to indicate the OS_CLOUD value to use the right section from the cloud.yaml in the CredentialsSecretRef.
+        Cloud will be used to indicate the OS_CLOUD value to use the right section from the clouds.yaml in the CredentialsSecretRef.
         """
         return pulumi.get(self, "cloud")
 
@@ -2143,6 +2201,19 @@ class ClusterDeploymentSpecPlatformOpenstackArgs:
         pulumi.set(self, "credentials_secret_ref", value)
 
     @property
+    @pulumi.getter(name="certificatesSecretRef")
+    def certificates_secret_ref(self) -> Optional[pulumi.Input['ClusterDeploymentSpecPlatformOpenstackCertificatesSecretRefArgs']]:
+        """
+        CertificatesSecretRef refers to a secret that contains CA certificates necessary for communicating with the OpenStack. There is additional configuration required for the OpenShift cluster to trust the certificates provided in this secret. The "clouds.yaml" file included in the credentialsSecretRef Secret must also include a reference to the certificate bundle file for the OpenShift cluster being created to trust the OpenStack endpoints. The "clouds.yaml" file must set the "cacert" field to either "/etc/openstack-ca/<key name containing the trust bundle in credentialsSecretRef Secret>" or "/etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem". 
+         For example, \"\"\"clouds.yaml clouds:   shiftstack:     auth: ...     cacert: "/etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem" \"\"\"
+        """
+        return pulumi.get(self, "certificates_secret_ref")
+
+    @certificates_secret_ref.setter
+    def certificates_secret_ref(self, value: Optional[pulumi.Input['ClusterDeploymentSpecPlatformOpenstackCertificatesSecretRefArgs']]):
+        pulumi.set(self, "certificates_secret_ref", value)
+
+    @property
     @pulumi.getter(name="trunkSupport")
     def trunk_support(self) -> Optional[pulumi.Input[bool]]:
         """
@@ -2153,6 +2224,31 @@ class ClusterDeploymentSpecPlatformOpenstackArgs:
     @trunk_support.setter
     def trunk_support(self, value: Optional[pulumi.Input[bool]]):
         pulumi.set(self, "trunk_support", value)
+
+
+@pulumi.input_type
+class ClusterDeploymentSpecPlatformOpenstackCertificatesSecretRefArgs:
+    def __init__(__self__, *,
+                 name: Optional[pulumi.Input[str]] = None):
+        """
+        CertificatesSecretRef refers to a secret that contains CA certificates necessary for communicating with the OpenStack. There is additional configuration required for the OpenShift cluster to trust the certificates provided in this secret. The "clouds.yaml" file included in the credentialsSecretRef Secret must also include a reference to the certificate bundle file for the OpenShift cluster being created to trust the OpenStack endpoints. The "clouds.yaml" file must set the "cacert" field to either "/etc/openstack-ca/<key name containing the trust bundle in credentialsSecretRef Secret>" or "/etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem". 
+         For example, \"\"\"clouds.yaml clouds:   shiftstack:     auth: ...     cacert: "/etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem" \"\"\"
+        :param pulumi.Input[str] name: Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+        """
+        if name is not None:
+            pulumi.set(__self__, "name", name)
+
+    @property
+    @pulumi.getter
+    def name(self) -> Optional[pulumi.Input[str]]:
+        """
+        Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+        """
+        return pulumi.get(self, "name")
+
+    @name.setter
+    def name(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "name", value)
 
 
 @pulumi.input_type
@@ -2721,7 +2817,7 @@ class ClusterDeploymentSpecProvisioningInstallerEnvValueFromArgs:
         """
         Source for the environment variable's value. Cannot be used if value is not empty.
         :param pulumi.Input['ClusterDeploymentSpecProvisioningInstallerEnvValueFromConfigMapKeyRefArgs'] config_map_key_ref: Selects a key of a ConfigMap.
-        :param pulumi.Input['ClusterDeploymentSpecProvisioningInstallerEnvValueFromFieldRefArgs'] field_ref: Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
+        :param pulumi.Input['ClusterDeploymentSpecProvisioningInstallerEnvValueFromFieldRefArgs'] field_ref: Selects a field of the pod: supports metadata.name, metadata.namespace, `metadata.labels['<KEY>']`, `metadata.annotations['<KEY>']`, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
         :param pulumi.Input['ClusterDeploymentSpecProvisioningInstallerEnvValueFromResourceFieldRefArgs'] resource_field_ref: Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
         :param pulumi.Input['ClusterDeploymentSpecProvisioningInstallerEnvValueFromSecretKeyRefArgs'] secret_key_ref: Selects a key of a secret in the pod's namespace
         """
@@ -2750,7 +2846,7 @@ class ClusterDeploymentSpecProvisioningInstallerEnvValueFromArgs:
     @pulumi.getter(name="fieldRef")
     def field_ref(self) -> Optional[pulumi.Input['ClusterDeploymentSpecProvisioningInstallerEnvValueFromFieldRefArgs']]:
         """
-        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
+        Selects a field of the pod: supports metadata.name, metadata.namespace, `metadata.labels['<KEY>']`, `metadata.annotations['<KEY>']`, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
         """
         return pulumi.get(self, "field_ref")
 
@@ -2844,7 +2940,7 @@ class ClusterDeploymentSpecProvisioningInstallerEnvValueFromFieldRefArgs:
                  field_path: pulumi.Input[str],
                  api_version: Optional[pulumi.Input[str]] = None):
         """
-        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
+        Selects a field of the pod: supports metadata.name, metadata.namespace, `metadata.labels['<KEY>']`, `metadata.annotations['<KEY>']`, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
         :param pulumi.Input[str] field_path: Path of the field to select in the specified API version.
         :param pulumi.Input[str] api_version: Version of the schema the FieldPath is written in terms of, defaults to "v1".
         """
@@ -3065,7 +3161,6 @@ class ClusterDeploymentStatusArgs:
                  api_url: Optional[pulumi.Input[str]] = None,
                  certificate_bundles: Optional[pulumi.Input[Sequence[pulumi.Input['ClusterDeploymentStatusCertificateBundlesArgs']]]] = None,
                  cli_image: Optional[pulumi.Input[str]] = None,
-                 cluster_version_status: Optional[pulumi.Input['ClusterDeploymentStatusClusterVersionStatusArgs']] = None,
                  conditions: Optional[pulumi.Input[Sequence[pulumi.Input['ClusterDeploymentStatusConditionsArgs']]]] = None,
                  install_restarts: Optional[pulumi.Input[int]] = None,
                  installed_timestamp: Optional[pulumi.Input[str]] = None,
@@ -3077,7 +3172,6 @@ class ClusterDeploymentStatusArgs:
         :param pulumi.Input[str] api_url: APIURL is the URL where the cluster's API can be accessed.
         :param pulumi.Input[Sequence[pulumi.Input['ClusterDeploymentStatusCertificateBundlesArgs']]] certificate_bundles: CertificateBundles contains of the status of the certificate bundles associated with this cluster deployment.
         :param pulumi.Input[str] cli_image: CLIImage is the name of the oc cli image to use when installing the target cluster
-        :param pulumi.Input['ClusterDeploymentStatusClusterVersionStatusArgs'] cluster_version_status: ClusterVersionStatus will hold a copy of the remote cluster's ClusterVersion.Status
         :param pulumi.Input[Sequence[pulumi.Input['ClusterDeploymentStatusConditionsArgs']]] conditions: Conditions includes more detailed status for the cluster deployment
         :param pulumi.Input[int] install_restarts: InstallRestarts is the total count of container restarts on the clusters install job.
         :param pulumi.Input[str] installed_timestamp: InstalledTimestamp is the time we first detected that the cluster has been successfully installed.
@@ -3091,8 +3185,6 @@ class ClusterDeploymentStatusArgs:
             pulumi.set(__self__, "certificate_bundles", certificate_bundles)
         if cli_image is not None:
             pulumi.set(__self__, "cli_image", cli_image)
-        if cluster_version_status is not None:
-            pulumi.set(__self__, "cluster_version_status", cluster_version_status)
         if conditions is not None:
             pulumi.set(__self__, "conditions", conditions)
         if install_restarts is not None:
@@ -3141,18 +3233,6 @@ class ClusterDeploymentStatusArgs:
     @cli_image.setter
     def cli_image(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "cli_image", value)
-
-    @property
-    @pulumi.getter(name="clusterVersionStatus")
-    def cluster_version_status(self) -> Optional[pulumi.Input['ClusterDeploymentStatusClusterVersionStatusArgs']]:
-        """
-        ClusterVersionStatus will hold a copy of the remote cluster's ClusterVersion.Status
-        """
-        return pulumi.get(self, "cluster_version_status")
-
-    @cluster_version_status.setter
-    def cluster_version_status(self, value: Optional[pulumi.Input['ClusterDeploymentStatusClusterVersionStatusArgs']]):
-        pulumi.set(self, "cluster_version_status", value)
 
     @property
     @pulumi.getter
@@ -3263,406 +3343,6 @@ class ClusterDeploymentStatusCertificateBundlesArgs:
     @name.setter
     def name(self, value: pulumi.Input[str]):
         pulumi.set(self, "name", value)
-
-
-@pulumi.input_type
-class ClusterDeploymentStatusClusterVersionStatusArgs:
-    def __init__(__self__, *,
-                 available_updates: pulumi.Input[Sequence[pulumi.Input['ClusterDeploymentStatusClusterVersionStatusAvailableUpdatesArgs']]],
-                 desired: pulumi.Input['ClusterDeploymentStatusClusterVersionStatusDesiredArgs'],
-                 observed_generation: pulumi.Input[int],
-                 version_hash: pulumi.Input[str],
-                 conditions: Optional[pulumi.Input[Sequence[pulumi.Input['ClusterDeploymentStatusClusterVersionStatusConditionsArgs']]]] = None,
-                 history: Optional[pulumi.Input[Sequence[pulumi.Input['ClusterDeploymentStatusClusterVersionStatusHistoryArgs']]]] = None):
-        """
-        ClusterVersionStatus will hold a copy of the remote cluster's ClusterVersion.Status
-        :param pulumi.Input[Sequence[pulumi.Input['ClusterDeploymentStatusClusterVersionStatusAvailableUpdatesArgs']]] available_updates: availableUpdates contains the list of updates that are appropriate for this cluster. This list may be empty if no updates are recommended, if the update service is unavailable, or if an invalid channel has been specified.
-        :param pulumi.Input['ClusterDeploymentStatusClusterVersionStatusDesiredArgs'] desired: desired is the version that the cluster is reconciling towards. If the cluster is not yet fully initialized desired will be set with the information available, which may be an image or a tag.
-        :param pulumi.Input[int] observed_generation: observedGeneration reports which version of the spec is being synced. If this value is not equal to metadata.generation, then the desired and conditions fields may represent a previous version.
-        :param pulumi.Input[str] version_hash: versionHash is a fingerprint of the content that the cluster will be updated with. It is used by the operator to avoid unnecessary work and is for internal use only.
-        :param pulumi.Input[Sequence[pulumi.Input['ClusterDeploymentStatusClusterVersionStatusConditionsArgs']]] conditions: conditions provides information about the cluster version. The condition "Available" is set to true if the desiredUpdate has been reached. The condition "Progressing" is set to true if an update is being applied. The condition "Degraded" is set to true if an update is currently blocked by a temporary or permanent error. Conditions are only valid for the current desiredUpdate when metadata.generation is equal to status.generation.
-        :param pulumi.Input[Sequence[pulumi.Input['ClusterDeploymentStatusClusterVersionStatusHistoryArgs']]] history: history contains a list of the most recent versions applied to the cluster. This value may be empty during cluster startup, and then will be updated when a new update is being applied. The newest update is first in the list and it is ordered by recency. Updates in the history have state Completed if the rollout completed - if an update was failing or halfway applied the state will be Partial. Only a limited amount of update history is preserved.
-        """
-        pulumi.set(__self__, "available_updates", available_updates)
-        pulumi.set(__self__, "desired", desired)
-        pulumi.set(__self__, "observed_generation", observed_generation)
-        pulumi.set(__self__, "version_hash", version_hash)
-        if conditions is not None:
-            pulumi.set(__self__, "conditions", conditions)
-        if history is not None:
-            pulumi.set(__self__, "history", history)
-
-    @property
-    @pulumi.getter(name="availableUpdates")
-    def available_updates(self) -> pulumi.Input[Sequence[pulumi.Input['ClusterDeploymentStatusClusterVersionStatusAvailableUpdatesArgs']]]:
-        """
-        availableUpdates contains the list of updates that are appropriate for this cluster. This list may be empty if no updates are recommended, if the update service is unavailable, or if an invalid channel has been specified.
-        """
-        return pulumi.get(self, "available_updates")
-
-    @available_updates.setter
-    def available_updates(self, value: pulumi.Input[Sequence[pulumi.Input['ClusterDeploymentStatusClusterVersionStatusAvailableUpdatesArgs']]]):
-        pulumi.set(self, "available_updates", value)
-
-    @property
-    @pulumi.getter
-    def desired(self) -> pulumi.Input['ClusterDeploymentStatusClusterVersionStatusDesiredArgs']:
-        """
-        desired is the version that the cluster is reconciling towards. If the cluster is not yet fully initialized desired will be set with the information available, which may be an image or a tag.
-        """
-        return pulumi.get(self, "desired")
-
-    @desired.setter
-    def desired(self, value: pulumi.Input['ClusterDeploymentStatusClusterVersionStatusDesiredArgs']):
-        pulumi.set(self, "desired", value)
-
-    @property
-    @pulumi.getter(name="observedGeneration")
-    def observed_generation(self) -> pulumi.Input[int]:
-        """
-        observedGeneration reports which version of the spec is being synced. If this value is not equal to metadata.generation, then the desired and conditions fields may represent a previous version.
-        """
-        return pulumi.get(self, "observed_generation")
-
-    @observed_generation.setter
-    def observed_generation(self, value: pulumi.Input[int]):
-        pulumi.set(self, "observed_generation", value)
-
-    @property
-    @pulumi.getter(name="versionHash")
-    def version_hash(self) -> pulumi.Input[str]:
-        """
-        versionHash is a fingerprint of the content that the cluster will be updated with. It is used by the operator to avoid unnecessary work and is for internal use only.
-        """
-        return pulumi.get(self, "version_hash")
-
-    @version_hash.setter
-    def version_hash(self, value: pulumi.Input[str]):
-        pulumi.set(self, "version_hash", value)
-
-    @property
-    @pulumi.getter
-    def conditions(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['ClusterDeploymentStatusClusterVersionStatusConditionsArgs']]]]:
-        """
-        conditions provides information about the cluster version. The condition "Available" is set to true if the desiredUpdate has been reached. The condition "Progressing" is set to true if an update is being applied. The condition "Degraded" is set to true if an update is currently blocked by a temporary or permanent error. Conditions are only valid for the current desiredUpdate when metadata.generation is equal to status.generation.
-        """
-        return pulumi.get(self, "conditions")
-
-    @conditions.setter
-    def conditions(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['ClusterDeploymentStatusClusterVersionStatusConditionsArgs']]]]):
-        pulumi.set(self, "conditions", value)
-
-    @property
-    @pulumi.getter
-    def history(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['ClusterDeploymentStatusClusterVersionStatusHistoryArgs']]]]:
-        """
-        history contains a list of the most recent versions applied to the cluster. This value may be empty during cluster startup, and then will be updated when a new update is being applied. The newest update is first in the list and it is ordered by recency. Updates in the history have state Completed if the rollout completed - if an update was failing or halfway applied the state will be Partial. Only a limited amount of update history is preserved.
-        """
-        return pulumi.get(self, "history")
-
-    @history.setter
-    def history(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['ClusterDeploymentStatusClusterVersionStatusHistoryArgs']]]]):
-        pulumi.set(self, "history", value)
-
-
-@pulumi.input_type
-class ClusterDeploymentStatusClusterVersionStatusAvailableUpdatesArgs:
-    def __init__(__self__, *,
-                 force: Optional[pulumi.Input[bool]] = None,
-                 image: Optional[pulumi.Input[str]] = None,
-                 version: Optional[pulumi.Input[str]] = None):
-        """
-        Update represents a release of the ClusterVersionOperator, referenced by the Image member.
-        :param pulumi.Input[bool] force: force allows an administrator to update to an image that has failed verification, does not appear in the availableUpdates list, or otherwise would be blocked by normal protections on update. This option should only be used when the authenticity of the provided image has been verified out of band because the provided image will run with full administrative access to the cluster. Do not use this flag with images that comes from unknown or potentially malicious sources. 
-                This flag does not override other forms of consistency checking that are required before a new update is deployed.
-        :param pulumi.Input[str] image: image is a container image location that contains the update. When this field is part of spec, image is optional if version is specified and the availableUpdates field contains a matching version.
-        :param pulumi.Input[str] version: version is a semantic versioning identifying the update version. When this field is part of spec, version is optional if image is specified.
-        """
-        if force is not None:
-            pulumi.set(__self__, "force", force)
-        if image is not None:
-            pulumi.set(__self__, "image", image)
-        if version is not None:
-            pulumi.set(__self__, "version", version)
-
-    @property
-    @pulumi.getter
-    def force(self) -> Optional[pulumi.Input[bool]]:
-        """
-        force allows an administrator to update to an image that has failed verification, does not appear in the availableUpdates list, or otherwise would be blocked by normal protections on update. This option should only be used when the authenticity of the provided image has been verified out of band because the provided image will run with full administrative access to the cluster. Do not use this flag with images that comes from unknown or potentially malicious sources. 
-         This flag does not override other forms of consistency checking that are required before a new update is deployed.
-        """
-        return pulumi.get(self, "force")
-
-    @force.setter
-    def force(self, value: Optional[pulumi.Input[bool]]):
-        pulumi.set(self, "force", value)
-
-    @property
-    @pulumi.getter
-    def image(self) -> Optional[pulumi.Input[str]]:
-        """
-        image is a container image location that contains the update. When this field is part of spec, image is optional if version is specified and the availableUpdates field contains a matching version.
-        """
-        return pulumi.get(self, "image")
-
-    @image.setter
-    def image(self, value: Optional[pulumi.Input[str]]):
-        pulumi.set(self, "image", value)
-
-    @property
-    @pulumi.getter
-    def version(self) -> Optional[pulumi.Input[str]]:
-        """
-        version is a semantic versioning identifying the update version. When this field is part of spec, version is optional if image is specified.
-        """
-        return pulumi.get(self, "version")
-
-    @version.setter
-    def version(self, value: Optional[pulumi.Input[str]]):
-        pulumi.set(self, "version", value)
-
-
-@pulumi.input_type
-class ClusterDeploymentStatusClusterVersionStatusConditionsArgs:
-    def __init__(__self__, *,
-                 last_transition_time: pulumi.Input[str],
-                 status: pulumi.Input[str],
-                 type: pulumi.Input[str],
-                 message: Optional[pulumi.Input[str]] = None,
-                 reason: Optional[pulumi.Input[str]] = None):
-        """
-        ClusterOperatorStatusCondition represents the state of the operator's managed and monitored components.
-        :param pulumi.Input[str] last_transition_time: lastTransitionTime is the time of the last update to the current status property.
-        :param pulumi.Input[str] status: status of the condition, one of True, False, Unknown.
-        :param pulumi.Input[str] type: type specifies the aspect reported by this condition.
-        :param pulumi.Input[str] message: message provides additional information about the current condition. This is only to be consumed by humans.
-        :param pulumi.Input[str] reason: reason is the CamelCase reason for the condition's current status.
-        """
-        pulumi.set(__self__, "last_transition_time", last_transition_time)
-        pulumi.set(__self__, "status", status)
-        pulumi.set(__self__, "type", type)
-        if message is not None:
-            pulumi.set(__self__, "message", message)
-        if reason is not None:
-            pulumi.set(__self__, "reason", reason)
-
-    @property
-    @pulumi.getter(name="lastTransitionTime")
-    def last_transition_time(self) -> pulumi.Input[str]:
-        """
-        lastTransitionTime is the time of the last update to the current status property.
-        """
-        return pulumi.get(self, "last_transition_time")
-
-    @last_transition_time.setter
-    def last_transition_time(self, value: pulumi.Input[str]):
-        pulumi.set(self, "last_transition_time", value)
-
-    @property
-    @pulumi.getter
-    def status(self) -> pulumi.Input[str]:
-        """
-        status of the condition, one of True, False, Unknown.
-        """
-        return pulumi.get(self, "status")
-
-    @status.setter
-    def status(self, value: pulumi.Input[str]):
-        pulumi.set(self, "status", value)
-
-    @property
-    @pulumi.getter
-    def type(self) -> pulumi.Input[str]:
-        """
-        type specifies the aspect reported by this condition.
-        """
-        return pulumi.get(self, "type")
-
-    @type.setter
-    def type(self, value: pulumi.Input[str]):
-        pulumi.set(self, "type", value)
-
-    @property
-    @pulumi.getter
-    def message(self) -> Optional[pulumi.Input[str]]:
-        """
-        message provides additional information about the current condition. This is only to be consumed by humans.
-        """
-        return pulumi.get(self, "message")
-
-    @message.setter
-    def message(self, value: Optional[pulumi.Input[str]]):
-        pulumi.set(self, "message", value)
-
-    @property
-    @pulumi.getter
-    def reason(self) -> Optional[pulumi.Input[str]]:
-        """
-        reason is the CamelCase reason for the condition's current status.
-        """
-        return pulumi.get(self, "reason")
-
-    @reason.setter
-    def reason(self, value: Optional[pulumi.Input[str]]):
-        pulumi.set(self, "reason", value)
-
-
-@pulumi.input_type
-class ClusterDeploymentStatusClusterVersionStatusDesiredArgs:
-    def __init__(__self__, *,
-                 force: Optional[pulumi.Input[bool]] = None,
-                 image: Optional[pulumi.Input[str]] = None,
-                 version: Optional[pulumi.Input[str]] = None):
-        """
-        desired is the version that the cluster is reconciling towards. If the cluster is not yet fully initialized desired will be set with the information available, which may be an image or a tag.
-        :param pulumi.Input[bool] force: force allows an administrator to update to an image that has failed verification, does not appear in the availableUpdates list, or otherwise would be blocked by normal protections on update. This option should only be used when the authenticity of the provided image has been verified out of band because the provided image will run with full administrative access to the cluster. Do not use this flag with images that comes from unknown or potentially malicious sources. 
-                This flag does not override other forms of consistency checking that are required before a new update is deployed.
-        :param pulumi.Input[str] image: image is a container image location that contains the update. When this field is part of spec, image is optional if version is specified and the availableUpdates field contains a matching version.
-        :param pulumi.Input[str] version: version is a semantic versioning identifying the update version. When this field is part of spec, version is optional if image is specified.
-        """
-        if force is not None:
-            pulumi.set(__self__, "force", force)
-        if image is not None:
-            pulumi.set(__self__, "image", image)
-        if version is not None:
-            pulumi.set(__self__, "version", version)
-
-    @property
-    @pulumi.getter
-    def force(self) -> Optional[pulumi.Input[bool]]:
-        """
-        force allows an administrator to update to an image that has failed verification, does not appear in the availableUpdates list, or otherwise would be blocked by normal protections on update. This option should only be used when the authenticity of the provided image has been verified out of band because the provided image will run with full administrative access to the cluster. Do not use this flag with images that comes from unknown or potentially malicious sources. 
-         This flag does not override other forms of consistency checking that are required before a new update is deployed.
-        """
-        return pulumi.get(self, "force")
-
-    @force.setter
-    def force(self, value: Optional[pulumi.Input[bool]]):
-        pulumi.set(self, "force", value)
-
-    @property
-    @pulumi.getter
-    def image(self) -> Optional[pulumi.Input[str]]:
-        """
-        image is a container image location that contains the update. When this field is part of spec, image is optional if version is specified and the availableUpdates field contains a matching version.
-        """
-        return pulumi.get(self, "image")
-
-    @image.setter
-    def image(self, value: Optional[pulumi.Input[str]]):
-        pulumi.set(self, "image", value)
-
-    @property
-    @pulumi.getter
-    def version(self) -> Optional[pulumi.Input[str]]:
-        """
-        version is a semantic versioning identifying the update version. When this field is part of spec, version is optional if image is specified.
-        """
-        return pulumi.get(self, "version")
-
-    @version.setter
-    def version(self, value: Optional[pulumi.Input[str]]):
-        pulumi.set(self, "version", value)
-
-
-@pulumi.input_type
-class ClusterDeploymentStatusClusterVersionStatusHistoryArgs:
-    def __init__(__self__, *,
-                 completion_time: pulumi.Input[str],
-                 image: pulumi.Input[str],
-                 started_time: pulumi.Input[str],
-                 state: pulumi.Input[str],
-                 verified: pulumi.Input[bool],
-                 version: Optional[pulumi.Input[str]] = None):
-        """
-        UpdateHistory is a single attempted update to the cluster.
-        :param pulumi.Input[str] completion_time: completionTime, if set, is when the update was fully applied. The update that is currently being applied will have a null completion time. Completion time will always be set for entries that are not the current update (usually to the started time of the next update).
-        :param pulumi.Input[str] image: image is a container image location that contains the update. This value is always populated.
-        :param pulumi.Input[str] started_time: startedTime is the time at which the update was started.
-        :param pulumi.Input[str] state: state reflects whether the update was fully applied. The Partial state indicates the update is not fully applied, while the Completed state indicates the update was successfully rolled out at least once (all parts of the update successfully applied).
-        :param pulumi.Input[bool] verified: verified indicates whether the provided update was properly verified before it was installed. If this is false the cluster may not be trusted.
-        :param pulumi.Input[str] version: version is a semantic versioning identifying the update version. If the requested image does not define a version, or if a failure occurs retrieving the image, this value may be empty.
-        """
-        pulumi.set(__self__, "completion_time", completion_time)
-        pulumi.set(__self__, "image", image)
-        pulumi.set(__self__, "started_time", started_time)
-        pulumi.set(__self__, "state", state)
-        pulumi.set(__self__, "verified", verified)
-        if version is not None:
-            pulumi.set(__self__, "version", version)
-
-    @property
-    @pulumi.getter(name="completionTime")
-    def completion_time(self) -> pulumi.Input[str]:
-        """
-        completionTime, if set, is when the update was fully applied. The update that is currently being applied will have a null completion time. Completion time will always be set for entries that are not the current update (usually to the started time of the next update).
-        """
-        return pulumi.get(self, "completion_time")
-
-    @completion_time.setter
-    def completion_time(self, value: pulumi.Input[str]):
-        pulumi.set(self, "completion_time", value)
-
-    @property
-    @pulumi.getter
-    def image(self) -> pulumi.Input[str]:
-        """
-        image is a container image location that contains the update. This value is always populated.
-        """
-        return pulumi.get(self, "image")
-
-    @image.setter
-    def image(self, value: pulumi.Input[str]):
-        pulumi.set(self, "image", value)
-
-    @property
-    @pulumi.getter(name="startedTime")
-    def started_time(self) -> pulumi.Input[str]:
-        """
-        startedTime is the time at which the update was started.
-        """
-        return pulumi.get(self, "started_time")
-
-    @started_time.setter
-    def started_time(self, value: pulumi.Input[str]):
-        pulumi.set(self, "started_time", value)
-
-    @property
-    @pulumi.getter
-    def state(self) -> pulumi.Input[str]:
-        """
-        state reflects whether the update was fully applied. The Partial state indicates the update is not fully applied, while the Completed state indicates the update was successfully rolled out at least once (all parts of the update successfully applied).
-        """
-        return pulumi.get(self, "state")
-
-    @state.setter
-    def state(self, value: pulumi.Input[str]):
-        pulumi.set(self, "state", value)
-
-    @property
-    @pulumi.getter
-    def verified(self) -> pulumi.Input[bool]:
-        """
-        verified indicates whether the provided update was properly verified before it was installed. If this is false the cluster may not be trusted.
-        """
-        return pulumi.get(self, "verified")
-
-    @verified.setter
-    def verified(self, value: pulumi.Input[bool]):
-        pulumi.set(self, "verified", value)
-
-    @property
-    @pulumi.getter
-    def version(self) -> Optional[pulumi.Input[str]]:
-        """
-        version is a semantic versioning identifying the update version. If the requested image does not define a version, or if a failure occurs retrieving the image, this value may be empty.
-        """
-        return pulumi.get(self, "version")
-
-    @version.setter
-    def version(self, value: Optional[pulumi.Input[str]]):
-        pulumi.set(self, "version", value)
 
 
 @pulumi.input_type
@@ -4128,13 +3808,17 @@ class ClusterDeprovisionSpecPlatformGcpCredentialsSecretRefArgs:
 class ClusterDeprovisionSpecPlatformOpenstackArgs:
     def __init__(__self__, *,
                  cloud: pulumi.Input[str],
+                 certificates_secret_ref: Optional[pulumi.Input['ClusterDeprovisionSpecPlatformOpenstackCertificatesSecretRefArgs']] = None,
                  credentials_secret_ref: Optional[pulumi.Input['ClusterDeprovisionSpecPlatformOpenstackCredentialsSecretRefArgs']] = None):
         """
         OpenStack contains OpenStack-specific deprovision settings
         :param pulumi.Input[str] cloud: Cloud is the secion in the clouds.yaml secret below to use for auth/connectivity.
+        :param pulumi.Input['ClusterDeprovisionSpecPlatformOpenstackCertificatesSecretRefArgs'] certificates_secret_ref: CertificatesSecretRef refers to a secret that contains CA certificates necessary for communicating with the OpenStack.
         :param pulumi.Input['ClusterDeprovisionSpecPlatformOpenstackCredentialsSecretRefArgs'] credentials_secret_ref: CredentialsSecretRef is the OpenStack account credentials to use for deprovisioning the cluster
         """
         pulumi.set(__self__, "cloud", cloud)
+        if certificates_secret_ref is not None:
+            pulumi.set(__self__, "certificates_secret_ref", certificates_secret_ref)
         if credentials_secret_ref is not None:
             pulumi.set(__self__, "credentials_secret_ref", credentials_secret_ref)
 
@@ -4151,6 +3835,18 @@ class ClusterDeprovisionSpecPlatformOpenstackArgs:
         pulumi.set(self, "cloud", value)
 
     @property
+    @pulumi.getter(name="certificatesSecretRef")
+    def certificates_secret_ref(self) -> Optional[pulumi.Input['ClusterDeprovisionSpecPlatformOpenstackCertificatesSecretRefArgs']]:
+        """
+        CertificatesSecretRef refers to a secret that contains CA certificates necessary for communicating with the OpenStack.
+        """
+        return pulumi.get(self, "certificates_secret_ref")
+
+    @certificates_secret_ref.setter
+    def certificates_secret_ref(self, value: Optional[pulumi.Input['ClusterDeprovisionSpecPlatformOpenstackCertificatesSecretRefArgs']]):
+        pulumi.set(self, "certificates_secret_ref", value)
+
+    @property
     @pulumi.getter(name="credentialsSecretRef")
     def credentials_secret_ref(self) -> Optional[pulumi.Input['ClusterDeprovisionSpecPlatformOpenstackCredentialsSecretRefArgs']]:
         """
@@ -4161,6 +3857,30 @@ class ClusterDeprovisionSpecPlatformOpenstackArgs:
     @credentials_secret_ref.setter
     def credentials_secret_ref(self, value: Optional[pulumi.Input['ClusterDeprovisionSpecPlatformOpenstackCredentialsSecretRefArgs']]):
         pulumi.set(self, "credentials_secret_ref", value)
+
+
+@pulumi.input_type
+class ClusterDeprovisionSpecPlatformOpenstackCertificatesSecretRefArgs:
+    def __init__(__self__, *,
+                 name: Optional[pulumi.Input[str]] = None):
+        """
+        CertificatesSecretRef refers to a secret that contains CA certificates necessary for communicating with the OpenStack.
+        :param pulumi.Input[str] name: Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+        """
+        if name is not None:
+            pulumi.set(__self__, "name", name)
+
+    @property
+    @pulumi.getter
+    def name(self) -> Optional[pulumi.Input[str]]:
+        """
+        Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+        """
+        return pulumi.get(self, "name")
+
+    @name.setter
+    def name(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "name", value)
 
 
 @pulumi.input_type
@@ -4392,13 +4112,17 @@ class ClusterDeprovisionSpecPlatformVsphereCredentialsSecretRefArgs:
 @pulumi.input_type
 class ClusterDeprovisionStatusArgs:
     def __init__(__self__, *,
-                 completed: Optional[pulumi.Input[bool]] = None):
+                 completed: Optional[pulumi.Input[bool]] = None,
+                 conditions: Optional[pulumi.Input[Sequence[pulumi.Input['ClusterDeprovisionStatusConditionsArgs']]]] = None):
         """
         ClusterDeprovisionStatus defines the observed state of ClusterDeprovision
         :param pulumi.Input[bool] completed: Completed is true when the uninstall has completed successfully
+        :param pulumi.Input[Sequence[pulumi.Input['ClusterDeprovisionStatusConditionsArgs']]] conditions: Conditions includes more detailed status for the cluster deprovision
         """
         if completed is not None:
             pulumi.set(__self__, "completed", completed)
+        if conditions is not None:
+            pulumi.set(__self__, "conditions", conditions)
 
     @property
     @pulumi.getter
@@ -4411,6 +4135,120 @@ class ClusterDeprovisionStatusArgs:
     @completed.setter
     def completed(self, value: Optional[pulumi.Input[bool]]):
         pulumi.set(self, "completed", value)
+
+    @property
+    @pulumi.getter
+    def conditions(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['ClusterDeprovisionStatusConditionsArgs']]]]:
+        """
+        Conditions includes more detailed status for the cluster deprovision
+        """
+        return pulumi.get(self, "conditions")
+
+    @conditions.setter
+    def conditions(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['ClusterDeprovisionStatusConditionsArgs']]]]):
+        pulumi.set(self, "conditions", value)
+
+
+@pulumi.input_type
+class ClusterDeprovisionStatusConditionsArgs:
+    def __init__(__self__, *,
+                 status: pulumi.Input[str],
+                 type: pulumi.Input[str],
+                 last_probe_time: Optional[pulumi.Input[str]] = None,
+                 last_transition_time: Optional[pulumi.Input[str]] = None,
+                 message: Optional[pulumi.Input[str]] = None,
+                 reason: Optional[pulumi.Input[str]] = None):
+        """
+        ClusterDeprovisionCondition contains details for the current condition of a ClusterDeprovision
+        :param pulumi.Input[str] status: Status is the status of the condition.
+        :param pulumi.Input[str] type: Type is the type of the condition.
+        :param pulumi.Input[str] last_probe_time: LastProbeTime is the last time we probed the condition.
+        :param pulumi.Input[str] last_transition_time: LastTransitionTime is the last time the condition transitioned from one status to another.
+        :param pulumi.Input[str] message: Message is a human-readable message indicating details about last transition.
+        :param pulumi.Input[str] reason: Reason is a unique, one-word, CamelCase reason for the condition's last transition.
+        """
+        pulumi.set(__self__, "status", status)
+        pulumi.set(__self__, "type", type)
+        if last_probe_time is not None:
+            pulumi.set(__self__, "last_probe_time", last_probe_time)
+        if last_transition_time is not None:
+            pulumi.set(__self__, "last_transition_time", last_transition_time)
+        if message is not None:
+            pulumi.set(__self__, "message", message)
+        if reason is not None:
+            pulumi.set(__self__, "reason", reason)
+
+    @property
+    @pulumi.getter
+    def status(self) -> pulumi.Input[str]:
+        """
+        Status is the status of the condition.
+        """
+        return pulumi.get(self, "status")
+
+    @status.setter
+    def status(self, value: pulumi.Input[str]):
+        pulumi.set(self, "status", value)
+
+    @property
+    @pulumi.getter
+    def type(self) -> pulumi.Input[str]:
+        """
+        Type is the type of the condition.
+        """
+        return pulumi.get(self, "type")
+
+    @type.setter
+    def type(self, value: pulumi.Input[str]):
+        pulumi.set(self, "type", value)
+
+    @property
+    @pulumi.getter(name="lastProbeTime")
+    def last_probe_time(self) -> Optional[pulumi.Input[str]]:
+        """
+        LastProbeTime is the last time we probed the condition.
+        """
+        return pulumi.get(self, "last_probe_time")
+
+    @last_probe_time.setter
+    def last_probe_time(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "last_probe_time", value)
+
+    @property
+    @pulumi.getter(name="lastTransitionTime")
+    def last_transition_time(self) -> Optional[pulumi.Input[str]]:
+        """
+        LastTransitionTime is the last time the condition transitioned from one status to another.
+        """
+        return pulumi.get(self, "last_transition_time")
+
+    @last_transition_time.setter
+    def last_transition_time(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "last_transition_time", value)
+
+    @property
+    @pulumi.getter
+    def message(self) -> Optional[pulumi.Input[str]]:
+        """
+        Message is a human-readable message indicating details about last transition.
+        """
+        return pulumi.get(self, "message")
+
+    @message.setter
+    def message(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "message", value)
+
+    @property
+    @pulumi.getter
+    def reason(self) -> Optional[pulumi.Input[str]]:
+        """
+        Reason is a unique, one-word, CamelCase reason for the condition's last transition.
+        """
+        return pulumi.get(self, "reason")
+
+    @reason.setter
+    def reason(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "reason", value)
 
 
 @pulumi.input_type
@@ -4443,21 +4281,45 @@ class ClusterPoolSpecArgs:
                  image_set_ref: pulumi.Input['ClusterPoolSpecImageSetRefArgs'],
                  platform: pulumi.Input['ClusterPoolSpecPlatformArgs'],
                  size: pulumi.Input[int],
-                 pull_secret_ref: Optional[pulumi.Input['ClusterPoolSpecPullSecretRefArgs']] = None):
+                 hibernate_after: Optional[pulumi.Input[str]] = None,
+                 install_config_secret_template_ref: Optional[pulumi.Input['ClusterPoolSpecInstallConfigSecretTemplateRefArgs']] = None,
+                 labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
+                 max_concurrent: Optional[pulumi.Input[int]] = None,
+                 max_size: Optional[pulumi.Input[int]] = None,
+                 pull_secret_ref: Optional[pulumi.Input['ClusterPoolSpecPullSecretRefArgs']] = None,
+                 skip_machine_pools: Optional[pulumi.Input[bool]] = None):
         """
         ClusterPoolSpec defines the desired state of the ClusterPool.
         :param pulumi.Input[str] base_domain: BaseDomain is the base domain to use for all clusters created in this pool.
         :param pulumi.Input['ClusterPoolSpecImageSetRefArgs'] image_set_ref: ImageSetRef is a reference to a ClusterImageSet. The release image specified in the ClusterImageSet will be used by clusters created for this cluster pool.
         :param pulumi.Input['ClusterPoolSpecPlatformArgs'] platform: Platform encompasses the desired platform for the cluster.
         :param pulumi.Input[int] size: Size is the default number of clusters that we should keep provisioned and waiting for use.
+        :param pulumi.Input[str] hibernate_after: HibernateAfter will be applied to new ClusterDeployments created for the pool. HibernateAfter will transition clusters in the clusterpool to hibernating power state after it has been running for the given duration. The time that a cluster has been running is the time since the cluster was installed or the time since the cluster last came out of hibernation.
+        :param pulumi.Input['ClusterPoolSpecInstallConfigSecretTemplateRefArgs'] install_config_secret_template_ref: InstallConfigSecretTemplateRef is a secret with the key install-config.yaml consisting of the content of the install-config.yaml to be used as a template for all clusters in this pool. Cluster specific settings (name, basedomain) will be injected dynamically when the ClusterDeployment install-config Secret is generated.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] labels: Labels to be applied to new ClusterDeployments created for the pool. ClusterDeployments that have already been claimed will not be affected when this value is modified.
+        :param pulumi.Input[int] max_concurrent: MaxConcurrent is the maximum number of clusters that will be provisioned or deprovisioned at an time. By default there is no limit.
+        :param pulumi.Input[int] max_size: MaxSize is the maximum number of clusters that will be provisioned including clusters that have been claimed and ones waiting to be used. By default there is no limit.
         :param pulumi.Input['ClusterPoolSpecPullSecretRefArgs'] pull_secret_ref: PullSecretRef is the reference to the secret to use when pulling images.
+        :param pulumi.Input[bool] skip_machine_pools: SkipMachinePools allows creating clusterpools where the machinepools are not managed by hive after cluster creation
         """
         pulumi.set(__self__, "base_domain", base_domain)
         pulumi.set(__self__, "image_set_ref", image_set_ref)
         pulumi.set(__self__, "platform", platform)
         pulumi.set(__self__, "size", size)
+        if hibernate_after is not None:
+            pulumi.set(__self__, "hibernate_after", hibernate_after)
+        if install_config_secret_template_ref is not None:
+            pulumi.set(__self__, "install_config_secret_template_ref", install_config_secret_template_ref)
+        if labels is not None:
+            pulumi.set(__self__, "labels", labels)
+        if max_concurrent is not None:
+            pulumi.set(__self__, "max_concurrent", max_concurrent)
+        if max_size is not None:
+            pulumi.set(__self__, "max_size", max_size)
         if pull_secret_ref is not None:
             pulumi.set(__self__, "pull_secret_ref", pull_secret_ref)
+        if skip_machine_pools is not None:
+            pulumi.set(__self__, "skip_machine_pools", skip_machine_pools)
 
     @property
     @pulumi.getter(name="baseDomain")
@@ -4508,6 +4370,66 @@ class ClusterPoolSpecArgs:
         pulumi.set(self, "size", value)
 
     @property
+    @pulumi.getter(name="hibernateAfter")
+    def hibernate_after(self) -> Optional[pulumi.Input[str]]:
+        """
+        HibernateAfter will be applied to new ClusterDeployments created for the pool. HibernateAfter will transition clusters in the clusterpool to hibernating power state after it has been running for the given duration. The time that a cluster has been running is the time since the cluster was installed or the time since the cluster last came out of hibernation.
+        """
+        return pulumi.get(self, "hibernate_after")
+
+    @hibernate_after.setter
+    def hibernate_after(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "hibernate_after", value)
+
+    @property
+    @pulumi.getter(name="installConfigSecretTemplateRef")
+    def install_config_secret_template_ref(self) -> Optional[pulumi.Input['ClusterPoolSpecInstallConfigSecretTemplateRefArgs']]:
+        """
+        InstallConfigSecretTemplateRef is a secret with the key install-config.yaml consisting of the content of the install-config.yaml to be used as a template for all clusters in this pool. Cluster specific settings (name, basedomain) will be injected dynamically when the ClusterDeployment install-config Secret is generated.
+        """
+        return pulumi.get(self, "install_config_secret_template_ref")
+
+    @install_config_secret_template_ref.setter
+    def install_config_secret_template_ref(self, value: Optional[pulumi.Input['ClusterPoolSpecInstallConfigSecretTemplateRefArgs']]):
+        pulumi.set(self, "install_config_secret_template_ref", value)
+
+    @property
+    @pulumi.getter
+    def labels(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+        """
+        Labels to be applied to new ClusterDeployments created for the pool. ClusterDeployments that have already been claimed will not be affected when this value is modified.
+        """
+        return pulumi.get(self, "labels")
+
+    @labels.setter
+    def labels(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
+        pulumi.set(self, "labels", value)
+
+    @property
+    @pulumi.getter(name="maxConcurrent")
+    def max_concurrent(self) -> Optional[pulumi.Input[int]]:
+        """
+        MaxConcurrent is the maximum number of clusters that will be provisioned or deprovisioned at an time. By default there is no limit.
+        """
+        return pulumi.get(self, "max_concurrent")
+
+    @max_concurrent.setter
+    def max_concurrent(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "max_concurrent", value)
+
+    @property
+    @pulumi.getter(name="maxSize")
+    def max_size(self) -> Optional[pulumi.Input[int]]:
+        """
+        MaxSize is the maximum number of clusters that will be provisioned including clusters that have been claimed and ones waiting to be used. By default there is no limit.
+        """
+        return pulumi.get(self, "max_size")
+
+    @max_size.setter
+    def max_size(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "max_size", value)
+
+    @property
     @pulumi.getter(name="pullSecretRef")
     def pull_secret_ref(self) -> Optional[pulumi.Input['ClusterPoolSpecPullSecretRefArgs']]:
         """
@@ -4518,6 +4440,18 @@ class ClusterPoolSpecArgs:
     @pull_secret_ref.setter
     def pull_secret_ref(self, value: Optional[pulumi.Input['ClusterPoolSpecPullSecretRefArgs']]):
         pulumi.set(self, "pull_secret_ref", value)
+
+    @property
+    @pulumi.getter(name="skipMachinePools")
+    def skip_machine_pools(self) -> Optional[pulumi.Input[bool]]:
+        """
+        SkipMachinePools allows creating clusterpools where the machinepools are not managed by hive after cluster creation
+        """
+        return pulumi.get(self, "skip_machine_pools")
+
+    @skip_machine_pools.setter
+    def skip_machine_pools(self, value: Optional[pulumi.Input[bool]]):
+        pulumi.set(self, "skip_machine_pools", value)
 
 
 @pulumi.input_type
@@ -4540,6 +4474,30 @@ class ClusterPoolSpecImageSetRefArgs:
 
     @name.setter
     def name(self, value: pulumi.Input[str]):
+        pulumi.set(self, "name", value)
+
+
+@pulumi.input_type
+class ClusterPoolSpecInstallConfigSecretTemplateRefArgs:
+    def __init__(__self__, *,
+                 name: Optional[pulumi.Input[str]] = None):
+        """
+        InstallConfigSecretTemplateRef is a secret with the key install-config.yaml consisting of the content of the install-config.yaml to be used as a template for all clusters in this pool. Cluster specific settings (name, basedomain) will be injected dynamically when the ClusterDeployment install-config Secret is generated.
+        :param pulumi.Input[str] name: Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+        """
+        if name is not None:
+            pulumi.set(__self__, "name", name)
+
+    @property
+    @pulumi.getter
+    def name(self) -> Optional[pulumi.Input[str]]:
+        """
+        Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+        """
+        return pulumi.get(self, "name")
+
+    @name.setter
+    def name(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "name", value)
 
 
@@ -4933,15 +4891,20 @@ class ClusterPoolSpecPlatformOpenstackArgs:
     def __init__(__self__, *,
                  cloud: pulumi.Input[str],
                  credentials_secret_ref: pulumi.Input['ClusterPoolSpecPlatformOpenstackCredentialsSecretRefArgs'],
+                 certificates_secret_ref: Optional[pulumi.Input['ClusterPoolSpecPlatformOpenstackCertificatesSecretRefArgs']] = None,
                  trunk_support: Optional[pulumi.Input[bool]] = None):
         """
         OpenStack is the configuration used when installing on OpenStack
-        :param pulumi.Input[str] cloud: Cloud will be used to indicate the OS_CLOUD value to use the right section from the cloud.yaml in the CredentialsSecretRef.
+        :param pulumi.Input[str] cloud: Cloud will be used to indicate the OS_CLOUD value to use the right section from the clouds.yaml in the CredentialsSecretRef.
         :param pulumi.Input['ClusterPoolSpecPlatformOpenstackCredentialsSecretRefArgs'] credentials_secret_ref: CredentialsSecretRef refers to a secret that contains the OpenStack account access credentials.
+        :param pulumi.Input['ClusterPoolSpecPlatformOpenstackCertificatesSecretRefArgs'] certificates_secret_ref: CertificatesSecretRef refers to a secret that contains CA certificates necessary for communicating with the OpenStack. There is additional configuration required for the OpenShift cluster to trust the certificates provided in this secret. The "clouds.yaml" file included in the credentialsSecretRef Secret must also include a reference to the certificate bundle file for the OpenShift cluster being created to trust the OpenStack endpoints. The "clouds.yaml" file must set the "cacert" field to either "/etc/openstack-ca/<key name containing the trust bundle in credentialsSecretRef Secret>" or "/etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem". 
+                For example, \"\"\"clouds.yaml clouds:   shiftstack:     auth: ...     cacert: "/etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem" \"\"\"
         :param pulumi.Input[bool] trunk_support: TrunkSupport indicates whether or not to use trunk ports in your OpenShift cluster.
         """
         pulumi.set(__self__, "cloud", cloud)
         pulumi.set(__self__, "credentials_secret_ref", credentials_secret_ref)
+        if certificates_secret_ref is not None:
+            pulumi.set(__self__, "certificates_secret_ref", certificates_secret_ref)
         if trunk_support is not None:
             pulumi.set(__self__, "trunk_support", trunk_support)
 
@@ -4949,7 +4912,7 @@ class ClusterPoolSpecPlatformOpenstackArgs:
     @pulumi.getter
     def cloud(self) -> pulumi.Input[str]:
         """
-        Cloud will be used to indicate the OS_CLOUD value to use the right section from the cloud.yaml in the CredentialsSecretRef.
+        Cloud will be used to indicate the OS_CLOUD value to use the right section from the clouds.yaml in the CredentialsSecretRef.
         """
         return pulumi.get(self, "cloud")
 
@@ -4970,6 +4933,19 @@ class ClusterPoolSpecPlatformOpenstackArgs:
         pulumi.set(self, "credentials_secret_ref", value)
 
     @property
+    @pulumi.getter(name="certificatesSecretRef")
+    def certificates_secret_ref(self) -> Optional[pulumi.Input['ClusterPoolSpecPlatformOpenstackCertificatesSecretRefArgs']]:
+        """
+        CertificatesSecretRef refers to a secret that contains CA certificates necessary for communicating with the OpenStack. There is additional configuration required for the OpenShift cluster to trust the certificates provided in this secret. The "clouds.yaml" file included in the credentialsSecretRef Secret must also include a reference to the certificate bundle file for the OpenShift cluster being created to trust the OpenStack endpoints. The "clouds.yaml" file must set the "cacert" field to either "/etc/openstack-ca/<key name containing the trust bundle in credentialsSecretRef Secret>" or "/etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem". 
+         For example, \"\"\"clouds.yaml clouds:   shiftstack:     auth: ...     cacert: "/etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem" \"\"\"
+        """
+        return pulumi.get(self, "certificates_secret_ref")
+
+    @certificates_secret_ref.setter
+    def certificates_secret_ref(self, value: Optional[pulumi.Input['ClusterPoolSpecPlatformOpenstackCertificatesSecretRefArgs']]):
+        pulumi.set(self, "certificates_secret_ref", value)
+
+    @property
     @pulumi.getter(name="trunkSupport")
     def trunk_support(self) -> Optional[pulumi.Input[bool]]:
         """
@@ -4980,6 +4956,31 @@ class ClusterPoolSpecPlatformOpenstackArgs:
     @trunk_support.setter
     def trunk_support(self, value: Optional[pulumi.Input[bool]]):
         pulumi.set(self, "trunk_support", value)
+
+
+@pulumi.input_type
+class ClusterPoolSpecPlatformOpenstackCertificatesSecretRefArgs:
+    def __init__(__self__, *,
+                 name: Optional[pulumi.Input[str]] = None):
+        """
+        CertificatesSecretRef refers to a secret that contains CA certificates necessary for communicating with the OpenStack. There is additional configuration required for the OpenShift cluster to trust the certificates provided in this secret. The "clouds.yaml" file included in the credentialsSecretRef Secret must also include a reference to the certificate bundle file for the OpenShift cluster being created to trust the OpenStack endpoints. The "clouds.yaml" file must set the "cacert" field to either "/etc/openstack-ca/<key name containing the trust bundle in credentialsSecretRef Secret>" or "/etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem". 
+         For example, \"\"\"clouds.yaml clouds:   shiftstack:     auth: ...     cacert: "/etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem" \"\"\"
+        :param pulumi.Input[str] name: Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+        """
+        if name is not None:
+            pulumi.set(__self__, "name", name)
+
+    @property
+    @pulumi.getter
+    def name(self) -> Optional[pulumi.Input[str]]:
+        """
+        Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+        """
+        return pulumi.get(self, "name")
+
+    @name.setter
+    def name(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "name", value)
 
 
 @pulumi.input_type
@@ -5796,6 +5797,7 @@ class ClusterProvisionSpecPodSpecArgs:
                  security_context: Optional[pulumi.Input['ClusterProvisionSpecPodSpecSecurityContextArgs']] = None,
                  service_account: Optional[pulumi.Input[str]] = None,
                  service_account_name: Optional[pulumi.Input[str]] = None,
+                 set_hostname_as_fqdn: Optional[pulumi.Input[bool]] = None,
                  share_process_namespace: Optional[pulumi.Input[bool]] = None,
                  subdomain: Optional[pulumi.Input[str]] = None,
                  termination_grace_period_seconds: Optional[pulumi.Input[int]] = None,
@@ -5822,7 +5824,7 @@ class ClusterProvisionSpecPodSpecArgs:
         :param pulumi.Input[str] node_name: NodeName is a request to schedule this pod onto a specific node. If it is non-empty, the scheduler simply schedules this pod onto that node, assuming that it fits resource requirements.
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] node_selector: NodeSelector is a selector which must be true for the pod to fit on a node. Selector which must match a node's labels for the pod to be scheduled on that node. More info: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] overhead: Overhead represents the resource overhead associated with running a pod for a given RuntimeClass. This field will be autopopulated at admission time by the RuntimeClass admission controller. If the RuntimeClass admission controller is enabled, overhead must not be set in Pod create requests. The RuntimeClass admission controller will reject Pod create requests which have the overhead already set. If RuntimeClass is configured and selected in the PodSpec, Overhead will be set to the value defined in the corresponding RuntimeClass, otherwise it will remain unset and treated as zero. More info: https://git.k8s.io/enhancements/keps/sig-node/20190226-pod-overhead.md This field is alpha-level as of Kubernetes v1.16, and is only honored by servers that enable the PodOverhead feature.
-        :param pulumi.Input[str] preemption_policy: PreemptionPolicy is the Policy for preempting pods with lower priority. One of Never, PreemptLowerPriority. Defaults to PreemptLowerPriority if unset. This field is alpha-level and is only honored by servers that enable the NonPreemptingPriority feature.
+        :param pulumi.Input[str] preemption_policy: PreemptionPolicy is the Policy for preempting pods with lower priority. One of Never, PreemptLowerPriority. Defaults to PreemptLowerPriority if unset. This field is beta-level, gated by the NonPreemptingPriority feature-gate.
         :param pulumi.Input[int] priority: The priority value. Various system components use this field to find the priority of the pod. When Priority Admission Controller is enabled, it prevents users from setting this field. The admission controller populates this field from PriorityClassName. The higher the value, the higher the priority.
         :param pulumi.Input[str] priority_class_name: If specified, indicates the pod's priority. "system-node-critical" and "system-cluster-critical" are two special keywords which indicate the highest priorities with the former being the highest priority. Any other name must be defined by creating a PriorityClass object with that name. If not specified, the pod priority will be default or zero if there is no default.
         :param pulumi.Input[Sequence[pulumi.Input['ClusterProvisionSpecPodSpecReadinessGatesArgs']]] readiness_gates: If specified, all readiness gates will be evaluated for pod readiness. A pod is ready when all its containers are ready AND all conditions specified in the readiness gates have status equal to "True" More info: https://git.k8s.io/enhancements/keps/sig-network/0007-pod-ready%2B%2B.md
@@ -5832,11 +5834,12 @@ class ClusterProvisionSpecPodSpecArgs:
         :param pulumi.Input['ClusterProvisionSpecPodSpecSecurityContextArgs'] security_context: SecurityContext holds pod-level security attributes and common container settings. Optional: Defaults to empty.  See type description for default values of each field.
         :param pulumi.Input[str] service_account: DeprecatedServiceAccount is a depreciated alias for ServiceAccountName. Deprecated: Use serviceAccountName instead.
         :param pulumi.Input[str] service_account_name: ServiceAccountName is the name of the ServiceAccount to use to run this pod. More info: https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
+        :param pulumi.Input[bool] set_hostname_as_fqdn: If true the pod's hostname will be configured as the pod's FQDN, rather than the leaf name (the default). In Linux containers, this means setting the FQDN in the hostname field of the kernel (the nodename field of struct utsname). In Windows containers, this means setting the registry value of hostname for the registry key HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services\\Tcpip\\Parameters to FQDN. If a pod does not have FQDN, this has no effect. Default to false.
         :param pulumi.Input[bool] share_process_namespace: Share a single process namespace between all of the containers in a pod. When this is set containers will be able to view and signal processes from other containers in the same pod, and the first process in each container will not be assigned PID 1. HostPID and ShareProcessNamespace cannot both be set. Optional: Default to false.
         :param pulumi.Input[str] subdomain: If specified, the fully qualified Pod hostname will be "<hostname>.<subdomain>.<pod namespace>.svc.<cluster domain>". If not specified, the pod will not have a domainname at all.
         :param pulumi.Input[int] termination_grace_period_seconds: Optional duration in seconds the pod needs to terminate gracefully. May be decreased in delete request. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period will be used instead. The grace period is the duration in seconds after the processes running in the pod are sent a termination signal and the time when the processes are forcibly halted with a kill signal. Set this value longer than the expected cleanup time for your process. Defaults to 30 seconds.
         :param pulumi.Input[Sequence[pulumi.Input['ClusterProvisionSpecPodSpecTolerationsArgs']]] tolerations: If specified, the pod's tolerations.
-        :param pulumi.Input[Sequence[pulumi.Input['ClusterProvisionSpecPodSpecTopologySpreadConstraintsArgs']]] topology_spread_constraints: TopologySpreadConstraints describes how a group of pods ought to spread across topology domains. Scheduler will schedule pods in a way which abides by the constraints. This field is only honored by clusters that enable the EvenPodsSpread feature. All topologySpreadConstraints are ANDed.
+        :param pulumi.Input[Sequence[pulumi.Input['ClusterProvisionSpecPodSpecTopologySpreadConstraintsArgs']]] topology_spread_constraints: TopologySpreadConstraints describes how a group of pods ought to spread across topology domains. Scheduler will schedule pods in a way which abides by the constraints. All topologySpreadConstraints are ANDed.
         :param pulumi.Input[Sequence[pulumi.Input['ClusterProvisionSpecPodSpecVolumesArgs']]] volumes: List of volumes that can be mounted by containers belonging to the pod. More info: https://kubernetes.io/docs/concepts/storage/volumes
         """
         pulumi.set(__self__, "containers", containers)
@@ -5894,6 +5897,8 @@ class ClusterProvisionSpecPodSpecArgs:
             pulumi.set(__self__, "service_account", service_account)
         if service_account_name is not None:
             pulumi.set(__self__, "service_account_name", service_account_name)
+        if set_hostname_as_fqdn is not None:
+            pulumi.set(__self__, "set_hostname_as_fqdn", set_hostname_as_fqdn)
         if share_process_namespace is not None:
             pulumi.set(__self__, "share_process_namespace", share_process_namespace)
         if subdomain is not None:
@@ -6127,7 +6132,7 @@ class ClusterProvisionSpecPodSpecArgs:
     @pulumi.getter(name="preemptionPolicy")
     def preemption_policy(self) -> Optional[pulumi.Input[str]]:
         """
-        PreemptionPolicy is the Policy for preempting pods with lower priority. One of Never, PreemptLowerPriority. Defaults to PreemptLowerPriority if unset. This field is alpha-level and is only honored by servers that enable the NonPreemptingPriority feature.
+        PreemptionPolicy is the Policy for preempting pods with lower priority. One of Never, PreemptLowerPriority. Defaults to PreemptLowerPriority if unset. This field is beta-level, gated by the NonPreemptingPriority feature-gate.
         """
         return pulumi.get(self, "preemption_policy")
 
@@ -6244,6 +6249,18 @@ class ClusterProvisionSpecPodSpecArgs:
         pulumi.set(self, "service_account_name", value)
 
     @property
+    @pulumi.getter(name="setHostnameAsFQDN")
+    def set_hostname_as_fqdn(self) -> Optional[pulumi.Input[bool]]:
+        """
+        If true the pod's hostname will be configured as the pod's FQDN, rather than the leaf name (the default). In Linux containers, this means setting the FQDN in the hostname field of the kernel (the nodename field of struct utsname). In Windows containers, this means setting the registry value of hostname for the registry key HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services\\Tcpip\\Parameters to FQDN. If a pod does not have FQDN, this has no effect. Default to false.
+        """
+        return pulumi.get(self, "set_hostname_as_fqdn")
+
+    @set_hostname_as_fqdn.setter
+    def set_hostname_as_fqdn(self, value: Optional[pulumi.Input[bool]]):
+        pulumi.set(self, "set_hostname_as_fqdn", value)
+
+    @property
     @pulumi.getter(name="shareProcessNamespace")
     def share_process_namespace(self) -> Optional[pulumi.Input[bool]]:
         """
@@ -6295,7 +6312,7 @@ class ClusterProvisionSpecPodSpecArgs:
     @pulumi.getter(name="topologySpreadConstraints")
     def topology_spread_constraints(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['ClusterProvisionSpecPodSpecTopologySpreadConstraintsArgs']]]]:
         """
-        TopologySpreadConstraints describes how a group of pods ought to spread across topology domains. Scheduler will schedule pods in a way which abides by the constraints. This field is only honored by clusters that enable the EvenPodsSpread feature. All topologySpreadConstraints are ANDed.
+        TopologySpreadConstraints describes how a group of pods ought to spread across topology domains. Scheduler will schedule pods in a way which abides by the constraints. All topologySpreadConstraints are ANDed.
         """
         return pulumi.get(self, "topology_spread_constraints")
 
@@ -8081,7 +8098,7 @@ class ClusterProvisionSpecPodSpecContainersEnvValueFromArgs:
         """
         Source for the environment variable's value. Cannot be used if value is not empty.
         :param pulumi.Input['ClusterProvisionSpecPodSpecContainersEnvValueFromConfigMapKeyRefArgs'] config_map_key_ref: Selects a key of a ConfigMap.
-        :param pulumi.Input['ClusterProvisionSpecPodSpecContainersEnvValueFromFieldRefArgs'] field_ref: Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
+        :param pulumi.Input['ClusterProvisionSpecPodSpecContainersEnvValueFromFieldRefArgs'] field_ref: Selects a field of the pod: supports metadata.name, metadata.namespace, `metadata.labels['<KEY>']`, `metadata.annotations['<KEY>']`, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
         :param pulumi.Input['ClusterProvisionSpecPodSpecContainersEnvValueFromResourceFieldRefArgs'] resource_field_ref: Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
         :param pulumi.Input['ClusterProvisionSpecPodSpecContainersEnvValueFromSecretKeyRefArgs'] secret_key_ref: Selects a key of a secret in the pod's namespace
         """
@@ -8110,7 +8127,7 @@ class ClusterProvisionSpecPodSpecContainersEnvValueFromArgs:
     @pulumi.getter(name="fieldRef")
     def field_ref(self) -> Optional[pulumi.Input['ClusterProvisionSpecPodSpecContainersEnvValueFromFieldRefArgs']]:
         """
-        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
+        Selects a field of the pod: supports metadata.name, metadata.namespace, `metadata.labels['<KEY>']`, `metadata.annotations['<KEY>']`, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
         """
         return pulumi.get(self, "field_ref")
 
@@ -8204,7 +8221,7 @@ class ClusterProvisionSpecPodSpecContainersEnvValueFromFieldRefArgs:
                  field_path: pulumi.Input[str],
                  api_version: Optional[pulumi.Input[str]] = None):
         """
-        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
+        Selects a field of the pod: supports metadata.name, metadata.namespace, `metadata.labels['<KEY>']`, `metadata.annotations['<KEY>']`, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
         :param pulumi.Input[str] field_path: Path of the field to select in the specified API version.
         :param pulumi.Input[str] api_version: Version of the schema the FieldPath is written in terms of, defaults to "v1".
         """
@@ -9710,6 +9727,7 @@ class ClusterProvisionSpecPodSpecContainersSecurityContextArgs:
                  run_as_non_root: Optional[pulumi.Input[bool]] = None,
                  run_as_user: Optional[pulumi.Input[int]] = None,
                  se_linux_options: Optional[pulumi.Input['ClusterProvisionSpecPodSpecContainersSecurityContextSeLinuxOptionsArgs']] = None,
+                 seccomp_profile: Optional[pulumi.Input['ClusterProvisionSpecPodSpecContainersSecurityContextSeccompProfileArgs']] = None,
                  windows_options: Optional[pulumi.Input['ClusterProvisionSpecPodSpecContainersSecurityContextWindowsOptionsArgs']] = None):
         """
         Security options the pod should run with. More info: https://kubernetes.io/docs/concepts/policy/security-context/ More info: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
@@ -9722,6 +9740,7 @@ class ClusterProvisionSpecPodSpecContainersSecurityContextArgs:
         :param pulumi.Input[bool] run_as_non_root: Indicates that the container must run as a non-root user. If true, the Kubelet will validate the image at runtime to ensure that it does not run as UID 0 (root) and fail to start the container if it does. If unset or false, no such validation will be performed. May also be set in PodSecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
         :param pulumi.Input[int] run_as_user: The UID to run the entrypoint of the container process. Defaults to user specified in image metadata if unspecified. May also be set in PodSecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
         :param pulumi.Input['ClusterProvisionSpecPodSpecContainersSecurityContextSeLinuxOptionsArgs'] se_linux_options: The SELinux context to be applied to the container. If unspecified, the container runtime will allocate a random SELinux context for each container.  May also be set in PodSecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
+        :param pulumi.Input['ClusterProvisionSpecPodSpecContainersSecurityContextSeccompProfileArgs'] seccomp_profile: The seccomp options to use by this container. If seccomp options are provided at both the pod & container level, the container options override the pod options.
         :param pulumi.Input['ClusterProvisionSpecPodSpecContainersSecurityContextWindowsOptionsArgs'] windows_options: The Windows specific settings applied to all containers. If unspecified, the options from the PodSecurityContext will be used. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
         """
         if allow_privilege_escalation is not None:
@@ -9742,6 +9761,8 @@ class ClusterProvisionSpecPodSpecContainersSecurityContextArgs:
             pulumi.set(__self__, "run_as_user", run_as_user)
         if se_linux_options is not None:
             pulumi.set(__self__, "se_linux_options", se_linux_options)
+        if seccomp_profile is not None:
+            pulumi.set(__self__, "seccomp_profile", seccomp_profile)
         if windows_options is not None:
             pulumi.set(__self__, "windows_options", windows_options)
 
@@ -9852,6 +9873,18 @@ class ClusterProvisionSpecPodSpecContainersSecurityContextArgs:
     @se_linux_options.setter
     def se_linux_options(self, value: Optional[pulumi.Input['ClusterProvisionSpecPodSpecContainersSecurityContextSeLinuxOptionsArgs']]):
         pulumi.set(self, "se_linux_options", value)
+
+    @property
+    @pulumi.getter(name="seccompProfile")
+    def seccomp_profile(self) -> Optional[pulumi.Input['ClusterProvisionSpecPodSpecContainersSecurityContextSeccompProfileArgs']]:
+        """
+        The seccomp options to use by this container. If seccomp options are provided at both the pod & container level, the container options override the pod options.
+        """
+        return pulumi.get(self, "seccomp_profile")
+
+    @seccomp_profile.setter
+    def seccomp_profile(self, value: Optional[pulumi.Input['ClusterProvisionSpecPodSpecContainersSecurityContextSeccompProfileArgs']]):
+        pulumi.set(self, "seccomp_profile", value)
 
     @property
     @pulumi.getter(name="windowsOptions")
@@ -9976,6 +10009,47 @@ class ClusterProvisionSpecPodSpecContainersSecurityContextSeLinuxOptionsArgs:
     @user.setter
     def user(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "user", value)
+
+
+@pulumi.input_type
+class ClusterProvisionSpecPodSpecContainersSecurityContextSeccompProfileArgs:
+    def __init__(__self__, *,
+                 type: pulumi.Input[str],
+                 localhost_profile: Optional[pulumi.Input[str]] = None):
+        """
+        The seccomp options to use by this container. If seccomp options are provided at both the pod & container level, the container options override the pod options.
+        :param pulumi.Input[str] type: type indicates which kind of seccomp profile will be applied. Valid options are: 
+                Localhost - a profile defined in a file on the node should be used. RuntimeDefault - the container runtime default profile should be used. Unconfined - no profile should be applied.
+        :param pulumi.Input[str] localhost_profile: localhostProfile indicates a profile defined in a file on the node should be used. The profile must be preconfigured on the node to work. Must be a descending path, relative to the kubelet's configured seccomp profile location. Must only be set if type is "Localhost".
+        """
+        pulumi.set(__self__, "type", type)
+        if localhost_profile is not None:
+            pulumi.set(__self__, "localhost_profile", localhost_profile)
+
+    @property
+    @pulumi.getter
+    def type(self) -> pulumi.Input[str]:
+        """
+        type indicates which kind of seccomp profile will be applied. Valid options are: 
+         Localhost - a profile defined in a file on the node should be used. RuntimeDefault - the container runtime default profile should be used. Unconfined - no profile should be applied.
+        """
+        return pulumi.get(self, "type")
+
+    @type.setter
+    def type(self, value: pulumi.Input[str]):
+        pulumi.set(self, "type", value)
+
+    @property
+    @pulumi.getter(name="localhostProfile")
+    def localhost_profile(self) -> Optional[pulumi.Input[str]]:
+        """
+        localhostProfile indicates a profile defined in a file on the node should be used. The profile must be preconfigured on the node to work. Must be a descending path, relative to the kubelet's configured seccomp profile location. Must only be set if type is "Localhost".
+        """
+        return pulumi.get(self, "localhost_profile")
+
+    @localhost_profile.setter
+    def localhost_profile(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "localhost_profile", value)
 
 
 @pulumi.input_type
@@ -11178,7 +11252,7 @@ class ClusterProvisionSpecPodSpecEphemeralContainersEnvValueFromArgs:
         """
         Source for the environment variable's value. Cannot be used if value is not empty.
         :param pulumi.Input['ClusterProvisionSpecPodSpecEphemeralContainersEnvValueFromConfigMapKeyRefArgs'] config_map_key_ref: Selects a key of a ConfigMap.
-        :param pulumi.Input['ClusterProvisionSpecPodSpecEphemeralContainersEnvValueFromFieldRefArgs'] field_ref: Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
+        :param pulumi.Input['ClusterProvisionSpecPodSpecEphemeralContainersEnvValueFromFieldRefArgs'] field_ref: Selects a field of the pod: supports metadata.name, metadata.namespace, `metadata.labels['<KEY>']`, `metadata.annotations['<KEY>']`, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
         :param pulumi.Input['ClusterProvisionSpecPodSpecEphemeralContainersEnvValueFromResourceFieldRefArgs'] resource_field_ref: Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
         :param pulumi.Input['ClusterProvisionSpecPodSpecEphemeralContainersEnvValueFromSecretKeyRefArgs'] secret_key_ref: Selects a key of a secret in the pod's namespace
         """
@@ -11207,7 +11281,7 @@ class ClusterProvisionSpecPodSpecEphemeralContainersEnvValueFromArgs:
     @pulumi.getter(name="fieldRef")
     def field_ref(self) -> Optional[pulumi.Input['ClusterProvisionSpecPodSpecEphemeralContainersEnvValueFromFieldRefArgs']]:
         """
-        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
+        Selects a field of the pod: supports metadata.name, metadata.namespace, `metadata.labels['<KEY>']`, `metadata.annotations['<KEY>']`, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
         """
         return pulumi.get(self, "field_ref")
 
@@ -11301,7 +11375,7 @@ class ClusterProvisionSpecPodSpecEphemeralContainersEnvValueFromFieldRefArgs:
                  field_path: pulumi.Input[str],
                  api_version: Optional[pulumi.Input[str]] = None):
         """
-        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
+        Selects a field of the pod: supports metadata.name, metadata.namespace, `metadata.labels['<KEY>']`, `metadata.annotations['<KEY>']`, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
         :param pulumi.Input[str] field_path: Path of the field to select in the specified API version.
         :param pulumi.Input[str] api_version: Version of the schema the FieldPath is written in terms of, defaults to "v1".
         """
@@ -12807,6 +12881,7 @@ class ClusterProvisionSpecPodSpecEphemeralContainersSecurityContextArgs:
                  run_as_non_root: Optional[pulumi.Input[bool]] = None,
                  run_as_user: Optional[pulumi.Input[int]] = None,
                  se_linux_options: Optional[pulumi.Input['ClusterProvisionSpecPodSpecEphemeralContainersSecurityContextSeLinuxOptionsArgs']] = None,
+                 seccomp_profile: Optional[pulumi.Input['ClusterProvisionSpecPodSpecEphemeralContainersSecurityContextSeccompProfileArgs']] = None,
                  windows_options: Optional[pulumi.Input['ClusterProvisionSpecPodSpecEphemeralContainersSecurityContextWindowsOptionsArgs']] = None):
         """
         SecurityContext is not allowed for ephemeral containers.
@@ -12819,6 +12894,7 @@ class ClusterProvisionSpecPodSpecEphemeralContainersSecurityContextArgs:
         :param pulumi.Input[bool] run_as_non_root: Indicates that the container must run as a non-root user. If true, the Kubelet will validate the image at runtime to ensure that it does not run as UID 0 (root) and fail to start the container if it does. If unset or false, no such validation will be performed. May also be set in PodSecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
         :param pulumi.Input[int] run_as_user: The UID to run the entrypoint of the container process. Defaults to user specified in image metadata if unspecified. May also be set in PodSecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
         :param pulumi.Input['ClusterProvisionSpecPodSpecEphemeralContainersSecurityContextSeLinuxOptionsArgs'] se_linux_options: The SELinux context to be applied to the container. If unspecified, the container runtime will allocate a random SELinux context for each container.  May also be set in PodSecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
+        :param pulumi.Input['ClusterProvisionSpecPodSpecEphemeralContainersSecurityContextSeccompProfileArgs'] seccomp_profile: The seccomp options to use by this container. If seccomp options are provided at both the pod & container level, the container options override the pod options.
         :param pulumi.Input['ClusterProvisionSpecPodSpecEphemeralContainersSecurityContextWindowsOptionsArgs'] windows_options: The Windows specific settings applied to all containers. If unspecified, the options from the PodSecurityContext will be used. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
         """
         if allow_privilege_escalation is not None:
@@ -12839,6 +12915,8 @@ class ClusterProvisionSpecPodSpecEphemeralContainersSecurityContextArgs:
             pulumi.set(__self__, "run_as_user", run_as_user)
         if se_linux_options is not None:
             pulumi.set(__self__, "se_linux_options", se_linux_options)
+        if seccomp_profile is not None:
+            pulumi.set(__self__, "seccomp_profile", seccomp_profile)
         if windows_options is not None:
             pulumi.set(__self__, "windows_options", windows_options)
 
@@ -12949,6 +13027,18 @@ class ClusterProvisionSpecPodSpecEphemeralContainersSecurityContextArgs:
     @se_linux_options.setter
     def se_linux_options(self, value: Optional[pulumi.Input['ClusterProvisionSpecPodSpecEphemeralContainersSecurityContextSeLinuxOptionsArgs']]):
         pulumi.set(self, "se_linux_options", value)
+
+    @property
+    @pulumi.getter(name="seccompProfile")
+    def seccomp_profile(self) -> Optional[pulumi.Input['ClusterProvisionSpecPodSpecEphemeralContainersSecurityContextSeccompProfileArgs']]:
+        """
+        The seccomp options to use by this container. If seccomp options are provided at both the pod & container level, the container options override the pod options.
+        """
+        return pulumi.get(self, "seccomp_profile")
+
+    @seccomp_profile.setter
+    def seccomp_profile(self, value: Optional[pulumi.Input['ClusterProvisionSpecPodSpecEphemeralContainersSecurityContextSeccompProfileArgs']]):
+        pulumi.set(self, "seccomp_profile", value)
 
     @property
     @pulumi.getter(name="windowsOptions")
@@ -13073,6 +13163,47 @@ class ClusterProvisionSpecPodSpecEphemeralContainersSecurityContextSeLinuxOption
     @user.setter
     def user(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "user", value)
+
+
+@pulumi.input_type
+class ClusterProvisionSpecPodSpecEphemeralContainersSecurityContextSeccompProfileArgs:
+    def __init__(__self__, *,
+                 type: pulumi.Input[str],
+                 localhost_profile: Optional[pulumi.Input[str]] = None):
+        """
+        The seccomp options to use by this container. If seccomp options are provided at both the pod & container level, the container options override the pod options.
+        :param pulumi.Input[str] type: type indicates which kind of seccomp profile will be applied. Valid options are: 
+                Localhost - a profile defined in a file on the node should be used. RuntimeDefault - the container runtime default profile should be used. Unconfined - no profile should be applied.
+        :param pulumi.Input[str] localhost_profile: localhostProfile indicates a profile defined in a file on the node should be used. The profile must be preconfigured on the node to work. Must be a descending path, relative to the kubelet's configured seccomp profile location. Must only be set if type is "Localhost".
+        """
+        pulumi.set(__self__, "type", type)
+        if localhost_profile is not None:
+            pulumi.set(__self__, "localhost_profile", localhost_profile)
+
+    @property
+    @pulumi.getter
+    def type(self) -> pulumi.Input[str]:
+        """
+        type indicates which kind of seccomp profile will be applied. Valid options are: 
+         Localhost - a profile defined in a file on the node should be used. RuntimeDefault - the container runtime default profile should be used. Unconfined - no profile should be applied.
+        """
+        return pulumi.get(self, "type")
+
+    @type.setter
+    def type(self, value: pulumi.Input[str]):
+        pulumi.set(self, "type", value)
+
+    @property
+    @pulumi.getter(name="localhostProfile")
+    def localhost_profile(self) -> Optional[pulumi.Input[str]]:
+        """
+        localhostProfile indicates a profile defined in a file on the node should be used. The profile must be preconfigured on the node to work. Must be a descending path, relative to the kubelet's configured seccomp profile location. Must only be set if type is "Localhost".
+        """
+        return pulumi.get(self, "localhost_profile")
+
+    @localhost_profile.setter
+    def localhost_profile(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "localhost_profile", value)
 
 
 @pulumi.input_type
@@ -14231,7 +14362,7 @@ class ClusterProvisionSpecPodSpecInitContainersEnvValueFromArgs:
         """
         Source for the environment variable's value. Cannot be used if value is not empty.
         :param pulumi.Input['ClusterProvisionSpecPodSpecInitContainersEnvValueFromConfigMapKeyRefArgs'] config_map_key_ref: Selects a key of a ConfigMap.
-        :param pulumi.Input['ClusterProvisionSpecPodSpecInitContainersEnvValueFromFieldRefArgs'] field_ref: Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
+        :param pulumi.Input['ClusterProvisionSpecPodSpecInitContainersEnvValueFromFieldRefArgs'] field_ref: Selects a field of the pod: supports metadata.name, metadata.namespace, `metadata.labels['<KEY>']`, `metadata.annotations['<KEY>']`, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
         :param pulumi.Input['ClusterProvisionSpecPodSpecInitContainersEnvValueFromResourceFieldRefArgs'] resource_field_ref: Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
         :param pulumi.Input['ClusterProvisionSpecPodSpecInitContainersEnvValueFromSecretKeyRefArgs'] secret_key_ref: Selects a key of a secret in the pod's namespace
         """
@@ -14260,7 +14391,7 @@ class ClusterProvisionSpecPodSpecInitContainersEnvValueFromArgs:
     @pulumi.getter(name="fieldRef")
     def field_ref(self) -> Optional[pulumi.Input['ClusterProvisionSpecPodSpecInitContainersEnvValueFromFieldRefArgs']]:
         """
-        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
+        Selects a field of the pod: supports metadata.name, metadata.namespace, `metadata.labels['<KEY>']`, `metadata.annotations['<KEY>']`, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
         """
         return pulumi.get(self, "field_ref")
 
@@ -14354,7 +14485,7 @@ class ClusterProvisionSpecPodSpecInitContainersEnvValueFromFieldRefArgs:
                  field_path: pulumi.Input[str],
                  api_version: Optional[pulumi.Input[str]] = None):
         """
-        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
+        Selects a field of the pod: supports metadata.name, metadata.namespace, `metadata.labels['<KEY>']`, `metadata.annotations['<KEY>']`, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
         :param pulumi.Input[str] field_path: Path of the field to select in the specified API version.
         :param pulumi.Input[str] api_version: Version of the schema the FieldPath is written in terms of, defaults to "v1".
         """
@@ -15860,6 +15991,7 @@ class ClusterProvisionSpecPodSpecInitContainersSecurityContextArgs:
                  run_as_non_root: Optional[pulumi.Input[bool]] = None,
                  run_as_user: Optional[pulumi.Input[int]] = None,
                  se_linux_options: Optional[pulumi.Input['ClusterProvisionSpecPodSpecInitContainersSecurityContextSeLinuxOptionsArgs']] = None,
+                 seccomp_profile: Optional[pulumi.Input['ClusterProvisionSpecPodSpecInitContainersSecurityContextSeccompProfileArgs']] = None,
                  windows_options: Optional[pulumi.Input['ClusterProvisionSpecPodSpecInitContainersSecurityContextWindowsOptionsArgs']] = None):
         """
         Security options the pod should run with. More info: https://kubernetes.io/docs/concepts/policy/security-context/ More info: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
@@ -15872,6 +16004,7 @@ class ClusterProvisionSpecPodSpecInitContainersSecurityContextArgs:
         :param pulumi.Input[bool] run_as_non_root: Indicates that the container must run as a non-root user. If true, the Kubelet will validate the image at runtime to ensure that it does not run as UID 0 (root) and fail to start the container if it does. If unset or false, no such validation will be performed. May also be set in PodSecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
         :param pulumi.Input[int] run_as_user: The UID to run the entrypoint of the container process. Defaults to user specified in image metadata if unspecified. May also be set in PodSecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
         :param pulumi.Input['ClusterProvisionSpecPodSpecInitContainersSecurityContextSeLinuxOptionsArgs'] se_linux_options: The SELinux context to be applied to the container. If unspecified, the container runtime will allocate a random SELinux context for each container.  May also be set in PodSecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
+        :param pulumi.Input['ClusterProvisionSpecPodSpecInitContainersSecurityContextSeccompProfileArgs'] seccomp_profile: The seccomp options to use by this container. If seccomp options are provided at both the pod & container level, the container options override the pod options.
         :param pulumi.Input['ClusterProvisionSpecPodSpecInitContainersSecurityContextWindowsOptionsArgs'] windows_options: The Windows specific settings applied to all containers. If unspecified, the options from the PodSecurityContext will be used. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
         """
         if allow_privilege_escalation is not None:
@@ -15892,6 +16025,8 @@ class ClusterProvisionSpecPodSpecInitContainersSecurityContextArgs:
             pulumi.set(__self__, "run_as_user", run_as_user)
         if se_linux_options is not None:
             pulumi.set(__self__, "se_linux_options", se_linux_options)
+        if seccomp_profile is not None:
+            pulumi.set(__self__, "seccomp_profile", seccomp_profile)
         if windows_options is not None:
             pulumi.set(__self__, "windows_options", windows_options)
 
@@ -16002,6 +16137,18 @@ class ClusterProvisionSpecPodSpecInitContainersSecurityContextArgs:
     @se_linux_options.setter
     def se_linux_options(self, value: Optional[pulumi.Input['ClusterProvisionSpecPodSpecInitContainersSecurityContextSeLinuxOptionsArgs']]):
         pulumi.set(self, "se_linux_options", value)
+
+    @property
+    @pulumi.getter(name="seccompProfile")
+    def seccomp_profile(self) -> Optional[pulumi.Input['ClusterProvisionSpecPodSpecInitContainersSecurityContextSeccompProfileArgs']]:
+        """
+        The seccomp options to use by this container. If seccomp options are provided at both the pod & container level, the container options override the pod options.
+        """
+        return pulumi.get(self, "seccomp_profile")
+
+    @seccomp_profile.setter
+    def seccomp_profile(self, value: Optional[pulumi.Input['ClusterProvisionSpecPodSpecInitContainersSecurityContextSeccompProfileArgs']]):
+        pulumi.set(self, "seccomp_profile", value)
 
     @property
     @pulumi.getter(name="windowsOptions")
@@ -16126,6 +16273,47 @@ class ClusterProvisionSpecPodSpecInitContainersSecurityContextSeLinuxOptionsArgs
     @user.setter
     def user(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "user", value)
+
+
+@pulumi.input_type
+class ClusterProvisionSpecPodSpecInitContainersSecurityContextSeccompProfileArgs:
+    def __init__(__self__, *,
+                 type: pulumi.Input[str],
+                 localhost_profile: Optional[pulumi.Input[str]] = None):
+        """
+        The seccomp options to use by this container. If seccomp options are provided at both the pod & container level, the container options override the pod options.
+        :param pulumi.Input[str] type: type indicates which kind of seccomp profile will be applied. Valid options are: 
+                Localhost - a profile defined in a file on the node should be used. RuntimeDefault - the container runtime default profile should be used. Unconfined - no profile should be applied.
+        :param pulumi.Input[str] localhost_profile: localhostProfile indicates a profile defined in a file on the node should be used. The profile must be preconfigured on the node to work. Must be a descending path, relative to the kubelet's configured seccomp profile location. Must only be set if type is "Localhost".
+        """
+        pulumi.set(__self__, "type", type)
+        if localhost_profile is not None:
+            pulumi.set(__self__, "localhost_profile", localhost_profile)
+
+    @property
+    @pulumi.getter
+    def type(self) -> pulumi.Input[str]:
+        """
+        type indicates which kind of seccomp profile will be applied. Valid options are: 
+         Localhost - a profile defined in a file on the node should be used. RuntimeDefault - the container runtime default profile should be used. Unconfined - no profile should be applied.
+        """
+        return pulumi.get(self, "type")
+
+    @type.setter
+    def type(self, value: pulumi.Input[str]):
+        pulumi.set(self, "type", value)
+
+    @property
+    @pulumi.getter(name="localhostProfile")
+    def localhost_profile(self) -> Optional[pulumi.Input[str]]:
+        """
+        localhostProfile indicates a profile defined in a file on the node should be used. The profile must be preconfigured on the node to work. Must be a descending path, relative to the kubelet's configured seccomp profile location. Must only be set if type is "Localhost".
+        """
+        return pulumi.get(self, "localhost_profile")
+
+    @localhost_profile.setter
+    def localhost_profile(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "localhost_profile", value)
 
 
 @pulumi.input_type
@@ -16692,6 +16880,7 @@ class ClusterProvisionSpecPodSpecSecurityContextArgs:
                  run_as_non_root: Optional[pulumi.Input[bool]] = None,
                  run_as_user: Optional[pulumi.Input[int]] = None,
                  se_linux_options: Optional[pulumi.Input['ClusterProvisionSpecPodSpecSecurityContextSeLinuxOptionsArgs']] = None,
+                 seccomp_profile: Optional[pulumi.Input['ClusterProvisionSpecPodSpecSecurityContextSeccompProfileArgs']] = None,
                  supplemental_groups: Optional[pulumi.Input[Sequence[pulumi.Input[int]]]] = None,
                  sysctls: Optional[pulumi.Input[Sequence[pulumi.Input['ClusterProvisionSpecPodSpecSecurityContextSysctlsArgs']]]] = None,
                  windows_options: Optional[pulumi.Input['ClusterProvisionSpecPodSpecSecurityContextWindowsOptionsArgs']] = None):
@@ -16705,6 +16894,7 @@ class ClusterProvisionSpecPodSpecSecurityContextArgs:
         :param pulumi.Input[bool] run_as_non_root: Indicates that the container must run as a non-root user. If true, the Kubelet will validate the image at runtime to ensure that it does not run as UID 0 (root) and fail to start the container if it does. If unset or false, no such validation will be performed. May also be set in SecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
         :param pulumi.Input[int] run_as_user: The UID to run the entrypoint of the container process. Defaults to user specified in image metadata if unspecified. May also be set in SecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence for that container.
         :param pulumi.Input['ClusterProvisionSpecPodSpecSecurityContextSeLinuxOptionsArgs'] se_linux_options: The SELinux context to be applied to all containers. If unspecified, the container runtime will allocate a random SELinux context for each container.  May also be set in SecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence for that container.
+        :param pulumi.Input['ClusterProvisionSpecPodSpecSecurityContextSeccompProfileArgs'] seccomp_profile: The seccomp options to use by the containers in this pod.
         :param pulumi.Input[Sequence[pulumi.Input[int]]] supplemental_groups: A list of groups applied to the first process run in each container, in addition to the container's primary GID.  If unspecified, no groups will be added to any container.
         :param pulumi.Input[Sequence[pulumi.Input['ClusterProvisionSpecPodSpecSecurityContextSysctlsArgs']]] sysctls: Sysctls hold a list of namespaced sysctls used for the pod. Pods with unsupported sysctls (by the container runtime) might fail to launch.
         :param pulumi.Input['ClusterProvisionSpecPodSpecSecurityContextWindowsOptionsArgs'] windows_options: The Windows specific settings applied to all containers. If unspecified, the options within a container's SecurityContext will be used. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
@@ -16721,6 +16911,8 @@ class ClusterProvisionSpecPodSpecSecurityContextArgs:
             pulumi.set(__self__, "run_as_user", run_as_user)
         if se_linux_options is not None:
             pulumi.set(__self__, "se_linux_options", se_linux_options)
+        if seccomp_profile is not None:
+            pulumi.set(__self__, "seccomp_profile", seccomp_profile)
         if supplemental_groups is not None:
             pulumi.set(__self__, "supplemental_groups", supplemental_groups)
         if sysctls is not None:
@@ -16801,6 +16993,18 @@ class ClusterProvisionSpecPodSpecSecurityContextArgs:
     @se_linux_options.setter
     def se_linux_options(self, value: Optional[pulumi.Input['ClusterProvisionSpecPodSpecSecurityContextSeLinuxOptionsArgs']]):
         pulumi.set(self, "se_linux_options", value)
+
+    @property
+    @pulumi.getter(name="seccompProfile")
+    def seccomp_profile(self) -> Optional[pulumi.Input['ClusterProvisionSpecPodSpecSecurityContextSeccompProfileArgs']]:
+        """
+        The seccomp options to use by the containers in this pod.
+        """
+        return pulumi.get(self, "seccomp_profile")
+
+    @seccomp_profile.setter
+    def seccomp_profile(self, value: Optional[pulumi.Input['ClusterProvisionSpecPodSpecSecurityContextSeccompProfileArgs']]):
+        pulumi.set(self, "seccomp_profile", value)
 
     @property
     @pulumi.getter(name="supplementalGroups")
@@ -16909,6 +17113,47 @@ class ClusterProvisionSpecPodSpecSecurityContextSeLinuxOptionsArgs:
     @user.setter
     def user(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "user", value)
+
+
+@pulumi.input_type
+class ClusterProvisionSpecPodSpecSecurityContextSeccompProfileArgs:
+    def __init__(__self__, *,
+                 type: pulumi.Input[str],
+                 localhost_profile: Optional[pulumi.Input[str]] = None):
+        """
+        The seccomp options to use by the containers in this pod.
+        :param pulumi.Input[str] type: type indicates which kind of seccomp profile will be applied. Valid options are: 
+                Localhost - a profile defined in a file on the node should be used. RuntimeDefault - the container runtime default profile should be used. Unconfined - no profile should be applied.
+        :param pulumi.Input[str] localhost_profile: localhostProfile indicates a profile defined in a file on the node should be used. The profile must be preconfigured on the node to work. Must be a descending path, relative to the kubelet's configured seccomp profile location. Must only be set if type is "Localhost".
+        """
+        pulumi.set(__self__, "type", type)
+        if localhost_profile is not None:
+            pulumi.set(__self__, "localhost_profile", localhost_profile)
+
+    @property
+    @pulumi.getter
+    def type(self) -> pulumi.Input[str]:
+        """
+        type indicates which kind of seccomp profile will be applied. Valid options are: 
+         Localhost - a profile defined in a file on the node should be used. RuntimeDefault - the container runtime default profile should be used. Unconfined - no profile should be applied.
+        """
+        return pulumi.get(self, "type")
+
+    @type.setter
+    def type(self, value: pulumi.Input[str]):
+        pulumi.set(self, "type", value)
+
+    @property
+    @pulumi.getter(name="localhostProfile")
+    def localhost_profile(self) -> Optional[pulumi.Input[str]]:
+        """
+        localhostProfile indicates a profile defined in a file on the node should be used. The profile must be preconfigured on the node to work. Must be a descending path, relative to the kubelet's configured seccomp profile location. Must only be set if type is "Localhost".
+        """
+        return pulumi.get(self, "localhost_profile")
+
+    @localhost_profile.setter
+    def localhost_profile(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "localhost_profile", value)
 
 
 @pulumi.input_type
@@ -17102,9 +17347,9 @@ class ClusterProvisionSpecPodSpecTopologySpreadConstraintsArgs:
                  label_selector: Optional[pulumi.Input['ClusterProvisionSpecPodSpecTopologySpreadConstraintsLabelSelectorArgs']] = None):
         """
         TopologySpreadConstraint specifies how to spread matching pods among the given topology.
-        :param pulumi.Input[int] max_skew: MaxSkew describes the degree to which pods may be unevenly distributed. It's the maximum permitted difference between the number of matching pods in any two topology domains of a given topology type. For example, in a 3-zone cluster, MaxSkew is set to 1, and pods with the same labelSelector spread as 1/1/0: | zone1 | zone2 | zone3 | |   P   |   P   |       | - if MaxSkew is 1, incoming pod can only be scheduled to zone3 to become 1/1/1; scheduling it onto zone1(zone2) would make the ActualSkew(2-0) on zone1(zone2) violate MaxSkew(1). - if MaxSkew is 2, incoming pod can be scheduled onto any zone. It's a required field. Default value is 1 and 0 is not allowed.
+        :param pulumi.Input[int] max_skew: MaxSkew describes the degree to which pods may be unevenly distributed. When `whenUnsatisfiable=DoNotSchedule`, it is the maximum permitted difference between the number of matching pods in the target topology and the global minimum. For example, in a 3-zone cluster, MaxSkew is set to 1, and pods with the same labelSelector spread as 1/1/0: | zone1 | zone2 | zone3 | |   P   |   P   |       | - if MaxSkew is 1, incoming pod can only be scheduled to zone3 to become 1/1/1; scheduling it onto zone1(zone2) would make the ActualSkew(2-0) on zone1(zone2) violate MaxSkew(1). - if MaxSkew is 2, incoming pod can be scheduled onto any zone. When `whenUnsatisfiable=ScheduleAnyway`, it is used to give higher precedence to topologies that satisfy it. It's a required field. Default value is 1 and 0 is not allowed.
         :param pulumi.Input[str] topology_key: TopologyKey is the key of node labels. Nodes that have a label with this key and identical values are considered to be in the same topology. We consider each <key, value> as a "bucket", and try to put balanced number of pods into each bucket. It's a required field.
-        :param pulumi.Input[str] when_unsatisfiable: WhenUnsatisfiable indicates how to deal with a pod if it doesn't satisfy the spread constraint. - DoNotSchedule (default) tells the scheduler not to schedule it - ScheduleAnyway tells the scheduler to still schedule it It's considered as "Unsatisfiable" if and only if placing incoming pod on any topology violates "MaxSkew". For example, in a 3-zone cluster, MaxSkew is set to 1, and pods with the same labelSelector spread as 3/1/1: | zone1 | zone2 | zone3 | | P P P |   P   |   P   | If WhenUnsatisfiable is set to DoNotSchedule, incoming pod can only be scheduled to zone2(zone3) to become 3/2/1(3/1/2) as ActualSkew(2-1) on zone2(zone3) satisfies MaxSkew(1). In other words, the cluster can still be imbalanced, but scheduler won't make it *more* imbalanced. It's a required field.
+        :param pulumi.Input[str] when_unsatisfiable: WhenUnsatisfiable indicates how to deal with a pod if it doesn't satisfy the spread constraint. - DoNotSchedule (default) tells the scheduler not to schedule it. - ScheduleAnyway tells the scheduler to schedule the pod in any location,   but giving higher precedence to topologies that would help reduce the   skew. A constraint is considered "Unsatisfiable" for an incoming pod if and only if every possible node assigment for that pod would violate "MaxSkew" on some topology. For example, in a 3-zone cluster, MaxSkew is set to 1, and pods with the same labelSelector spread as 3/1/1: | zone1 | zone2 | zone3 | | P P P |   P   |   P   | If WhenUnsatisfiable is set to DoNotSchedule, incoming pod can only be scheduled to zone2(zone3) to become 3/2/1(3/1/2) as ActualSkew(2-1) on zone2(zone3) satisfies MaxSkew(1). In other words, the cluster can still be imbalanced, but scheduler won't make it *more* imbalanced. It's a required field.
         :param pulumi.Input['ClusterProvisionSpecPodSpecTopologySpreadConstraintsLabelSelectorArgs'] label_selector: LabelSelector is used to find matching pods. Pods that match this label selector are counted to determine the number of pods in their corresponding topology domain.
         """
         pulumi.set(__self__, "max_skew", max_skew)
@@ -17117,7 +17362,7 @@ class ClusterProvisionSpecPodSpecTopologySpreadConstraintsArgs:
     @pulumi.getter(name="maxSkew")
     def max_skew(self) -> pulumi.Input[int]:
         """
-        MaxSkew describes the degree to which pods may be unevenly distributed. It's the maximum permitted difference between the number of matching pods in any two topology domains of a given topology type. For example, in a 3-zone cluster, MaxSkew is set to 1, and pods with the same labelSelector spread as 1/1/0: | zone1 | zone2 | zone3 | |   P   |   P   |       | - if MaxSkew is 1, incoming pod can only be scheduled to zone3 to become 1/1/1; scheduling it onto zone1(zone2) would make the ActualSkew(2-0) on zone1(zone2) violate MaxSkew(1). - if MaxSkew is 2, incoming pod can be scheduled onto any zone. It's a required field. Default value is 1 and 0 is not allowed.
+        MaxSkew describes the degree to which pods may be unevenly distributed. When `whenUnsatisfiable=DoNotSchedule`, it is the maximum permitted difference between the number of matching pods in the target topology and the global minimum. For example, in a 3-zone cluster, MaxSkew is set to 1, and pods with the same labelSelector spread as 1/1/0: | zone1 | zone2 | zone3 | |   P   |   P   |       | - if MaxSkew is 1, incoming pod can only be scheduled to zone3 to become 1/1/1; scheduling it onto zone1(zone2) would make the ActualSkew(2-0) on zone1(zone2) violate MaxSkew(1). - if MaxSkew is 2, incoming pod can be scheduled onto any zone. When `whenUnsatisfiable=ScheduleAnyway`, it is used to give higher precedence to topologies that satisfy it. It's a required field. Default value is 1 and 0 is not allowed.
         """
         return pulumi.get(self, "max_skew")
 
@@ -17141,7 +17386,7 @@ class ClusterProvisionSpecPodSpecTopologySpreadConstraintsArgs:
     @pulumi.getter(name="whenUnsatisfiable")
     def when_unsatisfiable(self) -> pulumi.Input[str]:
         """
-        WhenUnsatisfiable indicates how to deal with a pod if it doesn't satisfy the spread constraint. - DoNotSchedule (default) tells the scheduler not to schedule it - ScheduleAnyway tells the scheduler to still schedule it It's considered as "Unsatisfiable" if and only if placing incoming pod on any topology violates "MaxSkew". For example, in a 3-zone cluster, MaxSkew is set to 1, and pods with the same labelSelector spread as 3/1/1: | zone1 | zone2 | zone3 | | P P P |   P   |   P   | If WhenUnsatisfiable is set to DoNotSchedule, incoming pod can only be scheduled to zone2(zone3) to become 3/2/1(3/1/2) as ActualSkew(2-1) on zone2(zone3) satisfies MaxSkew(1). In other words, the cluster can still be imbalanced, but scheduler won't make it *more* imbalanced. It's a required field.
+        WhenUnsatisfiable indicates how to deal with a pod if it doesn't satisfy the spread constraint. - DoNotSchedule (default) tells the scheduler not to schedule it. - ScheduleAnyway tells the scheduler to schedule the pod in any location,   but giving higher precedence to topologies that would help reduce the   skew. A constraint is considered "Unsatisfiable" for an incoming pod if and only if every possible node assigment for that pod would violate "MaxSkew" on some topology. For example, in a 3-zone cluster, MaxSkew is set to 1, and pods with the same labelSelector spread as 3/1/1: | zone1 | zone2 | zone3 | | P P P |   P   |   P   | If WhenUnsatisfiable is set to DoNotSchedule, incoming pod can only be scheduled to zone2(zone3) to become 3/2/1(3/1/2) as ActualSkew(2-1) on zone2(zone3) satisfies MaxSkew(1). In other words, the cluster can still be imbalanced, but scheduler won't make it *more* imbalanced. It's a required field.
         """
         return pulumi.get(self, "when_unsatisfiable")
 
@@ -17269,6 +17514,7 @@ class ClusterProvisionSpecPodSpecVolumesArgs:
                  csi: Optional[pulumi.Input['ClusterProvisionSpecPodSpecVolumesCsiArgs']] = None,
                  downward_api: Optional[pulumi.Input['ClusterProvisionSpecPodSpecVolumesDownwardAPIArgs']] = None,
                  empty_dir: Optional[pulumi.Input['ClusterProvisionSpecPodSpecVolumesEmptyDirArgs']] = None,
+                 ephemeral: Optional[pulumi.Input['ClusterProvisionSpecPodSpecVolumesEphemeralArgs']] = None,
                  fc: Optional[pulumi.Input['ClusterProvisionSpecPodSpecVolumesFcArgs']] = None,
                  flex_volume: Optional[pulumi.Input['ClusterProvisionSpecPodSpecVolumesFlexVolumeArgs']] = None,
                  flocker: Optional[pulumi.Input['ClusterProvisionSpecPodSpecVolumesFlockerArgs']] = None,
@@ -17297,9 +17543,14 @@ class ClusterProvisionSpecPodSpecVolumesArgs:
         :param pulumi.Input['ClusterProvisionSpecPodSpecVolumesCephfsArgs'] cephfs: CephFS represents a Ceph FS mount on the host that shares a pod's lifetime
         :param pulumi.Input['ClusterProvisionSpecPodSpecVolumesCinderArgs'] cinder: Cinder represents a cinder volume attached and mounted on kubelets host machine. More info: https://examples.k8s.io/mysql-cinder-pd/README.md
         :param pulumi.Input['ClusterProvisionSpecPodSpecVolumesConfigMapArgs'] config_map: ConfigMap represents a configMap that should populate this volume
-        :param pulumi.Input['ClusterProvisionSpecPodSpecVolumesCsiArgs'] csi: CSI (Container Storage Interface) represents storage that is handled by an external CSI driver (Alpha feature).
+        :param pulumi.Input['ClusterProvisionSpecPodSpecVolumesCsiArgs'] csi: CSI (Container Storage Interface) represents ephemeral storage that is handled by certain external CSI drivers (Beta feature).
         :param pulumi.Input['ClusterProvisionSpecPodSpecVolumesDownwardAPIArgs'] downward_api: DownwardAPI represents downward API about the pod that should populate this volume
         :param pulumi.Input['ClusterProvisionSpecPodSpecVolumesEmptyDirArgs'] empty_dir: EmptyDir represents a temporary directory that shares a pod's lifetime. More info: https://kubernetes.io/docs/concepts/storage/volumes#emptydir
+        :param pulumi.Input['ClusterProvisionSpecPodSpecVolumesEphemeralArgs'] ephemeral: Ephemeral represents a volume that is handled by a cluster storage driver (Alpha feature). The volume's lifecycle is tied to the pod that defines it - it will be created before the pod starts, and deleted when the pod is removed. 
+                Use this if: a) the volume is only needed while the pod runs, b) features of normal volumes like restoring from snapshot or capacity    tracking are needed, c) the storage driver is specified through a storage class, and d) the storage driver supports dynamic volume provisioning through    a PersistentVolumeClaim (see EphemeralVolumeSource for more    information on the connection between this volume type    and PersistentVolumeClaim). 
+                Use PersistentVolumeClaim or one of the vendor-specific APIs for volumes that persist for longer than the lifecycle of an individual pod. 
+                Use CSI for light-weight local ephemeral volumes if the CSI driver is meant to be used that way - see the documentation of the driver for more information. 
+                A pod can use both types of ephemeral volumes and persistent volumes at the same time.
         :param pulumi.Input['ClusterProvisionSpecPodSpecVolumesFcArgs'] fc: FC represents a Fibre Channel resource that is attached to a kubelet's host machine and then exposed to the pod.
         :param pulumi.Input['ClusterProvisionSpecPodSpecVolumesFlexVolumeArgs'] flex_volume: FlexVolume represents a generic volume resource that is provisioned/attached using an exec based plugin.
         :param pulumi.Input['ClusterProvisionSpecPodSpecVolumesFlockerArgs'] flocker: Flocker represents a Flocker volume attached to a kubelet's host machine. This depends on the Flocker control service being running
@@ -17339,6 +17590,8 @@ class ClusterProvisionSpecPodSpecVolumesArgs:
             pulumi.set(__self__, "downward_api", downward_api)
         if empty_dir is not None:
             pulumi.set(__self__, "empty_dir", empty_dir)
+        if ephemeral is not None:
+            pulumi.set(__self__, "ephemeral", ephemeral)
         if fc is not None:
             pulumi.set(__self__, "fc", fc)
         if flex_volume is not None:
@@ -17466,7 +17719,7 @@ class ClusterProvisionSpecPodSpecVolumesArgs:
     @pulumi.getter
     def csi(self) -> Optional[pulumi.Input['ClusterProvisionSpecPodSpecVolumesCsiArgs']]:
         """
-        CSI (Container Storage Interface) represents storage that is handled by an external CSI driver (Alpha feature).
+        CSI (Container Storage Interface) represents ephemeral storage that is handled by certain external CSI drivers (Beta feature).
         """
         return pulumi.get(self, "csi")
 
@@ -17497,6 +17750,22 @@ class ClusterProvisionSpecPodSpecVolumesArgs:
     @empty_dir.setter
     def empty_dir(self, value: Optional[pulumi.Input['ClusterProvisionSpecPodSpecVolumesEmptyDirArgs']]):
         pulumi.set(self, "empty_dir", value)
+
+    @property
+    @pulumi.getter
+    def ephemeral(self) -> Optional[pulumi.Input['ClusterProvisionSpecPodSpecVolumesEphemeralArgs']]:
+        """
+        Ephemeral represents a volume that is handled by a cluster storage driver (Alpha feature). The volume's lifecycle is tied to the pod that defines it - it will be created before the pod starts, and deleted when the pod is removed. 
+         Use this if: a) the volume is only needed while the pod runs, b) features of normal volumes like restoring from snapshot or capacity    tracking are needed, c) the storage driver is specified through a storage class, and d) the storage driver supports dynamic volume provisioning through    a PersistentVolumeClaim (see EphemeralVolumeSource for more    information on the connection between this volume type    and PersistentVolumeClaim). 
+         Use PersistentVolumeClaim or one of the vendor-specific APIs for volumes that persist for longer than the lifecycle of an individual pod. 
+         Use CSI for light-weight local ephemeral volumes if the CSI driver is meant to be used that way - see the documentation of the driver for more information. 
+         A pod can use both types of ephemeral volumes and persistent volumes at the same time.
+        """
+        return pulumi.get(self, "ephemeral")
+
+    @ephemeral.setter
+    def ephemeral(self, value: Optional[pulumi.Input['ClusterProvisionSpecPodSpecVolumesEphemeralArgs']]):
+        pulumi.set(self, "ephemeral", value)
 
     @property
     @pulumi.getter
@@ -18185,7 +18454,7 @@ class ClusterProvisionSpecPodSpecVolumesConfigMapArgs:
                  optional: Optional[pulumi.Input[bool]] = None):
         """
         ConfigMap represents a configMap that should populate this volume
-        :param pulumi.Input[int] default_mode: Optional: mode bits to use on created files by default. Must be a value between 0 and 0777. Defaults to 0644. Directories within the path are not affected by this setting. This might be in conflict with other options that affect the file mode, like fsGroup, and the result can be other mode bits set.
+        :param pulumi.Input[int] default_mode: Optional: mode bits used to set permissions on created files by default. Must be an octal value between 0000 and 0777 or a decimal value between 0 and 511. YAML accepts both octal and decimal values, JSON requires decimal values for mode bits. Defaults to 0644. Directories within the path are not affected by this setting. This might be in conflict with other options that affect the file mode, like fsGroup, and the result can be other mode bits set.
         :param pulumi.Input[Sequence[pulumi.Input['ClusterProvisionSpecPodSpecVolumesConfigMapItemsArgs']]] items: If unspecified, each key-value pair in the Data field of the referenced ConfigMap will be projected into the volume as a file whose name is the key and content is the value. If specified, the listed keys will be projected into the specified paths, and unlisted keys will not be present. If a key is specified which is not present in the ConfigMap, the volume setup will error unless it is marked optional. Paths must be relative and may not contain the '..' path or start with '..'.
         :param pulumi.Input[str] name: Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
         :param pulumi.Input[bool] optional: Specify whether the ConfigMap or its keys must be defined
@@ -18203,7 +18472,7 @@ class ClusterProvisionSpecPodSpecVolumesConfigMapArgs:
     @pulumi.getter(name="defaultMode")
     def default_mode(self) -> Optional[pulumi.Input[int]]:
         """
-        Optional: mode bits to use on created files by default. Must be a value between 0 and 0777. Defaults to 0644. Directories within the path are not affected by this setting. This might be in conflict with other options that affect the file mode, like fsGroup, and the result can be other mode bits set.
+        Optional: mode bits used to set permissions on created files by default. Must be an octal value between 0000 and 0777 or a decimal value between 0 and 511. YAML accepts both octal and decimal values, JSON requires decimal values for mode bits. Defaults to 0644. Directories within the path are not affected by this setting. This might be in conflict with other options that affect the file mode, like fsGroup, and the result can be other mode bits set.
         """
         return pulumi.get(self, "default_mode")
 
@@ -18258,7 +18527,7 @@ class ClusterProvisionSpecPodSpecVolumesConfigMapItemsArgs:
         Maps a string key to a path within a volume.
         :param pulumi.Input[str] key: The key to project.
         :param pulumi.Input[str] path: The relative path of the file to map the key to. May not be an absolute path. May not contain the path element '..'. May not start with the string '..'.
-        :param pulumi.Input[int] mode: Optional: mode bits to use on this file, must be a value between 0 and 0777. If not specified, the volume defaultMode will be used. This might be in conflict with other options that affect the file mode, like fsGroup, and the result can be other mode bits set.
+        :param pulumi.Input[int] mode: Optional: mode bits used to set permissions on this file. Must be an octal value between 0000 and 0777 or a decimal value between 0 and 511. YAML accepts both octal and decimal values, JSON requires decimal values for mode bits. If not specified, the volume defaultMode will be used. This might be in conflict with other options that affect the file mode, like fsGroup, and the result can be other mode bits set.
         """
         pulumi.set(__self__, "key", key)
         pulumi.set(__self__, "path", path)
@@ -18293,7 +18562,7 @@ class ClusterProvisionSpecPodSpecVolumesConfigMapItemsArgs:
     @pulumi.getter
     def mode(self) -> Optional[pulumi.Input[int]]:
         """
-        Optional: mode bits to use on this file, must be a value between 0 and 0777. If not specified, the volume defaultMode will be used. This might be in conflict with other options that affect the file mode, like fsGroup, and the result can be other mode bits set.
+        Optional: mode bits used to set permissions on this file. Must be an octal value between 0000 and 0777 or a decimal value between 0 and 511. YAML accepts both octal and decimal values, JSON requires decimal values for mode bits. If not specified, the volume defaultMode will be used. This might be in conflict with other options that affect the file mode, like fsGroup, and the result can be other mode bits set.
         """
         return pulumi.get(self, "mode")
 
@@ -18311,7 +18580,7 @@ class ClusterProvisionSpecPodSpecVolumesCsiArgs:
                  read_only: Optional[pulumi.Input[bool]] = None,
                  volume_attributes: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None):
         """
-        CSI (Container Storage Interface) represents storage that is handled by an external CSI driver (Alpha feature).
+        CSI (Container Storage Interface) represents ephemeral storage that is handled by certain external CSI drivers (Beta feature).
         :param pulumi.Input[str] driver: Driver is the name of the CSI driver that handles this volume. Consult with your admin for the correct name as registered in the cluster.
         :param pulumi.Input[str] fs_type: Filesystem type to mount. Ex. "ext4", "xfs", "ntfs". If not provided, the empty value is passed to the associated CSI driver which will determine the default filesystem to apply.
         :param pulumi.Input['ClusterProvisionSpecPodSpecVolumesCsiNodePublishSecretRefArgs'] node_publish_secret_ref: NodePublishSecretRef is a reference to the secret object containing sensitive information to pass to the CSI driver to complete the CSI NodePublishVolume and NodeUnpublishVolume calls. This field is optional, and  may be empty if no secret is required. If the secret object contains more than one secret, all secret references are passed.
@@ -18420,7 +18689,7 @@ class ClusterProvisionSpecPodSpecVolumesDownwardAPIArgs:
                  items: Optional[pulumi.Input[Sequence[pulumi.Input['ClusterProvisionSpecPodSpecVolumesDownwardAPIItemsArgs']]]] = None):
         """
         DownwardAPI represents downward API about the pod that should populate this volume
-        :param pulumi.Input[int] default_mode: Optional: mode bits to use on created files by default. Must be a value between 0 and 0777. Defaults to 0644. Directories within the path are not affected by this setting. This might be in conflict with other options that affect the file mode, like fsGroup, and the result can be other mode bits set.
+        :param pulumi.Input[int] default_mode: Optional: mode bits to use on created files by default. Must be a Optional: mode bits used to set permissions on created files by default. Must be an octal value between 0000 and 0777 or a decimal value between 0 and 511. YAML accepts both octal and decimal values, JSON requires decimal values for mode bits. Defaults to 0644. Directories within the path are not affected by this setting. This might be in conflict with other options that affect the file mode, like fsGroup, and the result can be other mode bits set.
         :param pulumi.Input[Sequence[pulumi.Input['ClusterProvisionSpecPodSpecVolumesDownwardAPIItemsArgs']]] items: Items is a list of downward API volume file
         """
         if default_mode is not None:
@@ -18432,7 +18701,7 @@ class ClusterProvisionSpecPodSpecVolumesDownwardAPIArgs:
     @pulumi.getter(name="defaultMode")
     def default_mode(self) -> Optional[pulumi.Input[int]]:
         """
-        Optional: mode bits to use on created files by default. Must be a value between 0 and 0777. Defaults to 0644. Directories within the path are not affected by this setting. This might be in conflict with other options that affect the file mode, like fsGroup, and the result can be other mode bits set.
+        Optional: mode bits to use on created files by default. Must be a Optional: mode bits used to set permissions on created files by default. Must be an octal value between 0000 and 0777 or a decimal value between 0 and 511. YAML accepts both octal and decimal values, JSON requires decimal values for mode bits. Defaults to 0644. Directories within the path are not affected by this setting. This might be in conflict with other options that affect the file mode, like fsGroup, and the result can be other mode bits set.
         """
         return pulumi.get(self, "default_mode")
 
@@ -18464,7 +18733,7 @@ class ClusterProvisionSpecPodSpecVolumesDownwardAPIItemsArgs:
         DownwardAPIVolumeFile represents information to create the file containing the pod field
         :param pulumi.Input[str] path: Required: Path is  the relative path name of the file to be created. Must not be absolute or contain the '..' path. Must be utf-8 encoded. The first item of the relative path must not start with '..'
         :param pulumi.Input['ClusterProvisionSpecPodSpecVolumesDownwardAPIItemsFieldRefArgs'] field_ref: Required: Selects a field of the pod: only annotations, labels, name and namespace are supported.
-        :param pulumi.Input[int] mode: Optional: mode bits to use on this file, must be a value between 0 and 0777. If not specified, the volume defaultMode will be used. This might be in conflict with other options that affect the file mode, like fsGroup, and the result can be other mode bits set.
+        :param pulumi.Input[int] mode: Optional: mode bits used to set permissions on this file, must be an octal value between 0000 and 0777 or a decimal value between 0 and 511. YAML accepts both octal and decimal values, JSON requires decimal values for mode bits. If not specified, the volume defaultMode will be used. This might be in conflict with other options that affect the file mode, like fsGroup, and the result can be other mode bits set.
         :param pulumi.Input['ClusterProvisionSpecPodSpecVolumesDownwardAPIItemsResourceFieldRefArgs'] resource_field_ref: Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, requests.cpu and requests.memory) are currently supported.
         """
         pulumi.set(__self__, "path", path)
@@ -18503,7 +18772,7 @@ class ClusterProvisionSpecPodSpecVolumesDownwardAPIItemsArgs:
     @pulumi.getter
     def mode(self) -> Optional[pulumi.Input[int]]:
         """
-        Optional: mode bits to use on this file, must be a value between 0 and 0777. If not specified, the volume defaultMode will be used. This might be in conflict with other options that affect the file mode, like fsGroup, and the result can be other mode bits set.
+        Optional: mode bits used to set permissions on this file, must be an octal value between 0000 and 0777 or a decimal value between 0 and 511. YAML accepts both octal and decimal values, JSON requires decimal values for mode bits. If not specified, the volume defaultMode will be used. This might be in conflict with other options that affect the file mode, like fsGroup, and the result can be other mode bits set.
         """
         return pulumi.get(self, "mode")
 
@@ -18656,6 +18925,406 @@ class ClusterProvisionSpecPodSpecVolumesEmptyDirArgs:
     @size_limit.setter
     def size_limit(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "size_limit", value)
+
+
+@pulumi.input_type
+class ClusterProvisionSpecPodSpecVolumesEphemeralArgs:
+    def __init__(__self__, *,
+                 read_only: Optional[pulumi.Input[bool]] = None,
+                 volume_claim_template: Optional[pulumi.Input['ClusterProvisionSpecPodSpecVolumesEphemeralVolumeClaimTemplateArgs']] = None):
+        """
+        Ephemeral represents a volume that is handled by a cluster storage driver (Alpha feature). The volume's lifecycle is tied to the pod that defines it - it will be created before the pod starts, and deleted when the pod is removed. 
+         Use this if: a) the volume is only needed while the pod runs, b) features of normal volumes like restoring from snapshot or capacity    tracking are needed, c) the storage driver is specified through a storage class, and d) the storage driver supports dynamic volume provisioning through    a PersistentVolumeClaim (see EphemeralVolumeSource for more    information on the connection between this volume type    and PersistentVolumeClaim). 
+         Use PersistentVolumeClaim or one of the vendor-specific APIs for volumes that persist for longer than the lifecycle of an individual pod. 
+         Use CSI for light-weight local ephemeral volumes if the CSI driver is meant to be used that way - see the documentation of the driver for more information. 
+         A pod can use both types of ephemeral volumes and persistent volumes at the same time.
+        :param pulumi.Input[bool] read_only: Specifies a read-only configuration for the volume. Defaults to false (read/write).
+        :param pulumi.Input['ClusterProvisionSpecPodSpecVolumesEphemeralVolumeClaimTemplateArgs'] volume_claim_template: Will be used to create a stand-alone PVC to provision the volume. The pod in which this EphemeralVolumeSource is embedded will be the owner of the PVC, i.e. the PVC will be deleted together with the pod.  The name of the PVC will be `<pod name>-<volume name>` where `<volume name>` is the name from the `PodSpec.Volumes` array entry. Pod validation will reject the pod if the concatenated name is not valid for a PVC (for example, too long). 
+                An existing PVC with that name that is not owned by the pod will *not* be used for the pod to avoid using an unrelated volume by mistake. Starting the pod is then blocked until the unrelated PVC is removed. If such a pre-created PVC is meant to be used by the pod, the PVC has to updated with an owner reference to the pod once the pod exists. Normally this should not be necessary, but it may be useful when manually reconstructing a broken cluster. 
+                This field is read-only and no changes will be made by Kubernetes to the PVC after it has been created. 
+                Required, must not be nil.
+        """
+        if read_only is not None:
+            pulumi.set(__self__, "read_only", read_only)
+        if volume_claim_template is not None:
+            pulumi.set(__self__, "volume_claim_template", volume_claim_template)
+
+    @property
+    @pulumi.getter(name="readOnly")
+    def read_only(self) -> Optional[pulumi.Input[bool]]:
+        """
+        Specifies a read-only configuration for the volume. Defaults to false (read/write).
+        """
+        return pulumi.get(self, "read_only")
+
+    @read_only.setter
+    def read_only(self, value: Optional[pulumi.Input[bool]]):
+        pulumi.set(self, "read_only", value)
+
+    @property
+    @pulumi.getter(name="volumeClaimTemplate")
+    def volume_claim_template(self) -> Optional[pulumi.Input['ClusterProvisionSpecPodSpecVolumesEphemeralVolumeClaimTemplateArgs']]:
+        """
+        Will be used to create a stand-alone PVC to provision the volume. The pod in which this EphemeralVolumeSource is embedded will be the owner of the PVC, i.e. the PVC will be deleted together with the pod.  The name of the PVC will be `<pod name>-<volume name>` where `<volume name>` is the name from the `PodSpec.Volumes` array entry. Pod validation will reject the pod if the concatenated name is not valid for a PVC (for example, too long). 
+         An existing PVC with that name that is not owned by the pod will *not* be used for the pod to avoid using an unrelated volume by mistake. Starting the pod is then blocked until the unrelated PVC is removed. If such a pre-created PVC is meant to be used by the pod, the PVC has to updated with an owner reference to the pod once the pod exists. Normally this should not be necessary, but it may be useful when manually reconstructing a broken cluster. 
+         This field is read-only and no changes will be made by Kubernetes to the PVC after it has been created. 
+         Required, must not be nil.
+        """
+        return pulumi.get(self, "volume_claim_template")
+
+    @volume_claim_template.setter
+    def volume_claim_template(self, value: Optional[pulumi.Input['ClusterProvisionSpecPodSpecVolumesEphemeralVolumeClaimTemplateArgs']]):
+        pulumi.set(self, "volume_claim_template", value)
+
+
+@pulumi.input_type
+class ClusterProvisionSpecPodSpecVolumesEphemeralVolumeClaimTemplateArgs:
+    def __init__(__self__, *,
+                 spec: pulumi.Input['ClusterProvisionSpecPodSpecVolumesEphemeralVolumeClaimTemplateSpecArgs'],
+                 metadata: Optional[pulumi.Input[Mapping[str, Any]]] = None):
+        """
+        Will be used to create a stand-alone PVC to provision the volume. The pod in which this EphemeralVolumeSource is embedded will be the owner of the PVC, i.e. the PVC will be deleted together with the pod.  The name of the PVC will be `<pod name>-<volume name>` where `<volume name>` is the name from the `PodSpec.Volumes` array entry. Pod validation will reject the pod if the concatenated name is not valid for a PVC (for example, too long). 
+         An existing PVC with that name that is not owned by the pod will *not* be used for the pod to avoid using an unrelated volume by mistake. Starting the pod is then blocked until the unrelated PVC is removed. If such a pre-created PVC is meant to be used by the pod, the PVC has to updated with an owner reference to the pod once the pod exists. Normally this should not be necessary, but it may be useful when manually reconstructing a broken cluster. 
+         This field is read-only and no changes will be made by Kubernetes to the PVC after it has been created. 
+         Required, must not be nil.
+        :param pulumi.Input['ClusterProvisionSpecPodSpecVolumesEphemeralVolumeClaimTemplateSpecArgs'] spec: The specification for the PersistentVolumeClaim. The entire content is copied unchanged into the PVC that gets created from this template. The same fields as in a PersistentVolumeClaim are also valid here.
+        :param pulumi.Input[Mapping[str, Any]] metadata: May contain labels and annotations that will be copied into the PVC when creating it. No other fields are allowed and will be rejected during validation.
+        """
+        pulumi.set(__self__, "spec", spec)
+        if metadata is not None:
+            pulumi.set(__self__, "metadata", metadata)
+
+    @property
+    @pulumi.getter
+    def spec(self) -> pulumi.Input['ClusterProvisionSpecPodSpecVolumesEphemeralVolumeClaimTemplateSpecArgs']:
+        """
+        The specification for the PersistentVolumeClaim. The entire content is copied unchanged into the PVC that gets created from this template. The same fields as in a PersistentVolumeClaim are also valid here.
+        """
+        return pulumi.get(self, "spec")
+
+    @spec.setter
+    def spec(self, value: pulumi.Input['ClusterProvisionSpecPodSpecVolumesEphemeralVolumeClaimTemplateSpecArgs']):
+        pulumi.set(self, "spec", value)
+
+    @property
+    @pulumi.getter
+    def metadata(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
+        """
+        May contain labels and annotations that will be copied into the PVC when creating it. No other fields are allowed and will be rejected during validation.
+        """
+        return pulumi.get(self, "metadata")
+
+    @metadata.setter
+    def metadata(self, value: Optional[pulumi.Input[Mapping[str, Any]]]):
+        pulumi.set(self, "metadata", value)
+
+
+@pulumi.input_type
+class ClusterProvisionSpecPodSpecVolumesEphemeralVolumeClaimTemplateSpecArgs:
+    def __init__(__self__, *,
+                 access_modes: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
+                 data_source: Optional[pulumi.Input['ClusterProvisionSpecPodSpecVolumesEphemeralVolumeClaimTemplateSpecDataSourceArgs']] = None,
+                 resources: Optional[pulumi.Input['ClusterProvisionSpecPodSpecVolumesEphemeralVolumeClaimTemplateSpecResourcesArgs']] = None,
+                 selector: Optional[pulumi.Input['ClusterProvisionSpecPodSpecVolumesEphemeralVolumeClaimTemplateSpecSelectorArgs']] = None,
+                 storage_class_name: Optional[pulumi.Input[str]] = None,
+                 volume_mode: Optional[pulumi.Input[str]] = None,
+                 volume_name: Optional[pulumi.Input[str]] = None):
+        """
+        The specification for the PersistentVolumeClaim. The entire content is copied unchanged into the PVC that gets created from this template. The same fields as in a PersistentVolumeClaim are also valid here.
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] access_modes: AccessModes contains the desired access modes the volume should have. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#access-modes-1
+        :param pulumi.Input['ClusterProvisionSpecPodSpecVolumesEphemeralVolumeClaimTemplateSpecDataSourceArgs'] data_source: This field can be used to specify either: * An existing VolumeSnapshot object (snapshot.storage.k8s.io/VolumeSnapshot - Beta) * An existing PVC (PersistentVolumeClaim) * An existing custom resource/object that implements data population (Alpha) In order to use VolumeSnapshot object types, the appropriate feature gate must be enabled (VolumeSnapshotDataSource or AnyVolumeDataSource) If the provisioner or an external controller can support the specified data source, it will create a new volume based on the contents of the specified data source. If the specified data source is not supported, the volume will not be created and the failure will be reported as an event. In the future, we plan to support more data source types and the behavior of the provisioner may change.
+        :param pulumi.Input['ClusterProvisionSpecPodSpecVolumesEphemeralVolumeClaimTemplateSpecResourcesArgs'] resources: Resources represents the minimum resources the volume should have. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#resources
+        :param pulumi.Input['ClusterProvisionSpecPodSpecVolumesEphemeralVolumeClaimTemplateSpecSelectorArgs'] selector: A label query over volumes to consider for binding.
+        :param pulumi.Input[str] storage_class_name: Name of the StorageClass required by the claim. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#class-1
+        :param pulumi.Input[str] volume_mode: volumeMode defines what type of volume is required by the claim. Value of Filesystem is implied when not included in claim spec.
+        :param pulumi.Input[str] volume_name: VolumeName is the binding reference to the PersistentVolume backing this claim.
+        """
+        if access_modes is not None:
+            pulumi.set(__self__, "access_modes", access_modes)
+        if data_source is not None:
+            pulumi.set(__self__, "data_source", data_source)
+        if resources is not None:
+            pulumi.set(__self__, "resources", resources)
+        if selector is not None:
+            pulumi.set(__self__, "selector", selector)
+        if storage_class_name is not None:
+            pulumi.set(__self__, "storage_class_name", storage_class_name)
+        if volume_mode is not None:
+            pulumi.set(__self__, "volume_mode", volume_mode)
+        if volume_name is not None:
+            pulumi.set(__self__, "volume_name", volume_name)
+
+    @property
+    @pulumi.getter(name="accessModes")
+    def access_modes(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
+        """
+        AccessModes contains the desired access modes the volume should have. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#access-modes-1
+        """
+        return pulumi.get(self, "access_modes")
+
+    @access_modes.setter
+    def access_modes(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]):
+        pulumi.set(self, "access_modes", value)
+
+    @property
+    @pulumi.getter(name="dataSource")
+    def data_source(self) -> Optional[pulumi.Input['ClusterProvisionSpecPodSpecVolumesEphemeralVolumeClaimTemplateSpecDataSourceArgs']]:
+        """
+        This field can be used to specify either: * An existing VolumeSnapshot object (snapshot.storage.k8s.io/VolumeSnapshot - Beta) * An existing PVC (PersistentVolumeClaim) * An existing custom resource/object that implements data population (Alpha) In order to use VolumeSnapshot object types, the appropriate feature gate must be enabled (VolumeSnapshotDataSource or AnyVolumeDataSource) If the provisioner or an external controller can support the specified data source, it will create a new volume based on the contents of the specified data source. If the specified data source is not supported, the volume will not be created and the failure will be reported as an event. In the future, we plan to support more data source types and the behavior of the provisioner may change.
+        """
+        return pulumi.get(self, "data_source")
+
+    @data_source.setter
+    def data_source(self, value: Optional[pulumi.Input['ClusterProvisionSpecPodSpecVolumesEphemeralVolumeClaimTemplateSpecDataSourceArgs']]):
+        pulumi.set(self, "data_source", value)
+
+    @property
+    @pulumi.getter
+    def resources(self) -> Optional[pulumi.Input['ClusterProvisionSpecPodSpecVolumesEphemeralVolumeClaimTemplateSpecResourcesArgs']]:
+        """
+        Resources represents the minimum resources the volume should have. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#resources
+        """
+        return pulumi.get(self, "resources")
+
+    @resources.setter
+    def resources(self, value: Optional[pulumi.Input['ClusterProvisionSpecPodSpecVolumesEphemeralVolumeClaimTemplateSpecResourcesArgs']]):
+        pulumi.set(self, "resources", value)
+
+    @property
+    @pulumi.getter
+    def selector(self) -> Optional[pulumi.Input['ClusterProvisionSpecPodSpecVolumesEphemeralVolumeClaimTemplateSpecSelectorArgs']]:
+        """
+        A label query over volumes to consider for binding.
+        """
+        return pulumi.get(self, "selector")
+
+    @selector.setter
+    def selector(self, value: Optional[pulumi.Input['ClusterProvisionSpecPodSpecVolumesEphemeralVolumeClaimTemplateSpecSelectorArgs']]):
+        pulumi.set(self, "selector", value)
+
+    @property
+    @pulumi.getter(name="storageClassName")
+    def storage_class_name(self) -> Optional[pulumi.Input[str]]:
+        """
+        Name of the StorageClass required by the claim. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#class-1
+        """
+        return pulumi.get(self, "storage_class_name")
+
+    @storage_class_name.setter
+    def storage_class_name(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "storage_class_name", value)
+
+    @property
+    @pulumi.getter(name="volumeMode")
+    def volume_mode(self) -> Optional[pulumi.Input[str]]:
+        """
+        volumeMode defines what type of volume is required by the claim. Value of Filesystem is implied when not included in claim spec.
+        """
+        return pulumi.get(self, "volume_mode")
+
+    @volume_mode.setter
+    def volume_mode(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "volume_mode", value)
+
+    @property
+    @pulumi.getter(name="volumeName")
+    def volume_name(self) -> Optional[pulumi.Input[str]]:
+        """
+        VolumeName is the binding reference to the PersistentVolume backing this claim.
+        """
+        return pulumi.get(self, "volume_name")
+
+    @volume_name.setter
+    def volume_name(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "volume_name", value)
+
+
+@pulumi.input_type
+class ClusterProvisionSpecPodSpecVolumesEphemeralVolumeClaimTemplateSpecDataSourceArgs:
+    def __init__(__self__, *,
+                 kind: pulumi.Input[str],
+                 name: pulumi.Input[str],
+                 api_group: Optional[pulumi.Input[str]] = None):
+        """
+        This field can be used to specify either: * An existing VolumeSnapshot object (snapshot.storage.k8s.io/VolumeSnapshot - Beta) * An existing PVC (PersistentVolumeClaim) * An existing custom resource/object that implements data population (Alpha) In order to use VolumeSnapshot object types, the appropriate feature gate must be enabled (VolumeSnapshotDataSource or AnyVolumeDataSource) If the provisioner or an external controller can support the specified data source, it will create a new volume based on the contents of the specified data source. If the specified data source is not supported, the volume will not be created and the failure will be reported as an event. In the future, we plan to support more data source types and the behavior of the provisioner may change.
+        :param pulumi.Input[str] kind: Kind is the type of resource being referenced
+        :param pulumi.Input[str] name: Name is the name of resource being referenced
+        :param pulumi.Input[str] api_group: APIGroup is the group for the resource being referenced. If APIGroup is not specified, the specified Kind must be in the core API group. For any other third-party types, APIGroup is required.
+        """
+        pulumi.set(__self__, "kind", kind)
+        pulumi.set(__self__, "name", name)
+        if api_group is not None:
+            pulumi.set(__self__, "api_group", api_group)
+
+    @property
+    @pulumi.getter
+    def kind(self) -> pulumi.Input[str]:
+        """
+        Kind is the type of resource being referenced
+        """
+        return pulumi.get(self, "kind")
+
+    @kind.setter
+    def kind(self, value: pulumi.Input[str]):
+        pulumi.set(self, "kind", value)
+
+    @property
+    @pulumi.getter
+    def name(self) -> pulumi.Input[str]:
+        """
+        Name is the name of resource being referenced
+        """
+        return pulumi.get(self, "name")
+
+    @name.setter
+    def name(self, value: pulumi.Input[str]):
+        pulumi.set(self, "name", value)
+
+    @property
+    @pulumi.getter(name="apiGroup")
+    def api_group(self) -> Optional[pulumi.Input[str]]:
+        """
+        APIGroup is the group for the resource being referenced. If APIGroup is not specified, the specified Kind must be in the core API group. For any other third-party types, APIGroup is required.
+        """
+        return pulumi.get(self, "api_group")
+
+    @api_group.setter
+    def api_group(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "api_group", value)
+
+
+@pulumi.input_type
+class ClusterProvisionSpecPodSpecVolumesEphemeralVolumeClaimTemplateSpecResourcesArgs:
+    def __init__(__self__, *,
+                 limits: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
+                 requests: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None):
+        """
+        Resources represents the minimum resources the volume should have. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#resources
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] limits: Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] requests: Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
+        """
+        if limits is not None:
+            pulumi.set(__self__, "limits", limits)
+        if requests is not None:
+            pulumi.set(__self__, "requests", requests)
+
+    @property
+    @pulumi.getter
+    def limits(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+        """
+        Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
+        """
+        return pulumi.get(self, "limits")
+
+    @limits.setter
+    def limits(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
+        pulumi.set(self, "limits", value)
+
+    @property
+    @pulumi.getter
+    def requests(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+        """
+        Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
+        """
+        return pulumi.get(self, "requests")
+
+    @requests.setter
+    def requests(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
+        pulumi.set(self, "requests", value)
+
+
+@pulumi.input_type
+class ClusterProvisionSpecPodSpecVolumesEphemeralVolumeClaimTemplateSpecSelectorArgs:
+    def __init__(__self__, *,
+                 match_expressions: Optional[pulumi.Input[Sequence[pulumi.Input['ClusterProvisionSpecPodSpecVolumesEphemeralVolumeClaimTemplateSpecSelectorMatchExpressionsArgs']]]] = None,
+                 match_labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None):
+        """
+        A label query over volumes to consider for binding.
+        :param pulumi.Input[Sequence[pulumi.Input['ClusterProvisionSpecPodSpecVolumesEphemeralVolumeClaimTemplateSpecSelectorMatchExpressionsArgs']]] match_expressions: matchExpressions is a list of label selector requirements. The requirements are ANDed.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] match_labels: matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+        """
+        if match_expressions is not None:
+            pulumi.set(__self__, "match_expressions", match_expressions)
+        if match_labels is not None:
+            pulumi.set(__self__, "match_labels", match_labels)
+
+    @property
+    @pulumi.getter(name="matchExpressions")
+    def match_expressions(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['ClusterProvisionSpecPodSpecVolumesEphemeralVolumeClaimTemplateSpecSelectorMatchExpressionsArgs']]]]:
+        """
+        matchExpressions is a list of label selector requirements. The requirements are ANDed.
+        """
+        return pulumi.get(self, "match_expressions")
+
+    @match_expressions.setter
+    def match_expressions(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['ClusterProvisionSpecPodSpecVolumesEphemeralVolumeClaimTemplateSpecSelectorMatchExpressionsArgs']]]]):
+        pulumi.set(self, "match_expressions", value)
+
+    @property
+    @pulumi.getter(name="matchLabels")
+    def match_labels(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+        """
+        matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+        """
+        return pulumi.get(self, "match_labels")
+
+    @match_labels.setter
+    def match_labels(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
+        pulumi.set(self, "match_labels", value)
+
+
+@pulumi.input_type
+class ClusterProvisionSpecPodSpecVolumesEphemeralVolumeClaimTemplateSpecSelectorMatchExpressionsArgs:
+    def __init__(__self__, *,
+                 key: pulumi.Input[str],
+                 operator: pulumi.Input[str],
+                 values: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None):
+        """
+        A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+        :param pulumi.Input[str] key: key is the label key that the selector applies to.
+        :param pulumi.Input[str] operator: operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] values: values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+        """
+        pulumi.set(__self__, "key", key)
+        pulumi.set(__self__, "operator", operator)
+        if values is not None:
+            pulumi.set(__self__, "values", values)
+
+    @property
+    @pulumi.getter
+    def key(self) -> pulumi.Input[str]:
+        """
+        key is the label key that the selector applies to.
+        """
+        return pulumi.get(self, "key")
+
+    @key.setter
+    def key(self, value: pulumi.Input[str]):
+        pulumi.set(self, "key", value)
+
+    @property
+    @pulumi.getter
+    def operator(self) -> pulumi.Input[str]:
+        """
+        operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+        """
+        return pulumi.get(self, "operator")
+
+    @operator.setter
+    def operator(self, value: pulumi.Input[str]):
+        pulumi.set(self, "operator", value)
+
+    @property
+    @pulumi.getter
+    def values(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
+        """
+        values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+        """
+        return pulumi.get(self, "values")
+
+    @values.setter
+    def values(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]):
+        pulumi.set(self, "values", value)
 
 
 @pulumi.input_type
@@ -19516,7 +20185,7 @@ class ClusterProvisionSpecPodSpecVolumesProjectedArgs:
         """
         Items for all in one resources secrets, configmaps, and downward API
         :param pulumi.Input[Sequence[pulumi.Input['ClusterProvisionSpecPodSpecVolumesProjectedSourcesArgs']]] sources: list of volume projections
-        :param pulumi.Input[int] default_mode: Mode bits to use on created files by default. Must be a value between 0 and 0777. Directories within the path are not affected by this setting. This might be in conflict with other options that affect the file mode, like fsGroup, and the result can be other mode bits set.
+        :param pulumi.Input[int] default_mode: Mode bits used to set permissions on created files by default. Must be an octal value between 0000 and 0777 or a decimal value between 0 and 511. YAML accepts both octal and decimal values, JSON requires decimal values for mode bits. Directories within the path are not affected by this setting. This might be in conflict with other options that affect the file mode, like fsGroup, and the result can be other mode bits set.
         """
         pulumi.set(__self__, "sources", sources)
         if default_mode is not None:
@@ -19538,7 +20207,7 @@ class ClusterProvisionSpecPodSpecVolumesProjectedArgs:
     @pulumi.getter(name="defaultMode")
     def default_mode(self) -> Optional[pulumi.Input[int]]:
         """
-        Mode bits to use on created files by default. Must be a value between 0 and 0777. Directories within the path are not affected by this setting. This might be in conflict with other options that affect the file mode, like fsGroup, and the result can be other mode bits set.
+        Mode bits used to set permissions on created files by default. Must be an octal value between 0000 and 0777 or a decimal value between 0 and 511. YAML accepts both octal and decimal values, JSON requires decimal values for mode bits. Directories within the path are not affected by this setting. This might be in conflict with other options that affect the file mode, like fsGroup, and the result can be other mode bits set.
         """
         return pulumi.get(self, "default_mode")
 
@@ -19685,7 +20354,7 @@ class ClusterProvisionSpecPodSpecVolumesProjectedSourcesConfigMapItemsArgs:
         Maps a string key to a path within a volume.
         :param pulumi.Input[str] key: The key to project.
         :param pulumi.Input[str] path: The relative path of the file to map the key to. May not be an absolute path. May not contain the path element '..'. May not start with the string '..'.
-        :param pulumi.Input[int] mode: Optional: mode bits to use on this file, must be a value between 0 and 0777. If not specified, the volume defaultMode will be used. This might be in conflict with other options that affect the file mode, like fsGroup, and the result can be other mode bits set.
+        :param pulumi.Input[int] mode: Optional: mode bits used to set permissions on this file. Must be an octal value between 0000 and 0777 or a decimal value between 0 and 511. YAML accepts both octal and decimal values, JSON requires decimal values for mode bits. If not specified, the volume defaultMode will be used. This might be in conflict with other options that affect the file mode, like fsGroup, and the result can be other mode bits set.
         """
         pulumi.set(__self__, "key", key)
         pulumi.set(__self__, "path", path)
@@ -19720,7 +20389,7 @@ class ClusterProvisionSpecPodSpecVolumesProjectedSourcesConfigMapItemsArgs:
     @pulumi.getter
     def mode(self) -> Optional[pulumi.Input[int]]:
         """
-        Optional: mode bits to use on this file, must be a value between 0 and 0777. If not specified, the volume defaultMode will be used. This might be in conflict with other options that affect the file mode, like fsGroup, and the result can be other mode bits set.
+        Optional: mode bits used to set permissions on this file. Must be an octal value between 0000 and 0777 or a decimal value between 0 and 511. YAML accepts both octal and decimal values, JSON requires decimal values for mode bits. If not specified, the volume defaultMode will be used. This might be in conflict with other options that affect the file mode, like fsGroup, and the result can be other mode bits set.
         """
         return pulumi.get(self, "mode")
 
@@ -19764,7 +20433,7 @@ class ClusterProvisionSpecPodSpecVolumesProjectedSourcesDownwardAPIItemsArgs:
         DownwardAPIVolumeFile represents information to create the file containing the pod field
         :param pulumi.Input[str] path: Required: Path is  the relative path name of the file to be created. Must not be absolute or contain the '..' path. Must be utf-8 encoded. The first item of the relative path must not start with '..'
         :param pulumi.Input['ClusterProvisionSpecPodSpecVolumesProjectedSourcesDownwardAPIItemsFieldRefArgs'] field_ref: Required: Selects a field of the pod: only annotations, labels, name and namespace are supported.
-        :param pulumi.Input[int] mode: Optional: mode bits to use on this file, must be a value between 0 and 0777. If not specified, the volume defaultMode will be used. This might be in conflict with other options that affect the file mode, like fsGroup, and the result can be other mode bits set.
+        :param pulumi.Input[int] mode: Optional: mode bits used to set permissions on this file, must be an octal value between 0000 and 0777 or a decimal value between 0 and 511. YAML accepts both octal and decimal values, JSON requires decimal values for mode bits. If not specified, the volume defaultMode will be used. This might be in conflict with other options that affect the file mode, like fsGroup, and the result can be other mode bits set.
         :param pulumi.Input['ClusterProvisionSpecPodSpecVolumesProjectedSourcesDownwardAPIItemsResourceFieldRefArgs'] resource_field_ref: Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, requests.cpu and requests.memory) are currently supported.
         """
         pulumi.set(__self__, "path", path)
@@ -19803,7 +20472,7 @@ class ClusterProvisionSpecPodSpecVolumesProjectedSourcesDownwardAPIItemsArgs:
     @pulumi.getter
     def mode(self) -> Optional[pulumi.Input[int]]:
         """
-        Optional: mode bits to use on this file, must be a value between 0 and 0777. If not specified, the volume defaultMode will be used. This might be in conflict with other options that affect the file mode, like fsGroup, and the result can be other mode bits set.
+        Optional: mode bits used to set permissions on this file, must be an octal value between 0000 and 0777 or a decimal value between 0 and 511. YAML accepts both octal and decimal values, JSON requires decimal values for mode bits. If not specified, the volume defaultMode will be used. This might be in conflict with other options that affect the file mode, like fsGroup, and the result can be other mode bits set.
         """
         return pulumi.get(self, "mode")
 
@@ -19984,7 +20653,7 @@ class ClusterProvisionSpecPodSpecVolumesProjectedSourcesSecretItemsArgs:
         Maps a string key to a path within a volume.
         :param pulumi.Input[str] key: The key to project.
         :param pulumi.Input[str] path: The relative path of the file to map the key to. May not be an absolute path. May not contain the path element '..'. May not start with the string '..'.
-        :param pulumi.Input[int] mode: Optional: mode bits to use on this file, must be a value between 0 and 0777. If not specified, the volume defaultMode will be used. This might be in conflict with other options that affect the file mode, like fsGroup, and the result can be other mode bits set.
+        :param pulumi.Input[int] mode: Optional: mode bits used to set permissions on this file. Must be an octal value between 0000 and 0777 or a decimal value between 0 and 511. YAML accepts both octal and decimal values, JSON requires decimal values for mode bits. If not specified, the volume defaultMode will be used. This might be in conflict with other options that affect the file mode, like fsGroup, and the result can be other mode bits set.
         """
         pulumi.set(__self__, "key", key)
         pulumi.set(__self__, "path", path)
@@ -20019,7 +20688,7 @@ class ClusterProvisionSpecPodSpecVolumesProjectedSourcesSecretItemsArgs:
     @pulumi.getter
     def mode(self) -> Optional[pulumi.Input[int]]:
         """
-        Optional: mode bits to use on this file, must be a value between 0 and 0777. If not specified, the volume defaultMode will be used. This might be in conflict with other options that affect the file mode, like fsGroup, and the result can be other mode bits set.
+        Optional: mode bits used to set permissions on this file. Must be an octal value between 0000 and 0777 or a decimal value between 0 and 511. YAML accepts both octal and decimal values, JSON requires decimal values for mode bits. If not specified, the volume defaultMode will be used. This might be in conflict with other options that affect the file mode, like fsGroup, and the result can be other mode bits set.
         """
         return pulumi.get(self, "mode")
 
@@ -20541,7 +21210,7 @@ class ClusterProvisionSpecPodSpecVolumesSecretArgs:
                  secret_name: Optional[pulumi.Input[str]] = None):
         """
         Secret represents a secret that should populate this volume. More info: https://kubernetes.io/docs/concepts/storage/volumes#secret
-        :param pulumi.Input[int] default_mode: Optional: mode bits to use on created files by default. Must be a value between 0 and 0777. Defaults to 0644. Directories within the path are not affected by this setting. This might be in conflict with other options that affect the file mode, like fsGroup, and the result can be other mode bits set.
+        :param pulumi.Input[int] default_mode: Optional: mode bits used to set permissions on created files by default. Must be an octal value between 0000 and 0777 or a decimal value between 0 and 511. YAML accepts both octal and decimal values, JSON requires decimal values for mode bits. Defaults to 0644. Directories within the path are not affected by this setting. This might be in conflict with other options that affect the file mode, like fsGroup, and the result can be other mode bits set.
         :param pulumi.Input[Sequence[pulumi.Input['ClusterProvisionSpecPodSpecVolumesSecretItemsArgs']]] items: If unspecified, each key-value pair in the Data field of the referenced Secret will be projected into the volume as a file whose name is the key and content is the value. If specified, the listed keys will be projected into the specified paths, and unlisted keys will not be present. If a key is specified which is not present in the Secret, the volume setup will error unless it is marked optional. Paths must be relative and may not contain the '..' path or start with '..'.
         :param pulumi.Input[bool] optional: Specify whether the Secret or its keys must be defined
         :param pulumi.Input[str] secret_name: Name of the secret in the pod's namespace to use. More info: https://kubernetes.io/docs/concepts/storage/volumes#secret
@@ -20559,7 +21228,7 @@ class ClusterProvisionSpecPodSpecVolumesSecretArgs:
     @pulumi.getter(name="defaultMode")
     def default_mode(self) -> Optional[pulumi.Input[int]]:
         """
-        Optional: mode bits to use on created files by default. Must be a value between 0 and 0777. Defaults to 0644. Directories within the path are not affected by this setting. This might be in conflict with other options that affect the file mode, like fsGroup, and the result can be other mode bits set.
+        Optional: mode bits used to set permissions on created files by default. Must be an octal value between 0000 and 0777 or a decimal value between 0 and 511. YAML accepts both octal and decimal values, JSON requires decimal values for mode bits. Defaults to 0644. Directories within the path are not affected by this setting. This might be in conflict with other options that affect the file mode, like fsGroup, and the result can be other mode bits set.
         """
         return pulumi.get(self, "default_mode")
 
@@ -20614,7 +21283,7 @@ class ClusterProvisionSpecPodSpecVolumesSecretItemsArgs:
         Maps a string key to a path within a volume.
         :param pulumi.Input[str] key: The key to project.
         :param pulumi.Input[str] path: The relative path of the file to map the key to. May not be an absolute path. May not contain the path element '..'. May not start with the string '..'.
-        :param pulumi.Input[int] mode: Optional: mode bits to use on this file, must be a value between 0 and 0777. If not specified, the volume defaultMode will be used. This might be in conflict with other options that affect the file mode, like fsGroup, and the result can be other mode bits set.
+        :param pulumi.Input[int] mode: Optional: mode bits used to set permissions on this file. Must be an octal value between 0000 and 0777 or a decimal value between 0 and 511. YAML accepts both octal and decimal values, JSON requires decimal values for mode bits. If not specified, the volume defaultMode will be used. This might be in conflict with other options that affect the file mode, like fsGroup, and the result can be other mode bits set.
         """
         pulumi.set(__self__, "key", key)
         pulumi.set(__self__, "path", path)
@@ -20649,7 +21318,7 @@ class ClusterProvisionSpecPodSpecVolumesSecretItemsArgs:
     @pulumi.getter
     def mode(self) -> Optional[pulumi.Input[int]]:
         """
-        Optional: mode bits to use on this file, must be a value between 0 and 0777. If not specified, the volume defaultMode will be used. This might be in conflict with other options that affect the file mode, like fsGroup, and the result can be other mode bits set.
+        Optional: mode bits used to set permissions on this file. Must be an octal value between 0000 and 0777 or a decimal value between 0 and 511. YAML accepts both octal and decimal values, JSON requires decimal values for mode bits. If not specified, the volume defaultMode will be used. This might be in conflict with other options that affect the file mode, like fsGroup, and the result can be other mode bits set.
         """
         return pulumi.get(self, "mode")
 
@@ -21929,12 +22598,12 @@ class HiveConfigSpecArgs:
     def __init__(__self__, *,
                  additional_certificate_authorities_secret_ref: Optional[pulumi.Input[Sequence[pulumi.Input['HiveConfigSpecAdditionalCertificateAuthoritiesSecretRefArgs']]]] = None,
                  backup: Optional[pulumi.Input['HiveConfigSpecBackupArgs']] = None,
+                 controllers_config: Optional[pulumi.Input['HiveConfigSpecControllersConfigArgs']] = None,
                  delete_protection: Optional[pulumi.Input[str]] = None,
                  deprovisions_disabled: Optional[pulumi.Input[bool]] = None,
                  disabled_controllers: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  failed_provision_config: Optional[pulumi.Input['HiveConfigSpecFailedProvisionConfigArgs']] = None,
                  global_pull_secret_ref: Optional[pulumi.Input['HiveConfigSpecGlobalPullSecretRefArgs']] = None,
-                 hive_api_enabled: Optional[pulumi.Input[bool]] = None,
                  log_level: Optional[pulumi.Input[str]] = None,
                  maintenance_mode: Optional[pulumi.Input[bool]] = None,
                  managed_domains: Optional[pulumi.Input[Sequence[pulumi.Input['HiveConfigSpecManagedDomainsArgs']]]] = None,
@@ -21944,12 +22613,12 @@ class HiveConfigSpecArgs:
         HiveConfigSpec defines the desired state of Hive
         :param pulumi.Input[Sequence[pulumi.Input['HiveConfigSpecAdditionalCertificateAuthoritiesSecretRefArgs']]] additional_certificate_authorities_secret_ref: AdditionalCertificateAuthoritiesSecretRef is a list of references to secrets in the TargetNamespace that contain an additional Certificate Authority to use when communicating with target clusters. These certificate authorities will be used in addition to any self-signed CA generated by each cluster on installation.
         :param pulumi.Input['HiveConfigSpecBackupArgs'] backup: Backup specifies configuration for backup integration. If absent, backup integration will be disabled.
+        :param pulumi.Input['HiveConfigSpecControllersConfigArgs'] controllers_config: ControllersConfig is used to configure different hive controllers
         :param pulumi.Input[str] delete_protection: DeleteProtection can be set to "enabled" to turn on automatic delete protection for ClusterDeployments. When enabled, Hive will add the "hive.openshift.io/protected-delete" annotation to new ClusterDeployments. Once a ClusterDeployment has been installed, a user must remove the annotation from a ClusterDeployment prior to deleting it.
         :param pulumi.Input[bool] deprovisions_disabled: DeprovisionsDisabled can be set to true to block deprovision jobs from running.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] disabled_controllers: DisabledControllers allows selectively disabling Hive controllers by name. The name of an individual controller matches the name of the controller as seen in the Hive logging output.
         :param pulumi.Input['HiveConfigSpecFailedProvisionConfigArgs'] failed_provision_config: FailedProvisionConfig is used to configure settings related to handling provision failures.
         :param pulumi.Input['HiveConfigSpecGlobalPullSecretRefArgs'] global_pull_secret_ref: GlobalPullSecretRef is used to specify a pull secret that will be used globally by all of the cluster deployments. For each cluster deployment, the contents of GlobalPullSecret will be merged with the specific pull secret for a cluster deployment(if specified), with precedence given to the contents of the pull secret for the cluster deployment. The global pull secret is assumed to be in the TargetNamespace.
-        :param pulumi.Input[bool] hive_api_enabled: HiveAPIEnabled is a boolean controlling whether or not the Hive operator will start up the v1alpha1 aggregated API server.
         :param pulumi.Input[str] log_level: LogLevel is the level of logging to use for the Hive controllers. Acceptable levels, from coarsest to finest, are panic, fatal, error, warn, info, debug, and trace. The default level is info.
         :param pulumi.Input[bool] maintenance_mode: MaintenanceMode can be set to true to disable the hive controllers in situations where we need to ensure nothing is running that will add or act upon finalizers on Hive types. This should rarely be needed. Sets replicas to 0 for the hive-controllers deployment to accomplish this.
         :param pulumi.Input[Sequence[pulumi.Input['HiveConfigSpecManagedDomainsArgs']]] managed_domains: ManagedDomains is the list of DNS domains that are managed by the Hive cluster When specifying 'manageDNS: true' in a ClusterDeployment, the ClusterDeployment's baseDomain should be a direct child of one of these domains, otherwise the ClusterDeployment creation will result in a validation error.
@@ -21960,6 +22629,8 @@ class HiveConfigSpecArgs:
             pulumi.set(__self__, "additional_certificate_authorities_secret_ref", additional_certificate_authorities_secret_ref)
         if backup is not None:
             pulumi.set(__self__, "backup", backup)
+        if controllers_config is not None:
+            pulumi.set(__self__, "controllers_config", controllers_config)
         if delete_protection is not None:
             pulumi.set(__self__, "delete_protection", delete_protection)
         if deprovisions_disabled is not None:
@@ -21970,8 +22641,6 @@ class HiveConfigSpecArgs:
             pulumi.set(__self__, "failed_provision_config", failed_provision_config)
         if global_pull_secret_ref is not None:
             pulumi.set(__self__, "global_pull_secret_ref", global_pull_secret_ref)
-        if hive_api_enabled is not None:
-            pulumi.set(__self__, "hive_api_enabled", hive_api_enabled)
         if log_level is not None:
             pulumi.set(__self__, "log_level", log_level)
         if maintenance_mode is not None:
@@ -22006,6 +22675,18 @@ class HiveConfigSpecArgs:
     @backup.setter
     def backup(self, value: Optional[pulumi.Input['HiveConfigSpecBackupArgs']]):
         pulumi.set(self, "backup", value)
+
+    @property
+    @pulumi.getter(name="controllersConfig")
+    def controllers_config(self) -> Optional[pulumi.Input['HiveConfigSpecControllersConfigArgs']]:
+        """
+        ControllersConfig is used to configure different hive controllers
+        """
+        return pulumi.get(self, "controllers_config")
+
+    @controllers_config.setter
+    def controllers_config(self, value: Optional[pulumi.Input['HiveConfigSpecControllersConfigArgs']]):
+        pulumi.set(self, "controllers_config", value)
 
     @property
     @pulumi.getter(name="deleteProtection")
@@ -22066,18 +22747,6 @@ class HiveConfigSpecArgs:
     @global_pull_secret_ref.setter
     def global_pull_secret_ref(self, value: Optional[pulumi.Input['HiveConfigSpecGlobalPullSecretRefArgs']]):
         pulumi.set(self, "global_pull_secret_ref", value)
-
-    @property
-    @pulumi.getter(name="hiveAPIEnabled")
-    def hive_api_enabled(self) -> Optional[pulumi.Input[bool]]:
-        """
-        HiveAPIEnabled is a boolean controlling whether or not the Hive operator will start up the v1alpha1 aggregated API server.
-        """
-        return pulumi.get(self, "hive_api_enabled")
-
-    @hive_api_enabled.setter
-    def hive_api_enabled(self, value: Optional[pulumi.Input[bool]]):
-        pulumi.set(self, "hive_api_enabled", value)
 
     @property
     @pulumi.getter(name="logLevel")
@@ -22207,13 +22876,17 @@ class HiveConfigSpecBackupArgs:
 @pulumi.input_type
 class HiveConfigSpecBackupVeleroArgs:
     def __init__(__self__, *,
-                 enabled: Optional[pulumi.Input[bool]] = None):
+                 enabled: Optional[pulumi.Input[bool]] = None,
+                 namespace: Optional[pulumi.Input[str]] = None):
         """
         Velero specifies configuration for the Velero backup integration.
         :param pulumi.Input[bool] enabled: Enabled dictates if Velero backup integration is enabled. If not specified, the default is disabled.
+        :param pulumi.Input[str] namespace: Namespace specifies in which namespace velero backup objects should be created. If not specified, the default is a namespace named "velero".
         """
         if enabled is not None:
             pulumi.set(__self__, "enabled", enabled)
+        if namespace is not None:
+            pulumi.set(__self__, "namespace", namespace)
 
     @property
     @pulumi.getter
@@ -22227,29 +22900,438 @@ class HiveConfigSpecBackupVeleroArgs:
     def enabled(self, value: Optional[pulumi.Input[bool]]):
         pulumi.set(self, "enabled", value)
 
+    @property
+    @pulumi.getter
+    def namespace(self) -> Optional[pulumi.Input[str]]:
+        """
+        Namespace specifies in which namespace velero backup objects should be created. If not specified, the default is a namespace named "velero".
+        """
+        return pulumi.get(self, "namespace")
+
+    @namespace.setter
+    def namespace(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "namespace", value)
+
+
+@pulumi.input_type
+class HiveConfigSpecControllersConfigArgs:
+    def __init__(__self__, *,
+                 controllers: Optional[pulumi.Input[Sequence[pulumi.Input['HiveConfigSpecControllersConfigControllersArgs']]]] = None,
+                 default: Optional[pulumi.Input['HiveConfigSpecControllersConfigDefaultArgs']] = None):
+        """
+        ControllersConfig is used to configure different hive controllers
+        :param pulumi.Input[Sequence[pulumi.Input['HiveConfigSpecControllersConfigControllersArgs']]] controllers: Controllers contains a list of configurations for different controllers
+        :param pulumi.Input['HiveConfigSpecControllersConfigDefaultArgs'] default: Default specifies default configuration for all the controllers, can be used to override following coded defaults default for concurrent reconciles is 5 default for client qps is 5 default for client burst is 10 default for queue qps is 10 default for queue burst is 100
+        """
+        if controllers is not None:
+            pulumi.set(__self__, "controllers", controllers)
+        if default is not None:
+            pulumi.set(__self__, "default", default)
+
+    @property
+    @pulumi.getter
+    def controllers(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['HiveConfigSpecControllersConfigControllersArgs']]]]:
+        """
+        Controllers contains a list of configurations for different controllers
+        """
+        return pulumi.get(self, "controllers")
+
+    @controllers.setter
+    def controllers(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['HiveConfigSpecControllersConfigControllersArgs']]]]):
+        pulumi.set(self, "controllers", value)
+
+    @property
+    @pulumi.getter
+    def default(self) -> Optional[pulumi.Input['HiveConfigSpecControllersConfigDefaultArgs']]:
+        """
+        Default specifies default configuration for all the controllers, can be used to override following coded defaults default for concurrent reconciles is 5 default for client qps is 5 default for client burst is 10 default for queue qps is 10 default for queue burst is 100
+        """
+        return pulumi.get(self, "default")
+
+    @default.setter
+    def default(self, value: Optional[pulumi.Input['HiveConfigSpecControllersConfigDefaultArgs']]):
+        pulumi.set(self, "default", value)
+
+
+@pulumi.input_type
+class HiveConfigSpecControllersConfigControllersArgs:
+    def __init__(__self__, *,
+                 config: pulumi.Input['HiveConfigSpecControllersConfigControllersConfigArgs'],
+                 name: pulumi.Input[str]):
+        """
+        SpecificControllerConfig contains the configuration for a specific controller
+        :param pulumi.Input['HiveConfigSpecControllersConfigControllersConfigArgs'] config: ControllerConfig contains the configuration for the controller specified by Name field
+        :param pulumi.Input[str] name: Name specifies the name of the controller
+        """
+        pulumi.set(__self__, "config", config)
+        pulumi.set(__self__, "name", name)
+
+    @property
+    @pulumi.getter
+    def config(self) -> pulumi.Input['HiveConfigSpecControllersConfigControllersConfigArgs']:
+        """
+        ControllerConfig contains the configuration for the controller specified by Name field
+        """
+        return pulumi.get(self, "config")
+
+    @config.setter
+    def config(self, value: pulumi.Input['HiveConfigSpecControllersConfigControllersConfigArgs']):
+        pulumi.set(self, "config", value)
+
+    @property
+    @pulumi.getter
+    def name(self) -> pulumi.Input[str]:
+        """
+        Name specifies the name of the controller
+        """
+        return pulumi.get(self, "name")
+
+    @name.setter
+    def name(self, value: pulumi.Input[str]):
+        pulumi.set(self, "name", value)
+
+
+@pulumi.input_type
+class HiveConfigSpecControllersConfigControllersConfigArgs:
+    def __init__(__self__, *,
+                 client_burst: Optional[pulumi.Input[int]] = None,
+                 client_qps: Optional[pulumi.Input[int]] = None,
+                 concurrent_reconciles: Optional[pulumi.Input[int]] = None,
+                 queue_burst: Optional[pulumi.Input[int]] = None,
+                 queue_qps: Optional[pulumi.Input[int]] = None,
+                 replicas: Optional[pulumi.Input[int]] = None):
+        """
+        ControllerConfig contains the configuration for the controller specified by Name field
+        :param pulumi.Input[int] client_burst: ClientBurst specifies client rate limiter burst for a controller
+        :param pulumi.Input[int] client_qps: ClientQPS specifies client rate limiter QPS for a controller
+        :param pulumi.Input[int] concurrent_reconciles: ConcurrentReconciles specifies number of concurrent reconciles for a controller
+        :param pulumi.Input[int] queue_burst: QueueBurst specifies workqueue rate limiter burst for a controller
+        :param pulumi.Input[int] queue_qps: QueueQPS specifies workqueue rate limiter QPS for a controller
+        :param pulumi.Input[int] replicas: Replicas specifies the number of replicas the specific controller pod should use. This is ONLY for controllers that have been split out into their own pods. This is ignored for all others.
+        """
+        if client_burst is not None:
+            pulumi.set(__self__, "client_burst", client_burst)
+        if client_qps is not None:
+            pulumi.set(__self__, "client_qps", client_qps)
+        if concurrent_reconciles is not None:
+            pulumi.set(__self__, "concurrent_reconciles", concurrent_reconciles)
+        if queue_burst is not None:
+            pulumi.set(__self__, "queue_burst", queue_burst)
+        if queue_qps is not None:
+            pulumi.set(__self__, "queue_qps", queue_qps)
+        if replicas is not None:
+            pulumi.set(__self__, "replicas", replicas)
+
+    @property
+    @pulumi.getter(name="clientBurst")
+    def client_burst(self) -> Optional[pulumi.Input[int]]:
+        """
+        ClientBurst specifies client rate limiter burst for a controller
+        """
+        return pulumi.get(self, "client_burst")
+
+    @client_burst.setter
+    def client_burst(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "client_burst", value)
+
+    @property
+    @pulumi.getter(name="clientQPS")
+    def client_qps(self) -> Optional[pulumi.Input[int]]:
+        """
+        ClientQPS specifies client rate limiter QPS for a controller
+        """
+        return pulumi.get(self, "client_qps")
+
+    @client_qps.setter
+    def client_qps(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "client_qps", value)
+
+    @property
+    @pulumi.getter(name="concurrentReconciles")
+    def concurrent_reconciles(self) -> Optional[pulumi.Input[int]]:
+        """
+        ConcurrentReconciles specifies number of concurrent reconciles for a controller
+        """
+        return pulumi.get(self, "concurrent_reconciles")
+
+    @concurrent_reconciles.setter
+    def concurrent_reconciles(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "concurrent_reconciles", value)
+
+    @property
+    @pulumi.getter(name="queueBurst")
+    def queue_burst(self) -> Optional[pulumi.Input[int]]:
+        """
+        QueueBurst specifies workqueue rate limiter burst for a controller
+        """
+        return pulumi.get(self, "queue_burst")
+
+    @queue_burst.setter
+    def queue_burst(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "queue_burst", value)
+
+    @property
+    @pulumi.getter(name="queueQPS")
+    def queue_qps(self) -> Optional[pulumi.Input[int]]:
+        """
+        QueueQPS specifies workqueue rate limiter QPS for a controller
+        """
+        return pulumi.get(self, "queue_qps")
+
+    @queue_qps.setter
+    def queue_qps(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "queue_qps", value)
+
+    @property
+    @pulumi.getter
+    def replicas(self) -> Optional[pulumi.Input[int]]:
+        """
+        Replicas specifies the number of replicas the specific controller pod should use. This is ONLY for controllers that have been split out into their own pods. This is ignored for all others.
+        """
+        return pulumi.get(self, "replicas")
+
+    @replicas.setter
+    def replicas(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "replicas", value)
+
+
+@pulumi.input_type
+class HiveConfigSpecControllersConfigDefaultArgs:
+    def __init__(__self__, *,
+                 client_burst: Optional[pulumi.Input[int]] = None,
+                 client_qps: Optional[pulumi.Input[int]] = None,
+                 concurrent_reconciles: Optional[pulumi.Input[int]] = None,
+                 queue_burst: Optional[pulumi.Input[int]] = None,
+                 queue_qps: Optional[pulumi.Input[int]] = None,
+                 replicas: Optional[pulumi.Input[int]] = None):
+        """
+        Default specifies default configuration for all the controllers, can be used to override following coded defaults default for concurrent reconciles is 5 default for client qps is 5 default for client burst is 10 default for queue qps is 10 default for queue burst is 100
+        :param pulumi.Input[int] client_burst: ClientBurst specifies client rate limiter burst for a controller
+        :param pulumi.Input[int] client_qps: ClientQPS specifies client rate limiter QPS for a controller
+        :param pulumi.Input[int] concurrent_reconciles: ConcurrentReconciles specifies number of concurrent reconciles for a controller
+        :param pulumi.Input[int] queue_burst: QueueBurst specifies workqueue rate limiter burst for a controller
+        :param pulumi.Input[int] queue_qps: QueueQPS specifies workqueue rate limiter QPS for a controller
+        :param pulumi.Input[int] replicas: Replicas specifies the number of replicas the specific controller pod should use. This is ONLY for controllers that have been split out into their own pods. This is ignored for all others.
+        """
+        if client_burst is not None:
+            pulumi.set(__self__, "client_burst", client_burst)
+        if client_qps is not None:
+            pulumi.set(__self__, "client_qps", client_qps)
+        if concurrent_reconciles is not None:
+            pulumi.set(__self__, "concurrent_reconciles", concurrent_reconciles)
+        if queue_burst is not None:
+            pulumi.set(__self__, "queue_burst", queue_burst)
+        if queue_qps is not None:
+            pulumi.set(__self__, "queue_qps", queue_qps)
+        if replicas is not None:
+            pulumi.set(__self__, "replicas", replicas)
+
+    @property
+    @pulumi.getter(name="clientBurst")
+    def client_burst(self) -> Optional[pulumi.Input[int]]:
+        """
+        ClientBurst specifies client rate limiter burst for a controller
+        """
+        return pulumi.get(self, "client_burst")
+
+    @client_burst.setter
+    def client_burst(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "client_burst", value)
+
+    @property
+    @pulumi.getter(name="clientQPS")
+    def client_qps(self) -> Optional[pulumi.Input[int]]:
+        """
+        ClientQPS specifies client rate limiter QPS for a controller
+        """
+        return pulumi.get(self, "client_qps")
+
+    @client_qps.setter
+    def client_qps(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "client_qps", value)
+
+    @property
+    @pulumi.getter(name="concurrentReconciles")
+    def concurrent_reconciles(self) -> Optional[pulumi.Input[int]]:
+        """
+        ConcurrentReconciles specifies number of concurrent reconciles for a controller
+        """
+        return pulumi.get(self, "concurrent_reconciles")
+
+    @concurrent_reconciles.setter
+    def concurrent_reconciles(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "concurrent_reconciles", value)
+
+    @property
+    @pulumi.getter(name="queueBurst")
+    def queue_burst(self) -> Optional[pulumi.Input[int]]:
+        """
+        QueueBurst specifies workqueue rate limiter burst for a controller
+        """
+        return pulumi.get(self, "queue_burst")
+
+    @queue_burst.setter
+    def queue_burst(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "queue_burst", value)
+
+    @property
+    @pulumi.getter(name="queueQPS")
+    def queue_qps(self) -> Optional[pulumi.Input[int]]:
+        """
+        QueueQPS specifies workqueue rate limiter QPS for a controller
+        """
+        return pulumi.get(self, "queue_qps")
+
+    @queue_qps.setter
+    def queue_qps(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "queue_qps", value)
+
+    @property
+    @pulumi.getter
+    def replicas(self) -> Optional[pulumi.Input[int]]:
+        """
+        Replicas specifies the number of replicas the specific controller pod should use. This is ONLY for controllers that have been split out into their own pods. This is ignored for all others.
+        """
+        return pulumi.get(self, "replicas")
+
+    @replicas.setter
+    def replicas(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "replicas", value)
+
 
 @pulumi.input_type
 class HiveConfigSpecFailedProvisionConfigArgs:
     def __init__(__self__, *,
+                 aws: Optional[pulumi.Input['HiveConfigSpecFailedProvisionConfigAwsArgs']] = None,
                  skip_gather_logs: Optional[pulumi.Input[bool]] = None):
         """
         FailedProvisionConfig is used to configure settings related to handling provision failures.
-        :param pulumi.Input[bool] skip_gather_logs: SkipGatherLogs disables functionality that attempts to gather full logs from the cluster if an installation fails for any reason. The logs will be stored in a persistent volume for up to 7 days.
+        :param pulumi.Input['HiveConfigSpecFailedProvisionConfigAwsArgs'] aws: FailedProvisionAWSConfig contains AWS-specific info to upload log files.
+        :param pulumi.Input[bool] skip_gather_logs: DEPRECATED: This flag is no longer respected and will be removed in the future.
         """
+        if aws is not None:
+            pulumi.set(__self__, "aws", aws)
         if skip_gather_logs is not None:
             pulumi.set(__self__, "skip_gather_logs", skip_gather_logs)
+
+    @property
+    @pulumi.getter
+    def aws(self) -> Optional[pulumi.Input['HiveConfigSpecFailedProvisionConfigAwsArgs']]:
+        """
+        FailedProvisionAWSConfig contains AWS-specific info to upload log files.
+        """
+        return pulumi.get(self, "aws")
+
+    @aws.setter
+    def aws(self, value: Optional[pulumi.Input['HiveConfigSpecFailedProvisionConfigAwsArgs']]):
+        pulumi.set(self, "aws", value)
 
     @property
     @pulumi.getter(name="skipGatherLogs")
     def skip_gather_logs(self) -> Optional[pulumi.Input[bool]]:
         """
-        SkipGatherLogs disables functionality that attempts to gather full logs from the cluster if an installation fails for any reason. The logs will be stored in a persistent volume for up to 7 days.
+        DEPRECATED: This flag is no longer respected and will be removed in the future.
         """
         return pulumi.get(self, "skip_gather_logs")
 
     @skip_gather_logs.setter
     def skip_gather_logs(self, value: Optional[pulumi.Input[bool]]):
         pulumi.set(self, "skip_gather_logs", value)
+
+
+@pulumi.input_type
+class HiveConfigSpecFailedProvisionConfigAwsArgs:
+    def __init__(__self__, *,
+                 credentials_secret_ref: pulumi.Input['HiveConfigSpecFailedProvisionConfigAwsCredentialsSecretRefArgs'],
+                 bucket: Optional[pulumi.Input[str]] = None,
+                 region: Optional[pulumi.Input[str]] = None,
+                 service_endpoint: Optional[pulumi.Input[str]] = None):
+        """
+        FailedProvisionAWSConfig contains AWS-specific info to upload log files.
+        :param pulumi.Input['HiveConfigSpecFailedProvisionConfigAwsCredentialsSecretRefArgs'] credentials_secret_ref: CredentialsSecretRef references a secret in the TargetNamespace that will be used to authenticate with AWS S3. It will need permission to upload logs to S3. Secret should have keys named aws_access_key_id and aws_secret_access_key that contain the AWS credentials. Example Secret:   data:     aws_access_key_id: minio     aws_secret_access_key: minio123
+        :param pulumi.Input[str] bucket: Bucket is the S3 bucket to store the logs in.
+        :param pulumi.Input[str] region: Region is the AWS region to use for S3 operations. This defaults to us-east-1. For AWS China, use cn-northwest-1.
+        :param pulumi.Input[str] service_endpoint: ServiceEndpoint is the url to connect to an S3 compatible provider.
+        """
+        pulumi.set(__self__, "credentials_secret_ref", credentials_secret_ref)
+        if bucket is not None:
+            pulumi.set(__self__, "bucket", bucket)
+        if region is not None:
+            pulumi.set(__self__, "region", region)
+        if service_endpoint is not None:
+            pulumi.set(__self__, "service_endpoint", service_endpoint)
+
+    @property
+    @pulumi.getter(name="credentialsSecretRef")
+    def credentials_secret_ref(self) -> pulumi.Input['HiveConfigSpecFailedProvisionConfigAwsCredentialsSecretRefArgs']:
+        """
+        CredentialsSecretRef references a secret in the TargetNamespace that will be used to authenticate with AWS S3. It will need permission to upload logs to S3. Secret should have keys named aws_access_key_id and aws_secret_access_key that contain the AWS credentials. Example Secret:   data:     aws_access_key_id: minio     aws_secret_access_key: minio123
+        """
+        return pulumi.get(self, "credentials_secret_ref")
+
+    @credentials_secret_ref.setter
+    def credentials_secret_ref(self, value: pulumi.Input['HiveConfigSpecFailedProvisionConfigAwsCredentialsSecretRefArgs']):
+        pulumi.set(self, "credentials_secret_ref", value)
+
+    @property
+    @pulumi.getter
+    def bucket(self) -> Optional[pulumi.Input[str]]:
+        """
+        Bucket is the S3 bucket to store the logs in.
+        """
+        return pulumi.get(self, "bucket")
+
+    @bucket.setter
+    def bucket(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "bucket", value)
+
+    @property
+    @pulumi.getter
+    def region(self) -> Optional[pulumi.Input[str]]:
+        """
+        Region is the AWS region to use for S3 operations. This defaults to us-east-1. For AWS China, use cn-northwest-1.
+        """
+        return pulumi.get(self, "region")
+
+    @region.setter
+    def region(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "region", value)
+
+    @property
+    @pulumi.getter(name="serviceEndpoint")
+    def service_endpoint(self) -> Optional[pulumi.Input[str]]:
+        """
+        ServiceEndpoint is the url to connect to an S3 compatible provider.
+        """
+        return pulumi.get(self, "service_endpoint")
+
+    @service_endpoint.setter
+    def service_endpoint(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "service_endpoint", value)
+
+
+@pulumi.input_type
+class HiveConfigSpecFailedProvisionConfigAwsCredentialsSecretRefArgs:
+    def __init__(__self__, *,
+                 name: Optional[pulumi.Input[str]] = None):
+        """
+        CredentialsSecretRef references a secret in the TargetNamespace that will be used to authenticate with AWS S3. It will need permission to upload logs to S3. Secret should have keys named aws_access_key_id and aws_secret_access_key that contain the AWS credentials. Example Secret:   data:     aws_access_key_id: minio     aws_secret_access_key: minio123
+        :param pulumi.Input[str] name: Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+        """
+        if name is not None:
+            pulumi.set(__self__, "name", name)
+
+    @property
+    @pulumi.getter
+    def name(self) -> Optional[pulumi.Input[str]]:
+        """
+        Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+        """
+        return pulumi.get(self, "name")
+
+    @name.setter
+    def name(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "name", value)
 
 
 @pulumi.input_type
@@ -27331,1018 +28413,6 @@ class SyncIdentityProviderSpecIdentityProvidersRequestHeaderCaArgs:
     @name.setter
     def name(self, value: pulumi.Input[str]):
         pulumi.set(self, "name", value)
-
-
-@pulumi.input_type
-class SyncSetInstanceSpecArgs:
-    def __init__(__self__, *,
-                 cluster_deployment_ref: pulumi.Input['SyncSetInstanceSpecClusterDeploymentRefArgs'],
-                 resource_apply_mode: Optional[pulumi.Input[str]] = None,
-                 selector_sync_set_ref: Optional[pulumi.Input['SyncSetInstanceSpecSelectorSyncSetRefArgs']] = None,
-                 sync_set_hash: Optional[pulumi.Input[str]] = None,
-                 sync_set_ref: Optional[pulumi.Input['SyncSetInstanceSpecSyncSetRefArgs']] = None):
-        """
-        SyncSetInstanceSpec defines the desired state of SyncSetInstance
-        :param pulumi.Input['SyncSetInstanceSpecClusterDeploymentRefArgs'] cluster_deployment_ref: ClusterDeployment is a reference to to the clusterdeployment for this syncsetinstance.
-        :param pulumi.Input[str] resource_apply_mode: ResourceApplyMode indicates if the resource apply mode is "Upsert" (default) or "Sync". ApplyMode "Upsert" indicates create and update. ApplyMode "Sync" indicates create, update and delete.
-        :param pulumi.Input['SyncSetInstanceSpecSelectorSyncSetRefArgs'] selector_sync_set_ref: SelectorSyncSetRef is a reference to the selectorsyncset for this syncsetinstance.
-        :param pulumi.Input[str] sync_set_hash: SyncSetHash is a hash of the contents of the syncset or selectorsyncset spec. Its purpose is to cause a syncset instance update whenever there's a change in its source.
-        :param pulumi.Input['SyncSetInstanceSpecSyncSetRefArgs'] sync_set_ref: SyncSet is a reference to the syncset for this syncsetinstance.
-        """
-        pulumi.set(__self__, "cluster_deployment_ref", cluster_deployment_ref)
-        if resource_apply_mode is not None:
-            pulumi.set(__self__, "resource_apply_mode", resource_apply_mode)
-        if selector_sync_set_ref is not None:
-            pulumi.set(__self__, "selector_sync_set_ref", selector_sync_set_ref)
-        if sync_set_hash is not None:
-            pulumi.set(__self__, "sync_set_hash", sync_set_hash)
-        if sync_set_ref is not None:
-            pulumi.set(__self__, "sync_set_ref", sync_set_ref)
-
-    @property
-    @pulumi.getter(name="clusterDeploymentRef")
-    def cluster_deployment_ref(self) -> pulumi.Input['SyncSetInstanceSpecClusterDeploymentRefArgs']:
-        """
-        ClusterDeployment is a reference to to the clusterdeployment for this syncsetinstance.
-        """
-        return pulumi.get(self, "cluster_deployment_ref")
-
-    @cluster_deployment_ref.setter
-    def cluster_deployment_ref(self, value: pulumi.Input['SyncSetInstanceSpecClusterDeploymentRefArgs']):
-        pulumi.set(self, "cluster_deployment_ref", value)
-
-    @property
-    @pulumi.getter(name="resourceApplyMode")
-    def resource_apply_mode(self) -> Optional[pulumi.Input[str]]:
-        """
-        ResourceApplyMode indicates if the resource apply mode is "Upsert" (default) or "Sync". ApplyMode "Upsert" indicates create and update. ApplyMode "Sync" indicates create, update and delete.
-        """
-        return pulumi.get(self, "resource_apply_mode")
-
-    @resource_apply_mode.setter
-    def resource_apply_mode(self, value: Optional[pulumi.Input[str]]):
-        pulumi.set(self, "resource_apply_mode", value)
-
-    @property
-    @pulumi.getter(name="selectorSyncSetRef")
-    def selector_sync_set_ref(self) -> Optional[pulumi.Input['SyncSetInstanceSpecSelectorSyncSetRefArgs']]:
-        """
-        SelectorSyncSetRef is a reference to the selectorsyncset for this syncsetinstance.
-        """
-        return pulumi.get(self, "selector_sync_set_ref")
-
-    @selector_sync_set_ref.setter
-    def selector_sync_set_ref(self, value: Optional[pulumi.Input['SyncSetInstanceSpecSelectorSyncSetRefArgs']]):
-        pulumi.set(self, "selector_sync_set_ref", value)
-
-    @property
-    @pulumi.getter(name="syncSetHash")
-    def sync_set_hash(self) -> Optional[pulumi.Input[str]]:
-        """
-        SyncSetHash is a hash of the contents of the syncset or selectorsyncset spec. Its purpose is to cause a syncset instance update whenever there's a change in its source.
-        """
-        return pulumi.get(self, "sync_set_hash")
-
-    @sync_set_hash.setter
-    def sync_set_hash(self, value: Optional[pulumi.Input[str]]):
-        pulumi.set(self, "sync_set_hash", value)
-
-    @property
-    @pulumi.getter(name="syncSetRef")
-    def sync_set_ref(self) -> Optional[pulumi.Input['SyncSetInstanceSpecSyncSetRefArgs']]:
-        """
-        SyncSet is a reference to the syncset for this syncsetinstance.
-        """
-        return pulumi.get(self, "sync_set_ref")
-
-    @sync_set_ref.setter
-    def sync_set_ref(self, value: Optional[pulumi.Input['SyncSetInstanceSpecSyncSetRefArgs']]):
-        pulumi.set(self, "sync_set_ref", value)
-
-
-@pulumi.input_type
-class SyncSetInstanceSpecClusterDeploymentRefArgs:
-    def __init__(__self__, *,
-                 name: Optional[pulumi.Input[str]] = None):
-        """
-        ClusterDeployment is a reference to to the clusterdeployment for this syncsetinstance.
-        :param pulumi.Input[str] name: Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
-        """
-        if name is not None:
-            pulumi.set(__self__, "name", name)
-
-    @property
-    @pulumi.getter
-    def name(self) -> Optional[pulumi.Input[str]]:
-        """
-        Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
-        """
-        return pulumi.get(self, "name")
-
-    @name.setter
-    def name(self, value: Optional[pulumi.Input[str]]):
-        pulumi.set(self, "name", value)
-
-
-@pulumi.input_type
-class SyncSetInstanceSpecSelectorSyncSetRefArgs:
-    def __init__(__self__, *,
-                 name: pulumi.Input[str]):
-        """
-        SelectorSyncSetRef is a reference to the selectorsyncset for this syncsetinstance.
-        :param pulumi.Input[str] name: Name is the name of the SelectorSyncSet
-        """
-        pulumi.set(__self__, "name", name)
-
-    @property
-    @pulumi.getter
-    def name(self) -> pulumi.Input[str]:
-        """
-        Name is the name of the SelectorSyncSet
-        """
-        return pulumi.get(self, "name")
-
-    @name.setter
-    def name(self, value: pulumi.Input[str]):
-        pulumi.set(self, "name", value)
-
-
-@pulumi.input_type
-class SyncSetInstanceSpecSyncSetRefArgs:
-    def __init__(__self__, *,
-                 name: Optional[pulumi.Input[str]] = None):
-        """
-        SyncSet is a reference to the syncset for this syncsetinstance.
-        :param pulumi.Input[str] name: Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
-        """
-        if name is not None:
-            pulumi.set(__self__, "name", name)
-
-    @property
-    @pulumi.getter
-    def name(self) -> Optional[pulumi.Input[str]]:
-        """
-        Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
-        """
-        return pulumi.get(self, "name")
-
-    @name.setter
-    def name(self, value: Optional[pulumi.Input[str]]):
-        pulumi.set(self, "name", value)
-
-
-@pulumi.input_type
-class SyncSetInstanceStatusArgs:
-    def __init__(__self__, *,
-                 applied: Optional[pulumi.Input[bool]] = None,
-                 conditions: Optional[pulumi.Input[Sequence[pulumi.Input['SyncSetInstanceStatusConditionsArgs']]]] = None,
-                 first_success_timestamp: Optional[pulumi.Input[str]] = None,
-                 patches: Optional[pulumi.Input[Sequence[pulumi.Input['SyncSetInstanceStatusPatchesArgs']]]] = None,
-                 resources: Optional[pulumi.Input[Sequence[pulumi.Input['SyncSetInstanceStatusResourcesArgs']]]] = None,
-                 secret_references: Optional[pulumi.Input[Sequence[pulumi.Input['SyncSetInstanceStatusSecretReferencesArgs']]]] = None):
-        """
-        SyncSetInstanceStatus defines the observed state of SyncSetInstance
-        :param pulumi.Input[bool] applied: Applied will be true if all resources, patches, or secrets have successfully been applied on last attempt.
-        :param pulumi.Input[Sequence[pulumi.Input['SyncSetInstanceStatusConditionsArgs']]] conditions: Conditions is the list of SyncConditions used to indicate UnknownObject when a resource type cannot be determined from a SyncSet resource.
-        :param pulumi.Input[str] first_success_timestamp: FirstSuccessTimestamp is the time the syncset was successfully applied for the first time.
-        :param pulumi.Input[Sequence[pulumi.Input['SyncSetInstanceStatusPatchesArgs']]] patches: Patches is the list of SyncStatus for patches that have been applied.
-        :param pulumi.Input[Sequence[pulumi.Input['SyncSetInstanceStatusResourcesArgs']]] resources: Resources is the list of SyncStatus for objects that have been synced.
-        :param pulumi.Input[Sequence[pulumi.Input['SyncSetInstanceStatusSecretReferencesArgs']]] secret_references: Secrets is the list of SyncStatus for secrets that have been synced.
-        """
-        if applied is not None:
-            pulumi.set(__self__, "applied", applied)
-        if conditions is not None:
-            pulumi.set(__self__, "conditions", conditions)
-        if first_success_timestamp is not None:
-            pulumi.set(__self__, "first_success_timestamp", first_success_timestamp)
-        if patches is not None:
-            pulumi.set(__self__, "patches", patches)
-        if resources is not None:
-            pulumi.set(__self__, "resources", resources)
-        if secret_references is not None:
-            pulumi.set(__self__, "secret_references", secret_references)
-
-    @property
-    @pulumi.getter
-    def applied(self) -> Optional[pulumi.Input[bool]]:
-        """
-        Applied will be true if all resources, patches, or secrets have successfully been applied on last attempt.
-        """
-        return pulumi.get(self, "applied")
-
-    @applied.setter
-    def applied(self, value: Optional[pulumi.Input[bool]]):
-        pulumi.set(self, "applied", value)
-
-    @property
-    @pulumi.getter
-    def conditions(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['SyncSetInstanceStatusConditionsArgs']]]]:
-        """
-        Conditions is the list of SyncConditions used to indicate UnknownObject when a resource type cannot be determined from a SyncSet resource.
-        """
-        return pulumi.get(self, "conditions")
-
-    @conditions.setter
-    def conditions(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['SyncSetInstanceStatusConditionsArgs']]]]):
-        pulumi.set(self, "conditions", value)
-
-    @property
-    @pulumi.getter(name="firstSuccessTimestamp")
-    def first_success_timestamp(self) -> Optional[pulumi.Input[str]]:
-        """
-        FirstSuccessTimestamp is the time the syncset was successfully applied for the first time.
-        """
-        return pulumi.get(self, "first_success_timestamp")
-
-    @first_success_timestamp.setter
-    def first_success_timestamp(self, value: Optional[pulumi.Input[str]]):
-        pulumi.set(self, "first_success_timestamp", value)
-
-    @property
-    @pulumi.getter
-    def patches(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['SyncSetInstanceStatusPatchesArgs']]]]:
-        """
-        Patches is the list of SyncStatus for patches that have been applied.
-        """
-        return pulumi.get(self, "patches")
-
-    @patches.setter
-    def patches(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['SyncSetInstanceStatusPatchesArgs']]]]):
-        pulumi.set(self, "patches", value)
-
-    @property
-    @pulumi.getter
-    def resources(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['SyncSetInstanceStatusResourcesArgs']]]]:
-        """
-        Resources is the list of SyncStatus for objects that have been synced.
-        """
-        return pulumi.get(self, "resources")
-
-    @resources.setter
-    def resources(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['SyncSetInstanceStatusResourcesArgs']]]]):
-        pulumi.set(self, "resources", value)
-
-    @property
-    @pulumi.getter(name="secretReferences")
-    def secret_references(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['SyncSetInstanceStatusSecretReferencesArgs']]]]:
-        """
-        Secrets is the list of SyncStatus for secrets that have been synced.
-        """
-        return pulumi.get(self, "secret_references")
-
-    @secret_references.setter
-    def secret_references(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['SyncSetInstanceStatusSecretReferencesArgs']]]]):
-        pulumi.set(self, "secret_references", value)
-
-
-@pulumi.input_type
-class SyncSetInstanceStatusConditionsArgs:
-    def __init__(__self__, *,
-                 status: pulumi.Input[str],
-                 type: pulumi.Input[str],
-                 last_probe_time: Optional[pulumi.Input[str]] = None,
-                 last_transition_time: Optional[pulumi.Input[str]] = None,
-                 message: Optional[pulumi.Input[str]] = None,
-                 reason: Optional[pulumi.Input[str]] = None):
-        """
-        SyncCondition is a condition in a SyncStatus
-        :param pulumi.Input[str] status: Status is the status of the condition.
-        :param pulumi.Input[str] type: Type is the type of the condition.
-        :param pulumi.Input[str] last_probe_time: LastProbeTime is the last time we probed the condition.
-        :param pulumi.Input[str] last_transition_time: LastTransitionTime is the last time the condition transitioned from one status to another.
-        :param pulumi.Input[str] message: Message is a human-readable message indicating details about last transition.
-        :param pulumi.Input[str] reason: Reason is a unique, one-word, CamelCase reason for the condition's last transition.
-        """
-        pulumi.set(__self__, "status", status)
-        pulumi.set(__self__, "type", type)
-        if last_probe_time is not None:
-            pulumi.set(__self__, "last_probe_time", last_probe_time)
-        if last_transition_time is not None:
-            pulumi.set(__self__, "last_transition_time", last_transition_time)
-        if message is not None:
-            pulumi.set(__self__, "message", message)
-        if reason is not None:
-            pulumi.set(__self__, "reason", reason)
-
-    @property
-    @pulumi.getter
-    def status(self) -> pulumi.Input[str]:
-        """
-        Status is the status of the condition.
-        """
-        return pulumi.get(self, "status")
-
-    @status.setter
-    def status(self, value: pulumi.Input[str]):
-        pulumi.set(self, "status", value)
-
-    @property
-    @pulumi.getter
-    def type(self) -> pulumi.Input[str]:
-        """
-        Type is the type of the condition.
-        """
-        return pulumi.get(self, "type")
-
-    @type.setter
-    def type(self, value: pulumi.Input[str]):
-        pulumi.set(self, "type", value)
-
-    @property
-    @pulumi.getter(name="lastProbeTime")
-    def last_probe_time(self) -> Optional[pulumi.Input[str]]:
-        """
-        LastProbeTime is the last time we probed the condition.
-        """
-        return pulumi.get(self, "last_probe_time")
-
-    @last_probe_time.setter
-    def last_probe_time(self, value: Optional[pulumi.Input[str]]):
-        pulumi.set(self, "last_probe_time", value)
-
-    @property
-    @pulumi.getter(name="lastTransitionTime")
-    def last_transition_time(self) -> Optional[pulumi.Input[str]]:
-        """
-        LastTransitionTime is the last time the condition transitioned from one status to another.
-        """
-        return pulumi.get(self, "last_transition_time")
-
-    @last_transition_time.setter
-    def last_transition_time(self, value: Optional[pulumi.Input[str]]):
-        pulumi.set(self, "last_transition_time", value)
-
-    @property
-    @pulumi.getter
-    def message(self) -> Optional[pulumi.Input[str]]:
-        """
-        Message is a human-readable message indicating details about last transition.
-        """
-        return pulumi.get(self, "message")
-
-    @message.setter
-    def message(self, value: Optional[pulumi.Input[str]]):
-        pulumi.set(self, "message", value)
-
-    @property
-    @pulumi.getter
-    def reason(self) -> Optional[pulumi.Input[str]]:
-        """
-        Reason is a unique, one-word, CamelCase reason for the condition's last transition.
-        """
-        return pulumi.get(self, "reason")
-
-    @reason.setter
-    def reason(self, value: Optional[pulumi.Input[str]]):
-        pulumi.set(self, "reason", value)
-
-
-@pulumi.input_type
-class SyncSetInstanceStatusPatchesArgs:
-    def __init__(__self__, *,
-                 api_version: pulumi.Input[str],
-                 conditions: pulumi.Input[Sequence[pulumi.Input['SyncSetInstanceStatusPatchesConditionsArgs']]],
-                 hash: pulumi.Input[str],
-                 kind: pulumi.Input[str],
-                 name: pulumi.Input[str],
-                 namespace: pulumi.Input[str],
-                 resource: Optional[pulumi.Input[str]] = None):
-        """
-        SyncStatus describes objects that have been created or patches that have been applied using the unique md5 sum of the object or patch.
-        :param pulumi.Input[str] api_version: APIVersion is the Group and Version of the object that was synced or patched.
-        :param pulumi.Input[Sequence[pulumi.Input['SyncSetInstanceStatusPatchesConditionsArgs']]] conditions: Conditions is the list of conditions indicating success or failure of object create, update and delete as well as patch application.
-        :param pulumi.Input[str] hash: Hash is the unique md5 hash of the resource or patch.
-        :param pulumi.Input[str] kind: Kind is the Kind of the object that was synced or patched.
-        :param pulumi.Input[str] name: Name is the name of the object that was synced or patched.
-        :param pulumi.Input[str] namespace: Namespace is the Namespace of the object that was synced or patched.
-        :param pulumi.Input[str] resource: Resource is the resource name for the object that was synced. This will be populated for resources, but not patches
-        """
-        pulumi.set(__self__, "api_version", api_version)
-        pulumi.set(__self__, "conditions", conditions)
-        pulumi.set(__self__, "hash", hash)
-        pulumi.set(__self__, "kind", kind)
-        pulumi.set(__self__, "name", name)
-        pulumi.set(__self__, "namespace", namespace)
-        if resource is not None:
-            pulumi.set(__self__, "resource", resource)
-
-    @property
-    @pulumi.getter(name="apiVersion")
-    def api_version(self) -> pulumi.Input[str]:
-        """
-        APIVersion is the Group and Version of the object that was synced or patched.
-        """
-        return pulumi.get(self, "api_version")
-
-    @api_version.setter
-    def api_version(self, value: pulumi.Input[str]):
-        pulumi.set(self, "api_version", value)
-
-    @property
-    @pulumi.getter
-    def conditions(self) -> pulumi.Input[Sequence[pulumi.Input['SyncSetInstanceStatusPatchesConditionsArgs']]]:
-        """
-        Conditions is the list of conditions indicating success or failure of object create, update and delete as well as patch application.
-        """
-        return pulumi.get(self, "conditions")
-
-    @conditions.setter
-    def conditions(self, value: pulumi.Input[Sequence[pulumi.Input['SyncSetInstanceStatusPatchesConditionsArgs']]]):
-        pulumi.set(self, "conditions", value)
-
-    @property
-    @pulumi.getter
-    def hash(self) -> pulumi.Input[str]:
-        """
-        Hash is the unique md5 hash of the resource or patch.
-        """
-        return pulumi.get(self, "hash")
-
-    @hash.setter
-    def hash(self, value: pulumi.Input[str]):
-        pulumi.set(self, "hash", value)
-
-    @property
-    @pulumi.getter
-    def kind(self) -> pulumi.Input[str]:
-        """
-        Kind is the Kind of the object that was synced or patched.
-        """
-        return pulumi.get(self, "kind")
-
-    @kind.setter
-    def kind(self, value: pulumi.Input[str]):
-        pulumi.set(self, "kind", value)
-
-    @property
-    @pulumi.getter
-    def name(self) -> pulumi.Input[str]:
-        """
-        Name is the name of the object that was synced or patched.
-        """
-        return pulumi.get(self, "name")
-
-    @name.setter
-    def name(self, value: pulumi.Input[str]):
-        pulumi.set(self, "name", value)
-
-    @property
-    @pulumi.getter
-    def namespace(self) -> pulumi.Input[str]:
-        """
-        Namespace is the Namespace of the object that was synced or patched.
-        """
-        return pulumi.get(self, "namespace")
-
-    @namespace.setter
-    def namespace(self, value: pulumi.Input[str]):
-        pulumi.set(self, "namespace", value)
-
-    @property
-    @pulumi.getter
-    def resource(self) -> Optional[pulumi.Input[str]]:
-        """
-        Resource is the resource name for the object that was synced. This will be populated for resources, but not patches
-        """
-        return pulumi.get(self, "resource")
-
-    @resource.setter
-    def resource(self, value: Optional[pulumi.Input[str]]):
-        pulumi.set(self, "resource", value)
-
-
-@pulumi.input_type
-class SyncSetInstanceStatusPatchesConditionsArgs:
-    def __init__(__self__, *,
-                 status: pulumi.Input[str],
-                 type: pulumi.Input[str],
-                 last_probe_time: Optional[pulumi.Input[str]] = None,
-                 last_transition_time: Optional[pulumi.Input[str]] = None,
-                 message: Optional[pulumi.Input[str]] = None,
-                 reason: Optional[pulumi.Input[str]] = None):
-        """
-        SyncCondition is a condition in a SyncStatus
-        :param pulumi.Input[str] status: Status is the status of the condition.
-        :param pulumi.Input[str] type: Type is the type of the condition.
-        :param pulumi.Input[str] last_probe_time: LastProbeTime is the last time we probed the condition.
-        :param pulumi.Input[str] last_transition_time: LastTransitionTime is the last time the condition transitioned from one status to another.
-        :param pulumi.Input[str] message: Message is a human-readable message indicating details about last transition.
-        :param pulumi.Input[str] reason: Reason is a unique, one-word, CamelCase reason for the condition's last transition.
-        """
-        pulumi.set(__self__, "status", status)
-        pulumi.set(__self__, "type", type)
-        if last_probe_time is not None:
-            pulumi.set(__self__, "last_probe_time", last_probe_time)
-        if last_transition_time is not None:
-            pulumi.set(__self__, "last_transition_time", last_transition_time)
-        if message is not None:
-            pulumi.set(__self__, "message", message)
-        if reason is not None:
-            pulumi.set(__self__, "reason", reason)
-
-    @property
-    @pulumi.getter
-    def status(self) -> pulumi.Input[str]:
-        """
-        Status is the status of the condition.
-        """
-        return pulumi.get(self, "status")
-
-    @status.setter
-    def status(self, value: pulumi.Input[str]):
-        pulumi.set(self, "status", value)
-
-    @property
-    @pulumi.getter
-    def type(self) -> pulumi.Input[str]:
-        """
-        Type is the type of the condition.
-        """
-        return pulumi.get(self, "type")
-
-    @type.setter
-    def type(self, value: pulumi.Input[str]):
-        pulumi.set(self, "type", value)
-
-    @property
-    @pulumi.getter(name="lastProbeTime")
-    def last_probe_time(self) -> Optional[pulumi.Input[str]]:
-        """
-        LastProbeTime is the last time we probed the condition.
-        """
-        return pulumi.get(self, "last_probe_time")
-
-    @last_probe_time.setter
-    def last_probe_time(self, value: Optional[pulumi.Input[str]]):
-        pulumi.set(self, "last_probe_time", value)
-
-    @property
-    @pulumi.getter(name="lastTransitionTime")
-    def last_transition_time(self) -> Optional[pulumi.Input[str]]:
-        """
-        LastTransitionTime is the last time the condition transitioned from one status to another.
-        """
-        return pulumi.get(self, "last_transition_time")
-
-    @last_transition_time.setter
-    def last_transition_time(self, value: Optional[pulumi.Input[str]]):
-        pulumi.set(self, "last_transition_time", value)
-
-    @property
-    @pulumi.getter
-    def message(self) -> Optional[pulumi.Input[str]]:
-        """
-        Message is a human-readable message indicating details about last transition.
-        """
-        return pulumi.get(self, "message")
-
-    @message.setter
-    def message(self, value: Optional[pulumi.Input[str]]):
-        pulumi.set(self, "message", value)
-
-    @property
-    @pulumi.getter
-    def reason(self) -> Optional[pulumi.Input[str]]:
-        """
-        Reason is a unique, one-word, CamelCase reason for the condition's last transition.
-        """
-        return pulumi.get(self, "reason")
-
-    @reason.setter
-    def reason(self, value: Optional[pulumi.Input[str]]):
-        pulumi.set(self, "reason", value)
-
-
-@pulumi.input_type
-class SyncSetInstanceStatusResourcesArgs:
-    def __init__(__self__, *,
-                 api_version: pulumi.Input[str],
-                 conditions: pulumi.Input[Sequence[pulumi.Input['SyncSetInstanceStatusResourcesConditionsArgs']]],
-                 hash: pulumi.Input[str],
-                 kind: pulumi.Input[str],
-                 name: pulumi.Input[str],
-                 namespace: pulumi.Input[str],
-                 resource: Optional[pulumi.Input[str]] = None):
-        """
-        SyncStatus describes objects that have been created or patches that have been applied using the unique md5 sum of the object or patch.
-        :param pulumi.Input[str] api_version: APIVersion is the Group and Version of the object that was synced or patched.
-        :param pulumi.Input[Sequence[pulumi.Input['SyncSetInstanceStatusResourcesConditionsArgs']]] conditions: Conditions is the list of conditions indicating success or failure of object create, update and delete as well as patch application.
-        :param pulumi.Input[str] hash: Hash is the unique md5 hash of the resource or patch.
-        :param pulumi.Input[str] kind: Kind is the Kind of the object that was synced or patched.
-        :param pulumi.Input[str] name: Name is the name of the object that was synced or patched.
-        :param pulumi.Input[str] namespace: Namespace is the Namespace of the object that was synced or patched.
-        :param pulumi.Input[str] resource: Resource is the resource name for the object that was synced. This will be populated for resources, but not patches
-        """
-        pulumi.set(__self__, "api_version", api_version)
-        pulumi.set(__self__, "conditions", conditions)
-        pulumi.set(__self__, "hash", hash)
-        pulumi.set(__self__, "kind", kind)
-        pulumi.set(__self__, "name", name)
-        pulumi.set(__self__, "namespace", namespace)
-        if resource is not None:
-            pulumi.set(__self__, "resource", resource)
-
-    @property
-    @pulumi.getter(name="apiVersion")
-    def api_version(self) -> pulumi.Input[str]:
-        """
-        APIVersion is the Group and Version of the object that was synced or patched.
-        """
-        return pulumi.get(self, "api_version")
-
-    @api_version.setter
-    def api_version(self, value: pulumi.Input[str]):
-        pulumi.set(self, "api_version", value)
-
-    @property
-    @pulumi.getter
-    def conditions(self) -> pulumi.Input[Sequence[pulumi.Input['SyncSetInstanceStatusResourcesConditionsArgs']]]:
-        """
-        Conditions is the list of conditions indicating success or failure of object create, update and delete as well as patch application.
-        """
-        return pulumi.get(self, "conditions")
-
-    @conditions.setter
-    def conditions(self, value: pulumi.Input[Sequence[pulumi.Input['SyncSetInstanceStatusResourcesConditionsArgs']]]):
-        pulumi.set(self, "conditions", value)
-
-    @property
-    @pulumi.getter
-    def hash(self) -> pulumi.Input[str]:
-        """
-        Hash is the unique md5 hash of the resource or patch.
-        """
-        return pulumi.get(self, "hash")
-
-    @hash.setter
-    def hash(self, value: pulumi.Input[str]):
-        pulumi.set(self, "hash", value)
-
-    @property
-    @pulumi.getter
-    def kind(self) -> pulumi.Input[str]:
-        """
-        Kind is the Kind of the object that was synced or patched.
-        """
-        return pulumi.get(self, "kind")
-
-    @kind.setter
-    def kind(self, value: pulumi.Input[str]):
-        pulumi.set(self, "kind", value)
-
-    @property
-    @pulumi.getter
-    def name(self) -> pulumi.Input[str]:
-        """
-        Name is the name of the object that was synced or patched.
-        """
-        return pulumi.get(self, "name")
-
-    @name.setter
-    def name(self, value: pulumi.Input[str]):
-        pulumi.set(self, "name", value)
-
-    @property
-    @pulumi.getter
-    def namespace(self) -> pulumi.Input[str]:
-        """
-        Namespace is the Namespace of the object that was synced or patched.
-        """
-        return pulumi.get(self, "namespace")
-
-    @namespace.setter
-    def namespace(self, value: pulumi.Input[str]):
-        pulumi.set(self, "namespace", value)
-
-    @property
-    @pulumi.getter
-    def resource(self) -> Optional[pulumi.Input[str]]:
-        """
-        Resource is the resource name for the object that was synced. This will be populated for resources, but not patches
-        """
-        return pulumi.get(self, "resource")
-
-    @resource.setter
-    def resource(self, value: Optional[pulumi.Input[str]]):
-        pulumi.set(self, "resource", value)
-
-
-@pulumi.input_type
-class SyncSetInstanceStatusResourcesConditionsArgs:
-    def __init__(__self__, *,
-                 status: pulumi.Input[str],
-                 type: pulumi.Input[str],
-                 last_probe_time: Optional[pulumi.Input[str]] = None,
-                 last_transition_time: Optional[pulumi.Input[str]] = None,
-                 message: Optional[pulumi.Input[str]] = None,
-                 reason: Optional[pulumi.Input[str]] = None):
-        """
-        SyncCondition is a condition in a SyncStatus
-        :param pulumi.Input[str] status: Status is the status of the condition.
-        :param pulumi.Input[str] type: Type is the type of the condition.
-        :param pulumi.Input[str] last_probe_time: LastProbeTime is the last time we probed the condition.
-        :param pulumi.Input[str] last_transition_time: LastTransitionTime is the last time the condition transitioned from one status to another.
-        :param pulumi.Input[str] message: Message is a human-readable message indicating details about last transition.
-        :param pulumi.Input[str] reason: Reason is a unique, one-word, CamelCase reason for the condition's last transition.
-        """
-        pulumi.set(__self__, "status", status)
-        pulumi.set(__self__, "type", type)
-        if last_probe_time is not None:
-            pulumi.set(__self__, "last_probe_time", last_probe_time)
-        if last_transition_time is not None:
-            pulumi.set(__self__, "last_transition_time", last_transition_time)
-        if message is not None:
-            pulumi.set(__self__, "message", message)
-        if reason is not None:
-            pulumi.set(__self__, "reason", reason)
-
-    @property
-    @pulumi.getter
-    def status(self) -> pulumi.Input[str]:
-        """
-        Status is the status of the condition.
-        """
-        return pulumi.get(self, "status")
-
-    @status.setter
-    def status(self, value: pulumi.Input[str]):
-        pulumi.set(self, "status", value)
-
-    @property
-    @pulumi.getter
-    def type(self) -> pulumi.Input[str]:
-        """
-        Type is the type of the condition.
-        """
-        return pulumi.get(self, "type")
-
-    @type.setter
-    def type(self, value: pulumi.Input[str]):
-        pulumi.set(self, "type", value)
-
-    @property
-    @pulumi.getter(name="lastProbeTime")
-    def last_probe_time(self) -> Optional[pulumi.Input[str]]:
-        """
-        LastProbeTime is the last time we probed the condition.
-        """
-        return pulumi.get(self, "last_probe_time")
-
-    @last_probe_time.setter
-    def last_probe_time(self, value: Optional[pulumi.Input[str]]):
-        pulumi.set(self, "last_probe_time", value)
-
-    @property
-    @pulumi.getter(name="lastTransitionTime")
-    def last_transition_time(self) -> Optional[pulumi.Input[str]]:
-        """
-        LastTransitionTime is the last time the condition transitioned from one status to another.
-        """
-        return pulumi.get(self, "last_transition_time")
-
-    @last_transition_time.setter
-    def last_transition_time(self, value: Optional[pulumi.Input[str]]):
-        pulumi.set(self, "last_transition_time", value)
-
-    @property
-    @pulumi.getter
-    def message(self) -> Optional[pulumi.Input[str]]:
-        """
-        Message is a human-readable message indicating details about last transition.
-        """
-        return pulumi.get(self, "message")
-
-    @message.setter
-    def message(self, value: Optional[pulumi.Input[str]]):
-        pulumi.set(self, "message", value)
-
-    @property
-    @pulumi.getter
-    def reason(self) -> Optional[pulumi.Input[str]]:
-        """
-        Reason is a unique, one-word, CamelCase reason for the condition's last transition.
-        """
-        return pulumi.get(self, "reason")
-
-    @reason.setter
-    def reason(self, value: Optional[pulumi.Input[str]]):
-        pulumi.set(self, "reason", value)
-
-
-@pulumi.input_type
-class SyncSetInstanceStatusSecretReferencesArgs:
-    def __init__(__self__, *,
-                 api_version: pulumi.Input[str],
-                 conditions: pulumi.Input[Sequence[pulumi.Input['SyncSetInstanceStatusSecretReferencesConditionsArgs']]],
-                 hash: pulumi.Input[str],
-                 kind: pulumi.Input[str],
-                 name: pulumi.Input[str],
-                 namespace: pulumi.Input[str],
-                 resource: Optional[pulumi.Input[str]] = None):
-        """
-        SyncStatus describes objects that have been created or patches that have been applied using the unique md5 sum of the object or patch.
-        :param pulumi.Input[str] api_version: APIVersion is the Group and Version of the object that was synced or patched.
-        :param pulumi.Input[Sequence[pulumi.Input['SyncSetInstanceStatusSecretReferencesConditionsArgs']]] conditions: Conditions is the list of conditions indicating success or failure of object create, update and delete as well as patch application.
-        :param pulumi.Input[str] hash: Hash is the unique md5 hash of the resource or patch.
-        :param pulumi.Input[str] kind: Kind is the Kind of the object that was synced or patched.
-        :param pulumi.Input[str] name: Name is the name of the object that was synced or patched.
-        :param pulumi.Input[str] namespace: Namespace is the Namespace of the object that was synced or patched.
-        :param pulumi.Input[str] resource: Resource is the resource name for the object that was synced. This will be populated for resources, but not patches
-        """
-        pulumi.set(__self__, "api_version", api_version)
-        pulumi.set(__self__, "conditions", conditions)
-        pulumi.set(__self__, "hash", hash)
-        pulumi.set(__self__, "kind", kind)
-        pulumi.set(__self__, "name", name)
-        pulumi.set(__self__, "namespace", namespace)
-        if resource is not None:
-            pulumi.set(__self__, "resource", resource)
-
-    @property
-    @pulumi.getter(name="apiVersion")
-    def api_version(self) -> pulumi.Input[str]:
-        """
-        APIVersion is the Group and Version of the object that was synced or patched.
-        """
-        return pulumi.get(self, "api_version")
-
-    @api_version.setter
-    def api_version(self, value: pulumi.Input[str]):
-        pulumi.set(self, "api_version", value)
-
-    @property
-    @pulumi.getter
-    def conditions(self) -> pulumi.Input[Sequence[pulumi.Input['SyncSetInstanceStatusSecretReferencesConditionsArgs']]]:
-        """
-        Conditions is the list of conditions indicating success or failure of object create, update and delete as well as patch application.
-        """
-        return pulumi.get(self, "conditions")
-
-    @conditions.setter
-    def conditions(self, value: pulumi.Input[Sequence[pulumi.Input['SyncSetInstanceStatusSecretReferencesConditionsArgs']]]):
-        pulumi.set(self, "conditions", value)
-
-    @property
-    @pulumi.getter
-    def hash(self) -> pulumi.Input[str]:
-        """
-        Hash is the unique md5 hash of the resource or patch.
-        """
-        return pulumi.get(self, "hash")
-
-    @hash.setter
-    def hash(self, value: pulumi.Input[str]):
-        pulumi.set(self, "hash", value)
-
-    @property
-    @pulumi.getter
-    def kind(self) -> pulumi.Input[str]:
-        """
-        Kind is the Kind of the object that was synced or patched.
-        """
-        return pulumi.get(self, "kind")
-
-    @kind.setter
-    def kind(self, value: pulumi.Input[str]):
-        pulumi.set(self, "kind", value)
-
-    @property
-    @pulumi.getter
-    def name(self) -> pulumi.Input[str]:
-        """
-        Name is the name of the object that was synced or patched.
-        """
-        return pulumi.get(self, "name")
-
-    @name.setter
-    def name(self, value: pulumi.Input[str]):
-        pulumi.set(self, "name", value)
-
-    @property
-    @pulumi.getter
-    def namespace(self) -> pulumi.Input[str]:
-        """
-        Namespace is the Namespace of the object that was synced or patched.
-        """
-        return pulumi.get(self, "namespace")
-
-    @namespace.setter
-    def namespace(self, value: pulumi.Input[str]):
-        pulumi.set(self, "namespace", value)
-
-    @property
-    @pulumi.getter
-    def resource(self) -> Optional[pulumi.Input[str]]:
-        """
-        Resource is the resource name for the object that was synced. This will be populated for resources, but not patches
-        """
-        return pulumi.get(self, "resource")
-
-    @resource.setter
-    def resource(self, value: Optional[pulumi.Input[str]]):
-        pulumi.set(self, "resource", value)
-
-
-@pulumi.input_type
-class SyncSetInstanceStatusSecretReferencesConditionsArgs:
-    def __init__(__self__, *,
-                 status: pulumi.Input[str],
-                 type: pulumi.Input[str],
-                 last_probe_time: Optional[pulumi.Input[str]] = None,
-                 last_transition_time: Optional[pulumi.Input[str]] = None,
-                 message: Optional[pulumi.Input[str]] = None,
-                 reason: Optional[pulumi.Input[str]] = None):
-        """
-        SyncCondition is a condition in a SyncStatus
-        :param pulumi.Input[str] status: Status is the status of the condition.
-        :param pulumi.Input[str] type: Type is the type of the condition.
-        :param pulumi.Input[str] last_probe_time: LastProbeTime is the last time we probed the condition.
-        :param pulumi.Input[str] last_transition_time: LastTransitionTime is the last time the condition transitioned from one status to another.
-        :param pulumi.Input[str] message: Message is a human-readable message indicating details about last transition.
-        :param pulumi.Input[str] reason: Reason is a unique, one-word, CamelCase reason for the condition's last transition.
-        """
-        pulumi.set(__self__, "status", status)
-        pulumi.set(__self__, "type", type)
-        if last_probe_time is not None:
-            pulumi.set(__self__, "last_probe_time", last_probe_time)
-        if last_transition_time is not None:
-            pulumi.set(__self__, "last_transition_time", last_transition_time)
-        if message is not None:
-            pulumi.set(__self__, "message", message)
-        if reason is not None:
-            pulumi.set(__self__, "reason", reason)
-
-    @property
-    @pulumi.getter
-    def status(self) -> pulumi.Input[str]:
-        """
-        Status is the status of the condition.
-        """
-        return pulumi.get(self, "status")
-
-    @status.setter
-    def status(self, value: pulumi.Input[str]):
-        pulumi.set(self, "status", value)
-
-    @property
-    @pulumi.getter
-    def type(self) -> pulumi.Input[str]:
-        """
-        Type is the type of the condition.
-        """
-        return pulumi.get(self, "type")
-
-    @type.setter
-    def type(self, value: pulumi.Input[str]):
-        pulumi.set(self, "type", value)
-
-    @property
-    @pulumi.getter(name="lastProbeTime")
-    def last_probe_time(self) -> Optional[pulumi.Input[str]]:
-        """
-        LastProbeTime is the last time we probed the condition.
-        """
-        return pulumi.get(self, "last_probe_time")
-
-    @last_probe_time.setter
-    def last_probe_time(self, value: Optional[pulumi.Input[str]]):
-        pulumi.set(self, "last_probe_time", value)
-
-    @property
-    @pulumi.getter(name="lastTransitionTime")
-    def last_transition_time(self) -> Optional[pulumi.Input[str]]:
-        """
-        LastTransitionTime is the last time the condition transitioned from one status to another.
-        """
-        return pulumi.get(self, "last_transition_time")
-
-    @last_transition_time.setter
-    def last_transition_time(self, value: Optional[pulumi.Input[str]]):
-        pulumi.set(self, "last_transition_time", value)
-
-    @property
-    @pulumi.getter
-    def message(self) -> Optional[pulumi.Input[str]]:
-        """
-        Message is a human-readable message indicating details about last transition.
-        """
-        return pulumi.get(self, "message")
-
-    @message.setter
-    def message(self, value: Optional[pulumi.Input[str]]):
-        pulumi.set(self, "message", value)
-
-    @property
-    @pulumi.getter
-    def reason(self) -> Optional[pulumi.Input[str]]:
-        """
-        Reason is a unique, one-word, CamelCase reason for the condition's last transition.
-        """
-        return pulumi.get(self, "reason")
-
-    @reason.setter
-    def reason(self, value: Optional[pulumi.Input[str]]):
-        pulumi.set(self, "reason", value)
 
 
 @pulumi.input_type

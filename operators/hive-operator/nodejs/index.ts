@@ -6,5 +6,6 @@ export * from "./provider";
 
 // Export sub-modules:
 import * as hive from "./hive";
+import * as hiveinternal from "./hiveinternal";
 import * as types from "./types";
-export {hive, types};
+export {hive, hiveinternal, types};

@@ -34,7 +34,7 @@ namespace Pulumi.Kubernetes.Types.Outputs.Camel.V1
         /// <summary>
         /// IntegrationPlatformResourcesSpec contains platform related resources
         /// </summary>
-        public readonly Pulumi.Kubernetes.Types.Outputs.Camel.V1.IntegrationPlatformStatusResources Resources;
+        public readonly ImmutableDictionary<string, object> Resources;
         public readonly ImmutableDictionary<string, Pulumi.Kubernetes.Types.Outputs.Camel.V1.IntegrationPlatformStatusTraits> Traits;
         public readonly string Version;
 
@@ -52,7 +52,7 @@ namespace Pulumi.Kubernetes.Types.Outputs.Camel.V1
 
             string profile,
 
-            Pulumi.Kubernetes.Types.Outputs.Camel.V1.IntegrationPlatformStatusResources resources,
+            ImmutableDictionary<string, object> resources,
 
             ImmutableDictionary<string, Pulumi.Kubernetes.Types.Outputs.Camel.V1.IntegrationPlatformStatusTraits> traits,
 

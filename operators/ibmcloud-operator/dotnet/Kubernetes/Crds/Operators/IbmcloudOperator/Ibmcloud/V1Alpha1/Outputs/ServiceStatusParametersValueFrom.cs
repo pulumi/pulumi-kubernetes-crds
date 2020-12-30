@@ -16,17 +16,17 @@ namespace Pulumi.Kubernetes.Types.Outputs.Ibmcloud.V1Alpha1
         /// <summary>
         /// Selects a key of a ConfigMap.
         /// </summary>
-        public readonly ImmutableDictionary<string, object> ConfigMapKeyRef;
+        public readonly Pulumi.Kubernetes.Types.Outputs.Ibmcloud.V1Alpha1.ServiceStatusParametersValueFromConfigMapKeyRef ConfigMapKeyRef;
         /// <summary>
         /// Selects a key of a secret in the resource namespace
         /// </summary>
-        public readonly ImmutableDictionary<string, object> SecretKeyRef;
+        public readonly Pulumi.Kubernetes.Types.Outputs.Ibmcloud.V1Alpha1.ServiceStatusParametersValueFromSecretKeyRef SecretKeyRef;
 
         [OutputConstructor]
         private ServiceStatusParametersValueFrom(
-            ImmutableDictionary<string, object> configMapKeyRef,
+            Pulumi.Kubernetes.Types.Outputs.Ibmcloud.V1Alpha1.ServiceStatusParametersValueFromConfigMapKeyRef configMapKeyRef,
 
-            ImmutableDictionary<string, object> secretKeyRef)
+            Pulumi.Kubernetes.Types.Outputs.Ibmcloud.V1Alpha1.ServiceStatusParametersValueFromSecretKeyRef secretKeyRef)
         {
             ConfigMapKeyRef = configMapKeyRef;
             SecretKeyRef = secretKeyRef;

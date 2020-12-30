@@ -13,13 +13,16 @@ namespace Pulumi.Kubernetes.Types.Outputs.Apm.V1
     [OutputType]
     public sealed class ApmServerStatus
     {
+        /// <summary>
+        /// AvailableNodes is the number of available replicas in the deployment.
+        /// </summary>
         public readonly int AvailableNodes;
         /// <summary>
         /// ElasticsearchAssociationStatus is the status of any auto-linking to Elasticsearch clusters.
         /// </summary>
         public readonly string ElasticsearchAssociationStatus;
         /// <summary>
-        /// ApmServerHealth expresses the status of the Apm Server instances.
+        /// Health of the deployment.
         /// </summary>
         public readonly string Health;
         /// <summary>
@@ -34,6 +37,10 @@ namespace Pulumi.Kubernetes.Types.Outputs.Apm.V1
         /// ExternalService is the name of the service the agents should connect to.
         /// </summary>
         public readonly string Service;
+        /// <summary>
+        /// Version of the stack resource currently running. During version upgrades, multiple versions may run in parallel: this value specifies the lowest version currently running.
+        /// </summary>
+        public readonly string Version;
 
         [OutputConstructor]
         private ApmServerStatus(
@@ -47,7 +54,9 @@ namespace Pulumi.Kubernetes.Types.Outputs.Apm.V1
 
             string secretTokenSecret,
 
-            string service)
+            string service,
+
+            string version)
         {
             AvailableNodes = availableNodes;
             ElasticsearchAssociationStatus = elasticsearchAssociationStatus;
@@ -55,6 +64,7 @@ namespace Pulumi.Kubernetes.Types.Outputs.Apm.V1
             KibanaAssociationStatus = kibanaAssociationStatus;
             SecretTokenSecret = secretTokenSecret;
             Service = service;
+            Version = version;
         }
     }
 }

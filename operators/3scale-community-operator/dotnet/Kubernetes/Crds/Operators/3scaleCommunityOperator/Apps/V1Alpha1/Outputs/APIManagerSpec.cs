@@ -18,10 +18,14 @@ namespace Pulumi.Kubernetes.Types.Outputs.Apps.V1Alpha1
         public readonly Pulumi.Kubernetes.Types.Outputs.Apps.V1Alpha1.APIManagerSpecBackend Backend;
         public readonly Pulumi.Kubernetes.Types.Outputs.Apps.V1Alpha1.APIManagerSpecHighAvailability HighAvailability;
         public readonly bool ImageStreamTagImportInsecure;
+        public readonly Pulumi.Kubernetes.Types.Outputs.Apps.V1Alpha1.APIManagerSpecMonitoring Monitoring;
         public readonly Pulumi.Kubernetes.Types.Outputs.Apps.V1Alpha1.APIManagerSpecPodDisruptionBudget PodDisruptionBudget;
         public readonly bool ResourceRequirementsEnabled;
         public readonly Pulumi.Kubernetes.Types.Outputs.Apps.V1Alpha1.APIManagerSpecSystem System;
         public readonly string TenantName;
+        /// <summary>
+        /// Wildcard domain as configured in the API Manager object
+        /// </summary>
         public readonly string WildcardDomain;
         public readonly Pulumi.Kubernetes.Types.Outputs.Apps.V1Alpha1.APIManagerSpecZync Zync;
 
@@ -36,6 +40,8 @@ namespace Pulumi.Kubernetes.Types.Outputs.Apps.V1Alpha1
             Pulumi.Kubernetes.Types.Outputs.Apps.V1Alpha1.APIManagerSpecHighAvailability highAvailability,
 
             bool imageStreamTagImportInsecure,
+
+            Pulumi.Kubernetes.Types.Outputs.Apps.V1Alpha1.APIManagerSpecMonitoring monitoring,
 
             Pulumi.Kubernetes.Types.Outputs.Apps.V1Alpha1.APIManagerSpecPodDisruptionBudget podDisruptionBudget,
 
@@ -54,6 +60,7 @@ namespace Pulumi.Kubernetes.Types.Outputs.Apps.V1Alpha1
             Backend = backend;
             HighAvailability = highAvailability;
             ImageStreamTagImportInsecure = imageStreamTagImportInsecure;
+            Monitoring = monitoring;
             PodDisruptionBudget = podDisruptionBudget;
             ResourceRequirementsEnabled = resourceRequirementsEnabled;
             System = system;

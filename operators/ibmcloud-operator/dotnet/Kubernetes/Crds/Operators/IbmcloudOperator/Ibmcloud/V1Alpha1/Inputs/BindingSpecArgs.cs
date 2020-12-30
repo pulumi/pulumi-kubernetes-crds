@@ -10,6 +10,9 @@ using Pulumi.Serialization;
 namespace Pulumi.Kubernetes.Types.Inputs.Ibmcloud.V1Alpha1
 {
 
+    /// <summary>
+    /// BindingSpec defines the desired state of Binding
+    /// </summary>
     public class BindingSpecArgs : Pulumi.ResourceArgs
     {
         [Input("alias")]

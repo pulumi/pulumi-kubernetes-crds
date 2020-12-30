@@ -14,6 +14,10 @@ namespace Pulumi.Kubernetes.Types.Outputs.Argoproj.V1Alpha1
     public sealed class AppProjectSpec
     {
         /// <summary>
+        /// ClusterResourceBlacklist contains list of blacklisted cluster level resources
+        /// </summary>
+        public readonly ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Argoproj.V1Alpha1.AppProjectSpecClusterResourceBlacklist> ClusterResourceBlacklist;
+        /// <summary>
         /// ClusterResourceWhitelist contains list of whitelisted cluster level resources
         /// </summary>
         public readonly ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Argoproj.V1Alpha1.AppProjectSpecClusterResourceWhitelist> ClusterResourceWhitelist;
@@ -42,6 +46,10 @@ namespace Pulumi.Kubernetes.Types.Outputs.Argoproj.V1Alpha1
         /// </summary>
         public readonly ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Argoproj.V1Alpha1.AppProjectSpecRoles> Roles;
         /// <summary>
+        /// List of PGP key IDs that commits to be synced to must be signed with
+        /// </summary>
+        public readonly ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Argoproj.V1Alpha1.AppProjectSpecSignatureKeys> SignatureKeys;
+        /// <summary>
         /// SourceRepos contains list of repository URLs which can be used for deployment
         /// </summary>
         public readonly ImmutableArray<string> SourceRepos;
@@ -52,6 +60,8 @@ namespace Pulumi.Kubernetes.Types.Outputs.Argoproj.V1Alpha1
 
         [OutputConstructor]
         private AppProjectSpec(
+            ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Argoproj.V1Alpha1.AppProjectSpecClusterResourceBlacklist> clusterResourceBlacklist,
+
             ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Argoproj.V1Alpha1.AppProjectSpecClusterResourceWhitelist> clusterResourceWhitelist,
 
             string description,
@@ -66,10 +76,13 @@ namespace Pulumi.Kubernetes.Types.Outputs.Argoproj.V1Alpha1
 
             ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Argoproj.V1Alpha1.AppProjectSpecRoles> roles,
 
+            ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Argoproj.V1Alpha1.AppProjectSpecSignatureKeys> signatureKeys,
+
             ImmutableArray<string> sourceRepos,
 
             ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Argoproj.V1Alpha1.AppProjectSpecSyncWindows> syncWindows)
         {
+            ClusterResourceBlacklist = clusterResourceBlacklist;
             ClusterResourceWhitelist = clusterResourceWhitelist;
             Description = description;
             Destinations = destinations;
@@ -77,6 +90,7 @@ namespace Pulumi.Kubernetes.Types.Outputs.Argoproj.V1Alpha1
             NamespaceResourceWhitelist = namespaceResourceWhitelist;
             OrphanedResources = orphanedResources;
             Roles = roles;
+            SignatureKeys = signatureKeys;
             SourceRepos = sourceRepos;
             SyncWindows = syncWindows;
         }

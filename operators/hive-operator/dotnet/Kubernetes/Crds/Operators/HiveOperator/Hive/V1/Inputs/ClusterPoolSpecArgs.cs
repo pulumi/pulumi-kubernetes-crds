@@ -22,10 +22,46 @@ namespace Pulumi.Kubernetes.Types.Inputs.Hive.V1
         public Input<string> BaseDomain { get; set; } = null!;
 
         /// <summary>
+        /// HibernateAfter will be applied to new ClusterDeployments created for the pool. HibernateAfter will transition clusters in the clusterpool to hibernating power state after it has been running for the given duration. The time that a cluster has been running is the time since the cluster was installed or the time since the cluster last came out of hibernation.
+        /// </summary>
+        [Input("hibernateAfter")]
+        public Input<string>? HibernateAfter { get; set; }
+
+        /// <summary>
         /// ImageSetRef is a reference to a ClusterImageSet. The release image specified in the ClusterImageSet will be used by clusters created for this cluster pool.
         /// </summary>
         [Input("imageSetRef", required: true)]
         public Input<Pulumi.Kubernetes.Types.Inputs.Hive.V1.ClusterPoolSpecImageSetRefArgs> ImageSetRef { get; set; } = null!;
+
+        /// <summary>
+        /// InstallConfigSecretTemplateRef is a secret with the key install-config.yaml consisting of the content of the install-config.yaml to be used as a template for all clusters in this pool. Cluster specific settings (name, basedomain) will be injected dynamically when the ClusterDeployment install-config Secret is generated.
+        /// </summary>
+        [Input("installConfigSecretTemplateRef")]
+        public Input<Pulumi.Kubernetes.Types.Inputs.Hive.V1.ClusterPoolSpecInstallConfigSecretTemplateRefArgs>? InstallConfigSecretTemplateRef { get; set; }
+
+        [Input("labels")]
+        private InputMap<string>? _labels;
+
+        /// <summary>
+        /// Labels to be applied to new ClusterDeployments created for the pool. ClusterDeployments that have already been claimed will not be affected when this value is modified.
+        /// </summary>
+        public InputMap<string> Labels
+        {
+            get => _labels ?? (_labels = new InputMap<string>());
+            set => _labels = value;
+        }
+
+        /// <summary>
+        /// MaxConcurrent is the maximum number of clusters that will be provisioned or deprovisioned at an time. By default there is no limit.
+        /// </summary>
+        [Input("maxConcurrent")]
+        public Input<int>? MaxConcurrent { get; set; }
+
+        /// <summary>
+        /// MaxSize is the maximum number of clusters that will be provisioned including clusters that have been claimed and ones waiting to be used. By default there is no limit.
+        /// </summary>
+        [Input("maxSize")]
+        public Input<int>? MaxSize { get; set; }
 
         /// <summary>
         /// Platform encompasses the desired platform for the cluster.
@@ -44,6 +80,12 @@ namespace Pulumi.Kubernetes.Types.Inputs.Hive.V1
         /// </summary>
         [Input("size", required: true)]
         public Input<int> Size { get; set; } = null!;
+
+        /// <summary>
+        /// SkipMachinePools allows creating clusterpools where the machinepools are not managed by hive after cluster creation
+        /// </summary>
+        [Input("skipMachinePools")]
+        public Input<bool>? SkipMachinePools { get; set; }
 
         public ClusterPoolSpecArgs()
         {

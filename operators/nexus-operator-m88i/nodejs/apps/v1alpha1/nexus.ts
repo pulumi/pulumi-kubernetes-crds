@@ -8,9 +8,6 @@ import * as utilities from "../../utilities";
 
 import {ObjectMeta} from "../../meta/v1";
 
-/**
- * Nexus custom resource to deploy the Nexus Server
- */
 export class Nexus extends pulumi.CustomResource {
     /**
      * Get an existing Nexus resource's state with the given name, ID, and optional extra

@@ -3,3 +3,5 @@
 
 // Export members:
 export * from "./apimanager";
+export * from "./apimanagerBackup";
+export * from "./apimanagerRestore";

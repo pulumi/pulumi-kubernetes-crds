@@ -8,7 +8,7 @@ import * as outputs from "../types/output";
 import {ObjectMeta} from "../meta/v1";
 
 export namespace app {
-    export namespace v1alpha1 {
+    export namespace v1beta1 {
         /**
          * KogitoBuildSpec defines the desired state of KogitoBuild.
          */
@@ -16,11 +16,11 @@ export namespace app {
             /**
              * Artifact contains override information for building the Maven artifact (used for Local Source builds). You might want to override this information when building from decisions, rules or process files. In this scenario the Kogito Images will generate a new Java project for you underneath. This information will be used to generate this project.
              */
-            artifact?: outputs.app.v1alpha1.KogitoBuildSpecArtifact;
+            artifact?: outputs.app.v1beta1.KogitoBuildSpecArtifact;
             /**
-             * Image used to build the Kogito Service from source (Local and Remote). The operator will use the one provided by the Kogito Team based on the "Runtime" field. Example: Domain: quay.io, Namespace: kiegroup, Name: kogito-jvm-builder, Tag: latest. On OpenShift an ImageStream will be created in the current namespace pointing to the given image.
+             * Image used to build the Kogito Service from source (Local and Remote). The operator will use the one provided by the Kogito Team based on the "Runtime" field. Example: "quay.io/kiegroup/kogito-jvm-builder:latest". On OpenShift an ImageStream will be created in the current namespace pointing to the given image.
              */
-            buildImage?: outputs.app.v1alpha1.KogitoBuildSpecBuildImage;
+            buildImage?: string;
             /**
              * DisableIncremental indicates that source to image builds should NOT be incremental. Defaults to false.
              */
@@ -32,11 +32,11 @@ export namespace app {
             /**
              * Environment variables used during build time.
              */
-            envs?: outputs.app.v1alpha1.KogitoBuildSpecEnvs[];
+            env?: outputs.app.v1beta1.KogitoBuildSpecEnv[];
             /**
              * Information about the git repository where the Kogito Service source code resides. Ignored for binary builds.
              */
-            gitSource?: outputs.app.v1alpha1.KogitoBuildSpecGitSource;
+            gitSource?: outputs.app.v1beta1.KogitoBuildSpecGitSource;
             /**
              * Maven Mirror URL to be used during source-to-image builds (Local and Remote) to considerably increase build speed.
              */
@@ -48,15 +48,15 @@ export namespace app {
             /**
              * Resources Requirements for builder pods.
              */
-            resources?: outputs.app.v1alpha1.KogitoBuildSpecResources;
+            resources?: outputs.app.v1beta1.KogitoBuildSpecResources;
             /**
              * Which runtime Kogito service base image to use when building the Kogito service. If "BuildImage" is set, this value is ignored by the operator. Default value: quarkus.
              */
             runtime?: string;
             /**
-             * Image used as the base image for the final Kogito service. This image only has the required packages to run the application. For example: quarkus based services will have only JVM installed, native services only the packages required by the OS. The operator will use the one provided by the Kogito Team based on the "Runtime" field. Example: Domain: quay.io, Namespace: kiegroup, Name: kogito-jvm-builder, Tag: latest. On OpenShift an ImageStream will be created in the current namespace pointing to the given image.
+             * Image used as the base image for the final Kogito service. This image only has the required packages to run the application. For example: quarkus based services will have only JVM installed, native services only the packages required by the OS. The operator will use the one provided by the Kogito Team based on the "Runtime" field. Example: "quay.io/kiegroup/kogito-jvm-builder:latest". On OpenShift an ImageStream will be created in the current namespace pointing to the given image.
              */
-            runtimeImage?: outputs.app.v1alpha1.KogitoBuildSpecRuntimeImage;
+            runtimeImage?: string;
             /**
              * Set this field targeting the desired KogitoRuntime when this KogitoBuild instance has a different name than the KogitoRuntime. By default this KogitoBuild instance will generate a final image named after its own name (.metadata.name). On OpenShift, an ImageStream will be created causing a redeployment on any KogitoRuntime with the same name. On Kubernetes, the final image will be pushed to the KogitoRuntime deployment. If you have multiple KogitoBuild instances (let's say BinaryBuildType and Remote Source), you might need that both target the same KogitoRuntime. Both KogitoBuilds will update the same ImageStream or generate a final image to the same KogitoRuntime deployment.
              */
@@ -68,7 +68,7 @@ export namespace app {
             /**
              * WebHooks secrets for source to image builds based on Git repositories (Remote Sources).
              */
-            webHooks?: outputs.app.v1alpha1.KogitoBuildSpecWebHooks[];
+            webHooks?: outputs.app.v1beta1.KogitoBuildSpecWebHooks[];
         }
 
         /**
@@ -90,19 +90,9 @@ export namespace app {
         }
 
         /**
-         * Image used to build the Kogito Service from source (Local and Remote). The operator will use the one provided by the Kogito Team based on the "Runtime" field. Example: Domain: quay.io, Namespace: kiegroup, Name: kogito-jvm-builder, Tag: latest. On OpenShift an ImageStream will be created in the current namespace pointing to the given image.
-         */
-        export interface KogitoBuildSpecBuildImage {
-            domain?: string;
-            name?: string;
-            namespace?: string;
-            tag?: string;
-        }
-
-        /**
          * EnvVar represents an environment variable present in a Container.
          */
-        export interface KogitoBuildSpecEnvs {
+        export interface KogitoBuildSpecEnv {
             /**
              * Name of the environment variable. Must be a C_IDENTIFIER.
              */
@@ -114,35 +104,35 @@ export namespace app {
             /**
              * Source for the environment variable's value. Cannot be used if value is not empty.
              */
-            valueFrom?: outputs.app.v1alpha1.KogitoBuildSpecEnvsValueFrom;
+            valueFrom?: outputs.app.v1beta1.KogitoBuildSpecEnvValueFrom;
         }
 
         /**
          * Source for the environment variable's value. Cannot be used if value is not empty.
          */
-        export interface KogitoBuildSpecEnvsValueFrom {
+        export interface KogitoBuildSpecEnvValueFrom {
             /**
              * Selects a key of a ConfigMap.
              */
-            configMapKeyRef?: outputs.app.v1alpha1.KogitoBuildSpecEnvsValueFromConfigMapKeyRef;
+            configMapKeyRef?: outputs.app.v1beta1.KogitoBuildSpecEnvValueFromConfigMapKeyRef;
             /**
              * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
              */
-            fieldRef?: outputs.app.v1alpha1.KogitoBuildSpecEnvsValueFromFieldRef;
+            fieldRef?: outputs.app.v1beta1.KogitoBuildSpecEnvValueFromFieldRef;
             /**
              * Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
              */
-            resourceFieldRef?: outputs.app.v1alpha1.KogitoBuildSpecEnvsValueFromResourceFieldRef;
+            resourceFieldRef?: outputs.app.v1beta1.KogitoBuildSpecEnvValueFromResourceFieldRef;
             /**
              * Selects a key of a secret in the pod's namespace
              */
-            secretKeyRef?: outputs.app.v1alpha1.KogitoBuildSpecEnvsValueFromSecretKeyRef;
+            secretKeyRef?: outputs.app.v1beta1.KogitoBuildSpecEnvValueFromSecretKeyRef;
         }
 
         /**
          * Selects a key of a ConfigMap.
          */
-        export interface KogitoBuildSpecEnvsValueFromConfigMapKeyRef {
+        export interface KogitoBuildSpecEnvValueFromConfigMapKeyRef {
             /**
              * The key to select.
              */
@@ -160,7 +150,7 @@ export namespace app {
         /**
          * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
          */
-        export interface KogitoBuildSpecEnvsValueFromFieldRef {
+        export interface KogitoBuildSpecEnvValueFromFieldRef {
             /**
              * Version of the schema the FieldPath is written in terms of, defaults to "v1".
              */
@@ -174,7 +164,7 @@ export namespace app {
         /**
          * Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
          */
-        export interface KogitoBuildSpecEnvsValueFromResourceFieldRef {
+        export interface KogitoBuildSpecEnvValueFromResourceFieldRef {
             /**
              * Container name: required for volumes, optional for env vars
              */
@@ -182,20 +172,20 @@ export namespace app {
             /**
              * Specifies the output format of the exposed resources, defaults to "1"
              */
-            divisor?: outputs.app.v1alpha1.KogitoBuildSpecEnvsValueFromResourceFieldRefDivisor;
+            divisor?: outputs.app.v1beta1.KogitoBuildSpecEnvValueFromResourceFieldRefDivisor;
             /**
              * Required: resource to select
              */
             resource: string;
         }
 
-        export interface KogitoBuildSpecEnvsValueFromResourceFieldRefDivisor {
+        export interface KogitoBuildSpecEnvValueFromResourceFieldRefDivisor {
         }
 
         /**
          * Selects a key of a secret in the pod's namespace
          */
-        export interface KogitoBuildSpecEnvsValueFromSecretKeyRef {
+        export interface KogitoBuildSpecEnvValueFromSecretKeyRef {
             /**
              * The key of the secret to select from.  Must be a valid secret key.
              */
@@ -235,27 +225,17 @@ export namespace app {
             /**
              * Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
              */
-            limits?: {[key: string]: outputs.app.v1alpha1.KogitoBuildSpecResourcesLimits};
+            limits?: {[key: string]: outputs.app.v1beta1.KogitoBuildSpecResourcesLimits};
             /**
              * Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
              */
-            requests?: {[key: string]: outputs.app.v1alpha1.KogitoBuildSpecResourcesRequests};
+            requests?: {[key: string]: outputs.app.v1beta1.KogitoBuildSpecResourcesRequests};
         }
 
         export interface KogitoBuildSpecResourcesLimits {
         }
 
         export interface KogitoBuildSpecResourcesRequests {
-        }
-
-        /**
-         * Image used as the base image for the final Kogito service. This image only has the required packages to run the application. For example: quarkus based services will have only JVM installed, native services only the packages required by the OS. The operator will use the one provided by the Kogito Team based on the "Runtime" field. Example: Domain: quay.io, Namespace: kiegroup, Name: kogito-jvm-builder, Tag: latest. On OpenShift an ImageStream will be created in the current namespace pointing to the given image.
-         */
-        export interface KogitoBuildSpecRuntimeImage {
-            domain?: string;
-            name?: string;
-            namespace?: string;
-            tag?: string;
         }
 
         /**
@@ -279,11 +259,11 @@ export namespace app {
             /**
              * History of builds
              */
-            builds: outputs.app.v1alpha1.KogitoBuildStatusBuilds;
+            builds: outputs.app.v1beta1.KogitoBuildStatusBuilds;
             /**
              * History of conditions for the resource, shows the status of the younger builder controlled by this instance
              */
-            conditions: outputs.app.v1alpha1.KogitoBuildStatusConditions[];
+            conditions: outputs.app.v1beta1.KogitoBuildStatusConditions[];
             latestBuild?: string;
         }
 
@@ -348,343 +328,35 @@ export namespace app {
         }
 
         /**
-         * KogitoDataIndexSpec defines the desired state of KogitoDataIndex.
-         */
-        export interface KogitoDataIndexSpec {
-            /**
-             * Additional labels to be added to the Deployment and Pods managed by the operator.
-             */
-            deploymentLabels?: {[key: string]: string};
-            /**
-             * Environment variables to be added to the runtime container. Keys must be a C_IDENTIFIER.
-             */
-            envs?: outputs.app.v1alpha1.KogitoDataIndexSpecEnvs[];
-            /**
-             * HttpPort will set the environment env HTTP_PORT to define which port service will listen internally.
-             */
-            httpPort?: number;
-            /**
-             * Image definition for the service. Example: Domain: quay.io, Namespace: kiegroup, Name: kogito-service, Tag: latest. On OpenShift an ImageStream will be created in the current namespace pointing to the given image.
-             */
-            image?: outputs.app.v1alpha1.KogitoDataIndexSpecImage;
-            /**
-             * Has the data used by the service to connect to the Infinispan cluster.
-             */
-            infinispan?: outputs.app.v1alpha1.KogitoDataIndexSpecInfinispan;
-            /**
-             * A flag indicating that image streams created by Kogito Operator should be configured to allow pulling from insecure registries. Usable just on OpenShift. Defaults to 'false'.
-             */
-            insecureImageRegistry?: boolean;
-            /**
-             * Has the data used by the service to connect to the Kafka cluster.
-             */
-            kafka?: outputs.app.v1alpha1.KogitoDataIndexSpecKafka;
-            /**
-             * Number of replicas that the service will have deployed in the cluster. Default value: 1.
-             */
-            replicas?: number;
-            /**
-             * Defined compute resource requirements for the deployed service.
-             */
-            resources?: outputs.app.v1alpha1.KogitoDataIndexSpecResources;
-            /**
-             * Additional labels to be added to the Service managed by the operator.
-             */
-            serviceLabels?: {[key: string]: string};
-        }
-
-        /**
-         * EnvVar represents an environment variable present in a Container.
-         */
-        export interface KogitoDataIndexSpecEnvs {
-            /**
-             * Name of the environment variable. Must be a C_IDENTIFIER.
-             */
-            name: string;
-            /**
-             * Variable references $(VAR_NAME) are expanded using the previous defined environment variables in the container and any service environment variables. If a variable cannot be resolved, the reference in the input string will be unchanged. The $(VAR_NAME) syntax can be escaped with a double $$, ie: $$(VAR_NAME). Escaped references will never be expanded, regardless of whether the variable exists or not. Defaults to "".
-             */
-            value?: string;
-            /**
-             * Source for the environment variable's value. Cannot be used if value is not empty.
-             */
-            valueFrom?: outputs.app.v1alpha1.KogitoDataIndexSpecEnvsValueFrom;
-        }
-
-        /**
-         * Source for the environment variable's value. Cannot be used if value is not empty.
-         */
-        export interface KogitoDataIndexSpecEnvsValueFrom {
-            /**
-             * Selects a key of a ConfigMap.
-             */
-            configMapKeyRef?: outputs.app.v1alpha1.KogitoDataIndexSpecEnvsValueFromConfigMapKeyRef;
-            /**
-             * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
-             */
-            fieldRef?: outputs.app.v1alpha1.KogitoDataIndexSpecEnvsValueFromFieldRef;
-            /**
-             * Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
-             */
-            resourceFieldRef?: outputs.app.v1alpha1.KogitoDataIndexSpecEnvsValueFromResourceFieldRef;
-            /**
-             * Selects a key of a secret in the pod's namespace
-             */
-            secretKeyRef?: outputs.app.v1alpha1.KogitoDataIndexSpecEnvsValueFromSecretKeyRef;
-        }
-
-        /**
-         * Selects a key of a ConfigMap.
-         */
-        export interface KogitoDataIndexSpecEnvsValueFromConfigMapKeyRef {
-            /**
-             * The key to select.
-             */
-            key: string;
-            /**
-             * Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
-             */
-            name?: string;
-            /**
-             * Specify whether the ConfigMap or its key must be defined
-             */
-            optional?: boolean;
-        }
-
-        /**
-         * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
-         */
-        export interface KogitoDataIndexSpecEnvsValueFromFieldRef {
-            /**
-             * Version of the schema the FieldPath is written in terms of, defaults to "v1".
-             */
-            apiVersion?: string;
-            /**
-             * Path of the field to select in the specified API version.
-             */
-            fieldPath: string;
-        }
-
-        /**
-         * Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
-         */
-        export interface KogitoDataIndexSpecEnvsValueFromResourceFieldRef {
-            /**
-             * Container name: required for volumes, optional for env vars
-             */
-            containerName?: string;
-            /**
-             * Specifies the output format of the exposed resources, defaults to "1"
-             */
-            divisor?: outputs.app.v1alpha1.KogitoDataIndexSpecEnvsValueFromResourceFieldRefDivisor;
-            /**
-             * Required: resource to select
-             */
-            resource: string;
-        }
-
-        export interface KogitoDataIndexSpecEnvsValueFromResourceFieldRefDivisor {
-        }
-
-        /**
-         * Selects a key of a secret in the pod's namespace
-         */
-        export interface KogitoDataIndexSpecEnvsValueFromSecretKeyRef {
-            /**
-             * The key of the secret to select from.  Must be a valid secret key.
-             */
-            key: string;
-            /**
-             * Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
-             */
-            name?: string;
-            /**
-             * Specify whether the Secret or its key must be defined
-             */
-            optional?: boolean;
-        }
-
-        /**
-         * Image definition for the service. Example: Domain: quay.io, Namespace: kiegroup, Name: kogito-service, Tag: latest. On OpenShift an ImageStream will be created in the current namespace pointing to the given image.
-         */
-        export interface KogitoDataIndexSpecImage {
-            domain?: string;
-            name?: string;
-            namespace?: string;
-            tag?: string;
-        }
-
-        /**
-         * Has the data used by the service to connect to the Infinispan cluster.
-         */
-        export interface KogitoDataIndexSpecInfinispan {
-            /**
-             * Name of the Infinispan authentication realm. This sets the property infinispan.client.hotrod.auth_realm.
-             */
-            authRealm?: string;
-            /**
-             * SecretCredentialsType is the data structure for specifying credentials within a Secret.
-             */
-            credentials?: outputs.app.v1alpha1.KogitoDataIndexSpecInfinispanCredentials;
-            /**
-             * SaslMechanism defined for the authentication. This sets the property infinispan.client.hotrod.sasl_mechanism.
-             */
-            saslMechanism?: string;
-            /**
-             * URI to connect to the Infinispan cluster (can it be an internal service or external URI), for example, myinfinispan-cluster:11222.
-             */
-            uri?: string;
-            /**
-             * UseAuth is set to true if the credentials are set. This also sets the property infinispan.client.hotrod.use_auth.
-             */
-            useAuth?: boolean;
-            /**
-             * UseKogitoInfra flags if the instance will use a provided infrastructure by KogitoInfra CR. Setting this to true will deploy a new KogitoInfra CR into the namespace that will install Infinispan via Infinispan Operator. Infinispan Operator MUST be installed in the namespace for this to work. On OpenShift, OLM should install it for you. If running on Kubernetes without OLM installed, please install Infinispan Operator first. Set this to false and fill all other properties to provide your own infrastructure.
-             */
-            useKogitoInfra?: boolean;
-        }
-
-        /**
-         * SecretCredentialsType is the data structure for specifying credentials within a Secret.
-         */
-        export interface KogitoDataIndexSpecInfinispanCredentials {
-            /**
-             * PasswordKey is the key pointing to a value in a Secret holding the password value.
-             */
-            passwordKey?: string;
-            /**
-             * SecretName is the name of the secret where the credentials are set.
-             */
-            secretName?: string;
-            /**
-             * UsernameKey is the key pointing to a value in a Secret holding the username value.
-             */
-            usernameKey?: string;
-        }
-
-        /**
-         * Has the data used by the service to connect to the Kafka cluster.
-         */
-        export interface KogitoDataIndexSpecKafka {
-            /**
-             * URI is the service URI to connect to the Kafka cluster, for example, my-cluster-kafka-bootstrap:9092.
-             */
-            externalURI?: string;
-            /**
-             * Instance is the Kafka instance to be used, for example, kogito-kafka.
-             */
-            instance?: string;
-            /**
-             * UseKogitoInfra flags if the instance will use a provided infrastructure by KogitoInfra CR. Setting this to true will configure a KogitoInfra CR to install Kafka via Strimzi Operator. Strimzi Operator MUST be installed in the namespace for this to work. On OpenShift, OLM should install it for you. If running on Kubernetes without OLM installed, please install Strimzi Operator first. Set this to false and fill other properties to provide your own infrastructure.
-             */
-            useKogitoInfra?: boolean;
-        }
-
-        /**
-         * Defined compute resource requirements for the deployed service.
-         */
-        export interface KogitoDataIndexSpecResources {
-            /**
-             * Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-             */
-            limits?: {[key: string]: outputs.app.v1alpha1.KogitoDataIndexSpecResourcesLimits};
-            /**
-             * Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-             */
-            requests?: {[key: string]: outputs.app.v1alpha1.KogitoDataIndexSpecResourcesRequests};
-        }
-
-        export interface KogitoDataIndexSpecResourcesLimits {
-        }
-
-        export interface KogitoDataIndexSpecResourcesRequests {
-        }
-
-        /**
-         * KogitoDataIndexStatus defines the observed state of KogitoDataIndex.
-         */
-        export interface KogitoDataIndexStatus {
-            /**
-             * History of conditions for the resource
-             */
-            conditions: outputs.app.v1alpha1.KogitoDataIndexStatusConditions[];
-            /**
-             * General conditions for the Kogito Service deployment.
-             */
-            deploymentConditions?: outputs.app.v1alpha1.KogitoDataIndexStatusDeploymentConditions[];
-            /**
-             * URI is where the service is exposed.
-             */
-            externalURI?: string;
-            /**
-             * Image is the resolved image for this service.
-             */
-            image?: string;
-        }
-
-        /**
-         * Condition is the detailed condition for the resource
-         */
-        export interface KogitoDataIndexStatusConditions {
-            lastTransitionTime?: string;
-            message?: string;
-            /**
-             * ReasonType is the type of reason
-             */
-            reason?: string;
-            status: string;
-            /**
-             * ConditionType is the type of condition
-             */
-            type: string;
-        }
-
-        /**
-         * DeploymentCondition describes the state of a deployment at a certain point.
-         */
-        export interface KogitoDataIndexStatusDeploymentConditions {
-            /**
-             * Last time the condition transitioned from one status to another.
-             */
-            lastTransitionTime?: string;
-            /**
-             * The last time this condition was updated.
-             */
-            lastUpdateTime?: string;
-            /**
-             * A human readable message indicating details about the transition.
-             */
-            message?: string;
-            /**
-             * The reason for the condition's last transition.
-             */
-            reason?: string;
-            /**
-             * Status of the condition, one of True, False, Unknown.
-             */
-            status: string;
-            /**
-             * Type of deployment condition.
-             */
-            type: string;
-        }
-
-        /**
          * KogitoInfraSpec defines the desired state of KogitoInfra.
          */
         export interface KogitoInfraSpec {
             /**
-             * Indicates if Infinispan should be installed or not using Infinispan Operator. Please note that the Infinispan Operator must be installed manually on environments that doesn't have OLM installed.
+             * Resource for the service. Example: Infinispan/Kafka/Keycloak.
              */
-            installInfinispan?: boolean;
+            resource?: outputs.app.v1beta1.KogitoInfraSpecResource;
+        }
+
+        /**
+         * Resource for the service. Example: Infinispan/Kafka/Keycloak.
+         */
+        export interface KogitoInfraSpecResource {
             /**
-             * Indicates if Kafka should be installed or not using Strimzi (Kafka Operator). Please note that the Strimzi must be installed manually on environments that doesn't have OLM installed.
+             * APIVersion describes the API Version of referred Kubernetes resource for example, infinispan.org/v1
              */
-            installKafka?: boolean;
+            apiVersion: string;
             /**
-             * Whether or not to install Keycloak using Keycloak Operator. Please note that the Keycloak Operator must be installed manually on environments that doesn't have OLM installed.
+             * Kind describes the kind of referred Kubernetes resource for example, Infinispan
              */
-            installKeycloak?: boolean;
+            kind: string;
+            /**
+             * Name of referred resource.
+             */
+            name?: string;
+            /**
+             * Namespace where referred resource exists.
+             */
+            namespace?: string;
         }
 
         /**
@@ -692,161 +364,53 @@ export namespace app {
          */
         export interface KogitoInfraStatus {
             /**
+             * Application properties extracted from the linked resource that will be added to the deployed Kogito service.
+             */
+            appProps?: {[key: string]: string};
+            /**
              * KogitoInfraCondition ...
              */
-            condition?: outputs.app.v1alpha1.KogitoInfraStatusCondition;
+            condition?: outputs.app.v1beta1.KogitoInfraStatusCondition;
             /**
-             * InfinispanInstallStatus defines the Infinispan installation status.
+             * Environment variables extracted from the linked resource that will be added to the deployed Kogito service.
              */
-            infinispan?: outputs.app.v1alpha1.KogitoInfraStatusInfinispan;
+            env?: outputs.app.v1beta1.KogitoInfraStatusEnv[];
             /**
-             * InfraComponentInstallStatusType is the base structure to define the status for an actor in the infrastructure.
+             * List of volumes that should be added to the services bound to this infra instance
              */
-            kafka?: outputs.app.v1alpha1.KogitoInfraStatusKafka;
-            /**
-             * InfraComponentInstallStatusType is the base structure to define the status for an actor in the infrastructure.
-             */
-            keycloak?: outputs.app.v1alpha1.KogitoInfraStatusKeycloak;
+            volumes?: outputs.app.v1beta1.KogitoInfraStatusVolumes[];
         }
 
         /**
          * KogitoInfraCondition ...
          */
         export interface KogitoInfraStatusCondition {
+            /**
+             * LastTransitionTime ...
+             */
             lastTransitionTime?: string;
+            /**
+             * Message ...
+             */
             message?: string;
+            /**
+             * Reason ...
+             */
+            reason?: string;
+            /**
+             * Status ...
+             */
             status: string;
             /**
-             * KogitoInfraConditionType ...
+             * Type ...
              */
             type: string;
-        }
-
-        /**
-         * InfinispanInstallStatus defines the Infinispan installation status.
-         */
-        export interface KogitoInfraStatusInfinispan {
-            condition?: outputs.app.v1alpha1.KogitoInfraStatusInfinispanCondition[];
-            credentialSecret?: string;
-            name?: string;
-            service?: string;
-        }
-
-        /**
-         * InstallCondition defines the installation condition for the infrastructure actor.
-         */
-        export interface KogitoInfraStatusInfinispanCondition {
-            lastTransitionTime?: string;
-            message?: string;
-            status: string;
-            /**
-             * InstallConditionType defines the possibles conditions that a install might have.
-             */
-            type: string;
-        }
-
-        /**
-         * InfraComponentInstallStatusType is the base structure to define the status for an actor in the infrastructure.
-         */
-        export interface KogitoInfraStatusKafka {
-            condition?: outputs.app.v1alpha1.KogitoInfraStatusKafkaCondition[];
-            name?: string;
-            service?: string;
-        }
-
-        /**
-         * InstallCondition defines the installation condition for the infrastructure actor.
-         */
-        export interface KogitoInfraStatusKafkaCondition {
-            lastTransitionTime?: string;
-            message?: string;
-            status: string;
-            /**
-             * InstallConditionType defines the possibles conditions that a install might have.
-             */
-            type: string;
-        }
-
-        /**
-         * InfraComponentInstallStatusType is the base structure to define the status for an actor in the infrastructure.
-         */
-        export interface KogitoInfraStatusKeycloak {
-            condition?: outputs.app.v1alpha1.KogitoInfraStatusKeycloakCondition[];
-            name?: string;
-            service?: string;
-        }
-
-        /**
-         * InstallCondition defines the installation condition for the infrastructure actor.
-         */
-        export interface KogitoInfraStatusKeycloakCondition {
-            lastTransitionTime?: string;
-            message?: string;
-            status: string;
-            /**
-             * InstallConditionType defines the possibles conditions that a install might have.
-             */
-            type: string;
-        }
-
-        /**
-         * KogitoJobsServiceSpec defines the desired state of KogitoJobsService.
-         */
-        export interface KogitoJobsServiceSpec {
-            /**
-             * Retry backOff time in milliseconds between the job execution attempts, in case of execution failure. Default to service default, see: https://github.com/kiegroup/kogito-runtimes/wiki/Jobs-Service#configuration-properties
-             */
-            backOffRetryMillis?: number;
-            /**
-             * Additional labels to be added to the Deployment and Pods managed by the operator.
-             */
-            deploymentLabels?: {[key: string]: string};
-            /**
-             * Environment variables to be added to the runtime container. Keys must be a C_IDENTIFIER.
-             */
-            envs?: outputs.app.v1alpha1.KogitoJobsServiceSpecEnvs[];
-            /**
-             * HttpPort will set the environment env HTTP_PORT to define which port service will listen internally.
-             */
-            httpPort?: number;
-            /**
-             * Image definition for the service. Example: Domain: quay.io, Namespace: kiegroup, Name: kogito-service, Tag: latest. On OpenShift an ImageStream will be created in the current namespace pointing to the given image.
-             */
-            image?: outputs.app.v1alpha1.KogitoJobsServiceSpecImage;
-            /**
-             * Has the data used by the service to connect to the Infinispan cluster.
-             */
-            infinispan?: outputs.app.v1alpha1.KogitoJobsServiceSpecInfinispan;
-            /**
-             * A flag indicating that image streams created by Kogito Operator should be configured to allow pulling from insecure registries. Usable just on OpenShift. Defaults to 'false'.
-             */
-            insecureImageRegistry?: boolean;
-            /**
-             * Has the data used by the service to connect to the Kafka cluster.
-             */
-            kafka?: outputs.app.v1alpha1.KogitoJobsServiceSpecKafka;
-            /**
-             * Maximum interval in milliseconds when retrying to execute jobs, in case of failures. Default to service default, see: https://github.com/kiegroup/kogito-runtimes/wiki/Jobs-Service#configuration-properties
-             */
-            maxIntervalLimitToRetryMillis?: number;
-            /**
-             * Number of replicas that the service will have deployed in the cluster. Default value: 1.
-             */
-            replicas?: number;
-            /**
-             * Defined compute resource requirements for the deployed service.
-             */
-            resources?: outputs.app.v1alpha1.KogitoJobsServiceSpecResources;
-            /**
-             * Additional labels to be added to the Service managed by the operator.
-             */
-            serviceLabels?: {[key: string]: string};
         }
 
         /**
          * EnvVar represents an environment variable present in a Container.
          */
-        export interface KogitoJobsServiceSpecEnvs {
+        export interface KogitoInfraStatusEnv {
             /**
              * Name of the environment variable. Must be a C_IDENTIFIER.
              */
@@ -858,35 +422,35 @@ export namespace app {
             /**
              * Source for the environment variable's value. Cannot be used if value is not empty.
              */
-            valueFrom?: outputs.app.v1alpha1.KogitoJobsServiceSpecEnvsValueFrom;
+            valueFrom?: outputs.app.v1beta1.KogitoInfraStatusEnvValueFrom;
         }
 
         /**
          * Source for the environment variable's value. Cannot be used if value is not empty.
          */
-        export interface KogitoJobsServiceSpecEnvsValueFrom {
+        export interface KogitoInfraStatusEnvValueFrom {
             /**
              * Selects a key of a ConfigMap.
              */
-            configMapKeyRef?: outputs.app.v1alpha1.KogitoJobsServiceSpecEnvsValueFromConfigMapKeyRef;
+            configMapKeyRef?: outputs.app.v1beta1.KogitoInfraStatusEnvValueFromConfigMapKeyRef;
             /**
              * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
              */
-            fieldRef?: outputs.app.v1alpha1.KogitoJobsServiceSpecEnvsValueFromFieldRef;
+            fieldRef?: outputs.app.v1beta1.KogitoInfraStatusEnvValueFromFieldRef;
             /**
              * Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
              */
-            resourceFieldRef?: outputs.app.v1alpha1.KogitoJobsServiceSpecEnvsValueFromResourceFieldRef;
+            resourceFieldRef?: outputs.app.v1beta1.KogitoInfraStatusEnvValueFromResourceFieldRef;
             /**
              * Selects a key of a secret in the pod's namespace
              */
-            secretKeyRef?: outputs.app.v1alpha1.KogitoJobsServiceSpecEnvsValueFromSecretKeyRef;
+            secretKeyRef?: outputs.app.v1beta1.KogitoInfraStatusEnvValueFromSecretKeyRef;
         }
 
         /**
          * Selects a key of a ConfigMap.
          */
-        export interface KogitoJobsServiceSpecEnvsValueFromConfigMapKeyRef {
+        export interface KogitoInfraStatusEnvValueFromConfigMapKeyRef {
             /**
              * The key to select.
              */
@@ -904,7 +468,7 @@ export namespace app {
         /**
          * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
          */
-        export interface KogitoJobsServiceSpecEnvsValueFromFieldRef {
+        export interface KogitoInfraStatusEnvValueFromFieldRef {
             /**
              * Version of the schema the FieldPath is written in terms of, defaults to "v1".
              */
@@ -918,7 +482,7 @@ export namespace app {
         /**
          * Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
          */
-        export interface KogitoJobsServiceSpecEnvsValueFromResourceFieldRef {
+        export interface KogitoInfraStatusEnvValueFromResourceFieldRef {
             /**
              * Container name: required for volumes, optional for env vars
              */
@@ -926,20 +490,20 @@ export namespace app {
             /**
              * Specifies the output format of the exposed resources, defaults to "1"
              */
-            divisor?: outputs.app.v1alpha1.KogitoJobsServiceSpecEnvsValueFromResourceFieldRefDivisor;
+            divisor?: outputs.app.v1beta1.KogitoInfraStatusEnvValueFromResourceFieldRefDivisor;
             /**
              * Required: resource to select
              */
             resource: string;
         }
 
-        export interface KogitoJobsServiceSpecEnvsValueFromResourceFieldRefDivisor {
+        export interface KogitoInfraStatusEnvValueFromResourceFieldRefDivisor {
         }
 
         /**
          * Selects a key of a secret in the pod's namespace
          */
-        export interface KogitoJobsServiceSpecEnvsValueFromSecretKeyRef {
+        export interface KogitoInfraStatusEnvValueFromSecretKeyRef {
             /**
              * The key of the secret to select from.  Must be a valid secret key.
              */
@@ -955,422 +519,155 @@ export namespace app {
         }
 
         /**
-         * Image definition for the service. Example: Domain: quay.io, Namespace: kiegroup, Name: kogito-service, Tag: latest. On OpenShift an ImageStream will be created in the current namespace pointing to the given image.
+         * KogitoInfraVolume describes the data structure for volumes that should be mounted in the given service provided by this infra instance
          */
-        export interface KogitoJobsServiceSpecImage {
-            domain?: string;
+        export interface KogitoInfraStatusVolumes {
+            /**
+             * Mount is the Kubernetes VolumeMount referenced by this instance
+             */
+            mount: outputs.app.v1beta1.KogitoInfraStatusVolumesMount;
+            /**
+             * NamedVolume describes the pod Volume reference
+             */
+            volume: outputs.app.v1beta1.KogitoInfraStatusVolumesVolume;
+        }
+
+        /**
+         * Mount is the Kubernetes VolumeMount referenced by this instance
+         */
+        export interface KogitoInfraStatusVolumesMount {
+            /**
+             * Path within the container at which the volume should be mounted.  Must not contain ':'.
+             */
+            mountPath: string;
+            /**
+             * mountPropagation determines how mounts are propagated from the host to container and the other way around. When not set, MountPropagationNone is used. This field is beta in 1.10.
+             */
+            mountPropagation?: string;
+            /**
+             * This must match the Name of a Volume.
+             */
+            name: string;
+            /**
+             * Mounted read-only if true, read-write otherwise (false or unspecified). Defaults to false.
+             */
+            readOnly?: boolean;
+            /**
+             * Path within the volume from which the container's volume should be mounted. Defaults to "" (volume's root).
+             */
+            subPath?: string;
+            /**
+             * Expanded path within the volume from which the container's volume should be mounted. Behaves similarly to SubPath but environment variable references $(VAR_NAME) are expanded using the container's environment. Defaults to "" (volume's root). SubPathExpr and SubPath are mutually exclusive.
+             */
+            subPathExpr?: string;
+        }
+
+        /**
+         * NamedVolume describes the pod Volume reference
+         */
+        export interface KogitoInfraStatusVolumesVolume {
+            /**
+             * ConfigMap represents a configMap that should populate this volume
+             */
+            configMap?: outputs.app.v1beta1.KogitoInfraStatusVolumesVolumeConfigMap;
+            /**
+             * Volume's name. Must be a DNS_LABEL and unique within the pod. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
+             */
+            name: string;
+            /**
+             * Secret represents a secret that should populate this volume. More info: https://kubernetes.io/docs/concepts/storage/volumes#secret
+             */
+            secret?: outputs.app.v1beta1.KogitoInfraStatusVolumesVolumeSecret;
+        }
+
+        /**
+         * ConfigMap represents a configMap that should populate this volume
+         */
+        export interface KogitoInfraStatusVolumesVolumeConfigMap {
+            /**
+             * Optional: mode bits to use on created files by default. Must be a value between 0 and 0777. Defaults to 0644. Directories within the path are not affected by this setting. This might be in conflict with other options that affect the file mode, like fsGroup, and the result can be other mode bits set.
+             */
+            defaultMode?: number;
+            /**
+             * If unspecified, each key-value pair in the Data field of the referenced ConfigMap will be projected into the volume as a file whose name is the key and content is the value. If specified, the listed keys will be projected into the specified paths, and unlisted keys will not be present. If a key is specified which is not present in the ConfigMap, the volume setup will error unless it is marked optional. Paths must be relative and may not contain the '..' path or start with '..'.
+             */
+            items?: outputs.app.v1beta1.KogitoInfraStatusVolumesVolumeConfigMapItems[];
+            /**
+             * Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+             */
             name?: string;
-            namespace?: string;
-            tag?: string;
+            /**
+             * Specify whether the ConfigMap or its keys must be defined
+             */
+            optional?: boolean;
         }
 
         /**
-         * Has the data used by the service to connect to the Infinispan cluster.
+         * Maps a string key to a path within a volume.
          */
-        export interface KogitoJobsServiceSpecInfinispan {
+        export interface KogitoInfraStatusVolumesVolumeConfigMapItems {
             /**
-             * Name of the Infinispan authentication realm. This sets the property infinispan.client.hotrod.auth_realm.
+             * The key to project.
              */
-            authRealm?: string;
+            key: string;
             /**
-             * SecretCredentialsType is the data structure for specifying credentials within a Secret.
+             * Optional: mode bits to use on this file, must be a value between 0 and 0777. If not specified, the volume defaultMode will be used. This might be in conflict with other options that affect the file mode, like fsGroup, and the result can be other mode bits set.
              */
-            credentials?: outputs.app.v1alpha1.KogitoJobsServiceSpecInfinispanCredentials;
+            mode?: number;
             /**
-             * SaslMechanism defined for the authentication. This sets the property infinispan.client.hotrod.sasl_mechanism.
+             * The relative path of the file to map the key to. May not be an absolute path. May not contain the path element '..'. May not start with the string '..'.
              */
-            saslMechanism?: string;
-            /**
-             * URI to connect to the Infinispan cluster (can it be an internal service or external URI), for example, myinfinispan-cluster:11222.
-             */
-            uri?: string;
-            /**
-             * UseAuth is set to true if the credentials are set. This also sets the property infinispan.client.hotrod.use_auth.
-             */
-            useAuth?: boolean;
-            /**
-             * UseKogitoInfra flags if the instance will use a provided infrastructure by KogitoInfra CR. Setting this to true will deploy a new KogitoInfra CR into the namespace that will install Infinispan via Infinispan Operator. Infinispan Operator MUST be installed in the namespace for this to work. On OpenShift, OLM should install it for you. If running on Kubernetes without OLM installed, please install Infinispan Operator first. Set this to false and fill all other properties to provide your own infrastructure.
-             */
-            useKogitoInfra?: boolean;
+            path: string;
         }
 
         /**
-         * SecretCredentialsType is the data structure for specifying credentials within a Secret.
+         * Secret represents a secret that should populate this volume. More info: https://kubernetes.io/docs/concepts/storage/volumes#secret
          */
-        export interface KogitoJobsServiceSpecInfinispanCredentials {
+        export interface KogitoInfraStatusVolumesVolumeSecret {
             /**
-             * PasswordKey is the key pointing to a value in a Secret holding the password value.
+             * Optional: mode bits to use on created files by default. Must be a value between 0 and 0777. Defaults to 0644. Directories within the path are not affected by this setting. This might be in conflict with other options that affect the file mode, like fsGroup, and the result can be other mode bits set.
              */
-            passwordKey?: string;
+            defaultMode?: number;
             /**
-             * SecretName is the name of the secret where the credentials are set.
+             * If unspecified, each key-value pair in the Data field of the referenced Secret will be projected into the volume as a file whose name is the key and content is the value. If specified, the listed keys will be projected into the specified paths, and unlisted keys will not be present. If a key is specified which is not present in the Secret, the volume setup will error unless it is marked optional. Paths must be relative and may not contain the '..' path or start with '..'.
+             */
+            items?: outputs.app.v1beta1.KogitoInfraStatusVolumesVolumeSecretItems[];
+            /**
+             * Specify whether the Secret or its keys must be defined
+             */
+            optional?: boolean;
+            /**
+             * Name of the secret in the pod's namespace to use. More info: https://kubernetes.io/docs/concepts/storage/volumes#secret
              */
             secretName?: string;
-            /**
-             * UsernameKey is the key pointing to a value in a Secret holding the username value.
-             */
-            usernameKey?: string;
         }
 
         /**
-         * Has the data used by the service to connect to the Kafka cluster.
+         * Maps a string key to a path within a volume.
          */
-        export interface KogitoJobsServiceSpecKafka {
+        export interface KogitoInfraStatusVolumesVolumeSecretItems {
             /**
-             * URI is the service URI to connect to the Kafka cluster, for example, my-cluster-kafka-bootstrap:9092.
-             */
-            externalURI?: string;
-            /**
-             * Instance is the Kafka instance to be used, for example, kogito-kafka.
-             */
-            instance?: string;
-            /**
-             * UseKogitoInfra flags if the instance will use a provided infrastructure by KogitoInfra CR. Setting this to true will configure a KogitoInfra CR to install Kafka via Strimzi Operator. Strimzi Operator MUST be installed in the namespace for this to work. On OpenShift, OLM should install it for you. If running on Kubernetes without OLM installed, please install Strimzi Operator first. Set this to false and fill other properties to provide your own infrastructure.
-             */
-            useKogitoInfra?: boolean;
-        }
-
-        /**
-         * Defined compute resource requirements for the deployed service.
-         */
-        export interface KogitoJobsServiceSpecResources {
-            /**
-             * Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-             */
-            limits?: {[key: string]: outputs.app.v1alpha1.KogitoJobsServiceSpecResourcesLimits};
-            /**
-             * Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-             */
-            requests?: {[key: string]: outputs.app.v1alpha1.KogitoJobsServiceSpecResourcesRequests};
-        }
-
-        export interface KogitoJobsServiceSpecResourcesLimits {
-        }
-
-        export interface KogitoJobsServiceSpecResourcesRequests {
-        }
-
-        /**
-         * KogitoJobsServiceStatus defines the observed state of KogitoJobsService.
-         */
-        export interface KogitoJobsServiceStatus {
-            /**
-             * History of conditions for the resource
-             */
-            conditions: outputs.app.v1alpha1.KogitoJobsServiceStatusConditions[];
-            /**
-             * General conditions for the Kogito Service deployment.
-             */
-            deploymentConditions?: outputs.app.v1alpha1.KogitoJobsServiceStatusDeploymentConditions[];
-            /**
-             * URI is where the service is exposed.
-             */
-            externalURI?: string;
-            /**
-             * Image is the resolved image for this service.
-             */
-            image?: string;
-        }
-
-        /**
-         * Condition is the detailed condition for the resource
-         */
-        export interface KogitoJobsServiceStatusConditions {
-            lastTransitionTime?: string;
-            message?: string;
-            /**
-             * ReasonType is the type of reason
-             */
-            reason?: string;
-            status: string;
-            /**
-             * ConditionType is the type of condition
-             */
-            type: string;
-        }
-
-        /**
-         * DeploymentCondition describes the state of a deployment at a certain point.
-         */
-        export interface KogitoJobsServiceStatusDeploymentConditions {
-            /**
-             * Last time the condition transitioned from one status to another.
-             */
-            lastTransitionTime?: string;
-            /**
-             * The last time this condition was updated.
-             */
-            lastUpdateTime?: string;
-            /**
-             * A human readable message indicating details about the transition.
-             */
-            message?: string;
-            /**
-             * The reason for the condition's last transition.
-             */
-            reason?: string;
-            /**
-             * Status of the condition, one of True, False, Unknown.
-             */
-            status: string;
-            /**
-             * Type of deployment condition.
-             */
-            type: string;
-        }
-
-        /**
-         * KogitoMgmtConsoleSpec defines the desired state of KogitoMgmtConsole.
-         */
-        export interface KogitoMgmtConsoleSpec {
-            /**
-             * Additional labels to be added to the Deployment and Pods managed by the operator.
-             */
-            deploymentLabels?: {[key: string]: string};
-            /**
-             * Environment variables to be added to the runtime container. Keys must be a C_IDENTIFIER.
-             */
-            envs?: outputs.app.v1alpha1.KogitoMgmtConsoleSpecEnvs[];
-            /**
-             * HttpPort will set the environment env HTTP_PORT to define which port service will listen internally.
-             */
-            httpPort?: number;
-            /**
-             * Image definition for the service. Example: Domain: quay.io, Namespace: kiegroup, Name: kogito-service, Tag: latest. On OpenShift an ImageStream will be created in the current namespace pointing to the given image.
-             */
-            image?: outputs.app.v1alpha1.KogitoMgmtConsoleSpecImage;
-            /**
-             * A flag indicating that image streams created by Kogito Operator should be configured to allow pulling from insecure registries. Usable just on OpenShift. Defaults to 'false'.
-             */
-            insecureImageRegistry?: boolean;
-            /**
-             * Number of replicas that the service will have deployed in the cluster. Default value: 1.
-             */
-            replicas?: number;
-            /**
-             * Defined compute resource requirements for the deployed service.
-             */
-            resources?: outputs.app.v1alpha1.KogitoMgmtConsoleSpecResources;
-            /**
-             * Additional labels to be added to the Service managed by the operator.
-             */
-            serviceLabels?: {[key: string]: string};
-        }
-
-        /**
-         * EnvVar represents an environment variable present in a Container.
-         */
-        export interface KogitoMgmtConsoleSpecEnvs {
-            /**
-             * Name of the environment variable. Must be a C_IDENTIFIER.
-             */
-            name: string;
-            /**
-             * Variable references $(VAR_NAME) are expanded using the previous defined environment variables in the container and any service environment variables. If a variable cannot be resolved, the reference in the input string will be unchanged. The $(VAR_NAME) syntax can be escaped with a double $$, ie: $$(VAR_NAME). Escaped references will never be expanded, regardless of whether the variable exists or not. Defaults to "".
-             */
-            value?: string;
-            /**
-             * Source for the environment variable's value. Cannot be used if value is not empty.
-             */
-            valueFrom?: outputs.app.v1alpha1.KogitoMgmtConsoleSpecEnvsValueFrom;
-        }
-
-        /**
-         * Source for the environment variable's value. Cannot be used if value is not empty.
-         */
-        export interface KogitoMgmtConsoleSpecEnvsValueFrom {
-            /**
-             * Selects a key of a ConfigMap.
-             */
-            configMapKeyRef?: outputs.app.v1alpha1.KogitoMgmtConsoleSpecEnvsValueFromConfigMapKeyRef;
-            /**
-             * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
-             */
-            fieldRef?: outputs.app.v1alpha1.KogitoMgmtConsoleSpecEnvsValueFromFieldRef;
-            /**
-             * Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
-             */
-            resourceFieldRef?: outputs.app.v1alpha1.KogitoMgmtConsoleSpecEnvsValueFromResourceFieldRef;
-            /**
-             * Selects a key of a secret in the pod's namespace
-             */
-            secretKeyRef?: outputs.app.v1alpha1.KogitoMgmtConsoleSpecEnvsValueFromSecretKeyRef;
-        }
-
-        /**
-         * Selects a key of a ConfigMap.
-         */
-        export interface KogitoMgmtConsoleSpecEnvsValueFromConfigMapKeyRef {
-            /**
-             * The key to select.
+             * The key to project.
              */
             key: string;
             /**
-             * Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+             * Optional: mode bits to use on this file, must be a value between 0 and 0777. If not specified, the volume defaultMode will be used. This might be in conflict with other options that affect the file mode, like fsGroup, and the result can be other mode bits set.
              */
-            name?: string;
+            mode?: number;
             /**
-             * Specify whether the ConfigMap or its key must be defined
+             * The relative path of the file to map the key to. May not be an absolute path. May not contain the path element '..'. May not start with the string '..'.
              */
-            optional?: boolean;
-        }
-
-        /**
-         * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
-         */
-        export interface KogitoMgmtConsoleSpecEnvsValueFromFieldRef {
-            /**
-             * Version of the schema the FieldPath is written in terms of, defaults to "v1".
-             */
-            apiVersion?: string;
-            /**
-             * Path of the field to select in the specified API version.
-             */
-            fieldPath: string;
-        }
-
-        /**
-         * Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
-         */
-        export interface KogitoMgmtConsoleSpecEnvsValueFromResourceFieldRef {
-            /**
-             * Container name: required for volumes, optional for env vars
-             */
-            containerName?: string;
-            /**
-             * Specifies the output format of the exposed resources, defaults to "1"
-             */
-            divisor?: outputs.app.v1alpha1.KogitoMgmtConsoleSpecEnvsValueFromResourceFieldRefDivisor;
-            /**
-             * Required: resource to select
-             */
-            resource: string;
-        }
-
-        export interface KogitoMgmtConsoleSpecEnvsValueFromResourceFieldRefDivisor {
-        }
-
-        /**
-         * Selects a key of a secret in the pod's namespace
-         */
-        export interface KogitoMgmtConsoleSpecEnvsValueFromSecretKeyRef {
-            /**
-             * The key of the secret to select from.  Must be a valid secret key.
-             */
-            key: string;
-            /**
-             * Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
-             */
-            name?: string;
-            /**
-             * Specify whether the Secret or its key must be defined
-             */
-            optional?: boolean;
-        }
-
-        /**
-         * Image definition for the service. Example: Domain: quay.io, Namespace: kiegroup, Name: kogito-service, Tag: latest. On OpenShift an ImageStream will be created in the current namespace pointing to the given image.
-         */
-        export interface KogitoMgmtConsoleSpecImage {
-            domain?: string;
-            name?: string;
-            namespace?: string;
-            tag?: string;
-        }
-
-        /**
-         * Defined compute resource requirements for the deployed service.
-         */
-        export interface KogitoMgmtConsoleSpecResources {
-            /**
-             * Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-             */
-            limits?: {[key: string]: outputs.app.v1alpha1.KogitoMgmtConsoleSpecResourcesLimits};
-            /**
-             * Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-             */
-            requests?: {[key: string]: outputs.app.v1alpha1.KogitoMgmtConsoleSpecResourcesRequests};
-        }
-
-        export interface KogitoMgmtConsoleSpecResourcesLimits {
-        }
-
-        export interface KogitoMgmtConsoleSpecResourcesRequests {
-        }
-
-        /**
-         * KogitoMgmtConsoleStatus defines the observed state of KogitoMgmtConsole.
-         */
-        export interface KogitoMgmtConsoleStatus {
-            /**
-             * History of conditions for the resource
-             */
-            conditions: outputs.app.v1alpha1.KogitoMgmtConsoleStatusConditions[];
-            /**
-             * General conditions for the Kogito Service deployment.
-             */
-            deploymentConditions?: outputs.app.v1alpha1.KogitoMgmtConsoleStatusDeploymentConditions[];
-            /**
-             * URI is where the service is exposed.
-             */
-            externalURI?: string;
-            /**
-             * Image is the resolved image for this service.
-             */
-            image?: string;
-        }
-
-        /**
-         * Condition is the detailed condition for the resource
-         */
-        export interface KogitoMgmtConsoleStatusConditions {
-            lastTransitionTime?: string;
-            message?: string;
-            /**
-             * ReasonType is the type of reason
-             */
-            reason?: string;
-            status: string;
-            /**
-             * ConditionType is the type of condition
-             */
-            type: string;
-        }
-
-        /**
-         * DeploymentCondition describes the state of a deployment at a certain point.
-         */
-        export interface KogitoMgmtConsoleStatusDeploymentConditions {
-            /**
-             * Last time the condition transitioned from one status to another.
-             */
-            lastTransitionTime?: string;
-            /**
-             * The last time this condition was updated.
-             */
-            lastUpdateTime?: string;
-            /**
-             * A human readable message indicating details about the transition.
-             */
-            message?: string;
-            /**
-             * The reason for the condition's last transition.
-             */
-            reason?: string;
-            /**
-             * Status of the condition, one of True, False, Unknown.
-             */
-            status: string;
-            /**
-             * Type of deployment condition.
-             */
-            type: string;
+            path: string;
         }
 
         /**
          * KogitoRuntimeSpec defines the desired state of KogitoRuntime.
          */
         export interface KogitoRuntimeSpec {
+            /**
+             * Application properties that will be set to the service. For example 'MY_VAR: my_value'.
+             */
+            config?: {[key: string]: string};
             /**
              * Additional labels to be added to the Deployment and Pods managed by the operator.
              */
@@ -1382,27 +679,27 @@ export namespace app {
             /**
              * Environment variables to be added to the runtime container. Keys must be a C_IDENTIFIER.
              */
-            envs?: outputs.app.v1alpha1.KogitoRuntimeSpecEnvs[];
+            env?: outputs.app.v1beta1.KogitoRuntimeSpecEnv[];
             /**
-             * HttpPort will set the environment env HTTP_PORT to define which port service will listen internally.
+             * Image definition for the service. Example: "quay.io/kiegroup/kogito-service:latest". On OpenShift an ImageStream will be created in the current namespace pointing to the given image.
              */
-            httpPort?: number;
+            image?: string;
             /**
-             * Image definition for the service. Example: Domain: quay.io, Namespace: kiegroup, Name: kogito-service, Tag: latest. On OpenShift an ImageStream will be created in the current namespace pointing to the given image.
+             * Infra provides list of dependent KogitoInfra objects.
              */
-            image?: outputs.app.v1alpha1.KogitoRuntimeSpecImage;
-            /**
-             * Has the data used by the service to connect to the Infinispan cluster.
-             */
-            infinispan?: outputs.app.v1alpha1.KogitoRuntimeSpecInfinispan;
+            infra?: string[];
             /**
              * A flag indicating that image streams created by Kogito Operator should be configured to allow pulling from insecure registries. Usable just on OpenShift. Defaults to 'false'.
              */
             insecureImageRegistry?: boolean;
             /**
-             * Has the data used by the service to connect to the Kafka cluster.
+             * Create Service monitor instance to connect with Monitoring service
              */
-            kafka?: outputs.app.v1alpha1.KogitoRuntimeSpecKafka;
+            monitoring?: outputs.app.v1beta1.KogitoRuntimeSpecMonitoring;
+            /**
+             * Custom ConfigMap with application.properties file to be mounted for the Kogito service. The ConfigMap must be created in the same namespace. Use this property if you need custom properties to be mounted before the application deployment. If left empty, one will be created for you. Later it can be updated to add any custom properties to apply to the service.
+             */
+            propertiesConfigMap?: string;
             /**
              * Number of replicas that the service will have deployed in the cluster. Default value: 1.
              */
@@ -1410,7 +707,7 @@ export namespace app {
             /**
              * Defined compute resource requirements for the deployed service.
              */
-            resources?: outputs.app.v1alpha1.KogitoRuntimeSpecResources;
+            resources?: outputs.app.v1beta1.KogitoRuntimeSpecResources;
             /**
              * The name of the runtime used, either Quarkus or SpringBoot. Default value: quarkus
              */
@@ -1424,7 +721,7 @@ export namespace app {
         /**
          * EnvVar represents an environment variable present in a Container.
          */
-        export interface KogitoRuntimeSpecEnvs {
+        export interface KogitoRuntimeSpecEnv {
             /**
              * Name of the environment variable. Must be a C_IDENTIFIER.
              */
@@ -1436,35 +733,35 @@ export namespace app {
             /**
              * Source for the environment variable's value. Cannot be used if value is not empty.
              */
-            valueFrom?: outputs.app.v1alpha1.KogitoRuntimeSpecEnvsValueFrom;
+            valueFrom?: outputs.app.v1beta1.KogitoRuntimeSpecEnvValueFrom;
         }
 
         /**
          * Source for the environment variable's value. Cannot be used if value is not empty.
          */
-        export interface KogitoRuntimeSpecEnvsValueFrom {
+        export interface KogitoRuntimeSpecEnvValueFrom {
             /**
              * Selects a key of a ConfigMap.
              */
-            configMapKeyRef?: outputs.app.v1alpha1.KogitoRuntimeSpecEnvsValueFromConfigMapKeyRef;
+            configMapKeyRef?: outputs.app.v1beta1.KogitoRuntimeSpecEnvValueFromConfigMapKeyRef;
             /**
              * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
              */
-            fieldRef?: outputs.app.v1alpha1.KogitoRuntimeSpecEnvsValueFromFieldRef;
+            fieldRef?: outputs.app.v1beta1.KogitoRuntimeSpecEnvValueFromFieldRef;
             /**
              * Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
              */
-            resourceFieldRef?: outputs.app.v1alpha1.KogitoRuntimeSpecEnvsValueFromResourceFieldRef;
+            resourceFieldRef?: outputs.app.v1beta1.KogitoRuntimeSpecEnvValueFromResourceFieldRef;
             /**
              * Selects a key of a secret in the pod's namespace
              */
-            secretKeyRef?: outputs.app.v1alpha1.KogitoRuntimeSpecEnvsValueFromSecretKeyRef;
+            secretKeyRef?: outputs.app.v1beta1.KogitoRuntimeSpecEnvValueFromSecretKeyRef;
         }
 
         /**
          * Selects a key of a ConfigMap.
          */
-        export interface KogitoRuntimeSpecEnvsValueFromConfigMapKeyRef {
+        export interface KogitoRuntimeSpecEnvValueFromConfigMapKeyRef {
             /**
              * The key to select.
              */
@@ -1482,7 +779,7 @@ export namespace app {
         /**
          * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
          */
-        export interface KogitoRuntimeSpecEnvsValueFromFieldRef {
+        export interface KogitoRuntimeSpecEnvValueFromFieldRef {
             /**
              * Version of the schema the FieldPath is written in terms of, defaults to "v1".
              */
@@ -1496,7 +793,7 @@ export namespace app {
         /**
          * Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
          */
-        export interface KogitoRuntimeSpecEnvsValueFromResourceFieldRef {
+        export interface KogitoRuntimeSpecEnvValueFromResourceFieldRef {
             /**
              * Container name: required for volumes, optional for env vars
              */
@@ -1504,20 +801,20 @@ export namespace app {
             /**
              * Specifies the output format of the exposed resources, defaults to "1"
              */
-            divisor?: outputs.app.v1alpha1.KogitoRuntimeSpecEnvsValueFromResourceFieldRefDivisor;
+            divisor?: outputs.app.v1beta1.KogitoRuntimeSpecEnvValueFromResourceFieldRefDivisor;
             /**
              * Required: resource to select
              */
             resource: string;
         }
 
-        export interface KogitoRuntimeSpecEnvsValueFromResourceFieldRefDivisor {
+        export interface KogitoRuntimeSpecEnvValueFromResourceFieldRefDivisor {
         }
 
         /**
          * Selects a key of a secret in the pod's namespace
          */
-        export interface KogitoRuntimeSpecEnvsValueFromSecretKeyRef {
+        export interface KogitoRuntimeSpecEnvValueFromSecretKeyRef {
             /**
              * The key of the secret to select from.  Must be a valid secret key.
              */
@@ -1533,79 +830,17 @@ export namespace app {
         }
 
         /**
-         * Image definition for the service. Example: Domain: quay.io, Namespace: kiegroup, Name: kogito-service, Tag: latest. On OpenShift an ImageStream will be created in the current namespace pointing to the given image.
+         * Create Service monitor instance to connect with Monitoring service
          */
-        export interface KogitoRuntimeSpecImage {
-            domain?: string;
-            name?: string;
-            namespace?: string;
-            tag?: string;
-        }
-
-        /**
-         * Has the data used by the service to connect to the Infinispan cluster.
-         */
-        export interface KogitoRuntimeSpecInfinispan {
+        export interface KogitoRuntimeSpecMonitoring {
             /**
-             * Name of the Infinispan authentication realm. This sets the property infinispan.client.hotrod.auth_realm.
+             * HTTP path to scrape for metrics.
              */
-            authRealm?: string;
+            path?: string;
             /**
-             * SecretCredentialsType is the data structure for specifying credentials within a Secret.
+             * HTTP scheme to use for scraping.
              */
-            credentials?: outputs.app.v1alpha1.KogitoRuntimeSpecInfinispanCredentials;
-            /**
-             * SaslMechanism defined for the authentication. This sets the property infinispan.client.hotrod.sasl_mechanism.
-             */
-            saslMechanism?: string;
-            /**
-             * URI to connect to the Infinispan cluster (can it be an internal service or external URI), for example, myinfinispan-cluster:11222.
-             */
-            uri?: string;
-            /**
-             * UseAuth is set to true if the credentials are set. This also sets the property infinispan.client.hotrod.use_auth.
-             */
-            useAuth?: boolean;
-            /**
-             * UseKogitoInfra flags if the instance will use a provided infrastructure by KogitoInfra CR. Setting this to true will deploy a new KogitoInfra CR into the namespace that will install Infinispan via Infinispan Operator. Infinispan Operator MUST be installed in the namespace for this to work. On OpenShift, OLM should install it for you. If running on Kubernetes without OLM installed, please install Infinispan Operator first. Set this to false and fill all other properties to provide your own infrastructure.
-             */
-            useKogitoInfra?: boolean;
-        }
-
-        /**
-         * SecretCredentialsType is the data structure for specifying credentials within a Secret.
-         */
-        export interface KogitoRuntimeSpecInfinispanCredentials {
-            /**
-             * PasswordKey is the key pointing to a value in a Secret holding the password value.
-             */
-            passwordKey?: string;
-            /**
-             * SecretName is the name of the secret where the credentials are set.
-             */
-            secretName?: string;
-            /**
-             * UsernameKey is the key pointing to a value in a Secret holding the username value.
-             */
-            usernameKey?: string;
-        }
-
-        /**
-         * Has the data used by the service to connect to the Kafka cluster.
-         */
-        export interface KogitoRuntimeSpecKafka {
-            /**
-             * URI is the service URI to connect to the Kafka cluster, for example, my-cluster-kafka-bootstrap:9092.
-             */
-            externalURI?: string;
-            /**
-             * Instance is the Kafka instance to be used, for example, kogito-kafka.
-             */
-            instance?: string;
-            /**
-             * UseKogitoInfra flags if the instance will use a provided infrastructure by KogitoInfra CR. Setting this to true will configure a KogitoInfra CR to install Kafka via Strimzi Operator. Strimzi Operator MUST be installed in the namespace for this to work. On OpenShift, OLM should install it for you. If running on Kubernetes without OLM installed, please install Strimzi Operator first. Set this to false and fill other properties to provide your own infrastructure.
-             */
-            useKogitoInfra?: boolean;
+            scheme?: string;
         }
 
         /**
@@ -1615,11 +850,11 @@ export namespace app {
             /**
              * Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
              */
-            limits?: {[key: string]: outputs.app.v1alpha1.KogitoRuntimeSpecResourcesLimits};
+            limits?: {[key: string]: outputs.app.v1beta1.KogitoRuntimeSpecResourcesLimits};
             /**
              * Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
              */
-            requests?: {[key: string]: outputs.app.v1alpha1.KogitoRuntimeSpecResourcesRequests};
+            requests?: {[key: string]: outputs.app.v1beta1.KogitoRuntimeSpecResourcesRequests};
         }
 
         export interface KogitoRuntimeSpecResourcesLimits {
@@ -1633,13 +868,17 @@ export namespace app {
          */
         export interface KogitoRuntimeStatus {
             /**
+             * Describes the CloudEvents that this instance can consume or produce
+             */
+            cloudEvents?: outputs.app.v1beta1.KogitoRuntimeStatusCloudEvents;
+            /**
              * History of conditions for the resource
              */
-            conditions: outputs.app.v1alpha1.KogitoRuntimeStatusConditions[];
+            conditions: outputs.app.v1beta1.KogitoRuntimeStatusConditions[];
             /**
              * General conditions for the Kogito Service deployment.
              */
-            deploymentConditions?: outputs.app.v1alpha1.KogitoRuntimeStatusDeploymentConditions[];
+            deploymentConditions?: outputs.app.v1beta1.KogitoRuntimeStatusDeploymentConditions[];
             /**
              * URI is where the service is exposed.
              */
@@ -1651,13 +890,37 @@ export namespace app {
         }
 
         /**
+         * Describes the CloudEvents that this instance can consume or produce
+         */
+        export interface KogitoRuntimeStatusCloudEvents {
+            consumes?: outputs.app.v1beta1.KogitoRuntimeStatusCloudEventsConsumes[];
+            produces?: outputs.app.v1beta1.KogitoRuntimeStatusCloudEventsProduces[];
+        }
+
+        /**
+         * KogitoCloudEventInfo describes the CloudEvent information based on the specification
+         */
+        export interface KogitoRuntimeStatusCloudEventsConsumes {
+            source?: string;
+            type: string;
+        }
+
+        /**
+         * KogitoCloudEventInfo describes the CloudEvent information based on the specification
+         */
+        export interface KogitoRuntimeStatusCloudEventsProduces {
+            source?: string;
+            type: string;
+        }
+
+        /**
          * Condition is the detailed condition for the resource
          */
         export interface KogitoRuntimeStatusConditions {
             lastTransitionTime?: string;
             message?: string;
             /**
-             * ReasonType is the type of reason
+             * KogitoServiceConditionReason is the type of reason
              */
             reason?: string;
             status: string;
@@ -1698,9 +961,13 @@ export namespace app {
         }
 
         /**
-         * KogitoTrustySpec defines the desired state of KogitoTrusty.
+         * KogitoSupportingServiceSpec defines the desired state of KogitoSupportingService.
          */
-        export interface KogitoTrustySpec {
+        export interface KogitoSupportingServiceSpec {
+            /**
+             * Application properties that will be set to the service. For example 'MY_VAR: my_value'.
+             */
+            config?: {[key: string]: string};
             /**
              * Additional labels to be added to the Deployment and Pods managed by the operator.
              */
@@ -1708,27 +975,27 @@ export namespace app {
             /**
              * Environment variables to be added to the runtime container. Keys must be a C_IDENTIFIER.
              */
-            envs?: outputs.app.v1alpha1.KogitoTrustySpecEnvs[];
+            env?: outputs.app.v1beta1.KogitoSupportingServiceSpecEnv[];
             /**
-             * HttpPort will set the environment env HTTP_PORT to define which port service will listen internally.
+             * Image definition for the service. Example: "quay.io/kiegroup/kogito-service:latest". On OpenShift an ImageStream will be created in the current namespace pointing to the given image.
              */
-            httpPort?: number;
+            image?: string;
             /**
-             * Image definition for the service. Example: Domain: quay.io, Namespace: kiegroup, Name: kogito-service, Tag: latest. On OpenShift an ImageStream will be created in the current namespace pointing to the given image.
+             * Infra provides list of dependent KogitoInfra objects.
              */
-            image?: outputs.app.v1alpha1.KogitoTrustySpecImage;
-            /**
-             * Has the data used by the service to connect to the Infinispan cluster.
-             */
-            infinispan?: outputs.app.v1alpha1.KogitoTrustySpecInfinispan;
+            infra?: string[];
             /**
              * A flag indicating that image streams created by Kogito Operator should be configured to allow pulling from insecure registries. Usable just on OpenShift. Defaults to 'false'.
              */
             insecureImageRegistry?: boolean;
             /**
-             * Has the data used by the service to connect to the Kafka cluster.
+             * Create Service monitor instance to connect with Monitoring service
              */
-            kafka?: outputs.app.v1alpha1.KogitoTrustySpecKafka;
+            monitoring?: outputs.app.v1beta1.KogitoSupportingServiceSpecMonitoring;
+            /**
+             * Custom ConfigMap with application.properties file to be mounted for the Kogito service. The ConfigMap must be created in the same namespace. Use this property if you need custom properties to be mounted before the application deployment. If left empty, one will be created for you. Later it can be updated to add any custom properties to apply to the service.
+             */
+            propertiesConfigMap?: string;
             /**
              * Number of replicas that the service will have deployed in the cluster. Default value: 1.
              */
@@ -1736,17 +1003,21 @@ export namespace app {
             /**
              * Defined compute resource requirements for the deployed service.
              */
-            resources?: outputs.app.v1alpha1.KogitoTrustySpecResources;
+            resources?: outputs.app.v1beta1.KogitoSupportingServiceSpecResources;
             /**
              * Additional labels to be added to the Service managed by the operator.
              */
             serviceLabels?: {[key: string]: string};
+            /**
+             * Defines the type for the supporting service, eg: DataIndex, JobsService Default value: JobsService
+             */
+            serviceType: string;
         }
 
         /**
          * EnvVar represents an environment variable present in a Container.
          */
-        export interface KogitoTrustySpecEnvs {
+        export interface KogitoSupportingServiceSpecEnv {
             /**
              * Name of the environment variable. Must be a C_IDENTIFIER.
              */
@@ -1758,35 +1029,35 @@ export namespace app {
             /**
              * Source for the environment variable's value. Cannot be used if value is not empty.
              */
-            valueFrom?: outputs.app.v1alpha1.KogitoTrustySpecEnvsValueFrom;
+            valueFrom?: outputs.app.v1beta1.KogitoSupportingServiceSpecEnvValueFrom;
         }
 
         /**
          * Source for the environment variable's value. Cannot be used if value is not empty.
          */
-        export interface KogitoTrustySpecEnvsValueFrom {
+        export interface KogitoSupportingServiceSpecEnvValueFrom {
             /**
              * Selects a key of a ConfigMap.
              */
-            configMapKeyRef?: outputs.app.v1alpha1.KogitoTrustySpecEnvsValueFromConfigMapKeyRef;
+            configMapKeyRef?: outputs.app.v1beta1.KogitoSupportingServiceSpecEnvValueFromConfigMapKeyRef;
             /**
              * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
              */
-            fieldRef?: outputs.app.v1alpha1.KogitoTrustySpecEnvsValueFromFieldRef;
+            fieldRef?: outputs.app.v1beta1.KogitoSupportingServiceSpecEnvValueFromFieldRef;
             /**
              * Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
              */
-            resourceFieldRef?: outputs.app.v1alpha1.KogitoTrustySpecEnvsValueFromResourceFieldRef;
+            resourceFieldRef?: outputs.app.v1beta1.KogitoSupportingServiceSpecEnvValueFromResourceFieldRef;
             /**
              * Selects a key of a secret in the pod's namespace
              */
-            secretKeyRef?: outputs.app.v1alpha1.KogitoTrustySpecEnvsValueFromSecretKeyRef;
+            secretKeyRef?: outputs.app.v1beta1.KogitoSupportingServiceSpecEnvValueFromSecretKeyRef;
         }
 
         /**
          * Selects a key of a ConfigMap.
          */
-        export interface KogitoTrustySpecEnvsValueFromConfigMapKeyRef {
+        export interface KogitoSupportingServiceSpecEnvValueFromConfigMapKeyRef {
             /**
              * The key to select.
              */
@@ -1804,7 +1075,7 @@ export namespace app {
         /**
          * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
          */
-        export interface KogitoTrustySpecEnvsValueFromFieldRef {
+        export interface KogitoSupportingServiceSpecEnvValueFromFieldRef {
             /**
              * Version of the schema the FieldPath is written in terms of, defaults to "v1".
              */
@@ -1818,7 +1089,7 @@ export namespace app {
         /**
          * Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
          */
-        export interface KogitoTrustySpecEnvsValueFromResourceFieldRef {
+        export interface KogitoSupportingServiceSpecEnvValueFromResourceFieldRef {
             /**
              * Container name: required for volumes, optional for env vars
              */
@@ -1826,20 +1097,20 @@ export namespace app {
             /**
              * Specifies the output format of the exposed resources, defaults to "1"
              */
-            divisor?: outputs.app.v1alpha1.KogitoTrustySpecEnvsValueFromResourceFieldRefDivisor;
+            divisor?: outputs.app.v1beta1.KogitoSupportingServiceSpecEnvValueFromResourceFieldRefDivisor;
             /**
              * Required: resource to select
              */
             resource: string;
         }
 
-        export interface KogitoTrustySpecEnvsValueFromResourceFieldRefDivisor {
+        export interface KogitoSupportingServiceSpecEnvValueFromResourceFieldRefDivisor {
         }
 
         /**
          * Selects a key of a secret in the pod's namespace
          */
-        export interface KogitoTrustySpecEnvsValueFromSecretKeyRef {
+        export interface KogitoSupportingServiceSpecEnvValueFromSecretKeyRef {
             /**
              * The key of the secret to select from.  Must be a valid secret key.
              */
@@ -1855,113 +1126,55 @@ export namespace app {
         }
 
         /**
-         * Image definition for the service. Example: Domain: quay.io, Namespace: kiegroup, Name: kogito-service, Tag: latest. On OpenShift an ImageStream will be created in the current namespace pointing to the given image.
+         * Create Service monitor instance to connect with Monitoring service
          */
-        export interface KogitoTrustySpecImage {
-            domain?: string;
-            name?: string;
-            namespace?: string;
-            tag?: string;
-        }
-
-        /**
-         * Has the data used by the service to connect to the Infinispan cluster.
-         */
-        export interface KogitoTrustySpecInfinispan {
+        export interface KogitoSupportingServiceSpecMonitoring {
             /**
-             * Name of the Infinispan authentication realm. This sets the property infinispan.client.hotrod.auth_realm.
+             * HTTP path to scrape for metrics.
              */
-            authRealm?: string;
+            path?: string;
             /**
-             * SecretCredentialsType is the data structure for specifying credentials within a Secret.
+             * HTTP scheme to use for scraping.
              */
-            credentials?: outputs.app.v1alpha1.KogitoTrustySpecInfinispanCredentials;
-            /**
-             * SaslMechanism defined for the authentication. This sets the property infinispan.client.hotrod.sasl_mechanism.
-             */
-            saslMechanism?: string;
-            /**
-             * URI to connect to the Infinispan cluster (can it be an internal service or external URI), for example, myinfinispan-cluster:11222.
-             */
-            uri?: string;
-            /**
-             * UseAuth is set to true if the credentials are set. This also sets the property infinispan.client.hotrod.use_auth.
-             */
-            useAuth?: boolean;
-            /**
-             * UseKogitoInfra flags if the instance will use a provided infrastructure by KogitoInfra CR. Setting this to true will deploy a new KogitoInfra CR into the namespace that will install Infinispan via Infinispan Operator. Infinispan Operator MUST be installed in the namespace for this to work. On OpenShift, OLM should install it for you. If running on Kubernetes without OLM installed, please install Infinispan Operator first. Set this to false and fill all other properties to provide your own infrastructure.
-             */
-            useKogitoInfra?: boolean;
-        }
-
-        /**
-         * SecretCredentialsType is the data structure for specifying credentials within a Secret.
-         */
-        export interface KogitoTrustySpecInfinispanCredentials {
-            /**
-             * PasswordKey is the key pointing to a value in a Secret holding the password value.
-             */
-            passwordKey?: string;
-            /**
-             * SecretName is the name of the secret where the credentials are set.
-             */
-            secretName?: string;
-            /**
-             * UsernameKey is the key pointing to a value in a Secret holding the username value.
-             */
-            usernameKey?: string;
-        }
-
-        /**
-         * Has the data used by the service to connect to the Kafka cluster.
-         */
-        export interface KogitoTrustySpecKafka {
-            /**
-             * URI is the service URI to connect to the Kafka cluster, for example, my-cluster-kafka-bootstrap:9092.
-             */
-            externalURI?: string;
-            /**
-             * Instance is the Kafka instance to be used, for example, kogito-kafka.
-             */
-            instance?: string;
-            /**
-             * UseKogitoInfra flags if the instance will use a provided infrastructure by KogitoInfra CR. Setting this to true will configure a KogitoInfra CR to install Kafka via Strimzi Operator. Strimzi Operator MUST be installed in the namespace for this to work. On OpenShift, OLM should install it for you. If running on Kubernetes without OLM installed, please install Strimzi Operator first. Set this to false and fill other properties to provide your own infrastructure.
-             */
-            useKogitoInfra?: boolean;
+            scheme?: string;
         }
 
         /**
          * Defined compute resource requirements for the deployed service.
          */
-        export interface KogitoTrustySpecResources {
+        export interface KogitoSupportingServiceSpecResources {
             /**
              * Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
              */
-            limits?: {[key: string]: outputs.app.v1alpha1.KogitoTrustySpecResourcesLimits};
+            limits?: {[key: string]: outputs.app.v1beta1.KogitoSupportingServiceSpecResourcesLimits};
             /**
              * Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
              */
-            requests?: {[key: string]: outputs.app.v1alpha1.KogitoTrustySpecResourcesRequests};
+            requests?: {[key: string]: outputs.app.v1beta1.KogitoSupportingServiceSpecResourcesRequests};
         }
 
-        export interface KogitoTrustySpecResourcesLimits {
+        export interface KogitoSupportingServiceSpecResourcesLimits {
         }
 
-        export interface KogitoTrustySpecResourcesRequests {
+        export interface KogitoSupportingServiceSpecResourcesRequests {
         }
 
         /**
-         * KogitoTrustyStatus defines the observed state of KogitoTrusty.
+         * KogitoSupportingServiceStatus defines the observed state of KogitoSupportingService.
          */
-        export interface KogitoTrustyStatus {
+        export interface KogitoSupportingServiceStatus {
+            /**
+             * Describes the CloudEvents that this instance can consume or produce
+             */
+            cloudEvents?: outputs.app.v1beta1.KogitoSupportingServiceStatusCloudEvents;
             /**
              * History of conditions for the resource
              */
-            conditions: outputs.app.v1alpha1.KogitoTrustyStatusConditions[];
+            conditions: outputs.app.v1beta1.KogitoSupportingServiceStatusConditions[];
             /**
              * General conditions for the Kogito Service deployment.
              */
-            deploymentConditions?: outputs.app.v1alpha1.KogitoTrustyStatusDeploymentConditions[];
+            deploymentConditions?: outputs.app.v1beta1.KogitoSupportingServiceStatusDeploymentConditions[];
             /**
              * URI is where the service is exposed.
              */
@@ -1973,13 +1186,37 @@ export namespace app {
         }
 
         /**
+         * Describes the CloudEvents that this instance can consume or produce
+         */
+        export interface KogitoSupportingServiceStatusCloudEvents {
+            consumes?: outputs.app.v1beta1.KogitoSupportingServiceStatusCloudEventsConsumes[];
+            produces?: outputs.app.v1beta1.KogitoSupportingServiceStatusCloudEventsProduces[];
+        }
+
+        /**
+         * KogitoCloudEventInfo describes the CloudEvent information based on the specification
+         */
+        export interface KogitoSupportingServiceStatusCloudEventsConsumes {
+            source?: string;
+            type: string;
+        }
+
+        /**
+         * KogitoCloudEventInfo describes the CloudEvent information based on the specification
+         */
+        export interface KogitoSupportingServiceStatusCloudEventsProduces {
+            source?: string;
+            type: string;
+        }
+
+        /**
          * Condition is the detailed condition for the resource
          */
-        export interface KogitoTrustyStatusConditions {
+        export interface KogitoSupportingServiceStatusConditions {
             lastTransitionTime?: string;
             message?: string;
             /**
-             * ReasonType is the type of reason
+             * KogitoServiceConditionReason is the type of reason
              */
             reason?: string;
             status: string;
@@ -1992,7 +1229,7 @@ export namespace app {
         /**
          * DeploymentCondition describes the state of a deployment at a certain point.
          */
-        export interface KogitoTrustyStatusDeploymentConditions {
+        export interface KogitoSupportingServiceStatusDeploymentConditions {
             /**
              * Last time the condition transitioned from one status to another.
              */

@@ -22,7 +22,7 @@ namespace Pulumi.Kubernetes.Types.Outputs.Machinelearning.V1
         /// </summary>
         public readonly string Name;
         /// <summary>
-        /// Specify whether the ConfigMap or it's key must be defined
+        /// Specify whether the ConfigMap or its key must be defined
         /// </summary>
         public readonly bool Optional;
 

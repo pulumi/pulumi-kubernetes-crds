@@ -20,7 +20,7 @@ namespace Pulumi.Kubernetes.Types.Outputs.Storage.V1
         /// <summary>
         /// Specifies the output format of the exposed resources, defaults to "1"
         /// </summary>
-        public readonly string Divisor;
+        public readonly Pulumi.Kubernetes.Types.Outputs.Storage.V1.CSIPowerMaxSpecDriverControllerEnvsValueFromResourceFieldRefDivisor Divisor;
         /// <summary>
         /// Required: resource to select
         /// </summary>
@@ -30,7 +30,7 @@ namespace Pulumi.Kubernetes.Types.Outputs.Storage.V1
         private CSIPowerMaxSpecDriverControllerEnvsValueFromResourceFieldRef(
             string containerName,
 
-            string divisor,
+            Pulumi.Kubernetes.Types.Outputs.Storage.V1.CSIPowerMaxSpecDriverControllerEnvsValueFromResourceFieldRefDivisor divisor,
 
             string resource)
         {

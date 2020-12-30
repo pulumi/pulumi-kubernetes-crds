@@ -13,6 +13,9 @@ namespace Pulumi.Kubernetes.Types.Outputs.Ibmcloud.V1Alpha1
     [OutputType]
     public sealed class ServiceStatus
     {
+        /// <summary>
+        /// ResourceContext defines the CloudFoundry context and resource group
+        /// </summary>
         public readonly Pulumi.Kubernetes.Types.Outputs.Ibmcloud.V1Alpha1.ServiceStatusContext Context;
         public readonly string DashboardURL;
         public readonly string ExternalName;

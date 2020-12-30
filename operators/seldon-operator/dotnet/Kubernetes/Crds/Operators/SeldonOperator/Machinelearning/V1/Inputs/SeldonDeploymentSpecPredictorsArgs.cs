@@ -51,23 +51,20 @@ namespace Pulumi.Kubernetes.Types.Inputs.Machinelearning.V1
         [Input("name", required: true)]
         public Input<string> Name { get; set; } = null!;
 
-        [Input("protocol")]
-        public Input<string>? Protocol { get; set; }
-
         [Input("replicas")]
         public Input<int>? Replicas { get; set; }
 
         [Input("shadow")]
         public Input<bool>? Shadow { get; set; }
 
+        [Input("ssl")]
+        public Input<Pulumi.Kubernetes.Types.Inputs.Machinelearning.V1.SeldonDeploymentSpecPredictorsSslArgs>? Ssl { get; set; }
+
         [Input("svcOrchSpec")]
         public Input<Pulumi.Kubernetes.Types.Inputs.Machinelearning.V1.SeldonDeploymentSpecPredictorsSvcOrchSpecArgs>? SvcOrchSpec { get; set; }
 
         [Input("traffic")]
         public Input<int>? Traffic { get; set; }
-
-        [Input("transport")]
-        public Input<string>? Transport { get; set; }
 
         public SeldonDeploymentSpecPredictorsArgs()
         {

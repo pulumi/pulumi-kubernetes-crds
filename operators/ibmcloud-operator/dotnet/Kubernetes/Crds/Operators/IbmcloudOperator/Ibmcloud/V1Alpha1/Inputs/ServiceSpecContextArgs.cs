@@ -10,6 +10,9 @@ using Pulumi.Serialization;
 namespace Pulumi.Kubernetes.Types.Inputs.Ibmcloud.V1Alpha1
 {
 
+    /// <summary>
+    /// ResourceContext defines the CloudFoundry context and resource group
+    /// </summary>
     public class ServiceSpecContextArgs : Pulumi.ResourceArgs
     {
         [Input("org")]

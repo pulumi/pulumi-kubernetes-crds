@@ -13,21 +13,25 @@ namespace Pulumi.Kubernetes.Types.Outputs.Infinispan.V1
     [OutputType]
     public sealed class InfinispanSpecExpose
     {
+        public readonly ImmutableDictionary<string, string> Annotations;
         public readonly string Host;
         public readonly int NodePort;
         /// <summary>
-        /// Type specifies different exposition methods for datagrid
+        /// Type specifies different exposition methods for data grid
         /// </summary>
         public readonly string Type;
 
         [OutputConstructor]
         private InfinispanSpecExpose(
+            ImmutableDictionary<string, string> annotations,
+
             string host,
 
             int nodePort,
 
             string type)
         {
+            Annotations = annotations;
             Host = host;
             NodePort = nodePort;
             Type = type;

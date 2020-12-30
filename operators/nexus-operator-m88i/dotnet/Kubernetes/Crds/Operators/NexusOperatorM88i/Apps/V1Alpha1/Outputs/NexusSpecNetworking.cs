@@ -14,11 +14,11 @@ namespace Pulumi.Kubernetes.Types.Outputs.Apps.V1Alpha1
     public sealed class NexusSpecNetworking
     {
         /// <summary>
-        /// Set to `true` to expose the Nexus application. Default to false.
+        /// Set to `true` to expose the Nexus application. Defaults to `false`.
         /// </summary>
         public readonly bool Expose;
         /// <summary>
-        /// Type of networking exposure: NodePort, Route or Ingress. Default to Route on OpenShift and Ingress on Kubernetes.
+        /// Type of networking exposure: NodePort, Route or Ingress. Defaults to Route on OpenShift and Ingress on Kubernetes. Routes are only available on Openshift and Ingresses are only available on Kubernetes.
         /// </summary>
         public readonly string ExposeAs;
         /// <summary>

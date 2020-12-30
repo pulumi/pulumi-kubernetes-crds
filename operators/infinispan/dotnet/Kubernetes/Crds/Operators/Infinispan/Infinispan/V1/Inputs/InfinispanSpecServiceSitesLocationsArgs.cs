@@ -12,14 +12,20 @@ namespace Pulumi.Kubernetes.Types.Inputs.Infinispan.V1
 
     public class InfinispanSpecServiceSitesLocationsArgs : Pulumi.ResourceArgs
     {
+        [Input("host")]
+        public Input<string>? Host { get; set; }
+
         [Input("name", required: true)]
         public Input<string> Name { get; set; } = null!;
 
-        [Input("secretName", required: true)]
-        public Input<string> SecretName { get; set; } = null!;
+        [Input("port")]
+        public Input<int>? Port { get; set; }
 
-        [Input("url", required: true)]
-        public Input<string> Url { get; set; } = null!;
+        [Input("secretName")]
+        public Input<string>? SecretName { get; set; }
+
+        [Input("url")]
+        public Input<string>? Url { get; set; }
 
         public InfinispanSpecServiceSitesLocationsArgs()
         {

@@ -16,17 +16,17 @@ namespace Pulumi.Kubernetes.Types.Outputs.Build.V1Alpha1
         /// <summary>
         /// Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
         /// </summary>
-        public readonly ImmutableDictionary<string, string> Limits;
+        public readonly ImmutableDictionary<string, Pulumi.Kubernetes.Types.Outputs.Build.V1Alpha1.ClusterBuildStrategySpecBuildStepsResourcesLimits> Limits;
         /// <summary>
         /// Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
         /// </summary>
-        public readonly ImmutableDictionary<string, string> Requests;
+        public readonly ImmutableDictionary<string, Pulumi.Kubernetes.Types.Outputs.Build.V1Alpha1.ClusterBuildStrategySpecBuildStepsResourcesRequests> Requests;
 
         [OutputConstructor]
         private ClusterBuildStrategySpecBuildStepsResources(
-            ImmutableDictionary<string, string> limits,
+            ImmutableDictionary<string, Pulumi.Kubernetes.Types.Outputs.Build.V1Alpha1.ClusterBuildStrategySpecBuildStepsResourcesLimits> limits,
 
-            ImmutableDictionary<string, string> requests)
+            ImmutableDictionary<string, Pulumi.Kubernetes.Types.Outputs.Build.V1Alpha1.ClusterBuildStrategySpecBuildStepsResourcesRequests> requests)
         {
             Limits = limits;
             Requests = requests;

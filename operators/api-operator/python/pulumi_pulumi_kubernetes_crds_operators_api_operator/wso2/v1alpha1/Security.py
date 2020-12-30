@@ -27,9 +27,12 @@ class Security(pulumi.CustomResource):
                  __name__=None,
                  __opts__=None):
         """
-        Create a Security resource with the given unique name, props, and options.
+        Security is the Schema for the securities API
+
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[pulumi.InputType['SecuritySpecArgs']] spec: SecuritySpec defines the desired state of Security
+        :param pulumi.Input[Mapping[str, Any]] status: SecurityStatus defines the observed state of Security
         """
         if __name__ is not None:
             warnings.warn("explicit use of __name__ is deprecated", DeprecationWarning)
@@ -95,11 +98,17 @@ class Security(pulumi.CustomResource):
     @property
     @pulumi.getter
     def spec(self) -> pulumi.Output[Optional['outputs.SecuritySpec']]:
+        """
+        SecuritySpec defines the desired state of Security
+        """
         return pulumi.get(self, "spec")
 
     @property
     @pulumi.getter
     def status(self) -> pulumi.Output[Optional[Mapping[str, Any]]]:
+        """
+        SecurityStatus defines the observed state of Security
+        """
         return pulumi.get(self, "status")
 
     def translate_output_property(self, prop):

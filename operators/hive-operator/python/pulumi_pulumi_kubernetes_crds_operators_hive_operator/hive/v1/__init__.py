@@ -20,6 +20,5 @@ from .SelectorSyncIdentityProvider import *
 from .SelectorSyncSet import *
 from .SyncIdentityProvider import *
 from .SyncSet import *
-from .SyncSetInstance import *
 from ._inputs import *
 from . import outputs

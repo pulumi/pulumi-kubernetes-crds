@@ -16,7 +16,7 @@ namespace Pulumi.Kubernetes.Types.Outputs.Ibmcloud.V1Alpha1
         /// <summary>
         /// A parameter may have attributes (e.g. message hub topic might have partitions)
         /// </summary>
-        public readonly ImmutableDictionary<string, object> Attributes;
+        public readonly ImmutableDictionary<string, ImmutableDictionary<string, object>> Attributes;
         /// <summary>
         /// Name representing the key.
         /// </summary>
@@ -32,7 +32,7 @@ namespace Pulumi.Kubernetes.Types.Outputs.Ibmcloud.V1Alpha1
 
         [OutputConstructor]
         private BindingSpecParameters(
-            ImmutableDictionary<string, object> attributes,
+            ImmutableDictionary<string, ImmutableDictionary<string, object>> attributes,
 
             string name,
 

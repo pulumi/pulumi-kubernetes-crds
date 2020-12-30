@@ -33,6 +33,14 @@ namespace Pulumi.Kubernetes.Types.Inputs.Pingcap.V1Alpha1
         [Input("onLine")]
         public Input<bool>? OnLine { get; set; }
 
+        [Input("options")]
+        private InputList<string>? _options;
+        public InputList<string> Options
+        {
+            get => _options ?? (_options = new InputList<string>());
+            set => _options = value;
+        }
+
         [Input("rateLimit")]
         public Input<int>? RateLimit { get; set; }
 

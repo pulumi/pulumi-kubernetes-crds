@@ -22,7 +22,7 @@ namespace Pulumi.Kubernetes.Types.Outputs.Org.V1
         /// </summary>
         public readonly string IngressDomain;
         /// <summary>
-        /// Strategy for ingress creation. This can be `multi-host` (host is explicitly provided in ingress), `single-host` (host is provided, path-based rules) and `default-host.*`(no host is provided, path-based rules). Defaults to `"multi-host`
+        /// Strategy for ingress creation. This can be `multi-host` (host is explicitly provided in ingress), `single-host` (host is provided, path-based rules) and `default-host.*`(no host is provided, path-based rules). Defaults to `"multi-host` Deprecated in favor of "serverExposureStrategy" in the "server" section, which defines this regardless of the cluster type. If both are defined, `serverExposureStrategy` takes precedence.
         /// </summary>
         public readonly string IngressStrategy;
         /// <summary>
@@ -34,7 +34,11 @@ namespace Pulumi.Kubernetes.Types.Outputs.Org.V1
         /// </summary>
         public readonly string SecurityContextRunAsUser;
         /// <summary>
-        /// Name of a secret that will be used to setup ingress TLS termination if TLS is enabled. See also the `tlsSupport` field.
+        /// When the serverExposureStrategy is set to "single-host", the way the server, registries and workspaces are exposed is further configured by this property. The possible values are "native" (which means that the server and workspaces are exposed using ingresses on K8s) or "gateway" where the server and workspaces are exposed using a custom gateway based on Traefik. All the endpoints whether backed by the ingress or gateway "route" always point to the subpaths on the same domain. Defaults to "native".
+        /// </summary>
+        public readonly string SingleHostExposureType;
+        /// <summary>
+        /// Name of a secret that will be used to setup ingress TLS termination if TLS is enabled. If the field is empty string, then default cluster certificate will be used. See also the `tlsSupport` field.
         /// </summary>
         public readonly string TlsSecretName;
 
@@ -50,6 +54,8 @@ namespace Pulumi.Kubernetes.Types.Outputs.Org.V1
 
             string securityContextRunAsUser,
 
+            string singleHostExposureType,
+
             string tlsSecretName)
         {
             IngressClass = ingressClass;
@@ -57,6 +63,7 @@ namespace Pulumi.Kubernetes.Types.Outputs.Org.V1
             IngressStrategy = ingressStrategy;
             SecurityContextFsGroup = securityContextFsGroup;
             SecurityContextRunAsUser = securityContextRunAsUser;
+            SingleHostExposureType = singleHostExposureType;
             TlsSecretName = tlsSecretName;
         }
     }

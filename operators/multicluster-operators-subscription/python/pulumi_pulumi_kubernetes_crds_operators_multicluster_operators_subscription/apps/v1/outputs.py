@@ -44,6 +44,7 @@ __all__ = [
     'PlacementRuleStatus',
     'PlacementRuleStatusDecisions',
     'SubscriptionSpec',
+    'SubscriptionSpecHooksecretref',
     'SubscriptionSpecOverrides',
     'SubscriptionSpecPackageFilter',
     'SubscriptionSpecPackageFilterFilterRef',
@@ -58,6 +59,9 @@ __all__ = [
     'SubscriptionSpecTimewindow',
     'SubscriptionSpecTimewindowHours',
     'SubscriptionStatus',
+    'SubscriptionStatusAnsiblejobs',
+    'SubscriptionStatusStatuses',
+    'SubscriptionStatusStatusesPackages',
 ]
 
 @pulumi.output_type
@@ -70,6 +74,7 @@ class ChannelSpec(dict):
                  type: str,
                  config_map_ref: Optional['outputs.ChannelSpecConfigMapRef'] = None,
                  gates: Optional['outputs.ChannelSpecGates'] = None,
+                 insecure_skip_verify: Optional[bool] = None,
                  secret_ref: Optional['outputs.ChannelSpecSecretRef'] = None,
                  source_namespaces: Optional[Sequence[str]] = None):
         """
@@ -78,6 +83,7 @@ class ChannelSpec(dict):
         :param str type: ChannelType defines types of channel
         :param 'ChannelSpecConfigMapRefArgs' config_map_ref: Reference to a ConfigMap which contains additional settings for accessing the channel. For example, the `insecureSkipVerify` option for accessing HTTPS endpoints can be set in the ConfigMap to indicate a insecure connection.
         :param 'ChannelSpecGatesArgs' gates: Criteria for promoting a Deployable from the sourceNamespaces to Channel.
+        :param bool insecure_skip_verify: Skip server TLS certificate verification for Git or Helm channel.
         :param 'ChannelSpecSecretRefArgs' secret_ref: For a `github` channel or a `helmrepo` channel on github, this can be used to reference a Secret which contains the credentials for authentication, i.e. `user` and `accessToken`. For a `objectbucket` channel, this can be used to reference a Secret which contains the AWS credentials, i.e. `AccessKeyID` and `SecretAccessKey`.
         :param Sequence[str] source_namespaces: A list of namespace names from which Deployables can be promoted.
         """
@@ -87,6 +93,8 @@ class ChannelSpec(dict):
             pulumi.set(__self__, "config_map_ref", config_map_ref)
         if gates is not None:
             pulumi.set(__self__, "gates", gates)
+        if insecure_skip_verify is not None:
+            pulumi.set(__self__, "insecure_skip_verify", insecure_skip_verify)
         if secret_ref is not None:
             pulumi.set(__self__, "secret_ref", secret_ref)
         if source_namespaces is not None:
@@ -123,6 +131,14 @@ class ChannelSpec(dict):
         Criteria for promoting a Deployable from the sourceNamespaces to Channel.
         """
         return pulumi.get(self, "gates")
+
+    @property
+    @pulumi.getter(name="insecureSkipVerify")
+    def insecure_skip_verify(self) -> Optional[bool]:
+        """
+        Skip server TLS certificate verification for Git or Helm channel.
+        """
+        return pulumi.get(self, "insecure_skip_verify")
 
     @property
     @pulumi.getter(name="secretRef")
@@ -960,6 +976,7 @@ class HelmReleaseRepo(dict):
     def __init__(__self__, *,
                  chart_name: Optional[str] = None,
                  config_map_ref: Optional['outputs.HelmReleaseRepoConfigMapRef'] = None,
+                 insecure_skip_verify: Optional[bool] = None,
                  secret_ref: Optional['outputs.HelmReleaseRepoSecretRef'] = None,
                  source: Optional['outputs.HelmReleaseRepoSource'] = None,
                  version: Optional[str] = None):
@@ -967,6 +984,7 @@ class HelmReleaseRepo(dict):
         HelmReleaseRepo defines the repository of HelmRelease
         :param str chart_name: ChartName is the name of the chart within the repo
         :param 'HelmReleaseRepoConfigMapRefArgs' config_map_ref: Configuration parameters to access the helm-repo defined in the CatalogSource
+        :param bool insecure_skip_verify: Used to skip repo server's TLS certificate verification
         :param 'HelmReleaseRepoSecretRefArgs' secret_ref: Secret to use to access the helm-repo defined in the CatalogSource.
         :param 'HelmReleaseRepoSourceArgs' source: INSERT ADDITIONAL SPEC FIELDS - desired state of cluster Important: Run "operator-sdk generate k8s" to regenerate code after modifying this file Add custom validation using kubebuilder tags: https://book-v1.book.kubebuilder.io/beyond_basics/generating_crd.html Source holds the url toward the helm-chart
         :param str version: Version is the chart version
@@ -975,6 +993,8 @@ class HelmReleaseRepo(dict):
             pulumi.set(__self__, "chart_name", chart_name)
         if config_map_ref is not None:
             pulumi.set(__self__, "config_map_ref", config_map_ref)
+        if insecure_skip_verify is not None:
+            pulumi.set(__self__, "insecure_skip_verify", insecure_skip_verify)
         if secret_ref is not None:
             pulumi.set(__self__, "secret_ref", secret_ref)
         if source is not None:
@@ -997,6 +1017,14 @@ class HelmReleaseRepo(dict):
         Configuration parameters to access the helm-repo defined in the CatalogSource
         """
         return pulumi.get(self, "config_map_ref")
+
+    @property
+    @pulumi.getter(name="insecureSkipVerify")
+    def insecure_skip_verify(self) -> Optional[bool]:
+        """
+        Used to skip repo server's TLS certificate verification
+        """
+        return pulumi.get(self, "insecure_skip_verify")
 
     @property
     @pulumi.getter(name="secretRef")
@@ -1851,6 +1879,7 @@ class SubscriptionSpec(dict):
     """
     def __init__(__self__, *,
                  channel: str,
+                 hooksecretref: Optional['outputs.SubscriptionSpecHooksecretref'] = None,
                  name: Optional[str] = None,
                  overrides: Optional[Sequence['outputs.SubscriptionSpecOverrides']] = None,
                  package_filter: Optional['outputs.SubscriptionSpecPackageFilter'] = None,
@@ -1859,6 +1888,7 @@ class SubscriptionSpec(dict):
                  timewindow: Optional['outputs.SubscriptionSpecTimewindow'] = None):
         """
         SubscriptionSpec defines the desired state of Subscription
+        :param 'SubscriptionSpecHooksecretrefArgs' hooksecretref: ObjectReference contains enough information to let you inspect or modify the referred object. --- New uses of this type are discouraged because of difficulty describing its usage when embedded in APIs.  1. Ignored fields.  It includes many fields which are not generally honored.  For instance, ResourceVersion and FieldPath are both very rarely valid in actual usage.  2. Invalid usage help.  It is impossible to add specific help for individual usage.  In most embedded usages, there are particular     restrictions like, "must refer only to types A and B" or "UID not honored" or "name must be restricted".     Those cannot be well described when embedded.  3. Inconsistent validation.  Because the usages are different, the validation rules are different by usage, which makes it hard for users to predict what will happen.  4. The fields are both imprecise and overly precise.  Kind is not a precise mapping to a URL. This can produce ambiguity     during interpretation and require a REST mapping.  In most cases, the dependency is on the group,resource tuple     and the version of the actual struct is irrelevant.  5. We cannot easily change it.  Because this type is embedded in many locations, updates to this type     will affect numerous schemas.  Don't make new APIs embed an underspecified API type they do not control. Instead of using this type, create a locally provided and used type that is well-focused on your reference. For example, ServiceReferences for admission registration: https://github.com/kubernetes/api/blob/release-1.17/admissionregistration/v1/types.go#L533 .
         :param str name: To specify 1 package in channel
         :param Sequence['SubscriptionSpecOverridesArgs'] overrides: for hub use only to specify the overrides when apply to clusters
         :param 'SubscriptionSpecPackageFilterArgs' package_filter: To specify more than 1 package in channel
@@ -1867,6 +1897,8 @@ class SubscriptionSpec(dict):
         :param 'SubscriptionSpecTimewindowArgs' timewindow: help user control when the subscription will take affect
         """
         pulumi.set(__self__, "channel", channel)
+        if hooksecretref is not None:
+            pulumi.set(__self__, "hooksecretref", hooksecretref)
         if name is not None:
             pulumi.set(__self__, "name", name)
         if overrides is not None:
@@ -1884,6 +1916,14 @@ class SubscriptionSpec(dict):
     @pulumi.getter
     def channel(self) -> str:
         return pulumi.get(self, "channel")
+
+    @property
+    @pulumi.getter
+    def hooksecretref(self) -> Optional['outputs.SubscriptionSpecHooksecretref']:
+        """
+        ObjectReference contains enough information to let you inspect or modify the referred object. --- New uses of this type are discouraged because of difficulty describing its usage when embedded in APIs.  1. Ignored fields.  It includes many fields which are not generally honored.  For instance, ResourceVersion and FieldPath are both very rarely valid in actual usage.  2. Invalid usage help.  It is impossible to add specific help for individual usage.  In most embedded usages, there are particular     restrictions like, "must refer only to types A and B" or "UID not honored" or "name must be restricted".     Those cannot be well described when embedded.  3. Inconsistent validation.  Because the usages are different, the validation rules are different by usage, which makes it hard for users to predict what will happen.  4. The fields are both imprecise and overly precise.  Kind is not a precise mapping to a URL. This can produce ambiguity     during interpretation and require a REST mapping.  In most cases, the dependency is on the group,resource tuple     and the version of the actual struct is irrelevant.  5. We cannot easily change it.  Because this type is embedded in many locations, updates to this type     will affect numerous schemas.  Don't make new APIs embed an underspecified API type they do not control. Instead of using this type, create a locally provided and used type that is well-focused on your reference. For example, ServiceReferences for admission registration: https://github.com/kubernetes/api/blob/release-1.17/admissionregistration/v1/types.go#L533 .
+        """
+        return pulumi.get(self, "hooksecretref")
 
     @property
     @pulumi.getter
@@ -1932,6 +1972,104 @@ class SubscriptionSpec(dict):
         help user control when the subscription will take affect
         """
         return pulumi.get(self, "timewindow")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class SubscriptionSpecHooksecretref(dict):
+    """
+    ObjectReference contains enough information to let you inspect or modify the referred object. --- New uses of this type are discouraged because of difficulty describing its usage when embedded in APIs.  1. Ignored fields.  It includes many fields which are not generally honored.  For instance, ResourceVersion and FieldPath are both very rarely valid in actual usage.  2. Invalid usage help.  It is impossible to add specific help for individual usage.  In most embedded usages, there are particular     restrictions like, "must refer only to types A and B" or "UID not honored" or "name must be restricted".     Those cannot be well described when embedded.  3. Inconsistent validation.  Because the usages are different, the validation rules are different by usage, which makes it hard for users to predict what will happen.  4. The fields are both imprecise and overly precise.  Kind is not a precise mapping to a URL. This can produce ambiguity     during interpretation and require a REST mapping.  In most cases, the dependency is on the group,resource tuple     and the version of the actual struct is irrelevant.  5. We cannot easily change it.  Because this type is embedded in many locations, updates to this type     will affect numerous schemas.  Don't make new APIs embed an underspecified API type they do not control. Instead of using this type, create a locally provided and used type that is well-focused on your reference. For example, ServiceReferences for admission registration: https://github.com/kubernetes/api/blob/release-1.17/admissionregistration/v1/types.go#L533 .
+    """
+    def __init__(__self__, *,
+                 api_version: Optional[str] = None,
+                 field_path: Optional[str] = None,
+                 kind: Optional[str] = None,
+                 name: Optional[str] = None,
+                 namespace: Optional[str] = None,
+                 resource_version: Optional[str] = None,
+                 uid: Optional[str] = None):
+        """
+        ObjectReference contains enough information to let you inspect or modify the referred object. --- New uses of this type are discouraged because of difficulty describing its usage when embedded in APIs.  1. Ignored fields.  It includes many fields which are not generally honored.  For instance, ResourceVersion and FieldPath are both very rarely valid in actual usage.  2. Invalid usage help.  It is impossible to add specific help for individual usage.  In most embedded usages, there are particular     restrictions like, "must refer only to types A and B" or "UID not honored" or "name must be restricted".     Those cannot be well described when embedded.  3. Inconsistent validation.  Because the usages are different, the validation rules are different by usage, which makes it hard for users to predict what will happen.  4. The fields are both imprecise and overly precise.  Kind is not a precise mapping to a URL. This can produce ambiguity     during interpretation and require a REST mapping.  In most cases, the dependency is on the group,resource tuple     and the version of the actual struct is irrelevant.  5. We cannot easily change it.  Because this type is embedded in many locations, updates to this type     will affect numerous schemas.  Don't make new APIs embed an underspecified API type they do not control. Instead of using this type, create a locally provided and used type that is well-focused on your reference. For example, ServiceReferences for admission registration: https://github.com/kubernetes/api/blob/release-1.17/admissionregistration/v1/types.go#L533 .
+        :param str api_version: API version of the referent.
+        :param str field_path: If referring to a piece of an object instead of an entire object, this string should contain a valid JSON/Go field access statement, such as desiredState.manifest.containers[2]. For example, if the object reference is to a container within a pod, this would take on a value like: "spec.containers{name}" (where "name" refers to the name of the container that triggered the event) or if no container name is specified "spec.containers[2]" (container with index 2 in this pod). This syntax is chosen only to have some well-defined way of referencing a part of an object. TODO: this design is not final and this field is subject to change in the future.
+        :param str kind: Kind of the referent. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+        :param str name: Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
+        :param str namespace: Namespace of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/
+        :param str resource_version: Specific resourceVersion to which this reference is made, if any. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#concurrency-control-and-consistency
+        :param str uid: UID of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#uids
+        """
+        if api_version is not None:
+            pulumi.set(__self__, "api_version", api_version)
+        if field_path is not None:
+            pulumi.set(__self__, "field_path", field_path)
+        if kind is not None:
+            pulumi.set(__self__, "kind", kind)
+        if name is not None:
+            pulumi.set(__self__, "name", name)
+        if namespace is not None:
+            pulumi.set(__self__, "namespace", namespace)
+        if resource_version is not None:
+            pulumi.set(__self__, "resource_version", resource_version)
+        if uid is not None:
+            pulumi.set(__self__, "uid", uid)
+
+    @property
+    @pulumi.getter(name="apiVersion")
+    def api_version(self) -> Optional[str]:
+        """
+        API version of the referent.
+        """
+        return pulumi.get(self, "api_version")
+
+    @property
+    @pulumi.getter(name="fieldPath")
+    def field_path(self) -> Optional[str]:
+        """
+        If referring to a piece of an object instead of an entire object, this string should contain a valid JSON/Go field access statement, such as desiredState.manifest.containers[2]. For example, if the object reference is to a container within a pod, this would take on a value like: "spec.containers{name}" (where "name" refers to the name of the container that triggered the event) or if no container name is specified "spec.containers[2]" (container with index 2 in this pod). This syntax is chosen only to have some well-defined way of referencing a part of an object. TODO: this design is not final and this field is subject to change in the future.
+        """
+        return pulumi.get(self, "field_path")
+
+    @property
+    @pulumi.getter
+    def kind(self) -> Optional[str]:
+        """
+        Kind of the referent. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+        """
+        return pulumi.get(self, "kind")
+
+    @property
+    @pulumi.getter
+    def name(self) -> Optional[str]:
+        """
+        Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
+        """
+        return pulumi.get(self, "name")
+
+    @property
+    @pulumi.getter
+    def namespace(self) -> Optional[str]:
+        """
+        Namespace of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/
+        """
+        return pulumi.get(self, "namespace")
+
+    @property
+    @pulumi.getter(name="resourceVersion")
+    def resource_version(self) -> Optional[str]:
+        """
+        Specific resourceVersion to which this reference is made, if any. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#concurrency-control-and-consistency
+        """
+        return pulumi.get(self, "resource_version")
+
+    @property
+    @pulumi.getter
+    def uid(self) -> Optional[str]:
+        """
+        UID of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#uids
+        """
+        return pulumi.get(self, "uid")
 
     def _translate_property(self, prop):
         return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
@@ -2439,7 +2577,7 @@ class SubscriptionSpecTimewindow(dict):
                  windowtype: Optional[str] = None):
         """
         help user control when the subscription will take affect
-        :param Sequence[str] daysofweek: Defines the day of the week for the subscription timewindow window https://golang.org/pkg/time/#Weekday
+        :param Sequence[str] daysofweek: weekdays defined the day of the week for this time window https://golang.org/pkg/time/#Weekday
         :param str location: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
         :param str windowtype: active time window or not, if timewindow is active, then deploy will only applies during these windows Note, if you want to generation crd with operator-sdk v0.10.0, then the following line should be: <+kubebuilder:validation:Enum=active,blocked,Active,Blocked>
         """
@@ -2456,7 +2594,7 @@ class SubscriptionSpecTimewindow(dict):
     @pulumi.getter
     def daysofweek(self) -> Optional[Sequence[str]]:
         """
-        Defines the day of the week for the subscription timewindow window https://golang.org/pkg/time/#Weekday
+        weekdays defined the day of the week for this time window https://golang.org/pkg/time/#Weekday
         """
         return pulumi.get(self, "daysofweek")
 
@@ -2521,16 +2659,19 @@ class SubscriptionStatus(dict):
     SubscriptionStatus defines the observed state of Subscription Examples - status of a subscription on hub Status: 	phase: Propagated 	statuses: 	  washdc: 		packages: 		  nginx: 			phase: Subscribed 		  mongodb: 			phase: Failed 			Reason: "not authorized" 			Message: "user xxx does not have permission to start pod" 			resourceStatus: {}    toronto: 		packages: 		  nginx: 			phase: Subscribed 		  mongodb: 			phase: Subscribed Status of a subscription on managed cluster will only have 1 cluster in the map.
     """
     def __init__(__self__, *,
+                 ansiblejobs: Optional['outputs.SubscriptionStatusAnsiblejobs'] = None,
                  last_update_time: Optional[str] = None,
                  message: Optional[str] = None,
                  phase: Optional[str] = None,
                  reason: Optional[str] = None,
-                 statuses: Optional[Any] = None):
+                 statuses: Optional[Mapping[str, 'outputs.SubscriptionStatusStatuses']] = None):
         """
         SubscriptionStatus defines the observed state of Subscription Examples - status of a subscription on hub Status: 	phase: Propagated 	statuses: 	  washdc: 		packages: 		  nginx: 			phase: Subscribed 		  mongodb: 			phase: Failed 			Reason: "not authorized" 			Message: "user xxx does not have permission to start pod" 			resourceStatus: {}    toronto: 		packages: 		  nginx: 			phase: Subscribed 		  mongodb: 			phase: Subscribed Status of a subscription on managed cluster will only have 1 cluster in the map.
         :param str phase: INSERT ADDITIONAL STATUS FIELD - define observed state of cluster Important: Run "make" to regenerate code after modifying this file
-        :param Any statuses: For endpoint, it is the status of subscription, key is packagename, For hub, it aggregates all status, key is cluster name
+        :param Mapping[str, 'SubscriptionStatusStatusesArgs'] statuses: For endpoint, it is the status of subscription, key is packagename, For hub, it aggregates all status, key is cluster name
         """
+        if ansiblejobs is not None:
+            pulumi.set(__self__, "ansiblejobs", ansiblejobs)
         if last_update_time is not None:
             pulumi.set(__self__, "last_update_time", last_update_time)
         if message is not None:
@@ -2541,6 +2682,11 @@ class SubscriptionStatus(dict):
             pulumi.set(__self__, "reason", reason)
         if statuses is not None:
             pulumi.set(__self__, "statuses", statuses)
+
+    @property
+    @pulumi.getter
+    def ansiblejobs(self) -> Optional['outputs.SubscriptionStatusAnsiblejobs']:
+        return pulumi.get(self, "ansiblejobs")
 
     @property
     @pulumi.getter(name="lastUpdateTime")
@@ -2567,11 +2713,130 @@ class SubscriptionStatus(dict):
 
     @property
     @pulumi.getter
-    def statuses(self) -> Optional[Any]:
+    def statuses(self) -> Optional[Mapping[str, 'outputs.SubscriptionStatusStatuses']]:
         """
         For endpoint, it is the status of subscription, key is packagename, For hub, it aggregates all status, key is cluster name
         """
         return pulumi.get(self, "statuses")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class SubscriptionStatusAnsiblejobs(dict):
+    def __init__(__self__, *,
+                 lastposthookjob: Optional[str] = None,
+                 lastprehookjob: Optional[str] = None,
+                 posthookjobshistory: Optional[Sequence[str]] = None,
+                 prehookjobshistory: Optional[Sequence[str]] = None):
+        if lastposthookjob is not None:
+            pulumi.set(__self__, "lastposthookjob", lastposthookjob)
+        if lastprehookjob is not None:
+            pulumi.set(__self__, "lastprehookjob", lastprehookjob)
+        if posthookjobshistory is not None:
+            pulumi.set(__self__, "posthookjobshistory", posthookjobshistory)
+        if prehookjobshistory is not None:
+            pulumi.set(__self__, "prehookjobshistory", prehookjobshistory)
+
+    @property
+    @pulumi.getter
+    def lastposthookjob(self) -> Optional[str]:
+        return pulumi.get(self, "lastposthookjob")
+
+    @property
+    @pulumi.getter
+    def lastprehookjob(self) -> Optional[str]:
+        return pulumi.get(self, "lastprehookjob")
+
+    @property
+    @pulumi.getter
+    def posthookjobshistory(self) -> Optional[Sequence[str]]:
+        return pulumi.get(self, "posthookjobshistory")
+
+    @property
+    @pulumi.getter
+    def prehookjobshistory(self) -> Optional[Sequence[str]]:
+        return pulumi.get(self, "prehookjobshistory")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class SubscriptionStatusStatuses(dict):
+    """
+    SubscriptionPerClusterStatus defines status for subscription in each cluster, key is package name
+    """
+    def __init__(__self__, *,
+                 packages: Optional[Mapping[str, 'outputs.SubscriptionStatusStatusesPackages']] = None):
+        """
+        SubscriptionPerClusterStatus defines status for subscription in each cluster, key is package name
+        """
+        if packages is not None:
+            pulumi.set(__self__, "packages", packages)
+
+    @property
+    @pulumi.getter
+    def packages(self) -> Optional[Mapping[str, 'outputs.SubscriptionStatusStatusesPackages']]:
+        return pulumi.get(self, "packages")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class SubscriptionStatusStatusesPackages(dict):
+    """
+    SubscriptionUnitStatus defines status of a unit (subscription or package)
+    """
+    def __init__(__self__, *,
+                 last_update_time: str,
+                 message: Optional[str] = None,
+                 phase: Optional[str] = None,
+                 reason: Optional[str] = None,
+                 resource_status: Optional[Mapping[str, Any]] = None):
+        """
+        SubscriptionUnitStatus defines status of a unit (subscription or package)
+        :param str phase: Phase are Propagated if it is in hub or Subscribed if it is in endpoint
+        """
+        pulumi.set(__self__, "last_update_time", last_update_time)
+        if message is not None:
+            pulumi.set(__self__, "message", message)
+        if phase is not None:
+            pulumi.set(__self__, "phase", phase)
+        if reason is not None:
+            pulumi.set(__self__, "reason", reason)
+        if resource_status is not None:
+            pulumi.set(__self__, "resource_status", resource_status)
+
+    @property
+    @pulumi.getter(name="lastUpdateTime")
+    def last_update_time(self) -> str:
+        return pulumi.get(self, "last_update_time")
+
+    @property
+    @pulumi.getter
+    def message(self) -> Optional[str]:
+        return pulumi.get(self, "message")
+
+    @property
+    @pulumi.getter
+    def phase(self) -> Optional[str]:
+        """
+        Phase are Propagated if it is in hub or Subscribed if it is in endpoint
+        """
+        return pulumi.get(self, "phase")
+
+    @property
+    @pulumi.getter
+    def reason(self) -> Optional[str]:
+        return pulumi.get(self, "reason")
+
+    @property
+    @pulumi.getter(name="resourceStatus")
+    def resource_status(self) -> Optional[Mapping[str, Any]]:
+        return pulumi.get(self, "resource_status")
 
     def _translate_property(self, prop):
         return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop

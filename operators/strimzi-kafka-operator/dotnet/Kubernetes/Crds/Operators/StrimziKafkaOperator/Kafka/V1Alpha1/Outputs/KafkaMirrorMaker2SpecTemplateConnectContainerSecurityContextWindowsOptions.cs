@@ -15,15 +15,19 @@ namespace Pulumi.Kubernetes.Types.Outputs.Kafka.V1Alpha1
     {
         public readonly string GmsaCredentialSpec;
         public readonly string GmsaCredentialSpecName;
+        public readonly string RunAsUserName;
 
         [OutputConstructor]
         private KafkaMirrorMaker2SpecTemplateConnectContainerSecurityContextWindowsOptions(
             string gmsaCredentialSpec,
 
-            string gmsaCredentialSpecName)
+            string gmsaCredentialSpecName,
+
+            string runAsUserName)
         {
             GmsaCredentialSpec = gmsaCredentialSpec;
             GmsaCredentialSpecName = gmsaCredentialSpecName;
+            RunAsUserName = runAsUserName;
         }
     }
 }

@@ -18,7 +18,7 @@ namespace Pulumi.Kubernetes.Types.Outputs.Pingcap.V1Alpha1
         public readonly Pulumi.Kubernetes.Types.Outputs.Pingcap.V1Alpha1.TidbClusterSpecTiflashAffinity Affinity;
         public readonly ImmutableDictionary<string, object> Annotations;
         public readonly string BaseImage;
-        public readonly Pulumi.Kubernetes.Types.Outputs.Pingcap.V1Alpha1.TidbClusterSpecTiflashConfig Config;
+        public readonly object Config;
         public readonly string ConfigUpdateStrategy;
         public readonly ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Pingcap.V1Alpha1.TidbClusterSpecTiflashEnv> Env;
         public readonly bool HostNetwork;
@@ -31,10 +31,12 @@ namespace Pulumi.Kubernetes.Types.Outputs.Pingcap.V1Alpha1
         public readonly Pulumi.Kubernetes.Types.Outputs.Pingcap.V1Alpha1.TidbClusterSpecTiflashPodSecurityContext PodSecurityContext;
         public readonly string PriorityClassName;
         public readonly bool Privileged;
+        public readonly bool RecoverFailover;
         public readonly int Replicas;
         public readonly ImmutableDictionary<string, object> Requests;
         public readonly string SchedulerName;
         public readonly string ServiceAccount;
+        public readonly string StatefulSetUpdateStrategy;
         public readonly ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Pingcap.V1Alpha1.TidbClusterSpecTiflashStorageClaims> StorageClaims;
         public readonly int TerminationGracePeriodSeconds;
         public readonly ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Pingcap.V1Alpha1.TidbClusterSpecTiflashTolerations> Tolerations;
@@ -52,7 +54,7 @@ namespace Pulumi.Kubernetes.Types.Outputs.Pingcap.V1Alpha1
 
             string baseImage,
 
-            Pulumi.Kubernetes.Types.Outputs.Pingcap.V1Alpha1.TidbClusterSpecTiflashConfig config,
+            object config,
 
             string configUpdateStrategy,
 
@@ -78,6 +80,8 @@ namespace Pulumi.Kubernetes.Types.Outputs.Pingcap.V1Alpha1
 
             bool privileged,
 
+            bool recoverFailover,
+
             int replicas,
 
             ImmutableDictionary<string, object> requests,
@@ -85,6 +89,8 @@ namespace Pulumi.Kubernetes.Types.Outputs.Pingcap.V1Alpha1
             string schedulerName,
 
             string serviceAccount,
+
+            string statefulSetUpdateStrategy,
 
             ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Pingcap.V1Alpha1.TidbClusterSpecTiflashStorageClaims> storageClaims,
 
@@ -112,10 +118,12 @@ namespace Pulumi.Kubernetes.Types.Outputs.Pingcap.V1Alpha1
             PodSecurityContext = podSecurityContext;
             PriorityClassName = priorityClassName;
             Privileged = privileged;
+            RecoverFailover = recoverFailover;
             Replicas = replicas;
             Requests = requests;
             SchedulerName = schedulerName;
             ServiceAccount = serviceAccount;
+            StatefulSetUpdateStrategy = statefulSetUpdateStrategy;
             StorageClaims = storageClaims;
             TerminationGracePeriodSeconds = terminationGracePeriodSeconds;
             Tolerations = tolerations;

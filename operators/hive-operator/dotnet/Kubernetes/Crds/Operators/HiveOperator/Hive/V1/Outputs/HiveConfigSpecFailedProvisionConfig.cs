@@ -14,13 +14,21 @@ namespace Pulumi.Kubernetes.Types.Outputs.Hive.V1
     public sealed class HiveConfigSpecFailedProvisionConfig
     {
         /// <summary>
-        /// SkipGatherLogs disables functionality that attempts to gather full logs from the cluster if an installation fails for any reason. The logs will be stored in a persistent volume for up to 7 days.
+        /// FailedProvisionAWSConfig contains AWS-specific info to upload log files.
+        /// </summary>
+        public readonly Pulumi.Kubernetes.Types.Outputs.Hive.V1.HiveConfigSpecFailedProvisionConfigAws Aws;
+        /// <summary>
+        /// DEPRECATED: This flag is no longer respected and will be removed in the future.
         /// </summary>
         public readonly bool SkipGatherLogs;
 
         [OutputConstructor]
-        private HiveConfigSpecFailedProvisionConfig(bool skipGatherLogs)
+        private HiveConfigSpecFailedProvisionConfig(
+            Pulumi.Kubernetes.Types.Outputs.Hive.V1.HiveConfigSpecFailedProvisionConfigAws aws,
+
+            bool skipGatherLogs)
         {
+            Aws = aws;
             SkipGatherLogs = skipGatherLogs;
         }
     }

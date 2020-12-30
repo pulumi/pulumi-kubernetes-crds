@@ -11,6 +11,7 @@ import (
 	"github.com/pulumi/pulumi/sdk/v2/go/pulumi"
 )
 
+// The `CheCluster` custom resource allows defining and managing a Che server installation
 type CheClusterType struct {
 	ApiVersion *string            `pulumi:"apiVersion"`
 	Kind       *string            `pulumi:"kind"`
@@ -32,6 +33,7 @@ type CheClusterTypeInput interface {
 	ToCheClusterTypeOutputWithContext(context.Context) CheClusterTypeOutput
 }
 
+// The `CheCluster` custom resource allows defining and managing a Che server installation
 type CheClusterTypeArgs struct {
 	ApiVersion pulumi.StringPtrInput     `pulumi:"apiVersion"`
 	Kind       pulumi.StringPtrInput     `pulumi:"kind"`
@@ -54,6 +56,7 @@ func (i CheClusterTypeArgs) ToCheClusterTypeOutputWithContext(ctx context.Contex
 	return pulumi.ToOutputWithContext(ctx, i).(CheClusterTypeOutput)
 }
 
+// The `CheCluster` custom resource allows defining and managing a Che server installation
 type CheClusterTypeOutput struct{ *pulumi.OutputState }
 
 func (CheClusterTypeOutput) ElementType() reflect.Type {
@@ -139,6 +142,8 @@ type CheClusterSpec struct {
 	Auth *CheClusterSpecAuth `pulumi:"auth"`
 	// Configuration settings related to the database used by the Che installation.
 	Database *CheClusterSpecDatabase `pulumi:"database"`
+	// Kubernetes Image Puller configuration
+	ImagePuller *CheClusterSpecImagePuller `pulumi:"imagePuller"`
 	// Configuration settings specific to Che installations made on upstream Kubernetes.
 	K8s *CheClusterSpecK8s `pulumi:"k8s"`
 	// Configuration settings related to the metrics collection used by the Che installation.
@@ -166,6 +171,8 @@ type CheClusterSpecArgs struct {
 	Auth CheClusterSpecAuthPtrInput `pulumi:"auth"`
 	// Configuration settings related to the database used by the Che installation.
 	Database CheClusterSpecDatabasePtrInput `pulumi:"database"`
+	// Kubernetes Image Puller configuration
+	ImagePuller CheClusterSpecImagePullerPtrInput `pulumi:"imagePuller"`
 	// Configuration settings specific to Che installations made on upstream Kubernetes.
 	K8s CheClusterSpecK8sPtrInput `pulumi:"k8s"`
 	// Configuration settings related to the metrics collection used by the Che installation.
@@ -264,6 +271,11 @@ func (o CheClusterSpecOutput) Database() CheClusterSpecDatabasePtrOutput {
 	return o.ApplyT(func(v CheClusterSpec) *CheClusterSpecDatabase { return v.Database }).(CheClusterSpecDatabasePtrOutput)
 }
 
+// Kubernetes Image Puller configuration
+func (o CheClusterSpecOutput) ImagePuller() CheClusterSpecImagePullerPtrOutput {
+	return o.ApplyT(func(v CheClusterSpec) *CheClusterSpecImagePuller { return v.ImagePuller }).(CheClusterSpecImagePullerPtrOutput)
+}
+
 // Configuration settings specific to Che installations made on upstream Kubernetes.
 func (o CheClusterSpecOutput) K8s() CheClusterSpecK8sPtrOutput {
 	return o.ApplyT(func(v CheClusterSpec) *CheClusterSpecK8s { return v.K8s }).(CheClusterSpecK8sPtrOutput)
@@ -322,6 +334,16 @@ func (o CheClusterSpecPtrOutput) Database() CheClusterSpecDatabasePtrOutput {
 	}).(CheClusterSpecDatabasePtrOutput)
 }
 
+// Kubernetes Image Puller configuration
+func (o CheClusterSpecPtrOutput) ImagePuller() CheClusterSpecImagePullerPtrOutput {
+	return o.ApplyT(func(v *CheClusterSpec) *CheClusterSpecImagePuller {
+		if v == nil {
+			return nil
+		}
+		return v.ImagePuller
+	}).(CheClusterSpecImagePullerPtrOutput)
+}
+
 // Configuration settings specific to Che installations made on upstream Kubernetes.
 func (o CheClusterSpecPtrOutput) K8s() CheClusterSpecK8sPtrOutput {
 	return o.ApplyT(func(v *CheClusterSpec) *CheClusterSpecK8s {
@@ -374,6 +396,8 @@ type CheClusterSpecAuth struct {
 	IdentityProviderImage *string `pulumi:"identityProviderImage"`
 	// Overrides the image pull policy used in the Identity Provider (Keycloak / RH SSO) deployment. Default value is `Always` for `nightly` or `latest` images, and `IfNotPresent` in other cases.
 	IdentityProviderImagePullPolicy *string `pulumi:"identityProviderImagePullPolicy"`
+	// Ingress custom settings
+	IdentityProviderIngress *CheClusterSpecAuthIdentityProviderIngress `pulumi:"identityProviderIngress"`
 	// Overrides the password of Keycloak admin user. This is useful to override it ONLY if you use an external Identity Provider (see the `externalIdentityProvider` field). If omitted or left blank, it will be set to an auto-generated password.
 	IdentityProviderPassword *string `pulumi:"identityProviderPassword"`
 	// Password for The Identity Provider (Keycloak / RH SSO) to connect to the database. This is useful to override it ONLY if you use an external Identity Provider (see the `externalIdentityProvider` field). If omitted or left blank, it will be set to an auto-generated password.
@@ -382,6 +406,8 @@ type CheClusterSpecAuth struct {
 	IdentityProviderPostgresSecret *string `pulumi:"identityProviderPostgresSecret"`
 	// Name of a Identity provider (Keycloak / RH SSO) realm that should be used for Che. This is useful to override it ONLY if you use an external Identity Provider (see the `externalIdentityProvider` field). If omitted or left blank, it will be set to the value of the `flavour` field.
 	IdentityProviderRealm *string `pulumi:"identityProviderRealm"`
+	// Route custom settings
+	IdentityProviderRoute *CheClusterSpecAuthIdentityProviderRoute `pulumi:"identityProviderRoute"`
 	// The secret that contains `user` and `password` for Identity Provider. If the secret is defined then `identityProviderAdminUserName` and `identityProviderPassword` are ignored. If the value is omitted or left blank then there are two scenarios: 1. `identityProviderAdminUserName` and `identityProviderPassword` are defined, then they will be used. 2. `identityProviderAdminUserName` or `identityProviderPassword` are not defined, then a new secret with the name `che-identity-secret` will be created with default value `admin` for `user` and with an auto-generated value for `password`.
 	IdentityProviderSecret *string `pulumi:"identityProviderSecret"`
 	// Public URL of the Identity Provider server (Keycloak / RH SSO server). You should set it ONLY if you use an external Identity Provider (see the `externalIdentityProvider` field). By default this will be automatically calculated and set by the operator.
@@ -419,6 +445,8 @@ type CheClusterSpecAuthArgs struct {
 	IdentityProviderImage pulumi.StringPtrInput `pulumi:"identityProviderImage"`
 	// Overrides the image pull policy used in the Identity Provider (Keycloak / RH SSO) deployment. Default value is `Always` for `nightly` or `latest` images, and `IfNotPresent` in other cases.
 	IdentityProviderImagePullPolicy pulumi.StringPtrInput `pulumi:"identityProviderImagePullPolicy"`
+	// Ingress custom settings
+	IdentityProviderIngress CheClusterSpecAuthIdentityProviderIngressPtrInput `pulumi:"identityProviderIngress"`
 	// Overrides the password of Keycloak admin user. This is useful to override it ONLY if you use an external Identity Provider (see the `externalIdentityProvider` field). If omitted or left blank, it will be set to an auto-generated password.
 	IdentityProviderPassword pulumi.StringPtrInput `pulumi:"identityProviderPassword"`
 	// Password for The Identity Provider (Keycloak / RH SSO) to connect to the database. This is useful to override it ONLY if you use an external Identity Provider (see the `externalIdentityProvider` field). If omitted or left blank, it will be set to an auto-generated password.
@@ -427,6 +455,8 @@ type CheClusterSpecAuthArgs struct {
 	IdentityProviderPostgresSecret pulumi.StringPtrInput `pulumi:"identityProviderPostgresSecret"`
 	// Name of a Identity provider (Keycloak / RH SSO) realm that should be used for Che. This is useful to override it ONLY if you use an external Identity Provider (see the `externalIdentityProvider` field). If omitted or left blank, it will be set to the value of the `flavour` field.
 	IdentityProviderRealm pulumi.StringPtrInput `pulumi:"identityProviderRealm"`
+	// Route custom settings
+	IdentityProviderRoute CheClusterSpecAuthIdentityProviderRoutePtrInput `pulumi:"identityProviderRoute"`
 	// The secret that contains `user` and `password` for Identity Provider. If the secret is defined then `identityProviderAdminUserName` and `identityProviderPassword` are ignored. If the value is omitted or left blank then there are two scenarios: 1. `identityProviderAdminUserName` and `identityProviderPassword` are defined, then they will be used. 2. `identityProviderAdminUserName` or `identityProviderPassword` are not defined, then a new secret with the name `che-identity-secret` will be created with default value `admin` for `user` and with an auto-generated value for `password`.
 	IdentityProviderSecret pulumi.StringPtrInput `pulumi:"identityProviderSecret"`
 	// Public URL of the Identity Provider server (Keycloak / RH SSO server). You should set it ONLY if you use an external Identity Provider (see the `externalIdentityProvider` field). By default this will be automatically calculated and set by the operator.
@@ -544,6 +574,13 @@ func (o CheClusterSpecAuthOutput) IdentityProviderImagePullPolicy() pulumi.Strin
 	return o.ApplyT(func(v CheClusterSpecAuth) *string { return v.IdentityProviderImagePullPolicy }).(pulumi.StringPtrOutput)
 }
 
+// Ingress custom settings
+func (o CheClusterSpecAuthOutput) IdentityProviderIngress() CheClusterSpecAuthIdentityProviderIngressPtrOutput {
+	return o.ApplyT(func(v CheClusterSpecAuth) *CheClusterSpecAuthIdentityProviderIngress {
+		return v.IdentityProviderIngress
+	}).(CheClusterSpecAuthIdentityProviderIngressPtrOutput)
+}
+
 // Overrides the password of Keycloak admin user. This is useful to override it ONLY if you use an external Identity Provider (see the `externalIdentityProvider` field). If omitted or left blank, it will be set to an auto-generated password.
 func (o CheClusterSpecAuthOutput) IdentityProviderPassword() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v CheClusterSpecAuth) *string { return v.IdentityProviderPassword }).(pulumi.StringPtrOutput)
@@ -562,6 +599,11 @@ func (o CheClusterSpecAuthOutput) IdentityProviderPostgresSecret() pulumi.String
 // Name of a Identity provider (Keycloak / RH SSO) realm that should be used for Che. This is useful to override it ONLY if you use an external Identity Provider (see the `externalIdentityProvider` field). If omitted or left blank, it will be set to the value of the `flavour` field.
 func (o CheClusterSpecAuthOutput) IdentityProviderRealm() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v CheClusterSpecAuth) *string { return v.IdentityProviderRealm }).(pulumi.StringPtrOutput)
+}
+
+// Route custom settings
+func (o CheClusterSpecAuthOutput) IdentityProviderRoute() CheClusterSpecAuthIdentityProviderRoutePtrOutput {
+	return o.ApplyT(func(v CheClusterSpecAuth) *CheClusterSpecAuthIdentityProviderRoute { return v.IdentityProviderRoute }).(CheClusterSpecAuthIdentityProviderRoutePtrOutput)
 }
 
 // The secret that contains `user` and `password` for Identity Provider. If the secret is defined then `identityProviderAdminUserName` and `identityProviderPassword` are ignored. If the value is omitted or left blank then there are two scenarios: 1. `identityProviderAdminUserName` and `identityProviderPassword` are defined, then they will be used. 2. `identityProviderAdminUserName` or `identityProviderPassword` are not defined, then a new secret with the name `che-identity-secret` will be created with default value `admin` for `user` and with an auto-generated value for `password`.
@@ -662,6 +704,16 @@ func (o CheClusterSpecAuthPtrOutput) IdentityProviderImagePullPolicy() pulumi.St
 	}).(pulumi.StringPtrOutput)
 }
 
+// Ingress custom settings
+func (o CheClusterSpecAuthPtrOutput) IdentityProviderIngress() CheClusterSpecAuthIdentityProviderIngressPtrOutput {
+	return o.ApplyT(func(v *CheClusterSpecAuth) *CheClusterSpecAuthIdentityProviderIngress {
+		if v == nil {
+			return nil
+		}
+		return v.IdentityProviderIngress
+	}).(CheClusterSpecAuthIdentityProviderIngressPtrOutput)
+}
+
 // Overrides the password of Keycloak admin user. This is useful to override it ONLY if you use an external Identity Provider (see the `externalIdentityProvider` field). If omitted or left blank, it will be set to an auto-generated password.
 func (o CheClusterSpecAuthPtrOutput) IdentityProviderPassword() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *CheClusterSpecAuth) *string {
@@ -700,6 +752,16 @@ func (o CheClusterSpecAuthPtrOutput) IdentityProviderRealm() pulumi.StringPtrOut
 		}
 		return v.IdentityProviderRealm
 	}).(pulumi.StringPtrOutput)
+}
+
+// Route custom settings
+func (o CheClusterSpecAuthPtrOutput) IdentityProviderRoute() CheClusterSpecAuthIdentityProviderRoutePtrOutput {
+	return o.ApplyT(func(v *CheClusterSpecAuth) *CheClusterSpecAuthIdentityProviderRoute {
+		if v == nil {
+			return nil
+		}
+		return v.IdentityProviderRoute
+	}).(CheClusterSpecAuthIdentityProviderRoutePtrOutput)
 }
 
 // The secret that contains `user` and `password` for Identity Provider. If the secret is defined then `identityProviderAdminUserName` and `identityProviderPassword` are ignored. If the value is omitted or left blank then there are two scenarios: 1. `identityProviderAdminUserName` and `identityProviderPassword` are defined, then they will be used. 2. `identityProviderAdminUserName` or `identityProviderPassword` are not defined, then a new secret with the name `che-identity-secret` will be created with default value `admin` for `user` and with an auto-generated value for `password`.
@@ -760,6 +822,276 @@ func (o CheClusterSpecAuthPtrOutput) UpdateAdminPassword() pulumi.BoolPtrOutput 
 		}
 		return v.UpdateAdminPassword
 	}).(pulumi.BoolPtrOutput)
+}
+
+// Ingress custom settings
+type CheClusterSpecAuthIdentityProviderIngress struct {
+	// Comma separated list of labels that can be used to organize and categorize (scope and select) objects.
+	Labels *string `pulumi:"labels"`
+}
+
+// CheClusterSpecAuthIdentityProviderIngressInput is an input type that accepts CheClusterSpecAuthIdentityProviderIngressArgs and CheClusterSpecAuthIdentityProviderIngressOutput values.
+// You can construct a concrete instance of `CheClusterSpecAuthIdentityProviderIngressInput` via:
+//
+//          CheClusterSpecAuthIdentityProviderIngressArgs{...}
+type CheClusterSpecAuthIdentityProviderIngressInput interface {
+	pulumi.Input
+
+	ToCheClusterSpecAuthIdentityProviderIngressOutput() CheClusterSpecAuthIdentityProviderIngressOutput
+	ToCheClusterSpecAuthIdentityProviderIngressOutputWithContext(context.Context) CheClusterSpecAuthIdentityProviderIngressOutput
+}
+
+// Ingress custom settings
+type CheClusterSpecAuthIdentityProviderIngressArgs struct {
+	// Comma separated list of labels that can be used to organize and categorize (scope and select) objects.
+	Labels pulumi.StringPtrInput `pulumi:"labels"`
+}
+
+func (CheClusterSpecAuthIdentityProviderIngressArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*CheClusterSpecAuthIdentityProviderIngress)(nil)).Elem()
+}
+
+func (i CheClusterSpecAuthIdentityProviderIngressArgs) ToCheClusterSpecAuthIdentityProviderIngressOutput() CheClusterSpecAuthIdentityProviderIngressOutput {
+	return i.ToCheClusterSpecAuthIdentityProviderIngressOutputWithContext(context.Background())
+}
+
+func (i CheClusterSpecAuthIdentityProviderIngressArgs) ToCheClusterSpecAuthIdentityProviderIngressOutputWithContext(ctx context.Context) CheClusterSpecAuthIdentityProviderIngressOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(CheClusterSpecAuthIdentityProviderIngressOutput)
+}
+
+func (i CheClusterSpecAuthIdentityProviderIngressArgs) ToCheClusterSpecAuthIdentityProviderIngressPtrOutput() CheClusterSpecAuthIdentityProviderIngressPtrOutput {
+	return i.ToCheClusterSpecAuthIdentityProviderIngressPtrOutputWithContext(context.Background())
+}
+
+func (i CheClusterSpecAuthIdentityProviderIngressArgs) ToCheClusterSpecAuthIdentityProviderIngressPtrOutputWithContext(ctx context.Context) CheClusterSpecAuthIdentityProviderIngressPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(CheClusterSpecAuthIdentityProviderIngressOutput).ToCheClusterSpecAuthIdentityProviderIngressPtrOutputWithContext(ctx)
+}
+
+// CheClusterSpecAuthIdentityProviderIngressPtrInput is an input type that accepts CheClusterSpecAuthIdentityProviderIngressArgs, CheClusterSpecAuthIdentityProviderIngressPtr and CheClusterSpecAuthIdentityProviderIngressPtrOutput values.
+// You can construct a concrete instance of `CheClusterSpecAuthIdentityProviderIngressPtrInput` via:
+//
+//          CheClusterSpecAuthIdentityProviderIngressArgs{...}
+//
+//  or:
+//
+//          nil
+type CheClusterSpecAuthIdentityProviderIngressPtrInput interface {
+	pulumi.Input
+
+	ToCheClusterSpecAuthIdentityProviderIngressPtrOutput() CheClusterSpecAuthIdentityProviderIngressPtrOutput
+	ToCheClusterSpecAuthIdentityProviderIngressPtrOutputWithContext(context.Context) CheClusterSpecAuthIdentityProviderIngressPtrOutput
+}
+
+type cheClusterSpecAuthIdentityProviderIngressPtrType CheClusterSpecAuthIdentityProviderIngressArgs
+
+func CheClusterSpecAuthIdentityProviderIngressPtr(v *CheClusterSpecAuthIdentityProviderIngressArgs) CheClusterSpecAuthIdentityProviderIngressPtrInput {
+	return (*cheClusterSpecAuthIdentityProviderIngressPtrType)(v)
+}
+
+func (*cheClusterSpecAuthIdentityProviderIngressPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**CheClusterSpecAuthIdentityProviderIngress)(nil)).Elem()
+}
+
+func (i *cheClusterSpecAuthIdentityProviderIngressPtrType) ToCheClusterSpecAuthIdentityProviderIngressPtrOutput() CheClusterSpecAuthIdentityProviderIngressPtrOutput {
+	return i.ToCheClusterSpecAuthIdentityProviderIngressPtrOutputWithContext(context.Background())
+}
+
+func (i *cheClusterSpecAuthIdentityProviderIngressPtrType) ToCheClusterSpecAuthIdentityProviderIngressPtrOutputWithContext(ctx context.Context) CheClusterSpecAuthIdentityProviderIngressPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(CheClusterSpecAuthIdentityProviderIngressPtrOutput)
+}
+
+// Ingress custom settings
+type CheClusterSpecAuthIdentityProviderIngressOutput struct{ *pulumi.OutputState }
+
+func (CheClusterSpecAuthIdentityProviderIngressOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*CheClusterSpecAuthIdentityProviderIngress)(nil)).Elem()
+}
+
+func (o CheClusterSpecAuthIdentityProviderIngressOutput) ToCheClusterSpecAuthIdentityProviderIngressOutput() CheClusterSpecAuthIdentityProviderIngressOutput {
+	return o
+}
+
+func (o CheClusterSpecAuthIdentityProviderIngressOutput) ToCheClusterSpecAuthIdentityProviderIngressOutputWithContext(ctx context.Context) CheClusterSpecAuthIdentityProviderIngressOutput {
+	return o
+}
+
+func (o CheClusterSpecAuthIdentityProviderIngressOutput) ToCheClusterSpecAuthIdentityProviderIngressPtrOutput() CheClusterSpecAuthIdentityProviderIngressPtrOutput {
+	return o.ToCheClusterSpecAuthIdentityProviderIngressPtrOutputWithContext(context.Background())
+}
+
+func (o CheClusterSpecAuthIdentityProviderIngressOutput) ToCheClusterSpecAuthIdentityProviderIngressPtrOutputWithContext(ctx context.Context) CheClusterSpecAuthIdentityProviderIngressPtrOutput {
+	return o.ApplyT(func(v CheClusterSpecAuthIdentityProviderIngress) *CheClusterSpecAuthIdentityProviderIngress {
+		return &v
+	}).(CheClusterSpecAuthIdentityProviderIngressPtrOutput)
+}
+
+// Comma separated list of labels that can be used to organize and categorize (scope and select) objects.
+func (o CheClusterSpecAuthIdentityProviderIngressOutput) Labels() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v CheClusterSpecAuthIdentityProviderIngress) *string { return v.Labels }).(pulumi.StringPtrOutput)
+}
+
+type CheClusterSpecAuthIdentityProviderIngressPtrOutput struct{ *pulumi.OutputState }
+
+func (CheClusterSpecAuthIdentityProviderIngressPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**CheClusterSpecAuthIdentityProviderIngress)(nil)).Elem()
+}
+
+func (o CheClusterSpecAuthIdentityProviderIngressPtrOutput) ToCheClusterSpecAuthIdentityProviderIngressPtrOutput() CheClusterSpecAuthIdentityProviderIngressPtrOutput {
+	return o
+}
+
+func (o CheClusterSpecAuthIdentityProviderIngressPtrOutput) ToCheClusterSpecAuthIdentityProviderIngressPtrOutputWithContext(ctx context.Context) CheClusterSpecAuthIdentityProviderIngressPtrOutput {
+	return o
+}
+
+func (o CheClusterSpecAuthIdentityProviderIngressPtrOutput) Elem() CheClusterSpecAuthIdentityProviderIngressOutput {
+	return o.ApplyT(func(v *CheClusterSpecAuthIdentityProviderIngress) CheClusterSpecAuthIdentityProviderIngress {
+		return *v
+	}).(CheClusterSpecAuthIdentityProviderIngressOutput)
+}
+
+// Comma separated list of labels that can be used to organize and categorize (scope and select) objects.
+func (o CheClusterSpecAuthIdentityProviderIngressPtrOutput) Labels() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *CheClusterSpecAuthIdentityProviderIngress) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Labels
+	}).(pulumi.StringPtrOutput)
+}
+
+// Route custom settings
+type CheClusterSpecAuthIdentityProviderRoute struct {
+	// Comma separated list of labels that can be used to organize and categorize (scope and select) objects.
+	Labels *string `pulumi:"labels"`
+}
+
+// CheClusterSpecAuthIdentityProviderRouteInput is an input type that accepts CheClusterSpecAuthIdentityProviderRouteArgs and CheClusterSpecAuthIdentityProviderRouteOutput values.
+// You can construct a concrete instance of `CheClusterSpecAuthIdentityProviderRouteInput` via:
+//
+//          CheClusterSpecAuthIdentityProviderRouteArgs{...}
+type CheClusterSpecAuthIdentityProviderRouteInput interface {
+	pulumi.Input
+
+	ToCheClusterSpecAuthIdentityProviderRouteOutput() CheClusterSpecAuthIdentityProviderRouteOutput
+	ToCheClusterSpecAuthIdentityProviderRouteOutputWithContext(context.Context) CheClusterSpecAuthIdentityProviderRouteOutput
+}
+
+// Route custom settings
+type CheClusterSpecAuthIdentityProviderRouteArgs struct {
+	// Comma separated list of labels that can be used to organize and categorize (scope and select) objects.
+	Labels pulumi.StringPtrInput `pulumi:"labels"`
+}
+
+func (CheClusterSpecAuthIdentityProviderRouteArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*CheClusterSpecAuthIdentityProviderRoute)(nil)).Elem()
+}
+
+func (i CheClusterSpecAuthIdentityProviderRouteArgs) ToCheClusterSpecAuthIdentityProviderRouteOutput() CheClusterSpecAuthIdentityProviderRouteOutput {
+	return i.ToCheClusterSpecAuthIdentityProviderRouteOutputWithContext(context.Background())
+}
+
+func (i CheClusterSpecAuthIdentityProviderRouteArgs) ToCheClusterSpecAuthIdentityProviderRouteOutputWithContext(ctx context.Context) CheClusterSpecAuthIdentityProviderRouteOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(CheClusterSpecAuthIdentityProviderRouteOutput)
+}
+
+func (i CheClusterSpecAuthIdentityProviderRouteArgs) ToCheClusterSpecAuthIdentityProviderRoutePtrOutput() CheClusterSpecAuthIdentityProviderRoutePtrOutput {
+	return i.ToCheClusterSpecAuthIdentityProviderRoutePtrOutputWithContext(context.Background())
+}
+
+func (i CheClusterSpecAuthIdentityProviderRouteArgs) ToCheClusterSpecAuthIdentityProviderRoutePtrOutputWithContext(ctx context.Context) CheClusterSpecAuthIdentityProviderRoutePtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(CheClusterSpecAuthIdentityProviderRouteOutput).ToCheClusterSpecAuthIdentityProviderRoutePtrOutputWithContext(ctx)
+}
+
+// CheClusterSpecAuthIdentityProviderRoutePtrInput is an input type that accepts CheClusterSpecAuthIdentityProviderRouteArgs, CheClusterSpecAuthIdentityProviderRoutePtr and CheClusterSpecAuthIdentityProviderRoutePtrOutput values.
+// You can construct a concrete instance of `CheClusterSpecAuthIdentityProviderRoutePtrInput` via:
+//
+//          CheClusterSpecAuthIdentityProviderRouteArgs{...}
+//
+//  or:
+//
+//          nil
+type CheClusterSpecAuthIdentityProviderRoutePtrInput interface {
+	pulumi.Input
+
+	ToCheClusterSpecAuthIdentityProviderRoutePtrOutput() CheClusterSpecAuthIdentityProviderRoutePtrOutput
+	ToCheClusterSpecAuthIdentityProviderRoutePtrOutputWithContext(context.Context) CheClusterSpecAuthIdentityProviderRoutePtrOutput
+}
+
+type cheClusterSpecAuthIdentityProviderRoutePtrType CheClusterSpecAuthIdentityProviderRouteArgs
+
+func CheClusterSpecAuthIdentityProviderRoutePtr(v *CheClusterSpecAuthIdentityProviderRouteArgs) CheClusterSpecAuthIdentityProviderRoutePtrInput {
+	return (*cheClusterSpecAuthIdentityProviderRoutePtrType)(v)
+}
+
+func (*cheClusterSpecAuthIdentityProviderRoutePtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**CheClusterSpecAuthIdentityProviderRoute)(nil)).Elem()
+}
+
+func (i *cheClusterSpecAuthIdentityProviderRoutePtrType) ToCheClusterSpecAuthIdentityProviderRoutePtrOutput() CheClusterSpecAuthIdentityProviderRoutePtrOutput {
+	return i.ToCheClusterSpecAuthIdentityProviderRoutePtrOutputWithContext(context.Background())
+}
+
+func (i *cheClusterSpecAuthIdentityProviderRoutePtrType) ToCheClusterSpecAuthIdentityProviderRoutePtrOutputWithContext(ctx context.Context) CheClusterSpecAuthIdentityProviderRoutePtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(CheClusterSpecAuthIdentityProviderRoutePtrOutput)
+}
+
+// Route custom settings
+type CheClusterSpecAuthIdentityProviderRouteOutput struct{ *pulumi.OutputState }
+
+func (CheClusterSpecAuthIdentityProviderRouteOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*CheClusterSpecAuthIdentityProviderRoute)(nil)).Elem()
+}
+
+func (o CheClusterSpecAuthIdentityProviderRouteOutput) ToCheClusterSpecAuthIdentityProviderRouteOutput() CheClusterSpecAuthIdentityProviderRouteOutput {
+	return o
+}
+
+func (o CheClusterSpecAuthIdentityProviderRouteOutput) ToCheClusterSpecAuthIdentityProviderRouteOutputWithContext(ctx context.Context) CheClusterSpecAuthIdentityProviderRouteOutput {
+	return o
+}
+
+func (o CheClusterSpecAuthIdentityProviderRouteOutput) ToCheClusterSpecAuthIdentityProviderRoutePtrOutput() CheClusterSpecAuthIdentityProviderRoutePtrOutput {
+	return o.ToCheClusterSpecAuthIdentityProviderRoutePtrOutputWithContext(context.Background())
+}
+
+func (o CheClusterSpecAuthIdentityProviderRouteOutput) ToCheClusterSpecAuthIdentityProviderRoutePtrOutputWithContext(ctx context.Context) CheClusterSpecAuthIdentityProviderRoutePtrOutput {
+	return o.ApplyT(func(v CheClusterSpecAuthIdentityProviderRoute) *CheClusterSpecAuthIdentityProviderRoute {
+		return &v
+	}).(CheClusterSpecAuthIdentityProviderRoutePtrOutput)
+}
+
+// Comma separated list of labels that can be used to organize and categorize (scope and select) objects.
+func (o CheClusterSpecAuthIdentityProviderRouteOutput) Labels() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v CheClusterSpecAuthIdentityProviderRoute) *string { return v.Labels }).(pulumi.StringPtrOutput)
+}
+
+type CheClusterSpecAuthIdentityProviderRoutePtrOutput struct{ *pulumi.OutputState }
+
+func (CheClusterSpecAuthIdentityProviderRoutePtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**CheClusterSpecAuthIdentityProviderRoute)(nil)).Elem()
+}
+
+func (o CheClusterSpecAuthIdentityProviderRoutePtrOutput) ToCheClusterSpecAuthIdentityProviderRoutePtrOutput() CheClusterSpecAuthIdentityProviderRoutePtrOutput {
+	return o
+}
+
+func (o CheClusterSpecAuthIdentityProviderRoutePtrOutput) ToCheClusterSpecAuthIdentityProviderRoutePtrOutputWithContext(ctx context.Context) CheClusterSpecAuthIdentityProviderRoutePtrOutput {
+	return o
+}
+
+func (o CheClusterSpecAuthIdentityProviderRoutePtrOutput) Elem() CheClusterSpecAuthIdentityProviderRouteOutput {
+	return o.ApplyT(func(v *CheClusterSpecAuthIdentityProviderRoute) CheClusterSpecAuthIdentityProviderRoute { return *v }).(CheClusterSpecAuthIdentityProviderRouteOutput)
+}
+
+// Comma separated list of labels that can be used to organize and categorize (scope and select) objects.
+func (o CheClusterSpecAuthIdentityProviderRoutePtrOutput) Labels() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *CheClusterSpecAuthIdentityProviderRoute) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Labels
+	}).(pulumi.StringPtrOutput)
 }
 
 // Configuration settings related to the database used by the Che installation.
@@ -1048,19 +1380,438 @@ func (o CheClusterSpecDatabasePtrOutput) PostgresImagePullPolicy() pulumi.String
 	}).(pulumi.StringPtrOutput)
 }
 
+// Kubernetes Image Puller configuration
+type CheClusterSpecImagePuller struct {
+	// Install and configure the Kubernetes Image Puller Operator. If true and no spec is provided, it will create a default KubernetesImagePuller object to be managed by the Operator. If false, the KubernetesImagePuller object will be deleted, and the operator will be uninstalled, regardless of whether or not a spec is provided.
+	Enable *bool `pulumi:"enable"`
+	// A KubernetesImagePullerSpec to configure the image puller in the CheCluster
+	Spec *CheClusterSpecImagePullerSpec `pulumi:"spec"`
+}
+
+// CheClusterSpecImagePullerInput is an input type that accepts CheClusterSpecImagePullerArgs and CheClusterSpecImagePullerOutput values.
+// You can construct a concrete instance of `CheClusterSpecImagePullerInput` via:
+//
+//          CheClusterSpecImagePullerArgs{...}
+type CheClusterSpecImagePullerInput interface {
+	pulumi.Input
+
+	ToCheClusterSpecImagePullerOutput() CheClusterSpecImagePullerOutput
+	ToCheClusterSpecImagePullerOutputWithContext(context.Context) CheClusterSpecImagePullerOutput
+}
+
+// Kubernetes Image Puller configuration
+type CheClusterSpecImagePullerArgs struct {
+	// Install and configure the Kubernetes Image Puller Operator. If true and no spec is provided, it will create a default KubernetesImagePuller object to be managed by the Operator. If false, the KubernetesImagePuller object will be deleted, and the operator will be uninstalled, regardless of whether or not a spec is provided.
+	Enable pulumi.BoolPtrInput `pulumi:"enable"`
+	// A KubernetesImagePullerSpec to configure the image puller in the CheCluster
+	Spec CheClusterSpecImagePullerSpecPtrInput `pulumi:"spec"`
+}
+
+func (CheClusterSpecImagePullerArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*CheClusterSpecImagePuller)(nil)).Elem()
+}
+
+func (i CheClusterSpecImagePullerArgs) ToCheClusterSpecImagePullerOutput() CheClusterSpecImagePullerOutput {
+	return i.ToCheClusterSpecImagePullerOutputWithContext(context.Background())
+}
+
+func (i CheClusterSpecImagePullerArgs) ToCheClusterSpecImagePullerOutputWithContext(ctx context.Context) CheClusterSpecImagePullerOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(CheClusterSpecImagePullerOutput)
+}
+
+func (i CheClusterSpecImagePullerArgs) ToCheClusterSpecImagePullerPtrOutput() CheClusterSpecImagePullerPtrOutput {
+	return i.ToCheClusterSpecImagePullerPtrOutputWithContext(context.Background())
+}
+
+func (i CheClusterSpecImagePullerArgs) ToCheClusterSpecImagePullerPtrOutputWithContext(ctx context.Context) CheClusterSpecImagePullerPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(CheClusterSpecImagePullerOutput).ToCheClusterSpecImagePullerPtrOutputWithContext(ctx)
+}
+
+// CheClusterSpecImagePullerPtrInput is an input type that accepts CheClusterSpecImagePullerArgs, CheClusterSpecImagePullerPtr and CheClusterSpecImagePullerPtrOutput values.
+// You can construct a concrete instance of `CheClusterSpecImagePullerPtrInput` via:
+//
+//          CheClusterSpecImagePullerArgs{...}
+//
+//  or:
+//
+//          nil
+type CheClusterSpecImagePullerPtrInput interface {
+	pulumi.Input
+
+	ToCheClusterSpecImagePullerPtrOutput() CheClusterSpecImagePullerPtrOutput
+	ToCheClusterSpecImagePullerPtrOutputWithContext(context.Context) CheClusterSpecImagePullerPtrOutput
+}
+
+type cheClusterSpecImagePullerPtrType CheClusterSpecImagePullerArgs
+
+func CheClusterSpecImagePullerPtr(v *CheClusterSpecImagePullerArgs) CheClusterSpecImagePullerPtrInput {
+	return (*cheClusterSpecImagePullerPtrType)(v)
+}
+
+func (*cheClusterSpecImagePullerPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**CheClusterSpecImagePuller)(nil)).Elem()
+}
+
+func (i *cheClusterSpecImagePullerPtrType) ToCheClusterSpecImagePullerPtrOutput() CheClusterSpecImagePullerPtrOutput {
+	return i.ToCheClusterSpecImagePullerPtrOutputWithContext(context.Background())
+}
+
+func (i *cheClusterSpecImagePullerPtrType) ToCheClusterSpecImagePullerPtrOutputWithContext(ctx context.Context) CheClusterSpecImagePullerPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(CheClusterSpecImagePullerPtrOutput)
+}
+
+// Kubernetes Image Puller configuration
+type CheClusterSpecImagePullerOutput struct{ *pulumi.OutputState }
+
+func (CheClusterSpecImagePullerOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*CheClusterSpecImagePuller)(nil)).Elem()
+}
+
+func (o CheClusterSpecImagePullerOutput) ToCheClusterSpecImagePullerOutput() CheClusterSpecImagePullerOutput {
+	return o
+}
+
+func (o CheClusterSpecImagePullerOutput) ToCheClusterSpecImagePullerOutputWithContext(ctx context.Context) CheClusterSpecImagePullerOutput {
+	return o
+}
+
+func (o CheClusterSpecImagePullerOutput) ToCheClusterSpecImagePullerPtrOutput() CheClusterSpecImagePullerPtrOutput {
+	return o.ToCheClusterSpecImagePullerPtrOutputWithContext(context.Background())
+}
+
+func (o CheClusterSpecImagePullerOutput) ToCheClusterSpecImagePullerPtrOutputWithContext(ctx context.Context) CheClusterSpecImagePullerPtrOutput {
+	return o.ApplyT(func(v CheClusterSpecImagePuller) *CheClusterSpecImagePuller {
+		return &v
+	}).(CheClusterSpecImagePullerPtrOutput)
+}
+
+// Install and configure the Kubernetes Image Puller Operator. If true and no spec is provided, it will create a default KubernetesImagePuller object to be managed by the Operator. If false, the KubernetesImagePuller object will be deleted, and the operator will be uninstalled, regardless of whether or not a spec is provided.
+func (o CheClusterSpecImagePullerOutput) Enable() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v CheClusterSpecImagePuller) *bool { return v.Enable }).(pulumi.BoolPtrOutput)
+}
+
+// A KubernetesImagePullerSpec to configure the image puller in the CheCluster
+func (o CheClusterSpecImagePullerOutput) Spec() CheClusterSpecImagePullerSpecPtrOutput {
+	return o.ApplyT(func(v CheClusterSpecImagePuller) *CheClusterSpecImagePullerSpec { return v.Spec }).(CheClusterSpecImagePullerSpecPtrOutput)
+}
+
+type CheClusterSpecImagePullerPtrOutput struct{ *pulumi.OutputState }
+
+func (CheClusterSpecImagePullerPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**CheClusterSpecImagePuller)(nil)).Elem()
+}
+
+func (o CheClusterSpecImagePullerPtrOutput) ToCheClusterSpecImagePullerPtrOutput() CheClusterSpecImagePullerPtrOutput {
+	return o
+}
+
+func (o CheClusterSpecImagePullerPtrOutput) ToCheClusterSpecImagePullerPtrOutputWithContext(ctx context.Context) CheClusterSpecImagePullerPtrOutput {
+	return o
+}
+
+func (o CheClusterSpecImagePullerPtrOutput) Elem() CheClusterSpecImagePullerOutput {
+	return o.ApplyT(func(v *CheClusterSpecImagePuller) CheClusterSpecImagePuller { return *v }).(CheClusterSpecImagePullerOutput)
+}
+
+// Install and configure the Kubernetes Image Puller Operator. If true and no spec is provided, it will create a default KubernetesImagePuller object to be managed by the Operator. If false, the KubernetesImagePuller object will be deleted, and the operator will be uninstalled, regardless of whether or not a spec is provided.
+func (o CheClusterSpecImagePullerPtrOutput) Enable() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *CheClusterSpecImagePuller) *bool {
+		if v == nil {
+			return nil
+		}
+		return v.Enable
+	}).(pulumi.BoolPtrOutput)
+}
+
+// A KubernetesImagePullerSpec to configure the image puller in the CheCluster
+func (o CheClusterSpecImagePullerPtrOutput) Spec() CheClusterSpecImagePullerSpecPtrOutput {
+	return o.ApplyT(func(v *CheClusterSpecImagePuller) *CheClusterSpecImagePullerSpec {
+		if v == nil {
+			return nil
+		}
+		return v.Spec
+	}).(CheClusterSpecImagePullerSpecPtrOutput)
+}
+
+// A KubernetesImagePullerSpec to configure the image puller in the CheCluster
+type CheClusterSpecImagePullerSpec struct {
+	CachingCPULimit      *string `pulumi:"cachingCPULimit"`
+	CachingCPURequest    *string `pulumi:"cachingCPURequest"`
+	CachingIntervalHours *string `pulumi:"cachingIntervalHours"`
+	CachingMemoryLimit   *string `pulumi:"cachingMemoryLimit"`
+	CachingMemoryRequest *string `pulumi:"cachingMemoryRequest"`
+	ConfigMapName        *string `pulumi:"configMapName"`
+	DaemonsetName        *string `pulumi:"daemonsetName"`
+	DeploymentName       *string `pulumi:"deploymentName"`
+	Images               *string `pulumi:"images"`
+	NodeSelector         *string `pulumi:"nodeSelector"`
+}
+
+// CheClusterSpecImagePullerSpecInput is an input type that accepts CheClusterSpecImagePullerSpecArgs and CheClusterSpecImagePullerSpecOutput values.
+// You can construct a concrete instance of `CheClusterSpecImagePullerSpecInput` via:
+//
+//          CheClusterSpecImagePullerSpecArgs{...}
+type CheClusterSpecImagePullerSpecInput interface {
+	pulumi.Input
+
+	ToCheClusterSpecImagePullerSpecOutput() CheClusterSpecImagePullerSpecOutput
+	ToCheClusterSpecImagePullerSpecOutputWithContext(context.Context) CheClusterSpecImagePullerSpecOutput
+}
+
+// A KubernetesImagePullerSpec to configure the image puller in the CheCluster
+type CheClusterSpecImagePullerSpecArgs struct {
+	CachingCPULimit      pulumi.StringPtrInput `pulumi:"cachingCPULimit"`
+	CachingCPURequest    pulumi.StringPtrInput `pulumi:"cachingCPURequest"`
+	CachingIntervalHours pulumi.StringPtrInput `pulumi:"cachingIntervalHours"`
+	CachingMemoryLimit   pulumi.StringPtrInput `pulumi:"cachingMemoryLimit"`
+	CachingMemoryRequest pulumi.StringPtrInput `pulumi:"cachingMemoryRequest"`
+	ConfigMapName        pulumi.StringPtrInput `pulumi:"configMapName"`
+	DaemonsetName        pulumi.StringPtrInput `pulumi:"daemonsetName"`
+	DeploymentName       pulumi.StringPtrInput `pulumi:"deploymentName"`
+	Images               pulumi.StringPtrInput `pulumi:"images"`
+	NodeSelector         pulumi.StringPtrInput `pulumi:"nodeSelector"`
+}
+
+func (CheClusterSpecImagePullerSpecArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*CheClusterSpecImagePullerSpec)(nil)).Elem()
+}
+
+func (i CheClusterSpecImagePullerSpecArgs) ToCheClusterSpecImagePullerSpecOutput() CheClusterSpecImagePullerSpecOutput {
+	return i.ToCheClusterSpecImagePullerSpecOutputWithContext(context.Background())
+}
+
+func (i CheClusterSpecImagePullerSpecArgs) ToCheClusterSpecImagePullerSpecOutputWithContext(ctx context.Context) CheClusterSpecImagePullerSpecOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(CheClusterSpecImagePullerSpecOutput)
+}
+
+func (i CheClusterSpecImagePullerSpecArgs) ToCheClusterSpecImagePullerSpecPtrOutput() CheClusterSpecImagePullerSpecPtrOutput {
+	return i.ToCheClusterSpecImagePullerSpecPtrOutputWithContext(context.Background())
+}
+
+func (i CheClusterSpecImagePullerSpecArgs) ToCheClusterSpecImagePullerSpecPtrOutputWithContext(ctx context.Context) CheClusterSpecImagePullerSpecPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(CheClusterSpecImagePullerSpecOutput).ToCheClusterSpecImagePullerSpecPtrOutputWithContext(ctx)
+}
+
+// CheClusterSpecImagePullerSpecPtrInput is an input type that accepts CheClusterSpecImagePullerSpecArgs, CheClusterSpecImagePullerSpecPtr and CheClusterSpecImagePullerSpecPtrOutput values.
+// You can construct a concrete instance of `CheClusterSpecImagePullerSpecPtrInput` via:
+//
+//          CheClusterSpecImagePullerSpecArgs{...}
+//
+//  or:
+//
+//          nil
+type CheClusterSpecImagePullerSpecPtrInput interface {
+	pulumi.Input
+
+	ToCheClusterSpecImagePullerSpecPtrOutput() CheClusterSpecImagePullerSpecPtrOutput
+	ToCheClusterSpecImagePullerSpecPtrOutputWithContext(context.Context) CheClusterSpecImagePullerSpecPtrOutput
+}
+
+type cheClusterSpecImagePullerSpecPtrType CheClusterSpecImagePullerSpecArgs
+
+func CheClusterSpecImagePullerSpecPtr(v *CheClusterSpecImagePullerSpecArgs) CheClusterSpecImagePullerSpecPtrInput {
+	return (*cheClusterSpecImagePullerSpecPtrType)(v)
+}
+
+func (*cheClusterSpecImagePullerSpecPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**CheClusterSpecImagePullerSpec)(nil)).Elem()
+}
+
+func (i *cheClusterSpecImagePullerSpecPtrType) ToCheClusterSpecImagePullerSpecPtrOutput() CheClusterSpecImagePullerSpecPtrOutput {
+	return i.ToCheClusterSpecImagePullerSpecPtrOutputWithContext(context.Background())
+}
+
+func (i *cheClusterSpecImagePullerSpecPtrType) ToCheClusterSpecImagePullerSpecPtrOutputWithContext(ctx context.Context) CheClusterSpecImagePullerSpecPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(CheClusterSpecImagePullerSpecPtrOutput)
+}
+
+// A KubernetesImagePullerSpec to configure the image puller in the CheCluster
+type CheClusterSpecImagePullerSpecOutput struct{ *pulumi.OutputState }
+
+func (CheClusterSpecImagePullerSpecOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*CheClusterSpecImagePullerSpec)(nil)).Elem()
+}
+
+func (o CheClusterSpecImagePullerSpecOutput) ToCheClusterSpecImagePullerSpecOutput() CheClusterSpecImagePullerSpecOutput {
+	return o
+}
+
+func (o CheClusterSpecImagePullerSpecOutput) ToCheClusterSpecImagePullerSpecOutputWithContext(ctx context.Context) CheClusterSpecImagePullerSpecOutput {
+	return o
+}
+
+func (o CheClusterSpecImagePullerSpecOutput) ToCheClusterSpecImagePullerSpecPtrOutput() CheClusterSpecImagePullerSpecPtrOutput {
+	return o.ToCheClusterSpecImagePullerSpecPtrOutputWithContext(context.Background())
+}
+
+func (o CheClusterSpecImagePullerSpecOutput) ToCheClusterSpecImagePullerSpecPtrOutputWithContext(ctx context.Context) CheClusterSpecImagePullerSpecPtrOutput {
+	return o.ApplyT(func(v CheClusterSpecImagePullerSpec) *CheClusterSpecImagePullerSpec {
+		return &v
+	}).(CheClusterSpecImagePullerSpecPtrOutput)
+}
+func (o CheClusterSpecImagePullerSpecOutput) CachingCPULimit() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v CheClusterSpecImagePullerSpec) *string { return v.CachingCPULimit }).(pulumi.StringPtrOutput)
+}
+
+func (o CheClusterSpecImagePullerSpecOutput) CachingCPURequest() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v CheClusterSpecImagePullerSpec) *string { return v.CachingCPURequest }).(pulumi.StringPtrOutput)
+}
+
+func (o CheClusterSpecImagePullerSpecOutput) CachingIntervalHours() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v CheClusterSpecImagePullerSpec) *string { return v.CachingIntervalHours }).(pulumi.StringPtrOutput)
+}
+
+func (o CheClusterSpecImagePullerSpecOutput) CachingMemoryLimit() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v CheClusterSpecImagePullerSpec) *string { return v.CachingMemoryLimit }).(pulumi.StringPtrOutput)
+}
+
+func (o CheClusterSpecImagePullerSpecOutput) CachingMemoryRequest() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v CheClusterSpecImagePullerSpec) *string { return v.CachingMemoryRequest }).(pulumi.StringPtrOutput)
+}
+
+func (o CheClusterSpecImagePullerSpecOutput) ConfigMapName() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v CheClusterSpecImagePullerSpec) *string { return v.ConfigMapName }).(pulumi.StringPtrOutput)
+}
+
+func (o CheClusterSpecImagePullerSpecOutput) DaemonsetName() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v CheClusterSpecImagePullerSpec) *string { return v.DaemonsetName }).(pulumi.StringPtrOutput)
+}
+
+func (o CheClusterSpecImagePullerSpecOutput) DeploymentName() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v CheClusterSpecImagePullerSpec) *string { return v.DeploymentName }).(pulumi.StringPtrOutput)
+}
+
+func (o CheClusterSpecImagePullerSpecOutput) Images() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v CheClusterSpecImagePullerSpec) *string { return v.Images }).(pulumi.StringPtrOutput)
+}
+
+func (o CheClusterSpecImagePullerSpecOutput) NodeSelector() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v CheClusterSpecImagePullerSpec) *string { return v.NodeSelector }).(pulumi.StringPtrOutput)
+}
+
+type CheClusterSpecImagePullerSpecPtrOutput struct{ *pulumi.OutputState }
+
+func (CheClusterSpecImagePullerSpecPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**CheClusterSpecImagePullerSpec)(nil)).Elem()
+}
+
+func (o CheClusterSpecImagePullerSpecPtrOutput) ToCheClusterSpecImagePullerSpecPtrOutput() CheClusterSpecImagePullerSpecPtrOutput {
+	return o
+}
+
+func (o CheClusterSpecImagePullerSpecPtrOutput) ToCheClusterSpecImagePullerSpecPtrOutputWithContext(ctx context.Context) CheClusterSpecImagePullerSpecPtrOutput {
+	return o
+}
+
+func (o CheClusterSpecImagePullerSpecPtrOutput) Elem() CheClusterSpecImagePullerSpecOutput {
+	return o.ApplyT(func(v *CheClusterSpecImagePullerSpec) CheClusterSpecImagePullerSpec { return *v }).(CheClusterSpecImagePullerSpecOutput)
+}
+
+func (o CheClusterSpecImagePullerSpecPtrOutput) CachingCPULimit() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *CheClusterSpecImagePullerSpec) *string {
+		if v == nil {
+			return nil
+		}
+		return v.CachingCPULimit
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o CheClusterSpecImagePullerSpecPtrOutput) CachingCPURequest() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *CheClusterSpecImagePullerSpec) *string {
+		if v == nil {
+			return nil
+		}
+		return v.CachingCPURequest
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o CheClusterSpecImagePullerSpecPtrOutput) CachingIntervalHours() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *CheClusterSpecImagePullerSpec) *string {
+		if v == nil {
+			return nil
+		}
+		return v.CachingIntervalHours
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o CheClusterSpecImagePullerSpecPtrOutput) CachingMemoryLimit() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *CheClusterSpecImagePullerSpec) *string {
+		if v == nil {
+			return nil
+		}
+		return v.CachingMemoryLimit
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o CheClusterSpecImagePullerSpecPtrOutput) CachingMemoryRequest() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *CheClusterSpecImagePullerSpec) *string {
+		if v == nil {
+			return nil
+		}
+		return v.CachingMemoryRequest
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o CheClusterSpecImagePullerSpecPtrOutput) ConfigMapName() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *CheClusterSpecImagePullerSpec) *string {
+		if v == nil {
+			return nil
+		}
+		return v.ConfigMapName
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o CheClusterSpecImagePullerSpecPtrOutput) DaemonsetName() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *CheClusterSpecImagePullerSpec) *string {
+		if v == nil {
+			return nil
+		}
+		return v.DaemonsetName
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o CheClusterSpecImagePullerSpecPtrOutput) DeploymentName() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *CheClusterSpecImagePullerSpec) *string {
+		if v == nil {
+			return nil
+		}
+		return v.DeploymentName
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o CheClusterSpecImagePullerSpecPtrOutput) Images() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *CheClusterSpecImagePullerSpec) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Images
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o CheClusterSpecImagePullerSpecPtrOutput) NodeSelector() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *CheClusterSpecImagePullerSpec) *string {
+		if v == nil {
+			return nil
+		}
+		return v.NodeSelector
+	}).(pulumi.StringPtrOutput)
+}
+
 // Configuration settings specific to Che installations made on upstream Kubernetes.
 type CheClusterSpecK8s struct {
 	// Ingress class that will define the which controler will manage ingresses. Defaults to `nginx`. NB: This drives the `is kubernetes.io/ingress.class` annotation on Che-related ingresses.
 	IngressClass *string `pulumi:"ingressClass"`
 	// Global ingress domain for a K8S cluster. This MUST be explicitly specified: there are no defaults.
 	IngressDomain *string `pulumi:"ingressDomain"`
-	// Strategy for ingress creation. This can be `multi-host` (host is explicitly provided in ingress), `single-host` (host is provided, path-based rules) and `default-host.*`(no host is provided, path-based rules). Defaults to `"multi-host`
+	// Strategy for ingress creation. This can be `multi-host` (host is explicitly provided in ingress), `single-host` (host is provided, path-based rules) and `default-host.*`(no host is provided, path-based rules). Defaults to `"multi-host` Deprecated in favor of "serverExposureStrategy" in the "server" section, which defines this regardless of the cluster type. If both are defined, `serverExposureStrategy` takes precedence.
 	IngressStrategy *string `pulumi:"ingressStrategy"`
 	// FSGroup the Che pod and Workspace pods containers should run in. Defaults to `1724`.
 	SecurityContextFsGroup *string `pulumi:"securityContextFsGroup"`
 	// ID of the user the Che pod and Workspace pods containers should run as. Default to `1724`.
 	SecurityContextRunAsUser *string `pulumi:"securityContextRunAsUser"`
-	// Name of a secret that will be used to setup ingress TLS termination if TLS is enabled. See also the `tlsSupport` field.
+	// When the serverExposureStrategy is set to "single-host", the way the server, registries and workspaces are exposed is further configured by this property. The possible values are "native" (which means that the server and workspaces are exposed using ingresses on K8s) or "gateway" where the server and workspaces are exposed using a custom gateway based on Traefik. All the endpoints whether backed by the ingress or gateway "route" always point to the subpaths on the same domain. Defaults to "native".
+	SingleHostExposureType *string `pulumi:"singleHostExposureType"`
+	// Name of a secret that will be used to setup ingress TLS termination if TLS is enabled. If the field is empty string, then default cluster certificate will be used. See also the `tlsSupport` field.
 	TlsSecretName *string `pulumi:"tlsSecretName"`
 }
 
@@ -1081,13 +1832,15 @@ type CheClusterSpecK8sArgs struct {
 	IngressClass pulumi.StringPtrInput `pulumi:"ingressClass"`
 	// Global ingress domain for a K8S cluster. This MUST be explicitly specified: there are no defaults.
 	IngressDomain pulumi.StringPtrInput `pulumi:"ingressDomain"`
-	// Strategy for ingress creation. This can be `multi-host` (host is explicitly provided in ingress), `single-host` (host is provided, path-based rules) and `default-host.*`(no host is provided, path-based rules). Defaults to `"multi-host`
+	// Strategy for ingress creation. This can be `multi-host` (host is explicitly provided in ingress), `single-host` (host is provided, path-based rules) and `default-host.*`(no host is provided, path-based rules). Defaults to `"multi-host` Deprecated in favor of "serverExposureStrategy" in the "server" section, which defines this regardless of the cluster type. If both are defined, `serverExposureStrategy` takes precedence.
 	IngressStrategy pulumi.StringPtrInput `pulumi:"ingressStrategy"`
 	// FSGroup the Che pod and Workspace pods containers should run in. Defaults to `1724`.
 	SecurityContextFsGroup pulumi.StringPtrInput `pulumi:"securityContextFsGroup"`
 	// ID of the user the Che pod and Workspace pods containers should run as. Default to `1724`.
 	SecurityContextRunAsUser pulumi.StringPtrInput `pulumi:"securityContextRunAsUser"`
-	// Name of a secret that will be used to setup ingress TLS termination if TLS is enabled. See also the `tlsSupport` field.
+	// When the serverExposureStrategy is set to "single-host", the way the server, registries and workspaces are exposed is further configured by this property. The possible values are "native" (which means that the server and workspaces are exposed using ingresses on K8s) or "gateway" where the server and workspaces are exposed using a custom gateway based on Traefik. All the endpoints whether backed by the ingress or gateway "route" always point to the subpaths on the same domain. Defaults to "native".
+	SingleHostExposureType pulumi.StringPtrInput `pulumi:"singleHostExposureType"`
+	// Name of a secret that will be used to setup ingress TLS termination if TLS is enabled. If the field is empty string, then default cluster certificate will be used. See also the `tlsSupport` field.
 	TlsSecretName pulumi.StringPtrInput `pulumi:"tlsSecretName"`
 }
 
@@ -1179,7 +1932,7 @@ func (o CheClusterSpecK8sOutput) IngressDomain() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v CheClusterSpecK8s) *string { return v.IngressDomain }).(pulumi.StringPtrOutput)
 }
 
-// Strategy for ingress creation. This can be `multi-host` (host is explicitly provided in ingress), `single-host` (host is provided, path-based rules) and `default-host.*`(no host is provided, path-based rules). Defaults to `"multi-host`
+// Strategy for ingress creation. This can be `multi-host` (host is explicitly provided in ingress), `single-host` (host is provided, path-based rules) and `default-host.*`(no host is provided, path-based rules). Defaults to `"multi-host` Deprecated in favor of "serverExposureStrategy" in the "server" section, which defines this regardless of the cluster type. If both are defined, `serverExposureStrategy` takes precedence.
 func (o CheClusterSpecK8sOutput) IngressStrategy() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v CheClusterSpecK8s) *string { return v.IngressStrategy }).(pulumi.StringPtrOutput)
 }
@@ -1194,7 +1947,12 @@ func (o CheClusterSpecK8sOutput) SecurityContextRunAsUser() pulumi.StringPtrOutp
 	return o.ApplyT(func(v CheClusterSpecK8s) *string { return v.SecurityContextRunAsUser }).(pulumi.StringPtrOutput)
 }
 
-// Name of a secret that will be used to setup ingress TLS termination if TLS is enabled. See also the `tlsSupport` field.
+// When the serverExposureStrategy is set to "single-host", the way the server, registries and workspaces are exposed is further configured by this property. The possible values are "native" (which means that the server and workspaces are exposed using ingresses on K8s) or "gateway" where the server and workspaces are exposed using a custom gateway based on Traefik. All the endpoints whether backed by the ingress or gateway "route" always point to the subpaths on the same domain. Defaults to "native".
+func (o CheClusterSpecK8sOutput) SingleHostExposureType() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v CheClusterSpecK8s) *string { return v.SingleHostExposureType }).(pulumi.StringPtrOutput)
+}
+
+// Name of a secret that will be used to setup ingress TLS termination if TLS is enabled. If the field is empty string, then default cluster certificate will be used. See also the `tlsSupport` field.
 func (o CheClusterSpecK8sOutput) TlsSecretName() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v CheClusterSpecK8s) *string { return v.TlsSecretName }).(pulumi.StringPtrOutput)
 }
@@ -1237,7 +1995,7 @@ func (o CheClusterSpecK8sPtrOutput) IngressDomain() pulumi.StringPtrOutput {
 	}).(pulumi.StringPtrOutput)
 }
 
-// Strategy for ingress creation. This can be `multi-host` (host is explicitly provided in ingress), `single-host` (host is provided, path-based rules) and `default-host.*`(no host is provided, path-based rules). Defaults to `"multi-host`
+// Strategy for ingress creation. This can be `multi-host` (host is explicitly provided in ingress), `single-host` (host is provided, path-based rules) and `default-host.*`(no host is provided, path-based rules). Defaults to `"multi-host` Deprecated in favor of "serverExposureStrategy" in the "server" section, which defines this regardless of the cluster type. If both are defined, `serverExposureStrategy` takes precedence.
 func (o CheClusterSpecK8sPtrOutput) IngressStrategy() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *CheClusterSpecK8s) *string {
 		if v == nil {
@@ -1267,7 +2025,17 @@ func (o CheClusterSpecK8sPtrOutput) SecurityContextRunAsUser() pulumi.StringPtrO
 	}).(pulumi.StringPtrOutput)
 }
 
-// Name of a secret that will be used to setup ingress TLS termination if TLS is enabled. See also the `tlsSupport` field.
+// When the serverExposureStrategy is set to "single-host", the way the server, registries and workspaces are exposed is further configured by this property. The possible values are "native" (which means that the server and workspaces are exposed using ingresses on K8s) or "gateway" where the server and workspaces are exposed using a custom gateway based on Traefik. All the endpoints whether backed by the ingress or gateway "route" always point to the subpaths on the same domain. Defaults to "native".
+func (o CheClusterSpecK8sPtrOutput) SingleHostExposureType() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *CheClusterSpecK8s) *string {
+		if v == nil {
+			return nil
+		}
+		return v.SingleHostExposureType
+	}).(pulumi.StringPtrOutput)
+}
+
+// Name of a secret that will be used to setup ingress TLS termination if TLS is enabled. If the field is empty string, then default cluster certificate will be used. See also the `tlsSupport` field.
 func (o CheClusterSpecK8sPtrOutput) TlsSecretName() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *CheClusterSpecK8s) *string {
 		if v == nil {
@@ -1419,6 +2187,8 @@ type CheClusterSpecServer struct {
 	AirGapContainerRegistryOrganization *string `pulumi:"airGapContainerRegistryOrganization"`
 	// Defines if a user is able to specify Kubernetes namespace (or OpenShift project) different from the default. It's NOT RECOMMENDED to configured true without OAuth configured. This property is also used by the OpenShift infra.
 	AllowUserDefinedWorkspaceNamespaces *bool `pulumi:"allowUserDefinedWorkspaceNamespaces"`
+	// Comma-separated list of ClusterRoles that will be assigned to che ServiceAccount. Be aware that che-operator has to already have all permissions in these ClusterRoles to be able to grant them.
+	CheClusterRoles *string `pulumi:"cheClusterRoles"`
 	// Enables the debug mode for Che server. Defaults to `false`.
 	CheDebug *string `pulumi:"cheDebug"`
 	// Flavor of the installation. This is either `che` for upstream Che installations, or `codeready` for CodeReady Workspaces installation. In most cases the default value should not be overridden.
@@ -1435,18 +2205,26 @@ type CheClusterSpecServer struct {
 	CheImageTag *string `pulumi:"cheImageTag"`
 	// Log level for the Che server: `INFO` or `DEBUG`. Defaults to `INFO`.
 	CheLogLevel *string `pulumi:"cheLogLevel"`
+	// Che server ingress custom settings
+	CheServerIngress *CheClusterSpecServerCheServerIngress `pulumi:"cheServerIngress"`
+	// Che server route custom settings
+	CheServerRoute *CheClusterSpecServerCheServerRoute `pulumi:"cheServerRoute"`
 	// Custom cluster role bound to the user for the Che workspaces. The default roles are used if this is omitted or left blank.
 	CheWorkspaceClusterRole *string `pulumi:"cheWorkspaceClusterRole"`
 	// Map of additional environment variables that will be applied in the generated `che` config map to be used by the Che server, in addition to the values already generated from other fields of the `CheCluster` custom resource (CR). If `customCheProperties` contains a property that would be normally generated in `che` config map from other CR fields, then the value defined in the `customCheProperties` will be used instead.
 	CustomCheProperties map[string]string `pulumi:"customCheProperties"`
 	// Overrides the container image used in the Devfile registry deployment. This includes the image tag. Omit it or leave it empty to use the defaut container image provided by the operator.
 	DevfileRegistryImage *string `pulumi:"devfileRegistryImage"`
+	// Devfile registry ingress custom settings
+	DevfileRegistryIngress *CheClusterSpecServerDevfileRegistryIngress `pulumi:"devfileRegistryIngress"`
 	// Overrides the memory limit used in the Devfile registry deployment. Defaults to 256Mi.
 	DevfileRegistryMemoryLimit *string `pulumi:"devfileRegistryMemoryLimit"`
 	// Overrides the memory request used in the Devfile registry deployment. Defaults to 16Mi.
 	DevfileRegistryMemoryRequest *string `pulumi:"devfileRegistryMemoryRequest"`
 	// Overrides the image pull policy used in the Devfile registry deployment. Default value is `Always` for `nightly` or `latest` images, and `IfNotPresent` in other cases.
 	DevfileRegistryPullPolicy *string `pulumi:"devfileRegistryPullPolicy"`
+	// Devfile registry route custom settings
+	DevfileRegistryRoute *CheClusterSpecServerDevfileRegistryRoute `pulumi:"devfileRegistryRoute"`
 	// Public URL of the Devfile registry, that serves sample, ready-to-use devfiles. You should set it ONLY if you use an external devfile registry (see the `externalDevfileRegistry` field). By default this will be automatically calculated by the operator.
 	DevfileRegistryUrl *string `pulumi:"devfileRegistryUrl"`
 	// Instructs the operator on whether or not to deploy a dedicated Devfile registry server. By default a dedicated devfile registry server is started. But if `externalDevfileRegistry` is `true`, then no such dedicated server will be started by the operator and you will have to manually set the `devfileRegistryUrl` field
@@ -1455,16 +2233,20 @@ type CheClusterSpecServer struct {
 	ExternalPluginRegistry *bool `pulumi:"externalPluginRegistry"`
 	// If enabled, then the certificate from `che-git-self-signed-cert` config map will be propagated to the Che components and provide particular configuration for Git.
 	GitSelfSignedCert *bool `pulumi:"gitSelfSignedCert"`
-	// List of hosts that should not use the configured proxy. Use ` |`` as delimiter, eg  `localhost|my.host.com|123.42.12.32`Only use when configuring a proxy is required. Operator respects OpenShift cluster wide proxy configuration and no additional configuration is required, but defining`nonProxyHosts`in a custom resource leads to merging non proxy hosts lists from the cluster proxy configuration and ones defined in the custom resources. (see the doc https://docs.openshift.com/container-platform/4.4/networking/enable-cluster-wide-proxy.html) (see also the`proxyURL` fields).
+	// List of hosts that should not use the configured proxy. So specify wild card domain use the following form `.<DOMAIN>` and `|` as delimiter, eg: `localhost|.my.host.com|123.42.12.32` Only use when configuring a proxy is required. Operator respects OpenShift cluster wide proxy configuration and no additional configuration is required, but defining `nonProxyHosts` in a custom resource leads to merging non proxy hosts lists from the cluster proxy configuration and ones defined in the custom resources. (see the doc https://docs.openshift.com/container-platform/4.4/networking/enable-cluster-wide-proxy.html) (see also the `proxyURL` fields).
 	NonProxyHosts *string `pulumi:"nonProxyHosts"`
-	// Overrides the container image used in the Plugin registry deployment. This includes the image tag. Omit it or leave it empty to use the defaut container image provided by the operator.
+	// Overrides the container image used in the Plugin registry deployment. This includes the image tag. Omit it or leave it empty to use the default container image provided by the operator.
 	PluginRegistryImage *string `pulumi:"pluginRegistryImage"`
+	// Plugin registry ingress custom settings
+	PluginRegistryIngress *CheClusterSpecServerPluginRegistryIngress `pulumi:"pluginRegistryIngress"`
 	// Overrides the memory limit used in the Plugin registry deployment. Defaults to 256Mi.
 	PluginRegistryMemoryLimit *string `pulumi:"pluginRegistryMemoryLimit"`
 	// Overrides the memory request used in the Plugin registry deployment. Defaults to 16Mi.
 	PluginRegistryMemoryRequest *string `pulumi:"pluginRegistryMemoryRequest"`
 	// Overrides the image pull policy used in the Plugin registry deployment. Default value is `Always` for `nightly` or `latest` images, and `IfNotPresent` in other cases.
 	PluginRegistryPullPolicy *string `pulumi:"pluginRegistryPullPolicy"`
+	// Plugin registry route custom settings
+	PluginRegistryRoute *CheClusterSpecServerPluginRegistryRoute `pulumi:"pluginRegistryRoute"`
 	// Public URL of the Plugin registry, that serves sample ready-to-use devfiles. You should set it ONLY if you use an external devfile registry (see the `externalPluginRegistry` field). By default this will be automatically calculated by the operator.
 	PluginRegistryUrl *string `pulumi:"pluginRegistryUrl"`
 	// Password of the proxy server Only use when proxy configuration is required (see also the `proxyURL`, `proxyUser` and `proxySecret` fields).
@@ -1479,14 +2261,24 @@ type CheClusterSpecServer struct {
 	ProxyUser *string `pulumi:"proxyUser"`
 	// Deprecated. The value of this flag is ignored. Che operator will automatically detect if router certificate is self-signed. If so it will be propagated to Che server and some other components.
 	SelfSignedCert *bool `pulumi:"selfSignedCert"`
+	// Sets the server and workspaces exposure type. Possible values are "multi-host", "single-host", "default-host". Defaults to "multi-host" which creates a separate ingress (or route on OpenShift) for every required endpoint. "single-host" makes Che exposed on a single hostname with workspaces exposed on subpaths. Please read the docs to learn about the limitations of this approach. Also consult the `singleHostExposureType` property to further configure how the operator and Che server make that happen on Kubernetes. "default-host" exposes che server on the host of the cluster. Please read the docs to learn about the limitations of this approach.
+	ServerExposureStrategy *string `pulumi:"serverExposureStrategy"`
 	// Overrides the memory limit used in the Che server deployment. Defaults to 1Gi.
 	ServerMemoryLimit *string `pulumi:"serverMemoryLimit"`
 	// Overrides the memory request used in the Che server deployment. Defaults to 512Mi.
 	ServerMemoryRequest *string `pulumi:"serverMemoryRequest"`
 	// Name of the config-map with public certificates to add to Java trust store of the Che server. This is usually required when adding the OpenShift OAuth provider which has https endpoint signed with self-signed cert. So, Che server must be aware of its CA cert to be able to request it. This is disabled by default.
 	ServerTrustStoreConfigMapName *string `pulumi:"serverTrustStoreConfigMapName"`
+	// The labels that need to be present (and are put) on the configmaps representing the gateway configuration.
+	SingleHostGatewayConfigMapLabels map[string]string `pulumi:"singleHostGatewayConfigMapLabels"`
+	// The image used for the gateway sidecar that provides configuration to the gateway. Omit it or leave it empty to use the defaut container image provided by the operator.
+	SingleHostGatewayConfigSidecarImage *string `pulumi:"singleHostGatewayConfigSidecarImage"`
+	// The image used for the gateway in the single host mode. Omit it or leave it empty to use the defaut container image provided by the operator.
+	SingleHostGatewayImage *string `pulumi:"singleHostGatewayImage"`
 	// Deprecated. Instructs the operator to deploy Che in TLS mode. This is enabled by default. Disabling TLS may cause malfunction of some Che components.
 	TlsSupport *bool `pulumi:"tlsSupport"`
+	// Use internal cluster svc names to communicate between components to speed up the traffic and avoid proxy issues. The default value is `true`.
+	UseInternalClusterSVCNames *bool `pulumi:"useInternalClusterSVCNames"`
 	// Defines Kubernetes default namespace in which user's workspaces are created if user does not override it. It's possible to use <username>, <userid> and <workspaceid> placeholders (e.g.: che-workspace-<username>). In that case, new namespace will be created for each user (or workspace). Is used by OpenShift infra as well to specify Project
 	WorkspaceNamespaceDefault *string `pulumi:"workspaceNamespaceDefault"`
 }
@@ -1510,6 +2302,8 @@ type CheClusterSpecServerArgs struct {
 	AirGapContainerRegistryOrganization pulumi.StringPtrInput `pulumi:"airGapContainerRegistryOrganization"`
 	// Defines if a user is able to specify Kubernetes namespace (or OpenShift project) different from the default. It's NOT RECOMMENDED to configured true without OAuth configured. This property is also used by the OpenShift infra.
 	AllowUserDefinedWorkspaceNamespaces pulumi.BoolPtrInput `pulumi:"allowUserDefinedWorkspaceNamespaces"`
+	// Comma-separated list of ClusterRoles that will be assigned to che ServiceAccount. Be aware that che-operator has to already have all permissions in these ClusterRoles to be able to grant them.
+	CheClusterRoles pulumi.StringPtrInput `pulumi:"cheClusterRoles"`
 	// Enables the debug mode for Che server. Defaults to `false`.
 	CheDebug pulumi.StringPtrInput `pulumi:"cheDebug"`
 	// Flavor of the installation. This is either `che` for upstream Che installations, or `codeready` for CodeReady Workspaces installation. In most cases the default value should not be overridden.
@@ -1526,18 +2320,26 @@ type CheClusterSpecServerArgs struct {
 	CheImageTag pulumi.StringPtrInput `pulumi:"cheImageTag"`
 	// Log level for the Che server: `INFO` or `DEBUG`. Defaults to `INFO`.
 	CheLogLevel pulumi.StringPtrInput `pulumi:"cheLogLevel"`
+	// Che server ingress custom settings
+	CheServerIngress CheClusterSpecServerCheServerIngressPtrInput `pulumi:"cheServerIngress"`
+	// Che server route custom settings
+	CheServerRoute CheClusterSpecServerCheServerRoutePtrInput `pulumi:"cheServerRoute"`
 	// Custom cluster role bound to the user for the Che workspaces. The default roles are used if this is omitted or left blank.
 	CheWorkspaceClusterRole pulumi.StringPtrInput `pulumi:"cheWorkspaceClusterRole"`
 	// Map of additional environment variables that will be applied in the generated `che` config map to be used by the Che server, in addition to the values already generated from other fields of the `CheCluster` custom resource (CR). If `customCheProperties` contains a property that would be normally generated in `che` config map from other CR fields, then the value defined in the `customCheProperties` will be used instead.
 	CustomCheProperties pulumi.StringMapInput `pulumi:"customCheProperties"`
 	// Overrides the container image used in the Devfile registry deployment. This includes the image tag. Omit it or leave it empty to use the defaut container image provided by the operator.
 	DevfileRegistryImage pulumi.StringPtrInput `pulumi:"devfileRegistryImage"`
+	// Devfile registry ingress custom settings
+	DevfileRegistryIngress CheClusterSpecServerDevfileRegistryIngressPtrInput `pulumi:"devfileRegistryIngress"`
 	// Overrides the memory limit used in the Devfile registry deployment. Defaults to 256Mi.
 	DevfileRegistryMemoryLimit pulumi.StringPtrInput `pulumi:"devfileRegistryMemoryLimit"`
 	// Overrides the memory request used in the Devfile registry deployment. Defaults to 16Mi.
 	DevfileRegistryMemoryRequest pulumi.StringPtrInput `pulumi:"devfileRegistryMemoryRequest"`
 	// Overrides the image pull policy used in the Devfile registry deployment. Default value is `Always` for `nightly` or `latest` images, and `IfNotPresent` in other cases.
 	DevfileRegistryPullPolicy pulumi.StringPtrInput `pulumi:"devfileRegistryPullPolicy"`
+	// Devfile registry route custom settings
+	DevfileRegistryRoute CheClusterSpecServerDevfileRegistryRoutePtrInput `pulumi:"devfileRegistryRoute"`
 	// Public URL of the Devfile registry, that serves sample, ready-to-use devfiles. You should set it ONLY if you use an external devfile registry (see the `externalDevfileRegistry` field). By default this will be automatically calculated by the operator.
 	DevfileRegistryUrl pulumi.StringPtrInput `pulumi:"devfileRegistryUrl"`
 	// Instructs the operator on whether or not to deploy a dedicated Devfile registry server. By default a dedicated devfile registry server is started. But if `externalDevfileRegistry` is `true`, then no such dedicated server will be started by the operator and you will have to manually set the `devfileRegistryUrl` field
@@ -1546,16 +2348,20 @@ type CheClusterSpecServerArgs struct {
 	ExternalPluginRegistry pulumi.BoolPtrInput `pulumi:"externalPluginRegistry"`
 	// If enabled, then the certificate from `che-git-self-signed-cert` config map will be propagated to the Che components and provide particular configuration for Git.
 	GitSelfSignedCert pulumi.BoolPtrInput `pulumi:"gitSelfSignedCert"`
-	// List of hosts that should not use the configured proxy. Use ` |`` as delimiter, eg  `localhost|my.host.com|123.42.12.32`Only use when configuring a proxy is required. Operator respects OpenShift cluster wide proxy configuration and no additional configuration is required, but defining`nonProxyHosts`in a custom resource leads to merging non proxy hosts lists from the cluster proxy configuration and ones defined in the custom resources. (see the doc https://docs.openshift.com/container-platform/4.4/networking/enable-cluster-wide-proxy.html) (see also the`proxyURL` fields).
+	// List of hosts that should not use the configured proxy. So specify wild card domain use the following form `.<DOMAIN>` and `|` as delimiter, eg: `localhost|.my.host.com|123.42.12.32` Only use when configuring a proxy is required. Operator respects OpenShift cluster wide proxy configuration and no additional configuration is required, but defining `nonProxyHosts` in a custom resource leads to merging non proxy hosts lists from the cluster proxy configuration and ones defined in the custom resources. (see the doc https://docs.openshift.com/container-platform/4.4/networking/enable-cluster-wide-proxy.html) (see also the `proxyURL` fields).
 	NonProxyHosts pulumi.StringPtrInput `pulumi:"nonProxyHosts"`
-	// Overrides the container image used in the Plugin registry deployment. This includes the image tag. Omit it or leave it empty to use the defaut container image provided by the operator.
+	// Overrides the container image used in the Plugin registry deployment. This includes the image tag. Omit it or leave it empty to use the default container image provided by the operator.
 	PluginRegistryImage pulumi.StringPtrInput `pulumi:"pluginRegistryImage"`
+	// Plugin registry ingress custom settings
+	PluginRegistryIngress CheClusterSpecServerPluginRegistryIngressPtrInput `pulumi:"pluginRegistryIngress"`
 	// Overrides the memory limit used in the Plugin registry deployment. Defaults to 256Mi.
 	PluginRegistryMemoryLimit pulumi.StringPtrInput `pulumi:"pluginRegistryMemoryLimit"`
 	// Overrides the memory request used in the Plugin registry deployment. Defaults to 16Mi.
 	PluginRegistryMemoryRequest pulumi.StringPtrInput `pulumi:"pluginRegistryMemoryRequest"`
 	// Overrides the image pull policy used in the Plugin registry deployment. Default value is `Always` for `nightly` or `latest` images, and `IfNotPresent` in other cases.
 	PluginRegistryPullPolicy pulumi.StringPtrInput `pulumi:"pluginRegistryPullPolicy"`
+	// Plugin registry route custom settings
+	PluginRegistryRoute CheClusterSpecServerPluginRegistryRoutePtrInput `pulumi:"pluginRegistryRoute"`
 	// Public URL of the Plugin registry, that serves sample ready-to-use devfiles. You should set it ONLY if you use an external devfile registry (see the `externalPluginRegistry` field). By default this will be automatically calculated by the operator.
 	PluginRegistryUrl pulumi.StringPtrInput `pulumi:"pluginRegistryUrl"`
 	// Password of the proxy server Only use when proxy configuration is required (see also the `proxyURL`, `proxyUser` and `proxySecret` fields).
@@ -1570,14 +2376,24 @@ type CheClusterSpecServerArgs struct {
 	ProxyUser pulumi.StringPtrInput `pulumi:"proxyUser"`
 	// Deprecated. The value of this flag is ignored. Che operator will automatically detect if router certificate is self-signed. If so it will be propagated to Che server and some other components.
 	SelfSignedCert pulumi.BoolPtrInput `pulumi:"selfSignedCert"`
+	// Sets the server and workspaces exposure type. Possible values are "multi-host", "single-host", "default-host". Defaults to "multi-host" which creates a separate ingress (or route on OpenShift) for every required endpoint. "single-host" makes Che exposed on a single hostname with workspaces exposed on subpaths. Please read the docs to learn about the limitations of this approach. Also consult the `singleHostExposureType` property to further configure how the operator and Che server make that happen on Kubernetes. "default-host" exposes che server on the host of the cluster. Please read the docs to learn about the limitations of this approach.
+	ServerExposureStrategy pulumi.StringPtrInput `pulumi:"serverExposureStrategy"`
 	// Overrides the memory limit used in the Che server deployment. Defaults to 1Gi.
 	ServerMemoryLimit pulumi.StringPtrInput `pulumi:"serverMemoryLimit"`
 	// Overrides the memory request used in the Che server deployment. Defaults to 512Mi.
 	ServerMemoryRequest pulumi.StringPtrInput `pulumi:"serverMemoryRequest"`
 	// Name of the config-map with public certificates to add to Java trust store of the Che server. This is usually required when adding the OpenShift OAuth provider which has https endpoint signed with self-signed cert. So, Che server must be aware of its CA cert to be able to request it. This is disabled by default.
 	ServerTrustStoreConfigMapName pulumi.StringPtrInput `pulumi:"serverTrustStoreConfigMapName"`
+	// The labels that need to be present (and are put) on the configmaps representing the gateway configuration.
+	SingleHostGatewayConfigMapLabels pulumi.StringMapInput `pulumi:"singleHostGatewayConfigMapLabels"`
+	// The image used for the gateway sidecar that provides configuration to the gateway. Omit it or leave it empty to use the defaut container image provided by the operator.
+	SingleHostGatewayConfigSidecarImage pulumi.StringPtrInput `pulumi:"singleHostGatewayConfigSidecarImage"`
+	// The image used for the gateway in the single host mode. Omit it or leave it empty to use the defaut container image provided by the operator.
+	SingleHostGatewayImage pulumi.StringPtrInput `pulumi:"singleHostGatewayImage"`
 	// Deprecated. Instructs the operator to deploy Che in TLS mode. This is enabled by default. Disabling TLS may cause malfunction of some Che components.
 	TlsSupport pulumi.BoolPtrInput `pulumi:"tlsSupport"`
+	// Use internal cluster svc names to communicate between components to speed up the traffic and avoid proxy issues. The default value is `true`.
+	UseInternalClusterSVCNames pulumi.BoolPtrInput `pulumi:"useInternalClusterSVCNames"`
 	// Defines Kubernetes default namespace in which user's workspaces are created if user does not override it. It's possible to use <username>, <userid> and <workspaceid> placeholders (e.g.: che-workspace-<username>). In that case, new namespace will be created for each user (or workspace). Is used by OpenShift infra as well to specify Project
 	WorkspaceNamespaceDefault pulumi.StringPtrInput `pulumi:"workspaceNamespaceDefault"`
 }
@@ -1675,6 +2491,11 @@ func (o CheClusterSpecServerOutput) AllowUserDefinedWorkspaceNamespaces() pulumi
 	return o.ApplyT(func(v CheClusterSpecServer) *bool { return v.AllowUserDefinedWorkspaceNamespaces }).(pulumi.BoolPtrOutput)
 }
 
+// Comma-separated list of ClusterRoles that will be assigned to che ServiceAccount. Be aware that che-operator has to already have all permissions in these ClusterRoles to be able to grant them.
+func (o CheClusterSpecServerOutput) CheClusterRoles() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v CheClusterSpecServer) *string { return v.CheClusterRoles }).(pulumi.StringPtrOutput)
+}
+
 // Enables the debug mode for Che server. Defaults to `false`.
 func (o CheClusterSpecServerOutput) CheDebug() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v CheClusterSpecServer) *string { return v.CheDebug }).(pulumi.StringPtrOutput)
@@ -1715,6 +2536,16 @@ func (o CheClusterSpecServerOutput) CheLogLevel() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v CheClusterSpecServer) *string { return v.CheLogLevel }).(pulumi.StringPtrOutput)
 }
 
+// Che server ingress custom settings
+func (o CheClusterSpecServerOutput) CheServerIngress() CheClusterSpecServerCheServerIngressPtrOutput {
+	return o.ApplyT(func(v CheClusterSpecServer) *CheClusterSpecServerCheServerIngress { return v.CheServerIngress }).(CheClusterSpecServerCheServerIngressPtrOutput)
+}
+
+// Che server route custom settings
+func (o CheClusterSpecServerOutput) CheServerRoute() CheClusterSpecServerCheServerRoutePtrOutput {
+	return o.ApplyT(func(v CheClusterSpecServer) *CheClusterSpecServerCheServerRoute { return v.CheServerRoute }).(CheClusterSpecServerCheServerRoutePtrOutput)
+}
+
 // Custom cluster role bound to the user for the Che workspaces. The default roles are used if this is omitted or left blank.
 func (o CheClusterSpecServerOutput) CheWorkspaceClusterRole() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v CheClusterSpecServer) *string { return v.CheWorkspaceClusterRole }).(pulumi.StringPtrOutput)
@@ -1730,6 +2561,13 @@ func (o CheClusterSpecServerOutput) DevfileRegistryImage() pulumi.StringPtrOutpu
 	return o.ApplyT(func(v CheClusterSpecServer) *string { return v.DevfileRegistryImage }).(pulumi.StringPtrOutput)
 }
 
+// Devfile registry ingress custom settings
+func (o CheClusterSpecServerOutput) DevfileRegistryIngress() CheClusterSpecServerDevfileRegistryIngressPtrOutput {
+	return o.ApplyT(func(v CheClusterSpecServer) *CheClusterSpecServerDevfileRegistryIngress {
+		return v.DevfileRegistryIngress
+	}).(CheClusterSpecServerDevfileRegistryIngressPtrOutput)
+}
+
 // Overrides the memory limit used in the Devfile registry deployment. Defaults to 256Mi.
 func (o CheClusterSpecServerOutput) DevfileRegistryMemoryLimit() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v CheClusterSpecServer) *string { return v.DevfileRegistryMemoryLimit }).(pulumi.StringPtrOutput)
@@ -1743,6 +2581,11 @@ func (o CheClusterSpecServerOutput) DevfileRegistryMemoryRequest() pulumi.String
 // Overrides the image pull policy used in the Devfile registry deployment. Default value is `Always` for `nightly` or `latest` images, and `IfNotPresent` in other cases.
 func (o CheClusterSpecServerOutput) DevfileRegistryPullPolicy() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v CheClusterSpecServer) *string { return v.DevfileRegistryPullPolicy }).(pulumi.StringPtrOutput)
+}
+
+// Devfile registry route custom settings
+func (o CheClusterSpecServerOutput) DevfileRegistryRoute() CheClusterSpecServerDevfileRegistryRoutePtrOutput {
+	return o.ApplyT(func(v CheClusterSpecServer) *CheClusterSpecServerDevfileRegistryRoute { return v.DevfileRegistryRoute }).(CheClusterSpecServerDevfileRegistryRoutePtrOutput)
 }
 
 // Public URL of the Devfile registry, that serves sample, ready-to-use devfiles. You should set it ONLY if you use an external devfile registry (see the `externalDevfileRegistry` field). By default this will be automatically calculated by the operator.
@@ -1765,14 +2608,21 @@ func (o CheClusterSpecServerOutput) GitSelfSignedCert() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v CheClusterSpecServer) *bool { return v.GitSelfSignedCert }).(pulumi.BoolPtrOutput)
 }
 
-// List of hosts that should not use the configured proxy. Use ` |`` as delimiter, eg  `localhost|my.host.com|123.42.12.32`Only use when configuring a proxy is required. Operator respects OpenShift cluster wide proxy configuration and no additional configuration is required, but defining`nonProxyHosts`in a custom resource leads to merging non proxy hosts lists from the cluster proxy configuration and ones defined in the custom resources. (see the doc https://docs.openshift.com/container-platform/4.4/networking/enable-cluster-wide-proxy.html) (see also the`proxyURL` fields).
+// List of hosts that should not use the configured proxy. So specify wild card domain use the following form `.<DOMAIN>` and `|` as delimiter, eg: `localhost|.my.host.com|123.42.12.32` Only use when configuring a proxy is required. Operator respects OpenShift cluster wide proxy configuration and no additional configuration is required, but defining `nonProxyHosts` in a custom resource leads to merging non proxy hosts lists from the cluster proxy configuration and ones defined in the custom resources. (see the doc https://docs.openshift.com/container-platform/4.4/networking/enable-cluster-wide-proxy.html) (see also the `proxyURL` fields).
 func (o CheClusterSpecServerOutput) NonProxyHosts() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v CheClusterSpecServer) *string { return v.NonProxyHosts }).(pulumi.StringPtrOutput)
 }
 
-// Overrides the container image used in the Plugin registry deployment. This includes the image tag. Omit it or leave it empty to use the defaut container image provided by the operator.
+// Overrides the container image used in the Plugin registry deployment. This includes the image tag. Omit it or leave it empty to use the default container image provided by the operator.
 func (o CheClusterSpecServerOutput) PluginRegistryImage() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v CheClusterSpecServer) *string { return v.PluginRegistryImage }).(pulumi.StringPtrOutput)
+}
+
+// Plugin registry ingress custom settings
+func (o CheClusterSpecServerOutput) PluginRegistryIngress() CheClusterSpecServerPluginRegistryIngressPtrOutput {
+	return o.ApplyT(func(v CheClusterSpecServer) *CheClusterSpecServerPluginRegistryIngress {
+		return v.PluginRegistryIngress
+	}).(CheClusterSpecServerPluginRegistryIngressPtrOutput)
 }
 
 // Overrides the memory limit used in the Plugin registry deployment. Defaults to 256Mi.
@@ -1788,6 +2638,11 @@ func (o CheClusterSpecServerOutput) PluginRegistryMemoryRequest() pulumi.StringP
 // Overrides the image pull policy used in the Plugin registry deployment. Default value is `Always` for `nightly` or `latest` images, and `IfNotPresent` in other cases.
 func (o CheClusterSpecServerOutput) PluginRegistryPullPolicy() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v CheClusterSpecServer) *string { return v.PluginRegistryPullPolicy }).(pulumi.StringPtrOutput)
+}
+
+// Plugin registry route custom settings
+func (o CheClusterSpecServerOutput) PluginRegistryRoute() CheClusterSpecServerPluginRegistryRoutePtrOutput {
+	return o.ApplyT(func(v CheClusterSpecServer) *CheClusterSpecServerPluginRegistryRoute { return v.PluginRegistryRoute }).(CheClusterSpecServerPluginRegistryRoutePtrOutput)
 }
 
 // Public URL of the Plugin registry, that serves sample ready-to-use devfiles. You should set it ONLY if you use an external devfile registry (see the `externalPluginRegistry` field). By default this will be automatically calculated by the operator.
@@ -1825,6 +2680,11 @@ func (o CheClusterSpecServerOutput) SelfSignedCert() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v CheClusterSpecServer) *bool { return v.SelfSignedCert }).(pulumi.BoolPtrOutput)
 }
 
+// Sets the server and workspaces exposure type. Possible values are "multi-host", "single-host", "default-host". Defaults to "multi-host" which creates a separate ingress (or route on OpenShift) for every required endpoint. "single-host" makes Che exposed on a single hostname with workspaces exposed on subpaths. Please read the docs to learn about the limitations of this approach. Also consult the `singleHostExposureType` property to further configure how the operator and Che server make that happen on Kubernetes. "default-host" exposes che server on the host of the cluster. Please read the docs to learn about the limitations of this approach.
+func (o CheClusterSpecServerOutput) ServerExposureStrategy() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v CheClusterSpecServer) *string { return v.ServerExposureStrategy }).(pulumi.StringPtrOutput)
+}
+
 // Overrides the memory limit used in the Che server deployment. Defaults to 1Gi.
 func (o CheClusterSpecServerOutput) ServerMemoryLimit() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v CheClusterSpecServer) *string { return v.ServerMemoryLimit }).(pulumi.StringPtrOutput)
@@ -1840,9 +2700,29 @@ func (o CheClusterSpecServerOutput) ServerTrustStoreConfigMapName() pulumi.Strin
 	return o.ApplyT(func(v CheClusterSpecServer) *string { return v.ServerTrustStoreConfigMapName }).(pulumi.StringPtrOutput)
 }
 
+// The labels that need to be present (and are put) on the configmaps representing the gateway configuration.
+func (o CheClusterSpecServerOutput) SingleHostGatewayConfigMapLabels() pulumi.StringMapOutput {
+	return o.ApplyT(func(v CheClusterSpecServer) map[string]string { return v.SingleHostGatewayConfigMapLabels }).(pulumi.StringMapOutput)
+}
+
+// The image used for the gateway sidecar that provides configuration to the gateway. Omit it or leave it empty to use the defaut container image provided by the operator.
+func (o CheClusterSpecServerOutput) SingleHostGatewayConfigSidecarImage() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v CheClusterSpecServer) *string { return v.SingleHostGatewayConfigSidecarImage }).(pulumi.StringPtrOutput)
+}
+
+// The image used for the gateway in the single host mode. Omit it or leave it empty to use the defaut container image provided by the operator.
+func (o CheClusterSpecServerOutput) SingleHostGatewayImage() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v CheClusterSpecServer) *string { return v.SingleHostGatewayImage }).(pulumi.StringPtrOutput)
+}
+
 // Deprecated. Instructs the operator to deploy Che in TLS mode. This is enabled by default. Disabling TLS may cause malfunction of some Che components.
 func (o CheClusterSpecServerOutput) TlsSupport() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v CheClusterSpecServer) *bool { return v.TlsSupport }).(pulumi.BoolPtrOutput)
+}
+
+// Use internal cluster svc names to communicate between components to speed up the traffic and avoid proxy issues. The default value is `true`.
+func (o CheClusterSpecServerOutput) UseInternalClusterSVCNames() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v CheClusterSpecServer) *bool { return v.UseInternalClusterSVCNames }).(pulumi.BoolPtrOutput)
 }
 
 // Defines Kubernetes default namespace in which user's workspaces are created if user does not override it. It's possible to use <username>, <userid> and <workspaceid> placeholders (e.g.: che-workspace-<username>). In that case, new namespace will be created for each user (or workspace). Is used by OpenShift infra as well to specify Project
@@ -1896,6 +2776,16 @@ func (o CheClusterSpecServerPtrOutput) AllowUserDefinedWorkspaceNamespaces() pul
 		}
 		return v.AllowUserDefinedWorkspaceNamespaces
 	}).(pulumi.BoolPtrOutput)
+}
+
+// Comma-separated list of ClusterRoles that will be assigned to che ServiceAccount. Be aware that che-operator has to already have all permissions in these ClusterRoles to be able to grant them.
+func (o CheClusterSpecServerPtrOutput) CheClusterRoles() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *CheClusterSpecServer) *string {
+		if v == nil {
+			return nil
+		}
+		return v.CheClusterRoles
+	}).(pulumi.StringPtrOutput)
 }
 
 // Enables the debug mode for Che server. Defaults to `false`.
@@ -1978,6 +2868,26 @@ func (o CheClusterSpecServerPtrOutput) CheLogLevel() pulumi.StringPtrOutput {
 	}).(pulumi.StringPtrOutput)
 }
 
+// Che server ingress custom settings
+func (o CheClusterSpecServerPtrOutput) CheServerIngress() CheClusterSpecServerCheServerIngressPtrOutput {
+	return o.ApplyT(func(v *CheClusterSpecServer) *CheClusterSpecServerCheServerIngress {
+		if v == nil {
+			return nil
+		}
+		return v.CheServerIngress
+	}).(CheClusterSpecServerCheServerIngressPtrOutput)
+}
+
+// Che server route custom settings
+func (o CheClusterSpecServerPtrOutput) CheServerRoute() CheClusterSpecServerCheServerRoutePtrOutput {
+	return o.ApplyT(func(v *CheClusterSpecServer) *CheClusterSpecServerCheServerRoute {
+		if v == nil {
+			return nil
+		}
+		return v.CheServerRoute
+	}).(CheClusterSpecServerCheServerRoutePtrOutput)
+}
+
 // Custom cluster role bound to the user for the Che workspaces. The default roles are used if this is omitted or left blank.
 func (o CheClusterSpecServerPtrOutput) CheWorkspaceClusterRole() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *CheClusterSpecServer) *string {
@@ -2008,6 +2918,16 @@ func (o CheClusterSpecServerPtrOutput) DevfileRegistryImage() pulumi.StringPtrOu
 	}).(pulumi.StringPtrOutput)
 }
 
+// Devfile registry ingress custom settings
+func (o CheClusterSpecServerPtrOutput) DevfileRegistryIngress() CheClusterSpecServerDevfileRegistryIngressPtrOutput {
+	return o.ApplyT(func(v *CheClusterSpecServer) *CheClusterSpecServerDevfileRegistryIngress {
+		if v == nil {
+			return nil
+		}
+		return v.DevfileRegistryIngress
+	}).(CheClusterSpecServerDevfileRegistryIngressPtrOutput)
+}
+
 // Overrides the memory limit used in the Devfile registry deployment. Defaults to 256Mi.
 func (o CheClusterSpecServerPtrOutput) DevfileRegistryMemoryLimit() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *CheClusterSpecServer) *string {
@@ -2036,6 +2956,16 @@ func (o CheClusterSpecServerPtrOutput) DevfileRegistryPullPolicy() pulumi.String
 		}
 		return v.DevfileRegistryPullPolicy
 	}).(pulumi.StringPtrOutput)
+}
+
+// Devfile registry route custom settings
+func (o CheClusterSpecServerPtrOutput) DevfileRegistryRoute() CheClusterSpecServerDevfileRegistryRoutePtrOutput {
+	return o.ApplyT(func(v *CheClusterSpecServer) *CheClusterSpecServerDevfileRegistryRoute {
+		if v == nil {
+			return nil
+		}
+		return v.DevfileRegistryRoute
+	}).(CheClusterSpecServerDevfileRegistryRoutePtrOutput)
 }
 
 // Public URL of the Devfile registry, that serves sample, ready-to-use devfiles. You should set it ONLY if you use an external devfile registry (see the `externalDevfileRegistry` field). By default this will be automatically calculated by the operator.
@@ -2078,7 +3008,7 @@ func (o CheClusterSpecServerPtrOutput) GitSelfSignedCert() pulumi.BoolPtrOutput 
 	}).(pulumi.BoolPtrOutput)
 }
 
-// List of hosts that should not use the configured proxy. Use ` |`` as delimiter, eg  `localhost|my.host.com|123.42.12.32`Only use when configuring a proxy is required. Operator respects OpenShift cluster wide proxy configuration and no additional configuration is required, but defining`nonProxyHosts`in a custom resource leads to merging non proxy hosts lists from the cluster proxy configuration and ones defined in the custom resources. (see the doc https://docs.openshift.com/container-platform/4.4/networking/enable-cluster-wide-proxy.html) (see also the`proxyURL` fields).
+// List of hosts that should not use the configured proxy. So specify wild card domain use the following form `.<DOMAIN>` and `|` as delimiter, eg: `localhost|.my.host.com|123.42.12.32` Only use when configuring a proxy is required. Operator respects OpenShift cluster wide proxy configuration and no additional configuration is required, but defining `nonProxyHosts` in a custom resource leads to merging non proxy hosts lists from the cluster proxy configuration and ones defined in the custom resources. (see the doc https://docs.openshift.com/container-platform/4.4/networking/enable-cluster-wide-proxy.html) (see also the `proxyURL` fields).
 func (o CheClusterSpecServerPtrOutput) NonProxyHosts() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *CheClusterSpecServer) *string {
 		if v == nil {
@@ -2088,7 +3018,7 @@ func (o CheClusterSpecServerPtrOutput) NonProxyHosts() pulumi.StringPtrOutput {
 	}).(pulumi.StringPtrOutput)
 }
 
-// Overrides the container image used in the Plugin registry deployment. This includes the image tag. Omit it or leave it empty to use the defaut container image provided by the operator.
+// Overrides the container image used in the Plugin registry deployment. This includes the image tag. Omit it or leave it empty to use the default container image provided by the operator.
 func (o CheClusterSpecServerPtrOutput) PluginRegistryImage() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *CheClusterSpecServer) *string {
 		if v == nil {
@@ -2096,6 +3026,16 @@ func (o CheClusterSpecServerPtrOutput) PluginRegistryImage() pulumi.StringPtrOut
 		}
 		return v.PluginRegistryImage
 	}).(pulumi.StringPtrOutput)
+}
+
+// Plugin registry ingress custom settings
+func (o CheClusterSpecServerPtrOutput) PluginRegistryIngress() CheClusterSpecServerPluginRegistryIngressPtrOutput {
+	return o.ApplyT(func(v *CheClusterSpecServer) *CheClusterSpecServerPluginRegistryIngress {
+		if v == nil {
+			return nil
+		}
+		return v.PluginRegistryIngress
+	}).(CheClusterSpecServerPluginRegistryIngressPtrOutput)
 }
 
 // Overrides the memory limit used in the Plugin registry deployment. Defaults to 256Mi.
@@ -2126,6 +3066,16 @@ func (o CheClusterSpecServerPtrOutput) PluginRegistryPullPolicy() pulumi.StringP
 		}
 		return v.PluginRegistryPullPolicy
 	}).(pulumi.StringPtrOutput)
+}
+
+// Plugin registry route custom settings
+func (o CheClusterSpecServerPtrOutput) PluginRegistryRoute() CheClusterSpecServerPluginRegistryRoutePtrOutput {
+	return o.ApplyT(func(v *CheClusterSpecServer) *CheClusterSpecServerPluginRegistryRoute {
+		if v == nil {
+			return nil
+		}
+		return v.PluginRegistryRoute
+	}).(CheClusterSpecServerPluginRegistryRoutePtrOutput)
 }
 
 // Public URL of the Plugin registry, that serves sample ready-to-use devfiles. You should set it ONLY if you use an external devfile registry (see the `externalPluginRegistry` field). By default this will be automatically calculated by the operator.
@@ -2198,6 +3148,16 @@ func (o CheClusterSpecServerPtrOutput) SelfSignedCert() pulumi.BoolPtrOutput {
 	}).(pulumi.BoolPtrOutput)
 }
 
+// Sets the server and workspaces exposure type. Possible values are "multi-host", "single-host", "default-host". Defaults to "multi-host" which creates a separate ingress (or route on OpenShift) for every required endpoint. "single-host" makes Che exposed on a single hostname with workspaces exposed on subpaths. Please read the docs to learn about the limitations of this approach. Also consult the `singleHostExposureType` property to further configure how the operator and Che server make that happen on Kubernetes. "default-host" exposes che server on the host of the cluster. Please read the docs to learn about the limitations of this approach.
+func (o CheClusterSpecServerPtrOutput) ServerExposureStrategy() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *CheClusterSpecServer) *string {
+		if v == nil {
+			return nil
+		}
+		return v.ServerExposureStrategy
+	}).(pulumi.StringPtrOutput)
+}
+
 // Overrides the memory limit used in the Che server deployment. Defaults to 1Gi.
 func (o CheClusterSpecServerPtrOutput) ServerMemoryLimit() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *CheClusterSpecServer) *string {
@@ -2228,6 +3188,36 @@ func (o CheClusterSpecServerPtrOutput) ServerTrustStoreConfigMapName() pulumi.St
 	}).(pulumi.StringPtrOutput)
 }
 
+// The labels that need to be present (and are put) on the configmaps representing the gateway configuration.
+func (o CheClusterSpecServerPtrOutput) SingleHostGatewayConfigMapLabels() pulumi.StringMapOutput {
+	return o.ApplyT(func(v *CheClusterSpecServer) map[string]string {
+		if v == nil {
+			return nil
+		}
+		return v.SingleHostGatewayConfigMapLabels
+	}).(pulumi.StringMapOutput)
+}
+
+// The image used for the gateway sidecar that provides configuration to the gateway. Omit it or leave it empty to use the defaut container image provided by the operator.
+func (o CheClusterSpecServerPtrOutput) SingleHostGatewayConfigSidecarImage() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *CheClusterSpecServer) *string {
+		if v == nil {
+			return nil
+		}
+		return v.SingleHostGatewayConfigSidecarImage
+	}).(pulumi.StringPtrOutput)
+}
+
+// The image used for the gateway in the single host mode. Omit it or leave it empty to use the defaut container image provided by the operator.
+func (o CheClusterSpecServerPtrOutput) SingleHostGatewayImage() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *CheClusterSpecServer) *string {
+		if v == nil {
+			return nil
+		}
+		return v.SingleHostGatewayImage
+	}).(pulumi.StringPtrOutput)
+}
+
 // Deprecated. Instructs the operator to deploy Che in TLS mode. This is enabled by default. Disabling TLS may cause malfunction of some Che components.
 func (o CheClusterSpecServerPtrOutput) TlsSupport() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v *CheClusterSpecServer) *bool {
@@ -2238,6 +3228,16 @@ func (o CheClusterSpecServerPtrOutput) TlsSupport() pulumi.BoolPtrOutput {
 	}).(pulumi.BoolPtrOutput)
 }
 
+// Use internal cluster svc names to communicate between components to speed up the traffic and avoid proxy issues. The default value is `true`.
+func (o CheClusterSpecServerPtrOutput) UseInternalClusterSVCNames() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *CheClusterSpecServer) *bool {
+		if v == nil {
+			return nil
+		}
+		return v.UseInternalClusterSVCNames
+	}).(pulumi.BoolPtrOutput)
+}
+
 // Defines Kubernetes default namespace in which user's workspaces are created if user does not override it. It's possible to use <username>, <userid> and <workspaceid> placeholders (e.g.: che-workspace-<username>). In that case, new namespace will be created for each user (or workspace). Is used by OpenShift infra as well to specify Project
 func (o CheClusterSpecServerPtrOutput) WorkspaceNamespaceDefault() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *CheClusterSpecServer) *string {
@@ -2245,6 +3245,274 @@ func (o CheClusterSpecServerPtrOutput) WorkspaceNamespaceDefault() pulumi.String
 			return nil
 		}
 		return v.WorkspaceNamespaceDefault
+	}).(pulumi.StringPtrOutput)
+}
+
+// Che server ingress custom settings
+type CheClusterSpecServerCheServerIngress struct {
+	// Comma separated list of labels that can be used to organize and categorize (scope and select) objects.
+	Labels *string `pulumi:"labels"`
+}
+
+// CheClusterSpecServerCheServerIngressInput is an input type that accepts CheClusterSpecServerCheServerIngressArgs and CheClusterSpecServerCheServerIngressOutput values.
+// You can construct a concrete instance of `CheClusterSpecServerCheServerIngressInput` via:
+//
+//          CheClusterSpecServerCheServerIngressArgs{...}
+type CheClusterSpecServerCheServerIngressInput interface {
+	pulumi.Input
+
+	ToCheClusterSpecServerCheServerIngressOutput() CheClusterSpecServerCheServerIngressOutput
+	ToCheClusterSpecServerCheServerIngressOutputWithContext(context.Context) CheClusterSpecServerCheServerIngressOutput
+}
+
+// Che server ingress custom settings
+type CheClusterSpecServerCheServerIngressArgs struct {
+	// Comma separated list of labels that can be used to organize and categorize (scope and select) objects.
+	Labels pulumi.StringPtrInput `pulumi:"labels"`
+}
+
+func (CheClusterSpecServerCheServerIngressArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*CheClusterSpecServerCheServerIngress)(nil)).Elem()
+}
+
+func (i CheClusterSpecServerCheServerIngressArgs) ToCheClusterSpecServerCheServerIngressOutput() CheClusterSpecServerCheServerIngressOutput {
+	return i.ToCheClusterSpecServerCheServerIngressOutputWithContext(context.Background())
+}
+
+func (i CheClusterSpecServerCheServerIngressArgs) ToCheClusterSpecServerCheServerIngressOutputWithContext(ctx context.Context) CheClusterSpecServerCheServerIngressOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(CheClusterSpecServerCheServerIngressOutput)
+}
+
+func (i CheClusterSpecServerCheServerIngressArgs) ToCheClusterSpecServerCheServerIngressPtrOutput() CheClusterSpecServerCheServerIngressPtrOutput {
+	return i.ToCheClusterSpecServerCheServerIngressPtrOutputWithContext(context.Background())
+}
+
+func (i CheClusterSpecServerCheServerIngressArgs) ToCheClusterSpecServerCheServerIngressPtrOutputWithContext(ctx context.Context) CheClusterSpecServerCheServerIngressPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(CheClusterSpecServerCheServerIngressOutput).ToCheClusterSpecServerCheServerIngressPtrOutputWithContext(ctx)
+}
+
+// CheClusterSpecServerCheServerIngressPtrInput is an input type that accepts CheClusterSpecServerCheServerIngressArgs, CheClusterSpecServerCheServerIngressPtr and CheClusterSpecServerCheServerIngressPtrOutput values.
+// You can construct a concrete instance of `CheClusterSpecServerCheServerIngressPtrInput` via:
+//
+//          CheClusterSpecServerCheServerIngressArgs{...}
+//
+//  or:
+//
+//          nil
+type CheClusterSpecServerCheServerIngressPtrInput interface {
+	pulumi.Input
+
+	ToCheClusterSpecServerCheServerIngressPtrOutput() CheClusterSpecServerCheServerIngressPtrOutput
+	ToCheClusterSpecServerCheServerIngressPtrOutputWithContext(context.Context) CheClusterSpecServerCheServerIngressPtrOutput
+}
+
+type cheClusterSpecServerCheServerIngressPtrType CheClusterSpecServerCheServerIngressArgs
+
+func CheClusterSpecServerCheServerIngressPtr(v *CheClusterSpecServerCheServerIngressArgs) CheClusterSpecServerCheServerIngressPtrInput {
+	return (*cheClusterSpecServerCheServerIngressPtrType)(v)
+}
+
+func (*cheClusterSpecServerCheServerIngressPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**CheClusterSpecServerCheServerIngress)(nil)).Elem()
+}
+
+func (i *cheClusterSpecServerCheServerIngressPtrType) ToCheClusterSpecServerCheServerIngressPtrOutput() CheClusterSpecServerCheServerIngressPtrOutput {
+	return i.ToCheClusterSpecServerCheServerIngressPtrOutputWithContext(context.Background())
+}
+
+func (i *cheClusterSpecServerCheServerIngressPtrType) ToCheClusterSpecServerCheServerIngressPtrOutputWithContext(ctx context.Context) CheClusterSpecServerCheServerIngressPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(CheClusterSpecServerCheServerIngressPtrOutput)
+}
+
+// Che server ingress custom settings
+type CheClusterSpecServerCheServerIngressOutput struct{ *pulumi.OutputState }
+
+func (CheClusterSpecServerCheServerIngressOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*CheClusterSpecServerCheServerIngress)(nil)).Elem()
+}
+
+func (o CheClusterSpecServerCheServerIngressOutput) ToCheClusterSpecServerCheServerIngressOutput() CheClusterSpecServerCheServerIngressOutput {
+	return o
+}
+
+func (o CheClusterSpecServerCheServerIngressOutput) ToCheClusterSpecServerCheServerIngressOutputWithContext(ctx context.Context) CheClusterSpecServerCheServerIngressOutput {
+	return o
+}
+
+func (o CheClusterSpecServerCheServerIngressOutput) ToCheClusterSpecServerCheServerIngressPtrOutput() CheClusterSpecServerCheServerIngressPtrOutput {
+	return o.ToCheClusterSpecServerCheServerIngressPtrOutputWithContext(context.Background())
+}
+
+func (o CheClusterSpecServerCheServerIngressOutput) ToCheClusterSpecServerCheServerIngressPtrOutputWithContext(ctx context.Context) CheClusterSpecServerCheServerIngressPtrOutput {
+	return o.ApplyT(func(v CheClusterSpecServerCheServerIngress) *CheClusterSpecServerCheServerIngress {
+		return &v
+	}).(CheClusterSpecServerCheServerIngressPtrOutput)
+}
+
+// Comma separated list of labels that can be used to organize and categorize (scope and select) objects.
+func (o CheClusterSpecServerCheServerIngressOutput) Labels() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v CheClusterSpecServerCheServerIngress) *string { return v.Labels }).(pulumi.StringPtrOutput)
+}
+
+type CheClusterSpecServerCheServerIngressPtrOutput struct{ *pulumi.OutputState }
+
+func (CheClusterSpecServerCheServerIngressPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**CheClusterSpecServerCheServerIngress)(nil)).Elem()
+}
+
+func (o CheClusterSpecServerCheServerIngressPtrOutput) ToCheClusterSpecServerCheServerIngressPtrOutput() CheClusterSpecServerCheServerIngressPtrOutput {
+	return o
+}
+
+func (o CheClusterSpecServerCheServerIngressPtrOutput) ToCheClusterSpecServerCheServerIngressPtrOutputWithContext(ctx context.Context) CheClusterSpecServerCheServerIngressPtrOutput {
+	return o
+}
+
+func (o CheClusterSpecServerCheServerIngressPtrOutput) Elem() CheClusterSpecServerCheServerIngressOutput {
+	return o.ApplyT(func(v *CheClusterSpecServerCheServerIngress) CheClusterSpecServerCheServerIngress { return *v }).(CheClusterSpecServerCheServerIngressOutput)
+}
+
+// Comma separated list of labels that can be used to organize and categorize (scope and select) objects.
+func (o CheClusterSpecServerCheServerIngressPtrOutput) Labels() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *CheClusterSpecServerCheServerIngress) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Labels
+	}).(pulumi.StringPtrOutput)
+}
+
+// Che server route custom settings
+type CheClusterSpecServerCheServerRoute struct {
+	// Comma separated list of labels that can be used to organize and categorize (scope and select) objects.
+	Labels *string `pulumi:"labels"`
+}
+
+// CheClusterSpecServerCheServerRouteInput is an input type that accepts CheClusterSpecServerCheServerRouteArgs and CheClusterSpecServerCheServerRouteOutput values.
+// You can construct a concrete instance of `CheClusterSpecServerCheServerRouteInput` via:
+//
+//          CheClusterSpecServerCheServerRouteArgs{...}
+type CheClusterSpecServerCheServerRouteInput interface {
+	pulumi.Input
+
+	ToCheClusterSpecServerCheServerRouteOutput() CheClusterSpecServerCheServerRouteOutput
+	ToCheClusterSpecServerCheServerRouteOutputWithContext(context.Context) CheClusterSpecServerCheServerRouteOutput
+}
+
+// Che server route custom settings
+type CheClusterSpecServerCheServerRouteArgs struct {
+	// Comma separated list of labels that can be used to organize and categorize (scope and select) objects.
+	Labels pulumi.StringPtrInput `pulumi:"labels"`
+}
+
+func (CheClusterSpecServerCheServerRouteArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*CheClusterSpecServerCheServerRoute)(nil)).Elem()
+}
+
+func (i CheClusterSpecServerCheServerRouteArgs) ToCheClusterSpecServerCheServerRouteOutput() CheClusterSpecServerCheServerRouteOutput {
+	return i.ToCheClusterSpecServerCheServerRouteOutputWithContext(context.Background())
+}
+
+func (i CheClusterSpecServerCheServerRouteArgs) ToCheClusterSpecServerCheServerRouteOutputWithContext(ctx context.Context) CheClusterSpecServerCheServerRouteOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(CheClusterSpecServerCheServerRouteOutput)
+}
+
+func (i CheClusterSpecServerCheServerRouteArgs) ToCheClusterSpecServerCheServerRoutePtrOutput() CheClusterSpecServerCheServerRoutePtrOutput {
+	return i.ToCheClusterSpecServerCheServerRoutePtrOutputWithContext(context.Background())
+}
+
+func (i CheClusterSpecServerCheServerRouteArgs) ToCheClusterSpecServerCheServerRoutePtrOutputWithContext(ctx context.Context) CheClusterSpecServerCheServerRoutePtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(CheClusterSpecServerCheServerRouteOutput).ToCheClusterSpecServerCheServerRoutePtrOutputWithContext(ctx)
+}
+
+// CheClusterSpecServerCheServerRoutePtrInput is an input type that accepts CheClusterSpecServerCheServerRouteArgs, CheClusterSpecServerCheServerRoutePtr and CheClusterSpecServerCheServerRoutePtrOutput values.
+// You can construct a concrete instance of `CheClusterSpecServerCheServerRoutePtrInput` via:
+//
+//          CheClusterSpecServerCheServerRouteArgs{...}
+//
+//  or:
+//
+//          nil
+type CheClusterSpecServerCheServerRoutePtrInput interface {
+	pulumi.Input
+
+	ToCheClusterSpecServerCheServerRoutePtrOutput() CheClusterSpecServerCheServerRoutePtrOutput
+	ToCheClusterSpecServerCheServerRoutePtrOutputWithContext(context.Context) CheClusterSpecServerCheServerRoutePtrOutput
+}
+
+type cheClusterSpecServerCheServerRoutePtrType CheClusterSpecServerCheServerRouteArgs
+
+func CheClusterSpecServerCheServerRoutePtr(v *CheClusterSpecServerCheServerRouteArgs) CheClusterSpecServerCheServerRoutePtrInput {
+	return (*cheClusterSpecServerCheServerRoutePtrType)(v)
+}
+
+func (*cheClusterSpecServerCheServerRoutePtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**CheClusterSpecServerCheServerRoute)(nil)).Elem()
+}
+
+func (i *cheClusterSpecServerCheServerRoutePtrType) ToCheClusterSpecServerCheServerRoutePtrOutput() CheClusterSpecServerCheServerRoutePtrOutput {
+	return i.ToCheClusterSpecServerCheServerRoutePtrOutputWithContext(context.Background())
+}
+
+func (i *cheClusterSpecServerCheServerRoutePtrType) ToCheClusterSpecServerCheServerRoutePtrOutputWithContext(ctx context.Context) CheClusterSpecServerCheServerRoutePtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(CheClusterSpecServerCheServerRoutePtrOutput)
+}
+
+// Che server route custom settings
+type CheClusterSpecServerCheServerRouteOutput struct{ *pulumi.OutputState }
+
+func (CheClusterSpecServerCheServerRouteOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*CheClusterSpecServerCheServerRoute)(nil)).Elem()
+}
+
+func (o CheClusterSpecServerCheServerRouteOutput) ToCheClusterSpecServerCheServerRouteOutput() CheClusterSpecServerCheServerRouteOutput {
+	return o
+}
+
+func (o CheClusterSpecServerCheServerRouteOutput) ToCheClusterSpecServerCheServerRouteOutputWithContext(ctx context.Context) CheClusterSpecServerCheServerRouteOutput {
+	return o
+}
+
+func (o CheClusterSpecServerCheServerRouteOutput) ToCheClusterSpecServerCheServerRoutePtrOutput() CheClusterSpecServerCheServerRoutePtrOutput {
+	return o.ToCheClusterSpecServerCheServerRoutePtrOutputWithContext(context.Background())
+}
+
+func (o CheClusterSpecServerCheServerRouteOutput) ToCheClusterSpecServerCheServerRoutePtrOutputWithContext(ctx context.Context) CheClusterSpecServerCheServerRoutePtrOutput {
+	return o.ApplyT(func(v CheClusterSpecServerCheServerRoute) *CheClusterSpecServerCheServerRoute {
+		return &v
+	}).(CheClusterSpecServerCheServerRoutePtrOutput)
+}
+
+// Comma separated list of labels that can be used to organize and categorize (scope and select) objects.
+func (o CheClusterSpecServerCheServerRouteOutput) Labels() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v CheClusterSpecServerCheServerRoute) *string { return v.Labels }).(pulumi.StringPtrOutput)
+}
+
+type CheClusterSpecServerCheServerRoutePtrOutput struct{ *pulumi.OutputState }
+
+func (CheClusterSpecServerCheServerRoutePtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**CheClusterSpecServerCheServerRoute)(nil)).Elem()
+}
+
+func (o CheClusterSpecServerCheServerRoutePtrOutput) ToCheClusterSpecServerCheServerRoutePtrOutput() CheClusterSpecServerCheServerRoutePtrOutput {
+	return o
+}
+
+func (o CheClusterSpecServerCheServerRoutePtrOutput) ToCheClusterSpecServerCheServerRoutePtrOutputWithContext(ctx context.Context) CheClusterSpecServerCheServerRoutePtrOutput {
+	return o
+}
+
+func (o CheClusterSpecServerCheServerRoutePtrOutput) Elem() CheClusterSpecServerCheServerRouteOutput {
+	return o.ApplyT(func(v *CheClusterSpecServerCheServerRoute) CheClusterSpecServerCheServerRoute { return *v }).(CheClusterSpecServerCheServerRouteOutput)
+}
+
+// Comma separated list of labels that can be used to organize and categorize (scope and select) objects.
+func (o CheClusterSpecServerCheServerRoutePtrOutput) Labels() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *CheClusterSpecServerCheServerRoute) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Labels
 	}).(pulumi.StringPtrOutput)
 }
 
@@ -2291,6 +3559,592 @@ func (o CheClusterSpecServerCustomChePropertiesOutput) ToCheClusterSpecServerCus
 }
 
 func (o CheClusterSpecServerCustomChePropertiesOutput) ToCheClusterSpecServerCustomChePropertiesOutputWithContext(ctx context.Context) CheClusterSpecServerCustomChePropertiesOutput {
+	return o
+}
+
+// Devfile registry ingress custom settings
+type CheClusterSpecServerDevfileRegistryIngress struct {
+	// Comma separated list of labels that can be used to organize and categorize (scope and select) objects.
+	Labels *string `pulumi:"labels"`
+}
+
+// CheClusterSpecServerDevfileRegistryIngressInput is an input type that accepts CheClusterSpecServerDevfileRegistryIngressArgs and CheClusterSpecServerDevfileRegistryIngressOutput values.
+// You can construct a concrete instance of `CheClusterSpecServerDevfileRegistryIngressInput` via:
+//
+//          CheClusterSpecServerDevfileRegistryIngressArgs{...}
+type CheClusterSpecServerDevfileRegistryIngressInput interface {
+	pulumi.Input
+
+	ToCheClusterSpecServerDevfileRegistryIngressOutput() CheClusterSpecServerDevfileRegistryIngressOutput
+	ToCheClusterSpecServerDevfileRegistryIngressOutputWithContext(context.Context) CheClusterSpecServerDevfileRegistryIngressOutput
+}
+
+// Devfile registry ingress custom settings
+type CheClusterSpecServerDevfileRegistryIngressArgs struct {
+	// Comma separated list of labels that can be used to organize and categorize (scope and select) objects.
+	Labels pulumi.StringPtrInput `pulumi:"labels"`
+}
+
+func (CheClusterSpecServerDevfileRegistryIngressArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*CheClusterSpecServerDevfileRegistryIngress)(nil)).Elem()
+}
+
+func (i CheClusterSpecServerDevfileRegistryIngressArgs) ToCheClusterSpecServerDevfileRegistryIngressOutput() CheClusterSpecServerDevfileRegistryIngressOutput {
+	return i.ToCheClusterSpecServerDevfileRegistryIngressOutputWithContext(context.Background())
+}
+
+func (i CheClusterSpecServerDevfileRegistryIngressArgs) ToCheClusterSpecServerDevfileRegistryIngressOutputWithContext(ctx context.Context) CheClusterSpecServerDevfileRegistryIngressOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(CheClusterSpecServerDevfileRegistryIngressOutput)
+}
+
+func (i CheClusterSpecServerDevfileRegistryIngressArgs) ToCheClusterSpecServerDevfileRegistryIngressPtrOutput() CheClusterSpecServerDevfileRegistryIngressPtrOutput {
+	return i.ToCheClusterSpecServerDevfileRegistryIngressPtrOutputWithContext(context.Background())
+}
+
+func (i CheClusterSpecServerDevfileRegistryIngressArgs) ToCheClusterSpecServerDevfileRegistryIngressPtrOutputWithContext(ctx context.Context) CheClusterSpecServerDevfileRegistryIngressPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(CheClusterSpecServerDevfileRegistryIngressOutput).ToCheClusterSpecServerDevfileRegistryIngressPtrOutputWithContext(ctx)
+}
+
+// CheClusterSpecServerDevfileRegistryIngressPtrInput is an input type that accepts CheClusterSpecServerDevfileRegistryIngressArgs, CheClusterSpecServerDevfileRegistryIngressPtr and CheClusterSpecServerDevfileRegistryIngressPtrOutput values.
+// You can construct a concrete instance of `CheClusterSpecServerDevfileRegistryIngressPtrInput` via:
+//
+//          CheClusterSpecServerDevfileRegistryIngressArgs{...}
+//
+//  or:
+//
+//          nil
+type CheClusterSpecServerDevfileRegistryIngressPtrInput interface {
+	pulumi.Input
+
+	ToCheClusterSpecServerDevfileRegistryIngressPtrOutput() CheClusterSpecServerDevfileRegistryIngressPtrOutput
+	ToCheClusterSpecServerDevfileRegistryIngressPtrOutputWithContext(context.Context) CheClusterSpecServerDevfileRegistryIngressPtrOutput
+}
+
+type cheClusterSpecServerDevfileRegistryIngressPtrType CheClusterSpecServerDevfileRegistryIngressArgs
+
+func CheClusterSpecServerDevfileRegistryIngressPtr(v *CheClusterSpecServerDevfileRegistryIngressArgs) CheClusterSpecServerDevfileRegistryIngressPtrInput {
+	return (*cheClusterSpecServerDevfileRegistryIngressPtrType)(v)
+}
+
+func (*cheClusterSpecServerDevfileRegistryIngressPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**CheClusterSpecServerDevfileRegistryIngress)(nil)).Elem()
+}
+
+func (i *cheClusterSpecServerDevfileRegistryIngressPtrType) ToCheClusterSpecServerDevfileRegistryIngressPtrOutput() CheClusterSpecServerDevfileRegistryIngressPtrOutput {
+	return i.ToCheClusterSpecServerDevfileRegistryIngressPtrOutputWithContext(context.Background())
+}
+
+func (i *cheClusterSpecServerDevfileRegistryIngressPtrType) ToCheClusterSpecServerDevfileRegistryIngressPtrOutputWithContext(ctx context.Context) CheClusterSpecServerDevfileRegistryIngressPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(CheClusterSpecServerDevfileRegistryIngressPtrOutput)
+}
+
+// Devfile registry ingress custom settings
+type CheClusterSpecServerDevfileRegistryIngressOutput struct{ *pulumi.OutputState }
+
+func (CheClusterSpecServerDevfileRegistryIngressOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*CheClusterSpecServerDevfileRegistryIngress)(nil)).Elem()
+}
+
+func (o CheClusterSpecServerDevfileRegistryIngressOutput) ToCheClusterSpecServerDevfileRegistryIngressOutput() CheClusterSpecServerDevfileRegistryIngressOutput {
+	return o
+}
+
+func (o CheClusterSpecServerDevfileRegistryIngressOutput) ToCheClusterSpecServerDevfileRegistryIngressOutputWithContext(ctx context.Context) CheClusterSpecServerDevfileRegistryIngressOutput {
+	return o
+}
+
+func (o CheClusterSpecServerDevfileRegistryIngressOutput) ToCheClusterSpecServerDevfileRegistryIngressPtrOutput() CheClusterSpecServerDevfileRegistryIngressPtrOutput {
+	return o.ToCheClusterSpecServerDevfileRegistryIngressPtrOutputWithContext(context.Background())
+}
+
+func (o CheClusterSpecServerDevfileRegistryIngressOutput) ToCheClusterSpecServerDevfileRegistryIngressPtrOutputWithContext(ctx context.Context) CheClusterSpecServerDevfileRegistryIngressPtrOutput {
+	return o.ApplyT(func(v CheClusterSpecServerDevfileRegistryIngress) *CheClusterSpecServerDevfileRegistryIngress {
+		return &v
+	}).(CheClusterSpecServerDevfileRegistryIngressPtrOutput)
+}
+
+// Comma separated list of labels that can be used to organize and categorize (scope and select) objects.
+func (o CheClusterSpecServerDevfileRegistryIngressOutput) Labels() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v CheClusterSpecServerDevfileRegistryIngress) *string { return v.Labels }).(pulumi.StringPtrOutput)
+}
+
+type CheClusterSpecServerDevfileRegistryIngressPtrOutput struct{ *pulumi.OutputState }
+
+func (CheClusterSpecServerDevfileRegistryIngressPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**CheClusterSpecServerDevfileRegistryIngress)(nil)).Elem()
+}
+
+func (o CheClusterSpecServerDevfileRegistryIngressPtrOutput) ToCheClusterSpecServerDevfileRegistryIngressPtrOutput() CheClusterSpecServerDevfileRegistryIngressPtrOutput {
+	return o
+}
+
+func (o CheClusterSpecServerDevfileRegistryIngressPtrOutput) ToCheClusterSpecServerDevfileRegistryIngressPtrOutputWithContext(ctx context.Context) CheClusterSpecServerDevfileRegistryIngressPtrOutput {
+	return o
+}
+
+func (o CheClusterSpecServerDevfileRegistryIngressPtrOutput) Elem() CheClusterSpecServerDevfileRegistryIngressOutput {
+	return o.ApplyT(func(v *CheClusterSpecServerDevfileRegistryIngress) CheClusterSpecServerDevfileRegistryIngress {
+		return *v
+	}).(CheClusterSpecServerDevfileRegistryIngressOutput)
+}
+
+// Comma separated list of labels that can be used to organize and categorize (scope and select) objects.
+func (o CheClusterSpecServerDevfileRegistryIngressPtrOutput) Labels() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *CheClusterSpecServerDevfileRegistryIngress) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Labels
+	}).(pulumi.StringPtrOutput)
+}
+
+// Devfile registry route custom settings
+type CheClusterSpecServerDevfileRegistryRoute struct {
+	// Comma separated list of labels that can be used to organize and categorize (scope and select) objects.
+	Labels *string `pulumi:"labels"`
+}
+
+// CheClusterSpecServerDevfileRegistryRouteInput is an input type that accepts CheClusterSpecServerDevfileRegistryRouteArgs and CheClusterSpecServerDevfileRegistryRouteOutput values.
+// You can construct a concrete instance of `CheClusterSpecServerDevfileRegistryRouteInput` via:
+//
+//          CheClusterSpecServerDevfileRegistryRouteArgs{...}
+type CheClusterSpecServerDevfileRegistryRouteInput interface {
+	pulumi.Input
+
+	ToCheClusterSpecServerDevfileRegistryRouteOutput() CheClusterSpecServerDevfileRegistryRouteOutput
+	ToCheClusterSpecServerDevfileRegistryRouteOutputWithContext(context.Context) CheClusterSpecServerDevfileRegistryRouteOutput
+}
+
+// Devfile registry route custom settings
+type CheClusterSpecServerDevfileRegistryRouteArgs struct {
+	// Comma separated list of labels that can be used to organize and categorize (scope and select) objects.
+	Labels pulumi.StringPtrInput `pulumi:"labels"`
+}
+
+func (CheClusterSpecServerDevfileRegistryRouteArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*CheClusterSpecServerDevfileRegistryRoute)(nil)).Elem()
+}
+
+func (i CheClusterSpecServerDevfileRegistryRouteArgs) ToCheClusterSpecServerDevfileRegistryRouteOutput() CheClusterSpecServerDevfileRegistryRouteOutput {
+	return i.ToCheClusterSpecServerDevfileRegistryRouteOutputWithContext(context.Background())
+}
+
+func (i CheClusterSpecServerDevfileRegistryRouteArgs) ToCheClusterSpecServerDevfileRegistryRouteOutputWithContext(ctx context.Context) CheClusterSpecServerDevfileRegistryRouteOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(CheClusterSpecServerDevfileRegistryRouteOutput)
+}
+
+func (i CheClusterSpecServerDevfileRegistryRouteArgs) ToCheClusterSpecServerDevfileRegistryRoutePtrOutput() CheClusterSpecServerDevfileRegistryRoutePtrOutput {
+	return i.ToCheClusterSpecServerDevfileRegistryRoutePtrOutputWithContext(context.Background())
+}
+
+func (i CheClusterSpecServerDevfileRegistryRouteArgs) ToCheClusterSpecServerDevfileRegistryRoutePtrOutputWithContext(ctx context.Context) CheClusterSpecServerDevfileRegistryRoutePtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(CheClusterSpecServerDevfileRegistryRouteOutput).ToCheClusterSpecServerDevfileRegistryRoutePtrOutputWithContext(ctx)
+}
+
+// CheClusterSpecServerDevfileRegistryRoutePtrInput is an input type that accepts CheClusterSpecServerDevfileRegistryRouteArgs, CheClusterSpecServerDevfileRegistryRoutePtr and CheClusterSpecServerDevfileRegistryRoutePtrOutput values.
+// You can construct a concrete instance of `CheClusterSpecServerDevfileRegistryRoutePtrInput` via:
+//
+//          CheClusterSpecServerDevfileRegistryRouteArgs{...}
+//
+//  or:
+//
+//          nil
+type CheClusterSpecServerDevfileRegistryRoutePtrInput interface {
+	pulumi.Input
+
+	ToCheClusterSpecServerDevfileRegistryRoutePtrOutput() CheClusterSpecServerDevfileRegistryRoutePtrOutput
+	ToCheClusterSpecServerDevfileRegistryRoutePtrOutputWithContext(context.Context) CheClusterSpecServerDevfileRegistryRoutePtrOutput
+}
+
+type cheClusterSpecServerDevfileRegistryRoutePtrType CheClusterSpecServerDevfileRegistryRouteArgs
+
+func CheClusterSpecServerDevfileRegistryRoutePtr(v *CheClusterSpecServerDevfileRegistryRouteArgs) CheClusterSpecServerDevfileRegistryRoutePtrInput {
+	return (*cheClusterSpecServerDevfileRegistryRoutePtrType)(v)
+}
+
+func (*cheClusterSpecServerDevfileRegistryRoutePtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**CheClusterSpecServerDevfileRegistryRoute)(nil)).Elem()
+}
+
+func (i *cheClusterSpecServerDevfileRegistryRoutePtrType) ToCheClusterSpecServerDevfileRegistryRoutePtrOutput() CheClusterSpecServerDevfileRegistryRoutePtrOutput {
+	return i.ToCheClusterSpecServerDevfileRegistryRoutePtrOutputWithContext(context.Background())
+}
+
+func (i *cheClusterSpecServerDevfileRegistryRoutePtrType) ToCheClusterSpecServerDevfileRegistryRoutePtrOutputWithContext(ctx context.Context) CheClusterSpecServerDevfileRegistryRoutePtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(CheClusterSpecServerDevfileRegistryRoutePtrOutput)
+}
+
+// Devfile registry route custom settings
+type CheClusterSpecServerDevfileRegistryRouteOutput struct{ *pulumi.OutputState }
+
+func (CheClusterSpecServerDevfileRegistryRouteOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*CheClusterSpecServerDevfileRegistryRoute)(nil)).Elem()
+}
+
+func (o CheClusterSpecServerDevfileRegistryRouteOutput) ToCheClusterSpecServerDevfileRegistryRouteOutput() CheClusterSpecServerDevfileRegistryRouteOutput {
+	return o
+}
+
+func (o CheClusterSpecServerDevfileRegistryRouteOutput) ToCheClusterSpecServerDevfileRegistryRouteOutputWithContext(ctx context.Context) CheClusterSpecServerDevfileRegistryRouteOutput {
+	return o
+}
+
+func (o CheClusterSpecServerDevfileRegistryRouteOutput) ToCheClusterSpecServerDevfileRegistryRoutePtrOutput() CheClusterSpecServerDevfileRegistryRoutePtrOutput {
+	return o.ToCheClusterSpecServerDevfileRegistryRoutePtrOutputWithContext(context.Background())
+}
+
+func (o CheClusterSpecServerDevfileRegistryRouteOutput) ToCheClusterSpecServerDevfileRegistryRoutePtrOutputWithContext(ctx context.Context) CheClusterSpecServerDevfileRegistryRoutePtrOutput {
+	return o.ApplyT(func(v CheClusterSpecServerDevfileRegistryRoute) *CheClusterSpecServerDevfileRegistryRoute {
+		return &v
+	}).(CheClusterSpecServerDevfileRegistryRoutePtrOutput)
+}
+
+// Comma separated list of labels that can be used to organize and categorize (scope and select) objects.
+func (o CheClusterSpecServerDevfileRegistryRouteOutput) Labels() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v CheClusterSpecServerDevfileRegistryRoute) *string { return v.Labels }).(pulumi.StringPtrOutput)
+}
+
+type CheClusterSpecServerDevfileRegistryRoutePtrOutput struct{ *pulumi.OutputState }
+
+func (CheClusterSpecServerDevfileRegistryRoutePtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**CheClusterSpecServerDevfileRegistryRoute)(nil)).Elem()
+}
+
+func (o CheClusterSpecServerDevfileRegistryRoutePtrOutput) ToCheClusterSpecServerDevfileRegistryRoutePtrOutput() CheClusterSpecServerDevfileRegistryRoutePtrOutput {
+	return o
+}
+
+func (o CheClusterSpecServerDevfileRegistryRoutePtrOutput) ToCheClusterSpecServerDevfileRegistryRoutePtrOutputWithContext(ctx context.Context) CheClusterSpecServerDevfileRegistryRoutePtrOutput {
+	return o
+}
+
+func (o CheClusterSpecServerDevfileRegistryRoutePtrOutput) Elem() CheClusterSpecServerDevfileRegistryRouteOutput {
+	return o.ApplyT(func(v *CheClusterSpecServerDevfileRegistryRoute) CheClusterSpecServerDevfileRegistryRoute { return *v }).(CheClusterSpecServerDevfileRegistryRouteOutput)
+}
+
+// Comma separated list of labels that can be used to organize and categorize (scope and select) objects.
+func (o CheClusterSpecServerDevfileRegistryRoutePtrOutput) Labels() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *CheClusterSpecServerDevfileRegistryRoute) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Labels
+	}).(pulumi.StringPtrOutput)
+}
+
+// Plugin registry ingress custom settings
+type CheClusterSpecServerPluginRegistryIngress struct {
+	// Comma separated list of labels that can be used to organize and categorize (scope and select) objects.
+	Labels *string `pulumi:"labels"`
+}
+
+// CheClusterSpecServerPluginRegistryIngressInput is an input type that accepts CheClusterSpecServerPluginRegistryIngressArgs and CheClusterSpecServerPluginRegistryIngressOutput values.
+// You can construct a concrete instance of `CheClusterSpecServerPluginRegistryIngressInput` via:
+//
+//          CheClusterSpecServerPluginRegistryIngressArgs{...}
+type CheClusterSpecServerPluginRegistryIngressInput interface {
+	pulumi.Input
+
+	ToCheClusterSpecServerPluginRegistryIngressOutput() CheClusterSpecServerPluginRegistryIngressOutput
+	ToCheClusterSpecServerPluginRegistryIngressOutputWithContext(context.Context) CheClusterSpecServerPluginRegistryIngressOutput
+}
+
+// Plugin registry ingress custom settings
+type CheClusterSpecServerPluginRegistryIngressArgs struct {
+	// Comma separated list of labels that can be used to organize and categorize (scope and select) objects.
+	Labels pulumi.StringPtrInput `pulumi:"labels"`
+}
+
+func (CheClusterSpecServerPluginRegistryIngressArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*CheClusterSpecServerPluginRegistryIngress)(nil)).Elem()
+}
+
+func (i CheClusterSpecServerPluginRegistryIngressArgs) ToCheClusterSpecServerPluginRegistryIngressOutput() CheClusterSpecServerPluginRegistryIngressOutput {
+	return i.ToCheClusterSpecServerPluginRegistryIngressOutputWithContext(context.Background())
+}
+
+func (i CheClusterSpecServerPluginRegistryIngressArgs) ToCheClusterSpecServerPluginRegistryIngressOutputWithContext(ctx context.Context) CheClusterSpecServerPluginRegistryIngressOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(CheClusterSpecServerPluginRegistryIngressOutput)
+}
+
+func (i CheClusterSpecServerPluginRegistryIngressArgs) ToCheClusterSpecServerPluginRegistryIngressPtrOutput() CheClusterSpecServerPluginRegistryIngressPtrOutput {
+	return i.ToCheClusterSpecServerPluginRegistryIngressPtrOutputWithContext(context.Background())
+}
+
+func (i CheClusterSpecServerPluginRegistryIngressArgs) ToCheClusterSpecServerPluginRegistryIngressPtrOutputWithContext(ctx context.Context) CheClusterSpecServerPluginRegistryIngressPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(CheClusterSpecServerPluginRegistryIngressOutput).ToCheClusterSpecServerPluginRegistryIngressPtrOutputWithContext(ctx)
+}
+
+// CheClusterSpecServerPluginRegistryIngressPtrInput is an input type that accepts CheClusterSpecServerPluginRegistryIngressArgs, CheClusterSpecServerPluginRegistryIngressPtr and CheClusterSpecServerPluginRegistryIngressPtrOutput values.
+// You can construct a concrete instance of `CheClusterSpecServerPluginRegistryIngressPtrInput` via:
+//
+//          CheClusterSpecServerPluginRegistryIngressArgs{...}
+//
+//  or:
+//
+//          nil
+type CheClusterSpecServerPluginRegistryIngressPtrInput interface {
+	pulumi.Input
+
+	ToCheClusterSpecServerPluginRegistryIngressPtrOutput() CheClusterSpecServerPluginRegistryIngressPtrOutput
+	ToCheClusterSpecServerPluginRegistryIngressPtrOutputWithContext(context.Context) CheClusterSpecServerPluginRegistryIngressPtrOutput
+}
+
+type cheClusterSpecServerPluginRegistryIngressPtrType CheClusterSpecServerPluginRegistryIngressArgs
+
+func CheClusterSpecServerPluginRegistryIngressPtr(v *CheClusterSpecServerPluginRegistryIngressArgs) CheClusterSpecServerPluginRegistryIngressPtrInput {
+	return (*cheClusterSpecServerPluginRegistryIngressPtrType)(v)
+}
+
+func (*cheClusterSpecServerPluginRegistryIngressPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**CheClusterSpecServerPluginRegistryIngress)(nil)).Elem()
+}
+
+func (i *cheClusterSpecServerPluginRegistryIngressPtrType) ToCheClusterSpecServerPluginRegistryIngressPtrOutput() CheClusterSpecServerPluginRegistryIngressPtrOutput {
+	return i.ToCheClusterSpecServerPluginRegistryIngressPtrOutputWithContext(context.Background())
+}
+
+func (i *cheClusterSpecServerPluginRegistryIngressPtrType) ToCheClusterSpecServerPluginRegistryIngressPtrOutputWithContext(ctx context.Context) CheClusterSpecServerPluginRegistryIngressPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(CheClusterSpecServerPluginRegistryIngressPtrOutput)
+}
+
+// Plugin registry ingress custom settings
+type CheClusterSpecServerPluginRegistryIngressOutput struct{ *pulumi.OutputState }
+
+func (CheClusterSpecServerPluginRegistryIngressOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*CheClusterSpecServerPluginRegistryIngress)(nil)).Elem()
+}
+
+func (o CheClusterSpecServerPluginRegistryIngressOutput) ToCheClusterSpecServerPluginRegistryIngressOutput() CheClusterSpecServerPluginRegistryIngressOutput {
+	return o
+}
+
+func (o CheClusterSpecServerPluginRegistryIngressOutput) ToCheClusterSpecServerPluginRegistryIngressOutputWithContext(ctx context.Context) CheClusterSpecServerPluginRegistryIngressOutput {
+	return o
+}
+
+func (o CheClusterSpecServerPluginRegistryIngressOutput) ToCheClusterSpecServerPluginRegistryIngressPtrOutput() CheClusterSpecServerPluginRegistryIngressPtrOutput {
+	return o.ToCheClusterSpecServerPluginRegistryIngressPtrOutputWithContext(context.Background())
+}
+
+func (o CheClusterSpecServerPluginRegistryIngressOutput) ToCheClusterSpecServerPluginRegistryIngressPtrOutputWithContext(ctx context.Context) CheClusterSpecServerPluginRegistryIngressPtrOutput {
+	return o.ApplyT(func(v CheClusterSpecServerPluginRegistryIngress) *CheClusterSpecServerPluginRegistryIngress {
+		return &v
+	}).(CheClusterSpecServerPluginRegistryIngressPtrOutput)
+}
+
+// Comma separated list of labels that can be used to organize and categorize (scope and select) objects.
+func (o CheClusterSpecServerPluginRegistryIngressOutput) Labels() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v CheClusterSpecServerPluginRegistryIngress) *string { return v.Labels }).(pulumi.StringPtrOutput)
+}
+
+type CheClusterSpecServerPluginRegistryIngressPtrOutput struct{ *pulumi.OutputState }
+
+func (CheClusterSpecServerPluginRegistryIngressPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**CheClusterSpecServerPluginRegistryIngress)(nil)).Elem()
+}
+
+func (o CheClusterSpecServerPluginRegistryIngressPtrOutput) ToCheClusterSpecServerPluginRegistryIngressPtrOutput() CheClusterSpecServerPluginRegistryIngressPtrOutput {
+	return o
+}
+
+func (o CheClusterSpecServerPluginRegistryIngressPtrOutput) ToCheClusterSpecServerPluginRegistryIngressPtrOutputWithContext(ctx context.Context) CheClusterSpecServerPluginRegistryIngressPtrOutput {
+	return o
+}
+
+func (o CheClusterSpecServerPluginRegistryIngressPtrOutput) Elem() CheClusterSpecServerPluginRegistryIngressOutput {
+	return o.ApplyT(func(v *CheClusterSpecServerPluginRegistryIngress) CheClusterSpecServerPluginRegistryIngress {
+		return *v
+	}).(CheClusterSpecServerPluginRegistryIngressOutput)
+}
+
+// Comma separated list of labels that can be used to organize and categorize (scope and select) objects.
+func (o CheClusterSpecServerPluginRegistryIngressPtrOutput) Labels() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *CheClusterSpecServerPluginRegistryIngress) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Labels
+	}).(pulumi.StringPtrOutput)
+}
+
+// Plugin registry route custom settings
+type CheClusterSpecServerPluginRegistryRoute struct {
+	// Comma separated list of labels that can be used to organize and categorize (scope and select) objects.
+	Labels *string `pulumi:"labels"`
+}
+
+// CheClusterSpecServerPluginRegistryRouteInput is an input type that accepts CheClusterSpecServerPluginRegistryRouteArgs and CheClusterSpecServerPluginRegistryRouteOutput values.
+// You can construct a concrete instance of `CheClusterSpecServerPluginRegistryRouteInput` via:
+//
+//          CheClusterSpecServerPluginRegistryRouteArgs{...}
+type CheClusterSpecServerPluginRegistryRouteInput interface {
+	pulumi.Input
+
+	ToCheClusterSpecServerPluginRegistryRouteOutput() CheClusterSpecServerPluginRegistryRouteOutput
+	ToCheClusterSpecServerPluginRegistryRouteOutputWithContext(context.Context) CheClusterSpecServerPluginRegistryRouteOutput
+}
+
+// Plugin registry route custom settings
+type CheClusterSpecServerPluginRegistryRouteArgs struct {
+	// Comma separated list of labels that can be used to organize and categorize (scope and select) objects.
+	Labels pulumi.StringPtrInput `pulumi:"labels"`
+}
+
+func (CheClusterSpecServerPluginRegistryRouteArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*CheClusterSpecServerPluginRegistryRoute)(nil)).Elem()
+}
+
+func (i CheClusterSpecServerPluginRegistryRouteArgs) ToCheClusterSpecServerPluginRegistryRouteOutput() CheClusterSpecServerPluginRegistryRouteOutput {
+	return i.ToCheClusterSpecServerPluginRegistryRouteOutputWithContext(context.Background())
+}
+
+func (i CheClusterSpecServerPluginRegistryRouteArgs) ToCheClusterSpecServerPluginRegistryRouteOutputWithContext(ctx context.Context) CheClusterSpecServerPluginRegistryRouteOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(CheClusterSpecServerPluginRegistryRouteOutput)
+}
+
+func (i CheClusterSpecServerPluginRegistryRouteArgs) ToCheClusterSpecServerPluginRegistryRoutePtrOutput() CheClusterSpecServerPluginRegistryRoutePtrOutput {
+	return i.ToCheClusterSpecServerPluginRegistryRoutePtrOutputWithContext(context.Background())
+}
+
+func (i CheClusterSpecServerPluginRegistryRouteArgs) ToCheClusterSpecServerPluginRegistryRoutePtrOutputWithContext(ctx context.Context) CheClusterSpecServerPluginRegistryRoutePtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(CheClusterSpecServerPluginRegistryRouteOutput).ToCheClusterSpecServerPluginRegistryRoutePtrOutputWithContext(ctx)
+}
+
+// CheClusterSpecServerPluginRegistryRoutePtrInput is an input type that accepts CheClusterSpecServerPluginRegistryRouteArgs, CheClusterSpecServerPluginRegistryRoutePtr and CheClusterSpecServerPluginRegistryRoutePtrOutput values.
+// You can construct a concrete instance of `CheClusterSpecServerPluginRegistryRoutePtrInput` via:
+//
+//          CheClusterSpecServerPluginRegistryRouteArgs{...}
+//
+//  or:
+//
+//          nil
+type CheClusterSpecServerPluginRegistryRoutePtrInput interface {
+	pulumi.Input
+
+	ToCheClusterSpecServerPluginRegistryRoutePtrOutput() CheClusterSpecServerPluginRegistryRoutePtrOutput
+	ToCheClusterSpecServerPluginRegistryRoutePtrOutputWithContext(context.Context) CheClusterSpecServerPluginRegistryRoutePtrOutput
+}
+
+type cheClusterSpecServerPluginRegistryRoutePtrType CheClusterSpecServerPluginRegistryRouteArgs
+
+func CheClusterSpecServerPluginRegistryRoutePtr(v *CheClusterSpecServerPluginRegistryRouteArgs) CheClusterSpecServerPluginRegistryRoutePtrInput {
+	return (*cheClusterSpecServerPluginRegistryRoutePtrType)(v)
+}
+
+func (*cheClusterSpecServerPluginRegistryRoutePtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**CheClusterSpecServerPluginRegistryRoute)(nil)).Elem()
+}
+
+func (i *cheClusterSpecServerPluginRegistryRoutePtrType) ToCheClusterSpecServerPluginRegistryRoutePtrOutput() CheClusterSpecServerPluginRegistryRoutePtrOutput {
+	return i.ToCheClusterSpecServerPluginRegistryRoutePtrOutputWithContext(context.Background())
+}
+
+func (i *cheClusterSpecServerPluginRegistryRoutePtrType) ToCheClusterSpecServerPluginRegistryRoutePtrOutputWithContext(ctx context.Context) CheClusterSpecServerPluginRegistryRoutePtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(CheClusterSpecServerPluginRegistryRoutePtrOutput)
+}
+
+// Plugin registry route custom settings
+type CheClusterSpecServerPluginRegistryRouteOutput struct{ *pulumi.OutputState }
+
+func (CheClusterSpecServerPluginRegistryRouteOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*CheClusterSpecServerPluginRegistryRoute)(nil)).Elem()
+}
+
+func (o CheClusterSpecServerPluginRegistryRouteOutput) ToCheClusterSpecServerPluginRegistryRouteOutput() CheClusterSpecServerPluginRegistryRouteOutput {
+	return o
+}
+
+func (o CheClusterSpecServerPluginRegistryRouteOutput) ToCheClusterSpecServerPluginRegistryRouteOutputWithContext(ctx context.Context) CheClusterSpecServerPluginRegistryRouteOutput {
+	return o
+}
+
+func (o CheClusterSpecServerPluginRegistryRouteOutput) ToCheClusterSpecServerPluginRegistryRoutePtrOutput() CheClusterSpecServerPluginRegistryRoutePtrOutput {
+	return o.ToCheClusterSpecServerPluginRegistryRoutePtrOutputWithContext(context.Background())
+}
+
+func (o CheClusterSpecServerPluginRegistryRouteOutput) ToCheClusterSpecServerPluginRegistryRoutePtrOutputWithContext(ctx context.Context) CheClusterSpecServerPluginRegistryRoutePtrOutput {
+	return o.ApplyT(func(v CheClusterSpecServerPluginRegistryRoute) *CheClusterSpecServerPluginRegistryRoute {
+		return &v
+	}).(CheClusterSpecServerPluginRegistryRoutePtrOutput)
+}
+
+// Comma separated list of labels that can be used to organize and categorize (scope and select) objects.
+func (o CheClusterSpecServerPluginRegistryRouteOutput) Labels() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v CheClusterSpecServerPluginRegistryRoute) *string { return v.Labels }).(pulumi.StringPtrOutput)
+}
+
+type CheClusterSpecServerPluginRegistryRoutePtrOutput struct{ *pulumi.OutputState }
+
+func (CheClusterSpecServerPluginRegistryRoutePtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**CheClusterSpecServerPluginRegistryRoute)(nil)).Elem()
+}
+
+func (o CheClusterSpecServerPluginRegistryRoutePtrOutput) ToCheClusterSpecServerPluginRegistryRoutePtrOutput() CheClusterSpecServerPluginRegistryRoutePtrOutput {
+	return o
+}
+
+func (o CheClusterSpecServerPluginRegistryRoutePtrOutput) ToCheClusterSpecServerPluginRegistryRoutePtrOutputWithContext(ctx context.Context) CheClusterSpecServerPluginRegistryRoutePtrOutput {
+	return o
+}
+
+func (o CheClusterSpecServerPluginRegistryRoutePtrOutput) Elem() CheClusterSpecServerPluginRegistryRouteOutput {
+	return o.ApplyT(func(v *CheClusterSpecServerPluginRegistryRoute) CheClusterSpecServerPluginRegistryRoute { return *v }).(CheClusterSpecServerPluginRegistryRouteOutput)
+}
+
+// Comma separated list of labels that can be used to organize and categorize (scope and select) objects.
+func (o CheClusterSpecServerPluginRegistryRoutePtrOutput) Labels() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *CheClusterSpecServerPluginRegistryRoute) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Labels
+	}).(pulumi.StringPtrOutput)
+}
+
+// The labels that need to be present (and are put) on the configmaps representing the gateway configuration.
+type CheClusterSpecServerSingleHostGatewayConfigMapLabels struct {
+}
+
+// CheClusterSpecServerSingleHostGatewayConfigMapLabelsInput is an input type that accepts CheClusterSpecServerSingleHostGatewayConfigMapLabelsArgs and CheClusterSpecServerSingleHostGatewayConfigMapLabelsOutput values.
+// You can construct a concrete instance of `CheClusterSpecServerSingleHostGatewayConfigMapLabelsInput` via:
+//
+//          CheClusterSpecServerSingleHostGatewayConfigMapLabelsArgs{...}
+type CheClusterSpecServerSingleHostGatewayConfigMapLabelsInput interface {
+	pulumi.Input
+
+	ToCheClusterSpecServerSingleHostGatewayConfigMapLabelsOutput() CheClusterSpecServerSingleHostGatewayConfigMapLabelsOutput
+	ToCheClusterSpecServerSingleHostGatewayConfigMapLabelsOutputWithContext(context.Context) CheClusterSpecServerSingleHostGatewayConfigMapLabelsOutput
+}
+
+// The labels that need to be present (and are put) on the configmaps representing the gateway configuration.
+type CheClusterSpecServerSingleHostGatewayConfigMapLabelsArgs struct {
+}
+
+func (CheClusterSpecServerSingleHostGatewayConfigMapLabelsArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*CheClusterSpecServerSingleHostGatewayConfigMapLabels)(nil)).Elem()
+}
+
+func (i CheClusterSpecServerSingleHostGatewayConfigMapLabelsArgs) ToCheClusterSpecServerSingleHostGatewayConfigMapLabelsOutput() CheClusterSpecServerSingleHostGatewayConfigMapLabelsOutput {
+	return i.ToCheClusterSpecServerSingleHostGatewayConfigMapLabelsOutputWithContext(context.Background())
+}
+
+func (i CheClusterSpecServerSingleHostGatewayConfigMapLabelsArgs) ToCheClusterSpecServerSingleHostGatewayConfigMapLabelsOutputWithContext(ctx context.Context) CheClusterSpecServerSingleHostGatewayConfigMapLabelsOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(CheClusterSpecServerSingleHostGatewayConfigMapLabelsOutput)
+}
+
+// The labels that need to be present (and are put) on the configmaps representing the gateway configuration.
+type CheClusterSpecServerSingleHostGatewayConfigMapLabelsOutput struct{ *pulumi.OutputState }
+
+func (CheClusterSpecServerSingleHostGatewayConfigMapLabelsOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*CheClusterSpecServerSingleHostGatewayConfigMapLabels)(nil)).Elem()
+}
+
+func (o CheClusterSpecServerSingleHostGatewayConfigMapLabelsOutput) ToCheClusterSpecServerSingleHostGatewayConfigMapLabelsOutput() CheClusterSpecServerSingleHostGatewayConfigMapLabelsOutput {
+	return o
+}
+
+func (o CheClusterSpecServerSingleHostGatewayConfigMapLabelsOutput) ToCheClusterSpecServerSingleHostGatewayConfigMapLabelsOutputWithContext(ctx context.Context) CheClusterSpecServerSingleHostGatewayConfigMapLabelsOutput {
 	return o
 }
 
@@ -2873,15 +4727,36 @@ func init() {
 	pulumi.RegisterOutputType(CheClusterSpecPtrOutput{})
 	pulumi.RegisterOutputType(CheClusterSpecAuthOutput{})
 	pulumi.RegisterOutputType(CheClusterSpecAuthPtrOutput{})
+	pulumi.RegisterOutputType(CheClusterSpecAuthIdentityProviderIngressOutput{})
+	pulumi.RegisterOutputType(CheClusterSpecAuthIdentityProviderIngressPtrOutput{})
+	pulumi.RegisterOutputType(CheClusterSpecAuthIdentityProviderRouteOutput{})
+	pulumi.RegisterOutputType(CheClusterSpecAuthIdentityProviderRoutePtrOutput{})
 	pulumi.RegisterOutputType(CheClusterSpecDatabaseOutput{})
 	pulumi.RegisterOutputType(CheClusterSpecDatabasePtrOutput{})
+	pulumi.RegisterOutputType(CheClusterSpecImagePullerOutput{})
+	pulumi.RegisterOutputType(CheClusterSpecImagePullerPtrOutput{})
+	pulumi.RegisterOutputType(CheClusterSpecImagePullerSpecOutput{})
+	pulumi.RegisterOutputType(CheClusterSpecImagePullerSpecPtrOutput{})
 	pulumi.RegisterOutputType(CheClusterSpecK8sOutput{})
 	pulumi.RegisterOutputType(CheClusterSpecK8sPtrOutput{})
 	pulumi.RegisterOutputType(CheClusterSpecMetricsOutput{})
 	pulumi.RegisterOutputType(CheClusterSpecMetricsPtrOutput{})
 	pulumi.RegisterOutputType(CheClusterSpecServerOutput{})
 	pulumi.RegisterOutputType(CheClusterSpecServerPtrOutput{})
+	pulumi.RegisterOutputType(CheClusterSpecServerCheServerIngressOutput{})
+	pulumi.RegisterOutputType(CheClusterSpecServerCheServerIngressPtrOutput{})
+	pulumi.RegisterOutputType(CheClusterSpecServerCheServerRouteOutput{})
+	pulumi.RegisterOutputType(CheClusterSpecServerCheServerRoutePtrOutput{})
 	pulumi.RegisterOutputType(CheClusterSpecServerCustomChePropertiesOutput{})
+	pulumi.RegisterOutputType(CheClusterSpecServerDevfileRegistryIngressOutput{})
+	pulumi.RegisterOutputType(CheClusterSpecServerDevfileRegistryIngressPtrOutput{})
+	pulumi.RegisterOutputType(CheClusterSpecServerDevfileRegistryRouteOutput{})
+	pulumi.RegisterOutputType(CheClusterSpecServerDevfileRegistryRoutePtrOutput{})
+	pulumi.RegisterOutputType(CheClusterSpecServerPluginRegistryIngressOutput{})
+	pulumi.RegisterOutputType(CheClusterSpecServerPluginRegistryIngressPtrOutput{})
+	pulumi.RegisterOutputType(CheClusterSpecServerPluginRegistryRouteOutput{})
+	pulumi.RegisterOutputType(CheClusterSpecServerPluginRegistryRoutePtrOutput{})
+	pulumi.RegisterOutputType(CheClusterSpecServerSingleHostGatewayConfigMapLabelsOutput{})
 	pulumi.RegisterOutputType(CheClusterSpecStorageOutput{})
 	pulumi.RegisterOutputType(CheClusterSpecStoragePtrOutput{})
 	pulumi.RegisterOutputType(CheClusterStatusOutput{})

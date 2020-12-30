@@ -21,6 +21,18 @@ namespace Pulumi.Kubernetes.Types.Inputs.Kafka.V1Beta1
         [Input("affinity")]
         public Input<Pulumi.Kubernetes.Types.Inputs.Kafka.V1Beta1.KafkaConnectS2ISpecTemplatePodAffinityArgs>? Affinity { get; set; }
 
+        [Input("hostAliases")]
+        private InputList<Pulumi.Kubernetes.Types.Inputs.Kafka.V1Beta1.KafkaConnectS2ISpecTemplatePodHostAliasesArgs>? _hostAliases;
+
+        /// <summary>
+        /// The pod's HostAliases. HostAliases is an optional list of hosts and IPs that will be injected into the pod's hosts file if specified.
+        /// </summary>
+        public InputList<Pulumi.Kubernetes.Types.Inputs.Kafka.V1Beta1.KafkaConnectS2ISpecTemplatePodHostAliasesArgs> HostAliases
+        {
+            get => _hostAliases ?? (_hostAliases = new InputList<Pulumi.Kubernetes.Types.Inputs.Kafka.V1Beta1.KafkaConnectS2ISpecTemplatePodHostAliasesArgs>());
+            set => _hostAliases = value;
+        }
+
         [Input("imagePullSecrets")]
         private InputList<Pulumi.Kubernetes.Types.Inputs.Kafka.V1Beta1.KafkaConnectS2ISpecTemplatePodImagePullSecretsArgs>? _imagePullSecrets;
 

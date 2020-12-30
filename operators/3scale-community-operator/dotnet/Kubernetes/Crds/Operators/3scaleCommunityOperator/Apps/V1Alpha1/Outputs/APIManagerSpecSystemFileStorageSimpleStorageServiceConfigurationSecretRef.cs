@@ -13,6 +13,9 @@ namespace Pulumi.Kubernetes.Types.Outputs.Apps.V1Alpha1
     [OutputType]
     public sealed class APIManagerSpecSystemFileStorageSimpleStorageServiceConfigurationSecretRef
     {
+        /// <summary>
+        /// Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+        /// </summary>
         public readonly string Name;
 
         [OutputConstructor]

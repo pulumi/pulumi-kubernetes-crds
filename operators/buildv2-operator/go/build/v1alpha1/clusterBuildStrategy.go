@@ -10,7 +10,7 @@ import (
 	"github.com/pulumi/pulumi/sdk/v2/go/pulumi"
 )
 
-// ClusterBuildStrategy is the Schema for the clusterbuildstrategies API
+// ClusterBuildStrategy is the Schema representing a strategy in the cluster scope to build images from source code.
 type ClusterBuildStrategy struct {
 	pulumi.CustomResourceState
 

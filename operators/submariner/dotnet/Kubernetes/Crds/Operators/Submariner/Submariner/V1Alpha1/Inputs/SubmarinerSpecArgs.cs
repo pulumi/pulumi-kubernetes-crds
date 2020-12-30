@@ -54,11 +54,30 @@ namespace Pulumi.Kubernetes.Types.Inputs.Submariner.V1Alpha1
         [Input("colorCodes")]
         public Input<string>? ColorCodes { get; set; }
 
+        [Input("connectionHealthCheck")]
+        public Input<Pulumi.Kubernetes.Types.Inputs.Submariner.V1Alpha1.SubmarinerSpecConnectionHealthCheckArgs>? ConnectionHealthCheck { get; set; }
+
+        [Input("customDomains")]
+        private InputList<string>? _customDomains;
+        public InputList<string> CustomDomains
+        {
+            get => _customDomains ?? (_customDomains = new InputList<string>());
+            set => _customDomains = value;
+        }
+
         [Input("debug", required: true)]
         public Input<bool> Debug { get; set; } = null!;
 
         [Input("globalCIDR")]
         public Input<string>? GlobalCIDR { get; set; }
+
+        [Input("imageOverrides")]
+        private InputMap<string>? _imageOverrides;
+        public InputMap<string> ImageOverrides
+        {
+            get => _imageOverrides ?? (_imageOverrides = new InputMap<string>());
+            set => _imageOverrides = value;
+        }
 
         [Input("namespace", required: true)]
         public Input<string> Namespace { get; set; } = null!;

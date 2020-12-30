@@ -11,7 +11,7 @@ namespace Pulumi.Kubernetes.Types.Inputs.Hive.V1
 {
 
     /// <summary>
-    /// CSI (Container Storage Interface) represents storage that is handled by an external CSI driver (Alpha feature).
+    /// CSI (Container Storage Interface) represents ephemeral storage that is handled by certain external CSI drivers (Beta feature).
     /// </summary>
     public class ClusterProvisionSpecPodSpecVolumesCsiArgs : Pulumi.ResourceArgs
     {

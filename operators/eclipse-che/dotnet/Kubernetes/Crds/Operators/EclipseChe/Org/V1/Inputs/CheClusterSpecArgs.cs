@@ -28,6 +28,12 @@ namespace Pulumi.Kubernetes.Types.Inputs.Org.V1
         public Input<Pulumi.Kubernetes.Types.Inputs.Org.V1.CheClusterSpecDatabaseArgs>? Database { get; set; }
 
         /// <summary>
+        /// Kubernetes Image Puller configuration
+        /// </summary>
+        [Input("imagePuller")]
+        public Input<Pulumi.Kubernetes.Types.Inputs.Org.V1.CheClusterSpecImagePullerArgs>? ImagePuller { get; set; }
+
+        /// <summary>
         /// Configuration settings specific to Che installations made on upstream Kubernetes.
         /// </summary>
         [Input("k8s")]

@@ -30,6 +30,12 @@ namespace Pulumi.Kubernetes.Types.Inputs.Argoproj.V1Alpha1
         public Input<Pulumi.Kubernetes.Types.Inputs.Argoproj.V1Alpha1.ApplicationOperationInitiatedByArgs>? InitiatedBy { get; set; }
 
         /// <summary>
+        /// Retry controls failed sync retry behavior
+        /// </summary>
+        [Input("retry")]
+        public Input<Pulumi.Kubernetes.Types.Inputs.Argoproj.V1Alpha1.ApplicationOperationRetryArgs>? Retry { get; set; }
+
+        /// <summary>
         /// SyncOperation contains sync operation details.
         /// </summary>
         [Input("sync")]

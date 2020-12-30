@@ -13,18 +13,26 @@ namespace Pulumi.Kubernetes.Types.Outputs.Machinelearning.V1
     [OutputType]
     public sealed class SeldonDeploymentSpecPredictorsExplainerEndpoint
     {
+        public readonly int GrpcPort;
+        public readonly int HttpPort;
         public readonly string Service_host;
         public readonly int Service_port;
         public readonly string Type;
 
         [OutputConstructor]
         private SeldonDeploymentSpecPredictorsExplainerEndpoint(
+            int grpcPort,
+
+            int httpPort,
+
             string service_host,
 
             int service_port,
 
             string type)
         {
+            GrpcPort = grpcPort;
+            HttpPort = httpPort;
             Service_host = service_host;
             Service_port = service_port;
             Type = type;

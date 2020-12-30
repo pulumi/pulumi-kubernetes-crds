@@ -22,6 +22,10 @@ namespace Pulumi.Kubernetes.Types.Outputs.Apps.V1
         /// </summary>
         public readonly Pulumi.Kubernetes.Types.Outputs.Apps.V1.ChannelSpecGates Gates;
         /// <summary>
+        /// Skip server TLS certificate verification for Git or Helm channel.
+        /// </summary>
+        public readonly bool InsecureSkipVerify;
+        /// <summary>
         /// For a `namespace` channel, pathname is the name of the namespace; For a `helmrepo` or `github` channel, pathname is the remote URL for the channel contents; For a `objectbucket` channel, pathname is the URL and name of the bucket.
         /// </summary>
         public readonly string Pathname;
@@ -44,6 +48,8 @@ namespace Pulumi.Kubernetes.Types.Outputs.Apps.V1
 
             Pulumi.Kubernetes.Types.Outputs.Apps.V1.ChannelSpecGates gates,
 
+            bool insecureSkipVerify,
+
             string pathname,
 
             Pulumi.Kubernetes.Types.Outputs.Apps.V1.ChannelSpecSecretRef secretRef,
@@ -54,6 +60,7 @@ namespace Pulumi.Kubernetes.Types.Outputs.Apps.V1
         {
             ConfigMapRef = configMapRef;
             Gates = gates;
+            InsecureSkipVerify = insecureSkipVerify;
             Pathname = pathname;
             SecretRef = secretRef;
             SourceNamespaces = sourceNamespaces;

@@ -10,7 +10,7 @@ using Pulumi.Serialization;
 namespace Pulumi.Pulumi.Kubernetes.Crds.Operators.Buildv2Operator.Build.V1Alpha1
 {
     /// <summary>
-    /// BuildStrategy is the Schema for the buildstrategies API
+    /// BuildStrategy is the Schema representing a strategy in the namespace scope to build images from source code.
     /// </summary>
     public partial class BuildStrategy : KubernetesResource
     {

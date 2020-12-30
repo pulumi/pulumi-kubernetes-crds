@@ -10,6 +10,9 @@ using Pulumi.Serialization;
 namespace Pulumi.Kubernetes.Types.Inputs.Wso2.V1Alpha1
 {
 
+    /// <summary>
+    /// IPCondition is exported type in Ratelimiting Spec
+    /// </summary>
     public class RateLimitingSpecConditionsIpConditionArgs : Pulumi.ResourceArgs
     {
         [Input("endIp", required: true)]

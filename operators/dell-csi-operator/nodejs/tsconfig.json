@@ -18,6 +18,8 @@
         "storage/index.ts",
         "storage/v1/csiisilon.ts",
         "storage/v1/csipowerMax.ts",
+        "storage/v1/csipowerMaxRevProxy.ts",
+        "storage/v1/csipowerStore.ts",
         "storage/v1/csiunity.ts",
         "storage/v1/csivxflexOS.ts",
         "storage/v1/index.ts",

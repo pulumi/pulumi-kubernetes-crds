@@ -13,9 +13,6 @@ namespace Pulumi.Kubernetes.Types.Outputs.Camel.V1
     [OutputType]
     public sealed class BuildSpec
     {
-        /// <summary>
-        /// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster Important: Run "operator-sdk generate k8s" to regenerate code after modifying this file
-        /// </summary>
         public readonly ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Camel.V1.BuildSpecTasks> Tasks;
 
         [OutputConstructor]

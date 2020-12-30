@@ -13,15 +13,19 @@ namespace Pulumi.Kubernetes.Types.Outputs.Migration.V1Alpha1
     [OutputType]
     public sealed class MigPlanStatus
     {
+        public readonly ImmutableArray<string> ExcludedResources;
         public readonly ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Migration.V1Alpha1.MigPlanStatusIncompatibleNamespaces> IncompatibleNamespaces;
         public readonly string ObservedDigest;
 
         [OutputConstructor]
         private MigPlanStatus(
+            ImmutableArray<string> excludedResources,
+
             ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Migration.V1Alpha1.MigPlanStatusIncompatibleNamespaces> incompatibleNamespaces,
 
             string observedDigest)
         {
+            ExcludedResources = excludedResources;
             IncompatibleNamespaces = incompatibleNamespaces;
             ObservedDigest = observedDigest;
         }

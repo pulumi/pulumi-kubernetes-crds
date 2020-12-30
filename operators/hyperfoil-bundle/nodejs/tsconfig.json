@@ -14,8 +14,8 @@
     },
     "files": [
         "hyperfoil/index.ts",
-        "hyperfoil/v1alpha1/hyperfoil.ts",
-        "hyperfoil/v1alpha1/index.ts",
+        "hyperfoil/v1alpha2/hyperfoil.ts",
+        "hyperfoil/v1alpha2/index.ts",
         "index.ts",
         "provider.ts",
         "types/index.ts",

@@ -14,6 +14,11 @@ namespace Pulumi.Kubernetes.Types.Outputs.Apps.V1Alpha1
     public sealed class APIManagerSpecZync
     {
         public readonly Pulumi.Kubernetes.Types.Outputs.Apps.V1Alpha1.APIManagerSpecZyncAppSpec AppSpec;
+        /// <summary>
+        /// Affinity is a group of affinity scheduling rules.
+        /// </summary>
+        public readonly Pulumi.Kubernetes.Types.Outputs.Apps.V1Alpha1.APIManagerSpecZyncDatabaseAffinity DatabaseAffinity;
+        public readonly ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Apps.V1Alpha1.APIManagerSpecZyncDatabaseTolerations> DatabaseTolerations;
         public readonly string Image;
         public readonly string PostgreSQLImage;
         public readonly Pulumi.Kubernetes.Types.Outputs.Apps.V1Alpha1.APIManagerSpecZyncQueSpec QueSpec;
@@ -22,6 +27,10 @@ namespace Pulumi.Kubernetes.Types.Outputs.Apps.V1Alpha1
         private APIManagerSpecZync(
             Pulumi.Kubernetes.Types.Outputs.Apps.V1Alpha1.APIManagerSpecZyncAppSpec appSpec,
 
+            Pulumi.Kubernetes.Types.Outputs.Apps.V1Alpha1.APIManagerSpecZyncDatabaseAffinity databaseAffinity,
+
+            ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Apps.V1Alpha1.APIManagerSpecZyncDatabaseTolerations> databaseTolerations,
+
             string image,
 
             string postgreSQLImage,
@@ -29,6 +38,8 @@ namespace Pulumi.Kubernetes.Types.Outputs.Apps.V1Alpha1
             Pulumi.Kubernetes.Types.Outputs.Apps.V1Alpha1.APIManagerSpecZyncQueSpec queSpec)
         {
             AppSpec = appSpec;
+            DatabaseAffinity = databaseAffinity;
+            DatabaseTolerations = databaseTolerations;
             Image = image;
             PostgreSQLImage = postgreSQLImage;
             QueSpec = queSpec;

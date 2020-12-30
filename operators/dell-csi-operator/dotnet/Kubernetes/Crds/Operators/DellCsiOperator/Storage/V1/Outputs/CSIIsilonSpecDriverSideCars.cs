@@ -33,6 +33,14 @@ namespace Pulumi.Kubernetes.Types.Outputs.Storage.V1
         /// Name is the name of Container
         /// </summary>
         public readonly string Name;
+        /// <summary>
+        /// NodeSelector is a selector which must be true for the pod to fit on a node. Selector which must match a node's labels for the pod to be scheduled on that node.
+        /// </summary>
+        public readonly ImmutableDictionary<string, string> NodeSelector;
+        /// <summary>
+        /// Tolerations is the list of tolerations for the driver pods
+        /// </summary>
+        public readonly ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Storage.V1.CSIIsilonSpecDriverSideCarsTolerations> Tolerations;
 
         [OutputConstructor]
         private CSIIsilonSpecDriverSideCars(
@@ -44,13 +52,19 @@ namespace Pulumi.Kubernetes.Types.Outputs.Storage.V1
 
             string imagePullPolicy,
 
-            string name)
+            string name,
+
+            ImmutableDictionary<string, string> nodeSelector,
+
+            ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Storage.V1.CSIIsilonSpecDriverSideCarsTolerations> tolerations)
         {
             Args = args;
             Envs = envs;
             Image = image;
             ImagePullPolicy = imagePullPolicy;
             Name = name;
+            NodeSelector = nodeSelector;
+            Tolerations = tolerations;
         }
     }
 }

@@ -16,6 +16,12 @@ namespace Pulumi.Kubernetes.Types.Inputs.Hive.V1
     public class ClusterDeprovisionSpecPlatformOpenstackArgs : Pulumi.ResourceArgs
     {
         /// <summary>
+        /// CertificatesSecretRef refers to a secret that contains CA certificates necessary for communicating with the OpenStack.
+        /// </summary>
+        [Input("certificatesSecretRef")]
+        public Input<Pulumi.Kubernetes.Types.Inputs.Hive.V1.ClusterDeprovisionSpecPlatformOpenstackCertificatesSecretRefArgs>? CertificatesSecretRef { get; set; }
+
+        /// <summary>
         /// Cloud is the secion in the clouds.yaml secret below to use for auth/connectivity.
         /// </summary>
         [Input("cloud", required: true)]

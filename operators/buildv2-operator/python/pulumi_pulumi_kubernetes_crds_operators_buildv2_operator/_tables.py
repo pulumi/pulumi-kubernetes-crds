@@ -6,6 +6,7 @@ SNAKE_TO_CAMEL_CASE_TABLE = {
     "allow_privilege_escalation": "allowPrivilegeEscalation",
     "api_version": "apiVersion",
     "build_ref": "buildRef",
+    "build_spec": "buildSpec",
     "build_steps": "buildSteps",
     "completion_time": "completionTime",
     "config_map_key_ref": "configMapKeyRef",
@@ -65,6 +66,7 @@ SNAKE_TO_CAMEL_CASE_TABLE = {
     "volume_devices": "volumeDevices",
     "volume_mounts": "volumeMounts",
     "windows_options": "windowsOptions",
+    "work_dir": "workDir",
     "working_dir": "workingDir",
 }
 
@@ -72,6 +74,7 @@ CAMEL_TO_SNAKE_CASE_TABLE = {
     "allowPrivilegeEscalation": "allow_privilege_escalation",
     "apiVersion": "api_version",
     "buildRef": "build_ref",
+    "buildSpec": "build_spec",
     "buildSteps": "build_steps",
     "completionTime": "completion_time",
     "configMapKeyRef": "config_map_key_ref",
@@ -131,5 +134,6 @@ CAMEL_TO_SNAKE_CASE_TABLE = {
     "volumeDevices": "volume_devices",
     "volumeMounts": "volume_mounts",
     "windowsOptions": "windows_options",
+    "workDir": "work_dir",
     "workingDir": "working_dir",
 }

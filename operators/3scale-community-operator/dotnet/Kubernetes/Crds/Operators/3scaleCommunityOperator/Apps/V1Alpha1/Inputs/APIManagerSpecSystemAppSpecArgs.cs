@@ -12,8 +12,22 @@ namespace Pulumi.Kubernetes.Types.Inputs.Apps.V1Alpha1
 
     public class APIManagerSpecSystemAppSpecArgs : Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// Affinity is a group of affinity scheduling rules.
+        /// </summary>
+        [Input("affinity")]
+        public Input<Pulumi.Kubernetes.Types.Inputs.Apps.V1Alpha1.APIManagerSpecSystemAppSpecAffinityArgs>? Affinity { get; set; }
+
         [Input("replicas")]
         public Input<int>? Replicas { get; set; }
+
+        [Input("tolerations")]
+        private InputList<Pulumi.Kubernetes.Types.Inputs.Apps.V1Alpha1.APIManagerSpecSystemAppSpecTolerationsArgs>? _tolerations;
+        public InputList<Pulumi.Kubernetes.Types.Inputs.Apps.V1Alpha1.APIManagerSpecSystemAppSpecTolerationsArgs> Tolerations
+        {
+            get => _tolerations ?? (_tolerations = new InputList<Pulumi.Kubernetes.Types.Inputs.Apps.V1Alpha1.APIManagerSpecSystemAppSpecTolerationsArgs>());
+            set => _tolerations = value;
+        }
 
         public APIManagerSpecSystemAppSpecArgs()
         {

@@ -12,6 +12,14 @@ namespace Pulumi.Kubernetes.Types.Inputs.Migration.V1Alpha1
 
     public class MigPlanStatusArgs : Pulumi.ResourceArgs
     {
+        [Input("excludedResources")]
+        private InputList<string>? _excludedResources;
+        public InputList<string> ExcludedResources
+        {
+            get => _excludedResources ?? (_excludedResources = new InputList<string>());
+            set => _excludedResources = value;
+        }
+
         [Input("incompatibleNamespaces")]
         private InputList<Pulumi.Kubernetes.Types.Inputs.Migration.V1Alpha1.MigPlanStatusIncompatibleNamespacesArgs>? _incompatibleNamespaces;
         public InputList<Pulumi.Kubernetes.Types.Inputs.Migration.V1Alpha1.MigPlanStatusIncompatibleNamespacesArgs> IncompatibleNamespaces

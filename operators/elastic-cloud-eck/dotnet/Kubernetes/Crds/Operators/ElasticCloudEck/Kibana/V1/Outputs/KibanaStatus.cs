@@ -17,11 +17,18 @@ namespace Pulumi.Kubernetes.Types.Outputs.Kibana.V1
         /// AssociationStatus is the status of an association resource.
         /// </summary>
         public readonly string AssociationStatus;
+        /// <summary>
+        /// AvailableNodes is the number of available replicas in the deployment.
+        /// </summary>
         public readonly int AvailableNodes;
         /// <summary>
-        /// KibanaHealth expresses the status of the Kibana instances.
+        /// Health of the deployment.
         /// </summary>
         public readonly string Health;
+        /// <summary>
+        /// Version of the stack resource currently running. During version upgrades, multiple versions may run in parallel: this value specifies the lowest version currently running.
+        /// </summary>
+        public readonly string Version;
 
         [OutputConstructor]
         private KibanaStatus(
@@ -29,11 +36,14 @@ namespace Pulumi.Kubernetes.Types.Outputs.Kibana.V1
 
             int availableNodes,
 
-            string health)
+            string health,
+
+            string version)
         {
             AssociationStatus = associationStatus;
             AvailableNodes = availableNodes;
             Health = health;
+            Version = version;
         }
     }
 }

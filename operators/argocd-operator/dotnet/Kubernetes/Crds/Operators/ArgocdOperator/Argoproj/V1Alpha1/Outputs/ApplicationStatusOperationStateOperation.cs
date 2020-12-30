@@ -19,6 +19,10 @@ namespace Pulumi.Kubernetes.Types.Outputs.Argoproj.V1Alpha1
         /// </summary>
         public readonly Pulumi.Kubernetes.Types.Outputs.Argoproj.V1Alpha1.ApplicationStatusOperationStateOperationInitiatedBy InitiatedBy;
         /// <summary>
+        /// Retry controls failed sync retry behavior
+        /// </summary>
+        public readonly Pulumi.Kubernetes.Types.Outputs.Argoproj.V1Alpha1.ApplicationStatusOperationStateOperationRetry Retry;
+        /// <summary>
         /// SyncOperation contains sync operation details.
         /// </summary>
         public readonly Pulumi.Kubernetes.Types.Outputs.Argoproj.V1Alpha1.ApplicationStatusOperationStateOperationSync Sync;
@@ -29,10 +33,13 @@ namespace Pulumi.Kubernetes.Types.Outputs.Argoproj.V1Alpha1
 
             Pulumi.Kubernetes.Types.Outputs.Argoproj.V1Alpha1.ApplicationStatusOperationStateOperationInitiatedBy initiatedBy,
 
+            Pulumi.Kubernetes.Types.Outputs.Argoproj.V1Alpha1.ApplicationStatusOperationStateOperationRetry retry,
+
             Pulumi.Kubernetes.Types.Outputs.Argoproj.V1Alpha1.ApplicationStatusOperationStateOperationSync sync)
         {
             Info = info;
             InitiatedBy = initiatedBy;
+            Retry = retry;
             Sync = sync;
         }
     }

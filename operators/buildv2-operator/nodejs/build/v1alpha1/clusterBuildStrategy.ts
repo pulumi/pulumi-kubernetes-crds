@@ -9,7 +9,7 @@ import * as utilities from "../../utilities";
 import {ObjectMeta} from "../../meta/v1";
 
 /**
- * ClusterBuildStrategy is the Schema for the clusterbuildstrategies API
+ * ClusterBuildStrategy is the Schema representing a strategy in the cluster scope to build images from source code.
  */
 export class ClusterBuildStrategy extends pulumi.CustomResource {
     /**

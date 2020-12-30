@@ -10,13 +10,23 @@ using Pulumi.Serialization;
 namespace Pulumi.Kubernetes.Types.Inputs.Wso2.V1Alpha1
 {
 
+    /// <summary>
+    /// Definition of the API.
+    /// </summary>
     public class APISpecDefinitionArgs : Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// Interceptors for API. Default value "&lt;empty&gt;".
+        /// </summary>
         [Input("interceptors")]
         public Input<Pulumi.Kubernetes.Types.Inputs.Wso2.V1Alpha1.APISpecDefinitionInterceptorsArgs>? Interceptors { get; set; }
 
         [Input("swaggerConfigmapNames", required: true)]
         private InputList<string>? _swaggerConfigmapNames;
+
+        /// <summary>
+        /// Array of config map names of swagger definitions for the API.
+        /// </summary>
         public InputList<string> SwaggerConfigmapNames
         {
             get => _swaggerConfigmapNames ?? (_swaggerConfigmapNames = new InputList<string>());

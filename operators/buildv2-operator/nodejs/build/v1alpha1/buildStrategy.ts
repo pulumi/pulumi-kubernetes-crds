@@ -9,7 +9,7 @@ import * as utilities from "../../utilities";
 import {ObjectMeta} from "../../meta/v1";
 
 /**
- * BuildStrategy is the Schema for the buildstrategies API
+ * BuildStrategy is the Schema representing a strategy in the namespace scope to build images from source code.
  */
 export class BuildStrategy extends pulumi.CustomResource {
     /**

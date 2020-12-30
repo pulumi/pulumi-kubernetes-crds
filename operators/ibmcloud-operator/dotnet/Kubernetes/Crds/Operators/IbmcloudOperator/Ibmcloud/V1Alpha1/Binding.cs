@@ -9,6 +9,9 @@ using Pulumi.Serialization;
 
 namespace Pulumi.Pulumi.Kubernetes.Crds.Operators.IbmcloudOperator.Ibmcloud.V1Alpha1
 {
+    /// <summary>
+    /// Binding is the Schema for the bindings API
+    /// </summary>
     public partial class Binding : KubernetesResource
     {
         [Output("apiVersion")]
@@ -20,9 +23,15 @@ namespace Pulumi.Pulumi.Kubernetes.Crds.Operators.IbmcloudOperator.Ibmcloud.V1Al
         [Output("metadata")]
         public Output<Pulumi.Kubernetes.Types.Outputs.Meta.V1.ObjectMeta> Metadata { get; private set; } = null!;
 
+        /// <summary>
+        /// BindingSpec defines the desired state of Binding
+        /// </summary>
         [Output("spec")]
         public Output<Pulumi.Kubernetes.Types.Outputs.Ibmcloud.V1Alpha1.BindingSpec> Spec { get; private set; } = null!;
 
+        /// <summary>
+        /// BindingStatus defines the observed state of Binding
+        /// </summary>
         [Output("status")]
         public Output<Pulumi.Kubernetes.Types.Outputs.Ibmcloud.V1Alpha1.BindingStatus> Status { get; private set; } = null!;
 
@@ -95,9 +104,15 @@ namespace Pulumi.Kubernetes.Types.Inputs.Ibmcloud.V1Alpha1
         [Input("metadata")]
         public Input<Pulumi.Kubernetes.Types.Inputs.Meta.V1.ObjectMetaArgs>? Metadata { get; set; }
 
+        /// <summary>
+        /// BindingSpec defines the desired state of Binding
+        /// </summary>
         [Input("spec")]
         public Input<Pulumi.Kubernetes.Types.Inputs.Ibmcloud.V1Alpha1.BindingSpecArgs>? Spec { get; set; }
 
+        /// <summary>
+        /// BindingStatus defines the observed state of Binding
+        /// </summary>
         [Input("status")]
         public Input<Pulumi.Kubernetes.Types.Inputs.Ibmcloud.V1Alpha1.BindingStatusArgs>? Status { get; set; }
 

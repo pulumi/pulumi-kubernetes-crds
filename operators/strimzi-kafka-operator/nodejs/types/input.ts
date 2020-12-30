@@ -495,6 +495,7 @@ export namespace kafka {
         export interface KafkaBridgeSpecTemplateBridgeContainerSecurityContextWindowsOptions {
             gmsaCredentialSpec?: pulumi.Input<string>;
             gmsaCredentialSpecName?: pulumi.Input<string>;
+            runAsUserName?: pulumi.Input<string>;
         }
 
         /**
@@ -529,6 +530,10 @@ export namespace kafka {
              * The pod's affinity rules.
              */
             affinity?: pulumi.Input<inputs.kafka.v1alpha1.KafkaBridgeSpecTemplatePodAffinity>;
+            /**
+             * The pod's HostAliases. HostAliases is an optional list of hosts and IPs that will be injected into the pod's hosts file if specified.
+             */
+            hostAliases?: pulumi.Input<pulumi.Input<inputs.kafka.v1alpha1.KafkaBridgeSpecTemplatePodHostAliases>[]>;
             /**
              * List of references to secrets in the same namespace to use for pulling any of the images used by this Pod. When the `STRIMZI_IMAGE_PULL_SECRETS` environment variable in Cluster Operator and the `imagePullSecrets` option are specified, only the `imagePullSecrets` variable is used and the `STRIMZI_IMAGE_PULL_SECRETS` variable is ignored.
              */
@@ -732,6 +737,11 @@ export namespace kafka {
             labels?: pulumi.Input<{[key: string]: any}>;
         }
 
+        export interface KafkaBridgeSpecTemplatePodHostAliases {
+            hostnames?: pulumi.Input<pulumi.Input<string>[]>;
+            ip?: pulumi.Input<string>;
+        }
+
         export interface KafkaBridgeSpecTemplatePodImagePullSecrets {
             name?: pulumi.Input<string>;
         }
@@ -755,6 +765,7 @@ export namespace kafka {
          */
         export interface KafkaBridgeSpecTemplatePodSecurityContext {
             fsGroup?: pulumi.Input<number>;
+            fsGroupChangePolicy?: pulumi.Input<string>;
             runAsGroup?: pulumi.Input<number>;
             runAsNonRoot?: pulumi.Input<boolean>;
             runAsUser?: pulumi.Input<number>;
@@ -779,6 +790,7 @@ export namespace kafka {
         export interface KafkaBridgeSpecTemplatePodSecurityContextWindowsOptions {
             gmsaCredentialSpec?: pulumi.Input<string>;
             gmsaCredentialSpecName?: pulumi.Input<string>;
+            runAsUserName?: pulumi.Input<string>;
         }
 
         export interface KafkaBridgeSpecTemplatePodTolerations {
@@ -829,13 +841,13 @@ export namespace kafka {
              */
             conditions?: pulumi.Input<pulumi.Input<inputs.kafka.v1alpha1.KafkaBridgeStatusConditions>[]>;
             /**
+             * Label selector for pods providing this resource.
+             */
+            labelSelector?: pulumi.Input<string>;
+            /**
              * The generation of the CRD that was last reconciled by the operator.
              */
             observedGeneration?: pulumi.Input<number>;
-            /**
-             * Label selector for pods providing this resource.
-             */
-            podSelector?: pulumi.Input<inputs.kafka.v1alpha1.KafkaBridgeStatusPodSelector>;
             /**
              * The current number of pods being used to provide this resource.
              */
@@ -867,20 +879,6 @@ export namespace kafka {
              * The unique identifier of a condition, used to distinguish between other conditions in the resource.
              */
             type?: pulumi.Input<string>;
-        }
-
-        /**
-         * Label selector for pods providing this resource.
-         */
-        export interface KafkaBridgeStatusPodSelector {
-            matchExpressions?: pulumi.Input<pulumi.Input<inputs.kafka.v1alpha1.KafkaBridgeStatusPodSelectorMatchExpressions>[]>;
-            matchLabels?: pulumi.Input<{[key: string]: any}>;
-        }
-
-        export interface KafkaBridgeStatusPodSelectorMatchExpressions {
-            key?: pulumi.Input<string>;
-            operator?: pulumi.Input<string>;
-            values?: pulumi.Input<pulumi.Input<string>[]>;
         }
 
         /**
@@ -1689,6 +1687,10 @@ export namespace kafka {
              */
             deployment?: pulumi.Input<inputs.kafka.v1alpha1.KafkaMirrorMaker2SpecTemplateDeployment>;
             /**
+             * Template for the Kafka init container.
+             */
+            initContainer?: pulumi.Input<inputs.kafka.v1alpha1.KafkaMirrorMaker2SpecTemplateInitContainer>;
+            /**
              * Template for Kafka Connect `Pods`.
              */
             pod?: pulumi.Input<inputs.kafka.v1alpha1.KafkaMirrorMaker2SpecTemplatePod>;
@@ -1778,6 +1780,7 @@ export namespace kafka {
         export interface KafkaMirrorMaker2SpecTemplateConnectContainerSecurityContextWindowsOptions {
             gmsaCredentialSpec?: pulumi.Input<string>;
             gmsaCredentialSpecName?: pulumi.Input<string>;
+            runAsUserName?: pulumi.Input<string>;
         }
 
         /**
@@ -1805,6 +1808,65 @@ export namespace kafka {
         }
 
         /**
+         * Template for the Kafka init container.
+         */
+        export interface KafkaMirrorMaker2SpecTemplateInitContainer {
+            /**
+             * Environment variables which should be applied to the container.
+             */
+            env?: pulumi.Input<pulumi.Input<inputs.kafka.v1alpha1.KafkaMirrorMaker2SpecTemplateInitContainerEnv>[]>;
+            /**
+             * Security context for the container.
+             */
+            securityContext?: pulumi.Input<inputs.kafka.v1alpha1.KafkaMirrorMaker2SpecTemplateInitContainerSecurityContext>;
+        }
+
+        export interface KafkaMirrorMaker2SpecTemplateInitContainerEnv {
+            /**
+             * The environment variable key.
+             */
+            name?: pulumi.Input<string>;
+            /**
+             * The environment variable value.
+             */
+            value?: pulumi.Input<string>;
+        }
+
+        /**
+         * Security context for the container.
+         */
+        export interface KafkaMirrorMaker2SpecTemplateInitContainerSecurityContext {
+            allowPrivilegeEscalation?: pulumi.Input<boolean>;
+            capabilities?: pulumi.Input<inputs.kafka.v1alpha1.KafkaMirrorMaker2SpecTemplateInitContainerSecurityContextCapabilities>;
+            privileged?: pulumi.Input<boolean>;
+            procMount?: pulumi.Input<string>;
+            readOnlyRootFilesystem?: pulumi.Input<boolean>;
+            runAsGroup?: pulumi.Input<number>;
+            runAsNonRoot?: pulumi.Input<boolean>;
+            runAsUser?: pulumi.Input<number>;
+            seLinuxOptions?: pulumi.Input<inputs.kafka.v1alpha1.KafkaMirrorMaker2SpecTemplateInitContainerSecurityContextSeLinuxOptions>;
+            windowsOptions?: pulumi.Input<inputs.kafka.v1alpha1.KafkaMirrorMaker2SpecTemplateInitContainerSecurityContextWindowsOptions>;
+        }
+
+        export interface KafkaMirrorMaker2SpecTemplateInitContainerSecurityContextCapabilities {
+            add?: pulumi.Input<pulumi.Input<string>[]>;
+            drop?: pulumi.Input<pulumi.Input<string>[]>;
+        }
+
+        export interface KafkaMirrorMaker2SpecTemplateInitContainerSecurityContextSeLinuxOptions {
+            level?: pulumi.Input<string>;
+            role?: pulumi.Input<string>;
+            type?: pulumi.Input<string>;
+            user?: pulumi.Input<string>;
+        }
+
+        export interface KafkaMirrorMaker2SpecTemplateInitContainerSecurityContextWindowsOptions {
+            gmsaCredentialSpec?: pulumi.Input<string>;
+            gmsaCredentialSpecName?: pulumi.Input<string>;
+            runAsUserName?: pulumi.Input<string>;
+        }
+
+        /**
          * Template for Kafka Connect `Pods`.
          */
         export interface KafkaMirrorMaker2SpecTemplatePod {
@@ -1812,6 +1874,10 @@ export namespace kafka {
              * The pod's affinity rules.
              */
             affinity?: pulumi.Input<inputs.kafka.v1alpha1.KafkaMirrorMaker2SpecTemplatePodAffinity>;
+            /**
+             * The pod's HostAliases. HostAliases is an optional list of hosts and IPs that will be injected into the pod's hosts file if specified.
+             */
+            hostAliases?: pulumi.Input<pulumi.Input<inputs.kafka.v1alpha1.KafkaMirrorMaker2SpecTemplatePodHostAliases>[]>;
             /**
              * List of references to secrets in the same namespace to use for pulling any of the images used by this Pod. When the `STRIMZI_IMAGE_PULL_SECRETS` environment variable in Cluster Operator and the `imagePullSecrets` option are specified, only the `imagePullSecrets` variable is used and the `STRIMZI_IMAGE_PULL_SECRETS` variable is ignored.
              */
@@ -2015,6 +2081,11 @@ export namespace kafka {
             labels?: pulumi.Input<{[key: string]: any}>;
         }
 
+        export interface KafkaMirrorMaker2SpecTemplatePodHostAliases {
+            hostnames?: pulumi.Input<pulumi.Input<string>[]>;
+            ip?: pulumi.Input<string>;
+        }
+
         export interface KafkaMirrorMaker2SpecTemplatePodImagePullSecrets {
             name?: pulumi.Input<string>;
         }
@@ -2038,6 +2109,7 @@ export namespace kafka {
          */
         export interface KafkaMirrorMaker2SpecTemplatePodSecurityContext {
             fsGroup?: pulumi.Input<number>;
+            fsGroupChangePolicy?: pulumi.Input<string>;
             runAsGroup?: pulumi.Input<number>;
             runAsNonRoot?: pulumi.Input<boolean>;
             runAsUser?: pulumi.Input<number>;
@@ -2062,6 +2134,7 @@ export namespace kafka {
         export interface KafkaMirrorMaker2SpecTemplatePodSecurityContextWindowsOptions {
             gmsaCredentialSpec?: pulumi.Input<string>;
             gmsaCredentialSpecName?: pulumi.Input<string>;
+            runAsUserName?: pulumi.Input<string>;
         }
 
         export interface KafkaMirrorMaker2SpecTemplatePodTolerations {
@@ -2107,13 +2180,13 @@ export namespace kafka {
              */
             connectors?: pulumi.Input<pulumi.Input<{[key: string]: any}>[]>;
             /**
+             * Label selector for pods providing this resource.
+             */
+            labelSelector?: pulumi.Input<string>;
+            /**
              * The generation of the CRD that was last reconciled by the operator.
              */
             observedGeneration?: pulumi.Input<number>;
-            /**
-             * Label selector for pods providing this resource.
-             */
-            podSelector?: pulumi.Input<inputs.kafka.v1alpha1.KafkaMirrorMaker2StatusPodSelector>;
             /**
              * The current number of pods being used to provide this resource.
              */
@@ -2163,20 +2236,6 @@ export namespace kafka {
         }
 
         /**
-         * Label selector for pods providing this resource.
-         */
-        export interface KafkaMirrorMaker2StatusPodSelector {
-            matchExpressions?: pulumi.Input<pulumi.Input<inputs.kafka.v1alpha1.KafkaMirrorMaker2StatusPodSelectorMatchExpressions>[]>;
-            matchLabels?: pulumi.Input<{[key: string]: any}>;
-        }
-
-        export interface KafkaMirrorMaker2StatusPodSelectorMatchExpressions {
-            key?: pulumi.Input<string>;
-            operator?: pulumi.Input<string>;
-            values?: pulumi.Input<pulumi.Input<string>[]>;
-        }
-
-        /**
          * The specification of the Kafka rebalance.
          */
         export interface KafkaRebalanceSpec {
@@ -2200,6 +2259,10 @@ export namespace kafka {
              * A list of goals, ordered by decreasing priority, to use for generating and executing the rebalance proposal. The supported goals are available at https://github.com/linkedin/cruise-control#goals. If an empty goals list is provided, the goals declared in the default.goals Cruise Control configuration parameter are used.
              */
             goals?: pulumi.Input<pulumi.Input<string>[]>;
+            /**
+             * A list of strategy class names used to determine the execution order for the replica movements in the generated optimization proposal. By default BaseReplicaMovementStrategy is used, which will execute the replica movements in the order that they were generated.
+             */
+            replicaMovementStrategies?: pulumi.Input<pulumi.Input<string>[]>;
             /**
              * The upper bound, in bytes per second, on the bandwidth used to move replicas. There is no limit by default.
              */
@@ -2279,6 +2342,10 @@ export namespace kafka {
              */
             buildResources?: pulumi.Input<inputs.kafka.v1beta1.KafkaConnectS2ISpecBuildResources>;
             /**
+             * The image of the init container used for initializing the `client.rack`.
+             */
+            clientRackInitImage?: pulumi.Input<string>;
+            /**
              * The Kafka Connect configuration. Properties with the following prefixes cannot be set: ssl., sasl., security., listeners, plugin.path, rest., bootstrap.servers, consumer.interceptor.classes, producer.interceptor.classes (with the exception of: ssl.endpoint.identification.algorithm, ssl.cipher.suites, ssl.protocol, ssl.enabled.protocols).
              */
             config?: pulumi.Input<{[key: string]: any}>;
@@ -2310,6 +2377,10 @@ export namespace kafka {
              * The Prometheus JMX Exporter configuration. See https://github.com/prometheus/jmx_exporter for details of the structure of this configuration.
              */
             metrics?: pulumi.Input<{[key: string]: any}>;
+            /**
+             * Configuration of the node label which will be used as the client.rack consumer configuration.
+             */
+            rack?: pulumi.Input<inputs.kafka.v1beta1.KafkaConnectS2ISpecRack>;
             /**
              * Pod readiness checking.
              */
@@ -2830,6 +2901,16 @@ export namespace kafka {
         }
 
         /**
+         * Configuration of the node label which will be used as the client.rack consumer configuration.
+         */
+        export interface KafkaConnectS2ISpecRack {
+            /**
+             * A key that matches labels assigned to the Kubernetes cluster nodes. The value of the label is used to set the broker's `broker.rack` config.
+             */
+            topologyKey: pulumi.Input<string>;
+        }
+
+        /**
          * Pod readiness checking.
          */
         export interface KafkaConnectS2ISpecReadinessProbe {
@@ -2879,6 +2960,10 @@ export namespace kafka {
              * Template for Kafka Connect `Deployment`.
              */
             deployment?: pulumi.Input<inputs.kafka.v1beta1.KafkaConnectS2ISpecTemplateDeployment>;
+            /**
+             * Template for the Kafka init container.
+             */
+            initContainer?: pulumi.Input<inputs.kafka.v1beta1.KafkaConnectS2ISpecTemplateInitContainer>;
             /**
              * Template for Kafka Connect `Pods`.
              */
@@ -2969,6 +3054,7 @@ export namespace kafka {
         export interface KafkaConnectS2ISpecTemplateConnectContainerSecurityContextWindowsOptions {
             gmsaCredentialSpec?: pulumi.Input<string>;
             gmsaCredentialSpecName?: pulumi.Input<string>;
+            runAsUserName?: pulumi.Input<string>;
         }
 
         /**
@@ -2996,6 +3082,65 @@ export namespace kafka {
         }
 
         /**
+         * Template for the Kafka init container.
+         */
+        export interface KafkaConnectS2ISpecTemplateInitContainer {
+            /**
+             * Environment variables which should be applied to the container.
+             */
+            env?: pulumi.Input<pulumi.Input<inputs.kafka.v1beta1.KafkaConnectS2ISpecTemplateInitContainerEnv>[]>;
+            /**
+             * Security context for the container.
+             */
+            securityContext?: pulumi.Input<inputs.kafka.v1beta1.KafkaConnectS2ISpecTemplateInitContainerSecurityContext>;
+        }
+
+        export interface KafkaConnectS2ISpecTemplateInitContainerEnv {
+            /**
+             * The environment variable key.
+             */
+            name?: pulumi.Input<string>;
+            /**
+             * The environment variable value.
+             */
+            value?: pulumi.Input<string>;
+        }
+
+        /**
+         * Security context for the container.
+         */
+        export interface KafkaConnectS2ISpecTemplateInitContainerSecurityContext {
+            allowPrivilegeEscalation?: pulumi.Input<boolean>;
+            capabilities?: pulumi.Input<inputs.kafka.v1beta1.KafkaConnectS2ISpecTemplateInitContainerSecurityContextCapabilities>;
+            privileged?: pulumi.Input<boolean>;
+            procMount?: pulumi.Input<string>;
+            readOnlyRootFilesystem?: pulumi.Input<boolean>;
+            runAsGroup?: pulumi.Input<number>;
+            runAsNonRoot?: pulumi.Input<boolean>;
+            runAsUser?: pulumi.Input<number>;
+            seLinuxOptions?: pulumi.Input<inputs.kafka.v1beta1.KafkaConnectS2ISpecTemplateInitContainerSecurityContextSeLinuxOptions>;
+            windowsOptions?: pulumi.Input<inputs.kafka.v1beta1.KafkaConnectS2ISpecTemplateInitContainerSecurityContextWindowsOptions>;
+        }
+
+        export interface KafkaConnectS2ISpecTemplateInitContainerSecurityContextCapabilities {
+            add?: pulumi.Input<pulumi.Input<string>[]>;
+            drop?: pulumi.Input<pulumi.Input<string>[]>;
+        }
+
+        export interface KafkaConnectS2ISpecTemplateInitContainerSecurityContextSeLinuxOptions {
+            level?: pulumi.Input<string>;
+            role?: pulumi.Input<string>;
+            type?: pulumi.Input<string>;
+            user?: pulumi.Input<string>;
+        }
+
+        export interface KafkaConnectS2ISpecTemplateInitContainerSecurityContextWindowsOptions {
+            gmsaCredentialSpec?: pulumi.Input<string>;
+            gmsaCredentialSpecName?: pulumi.Input<string>;
+            runAsUserName?: pulumi.Input<string>;
+        }
+
+        /**
          * Template for Kafka Connect `Pods`.
          */
         export interface KafkaConnectS2ISpecTemplatePod {
@@ -3003,6 +3148,10 @@ export namespace kafka {
              * The pod's affinity rules.
              */
             affinity?: pulumi.Input<inputs.kafka.v1beta1.KafkaConnectS2ISpecTemplatePodAffinity>;
+            /**
+             * The pod's HostAliases. HostAliases is an optional list of hosts and IPs that will be injected into the pod's hosts file if specified.
+             */
+            hostAliases?: pulumi.Input<pulumi.Input<inputs.kafka.v1beta1.KafkaConnectS2ISpecTemplatePodHostAliases>[]>;
             /**
              * List of references to secrets in the same namespace to use for pulling any of the images used by this Pod. When the `STRIMZI_IMAGE_PULL_SECRETS` environment variable in Cluster Operator and the `imagePullSecrets` option are specified, only the `imagePullSecrets` variable is used and the `STRIMZI_IMAGE_PULL_SECRETS` variable is ignored.
              */
@@ -3206,6 +3355,11 @@ export namespace kafka {
             labels?: pulumi.Input<{[key: string]: any}>;
         }
 
+        export interface KafkaConnectS2ISpecTemplatePodHostAliases {
+            hostnames?: pulumi.Input<pulumi.Input<string>[]>;
+            ip?: pulumi.Input<string>;
+        }
+
         export interface KafkaConnectS2ISpecTemplatePodImagePullSecrets {
             name?: pulumi.Input<string>;
         }
@@ -3229,6 +3383,7 @@ export namespace kafka {
          */
         export interface KafkaConnectS2ISpecTemplatePodSecurityContext {
             fsGroup?: pulumi.Input<number>;
+            fsGroupChangePolicy?: pulumi.Input<string>;
             runAsGroup?: pulumi.Input<number>;
             runAsNonRoot?: pulumi.Input<boolean>;
             runAsUser?: pulumi.Input<number>;
@@ -3253,6 +3408,7 @@ export namespace kafka {
         export interface KafkaConnectS2ISpecTemplatePodSecurityContextWindowsOptions {
             gmsaCredentialSpec?: pulumi.Input<string>;
             gmsaCredentialSpecName?: pulumi.Input<string>;
+            runAsUserName?: pulumi.Input<string>;
         }
 
         export interface KafkaConnectS2ISpecTemplatePodTolerations {
@@ -3319,13 +3475,13 @@ export namespace kafka {
              */
             connectorPlugins?: pulumi.Input<pulumi.Input<inputs.kafka.v1beta1.KafkaConnectS2IStatusConnectorPlugins>[]>;
             /**
+             * Label selector for pods providing this resource.
+             */
+            labelSelector?: pulumi.Input<string>;
+            /**
              * The generation of the CRD that was last reconciled by the operator.
              */
             observedGeneration?: pulumi.Input<number>;
-            /**
-             * Label selector for pods providing this resource.
-             */
-            podSelector?: pulumi.Input<inputs.kafka.v1beta1.KafkaConnectS2IStatusPodSelector>;
             /**
              * The current number of pods being used to provide this resource.
              */
@@ -3375,20 +3531,6 @@ export namespace kafka {
         }
 
         /**
-         * Label selector for pods providing this resource.
-         */
-        export interface KafkaConnectS2IStatusPodSelector {
-            matchExpressions?: pulumi.Input<pulumi.Input<inputs.kafka.v1beta1.KafkaConnectS2IStatusPodSelectorMatchExpressions>[]>;
-            matchLabels?: pulumi.Input<{[key: string]: any}>;
-        }
-
-        export interface KafkaConnectS2IStatusPodSelectorMatchExpressions {
-            key?: pulumi.Input<string>;
-            operator?: pulumi.Input<string>;
-            values?: pulumi.Input<pulumi.Input<string>[]>;
-        }
-
-        /**
          * The specification of the Kafka Connect cluster.
          */
         export interface KafkaConnectSpec {
@@ -3404,6 +3546,10 @@ export namespace kafka {
              * Bootstrap servers to connect to. This should be given as a comma separated list of _<hostname>_:‍_<port>_ pairs.
              */
             bootstrapServers: pulumi.Input<string>;
+            /**
+             * The image of the init container used for initializing the `client.rack`.
+             */
+            clientRackInitImage?: pulumi.Input<string>;
             /**
              * The Kafka Connect configuration. Properties with the following prefixes cannot be set: ssl., sasl., security., listeners, plugin.path, rest., bootstrap.servers, consumer.interceptor.classes, producer.interceptor.classes (with the exception of: ssl.endpoint.identification.algorithm, ssl.cipher.suites, ssl.protocol, ssl.enabled.protocols).
              */
@@ -3432,6 +3578,10 @@ export namespace kafka {
              * The Prometheus JMX Exporter configuration. See https://github.com/prometheus/jmx_exporter for details of the structure of this configuration.
              */
             metrics?: pulumi.Input<{[key: string]: any}>;
+            /**
+             * Configuration of the node label which will be used as the client.rack consumer configuration.
+             */
+            rack?: pulumi.Input<inputs.kafka.v1beta1.KafkaConnectSpecRack>;
             /**
              * Pod readiness checking.
              */
@@ -3944,6 +4094,16 @@ export namespace kafka {
         }
 
         /**
+         * Configuration of the node label which will be used as the client.rack consumer configuration.
+         */
+        export interface KafkaConnectSpecRack {
+            /**
+             * A key that matches labels assigned to the Kubernetes cluster nodes. The value of the label is used to set the broker's `broker.rack` config.
+             */
+            topologyKey: pulumi.Input<string>;
+        }
+
+        /**
          * Pod readiness checking.
          */
         export interface KafkaConnectSpecReadinessProbe {
@@ -3993,6 +4153,10 @@ export namespace kafka {
              * Template for Kafka Connect `Deployment`.
              */
             deployment?: pulumi.Input<inputs.kafka.v1beta1.KafkaConnectSpecTemplateDeployment>;
+            /**
+             * Template for the Kafka init container.
+             */
+            initContainer?: pulumi.Input<inputs.kafka.v1beta1.KafkaConnectSpecTemplateInitContainer>;
             /**
              * Template for Kafka Connect `Pods`.
              */
@@ -4083,6 +4247,7 @@ export namespace kafka {
         export interface KafkaConnectSpecTemplateConnectContainerSecurityContextWindowsOptions {
             gmsaCredentialSpec?: pulumi.Input<string>;
             gmsaCredentialSpecName?: pulumi.Input<string>;
+            runAsUserName?: pulumi.Input<string>;
         }
 
         /**
@@ -4110,6 +4275,65 @@ export namespace kafka {
         }
 
         /**
+         * Template for the Kafka init container.
+         */
+        export interface KafkaConnectSpecTemplateInitContainer {
+            /**
+             * Environment variables which should be applied to the container.
+             */
+            env?: pulumi.Input<pulumi.Input<inputs.kafka.v1beta1.KafkaConnectSpecTemplateInitContainerEnv>[]>;
+            /**
+             * Security context for the container.
+             */
+            securityContext?: pulumi.Input<inputs.kafka.v1beta1.KafkaConnectSpecTemplateInitContainerSecurityContext>;
+        }
+
+        export interface KafkaConnectSpecTemplateInitContainerEnv {
+            /**
+             * The environment variable key.
+             */
+            name?: pulumi.Input<string>;
+            /**
+             * The environment variable value.
+             */
+            value?: pulumi.Input<string>;
+        }
+
+        /**
+         * Security context for the container.
+         */
+        export interface KafkaConnectSpecTemplateInitContainerSecurityContext {
+            allowPrivilegeEscalation?: pulumi.Input<boolean>;
+            capabilities?: pulumi.Input<inputs.kafka.v1beta1.KafkaConnectSpecTemplateInitContainerSecurityContextCapabilities>;
+            privileged?: pulumi.Input<boolean>;
+            procMount?: pulumi.Input<string>;
+            readOnlyRootFilesystem?: pulumi.Input<boolean>;
+            runAsGroup?: pulumi.Input<number>;
+            runAsNonRoot?: pulumi.Input<boolean>;
+            runAsUser?: pulumi.Input<number>;
+            seLinuxOptions?: pulumi.Input<inputs.kafka.v1beta1.KafkaConnectSpecTemplateInitContainerSecurityContextSeLinuxOptions>;
+            windowsOptions?: pulumi.Input<inputs.kafka.v1beta1.KafkaConnectSpecTemplateInitContainerSecurityContextWindowsOptions>;
+        }
+
+        export interface KafkaConnectSpecTemplateInitContainerSecurityContextCapabilities {
+            add?: pulumi.Input<pulumi.Input<string>[]>;
+            drop?: pulumi.Input<pulumi.Input<string>[]>;
+        }
+
+        export interface KafkaConnectSpecTemplateInitContainerSecurityContextSeLinuxOptions {
+            level?: pulumi.Input<string>;
+            role?: pulumi.Input<string>;
+            type?: pulumi.Input<string>;
+            user?: pulumi.Input<string>;
+        }
+
+        export interface KafkaConnectSpecTemplateInitContainerSecurityContextWindowsOptions {
+            gmsaCredentialSpec?: pulumi.Input<string>;
+            gmsaCredentialSpecName?: pulumi.Input<string>;
+            runAsUserName?: pulumi.Input<string>;
+        }
+
+        /**
          * Template for Kafka Connect `Pods`.
          */
         export interface KafkaConnectSpecTemplatePod {
@@ -4117,6 +4341,10 @@ export namespace kafka {
              * The pod's affinity rules.
              */
             affinity?: pulumi.Input<inputs.kafka.v1beta1.KafkaConnectSpecTemplatePodAffinity>;
+            /**
+             * The pod's HostAliases. HostAliases is an optional list of hosts and IPs that will be injected into the pod's hosts file if specified.
+             */
+            hostAliases?: pulumi.Input<pulumi.Input<inputs.kafka.v1beta1.KafkaConnectSpecTemplatePodHostAliases>[]>;
             /**
              * List of references to secrets in the same namespace to use for pulling any of the images used by this Pod. When the `STRIMZI_IMAGE_PULL_SECRETS` environment variable in Cluster Operator and the `imagePullSecrets` option are specified, only the `imagePullSecrets` variable is used and the `STRIMZI_IMAGE_PULL_SECRETS` variable is ignored.
              */
@@ -4320,6 +4548,11 @@ export namespace kafka {
             labels?: pulumi.Input<{[key: string]: any}>;
         }
 
+        export interface KafkaConnectSpecTemplatePodHostAliases {
+            hostnames?: pulumi.Input<pulumi.Input<string>[]>;
+            ip?: pulumi.Input<string>;
+        }
+
         export interface KafkaConnectSpecTemplatePodImagePullSecrets {
             name?: pulumi.Input<string>;
         }
@@ -4343,6 +4576,7 @@ export namespace kafka {
          */
         export interface KafkaConnectSpecTemplatePodSecurityContext {
             fsGroup?: pulumi.Input<number>;
+            fsGroupChangePolicy?: pulumi.Input<string>;
             runAsGroup?: pulumi.Input<number>;
             runAsNonRoot?: pulumi.Input<boolean>;
             runAsUser?: pulumi.Input<number>;
@@ -4367,6 +4601,7 @@ export namespace kafka {
         export interface KafkaConnectSpecTemplatePodSecurityContextWindowsOptions {
             gmsaCredentialSpec?: pulumi.Input<string>;
             gmsaCredentialSpecName?: pulumi.Input<string>;
+            runAsUserName?: pulumi.Input<string>;
         }
 
         export interface KafkaConnectSpecTemplatePodTolerations {
@@ -4429,13 +4664,13 @@ export namespace kafka {
              */
             connectorPlugins?: pulumi.Input<pulumi.Input<inputs.kafka.v1beta1.KafkaConnectStatusConnectorPlugins>[]>;
             /**
+             * Label selector for pods providing this resource.
+             */
+            labelSelector?: pulumi.Input<string>;
+            /**
              * The generation of the CRD that was last reconciled by the operator.
              */
             observedGeneration?: pulumi.Input<number>;
-            /**
-             * Label selector for pods providing this resource.
-             */
-            podSelector?: pulumi.Input<inputs.kafka.v1beta1.KafkaConnectStatusPodSelector>;
             /**
              * The current number of pods being used to provide this resource.
              */
@@ -4482,20 +4717,6 @@ export namespace kafka {
              * The version of the connector plugin.
              */
             version?: pulumi.Input<string>;
-        }
-
-        /**
-         * Label selector for pods providing this resource.
-         */
-        export interface KafkaConnectStatusPodSelector {
-            matchExpressions?: pulumi.Input<pulumi.Input<inputs.kafka.v1beta1.KafkaConnectStatusPodSelectorMatchExpressions>[]>;
-            matchLabels?: pulumi.Input<{[key: string]: any}>;
-        }
-
-        export interface KafkaConnectStatusPodSelectorMatchExpressions {
-            key?: pulumi.Input<string>;
-            operator?: pulumi.Input<string>;
-            values?: pulumi.Input<pulumi.Input<string>[]>;
         }
 
         /**
@@ -5326,6 +5547,7 @@ export namespace kafka {
         export interface KafkaMirrorMakerSpecTemplateMirrorMakerContainerSecurityContextWindowsOptions {
             gmsaCredentialSpec?: pulumi.Input<string>;
             gmsaCredentialSpecName?: pulumi.Input<string>;
+            runAsUserName?: pulumi.Input<string>;
         }
 
         /**
@@ -5336,6 +5558,10 @@ export namespace kafka {
              * The pod's affinity rules.
              */
             affinity?: pulumi.Input<inputs.kafka.v1beta1.KafkaMirrorMakerSpecTemplatePodAffinity>;
+            /**
+             * The pod's HostAliases. HostAliases is an optional list of hosts and IPs that will be injected into the pod's hosts file if specified.
+             */
+            hostAliases?: pulumi.Input<pulumi.Input<inputs.kafka.v1beta1.KafkaMirrorMakerSpecTemplatePodHostAliases>[]>;
             /**
              * List of references to secrets in the same namespace to use for pulling any of the images used by this Pod. When the `STRIMZI_IMAGE_PULL_SECRETS` environment variable in Cluster Operator and the `imagePullSecrets` option are specified, only the `imagePullSecrets` variable is used and the `STRIMZI_IMAGE_PULL_SECRETS` variable is ignored.
              */
@@ -5539,6 +5765,11 @@ export namespace kafka {
             labels?: pulumi.Input<{[key: string]: any}>;
         }
 
+        export interface KafkaMirrorMakerSpecTemplatePodHostAliases {
+            hostnames?: pulumi.Input<pulumi.Input<string>[]>;
+            ip?: pulumi.Input<string>;
+        }
+
         export interface KafkaMirrorMakerSpecTemplatePodImagePullSecrets {
             name?: pulumi.Input<string>;
         }
@@ -5562,6 +5793,7 @@ export namespace kafka {
          */
         export interface KafkaMirrorMakerSpecTemplatePodSecurityContext {
             fsGroup?: pulumi.Input<number>;
+            fsGroupChangePolicy?: pulumi.Input<string>;
             runAsGroup?: pulumi.Input<number>;
             runAsNonRoot?: pulumi.Input<boolean>;
             runAsUser?: pulumi.Input<number>;
@@ -5586,6 +5818,7 @@ export namespace kafka {
         export interface KafkaMirrorMakerSpecTemplatePodSecurityContextWindowsOptions {
             gmsaCredentialSpec?: pulumi.Input<string>;
             gmsaCredentialSpecName?: pulumi.Input<string>;
+            runAsUserName?: pulumi.Input<string>;
         }
 
         export interface KafkaMirrorMakerSpecTemplatePodTolerations {
@@ -5623,13 +5856,13 @@ export namespace kafka {
              */
             conditions?: pulumi.Input<pulumi.Input<inputs.kafka.v1beta1.KafkaMirrorMakerStatusConditions>[]>;
             /**
+             * Label selector for pods providing this resource.
+             */
+            labelSelector?: pulumi.Input<string>;
+            /**
              * The generation of the CRD that was last reconciled by the operator.
              */
             observedGeneration?: pulumi.Input<number>;
-            /**
-             * Label selector for pods providing this resource.
-             */
-            podSelector?: pulumi.Input<inputs.kafka.v1beta1.KafkaMirrorMakerStatusPodSelector>;
             /**
              * The current number of pods being used to provide this resource.
              */
@@ -5657,20 +5890,6 @@ export namespace kafka {
              * The unique identifier of a condition, used to distinguish between other conditions in the resource.
              */
             type?: pulumi.Input<string>;
-        }
-
-        /**
-         * Label selector for pods providing this resource.
-         */
-        export interface KafkaMirrorMakerStatusPodSelector {
-            matchExpressions?: pulumi.Input<pulumi.Input<inputs.kafka.v1beta1.KafkaMirrorMakerStatusPodSelectorMatchExpressions>[]>;
-            matchLabels?: pulumi.Input<{[key: string]: any}>;
-        }
-
-        export interface KafkaMirrorMakerStatusPodSelectorMatchExpressions {
-            key?: pulumi.Input<string>;
-            operator?: pulumi.Input<string>;
-            values?: pulumi.Input<pulumi.Input<string>[]>;
         }
 
         /**
@@ -5791,6 +6010,10 @@ export namespace kafka {
              * Logging configuration (log4j1) for Cruise Control.
              */
             logging?: pulumi.Input<inputs.kafka.v1beta1.KafkaSpecCruiseControlLogging>;
+            /**
+             * The Prometheus JMX Exporter configuration. See https://github.com/prometheus/jmx_exporter for details of the structure of this configuration.
+             */
+            metrics?: pulumi.Input<{[key: string]: any}>;
             /**
              * Pod readiness checking for the Cruise Control container.
              */
@@ -6056,6 +6279,7 @@ export namespace kafka {
         export interface KafkaSpecCruiseControlTemplateCruiseControlContainerSecurityContextWindowsOptions {
             gmsaCredentialSpec?: pulumi.Input<string>;
             gmsaCredentialSpecName?: pulumi.Input<string>;
+            runAsUserName?: pulumi.Input<string>;
         }
 
         /**
@@ -6090,6 +6314,10 @@ export namespace kafka {
              * The pod's affinity rules.
              */
             affinity?: pulumi.Input<inputs.kafka.v1beta1.KafkaSpecCruiseControlTemplatePodAffinity>;
+            /**
+             * The pod's HostAliases. HostAliases is an optional list of hosts and IPs that will be injected into the pod's hosts file if specified.
+             */
+            hostAliases?: pulumi.Input<pulumi.Input<inputs.kafka.v1beta1.KafkaSpecCruiseControlTemplatePodHostAliases>[]>;
             /**
              * List of references to secrets in the same namespace to use for pulling any of the images used by this Pod. When the `STRIMZI_IMAGE_PULL_SECRETS` environment variable in Cluster Operator and the `imagePullSecrets` option are specified, only the `imagePullSecrets` variable is used and the `STRIMZI_IMAGE_PULL_SECRETS` variable is ignored.
              */
@@ -6293,6 +6521,11 @@ export namespace kafka {
             labels?: pulumi.Input<{[key: string]: any}>;
         }
 
+        export interface KafkaSpecCruiseControlTemplatePodHostAliases {
+            hostnames?: pulumi.Input<pulumi.Input<string>[]>;
+            ip?: pulumi.Input<string>;
+        }
+
         export interface KafkaSpecCruiseControlTemplatePodImagePullSecrets {
             name?: pulumi.Input<string>;
         }
@@ -6316,6 +6549,7 @@ export namespace kafka {
          */
         export interface KafkaSpecCruiseControlTemplatePodSecurityContext {
             fsGroup?: pulumi.Input<number>;
+            fsGroupChangePolicy?: pulumi.Input<string>;
             runAsGroup?: pulumi.Input<number>;
             runAsNonRoot?: pulumi.Input<boolean>;
             runAsUser?: pulumi.Input<number>;
@@ -6340,6 +6574,7 @@ export namespace kafka {
         export interface KafkaSpecCruiseControlTemplatePodSecurityContextWindowsOptions {
             gmsaCredentialSpec?: pulumi.Input<string>;
             gmsaCredentialSpecName?: pulumi.Input<string>;
+            runAsUserName?: pulumi.Input<string>;
         }
 
         export interface KafkaSpecCruiseControlTemplatePodTolerations {
@@ -6406,6 +6641,7 @@ export namespace kafka {
         export interface KafkaSpecCruiseControlTemplateTlsSidecarContainerSecurityContextWindowsOptions {
             gmsaCredentialSpec?: pulumi.Input<string>;
             gmsaCredentialSpecName?: pulumi.Input<string>;
+            runAsUserName?: pulumi.Input<string>;
         }
 
         /**
@@ -6728,6 +6964,10 @@ export namespace kafka {
              */
             affinity?: pulumi.Input<inputs.kafka.v1beta1.KafkaSpecEntityOperatorTemplatePodAffinity>;
             /**
+             * The pod's HostAliases. HostAliases is an optional list of hosts and IPs that will be injected into the pod's hosts file if specified.
+             */
+            hostAliases?: pulumi.Input<pulumi.Input<inputs.kafka.v1beta1.KafkaSpecEntityOperatorTemplatePodHostAliases>[]>;
+            /**
              * List of references to secrets in the same namespace to use for pulling any of the images used by this Pod. When the `STRIMZI_IMAGE_PULL_SECRETS` environment variable in Cluster Operator and the `imagePullSecrets` option are specified, only the `imagePullSecrets` variable is used and the `STRIMZI_IMAGE_PULL_SECRETS` variable is ignored.
              */
             imagePullSecrets?: pulumi.Input<pulumi.Input<inputs.kafka.v1beta1.KafkaSpecEntityOperatorTemplatePodImagePullSecrets>[]>;
@@ -6902,6 +7142,11 @@ export namespace kafka {
             values?: pulumi.Input<pulumi.Input<string>[]>;
         }
 
+        export interface KafkaSpecEntityOperatorTemplatePodHostAliases {
+            hostnames?: pulumi.Input<pulumi.Input<string>[]>;
+            ip?: pulumi.Input<string>;
+        }
+
         export interface KafkaSpecEntityOperatorTemplatePodImagePullSecrets {
             name?: pulumi.Input<string>;
         }
@@ -6925,6 +7170,7 @@ export namespace kafka {
          */
         export interface KafkaSpecEntityOperatorTemplatePodSecurityContext {
             fsGroup?: pulumi.Input<number>;
+            fsGroupChangePolicy?: pulumi.Input<string>;
             runAsGroup?: pulumi.Input<number>;
             runAsNonRoot?: pulumi.Input<boolean>;
             runAsUser?: pulumi.Input<number>;
@@ -6949,6 +7195,7 @@ export namespace kafka {
         export interface KafkaSpecEntityOperatorTemplatePodSecurityContextWindowsOptions {
             gmsaCredentialSpec?: pulumi.Input<string>;
             gmsaCredentialSpecName?: pulumi.Input<string>;
+            runAsUserName?: pulumi.Input<string>;
         }
 
         export interface KafkaSpecEntityOperatorTemplatePodTolerations {
@@ -7015,6 +7262,7 @@ export namespace kafka {
         export interface KafkaSpecEntityOperatorTemplateTlsSidecarContainerSecurityContextWindowsOptions {
             gmsaCredentialSpec?: pulumi.Input<string>;
             gmsaCredentialSpecName?: pulumi.Input<string>;
+            runAsUserName?: pulumi.Input<string>;
         }
 
         /**
@@ -7073,6 +7321,7 @@ export namespace kafka {
         export interface KafkaSpecEntityOperatorTemplateTopicOperatorContainerSecurityContextWindowsOptions {
             gmsaCredentialSpec?: pulumi.Input<string>;
             gmsaCredentialSpecName?: pulumi.Input<string>;
+            runAsUserName?: pulumi.Input<string>;
         }
 
         /**
@@ -7131,6 +7380,7 @@ export namespace kafka {
         export interface KafkaSpecEntityOperatorTemplateUserOperatorContainerSecurityContextWindowsOptions {
             gmsaCredentialSpec?: pulumi.Input<string>;
             gmsaCredentialSpecName?: pulumi.Input<string>;
+            runAsUserName?: pulumi.Input<string>;
         }
 
         /**
@@ -7699,6 +7949,7 @@ export namespace kafka {
         export interface KafkaSpecJmxTransTemplateContainerSecurityContextWindowsOptions {
             gmsaCredentialSpec?: pulumi.Input<string>;
             gmsaCredentialSpecName?: pulumi.Input<string>;
+            runAsUserName?: pulumi.Input<string>;
         }
 
         /**
@@ -7733,6 +7984,10 @@ export namespace kafka {
              * The pod's affinity rules.
              */
             affinity?: pulumi.Input<inputs.kafka.v1beta1.KafkaSpecJmxTransTemplatePodAffinity>;
+            /**
+             * The pod's HostAliases. HostAliases is an optional list of hosts and IPs that will be injected into the pod's hosts file if specified.
+             */
+            hostAliases?: pulumi.Input<pulumi.Input<inputs.kafka.v1beta1.KafkaSpecJmxTransTemplatePodHostAliases>[]>;
             /**
              * List of references to secrets in the same namespace to use for pulling any of the images used by this Pod. When the `STRIMZI_IMAGE_PULL_SECRETS` environment variable in Cluster Operator and the `imagePullSecrets` option are specified, only the `imagePullSecrets` variable is used and the `STRIMZI_IMAGE_PULL_SECRETS` variable is ignored.
              */
@@ -7908,6 +8163,11 @@ export namespace kafka {
             values?: pulumi.Input<pulumi.Input<string>[]>;
         }
 
+        export interface KafkaSpecJmxTransTemplatePodHostAliases {
+            hostnames?: pulumi.Input<pulumi.Input<string>[]>;
+            ip?: pulumi.Input<string>;
+        }
+
         export interface KafkaSpecJmxTransTemplatePodImagePullSecrets {
             name?: pulumi.Input<string>;
         }
@@ -7931,6 +8191,7 @@ export namespace kafka {
          */
         export interface KafkaSpecJmxTransTemplatePodSecurityContext {
             fsGroup?: pulumi.Input<number>;
+            fsGroupChangePolicy?: pulumi.Input<string>;
             runAsGroup?: pulumi.Input<number>;
             runAsNonRoot?: pulumi.Input<boolean>;
             runAsUser?: pulumi.Input<number>;
@@ -7955,6 +8216,7 @@ export namespace kafka {
         export interface KafkaSpecJmxTransTemplatePodSecurityContextWindowsOptions {
             gmsaCredentialSpec?: pulumi.Input<string>;
             gmsaCredentialSpecName?: pulumi.Input<string>;
+            runAsUserName?: pulumi.Input<string>;
         }
 
         export interface KafkaSpecJmxTransTemplatePodTolerations {
@@ -7982,7 +8244,7 @@ export namespace kafka {
              */
             brokerRackInitImage?: pulumi.Input<string>;
             /**
-             * Kafka broker config properties with the following prefixes cannot be set: listeners, advertised., broker., listener., host.name, port, inter.broker.listener.name, sasl., ssl., security., password., principal.builder.class, log.dir, zookeeper.connect, zookeeper.set.acl, authorizer., super.user, cruise.control.metrics.topic, cruise.control.metrics.reporter.bootstrap.servers (with the exception of: zookeeper.connection.timeout.ms, ssl.cipher.suites, ssl.protocol, ssl.enabled.protocols,cruise.control.metrics.topic.num.partitions, cruise.control.metrics.topic.replication.factor, cruise.control.metrics.topic.retention.ms,cruise.control.metrics.topic.auto.create.retries, cruise.control.metrics.topic.auto.create.timeout.ms).
+             * Kafka broker config properties with the following prefixes cannot be set: listeners, advertised., broker., listener., host.name, port, inter.broker.listener.name, sasl., ssl., security., password., principal.builder.class, log.dir, zookeeper.connect, zookeeper.set.acl, zookeeper.ssl, zookeeper.clientCnxnSocket, authorizer., super.user, cruise.control.metrics.topic, cruise.control.metrics.reporter.bootstrap.servers (with the exception of: zookeeper.connection.timeout.ms, ssl.cipher.suites, ssl.protocol, ssl.enabled.protocols,cruise.control.metrics.topic.num.partitions, cruise.control.metrics.topic.replication.factor, cruise.control.metrics.topic.retention.ms,cruise.control.metrics.topic.auto.create.retries, cruise.control.metrics.topic.auto.create.timeout.ms).
              */
             config?: pulumi.Input<{[key: string]: any}>;
             /**
@@ -7997,10 +8259,7 @@ export namespace kafka {
              * JVM Options for pods.
              */
             jvmOptions?: pulumi.Input<inputs.kafka.v1beta1.KafkaSpecKafkaJvmOptions>;
-            /**
-             * Configures listeners of Kafka brokers.
-             */
-            listeners: pulumi.Input<inputs.kafka.v1beta1.KafkaSpecKafkaListeners>;
+            listeners: pulumi.Input<pulumi.Input<inputs.kafka.v1beta1.KafkaSpecKafkaListenersOneOf0>[] | inputs.kafka.v1beta1.KafkaSpecKafkaListenersOneOf1>;
             /**
              * Pod liveness checking.
              */
@@ -8209,7 +8468,7 @@ export namespace kafka {
              */
             clientId?: pulumi.Input<string>;
             /**
-             * Whether authorization decision should be delegated to the 'Simple' authorizer if DENIED by Keycloak Authorization Services policies.Default value is `false`.
+             * Whether authorization decision should be delegated to the 'Simple' authorizer if DENIED by Keycloak Authorization Services policies. Default value is `false`.
              */
             delegateToKafkaAcls?: pulumi.Input<boolean>;
             /**
@@ -8220,6 +8479,14 @@ export namespace kafka {
              * The expiration of the records kept in the local cache to avoid querying the Open Policy Agent for every request. Defines how often the cached authorization decisions are reloaded from the Open Policy Agent server. In milliseconds. Defaults to `3600000`.
              */
             expireAfterMs?: pulumi.Input<number>;
+            /**
+             * The time between two consecutive grants refresh runs in seconds. The default value is 60.
+             */
+            grantsRefreshPeriodSeconds?: pulumi.Input<number>;
+            /**
+             * The number of threads to use to refresh grants for active sessions. The more threads, the more parallelism, so the sooner the job completes. However, using more threads places a heavier load on the authorization server. The default value is 5.
+             */
+            grantsRefreshPoolSize?: pulumi.Input<number>;
             /**
              * Initial capacity of the local cache used by the authorizer to avoid querying the Open Policy Agent for every request Defaults to `5000`.
              */
@@ -8241,7 +8508,7 @@ export namespace kafka {
              */
             tokenEndpointUri?: pulumi.Input<string>;
             /**
-             * Authorization type. Currently, the supported types are `simple`, `keycloak`, and `opa`. `simple` authorization type uses Kafka's `kafka.security.auth.SimpleAclAuthorizer` class for authorization. `keycloak` authorization type uses Keycloak Authorization Services for authorization. `opa` authorization type uses Open Policy Agent based authorization.
+             * Authorization type. Currently, the supported types are `simple`, `keycloak`, and `opa`. `simple` authorization type uses Kafka's `kafka.security.authorizer.AclAuthorizer` class for authorization. `keycloak` authorization type uses Keycloak Authorization Services for authorization. `opa` authorization type uses Open Policy Agent based authorization.
              */
             type: pulumi.Input<string>;
             /**
@@ -8441,6 +8708,7 @@ export namespace kafka {
         export interface KafkaSpecKafkaExporterTemplateContainerSecurityContextWindowsOptions {
             gmsaCredentialSpec?: pulumi.Input<string>;
             gmsaCredentialSpecName?: pulumi.Input<string>;
+            runAsUserName?: pulumi.Input<string>;
         }
 
         /**
@@ -8475,6 +8743,10 @@ export namespace kafka {
              * The pod's affinity rules.
              */
             affinity?: pulumi.Input<inputs.kafka.v1beta1.KafkaSpecKafkaExporterTemplatePodAffinity>;
+            /**
+             * The pod's HostAliases. HostAliases is an optional list of hosts and IPs that will be injected into the pod's hosts file if specified.
+             */
+            hostAliases?: pulumi.Input<pulumi.Input<inputs.kafka.v1beta1.KafkaSpecKafkaExporterTemplatePodHostAliases>[]>;
             /**
              * List of references to secrets in the same namespace to use for pulling any of the images used by this Pod. When the `STRIMZI_IMAGE_PULL_SECRETS` environment variable in Cluster Operator and the `imagePullSecrets` option are specified, only the `imagePullSecrets` variable is used and the `STRIMZI_IMAGE_PULL_SECRETS` variable is ignored.
              */
@@ -8650,6 +8922,11 @@ export namespace kafka {
             values?: pulumi.Input<pulumi.Input<string>[]>;
         }
 
+        export interface KafkaSpecKafkaExporterTemplatePodHostAliases {
+            hostnames?: pulumi.Input<pulumi.Input<string>[]>;
+            ip?: pulumi.Input<string>;
+        }
+
         export interface KafkaSpecKafkaExporterTemplatePodImagePullSecrets {
             name?: pulumi.Input<string>;
         }
@@ -8673,6 +8950,7 @@ export namespace kafka {
          */
         export interface KafkaSpecKafkaExporterTemplatePodSecurityContext {
             fsGroup?: pulumi.Input<number>;
+            fsGroupChangePolicy?: pulumi.Input<string>;
             runAsGroup?: pulumi.Input<number>;
             runAsNonRoot?: pulumi.Input<boolean>;
             runAsUser?: pulumi.Input<number>;
@@ -8697,6 +8975,7 @@ export namespace kafka {
         export interface KafkaSpecKafkaExporterTemplatePodSecurityContextWindowsOptions {
             gmsaCredentialSpec?: pulumi.Input<string>;
             gmsaCredentialSpecName?: pulumi.Input<string>;
+            runAsUserName?: pulumi.Input<string>;
         }
 
         export interface KafkaSpecKafkaExporterTemplatePodTolerations {
@@ -8788,64 +9067,48 @@ export namespace kafka {
             value?: pulumi.Input<string>;
         }
 
-        /**
-         * Configures listeners of Kafka brokers.
-         */
-        export interface KafkaSpecKafkaListeners {
+        export interface KafkaSpecKafkaListenersOneOf0 {
             /**
-             * Configures external listener on port 9094.
+             * Authentication configuration for this listener.
              */
-            external?: pulumi.Input<inputs.kafka.v1beta1.KafkaSpecKafkaListenersExternal>;
+            authentication?: pulumi.Input<inputs.kafka.v1beta1.KafkaSpecKafkaListenersOneOf0Authentication>;
             /**
-             * Configures plain listener on port 9092.
+             * Additional listener configuration.
              */
-            plain?: pulumi.Input<inputs.kafka.v1beta1.KafkaSpecKafkaListenersPlain>;
+            configuration?: pulumi.Input<inputs.kafka.v1beta1.KafkaSpecKafkaListenersOneOf0Configuration>;
             /**
-             * Configures TLS listener on port 9093.
+             * Name of the listener. The name will be used to identify the listener and the related Kubernetes objects. The name has to be unique within given a Kafka cluster. The name can consist of lowercase characters and numbers and be up to 11 characters long.
              */
-            tls?: pulumi.Input<inputs.kafka.v1beta1.KafkaSpecKafkaListenersTls>;
-        }
-
-        /**
-         * Configures external listener on port 9094.
-         */
-        export interface KafkaSpecKafkaListenersExternal {
-            /**
-             * Authentication configuration for Kafka brokers.
-             */
-            authentication?: pulumi.Input<inputs.kafka.v1beta1.KafkaSpecKafkaListenersExternalAuthentication>;
-            /**
-             * Configures the `Ingress` class that defines which `Ingress` controller will be used. If not set, the `Ingress` class is set to `nginx`.
-             */
-            class?: pulumi.Input<string>;
-            /**
-             * External listener configuration.
-             */
-            configuration?: pulumi.Input<inputs.kafka.v1beta1.KafkaSpecKafkaListenersExternalConfiguration>;
+            name: pulumi.Input<string>;
             /**
              * List of peers which should be able to connect to this listener. Peers in this list are combined using a logical OR operation. If this field is empty or missing, all connections will be allowed for this listener. If this field is present and contains at least one item, the listener only allows the traffic which matches at least one item in this list.
              */
-            networkPolicyPeers?: pulumi.Input<pulumi.Input<inputs.kafka.v1beta1.KafkaSpecKafkaListenersExternalNetworkPolicyPeers>[]>;
+            networkPolicyPeers?: pulumi.Input<pulumi.Input<inputs.kafka.v1beta1.KafkaSpecKafkaListenersOneOf0NetworkPolicyPeers>[]>;
             /**
-             * Overrides for external bootstrap and broker services and externally advertised addresses.
+             * Port number used by the listener inside Kafka. The port number has to be unique within a given Kafka cluster. Allowed port numbers are 9092 and higher with the exception of ports 9404 and 9999, which are already used for Prometheus and JMX. Depending on the listener type, the port number might not be the same as the port number that connects Kafka clients.
              */
-            overrides?: pulumi.Input<inputs.kafka.v1beta1.KafkaSpecKafkaListenersExternalOverrides>;
+            port: pulumi.Input<number>;
             /**
-             * Enables TLS encryption on the listener. By default set to `true` for enabled TLS encryption.
+             * Enables TLS encryption on the listener. This is a required property.
              */
-            tls?: pulumi.Input<boolean>;
+            tls: pulumi.Input<boolean>;
             /**
-             * Type of the external listener. Currently the supported types are `route`, `loadbalancer`, and `nodeport`. 
+             * Type of the listener. Currently the supported types are `internal`, `route`, `loadbalancer`, `nodeport` and `ingress`. 
              *
-             * * `route` type uses OpenShift Routes to expose Kafka.* `loadbalancer` type uses LoadBalancer type services to expose Kafka.* `nodeport` type uses NodePort type services to expose Kafka..
+             * * `internal` type exposes Kafka internally only within the Kubernetes cluster.
+             * * `route` type uses OpenShift Routes to expose Kafka.
+             * * `loadbalancer` type uses LoadBalancer type services to expose Kafka.
+             * * `nodeport` type uses NodePort type services to expose Kafka.
+             * * `ingress` type uses Kubernetes Nginx Ingress to expose Kafka.
+             * .
              */
             type: pulumi.Input<string>;
         }
 
         /**
-         * Authentication configuration for Kafka brokers.
+         * Authentication configuration for this listener.
          */
-        export interface KafkaSpecKafkaListenersExternalAuthentication {
+        export interface KafkaSpecKafkaListenersOneOf0Authentication {
             /**
              * Configure whether the access token is treated as JWT. This must be set to `false` if the authorization server returns opaque tokens. Defaults to `true`.
              */
@@ -8865,7 +9128,7 @@ export namespace kafka {
             /**
              * Link to Kubernetes Secret containing the OAuth client secret which the Kafka broker can use to authenticate against the authorization server and use the introspect endpoint URI.
              */
-            clientSecret?: pulumi.Input<inputs.kafka.v1beta1.KafkaSpecKafkaListenersExternalAuthenticationClientSecret>;
+            clientSecret?: pulumi.Input<inputs.kafka.v1beta1.KafkaSpecKafkaListenersOneOf0AuthenticationClientSecret>;
             /**
              * Enable or disable TLS hostname verification. Default value is `false`.
              */
@@ -8895,13 +9158,21 @@ export namespace kafka {
              */
             jwksExpirySeconds?: pulumi.Input<number>;
             /**
+             * The minimum pause between two consecutive refreshes. When an unknown signing key is encountered the refresh is scheduled immediately, but will always wait for this minimum pause. Defaults to 1 second.
+             */
+            jwksMinRefreshPauseSeconds?: pulumi.Input<number>;
+            /**
              * Configures how often are the JWKS certificates refreshed. The refresh interval has to be at least 60 seconds shorter then the expiry interval specified in `jwksExpirySeconds`. Defaults to 300 seconds.
              */
             jwksRefreshSeconds?: pulumi.Input<number>;
             /**
+             * Maximum number of seconds the authenticated session remains valid without re-authentication. This enables Apache Kafka re-authentication feature, and causes sessions to expire when the access token expires. If the access token expires before max time or if max time is reached, the client has to re-authenticate, otherwise the server will drop the connection. Not set by default - the authenticated session does not expire when the access token expires.
+             */
+            maxSecondsWithoutReauthentication?: pulumi.Input<number>;
+            /**
              * Trusted certificates for TLS connection to the OAuth server.
              */
-            tlsTrustedCertificates?: pulumi.Input<pulumi.Input<inputs.kafka.v1beta1.KafkaSpecKafkaListenersExternalAuthenticationTlsTrustedCertificates>[]>;
+            tlsTrustedCertificates?: pulumi.Input<pulumi.Input<inputs.kafka.v1beta1.KafkaSpecKafkaListenersOneOf0AuthenticationTlsTrustedCertificates>[]>;
             /**
              * Authentication type. `oauth` type uses SASL OAUTHBEARER Authentication. `scram-sha-512` type uses SASL SCRAM-SHA-512 Authentication. `tls` type uses TLS Client Authentication. `tls` type is supported only on TLS listeners.
              */
@@ -8927,7 +9198,7 @@ export namespace kafka {
         /**
          * Link to Kubernetes Secret containing the OAuth client secret which the Kafka broker can use to authenticate against the authorization server and use the introspect endpoint URI.
          */
-        export interface KafkaSpecKafkaListenersExternalAuthenticationClientSecret {
+        export interface KafkaSpecKafkaListenersOneOf0AuthenticationClientSecret {
             /**
              * The key under which the secret value is stored in the Kubernetes Secret.
              */
@@ -8938,7 +9209,326 @@ export namespace kafka {
             secretName: pulumi.Input<string>;
         }
 
-        export interface KafkaSpecKafkaListenersExternalAuthenticationTlsTrustedCertificates {
+        export interface KafkaSpecKafkaListenersOneOf0AuthenticationTlsTrustedCertificates {
+            /**
+             * The name of the file certificate in the Secret.
+             */
+            certificate: pulumi.Input<string>;
+            /**
+             * The name of the Secret containing the certificate.
+             */
+            secretName: pulumi.Input<string>;
+        }
+
+        /**
+         * Additional listener configuration.
+         */
+        export interface KafkaSpecKafkaListenersOneOf0Configuration {
+            /**
+             * Bootstrap configuration.
+             */
+            bootstrap?: pulumi.Input<inputs.kafka.v1beta1.KafkaSpecKafkaListenersOneOf0ConfigurationBootstrap>;
+            /**
+             * Reference to the `Secret` which holds the certificate and private key pair which will be used for this listener. The certificate can optionally contain the whole chain. This field can be used only with listeners with enabled TLS encryption.
+             */
+            brokerCertChainAndKey?: pulumi.Input<inputs.kafka.v1beta1.KafkaSpecKafkaListenersOneOf0ConfigurationBrokerCertChainAndKey>;
+            /**
+             * Per-broker configurations.
+             */
+            brokers?: pulumi.Input<pulumi.Input<inputs.kafka.v1beta1.KafkaSpecKafkaListenersOneOf0ConfigurationBrokers>[]>;
+            /**
+             * Configures the `Ingress` class that defines which `Ingress` controller will be used. If not set, the `Ingress` class is set to `nginx`. This field can be used only with `ingress` type listener.
+             */
+            class?: pulumi.Input<string>;
+            /**
+             * Specifies whether the service routes external traffic to node-local or cluster-wide endpoints. `Cluster` may cause a second hop to another node and obscures the client source IP. `Local` avoids a second hop for LoadBalancer and Nodeport type services and preserves the client source IP (when supported by the infrastructure). If unspecified, Kubernetes will use `Cluster` as the default.This field can be used only with `loadbalancer` or `nodeport` type listener.
+             */
+            externalTrafficPolicy?: pulumi.Input<string>;
+            /**
+             * A list of CIDR ranges (for example `10.0.0.0/8` or `130.211.204.1/32`) from which clients can connect to load balancer type listeners. If supported by the platform, traffic through the loadbalancer is restricted to the specified CIDR ranges. This field is applicable only for loadbalancer type services and is ignored if the cloud provider does not support the feature. For more information, see https://v1-17.docs.kubernetes.io/docs/tasks/access-application-cluster/configure-cloud-provider-firewall/. This field can be used only with `loadbalancer` type listener.
+             */
+            loadBalancerSourceRanges?: pulumi.Input<pulumi.Input<string>[]>;
+            /**
+             * Defines which address type should be used as the node address. Available types are: `ExternalDNS`, `ExternalIP`, `InternalDNS`, `InternalIP` and `Hostname`. By default, the addresses will be used in the following order (the first one found will be used):
+             * * `ExternalDNS`
+             * * `ExternalIP`
+             * * `InternalDNS`
+             * * `InternalIP`
+             * * `Hostname`
+             *
+             * This field can be used to select the address type which will be used as the preferred type and checked first. In case no address will be found for this address type, the other types will be used in the default order.This field can be used only with `nodeport` type listener..
+             */
+            preferredNodePortAddressType?: pulumi.Input<string>;
+            /**
+             * Configures whether the Kubernetes service DNS domain should be used or not. If set to `true`, the generated addresses with contain the service DNS domain suffix (by default `.cluster.local`, can be configured using environment variable `KUBERNETES_SERVICE_DNS_DOMAIN`). Defaults to `false`.This field can be used only with `internal` type listener.
+             */
+            useServiceDnsDomain?: pulumi.Input<boolean>;
+        }
+
+        /**
+         * Bootstrap configuration.
+         */
+        export interface KafkaSpecKafkaListenersOneOf0ConfigurationBootstrap {
+            /**
+             * Additional alternative names for the bootstrap service. The alternative names will be added to the list of subject alternative names of the TLS certificates.
+             */
+            alternativeNames?: pulumi.Input<pulumi.Input<string>[]>;
+            /**
+             * Annotations that will be added to the `Ingress` or `Service` resource. You can use this field to configure DNS providers such as External DNS. This field can be used only with `loadbalancer`, `nodeport`, or `ingress` type listeners.
+             */
+            annotations?: pulumi.Input<{[key: string]: any}>;
+            /**
+             * The bootstrap host. This field will be used in the Ingress resource or in the Route resource to specify the desired hostname. This field can be used only with `route` (optional) or `ingress` (required) type listeners.
+             */
+            host?: pulumi.Input<string>;
+            /**
+             * The loadbalancer is requested with the IP address specified in this field. This feature depends on whether the underlying cloud provider supports specifying the `loadBalancerIP` when a load balancer is created. This field is ignored if the cloud provider does not support the feature.This field can be used only with `loadbalancer` type listener.
+             */
+            loadBalancerIP?: pulumi.Input<string>;
+            /**
+             * Node port for the bootstrap service. This field can be used only with `nodeport` type listener.
+             */
+            nodePort?: pulumi.Input<number>;
+        }
+
+        /**
+         * Reference to the `Secret` which holds the certificate and private key pair which will be used for this listener. The certificate can optionally contain the whole chain. This field can be used only with listeners with enabled TLS encryption.
+         */
+        export interface KafkaSpecKafkaListenersOneOf0ConfigurationBrokerCertChainAndKey {
+            /**
+             * The name of the file certificate in the Secret.
+             */
+            certificate: pulumi.Input<string>;
+            /**
+             * The name of the private key in the Secret.
+             */
+            key: pulumi.Input<string>;
+            /**
+             * The name of the Secret containing the certificate.
+             */
+            secretName: pulumi.Input<string>;
+        }
+
+        export interface KafkaSpecKafkaListenersOneOf0ConfigurationBrokers {
+            /**
+             * The host name which will be used in the brokers' `advertised.brokers`.
+             */
+            advertisedHost?: pulumi.Input<string>;
+            /**
+             * The port number which will be used in the brokers' `advertised.brokers`.
+             */
+            advertisedPort?: pulumi.Input<number>;
+            /**
+             * Annotations that will be added to the `Ingress` or `Service` resource. You can use this field to configure DNS providers such as External DNS. This field can be used only with `loadbalancer`, `nodeport`, or `ingress` type listeners.
+             */
+            annotations?: pulumi.Input<{[key: string]: any}>;
+            /**
+             * ID of the kafka broker (broker identifier). Broker IDs start from 0 and correspond to the number of broker replicas.
+             */
+            broker: pulumi.Input<number>;
+            /**
+             * The broker host. This field will be used in the Ingress resource or in the Route resource to specify the desired hostname. This field can be used only with `route` (optional) or `ingress` (required) type listeners.
+             */
+            host?: pulumi.Input<string>;
+            /**
+             * The loadbalancer is requested with the IP address specified in this field. This feature depends on whether the underlying cloud provider supports specifying the `loadBalancerIP` when a load balancer is created. This field is ignored if the cloud provider does not support the feature.This field can be used only with `loadbalancer` type listener.
+             */
+            loadBalancerIP?: pulumi.Input<string>;
+            /**
+             * Node port for the per-broker service. This field can be used only with `nodeport` type listener.
+             */
+            nodePort?: pulumi.Input<number>;
+        }
+
+        export interface KafkaSpecKafkaListenersOneOf0NetworkPolicyPeers {
+            ipBlock?: pulumi.Input<inputs.kafka.v1beta1.KafkaSpecKafkaListenersOneOf0NetworkPolicyPeersIpBlock>;
+            namespaceSelector?: pulumi.Input<inputs.kafka.v1beta1.KafkaSpecKafkaListenersOneOf0NetworkPolicyPeersNamespaceSelector>;
+            podSelector?: pulumi.Input<inputs.kafka.v1beta1.KafkaSpecKafkaListenersOneOf0NetworkPolicyPeersPodSelector>;
+        }
+
+        export interface KafkaSpecKafkaListenersOneOf0NetworkPolicyPeersIpBlock {
+            cidr?: pulumi.Input<string>;
+            except?: pulumi.Input<pulumi.Input<string>[]>;
+        }
+
+        export interface KafkaSpecKafkaListenersOneOf0NetworkPolicyPeersNamespaceSelector {
+            matchExpressions?: pulumi.Input<pulumi.Input<inputs.kafka.v1beta1.KafkaSpecKafkaListenersOneOf0NetworkPolicyPeersNamespaceSelectorMatchExpressions>[]>;
+            matchLabels?: pulumi.Input<{[key: string]: any}>;
+        }
+
+        export interface KafkaSpecKafkaListenersOneOf0NetworkPolicyPeersNamespaceSelectorMatchExpressions {
+            key?: pulumi.Input<string>;
+            operator?: pulumi.Input<string>;
+            values?: pulumi.Input<pulumi.Input<string>[]>;
+        }
+
+        export interface KafkaSpecKafkaListenersOneOf0NetworkPolicyPeersPodSelector {
+            matchExpressions?: pulumi.Input<pulumi.Input<inputs.kafka.v1beta1.KafkaSpecKafkaListenersOneOf0NetworkPolicyPeersPodSelectorMatchExpressions>[]>;
+            matchLabels?: pulumi.Input<{[key: string]: any}>;
+        }
+
+        export interface KafkaSpecKafkaListenersOneOf0NetworkPolicyPeersPodSelectorMatchExpressions {
+            key?: pulumi.Input<string>;
+            operator?: pulumi.Input<string>;
+            values?: pulumi.Input<pulumi.Input<string>[]>;
+        }
+
+        export interface KafkaSpecKafkaListenersOneOf1 {
+            /**
+             * Configures external listener on port 9094.
+             */
+            external?: pulumi.Input<inputs.kafka.v1beta1.KafkaSpecKafkaListenersOneOf1External>;
+            /**
+             * Configures plain listener on port 9092.
+             */
+            plain?: pulumi.Input<inputs.kafka.v1beta1.KafkaSpecKafkaListenersOneOf1Plain>;
+            /**
+             * Configures TLS listener on port 9093.
+             */
+            tls?: pulumi.Input<inputs.kafka.v1beta1.KafkaSpecKafkaListenersOneOf1Tls>;
+        }
+
+        /**
+         * Configures external listener on port 9094.
+         */
+        export interface KafkaSpecKafkaListenersOneOf1External {
+            /**
+             * Authentication configuration for Kafka brokers.
+             */
+            authentication?: pulumi.Input<inputs.kafka.v1beta1.KafkaSpecKafkaListenersOneOf1ExternalAuthentication>;
+            /**
+             * Configures the `Ingress` class that defines which `Ingress` controller will be used. If not set, the `Ingress` class is set to `nginx`.
+             */
+            class?: pulumi.Input<string>;
+            /**
+             * External listener configuration.
+             */
+            configuration?: pulumi.Input<inputs.kafka.v1beta1.KafkaSpecKafkaListenersOneOf1ExternalConfiguration>;
+            /**
+             * List of peers which should be able to connect to this listener. Peers in this list are combined using a logical OR operation. If this field is empty or missing, all connections will be allowed for this listener. If this field is present and contains at least one item, the listener only allows the traffic which matches at least one item in this list.
+             */
+            networkPolicyPeers?: pulumi.Input<pulumi.Input<inputs.kafka.v1beta1.KafkaSpecKafkaListenersOneOf1ExternalNetworkPolicyPeers>[]>;
+            /**
+             * Overrides for external bootstrap and broker services and externally advertised addresses.
+             */
+            overrides?: pulumi.Input<inputs.kafka.v1beta1.KafkaSpecKafkaListenersOneOf1ExternalOverrides>;
+            /**
+             * Enables TLS encryption on the listener. By default set to `true` for enabled TLS encryption.
+             */
+            tls?: pulumi.Input<boolean>;
+            /**
+             * Type of the external listener. Currently the supported types are `route`, `loadbalancer`, and `nodeport`. 
+             *
+             * * `route` type uses OpenShift Routes to expose Kafka.* `loadbalancer` type uses LoadBalancer type services to expose Kafka.* `nodeport` type uses NodePort type services to expose Kafka..
+             */
+            type: pulumi.Input<string>;
+        }
+
+        /**
+         * Authentication configuration for Kafka brokers.
+         */
+        export interface KafkaSpecKafkaListenersOneOf1ExternalAuthentication {
+            /**
+             * Configure whether the access token is treated as JWT. This must be set to `false` if the authorization server returns opaque tokens. Defaults to `true`.
+             */
+            accessTokenIsJwt?: pulumi.Input<boolean>;
+            /**
+             * Configure whether the access token type check is performed or not. This should be set to `false` if the authorization server does not include 'typ' claim in JWT token. Defaults to `true`.
+             */
+            checkAccessTokenType?: pulumi.Input<boolean>;
+            /**
+             * Enable or disable issuer checking. By default issuer is checked using the value configured by `validIssuerUri`. Default value is `true`.
+             */
+            checkIssuer?: pulumi.Input<boolean>;
+            /**
+             * OAuth Client ID which the Kafka broker can use to authenticate against the authorization server and use the introspect endpoint URI.
+             */
+            clientId?: pulumi.Input<string>;
+            /**
+             * Link to Kubernetes Secret containing the OAuth client secret which the Kafka broker can use to authenticate against the authorization server and use the introspect endpoint URI.
+             */
+            clientSecret?: pulumi.Input<inputs.kafka.v1beta1.KafkaSpecKafkaListenersOneOf1ExternalAuthenticationClientSecret>;
+            /**
+             * Enable or disable TLS hostname verification. Default value is `false`.
+             */
+            disableTlsHostnameVerification?: pulumi.Input<boolean>;
+            /**
+             * Enable or disable ECDSA support by installing BouncyCastle crypto provider. Default value is `false`.
+             */
+            enableECDSA?: pulumi.Input<boolean>;
+            /**
+             * The fallback username claim to be used for the user id if the claim specified by `userNameClaim` is not present. This is useful when `client_credentials` authentication only results in the client id being provided in another claim. It only takes effect if `userNameClaim` is set.
+             */
+            fallbackUserNameClaim?: pulumi.Input<string>;
+            /**
+             * The prefix to use with the value of `fallbackUserNameClaim` to construct the user id. This only takes effect if `fallbackUserNameClaim` is true, and the value is present for the claim. Mapping usernames and client ids into the same user id space is useful in preventing name collisions.
+             */
+            fallbackUserNamePrefix?: pulumi.Input<string>;
+            /**
+             * URI of the token introspection endpoint which can be used to validate opaque non-JWT tokens.
+             */
+            introspectionEndpointUri?: pulumi.Input<string>;
+            /**
+             * URI of the JWKS certificate endpoint, which can be used for local JWT validation.
+             */
+            jwksEndpointUri?: pulumi.Input<string>;
+            /**
+             * Configures how often are the JWKS certificates considered valid. The expiry interval has to be at least 60 seconds longer then the refresh interval specified in `jwksRefreshSeconds`. Defaults to 360 seconds.
+             */
+            jwksExpirySeconds?: pulumi.Input<number>;
+            /**
+             * The minimum pause between two consecutive refreshes. When an unknown signing key is encountered the refresh is scheduled immediately, but will always wait for this minimum pause. Defaults to 1 second.
+             */
+            jwksMinRefreshPauseSeconds?: pulumi.Input<number>;
+            /**
+             * Configures how often are the JWKS certificates refreshed. The refresh interval has to be at least 60 seconds shorter then the expiry interval specified in `jwksExpirySeconds`. Defaults to 300 seconds.
+             */
+            jwksRefreshSeconds?: pulumi.Input<number>;
+            /**
+             * Maximum number of seconds the authenticated session remains valid without re-authentication. This enables Apache Kafka re-authentication feature, and causes sessions to expire when the access token expires. If the access token expires before max time or if max time is reached, the client has to re-authenticate, otherwise the server will drop the connection. Not set by default - the authenticated session does not expire when the access token expires.
+             */
+            maxSecondsWithoutReauthentication?: pulumi.Input<number>;
+            /**
+             * Trusted certificates for TLS connection to the OAuth server.
+             */
+            tlsTrustedCertificates?: pulumi.Input<pulumi.Input<inputs.kafka.v1beta1.KafkaSpecKafkaListenersOneOf1ExternalAuthenticationTlsTrustedCertificates>[]>;
+            /**
+             * Authentication type. `oauth` type uses SASL OAUTHBEARER Authentication. `scram-sha-512` type uses SASL SCRAM-SHA-512 Authentication. `tls` type uses TLS Client Authentication. `tls` type is supported only on TLS listeners.
+             */
+            type: pulumi.Input<string>;
+            /**
+             * URI of the User Info Endpoint to use as a fallback to obtaining the user id when the Introspection Endpoint does not return information that can be used for the user id. 
+             */
+            userInfoEndpointUri?: pulumi.Input<string>;
+            /**
+             * Name of the claim from the JWT authentication token, Introspection Endpoint response or User Info Endpoint response which will be used to extract the user id. Defaults to `sub`.
+             */
+            userNameClaim?: pulumi.Input<string>;
+            /**
+             * URI of the token issuer used for authentication.
+             */
+            validIssuerUri?: pulumi.Input<string>;
+            /**
+             * Valid value for the `token_type` attribute returned by the Introspection Endpoint. No default value, and not checked by default.
+             */
+            validTokenType?: pulumi.Input<string>;
+        }
+
+        /**
+         * Link to Kubernetes Secret containing the OAuth client secret which the Kafka broker can use to authenticate against the authorization server and use the introspect endpoint URI.
+         */
+        export interface KafkaSpecKafkaListenersOneOf1ExternalAuthenticationClientSecret {
+            /**
+             * The key under which the secret value is stored in the Kubernetes Secret.
+             */
+            key: pulumi.Input<string>;
+            /**
+             * The name of the Kubernetes Secret containing the secret value.
+             */
+            secretName: pulumi.Input<string>;
+        }
+
+        export interface KafkaSpecKafkaListenersOneOf1ExternalAuthenticationTlsTrustedCertificates {
             /**
              * The name of the file certificate in the Secret.
              */
@@ -8952,25 +9542,25 @@ export namespace kafka {
         /**
          * External listener configuration.
          */
-        export interface KafkaSpecKafkaListenersExternalConfiguration {
+        export interface KafkaSpecKafkaListenersOneOf1ExternalConfiguration {
             /**
              * External bootstrap ingress configuration.
              */
-            bootstrap?: pulumi.Input<inputs.kafka.v1beta1.KafkaSpecKafkaListenersExternalConfigurationBootstrap>;
+            bootstrap?: pulumi.Input<inputs.kafka.v1beta1.KafkaSpecKafkaListenersOneOf1ExternalConfigurationBootstrap>;
             /**
              * Reference to the `Secret` which holds the certificate and private key pair. The certificate can optionally contain the whole chain.
              */
-            brokerCertChainAndKey?: pulumi.Input<inputs.kafka.v1beta1.KafkaSpecKafkaListenersExternalConfigurationBrokerCertChainAndKey>;
+            brokerCertChainAndKey?: pulumi.Input<inputs.kafka.v1beta1.KafkaSpecKafkaListenersOneOf1ExternalConfigurationBrokerCertChainAndKey>;
             /**
              * External broker ingress configuration.
              */
-            brokers?: pulumi.Input<pulumi.Input<inputs.kafka.v1beta1.KafkaSpecKafkaListenersExternalConfigurationBrokers>[]>;
+            brokers?: pulumi.Input<pulumi.Input<inputs.kafka.v1beta1.KafkaSpecKafkaListenersOneOf1ExternalConfigurationBrokers>[]>;
         }
 
         /**
          * External bootstrap ingress configuration.
          */
-        export interface KafkaSpecKafkaListenersExternalConfigurationBootstrap {
+        export interface KafkaSpecKafkaListenersOneOf1ExternalConfigurationBootstrap {
             /**
              * Additional address name for the bootstrap service. The address will be added to the list of subject alternative names of the TLS certificates.
              */
@@ -8988,7 +9578,7 @@ export namespace kafka {
         /**
          * Reference to the `Secret` which holds the certificate and private key pair. The certificate can optionally contain the whole chain.
          */
-        export interface KafkaSpecKafkaListenersExternalConfigurationBrokerCertChainAndKey {
+        export interface KafkaSpecKafkaListenersOneOf1ExternalConfigurationBrokerCertChainAndKey {
             /**
              * The name of the file certificate in the Secret.
              */
@@ -9003,7 +9593,7 @@ export namespace kafka {
             secretName: pulumi.Input<string>;
         }
 
-        export interface KafkaSpecKafkaListenersExternalConfigurationBrokers {
+        export interface KafkaSpecKafkaListenersOneOf1ExternalConfigurationBrokers {
             /**
              * The host name which will be used in the brokers' `advertised.brokers`.
              */
@@ -9026,34 +9616,34 @@ export namespace kafka {
             host: pulumi.Input<string>;
         }
 
-        export interface KafkaSpecKafkaListenersExternalNetworkPolicyPeers {
-            ipBlock?: pulumi.Input<inputs.kafka.v1beta1.KafkaSpecKafkaListenersExternalNetworkPolicyPeersIpBlock>;
-            namespaceSelector?: pulumi.Input<inputs.kafka.v1beta1.KafkaSpecKafkaListenersExternalNetworkPolicyPeersNamespaceSelector>;
-            podSelector?: pulumi.Input<inputs.kafka.v1beta1.KafkaSpecKafkaListenersExternalNetworkPolicyPeersPodSelector>;
+        export interface KafkaSpecKafkaListenersOneOf1ExternalNetworkPolicyPeers {
+            ipBlock?: pulumi.Input<inputs.kafka.v1beta1.KafkaSpecKafkaListenersOneOf1ExternalNetworkPolicyPeersIpBlock>;
+            namespaceSelector?: pulumi.Input<inputs.kafka.v1beta1.KafkaSpecKafkaListenersOneOf1ExternalNetworkPolicyPeersNamespaceSelector>;
+            podSelector?: pulumi.Input<inputs.kafka.v1beta1.KafkaSpecKafkaListenersOneOf1ExternalNetworkPolicyPeersPodSelector>;
         }
 
-        export interface KafkaSpecKafkaListenersExternalNetworkPolicyPeersIpBlock {
+        export interface KafkaSpecKafkaListenersOneOf1ExternalNetworkPolicyPeersIpBlock {
             cidr?: pulumi.Input<string>;
             except?: pulumi.Input<pulumi.Input<string>[]>;
         }
 
-        export interface KafkaSpecKafkaListenersExternalNetworkPolicyPeersNamespaceSelector {
-            matchExpressions?: pulumi.Input<pulumi.Input<inputs.kafka.v1beta1.KafkaSpecKafkaListenersExternalNetworkPolicyPeersNamespaceSelectorMatchExpressions>[]>;
+        export interface KafkaSpecKafkaListenersOneOf1ExternalNetworkPolicyPeersNamespaceSelector {
+            matchExpressions?: pulumi.Input<pulumi.Input<inputs.kafka.v1beta1.KafkaSpecKafkaListenersOneOf1ExternalNetworkPolicyPeersNamespaceSelectorMatchExpressions>[]>;
             matchLabels?: pulumi.Input<{[key: string]: any}>;
         }
 
-        export interface KafkaSpecKafkaListenersExternalNetworkPolicyPeersNamespaceSelectorMatchExpressions {
+        export interface KafkaSpecKafkaListenersOneOf1ExternalNetworkPolicyPeersNamespaceSelectorMatchExpressions {
             key?: pulumi.Input<string>;
             operator?: pulumi.Input<string>;
             values?: pulumi.Input<pulumi.Input<string>[]>;
         }
 
-        export interface KafkaSpecKafkaListenersExternalNetworkPolicyPeersPodSelector {
-            matchExpressions?: pulumi.Input<pulumi.Input<inputs.kafka.v1beta1.KafkaSpecKafkaListenersExternalNetworkPolicyPeersPodSelectorMatchExpressions>[]>;
+        export interface KafkaSpecKafkaListenersOneOf1ExternalNetworkPolicyPeersPodSelector {
+            matchExpressions?: pulumi.Input<pulumi.Input<inputs.kafka.v1beta1.KafkaSpecKafkaListenersOneOf1ExternalNetworkPolicyPeersPodSelectorMatchExpressions>[]>;
             matchLabels?: pulumi.Input<{[key: string]: any}>;
         }
 
-        export interface KafkaSpecKafkaListenersExternalNetworkPolicyPeersPodSelectorMatchExpressions {
+        export interface KafkaSpecKafkaListenersOneOf1ExternalNetworkPolicyPeersPodSelectorMatchExpressions {
             key?: pulumi.Input<string>;
             operator?: pulumi.Input<string>;
             values?: pulumi.Input<pulumi.Input<string>[]>;
@@ -9062,21 +9652,21 @@ export namespace kafka {
         /**
          * Overrides for external bootstrap and broker services and externally advertised addresses.
          */
-        export interface KafkaSpecKafkaListenersExternalOverrides {
+        export interface KafkaSpecKafkaListenersOneOf1ExternalOverrides {
             /**
              * External bootstrap service configuration.
              */
-            bootstrap?: pulumi.Input<inputs.kafka.v1beta1.KafkaSpecKafkaListenersExternalOverridesBootstrap>;
+            bootstrap?: pulumi.Input<inputs.kafka.v1beta1.KafkaSpecKafkaListenersOneOf1ExternalOverridesBootstrap>;
             /**
              * External broker services configuration.
              */
-            brokers?: pulumi.Input<pulumi.Input<inputs.kafka.v1beta1.KafkaSpecKafkaListenersExternalOverridesBrokers>[]>;
+            brokers?: pulumi.Input<pulumi.Input<inputs.kafka.v1beta1.KafkaSpecKafkaListenersOneOf1ExternalOverridesBrokers>[]>;
         }
 
         /**
          * External bootstrap service configuration.
          */
-        export interface KafkaSpecKafkaListenersExternalOverridesBootstrap {
+        export interface KafkaSpecKafkaListenersOneOf1ExternalOverridesBootstrap {
             /**
              * Additional address name for the bootstrap service. The address will be added to the list of subject alternative names of the TLS certificates.
              */
@@ -9091,7 +9681,7 @@ export namespace kafka {
             nodePort?: pulumi.Input<number>;
         }
 
-        export interface KafkaSpecKafkaListenersExternalOverridesBrokers {
+        export interface KafkaSpecKafkaListenersOneOf1ExternalOverridesBrokers {
             /**
              * The host name which will be used in the brokers' `advertised.brokers`.
              */
@@ -9117,21 +9707,21 @@ export namespace kafka {
         /**
          * Configures plain listener on port 9092.
          */
-        export interface KafkaSpecKafkaListenersPlain {
+        export interface KafkaSpecKafkaListenersOneOf1Plain {
             /**
              * Authentication configuration for this listener. Since this listener does not use TLS transport you cannot configure an authentication with `type: tls`.
              */
-            authentication?: pulumi.Input<inputs.kafka.v1beta1.KafkaSpecKafkaListenersPlainAuthentication>;
+            authentication?: pulumi.Input<inputs.kafka.v1beta1.KafkaSpecKafkaListenersOneOf1PlainAuthentication>;
             /**
              * List of peers which should be able to connect to this listener. Peers in this list are combined using a logical OR operation. If this field is empty or missing, all connections will be allowed for this listener. If this field is present and contains at least one item, the listener only allows the traffic which matches at least one item in this list.
              */
-            networkPolicyPeers?: pulumi.Input<pulumi.Input<inputs.kafka.v1beta1.KafkaSpecKafkaListenersPlainNetworkPolicyPeers>[]>;
+            networkPolicyPeers?: pulumi.Input<pulumi.Input<inputs.kafka.v1beta1.KafkaSpecKafkaListenersOneOf1PlainNetworkPolicyPeers>[]>;
         }
 
         /**
          * Authentication configuration for this listener. Since this listener does not use TLS transport you cannot configure an authentication with `type: tls`.
          */
-        export interface KafkaSpecKafkaListenersPlainAuthentication {
+        export interface KafkaSpecKafkaListenersOneOf1PlainAuthentication {
             /**
              * Configure whether the access token is treated as JWT. This must be set to `false` if the authorization server returns opaque tokens. Defaults to `true`.
              */
@@ -9151,7 +9741,7 @@ export namespace kafka {
             /**
              * Link to Kubernetes Secret containing the OAuth client secret which the Kafka broker can use to authenticate against the authorization server and use the introspect endpoint URI.
              */
-            clientSecret?: pulumi.Input<inputs.kafka.v1beta1.KafkaSpecKafkaListenersPlainAuthenticationClientSecret>;
+            clientSecret?: pulumi.Input<inputs.kafka.v1beta1.KafkaSpecKafkaListenersOneOf1PlainAuthenticationClientSecret>;
             /**
              * Enable or disable TLS hostname verification. Default value is `false`.
              */
@@ -9181,13 +9771,21 @@ export namespace kafka {
              */
             jwksExpirySeconds?: pulumi.Input<number>;
             /**
+             * The minimum pause between two consecutive refreshes. When an unknown signing key is encountered the refresh is scheduled immediately, but will always wait for this minimum pause. Defaults to 1 second.
+             */
+            jwksMinRefreshPauseSeconds?: pulumi.Input<number>;
+            /**
              * Configures how often are the JWKS certificates refreshed. The refresh interval has to be at least 60 seconds shorter then the expiry interval specified in `jwksExpirySeconds`. Defaults to 300 seconds.
              */
             jwksRefreshSeconds?: pulumi.Input<number>;
             /**
+             * Maximum number of seconds the authenticated session remains valid without re-authentication. This enables Apache Kafka re-authentication feature, and causes sessions to expire when the access token expires. If the access token expires before max time or if max time is reached, the client has to re-authenticate, otherwise the server will drop the connection. Not set by default - the authenticated session does not expire when the access token expires.
+             */
+            maxSecondsWithoutReauthentication?: pulumi.Input<number>;
+            /**
              * Trusted certificates for TLS connection to the OAuth server.
              */
-            tlsTrustedCertificates?: pulumi.Input<pulumi.Input<inputs.kafka.v1beta1.KafkaSpecKafkaListenersPlainAuthenticationTlsTrustedCertificates>[]>;
+            tlsTrustedCertificates?: pulumi.Input<pulumi.Input<inputs.kafka.v1beta1.KafkaSpecKafkaListenersOneOf1PlainAuthenticationTlsTrustedCertificates>[]>;
             /**
              * Authentication type. `oauth` type uses SASL OAUTHBEARER Authentication. `scram-sha-512` type uses SASL SCRAM-SHA-512 Authentication. `tls` type uses TLS Client Authentication. `tls` type is supported only on TLS listeners.
              */
@@ -9213,7 +9811,7 @@ export namespace kafka {
         /**
          * Link to Kubernetes Secret containing the OAuth client secret which the Kafka broker can use to authenticate against the authorization server and use the introspect endpoint URI.
          */
-        export interface KafkaSpecKafkaListenersPlainAuthenticationClientSecret {
+        export interface KafkaSpecKafkaListenersOneOf1PlainAuthenticationClientSecret {
             /**
              * The key under which the secret value is stored in the Kubernetes Secret.
              */
@@ -9224,7 +9822,7 @@ export namespace kafka {
             secretName: pulumi.Input<string>;
         }
 
-        export interface KafkaSpecKafkaListenersPlainAuthenticationTlsTrustedCertificates {
+        export interface KafkaSpecKafkaListenersOneOf1PlainAuthenticationTlsTrustedCertificates {
             /**
              * The name of the file certificate in the Secret.
              */
@@ -9235,34 +9833,34 @@ export namespace kafka {
             secretName: pulumi.Input<string>;
         }
 
-        export interface KafkaSpecKafkaListenersPlainNetworkPolicyPeers {
-            ipBlock?: pulumi.Input<inputs.kafka.v1beta1.KafkaSpecKafkaListenersPlainNetworkPolicyPeersIpBlock>;
-            namespaceSelector?: pulumi.Input<inputs.kafka.v1beta1.KafkaSpecKafkaListenersPlainNetworkPolicyPeersNamespaceSelector>;
-            podSelector?: pulumi.Input<inputs.kafka.v1beta1.KafkaSpecKafkaListenersPlainNetworkPolicyPeersPodSelector>;
+        export interface KafkaSpecKafkaListenersOneOf1PlainNetworkPolicyPeers {
+            ipBlock?: pulumi.Input<inputs.kafka.v1beta1.KafkaSpecKafkaListenersOneOf1PlainNetworkPolicyPeersIpBlock>;
+            namespaceSelector?: pulumi.Input<inputs.kafka.v1beta1.KafkaSpecKafkaListenersOneOf1PlainNetworkPolicyPeersNamespaceSelector>;
+            podSelector?: pulumi.Input<inputs.kafka.v1beta1.KafkaSpecKafkaListenersOneOf1PlainNetworkPolicyPeersPodSelector>;
         }
 
-        export interface KafkaSpecKafkaListenersPlainNetworkPolicyPeersIpBlock {
+        export interface KafkaSpecKafkaListenersOneOf1PlainNetworkPolicyPeersIpBlock {
             cidr?: pulumi.Input<string>;
             except?: pulumi.Input<pulumi.Input<string>[]>;
         }
 
-        export interface KafkaSpecKafkaListenersPlainNetworkPolicyPeersNamespaceSelector {
-            matchExpressions?: pulumi.Input<pulumi.Input<inputs.kafka.v1beta1.KafkaSpecKafkaListenersPlainNetworkPolicyPeersNamespaceSelectorMatchExpressions>[]>;
+        export interface KafkaSpecKafkaListenersOneOf1PlainNetworkPolicyPeersNamespaceSelector {
+            matchExpressions?: pulumi.Input<pulumi.Input<inputs.kafka.v1beta1.KafkaSpecKafkaListenersOneOf1PlainNetworkPolicyPeersNamespaceSelectorMatchExpressions>[]>;
             matchLabels?: pulumi.Input<{[key: string]: any}>;
         }
 
-        export interface KafkaSpecKafkaListenersPlainNetworkPolicyPeersNamespaceSelectorMatchExpressions {
+        export interface KafkaSpecKafkaListenersOneOf1PlainNetworkPolicyPeersNamespaceSelectorMatchExpressions {
             key?: pulumi.Input<string>;
             operator?: pulumi.Input<string>;
             values?: pulumi.Input<pulumi.Input<string>[]>;
         }
 
-        export interface KafkaSpecKafkaListenersPlainNetworkPolicyPeersPodSelector {
-            matchExpressions?: pulumi.Input<pulumi.Input<inputs.kafka.v1beta1.KafkaSpecKafkaListenersPlainNetworkPolicyPeersPodSelectorMatchExpressions>[]>;
+        export interface KafkaSpecKafkaListenersOneOf1PlainNetworkPolicyPeersPodSelector {
+            matchExpressions?: pulumi.Input<pulumi.Input<inputs.kafka.v1beta1.KafkaSpecKafkaListenersOneOf1PlainNetworkPolicyPeersPodSelectorMatchExpressions>[]>;
             matchLabels?: pulumi.Input<{[key: string]: any}>;
         }
 
-        export interface KafkaSpecKafkaListenersPlainNetworkPolicyPeersPodSelectorMatchExpressions {
+        export interface KafkaSpecKafkaListenersOneOf1PlainNetworkPolicyPeersPodSelectorMatchExpressions {
             key?: pulumi.Input<string>;
             operator?: pulumi.Input<string>;
             values?: pulumi.Input<pulumi.Input<string>[]>;
@@ -9271,25 +9869,25 @@ export namespace kafka {
         /**
          * Configures TLS listener on port 9093.
          */
-        export interface KafkaSpecKafkaListenersTls {
+        export interface KafkaSpecKafkaListenersOneOf1Tls {
             /**
              * Authentication configuration for this listener.
              */
-            authentication?: pulumi.Input<inputs.kafka.v1beta1.KafkaSpecKafkaListenersTlsAuthentication>;
+            authentication?: pulumi.Input<inputs.kafka.v1beta1.KafkaSpecKafkaListenersOneOf1TlsAuthentication>;
             /**
              * Configuration of TLS listener.
              */
-            configuration?: pulumi.Input<inputs.kafka.v1beta1.KafkaSpecKafkaListenersTlsConfiguration>;
+            configuration?: pulumi.Input<inputs.kafka.v1beta1.KafkaSpecKafkaListenersOneOf1TlsConfiguration>;
             /**
              * List of peers which should be able to connect to this listener. Peers in this list are combined using a logical OR operation. If this field is empty or missing, all connections will be allowed for this listener. If this field is present and contains at least one item, the listener only allows the traffic which matches at least one item in this list.
              */
-            networkPolicyPeers?: pulumi.Input<pulumi.Input<inputs.kafka.v1beta1.KafkaSpecKafkaListenersTlsNetworkPolicyPeers>[]>;
+            networkPolicyPeers?: pulumi.Input<pulumi.Input<inputs.kafka.v1beta1.KafkaSpecKafkaListenersOneOf1TlsNetworkPolicyPeers>[]>;
         }
 
         /**
          * Authentication configuration for this listener.
          */
-        export interface KafkaSpecKafkaListenersTlsAuthentication {
+        export interface KafkaSpecKafkaListenersOneOf1TlsAuthentication {
             /**
              * Configure whether the access token is treated as JWT. This must be set to `false` if the authorization server returns opaque tokens. Defaults to `true`.
              */
@@ -9309,7 +9907,7 @@ export namespace kafka {
             /**
              * Link to Kubernetes Secret containing the OAuth client secret which the Kafka broker can use to authenticate against the authorization server and use the introspect endpoint URI.
              */
-            clientSecret?: pulumi.Input<inputs.kafka.v1beta1.KafkaSpecKafkaListenersTlsAuthenticationClientSecret>;
+            clientSecret?: pulumi.Input<inputs.kafka.v1beta1.KafkaSpecKafkaListenersOneOf1TlsAuthenticationClientSecret>;
             /**
              * Enable or disable TLS hostname verification. Default value is `false`.
              */
@@ -9339,13 +9937,21 @@ export namespace kafka {
              */
             jwksExpirySeconds?: pulumi.Input<number>;
             /**
+             * The minimum pause between two consecutive refreshes. When an unknown signing key is encountered the refresh is scheduled immediately, but will always wait for this minimum pause. Defaults to 1 second.
+             */
+            jwksMinRefreshPauseSeconds?: pulumi.Input<number>;
+            /**
              * Configures how often are the JWKS certificates refreshed. The refresh interval has to be at least 60 seconds shorter then the expiry interval specified in `jwksExpirySeconds`. Defaults to 300 seconds.
              */
             jwksRefreshSeconds?: pulumi.Input<number>;
             /**
+             * Maximum number of seconds the authenticated session remains valid without re-authentication. This enables Apache Kafka re-authentication feature, and causes sessions to expire when the access token expires. If the access token expires before max time or if max time is reached, the client has to re-authenticate, otherwise the server will drop the connection. Not set by default - the authenticated session does not expire when the access token expires.
+             */
+            maxSecondsWithoutReauthentication?: pulumi.Input<number>;
+            /**
              * Trusted certificates for TLS connection to the OAuth server.
              */
-            tlsTrustedCertificates?: pulumi.Input<pulumi.Input<inputs.kafka.v1beta1.KafkaSpecKafkaListenersTlsAuthenticationTlsTrustedCertificates>[]>;
+            tlsTrustedCertificates?: pulumi.Input<pulumi.Input<inputs.kafka.v1beta1.KafkaSpecKafkaListenersOneOf1TlsAuthenticationTlsTrustedCertificates>[]>;
             /**
              * Authentication type. `oauth` type uses SASL OAUTHBEARER Authentication. `scram-sha-512` type uses SASL SCRAM-SHA-512 Authentication. `tls` type uses TLS Client Authentication. `tls` type is supported only on TLS listeners.
              */
@@ -9371,7 +9977,7 @@ export namespace kafka {
         /**
          * Link to Kubernetes Secret containing the OAuth client secret which the Kafka broker can use to authenticate against the authorization server and use the introspect endpoint URI.
          */
-        export interface KafkaSpecKafkaListenersTlsAuthenticationClientSecret {
+        export interface KafkaSpecKafkaListenersOneOf1TlsAuthenticationClientSecret {
             /**
              * The key under which the secret value is stored in the Kubernetes Secret.
              */
@@ -9382,7 +9988,7 @@ export namespace kafka {
             secretName: pulumi.Input<string>;
         }
 
-        export interface KafkaSpecKafkaListenersTlsAuthenticationTlsTrustedCertificates {
+        export interface KafkaSpecKafkaListenersOneOf1TlsAuthenticationTlsTrustedCertificates {
             /**
              * The name of the file certificate in the Secret.
              */
@@ -9396,17 +10002,17 @@ export namespace kafka {
         /**
          * Configuration of TLS listener.
          */
-        export interface KafkaSpecKafkaListenersTlsConfiguration {
+        export interface KafkaSpecKafkaListenersOneOf1TlsConfiguration {
             /**
              * Reference to the `Secret` which holds the certificate and private key pair. The certificate can optionally contain the whole chain.
              */
-            brokerCertChainAndKey?: pulumi.Input<inputs.kafka.v1beta1.KafkaSpecKafkaListenersTlsConfigurationBrokerCertChainAndKey>;
+            brokerCertChainAndKey?: pulumi.Input<inputs.kafka.v1beta1.KafkaSpecKafkaListenersOneOf1TlsConfigurationBrokerCertChainAndKey>;
         }
 
         /**
          * Reference to the `Secret` which holds the certificate and private key pair. The certificate can optionally contain the whole chain.
          */
-        export interface KafkaSpecKafkaListenersTlsConfigurationBrokerCertChainAndKey {
+        export interface KafkaSpecKafkaListenersOneOf1TlsConfigurationBrokerCertChainAndKey {
             /**
              * The name of the file certificate in the Secret.
              */
@@ -9421,34 +10027,34 @@ export namespace kafka {
             secretName: pulumi.Input<string>;
         }
 
-        export interface KafkaSpecKafkaListenersTlsNetworkPolicyPeers {
-            ipBlock?: pulumi.Input<inputs.kafka.v1beta1.KafkaSpecKafkaListenersTlsNetworkPolicyPeersIpBlock>;
-            namespaceSelector?: pulumi.Input<inputs.kafka.v1beta1.KafkaSpecKafkaListenersTlsNetworkPolicyPeersNamespaceSelector>;
-            podSelector?: pulumi.Input<inputs.kafka.v1beta1.KafkaSpecKafkaListenersTlsNetworkPolicyPeersPodSelector>;
+        export interface KafkaSpecKafkaListenersOneOf1TlsNetworkPolicyPeers {
+            ipBlock?: pulumi.Input<inputs.kafka.v1beta1.KafkaSpecKafkaListenersOneOf1TlsNetworkPolicyPeersIpBlock>;
+            namespaceSelector?: pulumi.Input<inputs.kafka.v1beta1.KafkaSpecKafkaListenersOneOf1TlsNetworkPolicyPeersNamespaceSelector>;
+            podSelector?: pulumi.Input<inputs.kafka.v1beta1.KafkaSpecKafkaListenersOneOf1TlsNetworkPolicyPeersPodSelector>;
         }
 
-        export interface KafkaSpecKafkaListenersTlsNetworkPolicyPeersIpBlock {
+        export interface KafkaSpecKafkaListenersOneOf1TlsNetworkPolicyPeersIpBlock {
             cidr?: pulumi.Input<string>;
             except?: pulumi.Input<pulumi.Input<string>[]>;
         }
 
-        export interface KafkaSpecKafkaListenersTlsNetworkPolicyPeersNamespaceSelector {
-            matchExpressions?: pulumi.Input<pulumi.Input<inputs.kafka.v1beta1.KafkaSpecKafkaListenersTlsNetworkPolicyPeersNamespaceSelectorMatchExpressions>[]>;
+        export interface KafkaSpecKafkaListenersOneOf1TlsNetworkPolicyPeersNamespaceSelector {
+            matchExpressions?: pulumi.Input<pulumi.Input<inputs.kafka.v1beta1.KafkaSpecKafkaListenersOneOf1TlsNetworkPolicyPeersNamespaceSelectorMatchExpressions>[]>;
             matchLabels?: pulumi.Input<{[key: string]: any}>;
         }
 
-        export interface KafkaSpecKafkaListenersTlsNetworkPolicyPeersNamespaceSelectorMatchExpressions {
+        export interface KafkaSpecKafkaListenersOneOf1TlsNetworkPolicyPeersNamespaceSelectorMatchExpressions {
             key?: pulumi.Input<string>;
             operator?: pulumi.Input<string>;
             values?: pulumi.Input<pulumi.Input<string>[]>;
         }
 
-        export interface KafkaSpecKafkaListenersTlsNetworkPolicyPeersPodSelector {
-            matchExpressions?: pulumi.Input<pulumi.Input<inputs.kafka.v1beta1.KafkaSpecKafkaListenersTlsNetworkPolicyPeersPodSelectorMatchExpressions>[]>;
+        export interface KafkaSpecKafkaListenersOneOf1TlsNetworkPolicyPeersPodSelector {
+            matchExpressions?: pulumi.Input<pulumi.Input<inputs.kafka.v1beta1.KafkaSpecKafkaListenersOneOf1TlsNetworkPolicyPeersPodSelectorMatchExpressions>[]>;
             matchLabels?: pulumi.Input<{[key: string]: any}>;
         }
 
-        export interface KafkaSpecKafkaListenersTlsNetworkPolicyPeersPodSelectorMatchExpressions {
+        export interface KafkaSpecKafkaListenersOneOf1TlsNetworkPolicyPeersPodSelectorMatchExpressions {
             key?: pulumi.Input<string>;
             operator?: pulumi.Input<string>;
             values?: pulumi.Input<pulumi.Input<string>[]>;
@@ -9812,7 +10418,7 @@ export namespace kafka {
              */
             externalTrafficPolicy?: pulumi.Input<string>;
             /**
-             * A list of CIDR ranges (for example `10.0.0.0/8` or `130.211.204.1/32`) from which clients can connect to load balancer type listeners. If supported by the platform, traffic through the loadbalancer is restricted to the specified CIDR ranges. This field is applicable only for loadbalancer type services and is ignored if the cloud provider does not support the feature. For more information, see https://kubernetes.io/docs/tasks/access-application-cluster/configure-cloud-provider-firewall/.
+             * A list of CIDR ranges (for example `10.0.0.0/8` or `130.211.204.1/32`) from which clients can connect to load balancer type listeners. If supported by the platform, traffic through the loadbalancer is restricted to the specified CIDR ranges. This field is applicable only for loadbalancer type services and is ignored if the cloud provider does not support the feature. For more information, see https://v1-17.docs.kubernetes.io/docs/tasks/access-application-cluster/configure-cloud-provider-firewall/. 
              */
             loadBalancerSourceRanges?: pulumi.Input<pulumi.Input<string>[]>;
             /**
@@ -9891,6 +10497,7 @@ export namespace kafka {
         export interface KafkaSpecKafkaTemplateInitContainerSecurityContextWindowsOptions {
             gmsaCredentialSpec?: pulumi.Input<string>;
             gmsaCredentialSpecName?: pulumi.Input<string>;
+            runAsUserName?: pulumi.Input<string>;
         }
 
         /**
@@ -9949,6 +10556,7 @@ export namespace kafka {
         export interface KafkaSpecKafkaTemplateKafkaContainerSecurityContextWindowsOptions {
             gmsaCredentialSpec?: pulumi.Input<string>;
             gmsaCredentialSpecName?: pulumi.Input<string>;
+            runAsUserName?: pulumi.Input<string>;
         }
 
         /**
@@ -10008,7 +10616,7 @@ export namespace kafka {
              */
             externalTrafficPolicy?: pulumi.Input<string>;
             /**
-             * A list of CIDR ranges (for example `10.0.0.0/8` or `130.211.204.1/32`) from which clients can connect to load balancer type listeners. If supported by the platform, traffic through the loadbalancer is restricted to the specified CIDR ranges. This field is applicable only for loadbalancer type services and is ignored if the cloud provider does not support the feature. For more information, see https://kubernetes.io/docs/tasks/access-application-cluster/configure-cloud-provider-firewall/.
+             * A list of CIDR ranges (for example `10.0.0.0/8` or `130.211.204.1/32`) from which clients can connect to load balancer type listeners. If supported by the platform, traffic through the loadbalancer is restricted to the specified CIDR ranges. This field is applicable only for loadbalancer type services and is ignored if the cloud provider does not support the feature. For more information, see https://v1-17.docs.kubernetes.io/docs/tasks/access-application-cluster/configure-cloud-provider-firewall/. 
              */
             loadBalancerSourceRanges?: pulumi.Input<pulumi.Input<string>[]>;
             /**
@@ -10063,6 +10671,10 @@ export namespace kafka {
              * The pod's affinity rules.
              */
             affinity?: pulumi.Input<inputs.kafka.v1beta1.KafkaSpecKafkaTemplatePodAffinity>;
+            /**
+             * The pod's HostAliases. HostAliases is an optional list of hosts and IPs that will be injected into the pod's hosts file if specified.
+             */
+            hostAliases?: pulumi.Input<pulumi.Input<inputs.kafka.v1beta1.KafkaSpecKafkaTemplatePodHostAliases>[]>;
             /**
              * List of references to secrets in the same namespace to use for pulling any of the images used by this Pod. When the `STRIMZI_IMAGE_PULL_SECRETS` environment variable in Cluster Operator and the `imagePullSecrets` option are specified, only the `imagePullSecrets` variable is used and the `STRIMZI_IMAGE_PULL_SECRETS` variable is ignored.
              */
@@ -10266,6 +10878,11 @@ export namespace kafka {
             labels?: pulumi.Input<{[key: string]: any}>;
         }
 
+        export interface KafkaSpecKafkaTemplatePodHostAliases {
+            hostnames?: pulumi.Input<pulumi.Input<string>[]>;
+            ip?: pulumi.Input<string>;
+        }
+
         export interface KafkaSpecKafkaTemplatePodImagePullSecrets {
             name?: pulumi.Input<string>;
         }
@@ -10289,6 +10906,7 @@ export namespace kafka {
          */
         export interface KafkaSpecKafkaTemplatePodSecurityContext {
             fsGroup?: pulumi.Input<number>;
+            fsGroupChangePolicy?: pulumi.Input<string>;
             runAsGroup?: pulumi.Input<number>;
             runAsNonRoot?: pulumi.Input<boolean>;
             runAsUser?: pulumi.Input<number>;
@@ -10313,6 +10931,7 @@ export namespace kafka {
         export interface KafkaSpecKafkaTemplatePodSecurityContextWindowsOptions {
             gmsaCredentialSpec?: pulumi.Input<string>;
             gmsaCredentialSpecName?: pulumi.Input<string>;
+            runAsUserName?: pulumi.Input<string>;
         }
 
         export interface KafkaSpecKafkaTemplatePodTolerations {
@@ -10407,6 +11026,7 @@ export namespace kafka {
         export interface KafkaSpecKafkaTemplateTlsSidecarContainerSecurityContextWindowsOptions {
             gmsaCredentialSpec?: pulumi.Input<string>;
             gmsaCredentialSpecName?: pulumi.Input<string>;
+            runAsUserName?: pulumi.Input<string>;
         }
 
         /**
@@ -11393,6 +12013,10 @@ export namespace kafka {
              */
             affinity?: pulumi.Input<inputs.kafka.v1beta1.KafkaSpecZookeeperTemplatePodAffinity>;
             /**
+             * The pod's HostAliases. HostAliases is an optional list of hosts and IPs that will be injected into the pod's hosts file if specified.
+             */
+            hostAliases?: pulumi.Input<pulumi.Input<inputs.kafka.v1beta1.KafkaSpecZookeeperTemplatePodHostAliases>[]>;
+            /**
              * List of references to secrets in the same namespace to use for pulling any of the images used by this Pod. When the `STRIMZI_IMAGE_PULL_SECRETS` environment variable in Cluster Operator and the `imagePullSecrets` option are specified, only the `imagePullSecrets` variable is used and the `STRIMZI_IMAGE_PULL_SECRETS` variable is ignored.
              */
             imagePullSecrets?: pulumi.Input<pulumi.Input<inputs.kafka.v1beta1.KafkaSpecZookeeperTemplatePodImagePullSecrets>[]>;
@@ -11595,6 +12219,11 @@ export namespace kafka {
             labels?: pulumi.Input<{[key: string]: any}>;
         }
 
+        export interface KafkaSpecZookeeperTemplatePodHostAliases {
+            hostnames?: pulumi.Input<pulumi.Input<string>[]>;
+            ip?: pulumi.Input<string>;
+        }
+
         export interface KafkaSpecZookeeperTemplatePodImagePullSecrets {
             name?: pulumi.Input<string>;
         }
@@ -11618,6 +12247,7 @@ export namespace kafka {
          */
         export interface KafkaSpecZookeeperTemplatePodSecurityContext {
             fsGroup?: pulumi.Input<number>;
+            fsGroupChangePolicy?: pulumi.Input<string>;
             runAsGroup?: pulumi.Input<number>;
             runAsNonRoot?: pulumi.Input<boolean>;
             runAsUser?: pulumi.Input<number>;
@@ -11642,6 +12272,7 @@ export namespace kafka {
         export interface KafkaSpecZookeeperTemplatePodSecurityContextWindowsOptions {
             gmsaCredentialSpec?: pulumi.Input<string>;
             gmsaCredentialSpecName?: pulumi.Input<string>;
+            runAsUserName?: pulumi.Input<string>;
         }
 
         export interface KafkaSpecZookeeperTemplatePodTolerations {
@@ -11736,6 +12367,7 @@ export namespace kafka {
         export interface KafkaSpecZookeeperTemplateTlsSidecarContainerSecurityContextWindowsOptions {
             gmsaCredentialSpec?: pulumi.Input<string>;
             gmsaCredentialSpecName?: pulumi.Input<string>;
+            runAsUserName?: pulumi.Input<string>;
         }
 
         /**
@@ -11794,6 +12426,7 @@ export namespace kafka {
         export interface KafkaSpecZookeeperTemplateZookeeperContainerSecurityContextWindowsOptions {
             gmsaCredentialSpec?: pulumi.Input<string>;
             gmsaCredentialSpecName?: pulumi.Input<string>;
+            runAsUserName?: pulumi.Input<string>;
         }
 
         /**
@@ -12061,7 +12694,7 @@ export namespace kafka {
              */
             acls: pulumi.Input<pulumi.Input<inputs.kafka.v1beta1.KafkaUserSpecAuthorizationAcls>[]>;
             /**
-             * Authorization type. Currently the only supported type is `simple`. `simple` authorization type uses Kafka's `kafka.security.auth.SimpleAclAuthorizer` class for authorization.
+             * Authorization type. Currently the only supported type is `simple`. `simple` authorization type uses Kafka's `kafka.security.authorizer.AclAuthorizer` class for authorization.
              */
             type: pulumi.Input<string>;
         }

@@ -13,11 +13,56 @@ export namespace iot {
             database?: any;
             imageOverrides?: {[key: string]: outputs.iot.v1alpha1.HawkbitSpecImageOverrides};
             rabbit?: any;
+            signOn?: outputs.iot.v1alpha1.HawkbitSpecSignOn;
         }
 
         export interface HawkbitSpecImageOverrides {
             image?: string;
             pullPolicy?: string;
+        }
+
+        export interface HawkbitSpecSignOn {
+            keycloak?: outputs.iot.v1alpha1.HawkbitSpecSignOnKeycloak;
+        }
+
+        export interface HawkbitSpecSignOnKeycloak {
+            hawkbitUrl?: string;
+            /**
+             * Selector for looking up Keycloak Custom Resources.
+             */
+            instanceSelector?: outputs.iot.v1alpha1.HawkbitSpecSignOnKeycloakInstanceSelector;
+        }
+
+        /**
+         * Selector for looking up Keycloak Custom Resources.
+         */
+        export interface HawkbitSpecSignOnKeycloakInstanceSelector {
+            /**
+             * matchExpressions is a list of label selector requirements. The requirements are ANDed.
+             */
+            matchExpressions?: outputs.iot.v1alpha1.HawkbitSpecSignOnKeycloakInstanceSelectorMatchExpressions[];
+            /**
+             * matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+             */
+            matchLabels?: {[key: string]: string};
+        }
+
+        /**
+         * A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface HawkbitSpecSignOnKeycloakInstanceSelectorMatchExpressions {
+            /**
+             * key is the label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+             */
+            operator: string;
+            /**
+             * values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
         }
 
         export interface HawkbitStatus {

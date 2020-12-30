@@ -10,14 +10,17 @@ import (
 	"github.com/pulumi/pulumi/sdk/v2/go/pulumi"
 )
 
+// Tenant is the Schema for the tenants API
 type Tenant struct {
 	pulumi.CustomResourceState
 
 	ApiVersion pulumi.StringPtrOutput     `pulumi:"apiVersion"`
 	Kind       pulumi.StringPtrOutput     `pulumi:"kind"`
 	Metadata   metav1.ObjectMetaPtrOutput `pulumi:"metadata"`
-	Spec       TenantSpecPtrOutput        `pulumi:"spec"`
-	Status     TenantStatusPtrOutput      `pulumi:"status"`
+	// TenantSpec defines the desired state of Tenant
+	Spec TenantSpecPtrOutput `pulumi:"spec"`
+	// TenantStatus defines the observed state of Tenant
+	Status TenantStatusPtrOutput `pulumi:"status"`
 }
 
 // NewTenant registers a new resource with the given unique name, arguments, and options.
@@ -53,16 +56,20 @@ type tenantState struct {
 	ApiVersion *string            `pulumi:"apiVersion"`
 	Kind       *string            `pulumi:"kind"`
 	Metadata   *metav1.ObjectMeta `pulumi:"metadata"`
-	Spec       *TenantSpec        `pulumi:"spec"`
-	Status     *TenantStatus      `pulumi:"status"`
+	// TenantSpec defines the desired state of Tenant
+	Spec *TenantSpec `pulumi:"spec"`
+	// TenantStatus defines the observed state of Tenant
+	Status *TenantStatus `pulumi:"status"`
 }
 
 type TenantState struct {
 	ApiVersion pulumi.StringPtrInput
 	Kind       pulumi.StringPtrInput
 	Metadata   metav1.ObjectMetaPtrInput
-	Spec       TenantSpecPtrInput
-	Status     TenantStatusPtrInput
+	// TenantSpec defines the desired state of Tenant
+	Spec TenantSpecPtrInput
+	// TenantStatus defines the observed state of Tenant
+	Status TenantStatusPtrInput
 }
 
 func (TenantState) ElementType() reflect.Type {
@@ -73,8 +80,10 @@ type tenantArgs struct {
 	ApiVersion *string            `pulumi:"apiVersion"`
 	Kind       *string            `pulumi:"kind"`
 	Metadata   *metav1.ObjectMeta `pulumi:"metadata"`
-	Spec       *TenantSpec        `pulumi:"spec"`
-	Status     *TenantStatus      `pulumi:"status"`
+	// TenantSpec defines the desired state of Tenant
+	Spec *TenantSpec `pulumi:"spec"`
+	// TenantStatus defines the observed state of Tenant
+	Status *TenantStatus `pulumi:"status"`
 }
 
 // The set of arguments for constructing a Tenant resource.
@@ -82,8 +91,10 @@ type TenantArgs struct {
 	ApiVersion pulumi.StringPtrInput
 	Kind       pulumi.StringPtrInput
 	Metadata   metav1.ObjectMetaPtrInput
-	Spec       TenantSpecPtrInput
-	Status     TenantStatusPtrInput
+	// TenantSpec defines the desired state of Tenant
+	Spec TenantSpecPtrInput
+	// TenantStatus defines the observed state of Tenant
+	Status TenantStatusPtrInput
 }
 
 func (TenantArgs) ElementType() reflect.Type {

@@ -24,8 +24,8 @@ namespace Pulumi.Kubernetes.Types.Inputs.Build.V1Alpha1
         /// <summary>
         /// Name of the referent; More info: http://kubernetes.io/docs/user-guide/identifiers#names
         /// </summary>
-        [Input("name")]
-        public Input<string>? Name { get; set; }
+        [Input("name", required: true)]
+        public Input<string> Name { get; set; } = null!;
 
         public BuildRunSpecBuildRefArgs()
         {

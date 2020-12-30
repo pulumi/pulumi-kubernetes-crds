@@ -27,9 +27,12 @@ class Service(pulumi.CustomResource):
                  __name__=None,
                  __opts__=None):
         """
-        Create a Service resource with the given unique name, props, and options.
+        Service is the Schema for the services API
+
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[pulumi.InputType['ServiceSpecArgs']] spec: ServiceSpec defines the desired state of Service
+        :param pulumi.Input[pulumi.InputType['ServiceStatusArgs']] status: ServiceStatus defines the observed state of Service
         """
         if __name__ is not None:
             warnings.warn("explicit use of __name__ is deprecated", DeprecationWarning)
@@ -95,11 +98,17 @@ class Service(pulumi.CustomResource):
     @property
     @pulumi.getter
     def spec(self) -> pulumi.Output[Optional['outputs.ServiceSpec']]:
+        """
+        ServiceSpec defines the desired state of Service
+        """
         return pulumi.get(self, "spec")
 
     @property
     @pulumi.getter
     def status(self) -> pulumi.Output[Optional['outputs.ServiceStatus']]:
+        """
+        ServiceStatus defines the observed state of Service
+        """
         return pulumi.get(self, "status")
 
     def translate_output_property(self, prop):

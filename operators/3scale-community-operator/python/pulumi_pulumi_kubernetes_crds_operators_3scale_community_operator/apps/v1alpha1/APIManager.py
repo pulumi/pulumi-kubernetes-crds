@@ -27,9 +27,12 @@ class APIManager(pulumi.CustomResource):
                  __name__=None,
                  __opts__=None):
         """
-        Create a APIManager resource with the given unique name, props, and options.
+        APIManager is the Schema for the apimanagers API
+
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[pulumi.InputType['APIManagerSpecArgs']] spec: APIManagerSpec defines the desired state of APIManager
+        :param pulumi.Input[pulumi.InputType['APIManagerStatusArgs']] status: APIManagerStatus defines the observed state of APIManager
         """
         if __name__ is not None:
             warnings.warn("explicit use of __name__ is deprecated", DeprecationWarning)
@@ -95,11 +98,17 @@ class APIManager(pulumi.CustomResource):
     @property
     @pulumi.getter
     def spec(self) -> pulumi.Output[Optional['outputs.APIManagerSpec']]:
+        """
+        APIManagerSpec defines the desired state of APIManager
+        """
         return pulumi.get(self, "spec")
 
     @property
     @pulumi.getter
     def status(self) -> pulumi.Output[Optional['outputs.APIManagerStatus']]:
+        """
+        APIManagerStatus defines the observed state of APIManager
+        """
         return pulumi.get(self, "status")
 
     def translate_output_property(self, prop):

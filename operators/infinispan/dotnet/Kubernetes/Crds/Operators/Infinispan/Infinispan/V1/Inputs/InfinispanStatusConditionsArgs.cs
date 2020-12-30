@@ -18,8 +18,8 @@ namespace Pulumi.Kubernetes.Types.Inputs.Infinispan.V1
         /// <summary>
         /// Human-readable message indicating details about last transition.
         /// </summary>
-        [Input("message", required: true)]
-        public Input<string> Message { get; set; } = null!;
+        [Input("message")]
+        public Input<string>? Message { get; set; }
 
         /// <summary>
         /// Status is the status of the condition.

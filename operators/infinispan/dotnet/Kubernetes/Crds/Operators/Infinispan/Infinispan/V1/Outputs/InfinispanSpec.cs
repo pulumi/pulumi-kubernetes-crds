@@ -14,6 +14,10 @@ namespace Pulumi.Kubernetes.Types.Outputs.Infinispan.V1
     public sealed class InfinispanSpec
     {
         /// <summary>
+        /// Affinity is a group of affinity scheduling rules.
+        /// </summary>
+        public readonly Pulumi.Kubernetes.Types.Outputs.Infinispan.V1.InfinispanSpecAffinity Affinity;
+        /// <summary>
         /// Autoscale describe autoscaling configuration for the cluster
         /// </summary>
         public readonly Pulumi.Kubernetes.Types.Outputs.Infinispan.V1.InfinispanSpecAutoscale Autoscale;
@@ -39,6 +43,8 @@ namespace Pulumi.Kubernetes.Types.Outputs.Infinispan.V1
 
         [OutputConstructor]
         private InfinispanSpec(
+            Pulumi.Kubernetes.Types.Outputs.Infinispan.V1.InfinispanSpecAffinity affinity,
+
             Pulumi.Kubernetes.Types.Outputs.Infinispan.V1.InfinispanSpecAutoscale autoscale,
 
             Pulumi.Kubernetes.Types.Outputs.Infinispan.V1.InfinispanSpecContainer container,
@@ -55,6 +61,7 @@ namespace Pulumi.Kubernetes.Types.Outputs.Infinispan.V1
 
             Pulumi.Kubernetes.Types.Outputs.Infinispan.V1.InfinispanSpecService service)
         {
+            Affinity = affinity;
             Autoscale = autoscale;
             Container = container;
             Expose = expose;

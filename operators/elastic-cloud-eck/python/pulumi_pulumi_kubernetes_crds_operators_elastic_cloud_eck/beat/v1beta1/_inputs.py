@@ -13,6 +13,10 @@ __all__ = [
     'BeatSpecConfigRefArgs',
     'BeatSpecDaemonSetArgs',
     'BeatSpecDeploymentArgs',
+    'BeatSpecDeploymentStrategyArgs',
+    'BeatSpecDeploymentStrategyRollingUpdateArgs',
+    'BeatSpecDeploymentStrategyRollingUpdateMaxSurgeArgs',
+    'BeatSpecDeploymentStrategyRollingUpdateMaxUnavailableArgs',
     'BeatSpecElasticsearchRefArgs',
     'BeatSpecKibanaRefArgs',
     'BeatSpecSecureSettingsArgs',
@@ -238,12 +242,16 @@ class BeatSpecDaemonSetArgs:
 @pulumi.input_type
 class BeatSpecDeploymentArgs:
     def __init__(__self__, *,
-                 replicas: Optional[pulumi.Input[int]] = None):
+                 replicas: Optional[pulumi.Input[int]] = None,
+                 strategy: Optional[pulumi.Input['BeatSpecDeploymentStrategyArgs']] = None):
         """
         Deployment specifies the Beat should be deployed as a Deployment, and allows providing its spec. Cannot be used along with `daemonSet`. If both are absent a default for the Type is used.
+        :param pulumi.Input['BeatSpecDeploymentStrategyArgs'] strategy: DeploymentStrategy describes how to replace existing pods with new ones.
         """
         if replicas is not None:
             pulumi.set(__self__, "replicas", replicas)
+        if strategy is not None:
+            pulumi.set(__self__, "strategy", strategy)
 
     @property
     @pulumi.getter
@@ -253,6 +261,110 @@ class BeatSpecDeploymentArgs:
     @replicas.setter
     def replicas(self, value: Optional[pulumi.Input[int]]):
         pulumi.set(self, "replicas", value)
+
+    @property
+    @pulumi.getter
+    def strategy(self) -> Optional[pulumi.Input['BeatSpecDeploymentStrategyArgs']]:
+        """
+        DeploymentStrategy describes how to replace existing pods with new ones.
+        """
+        return pulumi.get(self, "strategy")
+
+    @strategy.setter
+    def strategy(self, value: Optional[pulumi.Input['BeatSpecDeploymentStrategyArgs']]):
+        pulumi.set(self, "strategy", value)
+
+
+@pulumi.input_type
+class BeatSpecDeploymentStrategyArgs:
+    def __init__(__self__, *,
+                 rolling_update: Optional[pulumi.Input['BeatSpecDeploymentStrategyRollingUpdateArgs']] = None,
+                 type: Optional[pulumi.Input[str]] = None):
+        """
+        DeploymentStrategy describes how to replace existing pods with new ones.
+        :param pulumi.Input['BeatSpecDeploymentStrategyRollingUpdateArgs'] rolling_update: Rolling update config params. Present only if DeploymentStrategyType = RollingUpdate. --- TODO: Update this to follow our convention for oneOf, whatever we decide it to be.
+        :param pulumi.Input[str] type: Type of deployment. Can be "Recreate" or "RollingUpdate". Default is RollingUpdate.
+        """
+        if rolling_update is not None:
+            pulumi.set(__self__, "rolling_update", rolling_update)
+        if type is not None:
+            pulumi.set(__self__, "type", type)
+
+    @property
+    @pulumi.getter(name="rollingUpdate")
+    def rolling_update(self) -> Optional[pulumi.Input['BeatSpecDeploymentStrategyRollingUpdateArgs']]:
+        """
+        Rolling update config params. Present only if DeploymentStrategyType = RollingUpdate. --- TODO: Update this to follow our convention for oneOf, whatever we decide it to be.
+        """
+        return pulumi.get(self, "rolling_update")
+
+    @rolling_update.setter
+    def rolling_update(self, value: Optional[pulumi.Input['BeatSpecDeploymentStrategyRollingUpdateArgs']]):
+        pulumi.set(self, "rolling_update", value)
+
+    @property
+    @pulumi.getter
+    def type(self) -> Optional[pulumi.Input[str]]:
+        """
+        Type of deployment. Can be "Recreate" or "RollingUpdate". Default is RollingUpdate.
+        """
+        return pulumi.get(self, "type")
+
+    @type.setter
+    def type(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "type", value)
+
+
+@pulumi.input_type
+class BeatSpecDeploymentStrategyRollingUpdateArgs:
+    def __init__(__self__, *,
+                 max_surge: Optional[pulumi.Input['BeatSpecDeploymentStrategyRollingUpdateMaxSurgeArgs']] = None,
+                 max_unavailable: Optional[pulumi.Input['BeatSpecDeploymentStrategyRollingUpdateMaxUnavailableArgs']] = None):
+        """
+        Rolling update config params. Present only if DeploymentStrategyType = RollingUpdate. --- TODO: Update this to follow our convention for oneOf, whatever we decide it to be.
+        :param pulumi.Input['BeatSpecDeploymentStrategyRollingUpdateMaxSurgeArgs'] max_surge: The maximum number of pods that can be scheduled above the desired number of pods. Value can be an absolute number (ex: 5) or a percentage of desired pods (ex: 10%). This can not be 0 if MaxUnavailable is 0. Absolute number is calculated from percentage by rounding up. Defaults to 25%. Example: when this is set to 30%, the new ReplicaSet can be scaled up immediately when the rolling update starts, such that the total number of old and new pods do not exceed 130% of desired pods. Once old pods have been killed, new ReplicaSet can be scaled up further, ensuring that total number of pods running at any time during the update is at most 130% of desired pods.
+        :param pulumi.Input['BeatSpecDeploymentStrategyRollingUpdateMaxUnavailableArgs'] max_unavailable: The maximum number of pods that can be unavailable during the update. Value can be an absolute number (ex: 5) or a percentage of desired pods (ex: 10%). Absolute number is calculated from percentage by rounding down. This can not be 0 if MaxSurge is 0. Defaults to 25%. Example: when this is set to 30%, the old ReplicaSet can be scaled down to 70% of desired pods immediately when the rolling update starts. Once new pods are ready, old ReplicaSet can be scaled down further, followed by scaling up the new ReplicaSet, ensuring that the total number of pods available at all times during the update is at least 70% of desired pods.
+        """
+        if max_surge is not None:
+            pulumi.set(__self__, "max_surge", max_surge)
+        if max_unavailable is not None:
+            pulumi.set(__self__, "max_unavailable", max_unavailable)
+
+    @property
+    @pulumi.getter(name="maxSurge")
+    def max_surge(self) -> Optional[pulumi.Input['BeatSpecDeploymentStrategyRollingUpdateMaxSurgeArgs']]:
+        """
+        The maximum number of pods that can be scheduled above the desired number of pods. Value can be an absolute number (ex: 5) or a percentage of desired pods (ex: 10%). This can not be 0 if MaxUnavailable is 0. Absolute number is calculated from percentage by rounding up. Defaults to 25%. Example: when this is set to 30%, the new ReplicaSet can be scaled up immediately when the rolling update starts, such that the total number of old and new pods do not exceed 130% of desired pods. Once old pods have been killed, new ReplicaSet can be scaled up further, ensuring that total number of pods running at any time during the update is at most 130% of desired pods.
+        """
+        return pulumi.get(self, "max_surge")
+
+    @max_surge.setter
+    def max_surge(self, value: Optional[pulumi.Input['BeatSpecDeploymentStrategyRollingUpdateMaxSurgeArgs']]):
+        pulumi.set(self, "max_surge", value)
+
+    @property
+    @pulumi.getter(name="maxUnavailable")
+    def max_unavailable(self) -> Optional[pulumi.Input['BeatSpecDeploymentStrategyRollingUpdateMaxUnavailableArgs']]:
+        """
+        The maximum number of pods that can be unavailable during the update. Value can be an absolute number (ex: 5) or a percentage of desired pods (ex: 10%). Absolute number is calculated from percentage by rounding down. This can not be 0 if MaxSurge is 0. Defaults to 25%. Example: when this is set to 30%, the old ReplicaSet can be scaled down to 70% of desired pods immediately when the rolling update starts. Once new pods are ready, old ReplicaSet can be scaled down further, followed by scaling up the new ReplicaSet, ensuring that the total number of pods available at all times during the update is at least 70% of desired pods.
+        """
+        return pulumi.get(self, "max_unavailable")
+
+    @max_unavailable.setter
+    def max_unavailable(self, value: Optional[pulumi.Input['BeatSpecDeploymentStrategyRollingUpdateMaxUnavailableArgs']]):
+        pulumi.set(self, "max_unavailable", value)
+
+
+@pulumi.input_type
+class BeatSpecDeploymentStrategyRollingUpdateMaxSurgeArgs:
+    def __init__(__self__):
+        pass
+
+
+@pulumi.input_type
+class BeatSpecDeploymentStrategyRollingUpdateMaxUnavailableArgs:
+    def __init__(__self__):
+        pass
 
 
 @pulumi.input_type
@@ -418,11 +530,13 @@ class BeatStatusArgs:
                  elasticsearch_association_status: Optional[pulumi.Input[str]] = None,
                  expected_nodes: Optional[pulumi.Input[int]] = None,
                  health: Optional[pulumi.Input[str]] = None,
-                 kibana_association_status: Optional[pulumi.Input[str]] = None):
+                 kibana_association_status: Optional[pulumi.Input[str]] = None,
+                 version: Optional[pulumi.Input[str]] = None):
         """
         BeatStatus defines the observed state of a Beat.
         :param pulumi.Input[str] elasticsearch_association_status: AssociationStatus is the status of an association resource.
         :param pulumi.Input[str] kibana_association_status: AssociationStatus is the status of an association resource.
+        :param pulumi.Input[str] version: Version of the stack resource currently running. During version upgrades, multiple versions may run in parallel: this value specifies the lowest version currently running.
         """
         if available_nodes is not None:
             pulumi.set(__self__, "available_nodes", available_nodes)
@@ -434,6 +548,8 @@ class BeatStatusArgs:
             pulumi.set(__self__, "health", health)
         if kibana_association_status is not None:
             pulumi.set(__self__, "kibana_association_status", kibana_association_status)
+        if version is not None:
+            pulumi.set(__self__, "version", version)
 
     @property
     @pulumi.getter(name="availableNodes")
@@ -485,5 +601,17 @@ class BeatStatusArgs:
     @kibana_association_status.setter
     def kibana_association_status(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "kibana_association_status", value)
+
+    @property
+    @pulumi.getter
+    def version(self) -> Optional[pulumi.Input[str]]:
+        """
+        Version of the stack resource currently running. During version upgrades, multiple versions may run in parallel: this value specifies the lowest version currently running.
+        """
+        return pulumi.get(self, "version")
+
+    @version.setter
+    def version(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "version", value)
 
 

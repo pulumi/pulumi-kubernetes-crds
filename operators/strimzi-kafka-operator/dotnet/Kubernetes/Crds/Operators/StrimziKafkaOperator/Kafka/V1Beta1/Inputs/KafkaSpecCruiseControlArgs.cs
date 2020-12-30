@@ -57,6 +57,18 @@ namespace Pulumi.Kubernetes.Types.Inputs.Kafka.V1Beta1
         [Input("logging")]
         public Input<Pulumi.Kubernetes.Types.Inputs.Kafka.V1Beta1.KafkaSpecCruiseControlLoggingArgs>? Logging { get; set; }
 
+        [Input("metrics")]
+        private InputMap<object>? _metrics;
+
+        /// <summary>
+        /// The Prometheus JMX Exporter configuration. See https://github.com/prometheus/jmx_exporter for details of the structure of this configuration.
+        /// </summary>
+        public InputMap<object> Metrics
+        {
+            get => _metrics ?? (_metrics = new InputMap<object>());
+            set => _metrics = value;
+        }
+
         /// <summary>
         /// Pod readiness checking for the Cruise Control container.
         /// </summary>

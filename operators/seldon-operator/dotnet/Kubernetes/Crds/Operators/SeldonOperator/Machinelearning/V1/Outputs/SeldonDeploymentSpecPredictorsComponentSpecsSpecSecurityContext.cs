@@ -20,6 +20,10 @@ namespace Pulumi.Kubernetes.Types.Outputs.Machinelearning.V1
         /// </summary>
         public readonly int FsGroup;
         /// <summary>
+        /// fsGroupChangePolicy defines behavior of changing ownership and permission of the volume before being exposed inside Pod. This field will only apply to volume types which support fsGroup based ownership(and permissions). It will have no effect on ephemeral volume types such as: secret, configmaps and emptydir. Valid values are "OnRootMismatch" and "Always". If not specified defaults to "Always".
+        /// </summary>
+        public readonly string FsGroupChangePolicy;
+        /// <summary>
         /// The GID to run the entrypoint of the container process. Uses runtime default if unset. May also be set in SecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence for that container.
         /// </summary>
         public readonly int RunAsGroup;
@@ -43,10 +47,16 @@ namespace Pulumi.Kubernetes.Types.Outputs.Machinelearning.V1
         /// Sysctls hold a list of namespaced sysctls used for the pod. Pods with unsupported sysctls (by the container runtime) might fail to launch.
         /// </summary>
         public readonly ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Machinelearning.V1.SeldonDeploymentSpecPredictorsComponentSpecsSpecSecurityContextSysctls> Sysctls;
+        /// <summary>
+        /// The Windows specific settings applied to all containers. If unspecified, the options within a container's SecurityContext will be used. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
+        /// </summary>
+        public readonly Pulumi.Kubernetes.Types.Outputs.Machinelearning.V1.SeldonDeploymentSpecPredictorsComponentSpecsSpecSecurityContextWindowsOptions WindowsOptions;
 
         [OutputConstructor]
         private SeldonDeploymentSpecPredictorsComponentSpecsSpecSecurityContext(
             int fsGroup,
+
+            string fsGroupChangePolicy,
 
             int runAsGroup,
 
@@ -58,15 +68,19 @@ namespace Pulumi.Kubernetes.Types.Outputs.Machinelearning.V1
 
             ImmutableArray<int> supplementalGroups,
 
-            ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Machinelearning.V1.SeldonDeploymentSpecPredictorsComponentSpecsSpecSecurityContextSysctls> sysctls)
+            ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Machinelearning.V1.SeldonDeploymentSpecPredictorsComponentSpecsSpecSecurityContextSysctls> sysctls,
+
+            Pulumi.Kubernetes.Types.Outputs.Machinelearning.V1.SeldonDeploymentSpecPredictorsComponentSpecsSpecSecurityContextWindowsOptions windowsOptions)
         {
             FsGroup = fsGroup;
+            FsGroupChangePolicy = fsGroupChangePolicy;
             RunAsGroup = runAsGroup;
             RunAsNonRoot = runAsNonRoot;
             RunAsUser = runAsUser;
             SeLinuxOptions = seLinuxOptions;
             SupplementalGroups = supplementalGroups;
             Sysctls = sysctls;
+            WindowsOptions = windowsOptions;
         }
     }
 }

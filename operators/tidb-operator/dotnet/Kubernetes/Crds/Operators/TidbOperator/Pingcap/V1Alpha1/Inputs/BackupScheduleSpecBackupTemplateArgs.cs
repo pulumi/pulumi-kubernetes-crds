@@ -21,8 +21,8 @@ namespace Pulumi.Kubernetes.Types.Inputs.Pingcap.V1Alpha1
         [Input("br")]
         public Input<Pulumi.Kubernetes.Types.Inputs.Pingcap.V1Alpha1.BackupScheduleSpecBackupTemplateBrArgs>? Br { get; set; }
 
-        [Input("cleanData")]
-        public Input<bool>? CleanData { get; set; }
+        [Input("cleanPolicy")]
+        public Input<string>? CleanPolicy { get; set; }
 
         [Input("dumpling")]
         public Input<Pulumi.Kubernetes.Types.Inputs.Pingcap.V1Alpha1.BackupScheduleSpecBackupTemplateDumplingArgs>? Dumpling { get; set; }
@@ -56,6 +56,14 @@ namespace Pulumi.Kubernetes.Types.Inputs.Pingcap.V1Alpha1
         [Input("storageSize")]
         public Input<string>? StorageSize { get; set; }
 
+        [Input("tableFilter")]
+        private InputList<string>? _tableFilter;
+        public InputList<string> TableFilter
+        {
+            get => _tableFilter ?? (_tableFilter = new InputList<string>());
+            set => _tableFilter = value;
+        }
+
         [Input("tikvGCLifeTime")]
         public Input<string>? TikvGCLifeTime { get; set; }
 
@@ -66,6 +74,9 @@ namespace Pulumi.Kubernetes.Types.Inputs.Pingcap.V1Alpha1
             get => _tolerations ?? (_tolerations = new InputList<Pulumi.Kubernetes.Types.Inputs.Pingcap.V1Alpha1.BackupScheduleSpecBackupTemplateTolerationsArgs>());
             set => _tolerations = value;
         }
+
+        [Input("toolImage")]
+        public Input<string>? ToolImage { get; set; }
 
         [Input("useKMS")]
         public Input<bool>? UseKMS { get; set; }

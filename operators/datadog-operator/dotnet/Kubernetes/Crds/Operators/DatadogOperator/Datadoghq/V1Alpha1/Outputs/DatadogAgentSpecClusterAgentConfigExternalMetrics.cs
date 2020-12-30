@@ -18,6 +18,10 @@ namespace Pulumi.Kubernetes.Types.Outputs.Datadoghq.V1Alpha1
         /// </summary>
         public readonly bool Enabled;
         /// <summary>
+        /// Override the API endpoint for the external metrics server. Defaults to .spec.agent.config.ddUrl or "https://app.datadoghq.com" if that's empty.
+        /// </summary>
+        public readonly string Endpoint;
+        /// <summary>
         /// If specified configures the metricsProvider external metrics service port
         /// </summary>
         public readonly int Port;
@@ -25,18 +29,28 @@ namespace Pulumi.Kubernetes.Types.Outputs.Datadoghq.V1Alpha1
         /// Enable usage of DatadogMetrics CRD (allow to scale on arbitrary queries)
         /// </summary>
         public readonly bool UseDatadogMetrics;
+        /// <summary>
+        /// Enable informer and controller of the watermark pod autoscaler NOTE: The WatermarkPodAutoscaler controller needs to be installed see https://github.com/DataDog/watermarkpodautoscaler for more details.
+        /// </summary>
+        public readonly bool WpaController;
 
         [OutputConstructor]
         private DatadogAgentSpecClusterAgentConfigExternalMetrics(
             bool enabled,
 
+            string endpoint,
+
             int port,
 
-            bool useDatadogMetrics)
+            bool useDatadogMetrics,
+
+            bool wpaController)
         {
             Enabled = enabled;
+            Endpoint = endpoint;
             Port = port;
             UseDatadogMetrics = useDatadogMetrics;
+            WpaController = wpaController;
         }
     }
 }

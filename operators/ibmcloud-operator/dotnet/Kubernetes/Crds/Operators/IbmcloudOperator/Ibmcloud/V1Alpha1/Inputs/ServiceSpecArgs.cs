@@ -10,8 +10,14 @@ using Pulumi.Serialization;
 namespace Pulumi.Kubernetes.Types.Inputs.Ibmcloud.V1Alpha1
 {
 
+    /// <summary>
+    /// ServiceSpec defines the desired state of Service
+    /// </summary>
     public class ServiceSpecArgs : Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// ResourceContext defines the CloudFoundry context and resource group
+        /// </summary>
         [Input("context")]
         public Input<Pulumi.Kubernetes.Types.Inputs.Ibmcloud.V1Alpha1.ServiceSpecContextArgs>? Context { get; set; }
 

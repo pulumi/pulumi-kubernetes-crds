@@ -8,6 +8,9 @@ import * as utilities from "../../utilities";
 
 import {ObjectMeta} from "../../meta/v1";
 
+/**
+ * RateLimiting is the Schema for the ratelimitings API
+ */
 export class RateLimiting extends pulumi.CustomResource {
     /**
      * Get an existing RateLimiting resource's state with the given name, ID, and optional extra
@@ -38,8 +41,10 @@ export class RateLimiting extends pulumi.CustomResource {
     public readonly apiVersion!: pulumi.Output<"wso2.com/v1alpha1" | undefined>;
     public readonly kind!: pulumi.Output<"RateLimiting" | undefined>;
     public readonly metadata!: pulumi.Output<ObjectMeta | undefined>;
+    /**
+     * RateLimitingSpec defines the desired state of RateLimiting
+     */
     public readonly spec!: pulumi.Output<outputs.wso2.v1alpha1.RateLimitingSpec | undefined>;
-    public readonly status!: pulumi.Output<{[key: string]: any} | undefined>;
 
     /**
      * Create a RateLimiting resource with the given unique name, arguments, and options.
@@ -55,13 +60,11 @@ export class RateLimiting extends pulumi.CustomResource {
             inputs["kind"] = "RateLimiting";
             inputs["metadata"] = args ? args.metadata : undefined;
             inputs["spec"] = args ? args.spec : undefined;
-            inputs["status"] = args ? args.status : undefined;
         } else {
             inputs["apiVersion"] = undefined /*out*/;
             inputs["kind"] = undefined /*out*/;
             inputs["metadata"] = undefined /*out*/;
             inputs["spec"] = undefined /*out*/;
-            inputs["status"] = undefined /*out*/;
         }
         if (!opts) {
             opts = {}
@@ -81,6 +84,8 @@ export interface RateLimitingArgs {
     readonly apiVersion?: pulumi.Input<"wso2.com/v1alpha1">;
     readonly kind?: pulumi.Input<"RateLimiting">;
     readonly metadata?: pulumi.Input<ObjectMeta>;
+    /**
+     * RateLimitingSpec defines the desired state of RateLimiting
+     */
     readonly spec?: pulumi.Input<inputs.wso2.v1alpha1.RateLimitingSpec>;
-    readonly status?: pulumi.Input<{[key: string]: any}>;
 }

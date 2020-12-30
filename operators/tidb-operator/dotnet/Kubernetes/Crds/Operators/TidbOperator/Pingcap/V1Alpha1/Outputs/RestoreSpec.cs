@@ -23,9 +23,11 @@ namespace Pulumi.Kubernetes.Types.Outputs.Pingcap.V1Alpha1
         public readonly string ServiceAccount;
         public readonly string StorageClassName;
         public readonly string StorageSize;
+        public readonly ImmutableArray<string> TableFilter;
         public readonly string TikvGCLifeTime;
         public readonly Pulumi.Kubernetes.Types.Outputs.Pingcap.V1Alpha1.RestoreSpecTo To;
         public readonly ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Pingcap.V1Alpha1.RestoreSpecTolerations> Tolerations;
+        public readonly string ToolImage;
         public readonly bool UseKMS;
 
         [OutputConstructor]
@@ -50,11 +52,15 @@ namespace Pulumi.Kubernetes.Types.Outputs.Pingcap.V1Alpha1
 
             string storageSize,
 
+            ImmutableArray<string> tableFilter,
+
             string tikvGCLifeTime,
 
             Pulumi.Kubernetes.Types.Outputs.Pingcap.V1Alpha1.RestoreSpecTo to,
 
             ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Pingcap.V1Alpha1.RestoreSpecTolerations> tolerations,
+
+            string toolImage,
 
             bool useKMS)
         {
@@ -68,9 +74,11 @@ namespace Pulumi.Kubernetes.Types.Outputs.Pingcap.V1Alpha1
             ServiceAccount = serviceAccount;
             StorageClassName = storageClassName;
             StorageSize = storageSize;
+            TableFilter = tableFilter;
             TikvGCLifeTime = tikvGCLifeTime;
             To = to;
             Tolerations = tolerations;
+            ToolImage = toolImage;
             UseKMS = useKMS;
         }
     }

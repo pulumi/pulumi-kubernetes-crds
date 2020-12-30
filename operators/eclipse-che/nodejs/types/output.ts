@@ -22,6 +22,10 @@ export namespace org {
              */
             database?: outputs.org.v1.CheClusterSpecDatabase;
             /**
+             * Kubernetes Image Puller configuration
+             */
+            imagePuller?: outputs.org.v1.CheClusterSpecImagePuller;
+            /**
              * Configuration settings specific to Che installations made on upstream Kubernetes.
              */
             k8s?: outputs.org.v1.CheClusterSpecK8s;
@@ -64,6 +68,10 @@ export namespace org {
              */
             identityProviderImagePullPolicy?: string;
             /**
+             * Ingress custom settings
+             */
+            identityProviderIngress?: outputs.org.v1.CheClusterSpecAuthIdentityProviderIngress;
+            /**
              * Overrides the password of Keycloak admin user. This is useful to override it ONLY if you use an external Identity Provider (see the `externalIdentityProvider` field). If omitted or left blank, it will be set to an auto-generated password.
              */
             identityProviderPassword?: string;
@@ -79,6 +87,10 @@ export namespace org {
              * Name of a Identity provider (Keycloak / RH SSO) realm that should be used for Che. This is useful to override it ONLY if you use an external Identity Provider (see the `externalIdentityProvider` field). If omitted or left blank, it will be set to the value of the `flavour` field.
              */
             identityProviderRealm?: string;
+            /**
+             * Route custom settings
+             */
+            identityProviderRoute?: outputs.org.v1.CheClusterSpecAuthIdentityProviderRoute;
             /**
              * The secret that contains `user` and `password` for Identity Provider. If the secret is defined then `identityProviderAdminUserName` and `identityProviderPassword` are ignored. If the value is omitted or left blank then there are two scenarios: 1. `identityProviderAdminUserName` and `identityProviderPassword` are defined, then they will be used. 2. `identityProviderAdminUserName` or `identityProviderPassword` are not defined, then a new secret with the name `che-identity-secret` will be created with default value `admin` for `user` and with an auto-generated value for `password`.
              */
@@ -103,6 +115,26 @@ export namespace org {
              * Forces the default `admin` Che user to update password on first login. Defaults to `false`.
              */
             updateAdminPassword?: boolean;
+        }
+
+        /**
+         * Ingress custom settings
+         */
+        export interface CheClusterSpecAuthIdentityProviderIngress {
+            /**
+             * Comma separated list of labels that can be used to organize and categorize (scope and select) objects.
+             */
+            labels?: string;
+        }
+
+        /**
+         * Route custom settings
+         */
+        export interface CheClusterSpecAuthIdentityProviderRoute {
+            /**
+             * Comma separated list of labels that can be used to organize and categorize (scope and select) objects.
+             */
+            labels?: string;
         }
 
         /**
@@ -148,6 +180,36 @@ export namespace org {
         }
 
         /**
+         * Kubernetes Image Puller configuration
+         */
+        export interface CheClusterSpecImagePuller {
+            /**
+             * Install and configure the Kubernetes Image Puller Operator. If true and no spec is provided, it will create a default KubernetesImagePuller object to be managed by the Operator. If false, the KubernetesImagePuller object will be deleted, and the operator will be uninstalled, regardless of whether or not a spec is provided.
+             */
+            enable?: boolean;
+            /**
+             * A KubernetesImagePullerSpec to configure the image puller in the CheCluster
+             */
+            spec?: outputs.org.v1.CheClusterSpecImagePullerSpec;
+        }
+
+        /**
+         * A KubernetesImagePullerSpec to configure the image puller in the CheCluster
+         */
+        export interface CheClusterSpecImagePullerSpec {
+            cachingCPULimit?: string;
+            cachingCPURequest?: string;
+            cachingIntervalHours?: string;
+            cachingMemoryLimit?: string;
+            cachingMemoryRequest?: string;
+            configMapName?: string;
+            daemonsetName?: string;
+            deploymentName?: string;
+            images?: string;
+            nodeSelector?: string;
+        }
+
+        /**
          * Configuration settings specific to Che installations made on upstream Kubernetes.
          */
         export interface CheClusterSpecK8s {
@@ -160,7 +222,7 @@ export namespace org {
              */
             ingressDomain?: string;
             /**
-             * Strategy for ingress creation. This can be `multi-host` (host is explicitly provided in ingress), `single-host` (host is provided, path-based rules) and `default-host.*`(no host is provided, path-based rules). Defaults to `"multi-host`
+             * Strategy for ingress creation. This can be `multi-host` (host is explicitly provided in ingress), `single-host` (host is provided, path-based rules) and `default-host.*`(no host is provided, path-based rules). Defaults to `"multi-host` Deprecated in favor of "serverExposureStrategy" in the "server" section, which defines this regardless of the cluster type. If both are defined, `serverExposureStrategy` takes precedence.
              */
             ingressStrategy?: string;
             /**
@@ -172,7 +234,11 @@ export namespace org {
              */
             securityContextRunAsUser?: string;
             /**
-             * Name of a secret that will be used to setup ingress TLS termination if TLS is enabled. See also the `tlsSupport` field.
+             * When the serverExposureStrategy is set to "single-host", the way the server, registries and workspaces are exposed is further configured by this property. The possible values are "native" (which means that the server and workspaces are exposed using ingresses on K8s) or "gateway" where the server and workspaces are exposed using a custom gateway based on Traefik. All the endpoints whether backed by the ingress or gateway "route" always point to the subpaths on the same domain. Defaults to "native".
+             */
+            singleHostExposureType?: string;
+            /**
+             * Name of a secret that will be used to setup ingress TLS termination if TLS is enabled. If the field is empty string, then default cluster certificate will be used. See also the `tlsSupport` field.
              */
             tlsSecretName?: string;
         }
@@ -203,6 +269,10 @@ export namespace org {
              * Defines if a user is able to specify Kubernetes namespace (or OpenShift project) different from the default. It's NOT RECOMMENDED to configured true without OAuth configured. This property is also used by the OpenShift infra.
              */
             allowUserDefinedWorkspaceNamespaces?: boolean;
+            /**
+             * Comma-separated list of ClusterRoles that will be assigned to che ServiceAccount. Be aware that che-operator has to already have all permissions in these ClusterRoles to be able to grant them.
+             */
+            cheClusterRoles?: string;
             /**
              * Enables the debug mode for Che server. Defaults to `false`.
              */
@@ -236,6 +306,14 @@ export namespace org {
              */
             cheLogLevel?: string;
             /**
+             * Che server ingress custom settings
+             */
+            cheServerIngress?: outputs.org.v1.CheClusterSpecServerCheServerIngress;
+            /**
+             * Che server route custom settings
+             */
+            cheServerRoute?: outputs.org.v1.CheClusterSpecServerCheServerRoute;
+            /**
              * Custom cluster role bound to the user for the Che workspaces. The default roles are used if this is omitted or left blank.
              */
             cheWorkspaceClusterRole?: string;
@@ -248,6 +326,10 @@ export namespace org {
              */
             devfileRegistryImage?: string;
             /**
+             * Devfile registry ingress custom settings
+             */
+            devfileRegistryIngress?: outputs.org.v1.CheClusterSpecServerDevfileRegistryIngress;
+            /**
              * Overrides the memory limit used in the Devfile registry deployment. Defaults to 256Mi.
              */
             devfileRegistryMemoryLimit?: string;
@@ -259,6 +341,10 @@ export namespace org {
              * Overrides the image pull policy used in the Devfile registry deployment. Default value is `Always` for `nightly` or `latest` images, and `IfNotPresent` in other cases.
              */
             devfileRegistryPullPolicy?: string;
+            /**
+             * Devfile registry route custom settings
+             */
+            devfileRegistryRoute?: outputs.org.v1.CheClusterSpecServerDevfileRegistryRoute;
             /**
              * Public URL of the Devfile registry, that serves sample, ready-to-use devfiles. You should set it ONLY if you use an external devfile registry (see the `externalDevfileRegistry` field). By default this will be automatically calculated by the operator.
              */
@@ -276,13 +362,17 @@ export namespace org {
              */
             gitSelfSignedCert?: boolean;
             /**
-             * List of hosts that should not use the configured proxy. Use `|`` as delimiter, eg `localhost|my.host.com|123.42.12.32` Only use when configuring a proxy is required. Operator respects OpenShift cluster wide proxy configuration and no additional configuration is required, but defining `nonProxyHosts` in a custom resource leads to merging non proxy hosts lists from the cluster proxy configuration and ones defined in the custom resources. (see the doc https://docs.openshift.com/container-platform/4.4/networking/enable-cluster-wide-proxy.html) (see also the `proxyURL` fields).
+             * List of hosts that should not use the configured proxy. So specify wild card domain use the following form `.<DOMAIN>` and `|` as delimiter, eg: `localhost|.my.host.com|123.42.12.32` Only use when configuring a proxy is required. Operator respects OpenShift cluster wide proxy configuration and no additional configuration is required, but defining `nonProxyHosts` in a custom resource leads to merging non proxy hosts lists from the cluster proxy configuration and ones defined in the custom resources. (see the doc https://docs.openshift.com/container-platform/4.4/networking/enable-cluster-wide-proxy.html) (see also the `proxyURL` fields).
              */
             nonProxyHosts?: string;
             /**
-             * Overrides the container image used in the Plugin registry deployment. This includes the image tag. Omit it or leave it empty to use the defaut container image provided by the operator.
+             * Overrides the container image used in the Plugin registry deployment. This includes the image tag. Omit it or leave it empty to use the default container image provided by the operator.
              */
             pluginRegistryImage?: string;
+            /**
+             * Plugin registry ingress custom settings
+             */
+            pluginRegistryIngress?: outputs.org.v1.CheClusterSpecServerPluginRegistryIngress;
             /**
              * Overrides the memory limit used in the Plugin registry deployment. Defaults to 256Mi.
              */
@@ -295,6 +385,10 @@ export namespace org {
              * Overrides the image pull policy used in the Plugin registry deployment. Default value is `Always` for `nightly` or `latest` images, and `IfNotPresent` in other cases.
              */
             pluginRegistryPullPolicy?: string;
+            /**
+             * Plugin registry route custom settings
+             */
+            pluginRegistryRoute?: outputs.org.v1.CheClusterSpecServerPluginRegistryRoute;
             /**
              * Public URL of the Plugin registry, that serves sample ready-to-use devfiles. You should set it ONLY if you use an external devfile registry (see the `externalPluginRegistry` field). By default this will be automatically calculated by the operator.
              */
@@ -324,6 +418,10 @@ export namespace org {
              */
             selfSignedCert?: boolean;
             /**
+             * Sets the server and workspaces exposure type. Possible values are "multi-host", "single-host", "default-host". Defaults to "multi-host" which creates a separate ingress (or route on OpenShift) for every required endpoint. "single-host" makes Che exposed on a single hostname with workspaces exposed on subpaths. Please read the docs to learn about the limitations of this approach. Also consult the `singleHostExposureType` property to further configure how the operator and Che server make that happen on Kubernetes. "default-host" exposes che server on the host of the cluster. Please read the docs to learn about the limitations of this approach.
+             */
+            serverExposureStrategy?: string;
+            /**
              * Overrides the memory limit used in the Che server deployment. Defaults to 1Gi.
              */
             serverMemoryLimit?: string;
@@ -336,13 +434,89 @@ export namespace org {
              */
             serverTrustStoreConfigMapName?: string;
             /**
+             * The labels that need to be present (and are put) on the configmaps representing the gateway configuration.
+             */
+            singleHostGatewayConfigMapLabels?: {[key: string]: string};
+            /**
+             * The image used for the gateway sidecar that provides configuration to the gateway. Omit it or leave it empty to use the defaut container image provided by the operator.
+             */
+            singleHostGatewayConfigSidecarImage?: string;
+            /**
+             * The image used for the gateway in the single host mode. Omit it or leave it empty to use the defaut container image provided by the operator.
+             */
+            singleHostGatewayImage?: string;
+            /**
              * Deprecated. Instructs the operator to deploy Che in TLS mode. This is enabled by default. Disabling TLS may cause malfunction of some Che components.
              */
             tlsSupport?: boolean;
             /**
+             * Use internal cluster svc names to communicate between components to speed up the traffic and avoid proxy issues. The default value is `true`.
+             */
+            useInternalClusterSVCNames?: boolean;
+            /**
              * Defines Kubernetes default namespace in which user's workspaces are created if user does not override it. It's possible to use <username>, <userid> and <workspaceid> placeholders (e.g.: che-workspace-<username>). In that case, new namespace will be created for each user (or workspace). Is used by OpenShift infra as well to specify Project
              */
             workspaceNamespaceDefault?: string;
+        }
+
+        /**
+         * Che server ingress custom settings
+         */
+        export interface CheClusterSpecServerCheServerIngress {
+            /**
+             * Comma separated list of labels that can be used to organize and categorize (scope and select) objects.
+             */
+            labels?: string;
+        }
+
+        /**
+         * Che server route custom settings
+         */
+        export interface CheClusterSpecServerCheServerRoute {
+            /**
+             * Comma separated list of labels that can be used to organize and categorize (scope and select) objects.
+             */
+            labels?: string;
+        }
+
+        /**
+         * Devfile registry ingress custom settings
+         */
+        export interface CheClusterSpecServerDevfileRegistryIngress {
+            /**
+             * Comma separated list of labels that can be used to organize and categorize (scope and select) objects.
+             */
+            labels?: string;
+        }
+
+        /**
+         * Devfile registry route custom settings
+         */
+        export interface CheClusterSpecServerDevfileRegistryRoute {
+            /**
+             * Comma separated list of labels that can be used to organize and categorize (scope and select) objects.
+             */
+            labels?: string;
+        }
+
+        /**
+         * Plugin registry ingress custom settings
+         */
+        export interface CheClusterSpecServerPluginRegistryIngress {
+            /**
+             * Comma separated list of labels that can be used to organize and categorize (scope and select) objects.
+             */
+            labels?: string;
+        }
+
+        /**
+         * Plugin registry route custom settings
+         */
+        export interface CheClusterSpecServerPluginRegistryRoute {
+            /**
+             * Comma separated list of labels that can be used to organize and categorize (scope and select) objects.
+             */
+            labels?: string;
         }
 
         /**

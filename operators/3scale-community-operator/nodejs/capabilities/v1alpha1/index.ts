@@ -2,10 +2,4 @@
 // *** Do not edit by hand unless you're certain you know what you are doing! ***
 
 // Export members:
-export * from "./api";
-export * from "./binding";
-export * from "./limit";
-export * from "./mappingRule";
-export * from "./metric";
-export * from "./plan";
 export * from "./tenant";
