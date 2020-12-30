@@ -22,7 +22,6 @@ jobs:
         run: make generate CommunityOperatorsPath=${{ github.workspace }}/community-operators
       - name: git status
         run: git status
-        working-directory: sdk-repo
       - name: commit changes
         uses: EndBug/add-and-commit@v4.3.0
         with:
