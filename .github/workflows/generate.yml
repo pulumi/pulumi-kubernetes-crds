@@ -1,0 +1,42 @@
+name: Generate Community CRDS
+on:
+  workflow_dispatch:
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: checkout operators
+        uses: actions/checkout@v2
+        with:
+          repository: operator-framework/community-operators
+          path: ./tools/gen-kubernetes-crds
+          ref: master
+      - name: Install Go 1.15
+        uses: actions/setup-go@v2
+        with:
+          go-version: '1.15.x'
+      - name: generate
+        run: make generate
+      - name: git status
+        run: git status
+        working-directory: sdk-repo
+      - name: commit changes
+        uses: EndBug/add-and-commit@v4.3.0
+        with:
+          ref: "generate/${{ github.run_id }}-${{ github.run_number }}"
+          author_name: pulumi-bot
+          author_email: "bot@pulumi.com"
+      - name: pull-request
+        uses: repo-sync/pull-request@v2
+        with:
+          source_branch: "generate/${{ github.run_id }}-${{ github.run_number }}"
+          destination_branch: "master"
+          pr_title: "Regenerating community-operators"
+          pr_body: "*Automated PR*"
+          pr_label: "automation/merge"
+          pr_allow_empty: true
+          github_token: ${{ secrets.PULUMI_BOT_TOKEN }}
+
