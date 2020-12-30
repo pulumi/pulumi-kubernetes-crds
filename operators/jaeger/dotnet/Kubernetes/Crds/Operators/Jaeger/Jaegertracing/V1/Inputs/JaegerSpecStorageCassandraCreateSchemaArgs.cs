@@ -27,6 +27,9 @@ namespace Pulumi.Kubernetes.Types.Inputs.Jaegertracing.V1
         [Input("timeout")]
         public Input<string>? Timeout { get; set; }
 
+        [Input("traceTTL")]
+        public Input<string>? TraceTTL { get; set; }
+
         [Input("ttlSecondsAfterFinished")]
         public Input<int>? TtlSecondsAfterFinished { get; set; }
 

@@ -102,6 +102,7 @@ func getPackageToYamlPaths(communityOperatorsPath string, packageNames []string)
 		if !exists {
 			continue
 		}
+
 		packageInfoFile, err := ioutil.ReadFile(packageInfoPath)
 		if err != nil {
 			return nil, errors.Wrapf(err, "could not read file %s", packageInfoPath)

@@ -8,23 +8,24 @@ import (
 	"strings"
 )
 
-// Contains a map from operator package names and the specific languages in which to not generate code for.
-var ignorePackages = map[string][]string{
-	// Contains hyphened property names, which the Go codegen can't currently handle
-	"tidb-operator":            {"go"},
-	"strimzi-kafka-operator":   {"go"},
-	"victoriametrics-operator": {"go", "dotnet", "nodejs", "python"},
-	"t8c":                      {"go"},
-	"camel-k":                  {"go"},
-	"maistraoperator":          {"go"},
+// List of community-operators for which to not generate the code due to issues with the crd generation
+var ignorePackages = []string{
+	"3scale-community-operator",
+	"camel-k",
+	"hive-operator",
+	"maistraoperator",
+	"strimzi-kafka-operator",
+	"t8c",
+	"tidb-operator",
+	"victoriametrics-operator",
 }
 
 // Contains a map from operator package names to language-specific names for the package.
-var specialPackageNames = map[string]map[string]string{
-	"3scale-community-operator": {
-		"go": "three_scale_community_operator", // Go package names cannot start with numbers
-	},
-}
+// e.g
+// "3scale-community-operator": {
+//	 "go": "three_scale_community_operator", // Go package names cannot start with numbers
+// },
+var specialPackageNames = map[string]map[string]string{}
 
 func applySpecialPackageNames(ls *gen.LanguageSettings, languageToSpecialPackageNames map[string]string) {
 	if goName, ok := languageToSpecialPackageNames["go"]; ok {
@@ -38,28 +39,6 @@ func applySpecialPackageNames(ls *gen.LanguageSettings, languageToSpecialPackage
 	}
 	if nodeJSName, ok := languageToSpecialPackageNames["nodejs"]; ok {
 		ls.NodeJSName = nodeJSName
-	}
-}
-
-func ignoreLanguages(ls *gen.LanguageSettings, languages []string) {
-	ignoreLanguage := func(language string) {
-		switch language {
-		case "go":
-			ls.GoPath = nil
-			ls.GoName = ""
-		case "dotnet":
-			ls.DotNetPath = nil
-			ls.DotNetName = ""
-		case "python":
-			ls.PythonPath = nil
-			ls.PythonName = ""
-		case "nodejs":
-			ls.NodeJSPath = nil
-			ls.NodeJSName = ""
-		}
-	}
-	for _, language := range languages {
-		ignoreLanguage(language)
 	}
 }
 
@@ -92,8 +71,15 @@ func generateAll(communityOperatorsPath string, pulumiKubernetesCRDSPath string)
 // be a mapping from package names to a slice of their corresponding paths of CRD YAML files.
 func generate(pulumiKubernetesCRDSPath string, packageToYamlPaths map[string][]string) error {
 	gen.Version = "0.0.0"
+	var successCounter int
+	var failureCounter int
 
 	for packageName, yamlPaths := range packageToYamlPaths {
+		if isIgnoredPackage(packageName) {
+			fmt.Println("Skipping generation of " + packageName)
+			continue
+		}
+
 		basePath := filepath.Join(pulumiKubernetesCRDSPath, "operators", packageName)
 		nodeJSPath := filepath.Join(basePath, "nodejs")
 		pythonPath := filepath.Join(basePath, "python")
@@ -116,19 +102,23 @@ func generate(pulumiKubernetesCRDSPath string, packageToYamlPaths map[string][]s
 			GoName:     goName,
 		}
 
-		if languagesToIgnore, ok := ignorePackages[packageName]; ok {
-			ignoreLanguages(&ls, languagesToIgnore)
-		}
-
 		if languageToSpecialPackageNames, ok := specialPackageNames[packageName]; ok {
 			applySpecialPackageNames(&ls, languageToSpecialPackageNames)
 		}
 
 		if err := gen.Generate(ls, yamlPaths, true); err == nil {
+			successCounter++
 		} else {
 			fmt.Println("Failed to generate " + packageName + ".")
+			failureCounter++
 		}
 	}
+
+	fmt.Println("--------------")
+	fmt.Println(fmt.Sprintf("Found %d operators to convert", len(packageToYamlPaths)))
+	fmt.Println(fmt.Sprintf("Successfully converted %d operators", successCounter))
+	fmt.Println(fmt.Sprintf("Unable to convert %d operators", failureCounter))
+	fmt.Println(fmt.Sprintf("Skipped conversion %d operators", len(ignorePackages)))
 
 	return nil
 }
@@ -141,4 +131,13 @@ func getDotNetName(name string) string {
 		parts[i] = strings.Title(parts[i])
 	}
 	return strings.Join(parts, "")
+}
+
+func isIgnoredPackage(str string) bool {
+	for _, a := range ignorePackages {
+		if a == str {
+			return true
+		}
+	}
+	return false
 }
