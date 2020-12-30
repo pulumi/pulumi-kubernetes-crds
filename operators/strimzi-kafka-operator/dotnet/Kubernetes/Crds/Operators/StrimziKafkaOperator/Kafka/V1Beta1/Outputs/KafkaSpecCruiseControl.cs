@@ -38,6 +38,10 @@ namespace Pulumi.Kubernetes.Types.Outputs.Kafka.V1Beta1
         /// </summary>
         public readonly Pulumi.Kubernetes.Types.Outputs.Kafka.V1Beta1.KafkaSpecCruiseControlLogging Logging;
         /// <summary>
+        /// The Prometheus JMX Exporter configuration. See https://github.com/prometheus/jmx_exporter for details of the structure of this configuration.
+        /// </summary>
+        public readonly ImmutableDictionary<string, object> Metrics;
+        /// <summary>
         /// Pod readiness checking for the Cruise Control container.
         /// </summary>
         public readonly Pulumi.Kubernetes.Types.Outputs.Kafka.V1Beta1.KafkaSpecCruiseControlReadinessProbe ReadinessProbe;
@@ -68,6 +72,8 @@ namespace Pulumi.Kubernetes.Types.Outputs.Kafka.V1Beta1
 
             Pulumi.Kubernetes.Types.Outputs.Kafka.V1Beta1.KafkaSpecCruiseControlLogging logging,
 
+            ImmutableDictionary<string, object> metrics,
+
             Pulumi.Kubernetes.Types.Outputs.Kafka.V1Beta1.KafkaSpecCruiseControlReadinessProbe readinessProbe,
 
             Pulumi.Kubernetes.Types.Outputs.Kafka.V1Beta1.KafkaSpecCruiseControlResources resources,
@@ -82,6 +88,7 @@ namespace Pulumi.Kubernetes.Types.Outputs.Kafka.V1Beta1
             JvmOptions = jvmOptions;
             LivenessProbe = livenessProbe;
             Logging = logging;
+            Metrics = metrics;
             ReadinessProbe = readinessProbe;
             Resources = resources;
             Template = template;

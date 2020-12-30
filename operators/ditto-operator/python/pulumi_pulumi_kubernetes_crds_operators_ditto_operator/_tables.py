@@ -3,7 +3,15 @@
 # *** Do not edit by hand unless you're certain you know what you are doing! ***
 
 SNAKE_TO_CAMEL_CASE_TABLE = {
+    "api_version": "apiVersion",
+    "create_default_user": "createDefaultUser",
+    "devops_secure_status": "devopsSecureStatus",
+    "enable_dummy_auth": "enableDummyAuth",
 }
 
 CAMEL_TO_SNAKE_CASE_TABLE = {
+    "apiVersion": "api_version",
+    "createDefaultUser": "create_default_user",
+    "devopsSecureStatus": "devops_secure_status",
+    "enableDummyAuth": "enable_dummy_auth",
 }

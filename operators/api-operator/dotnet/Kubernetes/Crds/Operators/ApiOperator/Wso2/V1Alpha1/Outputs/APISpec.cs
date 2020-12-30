@@ -13,19 +13,55 @@ namespace Pulumi.Kubernetes.Types.Outputs.Wso2.V1Alpha1
     [OutputType]
     public sealed class APISpec
     {
+        public readonly string ApiEndPoint;
+        /// <summary>
+        /// Definition of the API.
+        /// </summary>
         public readonly Pulumi.Kubernetes.Types.Outputs.Wso2.V1Alpha1.APISpecDefinition Definition;
         /// <summary>
-        /// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster Important: Run "operator-sdk generate k8s" to regenerate code after modifying this file Add custom validation using kubebuilder tags: https://book.kubebuilder.io/beyond_basics/generating_crd.html
+        /// Environment variables to be added to the API deployment. Default value "&lt;empty&gt;".
+        /// </summary>
+        public readonly ImmutableArray<string> EnvironmentVariables;
+        /// <summary>
+        /// Docker image of the API to be deployed. If specified, ignores the values of `UpdateTimeStamp`, `Override`. Uses the given image for the deployment. Default value "&lt;empty&gt;".
+        /// </summary>
+        public readonly string Image;
+        /// <summary>
+        /// Ingress Hostname that the API is being exposed. Default value "&lt;empty&gt;".
+        /// </summary>
+        public readonly string IngressHostname;
+        /// <summary>
+        /// Mode of the API. The mode from the swagger definition will be overridden by this value. Supports "privateJet", "sidecar", "&lt;empty&gt;". Default value "&lt;empty&gt;".
         /// </summary>
         public readonly string Mode;
+        /// <summary>
+        /// Override the exiting API docker image. Default value "false".
+        /// </summary>
         public readonly bool Override;
+        /// <summary>
+        /// Replica count of the API.
+        /// </summary>
         public readonly int Replicas;
+        /// <summary>
+        /// Update API definition creating a new docker image. Make a rolling update to the existing API. with prefixing the timestamp value. Default value "&lt;empty&gt;".
+        /// </summary>
         public readonly string UpdateTimeStamp;
+        /// <summary>
+        /// Version of the API. The version from the swagger definition will be overridden by this value. Default value "&lt;empty&gt;".
+        /// </summary>
         public readonly string Version;
 
         [OutputConstructor]
         private APISpec(
+            string apiEndPoint,
+
             Pulumi.Kubernetes.Types.Outputs.Wso2.V1Alpha1.APISpecDefinition definition,
+
+            ImmutableArray<string> environmentVariables,
+
+            string image,
+
+            string ingressHostname,
 
             string mode,
 
@@ -37,7 +73,11 @@ namespace Pulumi.Kubernetes.Types.Outputs.Wso2.V1Alpha1
 
             string version)
         {
+            ApiEndPoint = apiEndPoint;
             Definition = definition;
+            EnvironmentVariables = environmentVariables;
+            Image = image;
+            IngressHostname = ingressHostname;
             Mode = mode;
             Override = @override;
             Replicas = replicas;

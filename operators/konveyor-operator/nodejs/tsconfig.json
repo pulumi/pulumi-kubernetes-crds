@@ -16,6 +16,7 @@
         "index.ts",
         "migration/index.ts",
         "migration/v1alpha1/index.ts",
+        "migration/v1alpha1/migAnalytic.ts",
         "migration/v1alpha1/migCluster.ts",
         "migration/v1alpha1/migHook.ts",
         "migration/v1alpha1/migMigration.ts",

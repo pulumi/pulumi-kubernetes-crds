@@ -27,9 +27,12 @@ class TargetEndpoint(pulumi.CustomResource):
                  __name__=None,
                  __opts__=None):
         """
-        Create a TargetEndpoint resource with the given unique name, props, and options.
+        TargetEndpoint is the Schema for the targetendpoints API
+
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[pulumi.InputType['TargetEndpointSpecArgs']] spec: TargetEndpointSpec defines the desired state of TargetEndpoint
+        :param pulumi.Input[Mapping[str, Any]] status: TargetEndpointStatus defines the observed state of TargetEndpoint
         """
         if __name__ is not None:
             warnings.warn("explicit use of __name__ is deprecated", DeprecationWarning)
@@ -95,11 +98,17 @@ class TargetEndpoint(pulumi.CustomResource):
     @property
     @pulumi.getter
     def spec(self) -> pulumi.Output[Optional['outputs.TargetEndpointSpec']]:
+        """
+        TargetEndpointSpec defines the desired state of TargetEndpoint
+        """
         return pulumi.get(self, "spec")
 
     @property
     @pulumi.getter
     def status(self) -> pulumi.Output[Optional[Mapping[str, Any]]]:
+        """
+        TargetEndpointStatus defines the observed state of TargetEndpoint
+        """
         return pulumi.get(self, "status")
 
     def translate_output_property(self, prop):

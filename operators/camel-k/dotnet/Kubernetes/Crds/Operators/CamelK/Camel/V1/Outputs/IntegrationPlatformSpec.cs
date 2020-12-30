@@ -29,7 +29,7 @@ namespace Pulumi.Kubernetes.Types.Outputs.Camel.V1
         /// <summary>
         /// IntegrationPlatformResourcesSpec contains platform related resources
         /// </summary>
-        public readonly Pulumi.Kubernetes.Types.Outputs.Camel.V1.IntegrationPlatformSpecResources Resources;
+        public readonly ImmutableDictionary<string, object> Resources;
         public readonly ImmutableDictionary<string, Pulumi.Kubernetes.Types.Outputs.Camel.V1.IntegrationPlatformSpecTraits> Traits;
 
         [OutputConstructor]
@@ -42,7 +42,7 @@ namespace Pulumi.Kubernetes.Types.Outputs.Camel.V1
 
             string profile,
 
-            Pulumi.Kubernetes.Types.Outputs.Camel.V1.IntegrationPlatformSpecResources resources,
+            ImmutableDictionary<string, object> resources,
 
             ImmutableDictionary<string, Pulumi.Kubernetes.Types.Outputs.Camel.V1.IntegrationPlatformSpecTraits> traits)
         {

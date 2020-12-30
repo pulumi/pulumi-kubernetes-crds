@@ -9,6 +9,9 @@ using Pulumi.Serialization;
 
 namespace Pulumi.Pulumi.Kubernetes.Crds.Operators.3scaleCommunityOperator.Capabilities.V1Alpha1
 {
+    /// <summary>
+    /// Tenant is the Schema for the tenants API
+    /// </summary>
     public partial class Tenant : KubernetesResource
     {
         [Output("apiVersion")]
@@ -20,9 +23,15 @@ namespace Pulumi.Pulumi.Kubernetes.Crds.Operators.3scaleCommunityOperator.Capabi
         [Output("metadata")]
         public Output<Pulumi.Kubernetes.Types.Outputs.Meta.V1.ObjectMeta> Metadata { get; private set; } = null!;
 
+        /// <summary>
+        /// TenantSpec defines the desired state of Tenant
+        /// </summary>
         [Output("spec")]
         public Output<Pulumi.Kubernetes.Types.Outputs.Capabilities.V1Alpha1.TenantSpec> Spec { get; private set; } = null!;
 
+        /// <summary>
+        /// TenantStatus defines the observed state of Tenant
+        /// </summary>
         [Output("status")]
         public Output<Pulumi.Kubernetes.Types.Outputs.Capabilities.V1Alpha1.TenantStatus> Status { get; private set; } = null!;
 
@@ -95,9 +104,15 @@ namespace Pulumi.Kubernetes.Types.Inputs.Capabilities.V1Alpha1
         [Input("metadata")]
         public Input<Pulumi.Kubernetes.Types.Inputs.Meta.V1.ObjectMetaArgs>? Metadata { get; set; }
 
+        /// <summary>
+        /// TenantSpec defines the desired state of Tenant
+        /// </summary>
         [Input("spec")]
         public Input<Pulumi.Kubernetes.Types.Inputs.Capabilities.V1Alpha1.TenantSpecArgs>? Spec { get; set; }
 
+        /// <summary>
+        /// TenantStatus defines the observed state of Tenant
+        /// </summary>
         [Input("status")]
         public Input<Pulumi.Kubernetes.Types.Inputs.Capabilities.V1Alpha1.TenantStatusArgs>? Status { get; set; }
 

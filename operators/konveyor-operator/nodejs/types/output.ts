@@ -9,11 +9,81 @@ import {ObjectMeta} from "../meta/v1";
 
 export namespace migration {
     export namespace v1alpha1 {
+        export interface MigAnalyticSpec {
+            analyzeImageCount: boolean;
+            analyzeK8SResources: boolean;
+            analyzePVCapacity: boolean;
+            listImages?: boolean;
+            listImagesLimit?: number;
+            migPlanRef: {[key: string]: any};
+        }
+
+        export interface MigAnalyticStatus {
+            analytics?: outputs.migration.v1alpha1.MigAnalyticStatusAnalytics;
+            observedGeneration?: number;
+        }
+
+        export interface MigAnalyticStatusAnalytics {
+            excludedk8sResourceTotal: number;
+            imageCount: number;
+            imageSizeTotal: string;
+            incompatiblek8sResourceTotal: number;
+            k8sResourceTotal: number;
+            namespaces?: outputs.migration.v1alpha1.MigAnalyticStatusAnalyticsNamespaces[];
+            percentComplete: number;
+            plan: string;
+            pvCapacity: string;
+            pvCount: number;
+        }
+
+        export interface MigAnalyticStatusAnalyticsNamespaces {
+            excludedK8SResourceTotal: number;
+            excludedK8SResources?: outputs.migration.v1alpha1.MigAnalyticStatusAnalyticsNamespacesExcludedK8SResources[];
+            imageCount: number;
+            imageSizeTotal: string;
+            images?: outputs.migration.v1alpha1.MigAnalyticStatusAnalyticsNamespacesImages[];
+            incompatibleK8SResourceTotal: number;
+            incompatibleK8SResources?: outputs.migration.v1alpha1.MigAnalyticStatusAnalyticsNamespacesIncompatibleK8SResources[];
+            k8sResourceTotal: number;
+            k8sResources?: outputs.migration.v1alpha1.MigAnalyticStatusAnalyticsNamespacesK8sResources[];
+            namespace: string;
+            pvCapacity: string;
+            pvCount: number;
+        }
+
+        export interface MigAnalyticStatusAnalyticsNamespacesExcludedK8SResources {
+            count: number;
+            group: string;
+            kind: string;
+            version: string;
+        }
+
+        export interface MigAnalyticStatusAnalyticsNamespacesImages {
+            name: string;
+            reference: string;
+            size: string;
+        }
+
+        export interface MigAnalyticStatusAnalyticsNamespacesIncompatibleK8SResources {
+            count: number;
+            group: string;
+            kind: string;
+            version: string;
+        }
+
+        export interface MigAnalyticStatusAnalyticsNamespacesK8sResources {
+            count: number;
+            group: string;
+            kind: string;
+            version: string;
+        }
+
         export interface MigClusterSpec {
             azureResourceGroup?: string;
             caBundle?: string;
             insecure?: boolean;
             isHostCluster: boolean;
+            restartRestic?: boolean;
             serviceAccountSecretRef?: {[key: string]: any};
             storageClasses?: outputs.migration.v1alpha1.MigClusterSpecStorageClasses[];
             url?: string;
@@ -53,7 +123,7 @@ export namespace migration {
 
         export interface MigMigrationStatus {
             errors?: string[];
-            itenerary?: string;
+            itinerary?: string;
             observedDigest?: string;
             phase?: string;
             startTimestamp?: string;
@@ -87,6 +157,7 @@ export namespace migration {
 
         export interface MigPlanSpecPersistentVolumesPvc {
             accessModes?: string[];
+            hasReference?: boolean;
             name?: string;
             namespace?: string;
         }
@@ -105,6 +176,7 @@ export namespace migration {
         }
 
         export interface MigPlanStatus {
+            excludedResources?: string[];
             incompatibleNamespaces?: outputs.migration.v1alpha1.MigPlanStatusIncompatibleNamespaces[];
             observedDigest?: string;
         }
@@ -403,9 +475,17 @@ export namespace velero {
              */
             expiration?: string;
             /**
+             * FormatVersion is the backup format version, including major, minor, and patch version.
+             */
+            formatVersion?: string;
+            /**
              * Phase is the current state of the Backup.
              */
             phase?: string;
+            /**
+             * Progress contains information about the backup's execution progress. Note that this information is best-effort only -- if Velero fails to update it during a backup for any reason, it may be inaccurate/stale.
+             */
+            progress?: outputs.velero.v1.BackupStatusProgress;
             /**
              * StartTimestamp records the time a backup was started. Separate from CreationTimestamp, since that value changes on restores. The server's time is used for StartTimestamps
              */
@@ -415,7 +495,7 @@ export namespace velero {
              */
             validationErrors?: string[];
             /**
-             * Version is the backup format version.
+             * Version is the backup format major version. Deprecated: Please see FormatVersion
              */
             version?: number;
             /**
@@ -430,6 +510,20 @@ export namespace velero {
              * Warnings is a count of all warning messages that were generated during execution of the backup. The actual warnings are in the backup's log file in object storage.
              */
             warnings?: number;
+        }
+
+        /**
+         * Progress contains information about the backup's execution progress. Note that this information is best-effort only -- if Velero fails to update it during a backup for any reason, it may be inaccurate/stale.
+         */
+        export interface BackupStatusProgress {
+            /**
+             * ItemsBackedUp is the number of items that have actually been written to the backup tarball so far.
+             */
+            itemsBackedUp?: number;
+            /**
+             * TotalItems is the total number of items to be backed up. This number may change throughout the execution of the backup due to plugins that return additional related items to back up, the velero.io/exclude-from-backup label, and various other filters that happen as items are processed.
+             */
+            totalItems?: number;
         }
 
         /**
@@ -466,6 +560,10 @@ export namespace velero {
              * Bucket is the bucket to use for object storage.
              */
             bucket: string;
+            /**
+             * CACert defines a CA bundle to use when verifying TLS connections to the provider.
+             */
+            caCert?: string;
             /**
              * Prefix is the path inside a bucket to use for Velero storage. Optional.
              */

@@ -22,16 +22,22 @@ namespace Pulumi.Kubernetes.Types.Inputs.Build.V1Alpha1
         public Input<Pulumi.Kubernetes.Types.Inputs.Build.V1Alpha1.BuildRunSpecBuildRefArgs> BuildRef { get; set; } = null!;
 
         /// <summary>
-        /// Compute Resources required by the build container which can overwrite the configuration in Build. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
+        /// Output refers to the location where the generated image would be pushed to. It will overwrite the output image in build spec
         /// </summary>
-        [Input("resources")]
-        public Input<Pulumi.Kubernetes.Types.Inputs.Build.V1Alpha1.BuildRunSpecResourcesArgs>? Resources { get; set; }
+        [Input("output")]
+        public Input<Pulumi.Kubernetes.Types.Inputs.Build.V1Alpha1.BuildRunSpecOutputArgs>? Output { get; set; }
 
         /// <summary>
         /// ServiceAccount refers to the kubernetes serviceaccount which is used for resource control. Default serviceaccount will be set if it is empty
         /// </summary>
         [Input("serviceAccount")]
-        public Input<string>? ServiceAccount { get; set; }
+        public Input<Pulumi.Kubernetes.Types.Inputs.Build.V1Alpha1.BuildRunSpecServiceAccountArgs>? ServiceAccount { get; set; }
+
+        /// <summary>
+        /// Timeout defines the maximum run time of this build run.
+        /// </summary>
+        [Input("timeout")]
+        public Input<string>? Timeout { get; set; }
 
         public BuildRunSpecArgs()
         {

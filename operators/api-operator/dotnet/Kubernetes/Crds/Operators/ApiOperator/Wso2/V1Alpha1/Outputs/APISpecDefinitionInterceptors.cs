@@ -13,7 +13,13 @@ namespace Pulumi.Kubernetes.Types.Outputs.Wso2.V1Alpha1
     [OutputType]
     public sealed class APISpecDefinitionInterceptors
     {
+        /// <summary>
+        /// Ballerina interceptors. Default value "&lt;empty&gt;".
+        /// </summary>
         public readonly ImmutableArray<string> Ballerina;
+        /// <summary>
+        /// Java interceptors. Default value "&lt;empty&gt;".
+        /// </summary>
         public readonly ImmutableArray<string> Java;
 
         [OutputConstructor]

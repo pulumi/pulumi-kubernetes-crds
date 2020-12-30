@@ -13,8 +13,21 @@ namespace Pulumi.Kubernetes.Types.Outputs.Argoproj.V1Alpha1
     [OutputType]
     public sealed class ApplicationStatusHistory
     {
+        /// <summary>
+        /// DeployStartedAt holds the time the deployment started
+        /// </summary>
+        public readonly string DeployStartedAt;
+        /// <summary>
+        /// DeployedAt holds the time the deployment completed
+        /// </summary>
         public readonly string DeployedAt;
+        /// <summary>
+        /// ID is an auto incrementing identifier of the RevisionHistory
+        /// </summary>
         public readonly int Id;
+        /// <summary>
+        /// Revision holds the revision of the sync
+        /// </summary>
         public readonly string Revision;
         /// <summary>
         /// ApplicationSource contains information about github repository, path within repository and target application environment.
@@ -23,6 +36,8 @@ namespace Pulumi.Kubernetes.Types.Outputs.Argoproj.V1Alpha1
 
         [OutputConstructor]
         private ApplicationStatusHistory(
+            string deployStartedAt,
+
             string deployedAt,
 
             int id,
@@ -31,6 +46,7 @@ namespace Pulumi.Kubernetes.Types.Outputs.Argoproj.V1Alpha1
 
             Pulumi.Kubernetes.Types.Outputs.Argoproj.V1Alpha1.ApplicationStatusHistorySource source)
         {
+            DeployStartedAt = deployStartedAt;
             DeployedAt = deployedAt;
             Id = id;
             Revision = revision;

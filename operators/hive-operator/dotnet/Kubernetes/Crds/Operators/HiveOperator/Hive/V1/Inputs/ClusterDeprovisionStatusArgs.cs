@@ -21,6 +21,18 @@ namespace Pulumi.Kubernetes.Types.Inputs.Hive.V1
         [Input("completed")]
         public Input<bool>? Completed { get; set; }
 
+        [Input("conditions")]
+        private InputList<Pulumi.Kubernetes.Types.Inputs.Hive.V1.ClusterDeprovisionStatusConditionsArgs>? _conditions;
+
+        /// <summary>
+        /// Conditions includes more detailed status for the cluster deprovision
+        /// </summary>
+        public InputList<Pulumi.Kubernetes.Types.Inputs.Hive.V1.ClusterDeprovisionStatusConditionsArgs> Conditions
+        {
+            get => _conditions ?? (_conditions = new InputList<Pulumi.Kubernetes.Types.Inputs.Hive.V1.ClusterDeprovisionStatusConditionsArgs>());
+            set => _conditions = value;
+        }
+
         public ClusterDeprovisionStatusArgs()
         {
         }

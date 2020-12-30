@@ -40,6 +40,12 @@ namespace Pulumi.Kubernetes.Types.Inputs.Argoproj.V1Alpha1
         public Input<string> Phase { get; set; } = null!;
 
         /// <summary>
+        /// RetryCount contains time of operation retries
+        /// </summary>
+        [Input("retryCount")]
+        public Input<int>? RetryCount { get; set; }
+
+        /// <summary>
         /// StartedAt contains time of operation start
         /// </summary>
         [Input("startedAt", required: true)]

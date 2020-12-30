@@ -25,7 +25,7 @@ namespace Pulumi.Kubernetes.Types.Inputs.Storage.V1
         /// Specifies the output format of the exposed resources, defaults to "1"
         /// </summary>
         [Input("divisor")]
-        public Input<string>? Divisor { get; set; }
+        public Input<Pulumi.Kubernetes.Types.Inputs.Storage.V1.CSIUnitySpecDriverControllerEnvsValueFromResourceFieldRefDivisorArgs>? Divisor { get; set; }
 
         /// <summary>
         /// Required: resource to select

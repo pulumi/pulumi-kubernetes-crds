@@ -69,6 +69,12 @@ namespace Pulumi.Kubernetes.Types.Inputs.Machinelearning.V1
         [Input("seLinuxOptions")]
         public Input<Pulumi.Kubernetes.Types.Inputs.Machinelearning.V1.SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersSecurityContextSeLinuxOptionsArgs>? SeLinuxOptions { get; set; }
 
+        /// <summary>
+        /// The Windows specific settings applied to all containers. If unspecified, the options from the PodSecurityContext will be used. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
+        /// </summary>
+        [Input("windowsOptions")]
+        public Input<Pulumi.Kubernetes.Types.Inputs.Machinelearning.V1.SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersSecurityContextWindowsOptionsArgs>? WindowsOptions { get; set; }
+
         public SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersSecurityContextArgs()
         {
         }

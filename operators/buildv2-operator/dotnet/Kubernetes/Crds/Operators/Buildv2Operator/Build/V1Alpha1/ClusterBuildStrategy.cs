@@ -10,7 +10,7 @@ using Pulumi.Serialization;
 namespace Pulumi.Pulumi.Kubernetes.Crds.Operators.Buildv2Operator.Build.V1Alpha1
 {
     /// <summary>
-    /// ClusterBuildStrategy is the Schema for the clusterbuildstrategies API
+    /// ClusterBuildStrategy is the Schema representing a strategy in the cluster scope to build images from source code.
     /// </summary>
     public partial class ClusterBuildStrategy : KubernetesResource
     {

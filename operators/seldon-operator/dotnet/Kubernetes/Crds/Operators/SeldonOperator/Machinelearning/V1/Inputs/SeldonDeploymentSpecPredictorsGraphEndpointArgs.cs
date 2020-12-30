@@ -12,6 +12,12 @@ namespace Pulumi.Kubernetes.Types.Inputs.Machinelearning.V1
 
     public class SeldonDeploymentSpecPredictorsGraphEndpointArgs : Pulumi.ResourceArgs
     {
+        [Input("grpcPort")]
+        public Input<int>? GrpcPort { get; set; }
+
+        [Input("httpPort")]
+        public Input<int>? HttpPort { get; set; }
+
         [Input("service_host")]
         public Input<string>? Service_host { get; set; }
 

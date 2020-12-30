@@ -54,6 +54,9 @@ namespace Pulumi.Kubernetes.Types.Inputs.Jaegertracing.V1
         [Input("serviceAccount")]
         public Input<string>? ServiceAccount { get; set; }
 
+        [Input("serviceType")]
+        public Input<string>? ServiceType { get; set; }
+
         [Input("tolerations")]
         private InputList<Pulumi.Kubernetes.Types.Inputs.Jaegertracing.V1.JaegerSpecQueryTolerationsArgs>? _tolerations;
         public InputList<Pulumi.Kubernetes.Types.Inputs.Jaegertracing.V1.JaegerSpecQueryTolerationsArgs> Tolerations

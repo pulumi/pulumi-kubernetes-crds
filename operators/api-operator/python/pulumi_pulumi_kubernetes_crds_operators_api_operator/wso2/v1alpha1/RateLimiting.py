@@ -22,14 +22,15 @@ class RateLimiting(pulumi.CustomResource):
                  kind: Optional[pulumi.Input[str]] = None,
                  metadata: Optional[pulumi.Input[pulumi.InputType['_meta_v1.ObjectMetaArgs']]] = None,
                  spec: Optional[pulumi.Input[pulumi.InputType['RateLimitingSpecArgs']]] = None,
-                 status: Optional[pulumi.Input[Mapping[str, Any]]] = None,
                  __props__=None,
                  __name__=None,
                  __opts__=None):
         """
-        Create a RateLimiting resource with the given unique name, props, and options.
+        RateLimiting is the Schema for the ratelimitings API
+
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[pulumi.InputType['RateLimitingSpecArgs']] spec: RateLimitingSpec defines the desired state of RateLimiting
         """
         if __name__ is not None:
             warnings.warn("explicit use of __name__ is deprecated", DeprecationWarning)
@@ -52,7 +53,6 @@ class RateLimiting(pulumi.CustomResource):
             __props__['kind'] = 'RateLimiting'
             __props__['metadata'] = metadata
             __props__['spec'] = spec
-            __props__['status'] = status
         super(RateLimiting, __self__).__init__(
             'kubernetes:wso2.com/v1alpha1:RateLimiting',
             resource_name,
@@ -95,12 +95,10 @@ class RateLimiting(pulumi.CustomResource):
     @property
     @pulumi.getter
     def spec(self) -> pulumi.Output[Optional['outputs.RateLimitingSpec']]:
+        """
+        RateLimitingSpec defines the desired state of RateLimiting
+        """
         return pulumi.get(self, "spec")
-
-    @property
-    @pulumi.getter
-    def status(self) -> pulumi.Output[Optional[Mapping[str, Any]]]:
-        return pulumi.get(self, "status")
 
     def translate_output_property(self, prop):
         return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop

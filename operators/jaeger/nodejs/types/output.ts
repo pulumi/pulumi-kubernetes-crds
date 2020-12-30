@@ -178,11 +178,13 @@ export namespace jaegertracing {
             annotations?: {[key: string]: string};
             config?: {[key: string]: any};
             image?: string;
+            imagePullSecrets?: outputs.jaegertracing.v1.JaegerSpecAgentImagePullSecrets[];
             labels?: {[key: string]: string};
             options?: {[key: string]: any};
             resources?: outputs.jaegertracing.v1.JaegerSpecAgentResources;
             securityContext?: outputs.jaegertracing.v1.JaegerSpecAgentSecurityContext;
             serviceAccount?: string;
+            sidecarSecurityContext?: outputs.jaegertracing.v1.JaegerSpecAgentSidecarSecurityContext;
             strategy?: string;
             tolerations?: outputs.jaegertracing.v1.JaegerSpecAgentTolerations[];
             volumeMounts?: outputs.jaegertracing.v1.JaegerSpecAgentVolumeMounts[];
@@ -331,6 +333,10 @@ export namespace jaegertracing {
             values?: string[];
         }
 
+        export interface JaegerSpecAgentImagePullSecrets {
+            name?: string;
+        }
+
         export interface JaegerSpecAgentResources {
             limits?: {[key: string]: string};
             requests?: {[key: string]: string};
@@ -338,6 +344,7 @@ export namespace jaegertracing {
 
         export interface JaegerSpecAgentSecurityContext {
             fsGroup?: number;
+            fsGroupChangePolicy?: string;
             runAsGroup?: number;
             runAsNonRoot?: boolean;
             runAsUser?: number;
@@ -360,6 +367,37 @@ export namespace jaegertracing {
         }
 
         export interface JaegerSpecAgentSecurityContextWindowsOptions {
+            gmsaCredentialSpec?: string;
+            gmsaCredentialSpecName?: string;
+            runAsUserName?: string;
+        }
+
+        export interface JaegerSpecAgentSidecarSecurityContext {
+            allowPrivilegeEscalation?: boolean;
+            capabilities?: outputs.jaegertracing.v1.JaegerSpecAgentSidecarSecurityContextCapabilities;
+            privileged?: boolean;
+            procMount?: string;
+            readOnlyRootFilesystem?: boolean;
+            runAsGroup?: number;
+            runAsNonRoot?: boolean;
+            runAsUser?: number;
+            seLinuxOptions?: outputs.jaegertracing.v1.JaegerSpecAgentSidecarSecurityContextSeLinuxOptions;
+            windowsOptions?: outputs.jaegertracing.v1.JaegerSpecAgentSidecarSecurityContextWindowsOptions;
+        }
+
+        export interface JaegerSpecAgentSidecarSecurityContextCapabilities {
+            add?: string[];
+            drop?: string[];
+        }
+
+        export interface JaegerSpecAgentSidecarSecurityContextSeLinuxOptions {
+            level?: string;
+            role?: string;
+            type?: string;
+            user?: string;
+        }
+
+        export interface JaegerSpecAgentSidecarSecurityContextWindowsOptions {
             gmsaCredentialSpec?: string;
             gmsaCredentialSpecName?: string;
             runAsUserName?: string;
@@ -903,6 +941,7 @@ export namespace jaegertracing {
 
         export interface JaegerSpecAllInOneSecurityContext {
             fsGroup?: number;
+            fsGroupChangePolicy?: string;
             runAsGroup?: number;
             runAsNonRoot?: boolean;
             runAsUser?: number;
@@ -1472,6 +1511,7 @@ export namespace jaegertracing {
 
         export interface JaegerSpecCollectorSecurityContext {
             fsGroup?: number;
+            fsGroupChangePolicy?: string;
             runAsGroup?: number;
             runAsNonRoot?: boolean;
             runAsUser?: number;
@@ -2041,6 +2081,7 @@ export namespace jaegertracing {
 
         export interface JaegerSpecIngesterSecurityContext {
             fsGroup?: number;
+            fsGroupChangePolicy?: string;
             runAsGroup?: number;
             runAsNonRoot?: boolean;
             runAsUser?: number;
@@ -2617,6 +2658,7 @@ export namespace jaegertracing {
 
         export interface JaegerSpecIngressSecurityContext {
             fsGroup?: number;
+            fsGroupChangePolicy?: string;
             runAsGroup?: number;
             runAsNonRoot?: boolean;
             runAsUser?: number;
@@ -3033,6 +3075,7 @@ export namespace jaegertracing {
             resources?: outputs.jaegertracing.v1.JaegerSpecQueryResources;
             securityContext?: outputs.jaegertracing.v1.JaegerSpecQuerySecurityContext;
             serviceAccount?: string;
+            serviceType?: string;
             tolerations?: outputs.jaegertracing.v1.JaegerSpecQueryTolerations[];
             volumeMounts?: outputs.jaegertracing.v1.JaegerSpecQueryVolumeMounts[];
             volumes?: outputs.jaegertracing.v1.JaegerSpecQueryVolumes[];
@@ -3187,6 +3230,7 @@ export namespace jaegertracing {
 
         export interface JaegerSpecQuerySecurityContext {
             fsGroup?: number;
+            fsGroupChangePolicy?: string;
             runAsGroup?: number;
             runAsNonRoot?: boolean;
             runAsUser?: number;
@@ -3599,6 +3643,7 @@ export namespace jaegertracing {
 
         export interface JaegerSpecSecurityContext {
             fsGroup?: number;
+            fsGroupChangePolicy?: string;
             runAsGroup?: number;
             runAsNonRoot?: boolean;
             runAsUser?: number;
@@ -3643,6 +3688,7 @@ export namespace jaegertracing {
             image?: string;
             mode?: string;
             timeout?: string;
+            traceTTL?: string;
             ttlSecondsAfterFinished?: number;
         }
 
@@ -3817,6 +3863,7 @@ export namespace jaegertracing {
 
         export interface JaegerSpecStorageDependenciesSecurityContext {
             fsGroup?: number;
+            fsGroupChangePolicy?: string;
             runAsGroup?: number;
             runAsNonRoot?: boolean;
             runAsUser?: number;
@@ -4404,6 +4451,7 @@ export namespace jaegertracing {
 
         export interface JaegerSpecStorageEsIndexCleanerSecurityContext {
             fsGroup?: number;
+            fsGroupChangePolicy?: string;
             runAsGroup?: number;
             runAsNonRoot?: boolean;
             runAsUser?: number;
@@ -4972,6 +5020,7 @@ export namespace jaegertracing {
 
         export interface JaegerSpecStorageEsRolloverSecurityContext {
             fsGroup?: number;
+            fsGroupChangePolicy?: string;
             runAsGroup?: number;
             runAsNonRoot?: boolean;
             runAsUser?: number;

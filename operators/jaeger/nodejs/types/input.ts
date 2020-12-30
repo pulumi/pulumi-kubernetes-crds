@@ -178,11 +178,13 @@ export namespace jaegertracing {
             annotations?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
             config?: pulumi.Input<{[key: string]: any}>;
             image?: pulumi.Input<string>;
+            imagePullSecrets?: pulumi.Input<pulumi.Input<inputs.jaegertracing.v1.JaegerSpecAgentImagePullSecrets>[]>;
             labels?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
             options?: pulumi.Input<{[key: string]: any}>;
             resources?: pulumi.Input<inputs.jaegertracing.v1.JaegerSpecAgentResources>;
             securityContext?: pulumi.Input<inputs.jaegertracing.v1.JaegerSpecAgentSecurityContext>;
             serviceAccount?: pulumi.Input<string>;
+            sidecarSecurityContext?: pulumi.Input<inputs.jaegertracing.v1.JaegerSpecAgentSidecarSecurityContext>;
             strategy?: pulumi.Input<string>;
             tolerations?: pulumi.Input<pulumi.Input<inputs.jaegertracing.v1.JaegerSpecAgentTolerations>[]>;
             volumeMounts?: pulumi.Input<pulumi.Input<inputs.jaegertracing.v1.JaegerSpecAgentVolumeMounts>[]>;
@@ -331,6 +333,10 @@ export namespace jaegertracing {
             values?: pulumi.Input<pulumi.Input<string>[]>;
         }
 
+        export interface JaegerSpecAgentImagePullSecrets {
+            name?: pulumi.Input<string>;
+        }
+
         export interface JaegerSpecAgentResources {
             limits?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
             requests?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
@@ -338,6 +344,7 @@ export namespace jaegertracing {
 
         export interface JaegerSpecAgentSecurityContext {
             fsGroup?: pulumi.Input<number>;
+            fsGroupChangePolicy?: pulumi.Input<string>;
             runAsGroup?: pulumi.Input<number>;
             runAsNonRoot?: pulumi.Input<boolean>;
             runAsUser?: pulumi.Input<number>;
@@ -360,6 +367,37 @@ export namespace jaegertracing {
         }
 
         export interface JaegerSpecAgentSecurityContextWindowsOptions {
+            gmsaCredentialSpec?: pulumi.Input<string>;
+            gmsaCredentialSpecName?: pulumi.Input<string>;
+            runAsUserName?: pulumi.Input<string>;
+        }
+
+        export interface JaegerSpecAgentSidecarSecurityContext {
+            allowPrivilegeEscalation?: pulumi.Input<boolean>;
+            capabilities?: pulumi.Input<inputs.jaegertracing.v1.JaegerSpecAgentSidecarSecurityContextCapabilities>;
+            privileged?: pulumi.Input<boolean>;
+            procMount?: pulumi.Input<string>;
+            readOnlyRootFilesystem?: pulumi.Input<boolean>;
+            runAsGroup?: pulumi.Input<number>;
+            runAsNonRoot?: pulumi.Input<boolean>;
+            runAsUser?: pulumi.Input<number>;
+            seLinuxOptions?: pulumi.Input<inputs.jaegertracing.v1.JaegerSpecAgentSidecarSecurityContextSeLinuxOptions>;
+            windowsOptions?: pulumi.Input<inputs.jaegertracing.v1.JaegerSpecAgentSidecarSecurityContextWindowsOptions>;
+        }
+
+        export interface JaegerSpecAgentSidecarSecurityContextCapabilities {
+            add?: pulumi.Input<pulumi.Input<string>[]>;
+            drop?: pulumi.Input<pulumi.Input<string>[]>;
+        }
+
+        export interface JaegerSpecAgentSidecarSecurityContextSeLinuxOptions {
+            level?: pulumi.Input<string>;
+            role?: pulumi.Input<string>;
+            type?: pulumi.Input<string>;
+            user?: pulumi.Input<string>;
+        }
+
+        export interface JaegerSpecAgentSidecarSecurityContextWindowsOptions {
             gmsaCredentialSpec?: pulumi.Input<string>;
             gmsaCredentialSpecName?: pulumi.Input<string>;
             runAsUserName?: pulumi.Input<string>;
@@ -903,6 +941,7 @@ export namespace jaegertracing {
 
         export interface JaegerSpecAllInOneSecurityContext {
             fsGroup?: pulumi.Input<number>;
+            fsGroupChangePolicy?: pulumi.Input<string>;
             runAsGroup?: pulumi.Input<number>;
             runAsNonRoot?: pulumi.Input<boolean>;
             runAsUser?: pulumi.Input<number>;
@@ -1472,6 +1511,7 @@ export namespace jaegertracing {
 
         export interface JaegerSpecCollectorSecurityContext {
             fsGroup?: pulumi.Input<number>;
+            fsGroupChangePolicy?: pulumi.Input<string>;
             runAsGroup?: pulumi.Input<number>;
             runAsNonRoot?: pulumi.Input<boolean>;
             runAsUser?: pulumi.Input<number>;
@@ -2041,6 +2081,7 @@ export namespace jaegertracing {
 
         export interface JaegerSpecIngesterSecurityContext {
             fsGroup?: pulumi.Input<number>;
+            fsGroupChangePolicy?: pulumi.Input<string>;
             runAsGroup?: pulumi.Input<number>;
             runAsNonRoot?: pulumi.Input<boolean>;
             runAsUser?: pulumi.Input<number>;
@@ -2617,6 +2658,7 @@ export namespace jaegertracing {
 
         export interface JaegerSpecIngressSecurityContext {
             fsGroup?: pulumi.Input<number>;
+            fsGroupChangePolicy?: pulumi.Input<string>;
             runAsGroup?: pulumi.Input<number>;
             runAsNonRoot?: pulumi.Input<boolean>;
             runAsUser?: pulumi.Input<number>;
@@ -3033,6 +3075,7 @@ export namespace jaegertracing {
             resources?: pulumi.Input<inputs.jaegertracing.v1.JaegerSpecQueryResources>;
             securityContext?: pulumi.Input<inputs.jaegertracing.v1.JaegerSpecQuerySecurityContext>;
             serviceAccount?: pulumi.Input<string>;
+            serviceType?: pulumi.Input<string>;
             tolerations?: pulumi.Input<pulumi.Input<inputs.jaegertracing.v1.JaegerSpecQueryTolerations>[]>;
             volumeMounts?: pulumi.Input<pulumi.Input<inputs.jaegertracing.v1.JaegerSpecQueryVolumeMounts>[]>;
             volumes?: pulumi.Input<pulumi.Input<inputs.jaegertracing.v1.JaegerSpecQueryVolumes>[]>;
@@ -3187,6 +3230,7 @@ export namespace jaegertracing {
 
         export interface JaegerSpecQuerySecurityContext {
             fsGroup?: pulumi.Input<number>;
+            fsGroupChangePolicy?: pulumi.Input<string>;
             runAsGroup?: pulumi.Input<number>;
             runAsNonRoot?: pulumi.Input<boolean>;
             runAsUser?: pulumi.Input<number>;
@@ -3599,6 +3643,7 @@ export namespace jaegertracing {
 
         export interface JaegerSpecSecurityContext {
             fsGroup?: pulumi.Input<number>;
+            fsGroupChangePolicy?: pulumi.Input<string>;
             runAsGroup?: pulumi.Input<number>;
             runAsNonRoot?: pulumi.Input<boolean>;
             runAsUser?: pulumi.Input<number>;
@@ -3643,6 +3688,7 @@ export namespace jaegertracing {
             image?: pulumi.Input<string>;
             mode?: pulumi.Input<string>;
             timeout?: pulumi.Input<string>;
+            traceTTL?: pulumi.Input<string>;
             ttlSecondsAfterFinished?: pulumi.Input<number>;
         }
 
@@ -3817,6 +3863,7 @@ export namespace jaegertracing {
 
         export interface JaegerSpecStorageDependenciesSecurityContext {
             fsGroup?: pulumi.Input<number>;
+            fsGroupChangePolicy?: pulumi.Input<string>;
             runAsGroup?: pulumi.Input<number>;
             runAsNonRoot?: pulumi.Input<boolean>;
             runAsUser?: pulumi.Input<number>;
@@ -4404,6 +4451,7 @@ export namespace jaegertracing {
 
         export interface JaegerSpecStorageEsIndexCleanerSecurityContext {
             fsGroup?: pulumi.Input<number>;
+            fsGroupChangePolicy?: pulumi.Input<string>;
             runAsGroup?: pulumi.Input<number>;
             runAsNonRoot?: pulumi.Input<boolean>;
             runAsUser?: pulumi.Input<number>;
@@ -4972,6 +5020,7 @@ export namespace jaegertracing {
 
         export interface JaegerSpecStorageEsRolloverSecurityContext {
             fsGroup?: pulumi.Input<number>;
+            fsGroupChangePolicy?: pulumi.Input<string>;
             runAsGroup?: pulumi.Input<number>;
             runAsNonRoot?: pulumi.Input<boolean>;
             runAsUser?: pulumi.Input<number>;

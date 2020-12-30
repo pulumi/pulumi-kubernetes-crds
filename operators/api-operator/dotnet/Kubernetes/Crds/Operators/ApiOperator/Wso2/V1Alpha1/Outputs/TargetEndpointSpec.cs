@@ -13,48 +13,37 @@ namespace Pulumi.Kubernetes.Types.Outputs.Wso2.V1Alpha1
     [OutputType]
     public sealed class TargetEndpointSpec
     {
-        public readonly Pulumi.Kubernetes.Types.Outputs.Wso2.V1Alpha1.TargetEndpointSpecDeploy Deploy;
-        public readonly string EndpointName;
-        public readonly Pulumi.Kubernetes.Types.Outputs.Wso2.V1Alpha1.TargetEndpointSpecEndpointSecurity EndpointSecurity;
-        public readonly string Hostname;
-        public readonly string Mode;
-        public readonly int Port;
-        public readonly string Protocol;
-        public readonly int TargetPort;
         /// <summary>
-        /// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster Important: Run "operator-sdk generate k8s" to regenerate code after modifying this file Add custom validation using kubebuilder tags: https://book.kubebuilder.io/beyond_basics/generating_crd.html
+        /// Protocol of the application. Supports "http" and "https".
         /// </summary>
-        public readonly string Type;
+        public readonly string ApplicationProtocol;
+        /// <summary>
+        /// Deployment details.
+        /// </summary>
+        public readonly Pulumi.Kubernetes.Types.Outputs.Wso2.V1Alpha1.TargetEndpointSpecDeploy Deploy;
+        /// <summary>
+        /// Mode of the Target Endpoint. Supports "privateJet", "sidecar", "serverless". Default value "privateJet"
+        /// </summary>
+        public readonly string Mode;
+        /// <summary>
+        /// List of optional ports of the target endpoint. First port should be the port of the target endpoint which is referred in swagger definition.
+        /// </summary>
+        public readonly ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Wso2.V1Alpha1.TargetEndpointSpecPorts> Ports;
 
         [OutputConstructor]
         private TargetEndpointSpec(
+            string applicationProtocol,
+
             Pulumi.Kubernetes.Types.Outputs.Wso2.V1Alpha1.TargetEndpointSpecDeploy deploy,
-
-            string endpointName,
-
-            Pulumi.Kubernetes.Types.Outputs.Wso2.V1Alpha1.TargetEndpointSpecEndpointSecurity endpointSecurity,
-
-            string hostname,
 
             string mode,
 
-            int port,
-
-            string protocol,
-
-            int targetPort,
-
-            string type)
+            ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Wso2.V1Alpha1.TargetEndpointSpecPorts> ports)
         {
+            ApplicationProtocol = applicationProtocol;
             Deploy = deploy;
-            EndpointName = endpointName;
-            EndpointSecurity = endpointSecurity;
-            Hostname = hostname;
             Mode = mode;
-            Port = port;
-            Protocol = protocol;
-            TargetPort = targetPort;
-            Type = type;
+            Ports = ports;
         }
     }
 }

@@ -11,13 +11,16 @@ import (
 // Contains a map from operator package names and the specific languages in which to not generate code for.
 var ignorePackages = map[string][]string{
 	// Contains hyphened property names, which the Go codegen can't currently handle
-	"tidb-operator": {"go"},
-	// Contains "-XX", "-Xms", etc property names in kafkabridges.kafka.strimzi.io.crd.yaml
-	"strimzi-kafka-operator": {"go"},
+	"tidb-operator":            {"go"},
+	"strimzi-kafka-operator":   {"go"},
+	"victoriametrics-operator": {"go", "dotnet", "nodejs", "python"},
+	"t8c":                      {"go"},
+	"camel-k":                  {"go"},
+	"maistraoperator":          {"go"},
 }
 
 // Contains a map from operator package names to language-specific names for the package.
-var specialPackageNames = map[string]map[string]string {
+var specialPackageNames = map[string]map[string]string{
 	"3scale-community-operator": {
 		"go": "three_scale_community_operator", // Go package names cannot start with numbers
 	},
@@ -110,7 +113,7 @@ func generate(pulumiKubernetesCRDSPath string, packageToYamlPaths map[string][]s
 			DotNetPath: &dotnetPath,
 			DotNetName: dotNetName,
 			GoPath:     &goPath,
-			GoName: goName,
+			GoName:     goName,
 		}
 
 		if languagesToIgnore, ok := ignorePackages[packageName]; ok {
@@ -121,12 +124,9 @@ func generate(pulumiKubernetesCRDSPath string, packageToYamlPaths map[string][]s
 			applySpecialPackageNames(&ls, languageToSpecialPackageNames)
 		}
 
-		fmt.Print("Generating " + packageName + "... ")
 		if err := gen.Generate(ls, yamlPaths, true); err == nil {
-			fmt.Println("success!")
 		} else {
-			fmt.Println("failed")
-			fmt.Printf("error: %v\n", err)
+			fmt.Println("Failed to generate " + packageName + ".")
 		}
 	}
 

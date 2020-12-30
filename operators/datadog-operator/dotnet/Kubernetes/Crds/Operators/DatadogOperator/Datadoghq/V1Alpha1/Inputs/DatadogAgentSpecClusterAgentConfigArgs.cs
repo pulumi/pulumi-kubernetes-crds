@@ -28,6 +28,12 @@ namespace Pulumi.Kubernetes.Types.Inputs.Datadoghq.V1Alpha1
         public Input<bool>? ClusterChecksEnabled { get; set; }
 
         /// <summary>
+        /// Enables this to start event collection from the kubernetes API ref: https://docs.datadoghq.com/agent/cluster_agent/event_collection/
+        /// </summary>
+        [Input("collectEvents")]
+        public Input<bool>? CollectEvents { get; set; }
+
+        /// <summary>
         /// Confd Provide additional cluster check configurations. Each key will become a file in /conf.d see https://docs.datadoghq.com/agent/autodiscovery/ for more details.
         /// </summary>
         [Input("confd")]

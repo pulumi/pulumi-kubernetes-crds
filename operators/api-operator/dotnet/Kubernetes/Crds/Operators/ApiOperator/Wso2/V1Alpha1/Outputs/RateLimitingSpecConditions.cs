@@ -13,7 +13,13 @@ namespace Pulumi.Kubernetes.Types.Outputs.Wso2.V1Alpha1
     [OutputType]
     public sealed class RateLimitingSpecConditions
     {
+        /// <summary>
+        /// HeaderCondition is exported type in Ratelimiting Spec
+        /// </summary>
         public readonly Pulumi.Kubernetes.Types.Outputs.Wso2.V1Alpha1.RateLimitingSpecConditionsHeaderCondition HeaderCondition;
+        /// <summary>
+        /// IPCondition is exported type in Ratelimiting Spec
+        /// </summary>
         public readonly Pulumi.Kubernetes.Types.Outputs.Wso2.V1Alpha1.RateLimitingSpecConditionsIpCondition IpCondition;
 
         [OutputConstructor]

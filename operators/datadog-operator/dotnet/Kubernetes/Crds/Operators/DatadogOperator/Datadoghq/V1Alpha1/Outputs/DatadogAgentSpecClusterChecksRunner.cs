@@ -42,6 +42,10 @@ namespace Pulumi.Kubernetes.Types.Outputs.Datadoghq.V1Alpha1
         /// </summary>
         public readonly Pulumi.Kubernetes.Types.Outputs.Datadoghq.V1Alpha1.DatadogAgentSpecClusterChecksRunnerImage Image;
         /// <summary>
+        /// Provide Cluster Checks Runner Network Policy configuration
+        /// </summary>
+        public readonly Pulumi.Kubernetes.Types.Outputs.Datadoghq.V1Alpha1.DatadogAgentSpecClusterChecksRunnerNetworkPolicy NetworkPolicy;
+        /// <summary>
         /// NodeSelector is a selector which must be true for the pod to fit on a node. Selector which must match a node's labels for the pod to be scheduled on that node. More info: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
         /// </summary>
         public readonly ImmutableDictionary<string, string> NodeSelector;
@@ -78,6 +82,8 @@ namespace Pulumi.Kubernetes.Types.Outputs.Datadoghq.V1Alpha1
 
             Pulumi.Kubernetes.Types.Outputs.Datadoghq.V1Alpha1.DatadogAgentSpecClusterChecksRunnerImage image,
 
+            Pulumi.Kubernetes.Types.Outputs.Datadoghq.V1Alpha1.DatadogAgentSpecClusterChecksRunnerNetworkPolicy networkPolicy,
+
             ImmutableDictionary<string, string> nodeSelector,
 
             string priorityClassName,
@@ -95,6 +101,7 @@ namespace Pulumi.Kubernetes.Types.Outputs.Datadoghq.V1Alpha1
             CustomConfig = customConfig;
             DeploymentName = deploymentName;
             Image = image;
+            NetworkPolicy = networkPolicy;
             NodeSelector = nodeSelector;
             PriorityClassName = priorityClassName;
             Rbac = rbac;

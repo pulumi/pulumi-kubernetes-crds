@@ -13,12 +13,24 @@ namespace Pulumi.Kubernetes.Types.Outputs.Apps.V1Alpha1
     [OutputType]
     public sealed class APIManagerSpecBackendCronSpec
     {
+        /// <summary>
+        /// Affinity is a group of affinity scheduling rules.
+        /// </summary>
+        public readonly Pulumi.Kubernetes.Types.Outputs.Apps.V1Alpha1.APIManagerSpecBackendCronSpecAffinity Affinity;
         public readonly int Replicas;
+        public readonly ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Apps.V1Alpha1.APIManagerSpecBackendCronSpecTolerations> Tolerations;
 
         [OutputConstructor]
-        private APIManagerSpecBackendCronSpec(int replicas)
+        private APIManagerSpecBackendCronSpec(
+            Pulumi.Kubernetes.Types.Outputs.Apps.V1Alpha1.APIManagerSpecBackendCronSpecAffinity affinity,
+
+            int replicas,
+
+            ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Apps.V1Alpha1.APIManagerSpecBackendCronSpecTolerations> tolerations)
         {
+            Affinity = affinity;
             Replicas = replicas;
+            Tolerations = tolerations;
         }
     }
 }

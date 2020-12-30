@@ -21,6 +21,7 @@ __all__ = [
     'BackupSpecLabelSelectorArgs',
     'BackupSpecLabelSelectorMatchExpressionsArgs',
     'BackupStatusArgs',
+    'BackupStatusProgressArgs',
     'BackupStorageLocationSpecArgs',
     'BackupStorageLocationSpecObjectStorageArgs',
     'BackupStorageLocationStatusArgs',
@@ -789,7 +790,9 @@ class BackupStatusArgs:
                  completion_timestamp: Optional[pulumi.Input[str]] = None,
                  errors: Optional[pulumi.Input[int]] = None,
                  expiration: Optional[pulumi.Input[str]] = None,
+                 format_version: Optional[pulumi.Input[str]] = None,
                  phase: Optional[pulumi.Input[str]] = None,
+                 progress: Optional[pulumi.Input['BackupStatusProgressArgs']] = None,
                  start_timestamp: Optional[pulumi.Input[str]] = None,
                  validation_errors: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  version: Optional[pulumi.Input[int]] = None,
@@ -801,10 +804,12 @@ class BackupStatusArgs:
         :param pulumi.Input[str] completion_timestamp: CompletionTimestamp records the time a backup was completed. Completion time is recorded even on failed backups. Completion time is recorded before uploading the backup object. The server's time is used for CompletionTimestamps
         :param pulumi.Input[int] errors: Errors is a count of all error messages that were generated during execution of the backup.  The actual errors are in the backup's log file in object storage.
         :param pulumi.Input[str] expiration: Expiration is when this Backup is eligible for garbage-collection.
+        :param pulumi.Input[str] format_version: FormatVersion is the backup format version, including major, minor, and patch version.
         :param pulumi.Input[str] phase: Phase is the current state of the Backup.
+        :param pulumi.Input['BackupStatusProgressArgs'] progress: Progress contains information about the backup's execution progress. Note that this information is best-effort only -- if Velero fails to update it during a backup for any reason, it may be inaccurate/stale.
         :param pulumi.Input[str] start_timestamp: StartTimestamp records the time a backup was started. Separate from CreationTimestamp, since that value changes on restores. The server's time is used for StartTimestamps
         :param pulumi.Input[Sequence[pulumi.Input[str]]] validation_errors: ValidationErrors is a slice of all validation errors (if applicable).
-        :param pulumi.Input[int] version: Version is the backup format version.
+        :param pulumi.Input[int] version: Version is the backup format major version. Deprecated: Please see FormatVersion
         :param pulumi.Input[int] volume_snapshots_attempted: VolumeSnapshotsAttempted is the total number of attempted volume snapshots for this backup.
         :param pulumi.Input[int] volume_snapshots_completed: VolumeSnapshotsCompleted is the total number of successfully completed volume snapshots for this backup.
         :param pulumi.Input[int] warnings: Warnings is a count of all warning messages that were generated during execution of the backup. The actual warnings are in the backup's log file in object storage.
@@ -815,8 +820,12 @@ class BackupStatusArgs:
             pulumi.set(__self__, "errors", errors)
         if expiration is not None:
             pulumi.set(__self__, "expiration", expiration)
+        if format_version is not None:
+            pulumi.set(__self__, "format_version", format_version)
         if phase is not None:
             pulumi.set(__self__, "phase", phase)
+        if progress is not None:
+            pulumi.set(__self__, "progress", progress)
         if start_timestamp is not None:
             pulumi.set(__self__, "start_timestamp", start_timestamp)
         if validation_errors is not None:
@@ -867,6 +876,18 @@ class BackupStatusArgs:
         pulumi.set(self, "expiration", value)
 
     @property
+    @pulumi.getter(name="formatVersion")
+    def format_version(self) -> Optional[pulumi.Input[str]]:
+        """
+        FormatVersion is the backup format version, including major, minor, and patch version.
+        """
+        return pulumi.get(self, "format_version")
+
+    @format_version.setter
+    def format_version(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "format_version", value)
+
+    @property
     @pulumi.getter
     def phase(self) -> Optional[pulumi.Input[str]]:
         """
@@ -877,6 +898,18 @@ class BackupStatusArgs:
     @phase.setter
     def phase(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "phase", value)
+
+    @property
+    @pulumi.getter
+    def progress(self) -> Optional[pulumi.Input['BackupStatusProgressArgs']]:
+        """
+        Progress contains information about the backup's execution progress. Note that this information is best-effort only -- if Velero fails to update it during a backup for any reason, it may be inaccurate/stale.
+        """
+        return pulumi.get(self, "progress")
+
+    @progress.setter
+    def progress(self, value: Optional[pulumi.Input['BackupStatusProgressArgs']]):
+        pulumi.set(self, "progress", value)
 
     @property
     @pulumi.getter(name="startTimestamp")
@@ -906,7 +939,7 @@ class BackupStatusArgs:
     @pulumi.getter
     def version(self) -> Optional[pulumi.Input[int]]:
         """
-        Version is the backup format version.
+        Version is the backup format major version. Deprecated: Please see FormatVersion
         """
         return pulumi.get(self, "version")
 
@@ -949,6 +982,46 @@ class BackupStatusArgs:
     @warnings.setter
     def warnings(self, value: Optional[pulumi.Input[int]]):
         pulumi.set(self, "warnings", value)
+
+
+@pulumi.input_type
+class BackupStatusProgressArgs:
+    def __init__(__self__, *,
+                 items_backed_up: Optional[pulumi.Input[int]] = None,
+                 total_items: Optional[pulumi.Input[int]] = None):
+        """
+        Progress contains information about the backup's execution progress. Note that this information is best-effort only -- if Velero fails to update it during a backup for any reason, it may be inaccurate/stale.
+        :param pulumi.Input[int] items_backed_up: ItemsBackedUp is the number of items that have actually been written to the backup tarball so far.
+        :param pulumi.Input[int] total_items: TotalItems is the total number of items to be backed up. This number may change throughout the execution of the backup due to plugins that return additional related items to back up, the velero.io/exclude-from-backup label, and various other filters that happen as items are processed.
+        """
+        if items_backed_up is not None:
+            pulumi.set(__self__, "items_backed_up", items_backed_up)
+        if total_items is not None:
+            pulumi.set(__self__, "total_items", total_items)
+
+    @property
+    @pulumi.getter(name="itemsBackedUp")
+    def items_backed_up(self) -> Optional[pulumi.Input[int]]:
+        """
+        ItemsBackedUp is the number of items that have actually been written to the backup tarball so far.
+        """
+        return pulumi.get(self, "items_backed_up")
+
+    @items_backed_up.setter
+    def items_backed_up(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "items_backed_up", value)
+
+    @property
+    @pulumi.getter(name="totalItems")
+    def total_items(self) -> Optional[pulumi.Input[int]]:
+        """
+        TotalItems is the total number of items to be backed up. This number may change throughout the execution of the backup due to plugins that return additional related items to back up, the velero.io/exclude-from-backup label, and various other filters that happen as items are processed.
+        """
+        return pulumi.get(self, "total_items")
+
+    @total_items.setter
+    def total_items(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "total_items", value)
 
 
 @pulumi.input_type
@@ -1041,13 +1114,17 @@ class BackupStorageLocationSpecArgs:
 class BackupStorageLocationSpecObjectStorageArgs:
     def __init__(__self__, *,
                  bucket: pulumi.Input[str],
+                 ca_cert: Optional[pulumi.Input[str]] = None,
                  prefix: Optional[pulumi.Input[str]] = None):
         """
         ObjectStorageLocation specifies the settings necessary to connect to a provider's object storage.
         :param pulumi.Input[str] bucket: Bucket is the bucket to use for object storage.
+        :param pulumi.Input[str] ca_cert: CACert defines a CA bundle to use when verifying TLS connections to the provider.
         :param pulumi.Input[str] prefix: Prefix is the path inside a bucket to use for Velero storage. Optional.
         """
         pulumi.set(__self__, "bucket", bucket)
+        if ca_cert is not None:
+            pulumi.set(__self__, "ca_cert", ca_cert)
         if prefix is not None:
             pulumi.set(__self__, "prefix", prefix)
 
@@ -1062,6 +1139,18 @@ class BackupStorageLocationSpecObjectStorageArgs:
     @bucket.setter
     def bucket(self, value: pulumi.Input[str]):
         pulumi.set(self, "bucket", value)
+
+    @property
+    @pulumi.getter(name="caCert")
+    def ca_cert(self) -> Optional[pulumi.Input[str]]:
+        """
+        CACert defines a CA bundle to use when verifying TLS connections to the provider.
+        """
+        return pulumi.get(self, "ca_cert")
+
+    @ca_cert.setter
+    def ca_cert(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "ca_cert", value)
 
     @property
     @pulumi.getter

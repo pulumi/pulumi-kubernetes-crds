@@ -10,15 +10,20 @@ from ... import _utilities, _tables
 
 __all__ = [
     'NexusSpecArgs',
+    'NexusSpecAutomaticUpdateArgs',
+    'NexusSpecLivenessProbeArgs',
     'NexusSpecNetworkingArgs',
     'NexusSpecNetworkingTlsArgs',
     'NexusSpecPersistenceArgs',
+    'NexusSpecReadinessProbeArgs',
     'NexusSpecResourcesArgs',
     'NexusSpecResourcesLimitsArgs',
     'NexusSpecResourcesRequestsArgs',
+    'NexusSpecServerOperationsArgs',
     'NexusStatusArgs',
     'NexusStatusDeploymentStatusArgs',
     'NexusStatusDeploymentStatusConditionsArgs',
+    'NexusStatusServerOperationsStatusArgs',
 ]
 
 @pulumi.input_type
@@ -27,29 +32,53 @@ class NexusSpecArgs:
                  persistence: pulumi.Input['NexusSpecPersistenceArgs'],
                  replicas: pulumi.Input[int],
                  use_red_hat_image: pulumi.Input[bool],
+                 automatic_update: Optional[pulumi.Input['NexusSpecAutomaticUpdateArgs']] = None,
+                 generate_random_admin_password: Optional[pulumi.Input[bool]] = None,
                  image: Optional[pulumi.Input[str]] = None,
+                 image_pull_policy: Optional[pulumi.Input[str]] = None,
+                 liveness_probe: Optional[pulumi.Input['NexusSpecLivenessProbeArgs']] = None,
                  networking: Optional[pulumi.Input['NexusSpecNetworkingArgs']] = None,
+                 readiness_probe: Optional[pulumi.Input['NexusSpecReadinessProbeArgs']] = None,
                  resources: Optional[pulumi.Input['NexusSpecResourcesArgs']] = None,
+                 server_operations: Optional[pulumi.Input['NexusSpecServerOperationsArgs']] = None,
                  service_account_name: Optional[pulumi.Input[str]] = None):
         """
         NexusSpec defines the desired state of Nexus
         :param pulumi.Input['NexusSpecPersistenceArgs'] persistence: Persistence definition
-        :param pulumi.Input[int] replicas: Number of pods replicas desired Default: 1
-        :param pulumi.Input[bool] use_red_hat_image: If you have access to Red Hat Container Catalog, turn this to true to use the certified image provided by Sonatype Default: false
-        :param pulumi.Input[str] image: Full image tag name for this specific deployment Default: docker.io/sonatype/nexus3:latest
+        :param pulumi.Input[int] replicas: Number of pod replicas desired. Defaults to 0.
+        :param pulumi.Input[bool] use_red_hat_image: If you have access to Red Hat Container Catalog, set this to `true` to use the certified image provided by Sonatype Defaults to `false`
+        :param pulumi.Input['NexusSpecAutomaticUpdateArgs'] automatic_update: Automatic updates configuration
+        :param pulumi.Input[bool] generate_random_admin_password: GenerateRandomAdminPassword enables the random password generation. Defaults to `false`: the default password for a newly created instance is 'admin123', which should be changed in the first login. If set to `true`, you must use the automatically generated 'admin' password, stored in the container's file system at `/nexus-data/admin.password`. The operator uses the default credentials to create a user for itself to create default repositories. If set to `true`, the repositories won't be created since the operator won't fetch for the random password.
+        :param pulumi.Input[str] image: Full image tag name for this specific deployment. Will be ignored if `spec.useRedHatImage` is set to `true`. Default: docker.io/sonatype/nexus3:latest
+        :param pulumi.Input[str] image_pull_policy: The image pull policy for the Nexus image. If left blank behavior will be determined by the image tag (`Always` if "latest" and `IfNotPresent` otherwise). Possible values: `Always`, `IfNotPresent` or `Never`.
+        :param pulumi.Input['NexusSpecLivenessProbeArgs'] liveness_probe: LivenessProbe describes how the Nexus container liveness probe should work
         :param pulumi.Input['NexusSpecNetworkingArgs'] networking: Networking definition
+        :param pulumi.Input['NexusSpecReadinessProbeArgs'] readiness_probe: ReadinessProbe describes how the Nexus container readiness probe should work
         :param pulumi.Input['NexusSpecResourcesArgs'] resources: Defined Resources for the Nexus instance
-        :param pulumi.Input[str] service_account_name: ServiceAccountName is the name of the ServiceAccount used to run the Pods. If left blank, a default ServiceAccount is created with the same name as the Nexus CR.
+        :param pulumi.Input['NexusSpecServerOperationsArgs'] server_operations: ServerOperations describes the options for the operations performed on the deployed server instance
+        :param pulumi.Input[str] service_account_name: ServiceAccountName is the name of the ServiceAccount used to run the Pods. If left blank, a default ServiceAccount is created with the same name as the Nexus CR (`metadata.name`).
         """
         pulumi.set(__self__, "persistence", persistence)
         pulumi.set(__self__, "replicas", replicas)
         pulumi.set(__self__, "use_red_hat_image", use_red_hat_image)
+        if automatic_update is not None:
+            pulumi.set(__self__, "automatic_update", automatic_update)
+        if generate_random_admin_password is not None:
+            pulumi.set(__self__, "generate_random_admin_password", generate_random_admin_password)
         if image is not None:
             pulumi.set(__self__, "image", image)
+        if image_pull_policy is not None:
+            pulumi.set(__self__, "image_pull_policy", image_pull_policy)
+        if liveness_probe is not None:
+            pulumi.set(__self__, "liveness_probe", liveness_probe)
         if networking is not None:
             pulumi.set(__self__, "networking", networking)
+        if readiness_probe is not None:
+            pulumi.set(__self__, "readiness_probe", readiness_probe)
         if resources is not None:
             pulumi.set(__self__, "resources", resources)
+        if server_operations is not None:
+            pulumi.set(__self__, "server_operations", server_operations)
         if service_account_name is not None:
             pulumi.set(__self__, "service_account_name", service_account_name)
 
@@ -69,7 +98,7 @@ class NexusSpecArgs:
     @pulumi.getter
     def replicas(self) -> pulumi.Input[int]:
         """
-        Number of pods replicas desired Default: 1
+        Number of pod replicas desired. Defaults to 0.
         """
         return pulumi.get(self, "replicas")
 
@@ -81,7 +110,7 @@ class NexusSpecArgs:
     @pulumi.getter(name="useRedHatImage")
     def use_red_hat_image(self) -> pulumi.Input[bool]:
         """
-        If you have access to Red Hat Container Catalog, turn this to true to use the certified image provided by Sonatype Default: false
+        If you have access to Red Hat Container Catalog, set this to `true` to use the certified image provided by Sonatype Defaults to `false`
         """
         return pulumi.get(self, "use_red_hat_image")
 
@@ -90,16 +119,64 @@ class NexusSpecArgs:
         pulumi.set(self, "use_red_hat_image", value)
 
     @property
+    @pulumi.getter(name="automaticUpdate")
+    def automatic_update(self) -> Optional[pulumi.Input['NexusSpecAutomaticUpdateArgs']]:
+        """
+        Automatic updates configuration
+        """
+        return pulumi.get(self, "automatic_update")
+
+    @automatic_update.setter
+    def automatic_update(self, value: Optional[pulumi.Input['NexusSpecAutomaticUpdateArgs']]):
+        pulumi.set(self, "automatic_update", value)
+
+    @property
+    @pulumi.getter(name="generateRandomAdminPassword")
+    def generate_random_admin_password(self) -> Optional[pulumi.Input[bool]]:
+        """
+        GenerateRandomAdminPassword enables the random password generation. Defaults to `false`: the default password for a newly created instance is 'admin123', which should be changed in the first login. If set to `true`, you must use the automatically generated 'admin' password, stored in the container's file system at `/nexus-data/admin.password`. The operator uses the default credentials to create a user for itself to create default repositories. If set to `true`, the repositories won't be created since the operator won't fetch for the random password.
+        """
+        return pulumi.get(self, "generate_random_admin_password")
+
+    @generate_random_admin_password.setter
+    def generate_random_admin_password(self, value: Optional[pulumi.Input[bool]]):
+        pulumi.set(self, "generate_random_admin_password", value)
+
+    @property
     @pulumi.getter
     def image(self) -> Optional[pulumi.Input[str]]:
         """
-        Full image tag name for this specific deployment Default: docker.io/sonatype/nexus3:latest
+        Full image tag name for this specific deployment. Will be ignored if `spec.useRedHatImage` is set to `true`. Default: docker.io/sonatype/nexus3:latest
         """
         return pulumi.get(self, "image")
 
     @image.setter
     def image(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "image", value)
+
+    @property
+    @pulumi.getter(name="imagePullPolicy")
+    def image_pull_policy(self) -> Optional[pulumi.Input[str]]:
+        """
+        The image pull policy for the Nexus image. If left blank behavior will be determined by the image tag (`Always` if "latest" and `IfNotPresent` otherwise). Possible values: `Always`, `IfNotPresent` or `Never`.
+        """
+        return pulumi.get(self, "image_pull_policy")
+
+    @image_pull_policy.setter
+    def image_pull_policy(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "image_pull_policy", value)
+
+    @property
+    @pulumi.getter(name="livenessProbe")
+    def liveness_probe(self) -> Optional[pulumi.Input['NexusSpecLivenessProbeArgs']]:
+        """
+        LivenessProbe describes how the Nexus container liveness probe should work
+        """
+        return pulumi.get(self, "liveness_probe")
+
+    @liveness_probe.setter
+    def liveness_probe(self, value: Optional[pulumi.Input['NexusSpecLivenessProbeArgs']]):
+        pulumi.set(self, "liveness_probe", value)
 
     @property
     @pulumi.getter
@@ -114,6 +191,18 @@ class NexusSpecArgs:
         pulumi.set(self, "networking", value)
 
     @property
+    @pulumi.getter(name="readinessProbe")
+    def readiness_probe(self) -> Optional[pulumi.Input['NexusSpecReadinessProbeArgs']]:
+        """
+        ReadinessProbe describes how the Nexus container readiness probe should work
+        """
+        return pulumi.get(self, "readiness_probe")
+
+    @readiness_probe.setter
+    def readiness_probe(self, value: Optional[pulumi.Input['NexusSpecReadinessProbeArgs']]):
+        pulumi.set(self, "readiness_probe", value)
+
+    @property
     @pulumi.getter
     def resources(self) -> Optional[pulumi.Input['NexusSpecResourcesArgs']]:
         """
@@ -126,16 +215,156 @@ class NexusSpecArgs:
         pulumi.set(self, "resources", value)
 
     @property
+    @pulumi.getter(name="serverOperations")
+    def server_operations(self) -> Optional[pulumi.Input['NexusSpecServerOperationsArgs']]:
+        """
+        ServerOperations describes the options for the operations performed on the deployed server instance
+        """
+        return pulumi.get(self, "server_operations")
+
+    @server_operations.setter
+    def server_operations(self, value: Optional[pulumi.Input['NexusSpecServerOperationsArgs']]):
+        pulumi.set(self, "server_operations", value)
+
+    @property
     @pulumi.getter(name="serviceAccountName")
     def service_account_name(self) -> Optional[pulumi.Input[str]]:
         """
-        ServiceAccountName is the name of the ServiceAccount used to run the Pods. If left blank, a default ServiceAccount is created with the same name as the Nexus CR.
+        ServiceAccountName is the name of the ServiceAccount used to run the Pods. If left blank, a default ServiceAccount is created with the same name as the Nexus CR (`metadata.name`).
         """
         return pulumi.get(self, "service_account_name")
 
     @service_account_name.setter
     def service_account_name(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "service_account_name", value)
+
+
+@pulumi.input_type
+class NexusSpecAutomaticUpdateArgs:
+    def __init__(__self__, *,
+                 disabled: Optional[pulumi.Input[bool]] = None,
+                 minor_version: Optional[pulumi.Input[int]] = None):
+        """
+        Automatic updates configuration
+        :param pulumi.Input[bool] disabled: Whether or not the Operator should perform automatic updates. Defaults to `false` (auto updates are enabled). Is set to `false` if `spec.image` is not empty and is different from the default community image.
+        :param pulumi.Input[int] minor_version: The Nexus image minor version the deployment should stay in. If left blank and automatic updates are enabled the latest minor is set.
+        """
+        if disabled is not None:
+            pulumi.set(__self__, "disabled", disabled)
+        if minor_version is not None:
+            pulumi.set(__self__, "minor_version", minor_version)
+
+    @property
+    @pulumi.getter
+    def disabled(self) -> Optional[pulumi.Input[bool]]:
+        """
+        Whether or not the Operator should perform automatic updates. Defaults to `false` (auto updates are enabled). Is set to `false` if `spec.image` is not empty and is different from the default community image.
+        """
+        return pulumi.get(self, "disabled")
+
+    @disabled.setter
+    def disabled(self, value: Optional[pulumi.Input[bool]]):
+        pulumi.set(self, "disabled", value)
+
+    @property
+    @pulumi.getter(name="minorVersion")
+    def minor_version(self) -> Optional[pulumi.Input[int]]:
+        """
+        The Nexus image minor version the deployment should stay in. If left blank and automatic updates are enabled the latest minor is set.
+        """
+        return pulumi.get(self, "minor_version")
+
+    @minor_version.setter
+    def minor_version(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "minor_version", value)
+
+
+@pulumi.input_type
+class NexusSpecLivenessProbeArgs:
+    def __init__(__self__, *,
+                 failure_threshold: Optional[pulumi.Input[int]] = None,
+                 initial_delay_seconds: Optional[pulumi.Input[int]] = None,
+                 period_seconds: Optional[pulumi.Input[int]] = None,
+                 success_threshold: Optional[pulumi.Input[int]] = None,
+                 timeout_seconds: Optional[pulumi.Input[int]] = None):
+        """
+        LivenessProbe describes how the Nexus container liveness probe should work
+        :param pulumi.Input[int] failure_threshold: Minimum consecutive failures for the probe to be considered failed after having succeeded. Defaults to 3. Minimum value is 1.
+        :param pulumi.Input[int] initial_delay_seconds: Number of seconds after the container has started before probes are initiated. Defaults to 240 seconds. Minimum value is 0.
+        :param pulumi.Input[int] period_seconds: How often (in seconds) to perform the probe. Defaults to 10 seconds. Minimum value is 1.
+        :param pulumi.Input[int] success_threshold: Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1. Must be 1 for liveness and startup. Minimum value is 1.
+        :param pulumi.Input[int] timeout_seconds: Number of seconds after which the probe times out. Defaults to 15 seconds. Minimum value is 1.
+        """
+        if failure_threshold is not None:
+            pulumi.set(__self__, "failure_threshold", failure_threshold)
+        if initial_delay_seconds is not None:
+            pulumi.set(__self__, "initial_delay_seconds", initial_delay_seconds)
+        if period_seconds is not None:
+            pulumi.set(__self__, "period_seconds", period_seconds)
+        if success_threshold is not None:
+            pulumi.set(__self__, "success_threshold", success_threshold)
+        if timeout_seconds is not None:
+            pulumi.set(__self__, "timeout_seconds", timeout_seconds)
+
+    @property
+    @pulumi.getter(name="failureThreshold")
+    def failure_threshold(self) -> Optional[pulumi.Input[int]]:
+        """
+        Minimum consecutive failures for the probe to be considered failed after having succeeded. Defaults to 3. Minimum value is 1.
+        """
+        return pulumi.get(self, "failure_threshold")
+
+    @failure_threshold.setter
+    def failure_threshold(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "failure_threshold", value)
+
+    @property
+    @pulumi.getter(name="initialDelaySeconds")
+    def initial_delay_seconds(self) -> Optional[pulumi.Input[int]]:
+        """
+        Number of seconds after the container has started before probes are initiated. Defaults to 240 seconds. Minimum value is 0.
+        """
+        return pulumi.get(self, "initial_delay_seconds")
+
+    @initial_delay_seconds.setter
+    def initial_delay_seconds(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "initial_delay_seconds", value)
+
+    @property
+    @pulumi.getter(name="periodSeconds")
+    def period_seconds(self) -> Optional[pulumi.Input[int]]:
+        """
+        How often (in seconds) to perform the probe. Defaults to 10 seconds. Minimum value is 1.
+        """
+        return pulumi.get(self, "period_seconds")
+
+    @period_seconds.setter
+    def period_seconds(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "period_seconds", value)
+
+    @property
+    @pulumi.getter(name="successThreshold")
+    def success_threshold(self) -> Optional[pulumi.Input[int]]:
+        """
+        Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1. Must be 1 for liveness and startup. Minimum value is 1.
+        """
+        return pulumi.get(self, "success_threshold")
+
+    @success_threshold.setter
+    def success_threshold(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "success_threshold", value)
+
+    @property
+    @pulumi.getter(name="timeoutSeconds")
+    def timeout_seconds(self) -> Optional[pulumi.Input[int]]:
+        """
+        Number of seconds after which the probe times out. Defaults to 15 seconds. Minimum value is 1.
+        """
+        return pulumi.get(self, "timeout_seconds")
+
+    @timeout_seconds.setter
+    def timeout_seconds(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "timeout_seconds", value)
 
 
 @pulumi.input_type
@@ -148,8 +377,8 @@ class NexusSpecNetworkingArgs:
                  tls: Optional[pulumi.Input['NexusSpecNetworkingTlsArgs']] = None):
         """
         Networking definition
-        :param pulumi.Input[bool] expose: Set to `true` to expose the Nexus application. Default to false.
-        :param pulumi.Input[str] expose_as: Type of networking exposure: NodePort, Route or Ingress. Default to Route on OpenShift and Ingress on Kubernetes.
+        :param pulumi.Input[bool] expose: Set to `true` to expose the Nexus application. Defaults to `false`.
+        :param pulumi.Input[str] expose_as: Type of networking exposure: NodePort, Route or Ingress. Defaults to Route on OpenShift and Ingress on Kubernetes. Routes are only available on Openshift and Ingresses are only available on Kubernetes.
         :param pulumi.Input[str] host: Host where the Nexus service is exposed. This attribute is required if the service is exposed via Ingress.
         :param pulumi.Input[int] node_port: NodePort defined in the exposed service. Required if exposed via NodePort.
         :param pulumi.Input['NexusSpecNetworkingTlsArgs'] tls: TLS/SSL-related configuration
@@ -169,7 +398,7 @@ class NexusSpecNetworkingArgs:
     @pulumi.getter
     def expose(self) -> Optional[pulumi.Input[bool]]:
         """
-        Set to `true` to expose the Nexus application. Default to false.
+        Set to `true` to expose the Nexus application. Defaults to `false`.
         """
         return pulumi.get(self, "expose")
 
@@ -181,7 +410,7 @@ class NexusSpecNetworkingArgs:
     @pulumi.getter(name="exposeAs")
     def expose_as(self) -> Optional[pulumi.Input[str]]:
         """
-        Type of networking exposure: NodePort, Route or Ingress. Default to Route on OpenShift and Ingress on Kubernetes.
+        Type of networking exposure: NodePort, Route or Ingress. Defaults to Route on OpenShift and Ingress on Kubernetes. Routes are only available on Openshift and Ingresses are only available on Kubernetes.
         """
         return pulumi.get(self, "expose_as")
 
@@ -233,7 +462,7 @@ class NexusSpecNetworkingTlsArgs:
                  secret_name: Optional[pulumi.Input[str]] = None):
         """
         TLS/SSL-related configuration
-        :param pulumi.Input[bool] mandatory: When exposing via Route, set to `true` to only allow encrypted traffic using TLS (disables HTTP in favor of HTTPS). Defaults to false.
+        :param pulumi.Input[bool] mandatory: When exposing via Route, set to `true` to only allow encrypted traffic using TLS (disables HTTP in favor of HTTPS). Defaults to `false`.
         :param pulumi.Input[str] secret_name: When exposing via Ingress, inform the name of the TLS secret containing certificate and private key for TLS encryption. It must be present in the same namespace as the Operator.
         """
         if mandatory is not None:
@@ -245,7 +474,7 @@ class NexusSpecNetworkingTlsArgs:
     @pulumi.getter
     def mandatory(self) -> Optional[pulumi.Input[bool]]:
         """
-        When exposing via Route, set to `true` to only allow encrypted traffic using TLS (disables HTTP in favor of HTTPS). Defaults to false.
+        When exposing via Route, set to `true` to only allow encrypted traffic using TLS (disables HTTP in favor of HTTPS). Defaults to `false`.
         """
         return pulumi.get(self, "mandatory")
 
@@ -322,6 +551,94 @@ class NexusSpecPersistenceArgs:
 
 
 @pulumi.input_type
+class NexusSpecReadinessProbeArgs:
+    def __init__(__self__, *,
+                 failure_threshold: Optional[pulumi.Input[int]] = None,
+                 initial_delay_seconds: Optional[pulumi.Input[int]] = None,
+                 period_seconds: Optional[pulumi.Input[int]] = None,
+                 success_threshold: Optional[pulumi.Input[int]] = None,
+                 timeout_seconds: Optional[pulumi.Input[int]] = None):
+        """
+        ReadinessProbe describes how the Nexus container readiness probe should work
+        :param pulumi.Input[int] failure_threshold: Minimum consecutive failures for the probe to be considered failed after having succeeded. Defaults to 3. Minimum value is 1.
+        :param pulumi.Input[int] initial_delay_seconds: Number of seconds after the container has started before probes are initiated. Defaults to 240 seconds. Minimum value is 0.
+        :param pulumi.Input[int] period_seconds: How often (in seconds) to perform the probe. Defaults to 10 seconds. Minimum value is 1.
+        :param pulumi.Input[int] success_threshold: Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1. Must be 1 for liveness and startup. Minimum value is 1.
+        :param pulumi.Input[int] timeout_seconds: Number of seconds after which the probe times out. Defaults to 15 seconds. Minimum value is 1.
+        """
+        if failure_threshold is not None:
+            pulumi.set(__self__, "failure_threshold", failure_threshold)
+        if initial_delay_seconds is not None:
+            pulumi.set(__self__, "initial_delay_seconds", initial_delay_seconds)
+        if period_seconds is not None:
+            pulumi.set(__self__, "period_seconds", period_seconds)
+        if success_threshold is not None:
+            pulumi.set(__self__, "success_threshold", success_threshold)
+        if timeout_seconds is not None:
+            pulumi.set(__self__, "timeout_seconds", timeout_seconds)
+
+    @property
+    @pulumi.getter(name="failureThreshold")
+    def failure_threshold(self) -> Optional[pulumi.Input[int]]:
+        """
+        Minimum consecutive failures for the probe to be considered failed after having succeeded. Defaults to 3. Minimum value is 1.
+        """
+        return pulumi.get(self, "failure_threshold")
+
+    @failure_threshold.setter
+    def failure_threshold(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "failure_threshold", value)
+
+    @property
+    @pulumi.getter(name="initialDelaySeconds")
+    def initial_delay_seconds(self) -> Optional[pulumi.Input[int]]:
+        """
+        Number of seconds after the container has started before probes are initiated. Defaults to 240 seconds. Minimum value is 0.
+        """
+        return pulumi.get(self, "initial_delay_seconds")
+
+    @initial_delay_seconds.setter
+    def initial_delay_seconds(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "initial_delay_seconds", value)
+
+    @property
+    @pulumi.getter(name="periodSeconds")
+    def period_seconds(self) -> Optional[pulumi.Input[int]]:
+        """
+        How often (in seconds) to perform the probe. Defaults to 10 seconds. Minimum value is 1.
+        """
+        return pulumi.get(self, "period_seconds")
+
+    @period_seconds.setter
+    def period_seconds(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "period_seconds", value)
+
+    @property
+    @pulumi.getter(name="successThreshold")
+    def success_threshold(self) -> Optional[pulumi.Input[int]]:
+        """
+        Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1. Must be 1 for liveness and startup. Minimum value is 1.
+        """
+        return pulumi.get(self, "success_threshold")
+
+    @success_threshold.setter
+    def success_threshold(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "success_threshold", value)
+
+    @property
+    @pulumi.getter(name="timeoutSeconds")
+    def timeout_seconds(self) -> Optional[pulumi.Input[int]]:
+        """
+        Number of seconds after which the probe times out. Defaults to 15 seconds. Minimum value is 1.
+        """
+        return pulumi.get(self, "timeout_seconds")
+
+    @timeout_seconds.setter
+    def timeout_seconds(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "timeout_seconds", value)
+
+
+@pulumi.input_type
 class NexusSpecResourcesArgs:
     def __init__(__self__, *,
                  limits: Optional[pulumi.Input[Mapping[str, pulumi.Input['NexusSpecResourcesLimitsArgs']]]] = None,
@@ -374,16 +691,62 @@ class NexusSpecResourcesRequestsArgs:
 
 
 @pulumi.input_type
+class NexusSpecServerOperationsArgs:
+    def __init__(__self__, *,
+                 disable_operator_user_creation: Optional[pulumi.Input[bool]] = None,
+                 disable_repository_creation: Optional[pulumi.Input[bool]] = None):
+        """
+        ServerOperations describes the options for the operations performed on the deployed server instance
+        :param pulumi.Input[bool] disable_operator_user_creation: DisableOperatorUserCreation disables the auto-creation of the `nexus-operator` user on the deployed server. This user performs all the operations on the server (such as creating the community repos). If disabled, the Operator will use the default `admin` user. Defaults to `false` (always create the user). Setting this to `true` is not recommended as it grants the Operator more privileges than it needs and it would not be possible to tell apart operations performed by the `admin` and the Operator.
+        :param pulumi.Input[bool] disable_repository_creation: DisableRepositoryCreation disables the auto-creation of Apache, JBoss and Red Hat repositories and their addition to the Maven Public group in this Nexus instance. Defaults to `false` (always try to create the repos). Set this to `true` to not create them. Only works if `spec.generateRandomAdminPassword` is `false`.
+        """
+        if disable_operator_user_creation is not None:
+            pulumi.set(__self__, "disable_operator_user_creation", disable_operator_user_creation)
+        if disable_repository_creation is not None:
+            pulumi.set(__self__, "disable_repository_creation", disable_repository_creation)
+
+    @property
+    @pulumi.getter(name="disableOperatorUserCreation")
+    def disable_operator_user_creation(self) -> Optional[pulumi.Input[bool]]:
+        """
+        DisableOperatorUserCreation disables the auto-creation of the `nexus-operator` user on the deployed server. This user performs all the operations on the server (such as creating the community repos). If disabled, the Operator will use the default `admin` user. Defaults to `false` (always create the user). Setting this to `true` is not recommended as it grants the Operator more privileges than it needs and it would not be possible to tell apart operations performed by the `admin` and the Operator.
+        """
+        return pulumi.get(self, "disable_operator_user_creation")
+
+    @disable_operator_user_creation.setter
+    def disable_operator_user_creation(self, value: Optional[pulumi.Input[bool]]):
+        pulumi.set(self, "disable_operator_user_creation", value)
+
+    @property
+    @pulumi.getter(name="disableRepositoryCreation")
+    def disable_repository_creation(self) -> Optional[pulumi.Input[bool]]:
+        """
+        DisableRepositoryCreation disables the auto-creation of Apache, JBoss and Red Hat repositories and their addition to the Maven Public group in this Nexus instance. Defaults to `false` (always try to create the repos). Set this to `true` to not create them. Only works if `spec.generateRandomAdminPassword` is `false`.
+        """
+        return pulumi.get(self, "disable_repository_creation")
+
+    @disable_repository_creation.setter
+    def disable_repository_creation(self, value: Optional[pulumi.Input[bool]]):
+        pulumi.set(self, "disable_repository_creation", value)
+
+
+@pulumi.input_type
 class NexusStatusArgs:
     def __init__(__self__, *,
                  deployment_status: Optional[pulumi.Input['NexusStatusDeploymentStatusArgs']] = None,
                  nexus_route: Optional[pulumi.Input[str]] = None,
-                 nexus_status: Optional[pulumi.Input[str]] = None):
+                 nexus_status: Optional[pulumi.Input[str]] = None,
+                 reason: Optional[pulumi.Input[str]] = None,
+                 server_operations_status: Optional[pulumi.Input['NexusStatusServerOperationsStatusArgs']] = None,
+                 update_conditions: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None):
         """
         NexusStatus defines the observed state of Nexus
         :param pulumi.Input['NexusStatusDeploymentStatusArgs'] deployment_status: Condition status for the Nexus deployment
         :param pulumi.Input[str] nexus_route: Route for external service access
-        :param pulumi.Input[str] nexus_status: Will be "OK" when all objects are created successfully
+        :param pulumi.Input[str] nexus_status: Will be "OK" when this Nexus instance is up
+        :param pulumi.Input[str] reason: Gives more information about a failure status
+        :param pulumi.Input['NexusStatusServerOperationsStatusArgs'] server_operations_status: ServerOperationsStatus describes the general status for the operations performed in the Nexus server instance
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] update_conditions: Conditions reached during an update
         """
         if deployment_status is not None:
             pulumi.set(__self__, "deployment_status", deployment_status)
@@ -391,6 +754,12 @@ class NexusStatusArgs:
             pulumi.set(__self__, "nexus_route", nexus_route)
         if nexus_status is not None:
             pulumi.set(__self__, "nexus_status", nexus_status)
+        if reason is not None:
+            pulumi.set(__self__, "reason", reason)
+        if server_operations_status is not None:
+            pulumi.set(__self__, "server_operations_status", server_operations_status)
+        if update_conditions is not None:
+            pulumi.set(__self__, "update_conditions", update_conditions)
 
     @property
     @pulumi.getter(name="deploymentStatus")
@@ -420,13 +789,49 @@ class NexusStatusArgs:
     @pulumi.getter(name="nexusStatus")
     def nexus_status(self) -> Optional[pulumi.Input[str]]:
         """
-        Will be "OK" when all objects are created successfully
+        Will be "OK" when this Nexus instance is up
         """
         return pulumi.get(self, "nexus_status")
 
     @nexus_status.setter
     def nexus_status(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "nexus_status", value)
+
+    @property
+    @pulumi.getter
+    def reason(self) -> Optional[pulumi.Input[str]]:
+        """
+        Gives more information about a failure status
+        """
+        return pulumi.get(self, "reason")
+
+    @reason.setter
+    def reason(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "reason", value)
+
+    @property
+    @pulumi.getter(name="serverOperationsStatus")
+    def server_operations_status(self) -> Optional[pulumi.Input['NexusStatusServerOperationsStatusArgs']]:
+        """
+        ServerOperationsStatus describes the general status for the operations performed in the Nexus server instance
+        """
+        return pulumi.get(self, "server_operations_status")
+
+    @server_operations_status.setter
+    def server_operations_status(self, value: Optional[pulumi.Input['NexusStatusServerOperationsStatusArgs']]):
+        pulumi.set(self, "server_operations_status", value)
+
+    @property
+    @pulumi.getter(name="updateConditions")
+    def update_conditions(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
+        """
+        Conditions reached during an update
+        """
+        return pulumi.get(self, "update_conditions")
+
+    @update_conditions.setter
+    def update_conditions(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]):
+        pulumi.set(self, "update_conditions", value)
 
 
 @pulumi.input_type
@@ -665,5 +1070,85 @@ class NexusStatusDeploymentStatusConditionsArgs:
     @reason.setter
     def reason(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "reason", value)
+
+
+@pulumi.input_type
+class NexusStatusServerOperationsStatusArgs:
+    def __init__(__self__, *,
+                 community_repositories_created: Optional[pulumi.Input[bool]] = None,
+                 maven_central_updated: Optional[pulumi.Input[bool]] = None,
+                 maven_public_url: Optional[pulumi.Input[str]] = None,
+                 operator_user_created: Optional[pulumi.Input[bool]] = None,
+                 reason: Optional[pulumi.Input[str]] = None,
+                 server_ready: Optional[pulumi.Input[bool]] = None):
+        """
+        ServerOperationsStatus describes the general status for the operations performed in the Nexus server instance
+        """
+        if community_repositories_created is not None:
+            pulumi.set(__self__, "community_repositories_created", community_repositories_created)
+        if maven_central_updated is not None:
+            pulumi.set(__self__, "maven_central_updated", maven_central_updated)
+        if maven_public_url is not None:
+            pulumi.set(__self__, "maven_public_url", maven_public_url)
+        if operator_user_created is not None:
+            pulumi.set(__self__, "operator_user_created", operator_user_created)
+        if reason is not None:
+            pulumi.set(__self__, "reason", reason)
+        if server_ready is not None:
+            pulumi.set(__self__, "server_ready", server_ready)
+
+    @property
+    @pulumi.getter(name="communityRepositoriesCreated")
+    def community_repositories_created(self) -> Optional[pulumi.Input[bool]]:
+        return pulumi.get(self, "community_repositories_created")
+
+    @community_repositories_created.setter
+    def community_repositories_created(self, value: Optional[pulumi.Input[bool]]):
+        pulumi.set(self, "community_repositories_created", value)
+
+    @property
+    @pulumi.getter(name="mavenCentralUpdated")
+    def maven_central_updated(self) -> Optional[pulumi.Input[bool]]:
+        return pulumi.get(self, "maven_central_updated")
+
+    @maven_central_updated.setter
+    def maven_central_updated(self, value: Optional[pulumi.Input[bool]]):
+        pulumi.set(self, "maven_central_updated", value)
+
+    @property
+    @pulumi.getter(name="mavenPublicURL")
+    def maven_public_url(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "maven_public_url")
+
+    @maven_public_url.setter
+    def maven_public_url(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "maven_public_url", value)
+
+    @property
+    @pulumi.getter(name="operatorUserCreated")
+    def operator_user_created(self) -> Optional[pulumi.Input[bool]]:
+        return pulumi.get(self, "operator_user_created")
+
+    @operator_user_created.setter
+    def operator_user_created(self, value: Optional[pulumi.Input[bool]]):
+        pulumi.set(self, "operator_user_created", value)
+
+    @property
+    @pulumi.getter
+    def reason(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "reason")
+
+    @reason.setter
+    def reason(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "reason", value)
+
+    @property
+    @pulumi.getter(name="serverReady")
+    def server_ready(self) -> Optional[pulumi.Input[bool]]:
+        return pulumi.get(self, "server_ready")
+
+    @server_ready.setter
+    def server_ready(self, value: Optional[pulumi.Input[bool]]):
+        pulumi.set(self, "server_ready", value)
 
 

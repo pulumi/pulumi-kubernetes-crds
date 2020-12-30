@@ -11,6 +11,10 @@ from ... import _utilities, _tables
 __all__ = [
     'HawkbitSpecArgs',
     'HawkbitSpecImageOverridesArgs',
+    'HawkbitSpecSignOnArgs',
+    'HawkbitSpecSignOnKeycloakArgs',
+    'HawkbitSpecSignOnKeycloakInstanceSelectorArgs',
+    'HawkbitSpecSignOnKeycloakInstanceSelectorMatchExpressionsArgs',
     'HawkbitStatusArgs',
 ]
 
@@ -19,13 +23,16 @@ class HawkbitSpecArgs:
     def __init__(__self__, *,
                  database: Optional[Any] = None,
                  image_overrides: Optional[pulumi.Input[Mapping[str, pulumi.Input['HawkbitSpecImageOverridesArgs']]]] = None,
-                 rabbit: Optional[Any] = None):
+                 rabbit: Optional[Any] = None,
+                 sign_on: Optional[pulumi.Input['HawkbitSpecSignOnArgs']] = None):
         if database is not None:
             pulumi.set(__self__, "database", database)
         if image_overrides is not None:
             pulumi.set(__self__, "image_overrides", image_overrides)
         if rabbit is not None:
             pulumi.set(__self__, "rabbit", rabbit)
+        if sign_on is not None:
+            pulumi.set(__self__, "sign_on", sign_on)
 
     @property
     @pulumi.getter
@@ -53,6 +60,15 @@ class HawkbitSpecArgs:
     @rabbit.setter
     def rabbit(self, value: Optional[Any]):
         pulumi.set(self, "rabbit", value)
+
+    @property
+    @pulumi.getter(name="signOn")
+    def sign_on(self) -> Optional[pulumi.Input['HawkbitSpecSignOnArgs']]:
+        return pulumi.get(self, "sign_on")
+
+    @sign_on.setter
+    def sign_on(self, value: Optional[pulumi.Input['HawkbitSpecSignOnArgs']]):
+        pulumi.set(self, "sign_on", value)
 
 
 @pulumi.input_type
@@ -82,6 +98,152 @@ class HawkbitSpecImageOverridesArgs:
     @pull_policy.setter
     def pull_policy(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "pull_policy", value)
+
+
+@pulumi.input_type
+class HawkbitSpecSignOnArgs:
+    def __init__(__self__, *,
+                 keycloak: Optional[pulumi.Input['HawkbitSpecSignOnKeycloakArgs']] = None):
+        if keycloak is not None:
+            pulumi.set(__self__, "keycloak", keycloak)
+
+    @property
+    @pulumi.getter
+    def keycloak(self) -> Optional[pulumi.Input['HawkbitSpecSignOnKeycloakArgs']]:
+        return pulumi.get(self, "keycloak")
+
+    @keycloak.setter
+    def keycloak(self, value: Optional[pulumi.Input['HawkbitSpecSignOnKeycloakArgs']]):
+        pulumi.set(self, "keycloak", value)
+
+
+@pulumi.input_type
+class HawkbitSpecSignOnKeycloakArgs:
+    def __init__(__self__, *,
+                 hawkbit_url: Optional[pulumi.Input[str]] = None,
+                 instance_selector: Optional[pulumi.Input['HawkbitSpecSignOnKeycloakInstanceSelectorArgs']] = None):
+        """
+        :param pulumi.Input['HawkbitSpecSignOnKeycloakInstanceSelectorArgs'] instance_selector: Selector for looking up Keycloak Custom Resources.
+        """
+        if hawkbit_url is not None:
+            pulumi.set(__self__, "hawkbit_url", hawkbit_url)
+        if instance_selector is not None:
+            pulumi.set(__self__, "instance_selector", instance_selector)
+
+    @property
+    @pulumi.getter(name="hawkbitUrl")
+    def hawkbit_url(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "hawkbit_url")
+
+    @hawkbit_url.setter
+    def hawkbit_url(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "hawkbit_url", value)
+
+    @property
+    @pulumi.getter(name="instanceSelector")
+    def instance_selector(self) -> Optional[pulumi.Input['HawkbitSpecSignOnKeycloakInstanceSelectorArgs']]:
+        """
+        Selector for looking up Keycloak Custom Resources.
+        """
+        return pulumi.get(self, "instance_selector")
+
+    @instance_selector.setter
+    def instance_selector(self, value: Optional[pulumi.Input['HawkbitSpecSignOnKeycloakInstanceSelectorArgs']]):
+        pulumi.set(self, "instance_selector", value)
+
+
+@pulumi.input_type
+class HawkbitSpecSignOnKeycloakInstanceSelectorArgs:
+    def __init__(__self__, *,
+                 match_expressions: Optional[pulumi.Input[Sequence[pulumi.Input['HawkbitSpecSignOnKeycloakInstanceSelectorMatchExpressionsArgs']]]] = None,
+                 match_labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None):
+        """
+        Selector for looking up Keycloak Custom Resources.
+        :param pulumi.Input[Sequence[pulumi.Input['HawkbitSpecSignOnKeycloakInstanceSelectorMatchExpressionsArgs']]] match_expressions: matchExpressions is a list of label selector requirements. The requirements are ANDed.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] match_labels: matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+        """
+        if match_expressions is not None:
+            pulumi.set(__self__, "match_expressions", match_expressions)
+        if match_labels is not None:
+            pulumi.set(__self__, "match_labels", match_labels)
+
+    @property
+    @pulumi.getter(name="matchExpressions")
+    def match_expressions(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['HawkbitSpecSignOnKeycloakInstanceSelectorMatchExpressionsArgs']]]]:
+        """
+        matchExpressions is a list of label selector requirements. The requirements are ANDed.
+        """
+        return pulumi.get(self, "match_expressions")
+
+    @match_expressions.setter
+    def match_expressions(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['HawkbitSpecSignOnKeycloakInstanceSelectorMatchExpressionsArgs']]]]):
+        pulumi.set(self, "match_expressions", value)
+
+    @property
+    @pulumi.getter(name="matchLabels")
+    def match_labels(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+        """
+        matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+        """
+        return pulumi.get(self, "match_labels")
+
+    @match_labels.setter
+    def match_labels(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
+        pulumi.set(self, "match_labels", value)
+
+
+@pulumi.input_type
+class HawkbitSpecSignOnKeycloakInstanceSelectorMatchExpressionsArgs:
+    def __init__(__self__, *,
+                 key: pulumi.Input[str],
+                 operator: pulumi.Input[str],
+                 values: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None):
+        """
+        A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+        :param pulumi.Input[str] key: key is the label key that the selector applies to.
+        :param pulumi.Input[str] operator: operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] values: values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+        """
+        pulumi.set(__self__, "key", key)
+        pulumi.set(__self__, "operator", operator)
+        if values is not None:
+            pulumi.set(__self__, "values", values)
+
+    @property
+    @pulumi.getter
+    def key(self) -> pulumi.Input[str]:
+        """
+        key is the label key that the selector applies to.
+        """
+        return pulumi.get(self, "key")
+
+    @key.setter
+    def key(self, value: pulumi.Input[str]):
+        pulumi.set(self, "key", value)
+
+    @property
+    @pulumi.getter
+    def operator(self) -> pulumi.Input[str]:
+        """
+        operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+        """
+        return pulumi.get(self, "operator")
+
+    @operator.setter
+    def operator(self, value: pulumi.Input[str]):
+        pulumi.set(self, "operator", value)
+
+    @property
+    @pulumi.getter
+    def values(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
+        """
+        values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+        """
+        return pulumi.get(self, "values")
+
+    @values.setter
+    def values(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]):
+        pulumi.set(self, "values", value)
 
 
 @pulumi.input_type

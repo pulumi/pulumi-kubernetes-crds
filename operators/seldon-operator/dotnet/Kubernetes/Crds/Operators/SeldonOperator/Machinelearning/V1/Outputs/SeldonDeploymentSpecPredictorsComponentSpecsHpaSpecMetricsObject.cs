@@ -16,7 +16,7 @@ namespace Pulumi.Kubernetes.Types.Outputs.Machinelearning.V1
         /// <summary>
         /// averageValue is the target value of the average of the metric across all relevant pods (as a quantity)
         /// </summary>
-        public readonly string AverageValue;
+        public readonly Pulumi.Kubernetes.Types.Outputs.Machinelearning.V1.SeldonDeploymentSpecPredictorsComponentSpecsHpaSpecMetricsObjectAverageValue AverageValue;
         /// <summary>
         /// metricName is the name of the metric in question.
         /// </summary>
@@ -32,11 +32,11 @@ namespace Pulumi.Kubernetes.Types.Outputs.Machinelearning.V1
         /// <summary>
         /// targetValue is the target value of the metric (as a quantity).
         /// </summary>
-        public readonly string TargetValue;
+        public readonly Pulumi.Kubernetes.Types.Outputs.Machinelearning.V1.SeldonDeploymentSpecPredictorsComponentSpecsHpaSpecMetricsObjectTargetValue TargetValue;
 
         [OutputConstructor]
         private SeldonDeploymentSpecPredictorsComponentSpecsHpaSpecMetricsObject(
-            string averageValue,
+            Pulumi.Kubernetes.Types.Outputs.Machinelearning.V1.SeldonDeploymentSpecPredictorsComponentSpecsHpaSpecMetricsObjectAverageValue averageValue,
 
             string metricName,
 
@@ -44,7 +44,7 @@ namespace Pulumi.Kubernetes.Types.Outputs.Machinelearning.V1
 
             Pulumi.Kubernetes.Types.Outputs.Machinelearning.V1.SeldonDeploymentSpecPredictorsComponentSpecsHpaSpecMetricsObjectTarget target,
 
-            string targetValue)
+            Pulumi.Kubernetes.Types.Outputs.Machinelearning.V1.SeldonDeploymentSpecPredictorsComponentSpecsHpaSpecMetricsObjectTargetValue targetValue)
         {
             AverageValue = averageValue;
             MetricName = metricName;

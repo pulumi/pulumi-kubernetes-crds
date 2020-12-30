@@ -10,7 +10,7 @@ import (
 	"github.com/pulumi/pulumi/sdk/v2/go/pulumi"
 )
 
-// Build is the Schema for the builds API
+// Build is the Schema representing a Build definition
 type Build struct {
 	pulumi.CustomResourceState
 
@@ -20,7 +20,7 @@ type Build struct {
 	// BuildSpec defines the desired state of Build
 	Spec BuildSpecPtrOutput `pulumi:"spec"`
 	// BuildStatus defines the observed state of Build
-	Status pulumi.MapOutput `pulumi:"status"`
+	Status BuildStatusPtrOutput `pulumi:"status"`
 }
 
 // NewBuild registers a new resource with the given unique name, arguments, and options.
@@ -59,7 +59,7 @@ type buildState struct {
 	// BuildSpec defines the desired state of Build
 	Spec *BuildSpec `pulumi:"spec"`
 	// BuildStatus defines the observed state of Build
-	Status map[string]interface{} `pulumi:"status"`
+	Status *BuildStatus `pulumi:"status"`
 }
 
 type BuildState struct {
@@ -69,7 +69,7 @@ type BuildState struct {
 	// BuildSpec defines the desired state of Build
 	Spec BuildSpecPtrInput
 	// BuildStatus defines the observed state of Build
-	Status pulumi.MapInput
+	Status BuildStatusPtrInput
 }
 
 func (BuildState) ElementType() reflect.Type {
@@ -83,7 +83,7 @@ type buildArgs struct {
 	// BuildSpec defines the desired state of Build
 	Spec *BuildSpec `pulumi:"spec"`
 	// BuildStatus defines the observed state of Build
-	Status map[string]interface{} `pulumi:"status"`
+	Status *BuildStatus `pulumi:"status"`
 }
 
 // The set of arguments for constructing a Build resource.
@@ -94,7 +94,7 @@ type BuildArgs struct {
 	// BuildSpec defines the desired state of Build
 	Spec BuildSpecPtrInput
 	// BuildStatus defines the observed state of Build
-	Status pulumi.MapInput
+	Status BuildStatusPtrInput
 }
 
 func (BuildArgs) ElementType() reflect.Type {

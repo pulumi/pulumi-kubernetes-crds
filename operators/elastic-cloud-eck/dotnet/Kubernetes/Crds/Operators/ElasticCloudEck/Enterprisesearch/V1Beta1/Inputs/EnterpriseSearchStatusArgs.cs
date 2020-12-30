@@ -21,11 +21,14 @@ namespace Pulumi.Kubernetes.Types.Inputs.Enterprisesearch.V1Beta1
         [Input("associationStatus")]
         public Input<string>? AssociationStatus { get; set; }
 
+        /// <summary>
+        /// AvailableNodes is the number of available replicas in the deployment.
+        /// </summary>
         [Input("availableNodes")]
         public Input<int>? AvailableNodes { get; set; }
 
         /// <summary>
-        /// EnterpriseSearchHealth expresses the health of the Enterprise Search instances.
+        /// Health of the deployment.
         /// </summary>
         [Input("health")]
         public Input<string>? Health { get; set; }
@@ -35,6 +38,12 @@ namespace Pulumi.Kubernetes.Types.Inputs.Enterprisesearch.V1Beta1
         /// </summary>
         [Input("service")]
         public Input<string>? Service { get; set; }
+
+        /// <summary>
+        /// Version of the stack resource currently running. During version upgrades, multiple versions may run in parallel: this value specifies the lowest version currently running.
+        /// </summary>
+        [Input("version")]
+        public Input<string>? Version { get; set; }
 
         public EnterpriseSearchStatusArgs()
         {

@@ -42,8 +42,8 @@ namespace Pulumi.Kubernetes.Types.Inputs.Machinelearning.V1
         /// <summary>
         /// Protocol for port. Must be UDP, TCP, or SCTP. Defaults to "TCP".
         /// </summary>
-        [Input("protocol")]
-        public Input<string>? Protocol { get; set; }
+        [Input("protocol", required: true)]
+        public Input<string> Protocol { get; set; } = null!;
 
         public SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersPortsArgs()
         {

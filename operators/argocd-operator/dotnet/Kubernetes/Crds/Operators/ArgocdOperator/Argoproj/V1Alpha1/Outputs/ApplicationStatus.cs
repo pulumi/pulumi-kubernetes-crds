@@ -20,7 +20,7 @@ namespace Pulumi.Kubernetes.Types.Outputs.Argoproj.V1Alpha1
         /// </summary>
         public readonly ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Argoproj.V1Alpha1.ApplicationStatusHistory> History;
         /// <summary>
-        /// ObservedAt indicates when the application state was updated without querying latest git state
+        /// ObservedAt indicates when the application state was updated without querying latest git state Deprecated: controller no longer updates ObservedAt field
         /// </summary>
         public readonly string ObservedAt;
         /// <summary>

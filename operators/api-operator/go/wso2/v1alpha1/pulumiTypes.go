@@ -11,12 +11,15 @@ import (
 	"github.com/pulumi/pulumi/sdk/v2/go/pulumi"
 )
 
+// API is the Schema for the apis API
 type APIType struct {
-	ApiVersion *string                `pulumi:"apiVersion"`
-	Kind       *string                `pulumi:"kind"`
-	Metadata   *metav1.ObjectMeta     `pulumi:"metadata"`
-	Spec       *APISpec               `pulumi:"spec"`
-	Status     map[string]interface{} `pulumi:"status"`
+	ApiVersion *string            `pulumi:"apiVersion"`
+	Kind       *string            `pulumi:"kind"`
+	Metadata   *metav1.ObjectMeta `pulumi:"metadata"`
+	// APISpec defines the desired state of API
+	Spec *APISpec `pulumi:"spec"`
+	// APIStatus defines the observed state of API
+	Status *APIStatus `pulumi:"status"`
 }
 
 // APITypeInput is an input type that accepts APITypeArgs and APITypeOutput values.
@@ -30,12 +33,15 @@ type APITypeInput interface {
 	ToAPITypeOutputWithContext(context.Context) APITypeOutput
 }
 
+// API is the Schema for the apis API
 type APITypeArgs struct {
 	ApiVersion pulumi.StringPtrInput     `pulumi:"apiVersion"`
 	Kind       pulumi.StringPtrInput     `pulumi:"kind"`
 	Metadata   metav1.ObjectMetaPtrInput `pulumi:"metadata"`
-	Spec       APISpecPtrInput           `pulumi:"spec"`
-	Status     pulumi.MapInput           `pulumi:"status"`
+	// APISpec defines the desired state of API
+	Spec APISpecPtrInput `pulumi:"spec"`
+	// APIStatus defines the observed state of API
+	Status APIStatusPtrInput `pulumi:"status"`
 }
 
 func (APITypeArgs) ElementType() reflect.Type {
@@ -50,6 +56,7 @@ func (i APITypeArgs) ToAPITypeOutputWithContext(ctx context.Context) APITypeOutp
 	return pulumi.ToOutputWithContext(ctx, i).(APITypeOutput)
 }
 
+// API is the Schema for the apis API
 type APITypeOutput struct{ *pulumi.OutputState }
 
 func (APITypeOutput) ElementType() reflect.Type {
@@ -76,12 +83,14 @@ func (o APITypeOutput) Metadata() metav1.ObjectMetaPtrOutput {
 	return o.ApplyT(func(v APIType) *metav1.ObjectMeta { return v.Metadata }).(metav1.ObjectMetaPtrOutput)
 }
 
+// APISpec defines the desired state of API
 func (o APITypeOutput) Spec() APISpecPtrOutput {
 	return o.ApplyT(func(v APIType) *APISpec { return v.Spec }).(APISpecPtrOutput)
 }
 
-func (o APITypeOutput) Status() pulumi.MapOutput {
-	return o.ApplyT(func(v APIType) map[string]interface{} { return v.Status }).(pulumi.MapOutput)
+// APIStatus defines the observed state of API
+func (o APITypeOutput) Status() APIStatusPtrOutput {
+	return o.ApplyT(func(v APIType) *APIStatus { return v.Status }).(APIStatusPtrOutput)
 }
 
 type APIMetadata struct {
@@ -127,14 +136,27 @@ func (o APIMetadataOutput) ToAPIMetadataOutputWithContext(ctx context.Context) A
 	return o
 }
 
+// APISpec defines the desired state of API
 type APISpec struct {
+	ApiEndPoint *string `pulumi:"apiEndPoint"`
+	// Definition of the API.
 	Definition APISpecDefinition `pulumi:"definition"`
-	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster Important: Run "operator-sdk generate k8s" to regenerate code after modifying this file Add custom validation using kubebuilder tags: https://book.kubebuilder.io/beyond_basics/generating_crd.html
-	Mode            *string `pulumi:"mode"`
-	Override        *bool   `pulumi:"override"`
-	Replicas        int     `pulumi:"replicas"`
+	// Environment variables to be added to the API deployment. Default value "<empty>".
+	EnvironmentVariables []string `pulumi:"environmentVariables"`
+	// Docker image of the API to be deployed. If specified, ignores the values of `UpdateTimeStamp`, `Override`. Uses the given image for the deployment. Default value "<empty>".
+	Image *string `pulumi:"image"`
+	// Ingress Hostname that the API is being exposed. Default value "<empty>".
+	IngressHostname *string `pulumi:"ingressHostname"`
+	// Mode of the API. The mode from the swagger definition will be overridden by this value. Supports "privateJet", "sidecar", "<empty>". Default value "<empty>".
+	Mode *string `pulumi:"mode"`
+	// Override the exiting API docker image. Default value "false".
+	Override *bool `pulumi:"override"`
+	// Replica count of the API.
+	Replicas int `pulumi:"replicas"`
+	// Update API definition creating a new docker image. Make a rolling update to the existing API. with prefixing the timestamp value. Default value "<empty>".
 	UpdateTimeStamp *string `pulumi:"updateTimeStamp"`
-	Version         *string `pulumi:"version"`
+	// Version of the API. The version from the swagger definition will be overridden by this value. Default value "<empty>".
+	Version *string `pulumi:"version"`
 }
 
 // APISpecInput is an input type that accepts APISpecArgs and APISpecOutput values.
@@ -148,14 +170,27 @@ type APISpecInput interface {
 	ToAPISpecOutputWithContext(context.Context) APISpecOutput
 }
 
+// APISpec defines the desired state of API
 type APISpecArgs struct {
+	ApiEndPoint pulumi.StringPtrInput `pulumi:"apiEndPoint"`
+	// Definition of the API.
 	Definition APISpecDefinitionInput `pulumi:"definition"`
-	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster Important: Run "operator-sdk generate k8s" to regenerate code after modifying this file Add custom validation using kubebuilder tags: https://book.kubebuilder.io/beyond_basics/generating_crd.html
-	Mode            pulumi.StringPtrInput `pulumi:"mode"`
-	Override        pulumi.BoolPtrInput   `pulumi:"override"`
-	Replicas        pulumi.IntInput       `pulumi:"replicas"`
+	// Environment variables to be added to the API deployment. Default value "<empty>".
+	EnvironmentVariables pulumi.StringArrayInput `pulumi:"environmentVariables"`
+	// Docker image of the API to be deployed. If specified, ignores the values of `UpdateTimeStamp`, `Override`. Uses the given image for the deployment. Default value "<empty>".
+	Image pulumi.StringPtrInput `pulumi:"image"`
+	// Ingress Hostname that the API is being exposed. Default value "<empty>".
+	IngressHostname pulumi.StringPtrInput `pulumi:"ingressHostname"`
+	// Mode of the API. The mode from the swagger definition will be overridden by this value. Supports "privateJet", "sidecar", "<empty>". Default value "<empty>".
+	Mode pulumi.StringPtrInput `pulumi:"mode"`
+	// Override the exiting API docker image. Default value "false".
+	Override pulumi.BoolPtrInput `pulumi:"override"`
+	// Replica count of the API.
+	Replicas pulumi.IntInput `pulumi:"replicas"`
+	// Update API definition creating a new docker image. Make a rolling update to the existing API. with prefixing the timestamp value. Default value "<empty>".
 	UpdateTimeStamp pulumi.StringPtrInput `pulumi:"updateTimeStamp"`
-	Version         pulumi.StringPtrInput `pulumi:"version"`
+	// Version of the API. The version from the swagger definition will be overridden by this value. Default value "<empty>".
+	Version pulumi.StringPtrInput `pulumi:"version"`
 }
 
 func (APISpecArgs) ElementType() reflect.Type {
@@ -211,6 +246,7 @@ func (i *apispecPtrType) ToAPISpecPtrOutputWithContext(ctx context.Context) APIS
 	return pulumi.ToOutputWithContext(ctx, i).(APISpecPtrOutput)
 }
 
+// APISpec defines the desired state of API
 type APISpecOutput struct{ *pulumi.OutputState }
 
 func (APISpecOutput) ElementType() reflect.Type {
@@ -234,27 +270,51 @@ func (o APISpecOutput) ToAPISpecPtrOutputWithContext(ctx context.Context) APISpe
 		return &v
 	}).(APISpecPtrOutput)
 }
+func (o APISpecOutput) ApiEndPoint() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v APISpec) *string { return v.ApiEndPoint }).(pulumi.StringPtrOutput)
+}
+
+// Definition of the API.
 func (o APISpecOutput) Definition() APISpecDefinitionOutput {
 	return o.ApplyT(func(v APISpec) APISpecDefinition { return v.Definition }).(APISpecDefinitionOutput)
 }
 
-// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster Important: Run "operator-sdk generate k8s" to regenerate code after modifying this file Add custom validation using kubebuilder tags: https://book.kubebuilder.io/beyond_basics/generating_crd.html
+// Environment variables to be added to the API deployment. Default value "<empty>".
+func (o APISpecOutput) EnvironmentVariables() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v APISpec) []string { return v.EnvironmentVariables }).(pulumi.StringArrayOutput)
+}
+
+// Docker image of the API to be deployed. If specified, ignores the values of `UpdateTimeStamp`, `Override`. Uses the given image for the deployment. Default value "<empty>".
+func (o APISpecOutput) Image() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v APISpec) *string { return v.Image }).(pulumi.StringPtrOutput)
+}
+
+// Ingress Hostname that the API is being exposed. Default value "<empty>".
+func (o APISpecOutput) IngressHostname() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v APISpec) *string { return v.IngressHostname }).(pulumi.StringPtrOutput)
+}
+
+// Mode of the API. The mode from the swagger definition will be overridden by this value. Supports "privateJet", "sidecar", "<empty>". Default value "<empty>".
 func (o APISpecOutput) Mode() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v APISpec) *string { return v.Mode }).(pulumi.StringPtrOutput)
 }
 
+// Override the exiting API docker image. Default value "false".
 func (o APISpecOutput) Override() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v APISpec) *bool { return v.Override }).(pulumi.BoolPtrOutput)
 }
 
+// Replica count of the API.
 func (o APISpecOutput) Replicas() pulumi.IntOutput {
 	return o.ApplyT(func(v APISpec) int { return v.Replicas }).(pulumi.IntOutput)
 }
 
+// Update API definition creating a new docker image. Make a rolling update to the existing API. with prefixing the timestamp value. Default value "<empty>".
 func (o APISpecOutput) UpdateTimeStamp() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v APISpec) *string { return v.UpdateTimeStamp }).(pulumi.StringPtrOutput)
 }
 
+// Version of the API. The version from the swagger definition will be overridden by this value. Default value "<empty>".
 func (o APISpecOutput) Version() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v APISpec) *string { return v.Version }).(pulumi.StringPtrOutput)
 }
@@ -277,6 +337,16 @@ func (o APISpecPtrOutput) Elem() APISpecOutput {
 	return o.ApplyT(func(v *APISpec) APISpec { return *v }).(APISpecOutput)
 }
 
+func (o APISpecPtrOutput) ApiEndPoint() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *APISpec) *string {
+		if v == nil {
+			return nil
+		}
+		return v.ApiEndPoint
+	}).(pulumi.StringPtrOutput)
+}
+
+// Definition of the API.
 func (o APISpecPtrOutput) Definition() APISpecDefinitionPtrOutput {
 	return o.ApplyT(func(v *APISpec) *APISpecDefinition {
 		if v == nil {
@@ -286,7 +356,37 @@ func (o APISpecPtrOutput) Definition() APISpecDefinitionPtrOutput {
 	}).(APISpecDefinitionPtrOutput)
 }
 
-// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster Important: Run "operator-sdk generate k8s" to regenerate code after modifying this file Add custom validation using kubebuilder tags: https://book.kubebuilder.io/beyond_basics/generating_crd.html
+// Environment variables to be added to the API deployment. Default value "<empty>".
+func (o APISpecPtrOutput) EnvironmentVariables() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v *APISpec) []string {
+		if v == nil {
+			return nil
+		}
+		return v.EnvironmentVariables
+	}).(pulumi.StringArrayOutput)
+}
+
+// Docker image of the API to be deployed. If specified, ignores the values of `UpdateTimeStamp`, `Override`. Uses the given image for the deployment. Default value "<empty>".
+func (o APISpecPtrOutput) Image() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *APISpec) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Image
+	}).(pulumi.StringPtrOutput)
+}
+
+// Ingress Hostname that the API is being exposed. Default value "<empty>".
+func (o APISpecPtrOutput) IngressHostname() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *APISpec) *string {
+		if v == nil {
+			return nil
+		}
+		return v.IngressHostname
+	}).(pulumi.StringPtrOutput)
+}
+
+// Mode of the API. The mode from the swagger definition will be overridden by this value. Supports "privateJet", "sidecar", "<empty>". Default value "<empty>".
 func (o APISpecPtrOutput) Mode() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *APISpec) *string {
 		if v == nil {
@@ -296,6 +396,7 @@ func (o APISpecPtrOutput) Mode() pulumi.StringPtrOutput {
 	}).(pulumi.StringPtrOutput)
 }
 
+// Override the exiting API docker image. Default value "false".
 func (o APISpecPtrOutput) Override() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v *APISpec) *bool {
 		if v == nil {
@@ -305,6 +406,7 @@ func (o APISpecPtrOutput) Override() pulumi.BoolPtrOutput {
 	}).(pulumi.BoolPtrOutput)
 }
 
+// Replica count of the API.
 func (o APISpecPtrOutput) Replicas() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v *APISpec) *int {
 		if v == nil {
@@ -314,6 +416,7 @@ func (o APISpecPtrOutput) Replicas() pulumi.IntPtrOutput {
 	}).(pulumi.IntPtrOutput)
 }
 
+// Update API definition creating a new docker image. Make a rolling update to the existing API. with prefixing the timestamp value. Default value "<empty>".
 func (o APISpecPtrOutput) UpdateTimeStamp() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *APISpec) *string {
 		if v == nil {
@@ -323,6 +426,7 @@ func (o APISpecPtrOutput) UpdateTimeStamp() pulumi.StringPtrOutput {
 	}).(pulumi.StringPtrOutput)
 }
 
+// Version of the API. The version from the swagger definition will be overridden by this value. Default value "<empty>".
 func (o APISpecPtrOutput) Version() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *APISpec) *string {
 		if v == nil {
@@ -332,10 +436,13 @@ func (o APISpecPtrOutput) Version() pulumi.StringPtrOutput {
 	}).(pulumi.StringPtrOutput)
 }
 
+// Definition of the API.
 type APISpecDefinition struct {
-	Interceptors          *APISpecDefinitionInterceptors `pulumi:"interceptors"`
-	SwaggerConfigmapNames []string                       `pulumi:"swaggerConfigmapNames"`
-	Type                  *string                        `pulumi:"type"`
+	// Interceptors for API. Default value "<empty>".
+	Interceptors *APISpecDefinitionInterceptors `pulumi:"interceptors"`
+	// Array of config map names of swagger definitions for the API.
+	SwaggerConfigmapNames []string `pulumi:"swaggerConfigmapNames"`
+	Type                  *string  `pulumi:"type"`
 }
 
 // APISpecDefinitionInput is an input type that accepts APISpecDefinitionArgs and APISpecDefinitionOutput values.
@@ -349,10 +456,13 @@ type APISpecDefinitionInput interface {
 	ToAPISpecDefinitionOutputWithContext(context.Context) APISpecDefinitionOutput
 }
 
+// Definition of the API.
 type APISpecDefinitionArgs struct {
-	Interceptors          APISpecDefinitionInterceptorsPtrInput `pulumi:"interceptors"`
-	SwaggerConfigmapNames pulumi.StringArrayInput               `pulumi:"swaggerConfigmapNames"`
-	Type                  pulumi.StringPtrInput                 `pulumi:"type"`
+	// Interceptors for API. Default value "<empty>".
+	Interceptors APISpecDefinitionInterceptorsPtrInput `pulumi:"interceptors"`
+	// Array of config map names of swagger definitions for the API.
+	SwaggerConfigmapNames pulumi.StringArrayInput `pulumi:"swaggerConfigmapNames"`
+	Type                  pulumi.StringPtrInput   `pulumi:"type"`
 }
 
 func (APISpecDefinitionArgs) ElementType() reflect.Type {
@@ -408,6 +518,7 @@ func (i *apispecDefinitionPtrType) ToAPISpecDefinitionPtrOutputWithContext(ctx c
 	return pulumi.ToOutputWithContext(ctx, i).(APISpecDefinitionPtrOutput)
 }
 
+// Definition of the API.
 type APISpecDefinitionOutput struct{ *pulumi.OutputState }
 
 func (APISpecDefinitionOutput) ElementType() reflect.Type {
@@ -431,10 +542,13 @@ func (o APISpecDefinitionOutput) ToAPISpecDefinitionPtrOutputWithContext(ctx con
 		return &v
 	}).(APISpecDefinitionPtrOutput)
 }
+
+// Interceptors for API. Default value "<empty>".
 func (o APISpecDefinitionOutput) Interceptors() APISpecDefinitionInterceptorsPtrOutput {
 	return o.ApplyT(func(v APISpecDefinition) *APISpecDefinitionInterceptors { return v.Interceptors }).(APISpecDefinitionInterceptorsPtrOutput)
 }
 
+// Array of config map names of swagger definitions for the API.
 func (o APISpecDefinitionOutput) SwaggerConfigmapNames() pulumi.StringArrayOutput {
 	return o.ApplyT(func(v APISpecDefinition) []string { return v.SwaggerConfigmapNames }).(pulumi.StringArrayOutput)
 }
@@ -461,6 +575,7 @@ func (o APISpecDefinitionPtrOutput) Elem() APISpecDefinitionOutput {
 	return o.ApplyT(func(v *APISpecDefinition) APISpecDefinition { return *v }).(APISpecDefinitionOutput)
 }
 
+// Interceptors for API. Default value "<empty>".
 func (o APISpecDefinitionPtrOutput) Interceptors() APISpecDefinitionInterceptorsPtrOutput {
 	return o.ApplyT(func(v *APISpecDefinition) *APISpecDefinitionInterceptors {
 		if v == nil {
@@ -470,6 +585,7 @@ func (o APISpecDefinitionPtrOutput) Interceptors() APISpecDefinitionInterceptors
 	}).(APISpecDefinitionInterceptorsPtrOutput)
 }
 
+// Array of config map names of swagger definitions for the API.
 func (o APISpecDefinitionPtrOutput) SwaggerConfigmapNames() pulumi.StringArrayOutput {
 	return o.ApplyT(func(v *APISpecDefinition) []string {
 		if v == nil {
@@ -488,9 +604,12 @@ func (o APISpecDefinitionPtrOutput) Type() pulumi.StringPtrOutput {
 	}).(pulumi.StringPtrOutput)
 }
 
+// Interceptors for API. Default value "<empty>".
 type APISpecDefinitionInterceptors struct {
+	// Ballerina interceptors. Default value "<empty>".
 	Ballerina []string `pulumi:"ballerina"`
-	Java      []string `pulumi:"java"`
+	// Java interceptors. Default value "<empty>".
+	Java []string `pulumi:"java"`
 }
 
 // APISpecDefinitionInterceptorsInput is an input type that accepts APISpecDefinitionInterceptorsArgs and APISpecDefinitionInterceptorsOutput values.
@@ -504,9 +623,12 @@ type APISpecDefinitionInterceptorsInput interface {
 	ToAPISpecDefinitionInterceptorsOutputWithContext(context.Context) APISpecDefinitionInterceptorsOutput
 }
 
+// Interceptors for API. Default value "<empty>".
 type APISpecDefinitionInterceptorsArgs struct {
+	// Ballerina interceptors. Default value "<empty>".
 	Ballerina pulumi.StringArrayInput `pulumi:"ballerina"`
-	Java      pulumi.StringArrayInput `pulumi:"java"`
+	// Java interceptors. Default value "<empty>".
+	Java pulumi.StringArrayInput `pulumi:"java"`
 }
 
 func (APISpecDefinitionInterceptorsArgs) ElementType() reflect.Type {
@@ -562,6 +684,7 @@ func (i *apispecDefinitionInterceptorsPtrType) ToAPISpecDefinitionInterceptorsPt
 	return pulumi.ToOutputWithContext(ctx, i).(APISpecDefinitionInterceptorsPtrOutput)
 }
 
+// Interceptors for API. Default value "<empty>".
 type APISpecDefinitionInterceptorsOutput struct{ *pulumi.OutputState }
 
 func (APISpecDefinitionInterceptorsOutput) ElementType() reflect.Type {
@@ -585,10 +708,13 @@ func (o APISpecDefinitionInterceptorsOutput) ToAPISpecDefinitionInterceptorsPtrO
 		return &v
 	}).(APISpecDefinitionInterceptorsPtrOutput)
 }
+
+// Ballerina interceptors. Default value "<empty>".
 func (o APISpecDefinitionInterceptorsOutput) Ballerina() pulumi.StringArrayOutput {
 	return o.ApplyT(func(v APISpecDefinitionInterceptors) []string { return v.Ballerina }).(pulumi.StringArrayOutput)
 }
 
+// Java interceptors. Default value "<empty>".
 func (o APISpecDefinitionInterceptorsOutput) Java() pulumi.StringArrayOutput {
 	return o.ApplyT(func(v APISpecDefinitionInterceptors) []string { return v.Java }).(pulumi.StringArrayOutput)
 }
@@ -611,6 +737,7 @@ func (o APISpecDefinitionInterceptorsPtrOutput) Elem() APISpecDefinitionIntercep
 	return o.ApplyT(func(v *APISpecDefinitionInterceptors) APISpecDefinitionInterceptors { return *v }).(APISpecDefinitionInterceptorsOutput)
 }
 
+// Ballerina interceptors. Default value "<empty>".
 func (o APISpecDefinitionInterceptorsPtrOutput) Ballerina() pulumi.StringArrayOutput {
 	return o.ApplyT(func(v *APISpecDefinitionInterceptors) []string {
 		if v == nil {
@@ -620,6 +747,7 @@ func (o APISpecDefinitionInterceptorsPtrOutput) Ballerina() pulumi.StringArrayOu
 	}).(pulumi.StringArrayOutput)
 }
 
+// Java interceptors. Default value "<empty>".
 func (o APISpecDefinitionInterceptorsPtrOutput) Java() pulumi.StringArrayOutput {
 	return o.ApplyT(func(v *APISpecDefinitionInterceptors) []string {
 		if v == nil {
@@ -629,7 +757,10 @@ func (o APISpecDefinitionInterceptorsPtrOutput) Java() pulumi.StringArrayOutput 
 	}).(pulumi.StringArrayOutput)
 }
 
+// APIStatus defines the observed state of API
 type APIStatus struct {
+	// replicas field in the status sub-resource will define the initial replica count allocated to the API.This will be the minimum replica count for a single API
+	Replicas int `pulumi:"replicas"`
 }
 
 // APIStatusInput is an input type that accepts APIStatusArgs and APIStatusOutput values.
@@ -643,7 +774,10 @@ type APIStatusInput interface {
 	ToAPIStatusOutputWithContext(context.Context) APIStatusOutput
 }
 
+// APIStatus defines the observed state of API
 type APIStatusArgs struct {
+	// replicas field in the status sub-resource will define the initial replica count allocated to the API.This will be the minimum replica count for a single API
+	Replicas pulumi.IntInput `pulumi:"replicas"`
 }
 
 func (APIStatusArgs) ElementType() reflect.Type {
@@ -658,6 +792,48 @@ func (i APIStatusArgs) ToAPIStatusOutputWithContext(ctx context.Context) APIStat
 	return pulumi.ToOutputWithContext(ctx, i).(APIStatusOutput)
 }
 
+func (i APIStatusArgs) ToAPIStatusPtrOutput() APIStatusPtrOutput {
+	return i.ToAPIStatusPtrOutputWithContext(context.Background())
+}
+
+func (i APIStatusArgs) ToAPIStatusPtrOutputWithContext(ctx context.Context) APIStatusPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(APIStatusOutput).ToAPIStatusPtrOutputWithContext(ctx)
+}
+
+// APIStatusPtrInput is an input type that accepts APIStatusArgs, APIStatusPtr and APIStatusPtrOutput values.
+// You can construct a concrete instance of `APIStatusPtrInput` via:
+//
+//          APIStatusArgs{...}
+//
+//  or:
+//
+//          nil
+type APIStatusPtrInput interface {
+	pulumi.Input
+
+	ToAPIStatusPtrOutput() APIStatusPtrOutput
+	ToAPIStatusPtrOutputWithContext(context.Context) APIStatusPtrOutput
+}
+
+type apistatusPtrType APIStatusArgs
+
+func APIStatusPtr(v *APIStatusArgs) APIStatusPtrInput {
+	return (*apistatusPtrType)(v)
+}
+
+func (*apistatusPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**APIStatus)(nil)).Elem()
+}
+
+func (i *apistatusPtrType) ToAPIStatusPtrOutput() APIStatusPtrOutput {
+	return i.ToAPIStatusPtrOutputWithContext(context.Background())
+}
+
+func (i *apistatusPtrType) ToAPIStatusPtrOutputWithContext(ctx context.Context) APIStatusPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(APIStatusPtrOutput)
+}
+
+// APIStatus defines the observed state of API
 type APIStatusOutput struct{ *pulumi.OutputState }
 
 func (APIStatusOutput) ElementType() reflect.Type {
@@ -672,12 +848,56 @@ func (o APIStatusOutput) ToAPIStatusOutputWithContext(ctx context.Context) APISt
 	return o
 }
 
+func (o APIStatusOutput) ToAPIStatusPtrOutput() APIStatusPtrOutput {
+	return o.ToAPIStatusPtrOutputWithContext(context.Background())
+}
+
+func (o APIStatusOutput) ToAPIStatusPtrOutputWithContext(ctx context.Context) APIStatusPtrOutput {
+	return o.ApplyT(func(v APIStatus) *APIStatus {
+		return &v
+	}).(APIStatusPtrOutput)
+}
+
+// replicas field in the status sub-resource will define the initial replica count allocated to the API.This will be the minimum replica count for a single API
+func (o APIStatusOutput) Replicas() pulumi.IntOutput {
+	return o.ApplyT(func(v APIStatus) int { return v.Replicas }).(pulumi.IntOutput)
+}
+
+type APIStatusPtrOutput struct{ *pulumi.OutputState }
+
+func (APIStatusPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**APIStatus)(nil)).Elem()
+}
+
+func (o APIStatusPtrOutput) ToAPIStatusPtrOutput() APIStatusPtrOutput {
+	return o
+}
+
+func (o APIStatusPtrOutput) ToAPIStatusPtrOutputWithContext(ctx context.Context) APIStatusPtrOutput {
+	return o
+}
+
+func (o APIStatusPtrOutput) Elem() APIStatusOutput {
+	return o.ApplyT(func(v *APIStatus) APIStatus { return *v }).(APIStatusOutput)
+}
+
+// replicas field in the status sub-resource will define the initial replica count allocated to the API.This will be the minimum replica count for a single API
+func (o APIStatusPtrOutput) Replicas() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *APIStatus) *int {
+		if v == nil {
+			return nil
+		}
+		return &v.Replicas
+	}).(pulumi.IntPtrOutput)
+}
+
+// RateLimiting is the Schema for the ratelimitings API
 type RateLimitingType struct {
-	ApiVersion *string                `pulumi:"apiVersion"`
-	Kind       *string                `pulumi:"kind"`
-	Metadata   *metav1.ObjectMeta     `pulumi:"metadata"`
-	Spec       *RateLimitingSpec      `pulumi:"spec"`
-	Status     map[string]interface{} `pulumi:"status"`
+	ApiVersion *string            `pulumi:"apiVersion"`
+	Kind       *string            `pulumi:"kind"`
+	Metadata   *metav1.ObjectMeta `pulumi:"metadata"`
+	// RateLimitingSpec defines the desired state of RateLimiting
+	Spec *RateLimitingSpec `pulumi:"spec"`
 }
 
 // RateLimitingTypeInput is an input type that accepts RateLimitingTypeArgs and RateLimitingTypeOutput values.
@@ -691,12 +911,13 @@ type RateLimitingTypeInput interface {
 	ToRateLimitingTypeOutputWithContext(context.Context) RateLimitingTypeOutput
 }
 
+// RateLimiting is the Schema for the ratelimitings API
 type RateLimitingTypeArgs struct {
 	ApiVersion pulumi.StringPtrInput     `pulumi:"apiVersion"`
 	Kind       pulumi.StringPtrInput     `pulumi:"kind"`
 	Metadata   metav1.ObjectMetaPtrInput `pulumi:"metadata"`
-	Spec       RateLimitingSpecPtrInput  `pulumi:"spec"`
-	Status     pulumi.MapInput           `pulumi:"status"`
+	// RateLimitingSpec defines the desired state of RateLimiting
+	Spec RateLimitingSpecPtrInput `pulumi:"spec"`
 }
 
 func (RateLimitingTypeArgs) ElementType() reflect.Type {
@@ -711,6 +932,7 @@ func (i RateLimitingTypeArgs) ToRateLimitingTypeOutputWithContext(ctx context.Co
 	return pulumi.ToOutputWithContext(ctx, i).(RateLimitingTypeOutput)
 }
 
+// RateLimiting is the Schema for the ratelimitings API
 type RateLimitingTypeOutput struct{ *pulumi.OutputState }
 
 func (RateLimitingTypeOutput) ElementType() reflect.Type {
@@ -737,12 +959,9 @@ func (o RateLimitingTypeOutput) Metadata() metav1.ObjectMetaPtrOutput {
 	return o.ApplyT(func(v RateLimitingType) *metav1.ObjectMeta { return v.Metadata }).(metav1.ObjectMetaPtrOutput)
 }
 
+// RateLimitingSpec defines the desired state of RateLimiting
 func (o RateLimitingTypeOutput) Spec() RateLimitingSpecPtrOutput {
 	return o.ApplyT(func(v RateLimitingType) *RateLimitingSpec { return v.Spec }).(RateLimitingSpecPtrOutput)
-}
-
-func (o RateLimitingTypeOutput) Status() pulumi.MapOutput {
-	return o.ApplyT(func(v RateLimitingType) map[string]interface{} { return v.Status }).(pulumi.MapOutput)
 }
 
 type RateLimitingMetadata struct {
@@ -788,10 +1007,14 @@ func (o RateLimitingMetadataOutput) ToRateLimitingMetadataOutputWithContext(ctx 
 	return o
 }
 
+// RateLimitingSpec defines the desired state of RateLimiting
 type RateLimitingSpec struct {
-	Bandwidth        *RateLimitingSpecBandwidth   `pulumi:"bandwidth"`
-	Conditions       *RateLimitingSpecConditions  `pulumi:"conditions"`
-	Description      *string                      `pulumi:"description"`
+	// Bandwidth is exported type in Ratelimiting Spec
+	Bandwidth *RateLimitingSpecBandwidth `pulumi:"bandwidth"`
+	// Conditions is exported type in Ratelimiting Spec
+	Conditions  *RateLimitingSpecConditions `pulumi:"conditions"`
+	Description *string                     `pulumi:"description"`
+	// RequestCount is exported type in Ratelimiting Spec
 	RequestCount     RateLimitingSpecRequestCount `pulumi:"requestCount"`
 	StopOnQuotaReach *bool                        `pulumi:"stopOnQuotaReach"`
 	TimeUnit         string                       `pulumi:"timeUnit"`
@@ -810,15 +1033,19 @@ type RateLimitingSpecInput interface {
 	ToRateLimitingSpecOutputWithContext(context.Context) RateLimitingSpecOutput
 }
 
+// RateLimitingSpec defines the desired state of RateLimiting
 type RateLimitingSpecArgs struct {
-	Bandwidth        RateLimitingSpecBandwidthPtrInput  `pulumi:"bandwidth"`
-	Conditions       RateLimitingSpecConditionsPtrInput `pulumi:"conditions"`
-	Description      pulumi.StringPtrInput              `pulumi:"description"`
-	RequestCount     RateLimitingSpecRequestCountInput  `pulumi:"requestCount"`
-	StopOnQuotaReach pulumi.BoolPtrInput                `pulumi:"stopOnQuotaReach"`
-	TimeUnit         pulumi.StringInput                 `pulumi:"timeUnit"`
-	Type             pulumi.StringInput                 `pulumi:"type"`
-	UnitTime         pulumi.IntInput                    `pulumi:"unitTime"`
+	// Bandwidth is exported type in Ratelimiting Spec
+	Bandwidth RateLimitingSpecBandwidthPtrInput `pulumi:"bandwidth"`
+	// Conditions is exported type in Ratelimiting Spec
+	Conditions  RateLimitingSpecConditionsPtrInput `pulumi:"conditions"`
+	Description pulumi.StringPtrInput              `pulumi:"description"`
+	// RequestCount is exported type in Ratelimiting Spec
+	RequestCount     RateLimitingSpecRequestCountInput `pulumi:"requestCount"`
+	StopOnQuotaReach pulumi.BoolPtrInput               `pulumi:"stopOnQuotaReach"`
+	TimeUnit         pulumi.StringInput                `pulumi:"timeUnit"`
+	Type             pulumi.StringInput                `pulumi:"type"`
+	UnitTime         pulumi.IntInput                   `pulumi:"unitTime"`
 }
 
 func (RateLimitingSpecArgs) ElementType() reflect.Type {
@@ -874,6 +1101,7 @@ func (i *rateLimitingSpecPtrType) ToRateLimitingSpecPtrOutputWithContext(ctx con
 	return pulumi.ToOutputWithContext(ctx, i).(RateLimitingSpecPtrOutput)
 }
 
+// RateLimitingSpec defines the desired state of RateLimiting
 type RateLimitingSpecOutput struct{ *pulumi.OutputState }
 
 func (RateLimitingSpecOutput) ElementType() reflect.Type {
@@ -897,10 +1125,13 @@ func (o RateLimitingSpecOutput) ToRateLimitingSpecPtrOutputWithContext(ctx conte
 		return &v
 	}).(RateLimitingSpecPtrOutput)
 }
+
+// Bandwidth is exported type in Ratelimiting Spec
 func (o RateLimitingSpecOutput) Bandwidth() RateLimitingSpecBandwidthPtrOutput {
 	return o.ApplyT(func(v RateLimitingSpec) *RateLimitingSpecBandwidth { return v.Bandwidth }).(RateLimitingSpecBandwidthPtrOutput)
 }
 
+// Conditions is exported type in Ratelimiting Spec
 func (o RateLimitingSpecOutput) Conditions() RateLimitingSpecConditionsPtrOutput {
 	return o.ApplyT(func(v RateLimitingSpec) *RateLimitingSpecConditions { return v.Conditions }).(RateLimitingSpecConditionsPtrOutput)
 }
@@ -909,6 +1140,7 @@ func (o RateLimitingSpecOutput) Description() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v RateLimitingSpec) *string { return v.Description }).(pulumi.StringPtrOutput)
 }
 
+// RequestCount is exported type in Ratelimiting Spec
 func (o RateLimitingSpecOutput) RequestCount() RateLimitingSpecRequestCountOutput {
 	return o.ApplyT(func(v RateLimitingSpec) RateLimitingSpecRequestCount { return v.RequestCount }).(RateLimitingSpecRequestCountOutput)
 }
@@ -947,6 +1179,7 @@ func (o RateLimitingSpecPtrOutput) Elem() RateLimitingSpecOutput {
 	return o.ApplyT(func(v *RateLimitingSpec) RateLimitingSpec { return *v }).(RateLimitingSpecOutput)
 }
 
+// Bandwidth is exported type in Ratelimiting Spec
 func (o RateLimitingSpecPtrOutput) Bandwidth() RateLimitingSpecBandwidthPtrOutput {
 	return o.ApplyT(func(v *RateLimitingSpec) *RateLimitingSpecBandwidth {
 		if v == nil {
@@ -956,6 +1189,7 @@ func (o RateLimitingSpecPtrOutput) Bandwidth() RateLimitingSpecBandwidthPtrOutpu
 	}).(RateLimitingSpecBandwidthPtrOutput)
 }
 
+// Conditions is exported type in Ratelimiting Spec
 func (o RateLimitingSpecPtrOutput) Conditions() RateLimitingSpecConditionsPtrOutput {
 	return o.ApplyT(func(v *RateLimitingSpec) *RateLimitingSpecConditions {
 		if v == nil {
@@ -974,6 +1208,7 @@ func (o RateLimitingSpecPtrOutput) Description() pulumi.StringPtrOutput {
 	}).(pulumi.StringPtrOutput)
 }
 
+// RequestCount is exported type in Ratelimiting Spec
 func (o RateLimitingSpecPtrOutput) RequestCount() RateLimitingSpecRequestCountPtrOutput {
 	return o.ApplyT(func(v *RateLimitingSpec) *RateLimitingSpecRequestCount {
 		if v == nil {
@@ -1019,6 +1254,7 @@ func (o RateLimitingSpecPtrOutput) UnitTime() pulumi.IntPtrOutput {
 	}).(pulumi.IntPtrOutput)
 }
 
+// Bandwidth is exported type in Ratelimiting Spec
 type RateLimitingSpecBandwidth struct {
 	DataAmount string `pulumi:"dataAmount"`
 	DataUnit   string `pulumi:"dataUnit"`
@@ -1035,6 +1271,7 @@ type RateLimitingSpecBandwidthInput interface {
 	ToRateLimitingSpecBandwidthOutputWithContext(context.Context) RateLimitingSpecBandwidthOutput
 }
 
+// Bandwidth is exported type in Ratelimiting Spec
 type RateLimitingSpecBandwidthArgs struct {
 	DataAmount pulumi.StringInput `pulumi:"dataAmount"`
 	DataUnit   pulumi.StringInput `pulumi:"dataUnit"`
@@ -1093,6 +1330,7 @@ func (i *rateLimitingSpecBandwidthPtrType) ToRateLimitingSpecBandwidthPtrOutputW
 	return pulumi.ToOutputWithContext(ctx, i).(RateLimitingSpecBandwidthPtrOutput)
 }
 
+// Bandwidth is exported type in Ratelimiting Spec
 type RateLimitingSpecBandwidthOutput struct{ *pulumi.OutputState }
 
 func (RateLimitingSpecBandwidthOutput) ElementType() reflect.Type {
@@ -1160,9 +1398,12 @@ func (o RateLimitingSpecBandwidthPtrOutput) DataUnit() pulumi.StringPtrOutput {
 	}).(pulumi.StringPtrOutput)
 }
 
+// Conditions is exported type in Ratelimiting Spec
 type RateLimitingSpecConditions struct {
+	// HeaderCondition is exported type in Ratelimiting Spec
 	HeaderCondition RateLimitingSpecConditionsHeaderCondition `pulumi:"headerCondition"`
-	IpCondition     RateLimitingSpecConditionsIpCondition     `pulumi:"ipCondition"`
+	// IPCondition is exported type in Ratelimiting Spec
+	IpCondition RateLimitingSpecConditionsIpCondition `pulumi:"ipCondition"`
 }
 
 // RateLimitingSpecConditionsInput is an input type that accepts RateLimitingSpecConditionsArgs and RateLimitingSpecConditionsOutput values.
@@ -1176,9 +1417,12 @@ type RateLimitingSpecConditionsInput interface {
 	ToRateLimitingSpecConditionsOutputWithContext(context.Context) RateLimitingSpecConditionsOutput
 }
 
+// Conditions is exported type in Ratelimiting Spec
 type RateLimitingSpecConditionsArgs struct {
+	// HeaderCondition is exported type in Ratelimiting Spec
 	HeaderCondition RateLimitingSpecConditionsHeaderConditionInput `pulumi:"headerCondition"`
-	IpCondition     RateLimitingSpecConditionsIpConditionInput     `pulumi:"ipCondition"`
+	// IPCondition is exported type in Ratelimiting Spec
+	IpCondition RateLimitingSpecConditionsIpConditionInput `pulumi:"ipCondition"`
 }
 
 func (RateLimitingSpecConditionsArgs) ElementType() reflect.Type {
@@ -1234,6 +1478,7 @@ func (i *rateLimitingSpecConditionsPtrType) ToRateLimitingSpecConditionsPtrOutpu
 	return pulumi.ToOutputWithContext(ctx, i).(RateLimitingSpecConditionsPtrOutput)
 }
 
+// Conditions is exported type in Ratelimiting Spec
 type RateLimitingSpecConditionsOutput struct{ *pulumi.OutputState }
 
 func (RateLimitingSpecConditionsOutput) ElementType() reflect.Type {
@@ -1257,10 +1502,13 @@ func (o RateLimitingSpecConditionsOutput) ToRateLimitingSpecConditionsPtrOutputW
 		return &v
 	}).(RateLimitingSpecConditionsPtrOutput)
 }
+
+// HeaderCondition is exported type in Ratelimiting Spec
 func (o RateLimitingSpecConditionsOutput) HeaderCondition() RateLimitingSpecConditionsHeaderConditionOutput {
 	return o.ApplyT(func(v RateLimitingSpecConditions) RateLimitingSpecConditionsHeaderCondition { return v.HeaderCondition }).(RateLimitingSpecConditionsHeaderConditionOutput)
 }
 
+// IPCondition is exported type in Ratelimiting Spec
 func (o RateLimitingSpecConditionsOutput) IpCondition() RateLimitingSpecConditionsIpConditionOutput {
 	return o.ApplyT(func(v RateLimitingSpecConditions) RateLimitingSpecConditionsIpCondition { return v.IpCondition }).(RateLimitingSpecConditionsIpConditionOutput)
 }
@@ -1283,6 +1531,7 @@ func (o RateLimitingSpecConditionsPtrOutput) Elem() RateLimitingSpecConditionsOu
 	return o.ApplyT(func(v *RateLimitingSpecConditions) RateLimitingSpecConditions { return *v }).(RateLimitingSpecConditionsOutput)
 }
 
+// HeaderCondition is exported type in Ratelimiting Spec
 func (o RateLimitingSpecConditionsPtrOutput) HeaderCondition() RateLimitingSpecConditionsHeaderConditionPtrOutput {
 	return o.ApplyT(func(v *RateLimitingSpecConditions) *RateLimitingSpecConditionsHeaderCondition {
 		if v == nil {
@@ -1292,6 +1541,7 @@ func (o RateLimitingSpecConditionsPtrOutput) HeaderCondition() RateLimitingSpecC
 	}).(RateLimitingSpecConditionsHeaderConditionPtrOutput)
 }
 
+// IPCondition is exported type in Ratelimiting Spec
 func (o RateLimitingSpecConditionsPtrOutput) IpCondition() RateLimitingSpecConditionsIpConditionPtrOutput {
 	return o.ApplyT(func(v *RateLimitingSpecConditions) *RateLimitingSpecConditionsIpCondition {
 		if v == nil {
@@ -1301,6 +1551,7 @@ func (o RateLimitingSpecConditionsPtrOutput) IpCondition() RateLimitingSpecCondi
 	}).(RateLimitingSpecConditionsIpConditionPtrOutput)
 }
 
+// HeaderCondition is exported type in Ratelimiting Spec
 type RateLimitingSpecConditionsHeaderCondition struct {
 	HeaderName  string `pulumi:"headerName"`
 	HeaderValue string `pulumi:"headerValue"`
@@ -1317,6 +1568,7 @@ type RateLimitingSpecConditionsHeaderConditionInput interface {
 	ToRateLimitingSpecConditionsHeaderConditionOutputWithContext(context.Context) RateLimitingSpecConditionsHeaderConditionOutput
 }
 
+// HeaderCondition is exported type in Ratelimiting Spec
 type RateLimitingSpecConditionsHeaderConditionArgs struct {
 	HeaderName  pulumi.StringInput `pulumi:"headerName"`
 	HeaderValue pulumi.StringInput `pulumi:"headerValue"`
@@ -1375,6 +1627,7 @@ func (i *rateLimitingSpecConditionsHeaderConditionPtrType) ToRateLimitingSpecCon
 	return pulumi.ToOutputWithContext(ctx, i).(RateLimitingSpecConditionsHeaderConditionPtrOutput)
 }
 
+// HeaderCondition is exported type in Ratelimiting Spec
 type RateLimitingSpecConditionsHeaderConditionOutput struct{ *pulumi.OutputState }
 
 func (RateLimitingSpecConditionsHeaderConditionOutput) ElementType() reflect.Type {
@@ -1444,6 +1697,7 @@ func (o RateLimitingSpecConditionsHeaderConditionPtrOutput) HeaderValue() pulumi
 	}).(pulumi.StringPtrOutput)
 }
 
+// IPCondition is exported type in Ratelimiting Spec
 type RateLimitingSpecConditionsIpCondition struct {
 	EndIp      string `pulumi:"endIp"`
 	Negation   bool   `pulumi:"negation"`
@@ -1463,6 +1717,7 @@ type RateLimitingSpecConditionsIpConditionInput interface {
 	ToRateLimitingSpecConditionsIpConditionOutputWithContext(context.Context) RateLimitingSpecConditionsIpConditionOutput
 }
 
+// IPCondition is exported type in Ratelimiting Spec
 type RateLimitingSpecConditionsIpConditionArgs struct {
 	EndIp      pulumi.StringInput `pulumi:"endIp"`
 	Negation   pulumi.BoolInput   `pulumi:"negation"`
@@ -1524,6 +1779,7 @@ func (i *rateLimitingSpecConditionsIpConditionPtrType) ToRateLimitingSpecConditi
 	return pulumi.ToOutputWithContext(ctx, i).(RateLimitingSpecConditionsIpConditionPtrOutput)
 }
 
+// IPCondition is exported type in Ratelimiting Spec
 type RateLimitingSpecConditionsIpConditionOutput struct{ *pulumi.OutputState }
 
 func (RateLimitingSpecConditionsIpConditionOutput) ElementType() reflect.Type {
@@ -1630,6 +1886,7 @@ func (o RateLimitingSpecConditionsIpConditionPtrOutput) Type() pulumi.StringPtrO
 	}).(pulumi.StringPtrOutput)
 }
 
+// RequestCount is exported type in Ratelimiting Spec
 type RateLimitingSpecRequestCount struct {
 	Limit int `pulumi:"limit"`
 }
@@ -1645,6 +1902,7 @@ type RateLimitingSpecRequestCountInput interface {
 	ToRateLimitingSpecRequestCountOutputWithContext(context.Context) RateLimitingSpecRequestCountOutput
 }
 
+// RequestCount is exported type in Ratelimiting Spec
 type RateLimitingSpecRequestCountArgs struct {
 	Limit pulumi.IntInput `pulumi:"limit"`
 }
@@ -1702,6 +1960,7 @@ func (i *rateLimitingSpecRequestCountPtrType) ToRateLimitingSpecRequestCountPtrO
 	return pulumi.ToOutputWithContext(ctx, i).(RateLimitingSpecRequestCountPtrOutput)
 }
 
+// RequestCount is exported type in Ratelimiting Spec
 type RateLimitingSpecRequestCountOutput struct{ *pulumi.OutputState }
 
 func (RateLimitingSpecRequestCountOutput) ElementType() reflect.Type {
@@ -1756,55 +2015,15 @@ func (o RateLimitingSpecRequestCountPtrOutput) Limit() pulumi.IntPtrOutput {
 	}).(pulumi.IntPtrOutput)
 }
 
-type RateLimitingStatus struct {
-}
-
-// RateLimitingStatusInput is an input type that accepts RateLimitingStatusArgs and RateLimitingStatusOutput values.
-// You can construct a concrete instance of `RateLimitingStatusInput` via:
-//
-//          RateLimitingStatusArgs{...}
-type RateLimitingStatusInput interface {
-	pulumi.Input
-
-	ToRateLimitingStatusOutput() RateLimitingStatusOutput
-	ToRateLimitingStatusOutputWithContext(context.Context) RateLimitingStatusOutput
-}
-
-type RateLimitingStatusArgs struct {
-}
-
-func (RateLimitingStatusArgs) ElementType() reflect.Type {
-	return reflect.TypeOf((*RateLimitingStatus)(nil)).Elem()
-}
-
-func (i RateLimitingStatusArgs) ToRateLimitingStatusOutput() RateLimitingStatusOutput {
-	return i.ToRateLimitingStatusOutputWithContext(context.Background())
-}
-
-func (i RateLimitingStatusArgs) ToRateLimitingStatusOutputWithContext(ctx context.Context) RateLimitingStatusOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(RateLimitingStatusOutput)
-}
-
-type RateLimitingStatusOutput struct{ *pulumi.OutputState }
-
-func (RateLimitingStatusOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*RateLimitingStatus)(nil)).Elem()
-}
-
-func (o RateLimitingStatusOutput) ToRateLimitingStatusOutput() RateLimitingStatusOutput {
-	return o
-}
-
-func (o RateLimitingStatusOutput) ToRateLimitingStatusOutputWithContext(ctx context.Context) RateLimitingStatusOutput {
-	return o
-}
-
+// Security is the Schema for the securities API
 type SecurityType struct {
-	ApiVersion *string                `pulumi:"apiVersion"`
-	Kind       *string                `pulumi:"kind"`
-	Metadata   *metav1.ObjectMeta     `pulumi:"metadata"`
-	Spec       *SecuritySpec          `pulumi:"spec"`
-	Status     map[string]interface{} `pulumi:"status"`
+	ApiVersion *string            `pulumi:"apiVersion"`
+	Kind       *string            `pulumi:"kind"`
+	Metadata   *metav1.ObjectMeta `pulumi:"metadata"`
+	// SecuritySpec defines the desired state of Security
+	Spec *SecuritySpec `pulumi:"spec"`
+	// SecurityStatus defines the observed state of Security
+	Status map[string]interface{} `pulumi:"status"`
 }
 
 // SecurityTypeInput is an input type that accepts SecurityTypeArgs and SecurityTypeOutput values.
@@ -1818,12 +2037,15 @@ type SecurityTypeInput interface {
 	ToSecurityTypeOutputWithContext(context.Context) SecurityTypeOutput
 }
 
+// Security is the Schema for the securities API
 type SecurityTypeArgs struct {
 	ApiVersion pulumi.StringPtrInput     `pulumi:"apiVersion"`
 	Kind       pulumi.StringPtrInput     `pulumi:"kind"`
 	Metadata   metav1.ObjectMetaPtrInput `pulumi:"metadata"`
-	Spec       SecuritySpecPtrInput      `pulumi:"spec"`
-	Status     pulumi.MapInput           `pulumi:"status"`
+	// SecuritySpec defines the desired state of Security
+	Spec SecuritySpecPtrInput `pulumi:"spec"`
+	// SecurityStatus defines the observed state of Security
+	Status pulumi.MapInput `pulumi:"status"`
 }
 
 func (SecurityTypeArgs) ElementType() reflect.Type {
@@ -1838,6 +2060,7 @@ func (i SecurityTypeArgs) ToSecurityTypeOutputWithContext(ctx context.Context) S
 	return pulumi.ToOutputWithContext(ctx, i).(SecurityTypeOutput)
 }
 
+// Security is the Schema for the securities API
 type SecurityTypeOutput struct{ *pulumi.OutputState }
 
 func (SecurityTypeOutput) ElementType() reflect.Type {
@@ -1864,10 +2087,12 @@ func (o SecurityTypeOutput) Metadata() metav1.ObjectMetaPtrOutput {
 	return o.ApplyT(func(v SecurityType) *metav1.ObjectMeta { return v.Metadata }).(metav1.ObjectMetaPtrOutput)
 }
 
+// SecuritySpec defines the desired state of Security
 func (o SecurityTypeOutput) Spec() SecuritySpecPtrOutput {
 	return o.ApplyT(func(v SecurityType) *SecuritySpec { return v.Spec }).(SecuritySpecPtrOutput)
 }
 
+// SecurityStatus defines the observed state of Security
 func (o SecurityTypeOutput) Status() pulumi.MapOutput {
 	return o.ApplyT(func(v SecurityType) map[string]interface{} { return v.Status }).(pulumi.MapOutput)
 }
@@ -1915,6 +2140,7 @@ func (o SecurityMetadataOutput) ToSecurityMetadataOutputWithContext(ctx context.
 	return o
 }
 
+// SecuritySpec defines the desired state of Security
 type SecuritySpec struct {
 	SecurityConfig []SecuritySpecSecurityConfig `pulumi:"securityConfig"`
 	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster Important: Run "operator-sdk generate k8s" to regenerate code after modifying this file Add custom validation using kubebuilder tags: https://book.kubebuilder.io/beyond_basics/generating_crd.html
@@ -1932,6 +2158,7 @@ type SecuritySpecInput interface {
 	ToSecuritySpecOutputWithContext(context.Context) SecuritySpecOutput
 }
 
+// SecuritySpec defines the desired state of Security
 type SecuritySpecArgs struct {
 	SecurityConfig SecuritySpecSecurityConfigArrayInput `pulumi:"securityConfig"`
 	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster Important: Run "operator-sdk generate k8s" to regenerate code after modifying this file Add custom validation using kubebuilder tags: https://book.kubebuilder.io/beyond_basics/generating_crd.html
@@ -1991,6 +2218,7 @@ func (i *securitySpecPtrType) ToSecuritySpecPtrOutputWithContext(ctx context.Con
 	return pulumi.ToOutputWithContext(ctx, i).(SecuritySpecPtrOutput)
 }
 
+// SecuritySpec defines the desired state of Security
 type SecuritySpecOutput struct{ *pulumi.OutputState }
 
 func (SecuritySpecOutput) ElementType() reflect.Type {
@@ -2067,6 +2295,7 @@ type SecuritySpecSecurityConfig struct {
 	Credentials          *string `pulumi:"credentials"`
 	Endpoint             *string `pulumi:"endpoint"`
 	Issuer               *string `pulumi:"issuer"`
+	ValidateAllowedAPIs  *bool   `pulumi:"validateAllowedAPIs"`
 	ValidateSubscription *bool   `pulumi:"validateSubscription"`
 }
 
@@ -2088,6 +2317,7 @@ type SecuritySpecSecurityConfigArgs struct {
 	Credentials          pulumi.StringPtrInput `pulumi:"credentials"`
 	Endpoint             pulumi.StringPtrInput `pulumi:"endpoint"`
 	Issuer               pulumi.StringPtrInput `pulumi:"issuer"`
+	ValidateAllowedAPIs  pulumi.BoolPtrInput   `pulumi:"validateAllowedAPIs"`
 	ValidateSubscription pulumi.BoolPtrInput   `pulumi:"validateSubscription"`
 }
 
@@ -2166,6 +2396,10 @@ func (o SecuritySpecSecurityConfigOutput) Issuer() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v SecuritySpecSecurityConfig) *string { return v.Issuer }).(pulumi.StringPtrOutput)
 }
 
+func (o SecuritySpecSecurityConfigOutput) ValidateAllowedAPIs() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v SecuritySpecSecurityConfig) *bool { return v.ValidateAllowedAPIs }).(pulumi.BoolPtrOutput)
+}
+
 func (o SecuritySpecSecurityConfigOutput) ValidateSubscription() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v SecuritySpecSecurityConfig) *bool { return v.ValidateSubscription }).(pulumi.BoolPtrOutput)
 }
@@ -2190,6 +2424,7 @@ func (o SecuritySpecSecurityConfigArrayOutput) Index(i pulumi.IntInput) Security
 	}).(SecuritySpecSecurityConfigOutput)
 }
 
+// SecurityStatus defines the observed state of Security
 type SecurityStatus struct {
 }
 
@@ -2204,6 +2439,7 @@ type SecurityStatusInput interface {
 	ToSecurityStatusOutputWithContext(context.Context) SecurityStatusOutput
 }
 
+// SecurityStatus defines the observed state of Security
 type SecurityStatusArgs struct {
 }
 
@@ -2219,6 +2455,7 @@ func (i SecurityStatusArgs) ToSecurityStatusOutputWithContext(ctx context.Contex
 	return pulumi.ToOutputWithContext(ctx, i).(SecurityStatusOutput)
 }
 
+// SecurityStatus defines the observed state of Security
 type SecurityStatusOutput struct{ *pulumi.OutputState }
 
 func (SecurityStatusOutput) ElementType() reflect.Type {
@@ -2233,12 +2470,15 @@ func (o SecurityStatusOutput) ToSecurityStatusOutputWithContext(ctx context.Cont
 	return o
 }
 
+// TargetEndpoint is the Schema for the targetendpoints API
 type TargetEndpointType struct {
-	ApiVersion *string                `pulumi:"apiVersion"`
-	Kind       *string                `pulumi:"kind"`
-	Metadata   *metav1.ObjectMeta     `pulumi:"metadata"`
-	Spec       *TargetEndpointSpec    `pulumi:"spec"`
-	Status     map[string]interface{} `pulumi:"status"`
+	ApiVersion *string            `pulumi:"apiVersion"`
+	Kind       *string            `pulumi:"kind"`
+	Metadata   *metav1.ObjectMeta `pulumi:"metadata"`
+	// TargetEndpointSpec defines the desired state of TargetEndpoint
+	Spec *TargetEndpointSpec `pulumi:"spec"`
+	// TargetEndpointStatus defines the observed state of TargetEndpoint
+	Status map[string]interface{} `pulumi:"status"`
 }
 
 // TargetEndpointTypeInput is an input type that accepts TargetEndpointTypeArgs and TargetEndpointTypeOutput values.
@@ -2252,12 +2492,15 @@ type TargetEndpointTypeInput interface {
 	ToTargetEndpointTypeOutputWithContext(context.Context) TargetEndpointTypeOutput
 }
 
+// TargetEndpoint is the Schema for the targetendpoints API
 type TargetEndpointTypeArgs struct {
-	ApiVersion pulumi.StringPtrInput      `pulumi:"apiVersion"`
-	Kind       pulumi.StringPtrInput      `pulumi:"kind"`
-	Metadata   metav1.ObjectMetaPtrInput  `pulumi:"metadata"`
-	Spec       TargetEndpointSpecPtrInput `pulumi:"spec"`
-	Status     pulumi.MapInput            `pulumi:"status"`
+	ApiVersion pulumi.StringPtrInput     `pulumi:"apiVersion"`
+	Kind       pulumi.StringPtrInput     `pulumi:"kind"`
+	Metadata   metav1.ObjectMetaPtrInput `pulumi:"metadata"`
+	// TargetEndpointSpec defines the desired state of TargetEndpoint
+	Spec TargetEndpointSpecPtrInput `pulumi:"spec"`
+	// TargetEndpointStatus defines the observed state of TargetEndpoint
+	Status pulumi.MapInput `pulumi:"status"`
 }
 
 func (TargetEndpointTypeArgs) ElementType() reflect.Type {
@@ -2272,6 +2515,7 @@ func (i TargetEndpointTypeArgs) ToTargetEndpointTypeOutputWithContext(ctx contex
 	return pulumi.ToOutputWithContext(ctx, i).(TargetEndpointTypeOutput)
 }
 
+// TargetEndpoint is the Schema for the targetendpoints API
 type TargetEndpointTypeOutput struct{ *pulumi.OutputState }
 
 func (TargetEndpointTypeOutput) ElementType() reflect.Type {
@@ -2298,10 +2542,12 @@ func (o TargetEndpointTypeOutput) Metadata() metav1.ObjectMetaPtrOutput {
 	return o.ApplyT(func(v TargetEndpointType) *metav1.ObjectMeta { return v.Metadata }).(metav1.ObjectMetaPtrOutput)
 }
 
+// TargetEndpointSpec defines the desired state of TargetEndpoint
 func (o TargetEndpointTypeOutput) Spec() TargetEndpointSpecPtrOutput {
 	return o.ApplyT(func(v TargetEndpointType) *TargetEndpointSpec { return v.Spec }).(TargetEndpointSpecPtrOutput)
 }
 
+// TargetEndpointStatus defines the observed state of TargetEndpoint
 func (o TargetEndpointTypeOutput) Status() pulumi.MapOutput {
 	return o.ApplyT(func(v TargetEndpointType) map[string]interface{} { return v.Status }).(pulumi.MapOutput)
 }
@@ -2349,17 +2595,16 @@ func (o TargetEndpointMetadataOutput) ToTargetEndpointMetadataOutputWithContext(
 	return o
 }
 
+// TargetEndpointSpec defines the desired state of TargetEndpoint
 type TargetEndpointSpec struct {
-	Deploy           TargetEndpointSpecDeploy            `pulumi:"deploy"`
-	EndpointName     *string                             `pulumi:"endpointName"`
-	EndpointSecurity *TargetEndpointSpecEndpointSecurity `pulumi:"endpointSecurity"`
-	Hostname         *string                             `pulumi:"hostname"`
-	Mode             *string                             `pulumi:"mode"`
-	Port             int                                 `pulumi:"port"`
-	Protocol         string                              `pulumi:"protocol"`
-	TargetPort       int                                 `pulumi:"targetPort"`
-	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster Important: Run "operator-sdk generate k8s" to regenerate code after modifying this file Add custom validation using kubebuilder tags: https://book.kubebuilder.io/beyond_basics/generating_crd.html
-	Type *string `pulumi:"type"`
+	// Protocol of the application. Supports "http" and "https".
+	ApplicationProtocol string `pulumi:"applicationProtocol"`
+	// Deployment details.
+	Deploy TargetEndpointSpecDeploy `pulumi:"deploy"`
+	// Mode of the Target Endpoint. Supports "privateJet", "sidecar", "serverless". Default value "privateJet"
+	Mode *string `pulumi:"mode"`
+	// List of optional ports of the target endpoint. First port should be the port of the target endpoint which is referred in swagger definition.
+	Ports []TargetEndpointSpecPorts `pulumi:"ports"`
 }
 
 // TargetEndpointSpecInput is an input type that accepts TargetEndpointSpecArgs and TargetEndpointSpecOutput values.
@@ -2373,17 +2618,16 @@ type TargetEndpointSpecInput interface {
 	ToTargetEndpointSpecOutputWithContext(context.Context) TargetEndpointSpecOutput
 }
 
+// TargetEndpointSpec defines the desired state of TargetEndpoint
 type TargetEndpointSpecArgs struct {
-	Deploy           TargetEndpointSpecDeployInput              `pulumi:"deploy"`
-	EndpointName     pulumi.StringPtrInput                      `pulumi:"endpointName"`
-	EndpointSecurity TargetEndpointSpecEndpointSecurityPtrInput `pulumi:"endpointSecurity"`
-	Hostname         pulumi.StringPtrInput                      `pulumi:"hostname"`
-	Mode             pulumi.StringPtrInput                      `pulumi:"mode"`
-	Port             pulumi.IntInput                            `pulumi:"port"`
-	Protocol         pulumi.StringInput                         `pulumi:"protocol"`
-	TargetPort       pulumi.IntInput                            `pulumi:"targetPort"`
-	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster Important: Run "operator-sdk generate k8s" to regenerate code after modifying this file Add custom validation using kubebuilder tags: https://book.kubebuilder.io/beyond_basics/generating_crd.html
-	Type pulumi.StringPtrInput `pulumi:"type"`
+	// Protocol of the application. Supports "http" and "https".
+	ApplicationProtocol pulumi.StringInput `pulumi:"applicationProtocol"`
+	// Deployment details.
+	Deploy TargetEndpointSpecDeployInput `pulumi:"deploy"`
+	// Mode of the Target Endpoint. Supports "privateJet", "sidecar", "serverless". Default value "privateJet"
+	Mode pulumi.StringPtrInput `pulumi:"mode"`
+	// List of optional ports of the target endpoint. First port should be the port of the target endpoint which is referred in swagger definition.
+	Ports TargetEndpointSpecPortsArrayInput `pulumi:"ports"`
 }
 
 func (TargetEndpointSpecArgs) ElementType() reflect.Type {
@@ -2439,6 +2683,7 @@ func (i *targetEndpointSpecPtrType) ToTargetEndpointSpecPtrOutputWithContext(ctx
 	return pulumi.ToOutputWithContext(ctx, i).(TargetEndpointSpecPtrOutput)
 }
 
+// TargetEndpointSpec defines the desired state of TargetEndpoint
 type TargetEndpointSpecOutput struct{ *pulumi.OutputState }
 
 func (TargetEndpointSpecOutput) ElementType() reflect.Type {
@@ -2462,41 +2707,25 @@ func (o TargetEndpointSpecOutput) ToTargetEndpointSpecPtrOutputWithContext(ctx c
 		return &v
 	}).(TargetEndpointSpecPtrOutput)
 }
+
+// Protocol of the application. Supports "http" and "https".
+func (o TargetEndpointSpecOutput) ApplicationProtocol() pulumi.StringOutput {
+	return o.ApplyT(func(v TargetEndpointSpec) string { return v.ApplicationProtocol }).(pulumi.StringOutput)
+}
+
+// Deployment details.
 func (o TargetEndpointSpecOutput) Deploy() TargetEndpointSpecDeployOutput {
 	return o.ApplyT(func(v TargetEndpointSpec) TargetEndpointSpecDeploy { return v.Deploy }).(TargetEndpointSpecDeployOutput)
 }
 
-func (o TargetEndpointSpecOutput) EndpointName() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v TargetEndpointSpec) *string { return v.EndpointName }).(pulumi.StringPtrOutput)
-}
-
-func (o TargetEndpointSpecOutput) EndpointSecurity() TargetEndpointSpecEndpointSecurityPtrOutput {
-	return o.ApplyT(func(v TargetEndpointSpec) *TargetEndpointSpecEndpointSecurity { return v.EndpointSecurity }).(TargetEndpointSpecEndpointSecurityPtrOutput)
-}
-
-func (o TargetEndpointSpecOutput) Hostname() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v TargetEndpointSpec) *string { return v.Hostname }).(pulumi.StringPtrOutput)
-}
-
+// Mode of the Target Endpoint. Supports "privateJet", "sidecar", "serverless". Default value "privateJet"
 func (o TargetEndpointSpecOutput) Mode() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v TargetEndpointSpec) *string { return v.Mode }).(pulumi.StringPtrOutput)
 }
 
-func (o TargetEndpointSpecOutput) Port() pulumi.IntOutput {
-	return o.ApplyT(func(v TargetEndpointSpec) int { return v.Port }).(pulumi.IntOutput)
-}
-
-func (o TargetEndpointSpecOutput) Protocol() pulumi.StringOutput {
-	return o.ApplyT(func(v TargetEndpointSpec) string { return v.Protocol }).(pulumi.StringOutput)
-}
-
-func (o TargetEndpointSpecOutput) TargetPort() pulumi.IntOutput {
-	return o.ApplyT(func(v TargetEndpointSpec) int { return v.TargetPort }).(pulumi.IntOutput)
-}
-
-// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster Important: Run "operator-sdk generate k8s" to regenerate code after modifying this file Add custom validation using kubebuilder tags: https://book.kubebuilder.io/beyond_basics/generating_crd.html
-func (o TargetEndpointSpecOutput) Type() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v TargetEndpointSpec) *string { return v.Type }).(pulumi.StringPtrOutput)
+// List of optional ports of the target endpoint. First port should be the port of the target endpoint which is referred in swagger definition.
+func (o TargetEndpointSpecOutput) Ports() TargetEndpointSpecPortsArrayOutput {
+	return o.ApplyT(func(v TargetEndpointSpec) []TargetEndpointSpecPorts { return v.Ports }).(TargetEndpointSpecPortsArrayOutput)
 }
 
 type TargetEndpointSpecPtrOutput struct{ *pulumi.OutputState }
@@ -2517,6 +2746,17 @@ func (o TargetEndpointSpecPtrOutput) Elem() TargetEndpointSpecOutput {
 	return o.ApplyT(func(v *TargetEndpointSpec) TargetEndpointSpec { return *v }).(TargetEndpointSpecOutput)
 }
 
+// Protocol of the application. Supports "http" and "https".
+func (o TargetEndpointSpecPtrOutput) ApplicationProtocol() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *TargetEndpointSpec) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.ApplicationProtocol
+	}).(pulumi.StringPtrOutput)
+}
+
+// Deployment details.
 func (o TargetEndpointSpecPtrOutput) Deploy() TargetEndpointSpecDeployPtrOutput {
 	return o.ApplyT(func(v *TargetEndpointSpec) *TargetEndpointSpecDeploy {
 		if v == nil {
@@ -2526,33 +2766,7 @@ func (o TargetEndpointSpecPtrOutput) Deploy() TargetEndpointSpecDeployPtrOutput 
 	}).(TargetEndpointSpecDeployPtrOutput)
 }
 
-func (o TargetEndpointSpecPtrOutput) EndpointName() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *TargetEndpointSpec) *string {
-		if v == nil {
-			return nil
-		}
-		return v.EndpointName
-	}).(pulumi.StringPtrOutput)
-}
-
-func (o TargetEndpointSpecPtrOutput) EndpointSecurity() TargetEndpointSpecEndpointSecurityPtrOutput {
-	return o.ApplyT(func(v *TargetEndpointSpec) *TargetEndpointSpecEndpointSecurity {
-		if v == nil {
-			return nil
-		}
-		return v.EndpointSecurity
-	}).(TargetEndpointSpecEndpointSecurityPtrOutput)
-}
-
-func (o TargetEndpointSpecPtrOutput) Hostname() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *TargetEndpointSpec) *string {
-		if v == nil {
-			return nil
-		}
-		return v.Hostname
-	}).(pulumi.StringPtrOutput)
-}
-
+// Mode of the Target Endpoint. Supports "privateJet", "sidecar", "serverless". Default value "privateJet"
 func (o TargetEndpointSpecPtrOutput) Mode() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *TargetEndpointSpec) *string {
 		if v == nil {
@@ -2562,43 +2776,17 @@ func (o TargetEndpointSpecPtrOutput) Mode() pulumi.StringPtrOutput {
 	}).(pulumi.StringPtrOutput)
 }
 
-func (o TargetEndpointSpecPtrOutput) Port() pulumi.IntPtrOutput {
-	return o.ApplyT(func(v *TargetEndpointSpec) *int {
+// List of optional ports of the target endpoint. First port should be the port of the target endpoint which is referred in swagger definition.
+func (o TargetEndpointSpecPtrOutput) Ports() TargetEndpointSpecPortsArrayOutput {
+	return o.ApplyT(func(v *TargetEndpointSpec) []TargetEndpointSpecPorts {
 		if v == nil {
 			return nil
 		}
-		return &v.Port
-	}).(pulumi.IntPtrOutput)
+		return v.Ports
+	}).(TargetEndpointSpecPortsArrayOutput)
 }
 
-func (o TargetEndpointSpecPtrOutput) Protocol() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *TargetEndpointSpec) *string {
-		if v == nil {
-			return nil
-		}
-		return &v.Protocol
-	}).(pulumi.StringPtrOutput)
-}
-
-func (o TargetEndpointSpecPtrOutput) TargetPort() pulumi.IntPtrOutput {
-	return o.ApplyT(func(v *TargetEndpointSpec) *int {
-		if v == nil {
-			return nil
-		}
-		return &v.TargetPort
-	}).(pulumi.IntPtrOutput)
-}
-
-// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster Important: Run "operator-sdk generate k8s" to regenerate code after modifying this file Add custom validation using kubebuilder tags: https://book.kubebuilder.io/beyond_basics/generating_crd.html
-func (o TargetEndpointSpecPtrOutput) Type() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *TargetEndpointSpec) *string {
-		if v == nil {
-			return nil
-		}
-		return v.Type
-	}).(pulumi.StringPtrOutput)
-}
-
+// Deployment details.
 type TargetEndpointSpecDeploy struct {
 	CpuLimit    *string `pulumi:"cpuLimit"`
 	DockerImage string  `pulumi:"dockerImage"`
@@ -2621,6 +2809,7 @@ type TargetEndpointSpecDeployInput interface {
 	ToTargetEndpointSpecDeployOutputWithContext(context.Context) TargetEndpointSpecDeployOutput
 }
 
+// Deployment details.
 type TargetEndpointSpecDeployArgs struct {
 	CpuLimit    pulumi.StringPtrInput `pulumi:"cpuLimit"`
 	DockerImage pulumi.StringInput    `pulumi:"dockerImage"`
@@ -2685,6 +2874,7 @@ func (i *targetEndpointSpecDeployPtrType) ToTargetEndpointSpecDeployPtrOutputWit
 	return pulumi.ToOutputWithContext(ctx, i).(TargetEndpointSpecDeployPtrOutput)
 }
 
+// Deployment details.
 type TargetEndpointSpecDeployOutput struct{ *pulumi.OutputState }
 
 func (TargetEndpointSpecDeployOutput) ElementType() reflect.Type {
@@ -2830,162 +3020,125 @@ func (o TargetEndpointSpecDeployPtrOutput) RequestCPU() pulumi.StringPtrOutput {
 	}).(pulumi.StringPtrOutput)
 }
 
-type TargetEndpointSpecEndpointSecurity struct {
-	Password string `pulumi:"password"`
-	Type     string `pulumi:"type"`
-	Username string `pulumi:"username"`
+// Port represents ports of the Target Endpoint
+type TargetEndpointSpecPorts struct {
+	// The name of this port within the service. This must be a DNS_LABEL. All ports within a ServiceSpec must have unique names.
+	Name string `pulumi:"name"`
+	// The port that will be exposed by this service.
+	Port int `pulumi:"port"`
+	// Port that is targeted to expose.
+	TargetPort int `pulumi:"targetPort"`
 }
 
-// TargetEndpointSpecEndpointSecurityInput is an input type that accepts TargetEndpointSpecEndpointSecurityArgs and TargetEndpointSpecEndpointSecurityOutput values.
-// You can construct a concrete instance of `TargetEndpointSpecEndpointSecurityInput` via:
+// TargetEndpointSpecPortsInput is an input type that accepts TargetEndpointSpecPortsArgs and TargetEndpointSpecPortsOutput values.
+// You can construct a concrete instance of `TargetEndpointSpecPortsInput` via:
 //
-//          TargetEndpointSpecEndpointSecurityArgs{...}
-type TargetEndpointSpecEndpointSecurityInput interface {
+//          TargetEndpointSpecPortsArgs{...}
+type TargetEndpointSpecPortsInput interface {
 	pulumi.Input
 
-	ToTargetEndpointSpecEndpointSecurityOutput() TargetEndpointSpecEndpointSecurityOutput
-	ToTargetEndpointSpecEndpointSecurityOutputWithContext(context.Context) TargetEndpointSpecEndpointSecurityOutput
+	ToTargetEndpointSpecPortsOutput() TargetEndpointSpecPortsOutput
+	ToTargetEndpointSpecPortsOutputWithContext(context.Context) TargetEndpointSpecPortsOutput
 }
 
-type TargetEndpointSpecEndpointSecurityArgs struct {
-	Password pulumi.StringInput `pulumi:"password"`
-	Type     pulumi.StringInput `pulumi:"type"`
-	Username pulumi.StringInput `pulumi:"username"`
+// Port represents ports of the Target Endpoint
+type TargetEndpointSpecPortsArgs struct {
+	// The name of this port within the service. This must be a DNS_LABEL. All ports within a ServiceSpec must have unique names.
+	Name pulumi.StringInput `pulumi:"name"`
+	// The port that will be exposed by this service.
+	Port pulumi.IntInput `pulumi:"port"`
+	// Port that is targeted to expose.
+	TargetPort pulumi.IntInput `pulumi:"targetPort"`
 }
 
-func (TargetEndpointSpecEndpointSecurityArgs) ElementType() reflect.Type {
-	return reflect.TypeOf((*TargetEndpointSpecEndpointSecurity)(nil)).Elem()
+func (TargetEndpointSpecPortsArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*TargetEndpointSpecPorts)(nil)).Elem()
 }
 
-func (i TargetEndpointSpecEndpointSecurityArgs) ToTargetEndpointSpecEndpointSecurityOutput() TargetEndpointSpecEndpointSecurityOutput {
-	return i.ToTargetEndpointSpecEndpointSecurityOutputWithContext(context.Background())
+func (i TargetEndpointSpecPortsArgs) ToTargetEndpointSpecPortsOutput() TargetEndpointSpecPortsOutput {
+	return i.ToTargetEndpointSpecPortsOutputWithContext(context.Background())
 }
 
-func (i TargetEndpointSpecEndpointSecurityArgs) ToTargetEndpointSpecEndpointSecurityOutputWithContext(ctx context.Context) TargetEndpointSpecEndpointSecurityOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(TargetEndpointSpecEndpointSecurityOutput)
+func (i TargetEndpointSpecPortsArgs) ToTargetEndpointSpecPortsOutputWithContext(ctx context.Context) TargetEndpointSpecPortsOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(TargetEndpointSpecPortsOutput)
 }
 
-func (i TargetEndpointSpecEndpointSecurityArgs) ToTargetEndpointSpecEndpointSecurityPtrOutput() TargetEndpointSpecEndpointSecurityPtrOutput {
-	return i.ToTargetEndpointSpecEndpointSecurityPtrOutputWithContext(context.Background())
-}
-
-func (i TargetEndpointSpecEndpointSecurityArgs) ToTargetEndpointSpecEndpointSecurityPtrOutputWithContext(ctx context.Context) TargetEndpointSpecEndpointSecurityPtrOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(TargetEndpointSpecEndpointSecurityOutput).ToTargetEndpointSpecEndpointSecurityPtrOutputWithContext(ctx)
-}
-
-// TargetEndpointSpecEndpointSecurityPtrInput is an input type that accepts TargetEndpointSpecEndpointSecurityArgs, TargetEndpointSpecEndpointSecurityPtr and TargetEndpointSpecEndpointSecurityPtrOutput values.
-// You can construct a concrete instance of `TargetEndpointSpecEndpointSecurityPtrInput` via:
+// TargetEndpointSpecPortsArrayInput is an input type that accepts TargetEndpointSpecPortsArray and TargetEndpointSpecPortsArrayOutput values.
+// You can construct a concrete instance of `TargetEndpointSpecPortsArrayInput` via:
 //
-//          TargetEndpointSpecEndpointSecurityArgs{...}
-//
-//  or:
-//
-//          nil
-type TargetEndpointSpecEndpointSecurityPtrInput interface {
+//          TargetEndpointSpecPortsArray{ TargetEndpointSpecPortsArgs{...} }
+type TargetEndpointSpecPortsArrayInput interface {
 	pulumi.Input
 
-	ToTargetEndpointSpecEndpointSecurityPtrOutput() TargetEndpointSpecEndpointSecurityPtrOutput
-	ToTargetEndpointSpecEndpointSecurityPtrOutputWithContext(context.Context) TargetEndpointSpecEndpointSecurityPtrOutput
+	ToTargetEndpointSpecPortsArrayOutput() TargetEndpointSpecPortsArrayOutput
+	ToTargetEndpointSpecPortsArrayOutputWithContext(context.Context) TargetEndpointSpecPortsArrayOutput
 }
 
-type targetEndpointSpecEndpointSecurityPtrType TargetEndpointSpecEndpointSecurityArgs
+type TargetEndpointSpecPortsArray []TargetEndpointSpecPortsInput
 
-func TargetEndpointSpecEndpointSecurityPtr(v *TargetEndpointSpecEndpointSecurityArgs) TargetEndpointSpecEndpointSecurityPtrInput {
-	return (*targetEndpointSpecEndpointSecurityPtrType)(v)
+func (TargetEndpointSpecPortsArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]TargetEndpointSpecPorts)(nil)).Elem()
 }
 
-func (*targetEndpointSpecEndpointSecurityPtrType) ElementType() reflect.Type {
-	return reflect.TypeOf((**TargetEndpointSpecEndpointSecurity)(nil)).Elem()
+func (i TargetEndpointSpecPortsArray) ToTargetEndpointSpecPortsArrayOutput() TargetEndpointSpecPortsArrayOutput {
+	return i.ToTargetEndpointSpecPortsArrayOutputWithContext(context.Background())
 }
 
-func (i *targetEndpointSpecEndpointSecurityPtrType) ToTargetEndpointSpecEndpointSecurityPtrOutput() TargetEndpointSpecEndpointSecurityPtrOutput {
-	return i.ToTargetEndpointSpecEndpointSecurityPtrOutputWithContext(context.Background())
+func (i TargetEndpointSpecPortsArray) ToTargetEndpointSpecPortsArrayOutputWithContext(ctx context.Context) TargetEndpointSpecPortsArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(TargetEndpointSpecPortsArrayOutput)
 }
 
-func (i *targetEndpointSpecEndpointSecurityPtrType) ToTargetEndpointSpecEndpointSecurityPtrOutputWithContext(ctx context.Context) TargetEndpointSpecEndpointSecurityPtrOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(TargetEndpointSpecEndpointSecurityPtrOutput)
+// Port represents ports of the Target Endpoint
+type TargetEndpointSpecPortsOutput struct{ *pulumi.OutputState }
+
+func (TargetEndpointSpecPortsOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*TargetEndpointSpecPorts)(nil)).Elem()
 }
 
-type TargetEndpointSpecEndpointSecurityOutput struct{ *pulumi.OutputState }
-
-func (TargetEndpointSpecEndpointSecurityOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*TargetEndpointSpecEndpointSecurity)(nil)).Elem()
-}
-
-func (o TargetEndpointSpecEndpointSecurityOutput) ToTargetEndpointSpecEndpointSecurityOutput() TargetEndpointSpecEndpointSecurityOutput {
+func (o TargetEndpointSpecPortsOutput) ToTargetEndpointSpecPortsOutput() TargetEndpointSpecPortsOutput {
 	return o
 }
 
-func (o TargetEndpointSpecEndpointSecurityOutput) ToTargetEndpointSpecEndpointSecurityOutputWithContext(ctx context.Context) TargetEndpointSpecEndpointSecurityOutput {
+func (o TargetEndpointSpecPortsOutput) ToTargetEndpointSpecPortsOutputWithContext(ctx context.Context) TargetEndpointSpecPortsOutput {
 	return o
 }
 
-func (o TargetEndpointSpecEndpointSecurityOutput) ToTargetEndpointSpecEndpointSecurityPtrOutput() TargetEndpointSpecEndpointSecurityPtrOutput {
-	return o.ToTargetEndpointSpecEndpointSecurityPtrOutputWithContext(context.Background())
+// The name of this port within the service. This must be a DNS_LABEL. All ports within a ServiceSpec must have unique names.
+func (o TargetEndpointSpecPortsOutput) Name() pulumi.StringOutput {
+	return o.ApplyT(func(v TargetEndpointSpecPorts) string { return v.Name }).(pulumi.StringOutput)
 }
 
-func (o TargetEndpointSpecEndpointSecurityOutput) ToTargetEndpointSpecEndpointSecurityPtrOutputWithContext(ctx context.Context) TargetEndpointSpecEndpointSecurityPtrOutput {
-	return o.ApplyT(func(v TargetEndpointSpecEndpointSecurity) *TargetEndpointSpecEndpointSecurity {
-		return &v
-	}).(TargetEndpointSpecEndpointSecurityPtrOutput)
-}
-func (o TargetEndpointSpecEndpointSecurityOutput) Password() pulumi.StringOutput {
-	return o.ApplyT(func(v TargetEndpointSpecEndpointSecurity) string { return v.Password }).(pulumi.StringOutput)
+// The port that will be exposed by this service.
+func (o TargetEndpointSpecPortsOutput) Port() pulumi.IntOutput {
+	return o.ApplyT(func(v TargetEndpointSpecPorts) int { return v.Port }).(pulumi.IntOutput)
 }
 
-func (o TargetEndpointSpecEndpointSecurityOutput) Type() pulumi.StringOutput {
-	return o.ApplyT(func(v TargetEndpointSpecEndpointSecurity) string { return v.Type }).(pulumi.StringOutput)
+// Port that is targeted to expose.
+func (o TargetEndpointSpecPortsOutput) TargetPort() pulumi.IntOutput {
+	return o.ApplyT(func(v TargetEndpointSpecPorts) int { return v.TargetPort }).(pulumi.IntOutput)
 }
 
-func (o TargetEndpointSpecEndpointSecurityOutput) Username() pulumi.StringOutput {
-	return o.ApplyT(func(v TargetEndpointSpecEndpointSecurity) string { return v.Username }).(pulumi.StringOutput)
+type TargetEndpointSpecPortsArrayOutput struct{ *pulumi.OutputState }
+
+func (TargetEndpointSpecPortsArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]TargetEndpointSpecPorts)(nil)).Elem()
 }
 
-type TargetEndpointSpecEndpointSecurityPtrOutput struct{ *pulumi.OutputState }
-
-func (TargetEndpointSpecEndpointSecurityPtrOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((**TargetEndpointSpecEndpointSecurity)(nil)).Elem()
-}
-
-func (o TargetEndpointSpecEndpointSecurityPtrOutput) ToTargetEndpointSpecEndpointSecurityPtrOutput() TargetEndpointSpecEndpointSecurityPtrOutput {
+func (o TargetEndpointSpecPortsArrayOutput) ToTargetEndpointSpecPortsArrayOutput() TargetEndpointSpecPortsArrayOutput {
 	return o
 }
 
-func (o TargetEndpointSpecEndpointSecurityPtrOutput) ToTargetEndpointSpecEndpointSecurityPtrOutputWithContext(ctx context.Context) TargetEndpointSpecEndpointSecurityPtrOutput {
+func (o TargetEndpointSpecPortsArrayOutput) ToTargetEndpointSpecPortsArrayOutputWithContext(ctx context.Context) TargetEndpointSpecPortsArrayOutput {
 	return o
 }
 
-func (o TargetEndpointSpecEndpointSecurityPtrOutput) Elem() TargetEndpointSpecEndpointSecurityOutput {
-	return o.ApplyT(func(v *TargetEndpointSpecEndpointSecurity) TargetEndpointSpecEndpointSecurity { return *v }).(TargetEndpointSpecEndpointSecurityOutput)
+func (o TargetEndpointSpecPortsArrayOutput) Index(i pulumi.IntInput) TargetEndpointSpecPortsOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) TargetEndpointSpecPorts {
+		return vs[0].([]TargetEndpointSpecPorts)[vs[1].(int)]
+	}).(TargetEndpointSpecPortsOutput)
 }
 
-func (o TargetEndpointSpecEndpointSecurityPtrOutput) Password() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *TargetEndpointSpecEndpointSecurity) *string {
-		if v == nil {
-			return nil
-		}
-		return &v.Password
-	}).(pulumi.StringPtrOutput)
-}
-
-func (o TargetEndpointSpecEndpointSecurityPtrOutput) Type() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *TargetEndpointSpecEndpointSecurity) *string {
-		if v == nil {
-			return nil
-		}
-		return &v.Type
-	}).(pulumi.StringPtrOutput)
-}
-
-func (o TargetEndpointSpecEndpointSecurityPtrOutput) Username() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *TargetEndpointSpecEndpointSecurity) *string {
-		if v == nil {
-			return nil
-		}
-		return &v.Username
-	}).(pulumi.StringPtrOutput)
-}
-
+// TargetEndpointStatus defines the observed state of TargetEndpoint
 type TargetEndpointStatus struct {
 }
 
@@ -3000,6 +3153,7 @@ type TargetEndpointStatusInput interface {
 	ToTargetEndpointStatusOutputWithContext(context.Context) TargetEndpointStatusOutput
 }
 
+// TargetEndpointStatus defines the observed state of TargetEndpoint
 type TargetEndpointStatusArgs struct {
 }
 
@@ -3015,6 +3169,7 @@ func (i TargetEndpointStatusArgs) ToTargetEndpointStatusOutputWithContext(ctx co
 	return pulumi.ToOutputWithContext(ctx, i).(TargetEndpointStatusOutput)
 }
 
+// TargetEndpointStatus defines the observed state of TargetEndpoint
 type TargetEndpointStatusOutput struct{ *pulumi.OutputState }
 
 func (TargetEndpointStatusOutput) ElementType() reflect.Type {
@@ -3039,6 +3194,7 @@ func init() {
 	pulumi.RegisterOutputType(APISpecDefinitionInterceptorsOutput{})
 	pulumi.RegisterOutputType(APISpecDefinitionInterceptorsPtrOutput{})
 	pulumi.RegisterOutputType(APIStatusOutput{})
+	pulumi.RegisterOutputType(APIStatusPtrOutput{})
 	pulumi.RegisterOutputType(RateLimitingTypeOutput{})
 	pulumi.RegisterOutputType(RateLimitingMetadataOutput{})
 	pulumi.RegisterOutputType(RateLimitingSpecOutput{})
@@ -3053,7 +3209,6 @@ func init() {
 	pulumi.RegisterOutputType(RateLimitingSpecConditionsIpConditionPtrOutput{})
 	pulumi.RegisterOutputType(RateLimitingSpecRequestCountOutput{})
 	pulumi.RegisterOutputType(RateLimitingSpecRequestCountPtrOutput{})
-	pulumi.RegisterOutputType(RateLimitingStatusOutput{})
 	pulumi.RegisterOutputType(SecurityTypeOutput{})
 	pulumi.RegisterOutputType(SecurityMetadataOutput{})
 	pulumi.RegisterOutputType(SecuritySpecOutput{})
@@ -3067,7 +3222,7 @@ func init() {
 	pulumi.RegisterOutputType(TargetEndpointSpecPtrOutput{})
 	pulumi.RegisterOutputType(TargetEndpointSpecDeployOutput{})
 	pulumi.RegisterOutputType(TargetEndpointSpecDeployPtrOutput{})
-	pulumi.RegisterOutputType(TargetEndpointSpecEndpointSecurityOutput{})
-	pulumi.RegisterOutputType(TargetEndpointSpecEndpointSecurityPtrOutput{})
+	pulumi.RegisterOutputType(TargetEndpointSpecPortsOutput{})
+	pulumi.RegisterOutputType(TargetEndpointSpecPortsArrayOutput{})
 	pulumi.RegisterOutputType(TargetEndpointStatusOutput{})
 }

@@ -9,7 +9,7 @@ import * as utilities from "../../utilities";
 import {ObjectMeta} from "../../meta/v1";
 
 /**
- * Build is the Schema for the builds API
+ * Build is the Schema representing a Build definition
  */
 export class Build extends pulumi.CustomResource {
     /**
@@ -48,7 +48,7 @@ export class Build extends pulumi.CustomResource {
     /**
      * BuildStatus defines the observed state of Build
      */
-    public readonly status!: pulumi.Output<{[key: string]: any} | undefined>;
+    public readonly status!: pulumi.Output<outputs.build.v1alpha1.BuildStatus | undefined>;
 
     /**
      * Create a Build resource with the given unique name, arguments, and options.
@@ -97,5 +97,5 @@ export interface BuildArgs {
     /**
      * BuildStatus defines the observed state of Build
      */
-    readonly status?: pulumi.Input<{[key: string]: any}>;
+    readonly status?: pulumi.Input<inputs.build.v1alpha1.BuildStatus>;
 }

@@ -22,17 +22,17 @@ class Build(pulumi.CustomResource):
                  kind: Optional[pulumi.Input[str]] = None,
                  metadata: Optional[pulumi.Input[pulumi.InputType['_meta_v1.ObjectMetaArgs']]] = None,
                  spec: Optional[pulumi.Input[pulumi.InputType['BuildSpecArgs']]] = None,
-                 status: Optional[pulumi.Input[Mapping[str, Any]]] = None,
+                 status: Optional[pulumi.Input[pulumi.InputType['BuildStatusArgs']]] = None,
                  __props__=None,
                  __name__=None,
                  __opts__=None):
         """
-        Build is the Schema for the builds API
+        Build is the Schema representing a Build definition
 
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[pulumi.InputType['BuildSpecArgs']] spec: BuildSpec defines the desired state of Build
-        :param pulumi.Input[Mapping[str, Any]] status: BuildStatus defines the observed state of Build
+        :param pulumi.Input[pulumi.InputType['BuildStatusArgs']] status: BuildStatus defines the observed state of Build
         """
         if __name__ is not None:
             warnings.warn("explicit use of __name__ is deprecated", DeprecationWarning)
@@ -105,7 +105,7 @@ class Build(pulumi.CustomResource):
 
     @property
     @pulumi.getter
-    def status(self) -> pulumi.Output[Optional[Mapping[str, Any]]]:
+    def status(self) -> pulumi.Output[Optional['outputs.BuildStatus']]:
         """
         BuildStatus defines the observed state of Build
         """

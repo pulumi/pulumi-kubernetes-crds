@@ -13,7 +13,13 @@ namespace Pulumi.Kubernetes.Types.Outputs.Wso2.V1Alpha1
     [OutputType]
     public sealed class APISpecDefinition
     {
+        /// <summary>
+        /// Interceptors for API. Default value "&lt;empty&gt;".
+        /// </summary>
         public readonly Pulumi.Kubernetes.Types.Outputs.Wso2.V1Alpha1.APISpecDefinitionInterceptors Interceptors;
+        /// <summary>
+        /// Array of config map names of swagger definitions for the API.
+        /// </summary>
         public readonly ImmutableArray<string> SwaggerConfigmapNames;
         public readonly string Type;
 

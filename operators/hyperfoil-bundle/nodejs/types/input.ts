@@ -8,15 +8,19 @@ import * as outputs from "../types/output";
 import {ObjectMeta} from "../meta/v1";
 
 export namespace hyperfoil {
-    export namespace v1alpha1 {
+    export namespace v1alpha2 {
         /**
-         * Configures Hyperfoil Controller and related resources.
+         * HyperfoilSpec Configures Hyperfoil Controller and related resources.
          */
         export interface HyperfoilSpec {
             /**
              * Deploy timeout for agents, in milliseconds.
              */
             agentDeployTimeout?: pulumi.Input<number>;
+            /**
+             * Authentication/authorization settings.
+             */
+            auth?: pulumi.Input<inputs.hyperfoil.v1alpha2.HyperfoilSpecAuth>;
             /**
              * Controller image. If 'version' is defined, too, the tag is replaced (or appended). Defaults to 'quay.io/hyperfoil/hyperfoil'
              */
@@ -30,17 +34,17 @@ export namespace hyperfoil {
              */
             persistentVolumeClaim?: pulumi.Input<string>;
             /**
-             * Name of config map holding hooks that run when the run finishes.
+             * Names of config maps and optionally keys (separated by '/') holding hooks that run after the run finishes.
              */
-            postHooks?: pulumi.Input<string>;
+            postHooks?: pulumi.Input<pulumi.Input<string>[]>;
             /**
-             * Name of config map holding hooks that run before the run starts.
+             * Names of config maps and optionally keys (separated by '/') holding hooks that run before the run starts.
              */
-            preHooks?: pulumi.Input<string>;
+            preHooks?: pulumi.Input<pulumi.Input<string>[]>;
             /**
-             * Host for the route leading to Controller REST endpoint.
+             * Specification of the exposed route.
              */
-            route?: pulumi.Input<string>;
+            route?: pulumi.Input<inputs.hyperfoil.v1alpha2.HyperfoilSpecRoute>;
             /**
              * List of secrets in this namespace; each entry from those secrets will be mapped as environment variable, using the key as variable name.
              */
@@ -56,7 +60,35 @@ export namespace hyperfoil {
         }
 
         /**
-         * status defines the observed state of Hyperfoil
+         * Authentication/authorization settings.
+         */
+        export interface HyperfoilSpecAuth {
+            /**
+             * Optional; Name of secret used for basic authentication. Must contain key 'password'.
+             */
+            secret?: pulumi.Input<string>;
+        }
+
+        /**
+         * Specification of the exposed route.
+         */
+        export interface HyperfoilSpecRoute {
+            /**
+             * Host for the route leading to Controller REST endpoint. Example: hyperfoil.apps.cloud.example.com
+             */
+            host?: pulumi.Input<string>;
+            /**
+             * Optional for edge and reencrypt routes, required for passthrough; Name of the secret hosting `tls.crt`, `tls.key` and optionally `ca.crt`
+             */
+            tls?: pulumi.Input<string>;
+            /**
+             * Either 'http' (for plain-text routes - not recommended), 'edge', 'reencrypt' or 'passthrough'
+             */
+            type?: pulumi.Input<string>;
+        }
+
+        /**
+         * HyperfoilStatus defines the observed state of Hyperfoil.
          */
         export interface HyperfoilStatus {
             /**
@@ -68,7 +100,7 @@ export namespace hyperfoil {
              */
             reason?: pulumi.Input<string>;
             /**
-             * One of: 'Ready', 'Pending' or 'Error'
+             * "One of: 'Ready', 'Pending' or 'Error'"
              */
             status?: pulumi.Input<string>;
         }

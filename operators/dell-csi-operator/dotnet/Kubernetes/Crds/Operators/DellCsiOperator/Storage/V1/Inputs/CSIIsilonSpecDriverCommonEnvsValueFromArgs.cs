@@ -22,7 +22,7 @@ namespace Pulumi.Kubernetes.Types.Inputs.Storage.V1
         public Input<Pulumi.Kubernetes.Types.Inputs.Storage.V1.CSIIsilonSpecDriverCommonEnvsValueFromConfigMapKeyRefArgs>? ConfigMapKeyRef { get; set; }
 
         /// <summary>
-        /// Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+        /// Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
         /// </summary>
         [Input("fieldRef")]
         public Input<Pulumi.Kubernetes.Types.Inputs.Storage.V1.CSIIsilonSpecDriverCommonEnvsValueFromFieldRefArgs>? FieldRef { get; set; }

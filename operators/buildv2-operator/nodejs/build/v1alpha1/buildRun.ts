@@ -9,7 +9,7 @@ import * as utilities from "../../utilities";
 import {ObjectMeta} from "../../meta/v1";
 
 /**
- * BuildRun is the Schema for the buildruns API
+ * BuildRun is the Schema representing an instance of build execution
  */
 export class BuildRun extends pulumi.CustomResource {
     /**

@@ -9,142 +9,36 @@ from typing import Any, Mapping, Optional, Sequence, Union
 from ... import _utilities, _tables
 
 __all__ = [
-    'ServiceDiscoverySpecArgs',
     'SubmarinerSpecArgs',
+    'SubmarinerSpecConnectionHealthCheckArgs',
     'SubmarinerStatusArgs',
     'SubmarinerStatusEngineDaemonSetStatusArgs',
-    'SubmarinerStatusEngineDaemonSetStatusConditionsArgs',
+    'SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesArgs',
+    'SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunningArgs',
+    'SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminatedArgs',
+    'SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaitingArgs',
+    'SubmarinerStatusEngineDaemonSetStatusStatusArgs',
+    'SubmarinerStatusEngineDaemonSetStatusStatusConditionsArgs',
     'SubmarinerStatusGatewaysArgs',
-    'SubmarinerStatusGatewaysStatusArgs',
-    'SubmarinerStatusGatewaysStatusConnectionsArgs',
-    'SubmarinerStatusGatewaysStatusConnectionsEndpointArgs',
-    'SubmarinerStatusGatewaysStatusLocalEndpointArgs',
+    'SubmarinerStatusGatewaysConnectionsArgs',
+    'SubmarinerStatusGatewaysConnectionsEndpointArgs',
+    'SubmarinerStatusGatewaysConnectionsLatencyRTTArgs',
+    'SubmarinerStatusGatewaysLocalEndpointArgs',
     'SubmarinerStatusGlobalnetDaemonSetStatusArgs',
-    'SubmarinerStatusGlobalnetDaemonSetStatusConditionsArgs',
+    'SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesArgs',
+    'SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunningArgs',
+    'SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminatedArgs',
+    'SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaitingArgs',
+    'SubmarinerStatusGlobalnetDaemonSetStatusStatusArgs',
+    'SubmarinerStatusGlobalnetDaemonSetStatusStatusConditionsArgs',
     'SubmarinerStatusRouteAgentDaemonSetStatusArgs',
-    'SubmarinerStatusRouteAgentDaemonSetStatusConditionsArgs',
+    'SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesArgs',
+    'SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunningArgs',
+    'SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminatedArgs',
+    'SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaitingArgs',
+    'SubmarinerStatusRouteAgentDaemonSetStatusStatusArgs',
+    'SubmarinerStatusRouteAgentDaemonSetStatusStatusConditionsArgs',
 ]
-
-@pulumi.input_type
-class ServiceDiscoverySpecArgs:
-    def __init__(__self__, *,
-                 broker_k8s_api_server: pulumi.Input[str],
-                 broker_k8s_api_server_token: pulumi.Input[str],
-                 broker_k8s_ca: pulumi.Input[str],
-                 broker_k8s_remote_namespace: pulumi.Input[str],
-                 cluster_id: pulumi.Input[str],
-                 debug: pulumi.Input[bool],
-                 namespace: pulumi.Input[str],
-                 globalnet_enabled: Optional[pulumi.Input[bool]] = None,
-                 repository: Optional[pulumi.Input[str]] = None,
-                 version: Optional[pulumi.Input[str]] = None):
-        """
-        ServiceDiscoverySpec defines the desired state of ServiceDiscovery
-        """
-        pulumi.set(__self__, "broker_k8s_api_server", broker_k8s_api_server)
-        pulumi.set(__self__, "broker_k8s_api_server_token", broker_k8s_api_server_token)
-        pulumi.set(__self__, "broker_k8s_ca", broker_k8s_ca)
-        pulumi.set(__self__, "broker_k8s_remote_namespace", broker_k8s_remote_namespace)
-        pulumi.set(__self__, "cluster_id", cluster_id)
-        pulumi.set(__self__, "debug", debug)
-        pulumi.set(__self__, "namespace", namespace)
-        if globalnet_enabled is not None:
-            pulumi.set(__self__, "globalnet_enabled", globalnet_enabled)
-        if repository is not None:
-            pulumi.set(__self__, "repository", repository)
-        if version is not None:
-            pulumi.set(__self__, "version", version)
-
-    @property
-    @pulumi.getter(name="brokerK8sApiServer")
-    def broker_k8s_api_server(self) -> pulumi.Input[str]:
-        return pulumi.get(self, "broker_k8s_api_server")
-
-    @broker_k8s_api_server.setter
-    def broker_k8s_api_server(self, value: pulumi.Input[str]):
-        pulumi.set(self, "broker_k8s_api_server", value)
-
-    @property
-    @pulumi.getter(name="brokerK8sApiServerToken")
-    def broker_k8s_api_server_token(self) -> pulumi.Input[str]:
-        return pulumi.get(self, "broker_k8s_api_server_token")
-
-    @broker_k8s_api_server_token.setter
-    def broker_k8s_api_server_token(self, value: pulumi.Input[str]):
-        pulumi.set(self, "broker_k8s_api_server_token", value)
-
-    @property
-    @pulumi.getter(name="brokerK8sCA")
-    def broker_k8s_ca(self) -> pulumi.Input[str]:
-        return pulumi.get(self, "broker_k8s_ca")
-
-    @broker_k8s_ca.setter
-    def broker_k8s_ca(self, value: pulumi.Input[str]):
-        pulumi.set(self, "broker_k8s_ca", value)
-
-    @property
-    @pulumi.getter(name="brokerK8sRemoteNamespace")
-    def broker_k8s_remote_namespace(self) -> pulumi.Input[str]:
-        return pulumi.get(self, "broker_k8s_remote_namespace")
-
-    @broker_k8s_remote_namespace.setter
-    def broker_k8s_remote_namespace(self, value: pulumi.Input[str]):
-        pulumi.set(self, "broker_k8s_remote_namespace", value)
-
-    @property
-    @pulumi.getter(name="clusterID")
-    def cluster_id(self) -> pulumi.Input[str]:
-        return pulumi.get(self, "cluster_id")
-
-    @cluster_id.setter
-    def cluster_id(self, value: pulumi.Input[str]):
-        pulumi.set(self, "cluster_id", value)
-
-    @property
-    @pulumi.getter
-    def debug(self) -> pulumi.Input[bool]:
-        return pulumi.get(self, "debug")
-
-    @debug.setter
-    def debug(self, value: pulumi.Input[bool]):
-        pulumi.set(self, "debug", value)
-
-    @property
-    @pulumi.getter
-    def namespace(self) -> pulumi.Input[str]:
-        return pulumi.get(self, "namespace")
-
-    @namespace.setter
-    def namespace(self, value: pulumi.Input[str]):
-        pulumi.set(self, "namespace", value)
-
-    @property
-    @pulumi.getter(name="globalnetEnabled")
-    def globalnet_enabled(self) -> Optional[pulumi.Input[bool]]:
-        return pulumi.get(self, "globalnet_enabled")
-
-    @globalnet_enabled.setter
-    def globalnet_enabled(self, value: Optional[pulumi.Input[bool]]):
-        pulumi.set(self, "globalnet_enabled", value)
-
-    @property
-    @pulumi.getter
-    def repository(self) -> Optional[pulumi.Input[str]]:
-        return pulumi.get(self, "repository")
-
-    @repository.setter
-    def repository(self, value: Optional[pulumi.Input[str]]):
-        pulumi.set(self, "repository", value)
-
-    @property
-    @pulumi.getter
-    def version(self) -> Optional[pulumi.Input[str]]:
-        return pulumi.get(self, "version")
-
-    @version.setter
-    def version(self, value: Optional[pulumi.Input[str]]):
-        pulumi.set(self, "version", value)
-
 
 @pulumi.input_type
 class SubmarinerSpecArgs:
@@ -166,7 +60,10 @@ class SubmarinerSpecArgs:
                  ce_ip_sec_ike_port: Optional[pulumi.Input[int]] = None,
                  ce_ip_sec_natt_port: Optional[pulumi.Input[int]] = None,
                  color_codes: Optional[pulumi.Input[str]] = None,
+                 connection_health_check: Optional[pulumi.Input['SubmarinerSpecConnectionHealthCheckArgs']] = None,
+                 custom_domains: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  global_cidr: Optional[pulumi.Input[str]] = None,
+                 image_overrides: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  repository: Optional[pulumi.Input[str]] = None,
                  service_discovery_enabled: Optional[pulumi.Input[bool]] = None,
                  version: Optional[pulumi.Input[str]] = None):
@@ -194,8 +91,14 @@ class SubmarinerSpecArgs:
             pulumi.set(__self__, "ce_ip_sec_natt_port", ce_ip_sec_natt_port)
         if color_codes is not None:
             pulumi.set(__self__, "color_codes", color_codes)
+        if connection_health_check is not None:
+            pulumi.set(__self__, "connection_health_check", connection_health_check)
+        if custom_domains is not None:
+            pulumi.set(__self__, "custom_domains", custom_domains)
         if global_cidr is not None:
             pulumi.set(__self__, "global_cidr", global_cidr)
+        if image_overrides is not None:
+            pulumi.set(__self__, "image_overrides", image_overrides)
         if repository is not None:
             pulumi.set(__self__, "repository", repository)
         if service_discovery_enabled is not None:
@@ -357,6 +260,24 @@ class SubmarinerSpecArgs:
         pulumi.set(self, "color_codes", value)
 
     @property
+    @pulumi.getter(name="connectionHealthCheck")
+    def connection_health_check(self) -> Optional[pulumi.Input['SubmarinerSpecConnectionHealthCheckArgs']]:
+        return pulumi.get(self, "connection_health_check")
+
+    @connection_health_check.setter
+    def connection_health_check(self, value: Optional[pulumi.Input['SubmarinerSpecConnectionHealthCheckArgs']]):
+        pulumi.set(self, "connection_health_check", value)
+
+    @property
+    @pulumi.getter(name="customDomains")
+    def custom_domains(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
+        return pulumi.get(self, "custom_domains")
+
+    @custom_domains.setter
+    def custom_domains(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]):
+        pulumi.set(self, "custom_domains", value)
+
+    @property
     @pulumi.getter(name="globalCIDR")
     def global_cidr(self) -> Optional[pulumi.Input[str]]:
         return pulumi.get(self, "global_cidr")
@@ -364,6 +285,15 @@ class SubmarinerSpecArgs:
     @global_cidr.setter
     def global_cidr(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "global_cidr", value)
+
+    @property
+    @pulumi.getter(name="imageOverrides")
+    def image_overrides(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+        return pulumi.get(self, "image_overrides")
+
+    @image_overrides.setter
+    def image_overrides(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
+        pulumi.set(self, "image_overrides", value)
 
     @property
     @pulumi.getter
@@ -394,28 +324,77 @@ class SubmarinerSpecArgs:
 
 
 @pulumi.input_type
+class SubmarinerSpecConnectionHealthCheckArgs:
+    def __init__(__self__, *,
+                 enabled: Optional[pulumi.Input[bool]] = None,
+                 interval_seconds: Optional[pulumi.Input[int]] = None,
+                 max_packet_loss_count: Optional[pulumi.Input[int]] = None):
+        """
+        :param pulumi.Input[int] interval_seconds: The interval at which health check pings are sent.
+        :param pulumi.Input[int] max_packet_loss_count: The maximum number of packets lost at which the health checker will mark the connection as down.
+        """
+        if enabled is not None:
+            pulumi.set(__self__, "enabled", enabled)
+        if interval_seconds is not None:
+            pulumi.set(__self__, "interval_seconds", interval_seconds)
+        if max_packet_loss_count is not None:
+            pulumi.set(__self__, "max_packet_loss_count", max_packet_loss_count)
+
+    @property
+    @pulumi.getter
+    def enabled(self) -> Optional[pulumi.Input[bool]]:
+        return pulumi.get(self, "enabled")
+
+    @enabled.setter
+    def enabled(self, value: Optional[pulumi.Input[bool]]):
+        pulumi.set(self, "enabled", value)
+
+    @property
+    @pulumi.getter(name="intervalSeconds")
+    def interval_seconds(self) -> Optional[pulumi.Input[int]]:
+        """
+        The interval at which health check pings are sent.
+        """
+        return pulumi.get(self, "interval_seconds")
+
+    @interval_seconds.setter
+    def interval_seconds(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "interval_seconds", value)
+
+    @property
+    @pulumi.getter(name="maxPacketLossCount")
+    def max_packet_loss_count(self) -> Optional[pulumi.Input[int]]:
+        """
+        The maximum number of packets lost at which the health checker will mark the connection as down.
+        """
+        return pulumi.get(self, "max_packet_loss_count")
+
+    @max_packet_loss_count.setter
+    def max_packet_loss_count(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "max_packet_loss_count", value)
+
+
+@pulumi.input_type
 class SubmarinerStatusArgs:
     def __init__(__self__, *,
-                 cluster_cidr: pulumi.Input[str],
                  cluster_id: pulumi.Input[str],
                  nat_enabled: pulumi.Input[bool],
-                 service_cidr: pulumi.Input[str],
+                 cluster_cidr: Optional[pulumi.Input[str]] = None,
                  color_codes: Optional[pulumi.Input[str]] = None,
                  engine_daemon_set_status: Optional[pulumi.Input['SubmarinerStatusEngineDaemonSetStatusArgs']] = None,
                  gateways: Optional[pulumi.Input[Sequence[pulumi.Input['SubmarinerStatusGatewaysArgs']]]] = None,
                  global_cidr: Optional[pulumi.Input[str]] = None,
                  globalnet_daemon_set_status: Optional[pulumi.Input['SubmarinerStatusGlobalnetDaemonSetStatusArgs']] = None,
-                 route_agent_daemon_set_status: Optional[pulumi.Input['SubmarinerStatusRouteAgentDaemonSetStatusArgs']] = None):
+                 network_plugin: Optional[pulumi.Input[str]] = None,
+                 route_agent_daemon_set_status: Optional[pulumi.Input['SubmarinerStatusRouteAgentDaemonSetStatusArgs']] = None,
+                 service_cidr: Optional[pulumi.Input[str]] = None):
         """
         SubmarinerStatus defines the observed state of Submariner
-        :param pulumi.Input['SubmarinerStatusEngineDaemonSetStatusArgs'] engine_daemon_set_status: DaemonSetStatus represents the current status of a daemon set.
-        :param pulumi.Input['SubmarinerStatusGlobalnetDaemonSetStatusArgs'] globalnet_daemon_set_status: DaemonSetStatus represents the current status of a daemon set.
-        :param pulumi.Input['SubmarinerStatusRouteAgentDaemonSetStatusArgs'] route_agent_daemon_set_status: DaemonSetStatus represents the current status of a daemon set.
         """
-        pulumi.set(__self__, "cluster_cidr", cluster_cidr)
         pulumi.set(__self__, "cluster_id", cluster_id)
         pulumi.set(__self__, "nat_enabled", nat_enabled)
-        pulumi.set(__self__, "service_cidr", service_cidr)
+        if cluster_cidr is not None:
+            pulumi.set(__self__, "cluster_cidr", cluster_cidr)
         if color_codes is not None:
             pulumi.set(__self__, "color_codes", color_codes)
         if engine_daemon_set_status is not None:
@@ -426,17 +405,12 @@ class SubmarinerStatusArgs:
             pulumi.set(__self__, "global_cidr", global_cidr)
         if globalnet_daemon_set_status is not None:
             pulumi.set(__self__, "globalnet_daemon_set_status", globalnet_daemon_set_status)
+        if network_plugin is not None:
+            pulumi.set(__self__, "network_plugin", network_plugin)
         if route_agent_daemon_set_status is not None:
             pulumi.set(__self__, "route_agent_daemon_set_status", route_agent_daemon_set_status)
-
-    @property
-    @pulumi.getter(name="clusterCIDR")
-    def cluster_cidr(self) -> pulumi.Input[str]:
-        return pulumi.get(self, "cluster_cidr")
-
-    @cluster_cidr.setter
-    def cluster_cidr(self, value: pulumi.Input[str]):
-        pulumi.set(self, "cluster_cidr", value)
+        if service_cidr is not None:
+            pulumi.set(__self__, "service_cidr", service_cidr)
 
     @property
     @pulumi.getter(name="clusterID")
@@ -457,13 +431,13 @@ class SubmarinerStatusArgs:
         pulumi.set(self, "nat_enabled", value)
 
     @property
-    @pulumi.getter(name="serviceCIDR")
-    def service_cidr(self) -> pulumi.Input[str]:
-        return pulumi.get(self, "service_cidr")
+    @pulumi.getter(name="clusterCIDR")
+    def cluster_cidr(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "cluster_cidr")
 
-    @service_cidr.setter
-    def service_cidr(self, value: pulumi.Input[str]):
-        pulumi.set(self, "service_cidr", value)
+    @cluster_cidr.setter
+    def cluster_cidr(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "cluster_cidr", value)
 
     @property
     @pulumi.getter(name="colorCodes")
@@ -477,9 +451,6 @@ class SubmarinerStatusArgs:
     @property
     @pulumi.getter(name="engineDaemonSetStatus")
     def engine_daemon_set_status(self) -> Optional[pulumi.Input['SubmarinerStatusEngineDaemonSetStatusArgs']]:
-        """
-        DaemonSetStatus represents the current status of a daemon set.
-        """
         return pulumi.get(self, "engine_daemon_set_status")
 
     @engine_daemon_set_status.setter
@@ -507,9 +478,6 @@ class SubmarinerStatusArgs:
     @property
     @pulumi.getter(name="globalnetDaemonSetStatus")
     def globalnet_daemon_set_status(self) -> Optional[pulumi.Input['SubmarinerStatusGlobalnetDaemonSetStatusArgs']]:
-        """
-        DaemonSetStatus represents the current status of a daemon set.
-        """
         return pulumi.get(self, "globalnet_daemon_set_status")
 
     @globalnet_daemon_set_status.setter
@@ -517,27 +485,339 @@ class SubmarinerStatusArgs:
         pulumi.set(self, "globalnet_daemon_set_status", value)
 
     @property
+    @pulumi.getter(name="networkPlugin")
+    def network_plugin(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "network_plugin")
+
+    @network_plugin.setter
+    def network_plugin(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "network_plugin", value)
+
+    @property
     @pulumi.getter(name="routeAgentDaemonSetStatus")
     def route_agent_daemon_set_status(self) -> Optional[pulumi.Input['SubmarinerStatusRouteAgentDaemonSetStatusArgs']]:
-        """
-        DaemonSetStatus represents the current status of a daemon set.
-        """
         return pulumi.get(self, "route_agent_daemon_set_status")
 
     @route_agent_daemon_set_status.setter
     def route_agent_daemon_set_status(self, value: Optional[pulumi.Input['SubmarinerStatusRouteAgentDaemonSetStatusArgs']]):
         pulumi.set(self, "route_agent_daemon_set_status", value)
 
+    @property
+    @pulumi.getter(name="serviceCIDR")
+    def service_cidr(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "service_cidr")
+
+    @service_cidr.setter
+    def service_cidr(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "service_cidr", value)
+
 
 @pulumi.input_type
 class SubmarinerStatusEngineDaemonSetStatusArgs:
+    def __init__(__self__, *,
+                 mismatched_container_images: pulumi.Input[bool],
+                 last_resource_version: Optional[pulumi.Input[str]] = None,
+                 non_ready_container_states: Optional[pulumi.Input[Sequence[pulumi.Input['SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesArgs']]]] = None,
+                 status: Optional[pulumi.Input['SubmarinerStatusEngineDaemonSetStatusStatusArgs']] = None):
+        """
+        :param pulumi.Input['SubmarinerStatusEngineDaemonSetStatusStatusArgs'] status: DaemonSetStatus represents the current status of a daemon set.
+        """
+        pulumi.set(__self__, "mismatched_container_images", mismatched_container_images)
+        if last_resource_version is not None:
+            pulumi.set(__self__, "last_resource_version", last_resource_version)
+        if non_ready_container_states is not None:
+            pulumi.set(__self__, "non_ready_container_states", non_ready_container_states)
+        if status is not None:
+            pulumi.set(__self__, "status", status)
+
+    @property
+    @pulumi.getter(name="mismatchedContainerImages")
+    def mismatched_container_images(self) -> pulumi.Input[bool]:
+        return pulumi.get(self, "mismatched_container_images")
+
+    @mismatched_container_images.setter
+    def mismatched_container_images(self, value: pulumi.Input[bool]):
+        pulumi.set(self, "mismatched_container_images", value)
+
+    @property
+    @pulumi.getter(name="lastResourceVersion")
+    def last_resource_version(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "last_resource_version")
+
+    @last_resource_version.setter
+    def last_resource_version(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "last_resource_version", value)
+
+    @property
+    @pulumi.getter(name="nonReadyContainerStates")
+    def non_ready_container_states(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesArgs']]]]:
+        return pulumi.get(self, "non_ready_container_states")
+
+    @non_ready_container_states.setter
+    def non_ready_container_states(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesArgs']]]]):
+        pulumi.set(self, "non_ready_container_states", value)
+
+    @property
+    @pulumi.getter
+    def status(self) -> Optional[pulumi.Input['SubmarinerStatusEngineDaemonSetStatusStatusArgs']]:
+        """
+        DaemonSetStatus represents the current status of a daemon set.
+        """
+        return pulumi.get(self, "status")
+
+    @status.setter
+    def status(self, value: Optional[pulumi.Input['SubmarinerStatusEngineDaemonSetStatusStatusArgs']]):
+        pulumi.set(self, "status", value)
+
+
+@pulumi.input_type
+class SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesArgs:
+    def __init__(__self__, *,
+                 running: Optional[pulumi.Input['SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunningArgs']] = None,
+                 terminated: Optional[pulumi.Input['SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminatedArgs']] = None,
+                 waiting: Optional[pulumi.Input['SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaitingArgs']] = None):
+        """
+        ContainerState holds a possible state of container. Only one of its members may be specified. If none of them is specified, the default one is ContainerStateWaiting.
+        :param pulumi.Input['SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunningArgs'] running: Details about a running container
+        :param pulumi.Input['SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminatedArgs'] terminated: Details about a terminated container
+        :param pulumi.Input['SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaitingArgs'] waiting: Details about a waiting container
+        """
+        if running is not None:
+            pulumi.set(__self__, "running", running)
+        if terminated is not None:
+            pulumi.set(__self__, "terminated", terminated)
+        if waiting is not None:
+            pulumi.set(__self__, "waiting", waiting)
+
+    @property
+    @pulumi.getter
+    def running(self) -> Optional[pulumi.Input['SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunningArgs']]:
+        """
+        Details about a running container
+        """
+        return pulumi.get(self, "running")
+
+    @running.setter
+    def running(self, value: Optional[pulumi.Input['SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunningArgs']]):
+        pulumi.set(self, "running", value)
+
+    @property
+    @pulumi.getter
+    def terminated(self) -> Optional[pulumi.Input['SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminatedArgs']]:
+        """
+        Details about a terminated container
+        """
+        return pulumi.get(self, "terminated")
+
+    @terminated.setter
+    def terminated(self, value: Optional[pulumi.Input['SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminatedArgs']]):
+        pulumi.set(self, "terminated", value)
+
+    @property
+    @pulumi.getter
+    def waiting(self) -> Optional[pulumi.Input['SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaitingArgs']]:
+        """
+        Details about a waiting container
+        """
+        return pulumi.get(self, "waiting")
+
+    @waiting.setter
+    def waiting(self, value: Optional[pulumi.Input['SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaitingArgs']]):
+        pulumi.set(self, "waiting", value)
+
+
+@pulumi.input_type
+class SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunningArgs:
+    def __init__(__self__, *,
+                 started_at: Optional[pulumi.Input[str]] = None):
+        """
+        Details about a running container
+        :param pulumi.Input[str] started_at: Time at which the container was last (re-)started
+        """
+        if started_at is not None:
+            pulumi.set(__self__, "started_at", started_at)
+
+    @property
+    @pulumi.getter(name="startedAt")
+    def started_at(self) -> Optional[pulumi.Input[str]]:
+        """
+        Time at which the container was last (re-)started
+        """
+        return pulumi.get(self, "started_at")
+
+    @started_at.setter
+    def started_at(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "started_at", value)
+
+
+@pulumi.input_type
+class SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminatedArgs:
+    def __init__(__self__, *,
+                 exit_code: pulumi.Input[int],
+                 container_id: Optional[pulumi.Input[str]] = None,
+                 finished_at: Optional[pulumi.Input[str]] = None,
+                 message: Optional[pulumi.Input[str]] = None,
+                 reason: Optional[pulumi.Input[str]] = None,
+                 signal: Optional[pulumi.Input[int]] = None,
+                 started_at: Optional[pulumi.Input[str]] = None):
+        """
+        Details about a terminated container
+        :param pulumi.Input[int] exit_code: Exit status from the last termination of the container
+        :param pulumi.Input[str] container_id: Container's ID in the format 'docker://<container_id>'
+        :param pulumi.Input[str] finished_at: Time at which the container last terminated
+        :param pulumi.Input[str] message: Message regarding the last termination of the container
+        :param pulumi.Input[str] reason: (brief) reason from the last termination of the container
+        :param pulumi.Input[int] signal: Signal from the last termination of the container
+        :param pulumi.Input[str] started_at: Time at which previous execution of the container started
+        """
+        pulumi.set(__self__, "exit_code", exit_code)
+        if container_id is not None:
+            pulumi.set(__self__, "container_id", container_id)
+        if finished_at is not None:
+            pulumi.set(__self__, "finished_at", finished_at)
+        if message is not None:
+            pulumi.set(__self__, "message", message)
+        if reason is not None:
+            pulumi.set(__self__, "reason", reason)
+        if signal is not None:
+            pulumi.set(__self__, "signal", signal)
+        if started_at is not None:
+            pulumi.set(__self__, "started_at", started_at)
+
+    @property
+    @pulumi.getter(name="exitCode")
+    def exit_code(self) -> pulumi.Input[int]:
+        """
+        Exit status from the last termination of the container
+        """
+        return pulumi.get(self, "exit_code")
+
+    @exit_code.setter
+    def exit_code(self, value: pulumi.Input[int]):
+        pulumi.set(self, "exit_code", value)
+
+    @property
+    @pulumi.getter(name="containerID")
+    def container_id(self) -> Optional[pulumi.Input[str]]:
+        """
+        Container's ID in the format 'docker://<container_id>'
+        """
+        return pulumi.get(self, "container_id")
+
+    @container_id.setter
+    def container_id(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "container_id", value)
+
+    @property
+    @pulumi.getter(name="finishedAt")
+    def finished_at(self) -> Optional[pulumi.Input[str]]:
+        """
+        Time at which the container last terminated
+        """
+        return pulumi.get(self, "finished_at")
+
+    @finished_at.setter
+    def finished_at(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "finished_at", value)
+
+    @property
+    @pulumi.getter
+    def message(self) -> Optional[pulumi.Input[str]]:
+        """
+        Message regarding the last termination of the container
+        """
+        return pulumi.get(self, "message")
+
+    @message.setter
+    def message(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "message", value)
+
+    @property
+    @pulumi.getter
+    def reason(self) -> Optional[pulumi.Input[str]]:
+        """
+        (brief) reason from the last termination of the container
+        """
+        return pulumi.get(self, "reason")
+
+    @reason.setter
+    def reason(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "reason", value)
+
+    @property
+    @pulumi.getter
+    def signal(self) -> Optional[pulumi.Input[int]]:
+        """
+        Signal from the last termination of the container
+        """
+        return pulumi.get(self, "signal")
+
+    @signal.setter
+    def signal(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "signal", value)
+
+    @property
+    @pulumi.getter(name="startedAt")
+    def started_at(self) -> Optional[pulumi.Input[str]]:
+        """
+        Time at which previous execution of the container started
+        """
+        return pulumi.get(self, "started_at")
+
+    @started_at.setter
+    def started_at(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "started_at", value)
+
+
+@pulumi.input_type
+class SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaitingArgs:
+    def __init__(__self__, *,
+                 message: Optional[pulumi.Input[str]] = None,
+                 reason: Optional[pulumi.Input[str]] = None):
+        """
+        Details about a waiting container
+        :param pulumi.Input[str] message: Message regarding why the container is not yet running.
+        :param pulumi.Input[str] reason: (brief) reason the container is not yet running.
+        """
+        if message is not None:
+            pulumi.set(__self__, "message", message)
+        if reason is not None:
+            pulumi.set(__self__, "reason", reason)
+
+    @property
+    @pulumi.getter
+    def message(self) -> Optional[pulumi.Input[str]]:
+        """
+        Message regarding why the container is not yet running.
+        """
+        return pulumi.get(self, "message")
+
+    @message.setter
+    def message(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "message", value)
+
+    @property
+    @pulumi.getter
+    def reason(self) -> Optional[pulumi.Input[str]]:
+        """
+        (brief) reason the container is not yet running.
+        """
+        return pulumi.get(self, "reason")
+
+    @reason.setter
+    def reason(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "reason", value)
+
+
+@pulumi.input_type
+class SubmarinerStatusEngineDaemonSetStatusStatusArgs:
     def __init__(__self__, *,
                  current_number_scheduled: pulumi.Input[int],
                  desired_number_scheduled: pulumi.Input[int],
                  number_misscheduled: pulumi.Input[int],
                  number_ready: pulumi.Input[int],
                  collision_count: Optional[pulumi.Input[int]] = None,
-                 conditions: Optional[pulumi.Input[Sequence[pulumi.Input['SubmarinerStatusEngineDaemonSetStatusConditionsArgs']]]] = None,
+                 conditions: Optional[pulumi.Input[Sequence[pulumi.Input['SubmarinerStatusEngineDaemonSetStatusStatusConditionsArgs']]]] = None,
                  number_available: Optional[pulumi.Input[int]] = None,
                  number_unavailable: Optional[pulumi.Input[int]] = None,
                  observed_generation: Optional[pulumi.Input[int]] = None,
@@ -549,7 +829,7 @@ class SubmarinerStatusEngineDaemonSetStatusArgs:
         :param pulumi.Input[int] number_misscheduled: The number of nodes that are running the daemon pod, but are not supposed to run the daemon pod. More info: https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/
         :param pulumi.Input[int] number_ready: The number of nodes that should be running the daemon pod and have one or more of the daemon pod running and ready.
         :param pulumi.Input[int] collision_count: Count of hash collisions for the DaemonSet. The DaemonSet controller uses this field as a collision avoidance mechanism when it needs to create the name for the newest ControllerRevision.
-        :param pulumi.Input[Sequence[pulumi.Input['SubmarinerStatusEngineDaemonSetStatusConditionsArgs']]] conditions: Represents the latest available observations of a DaemonSet's current state.
+        :param pulumi.Input[Sequence[pulumi.Input['SubmarinerStatusEngineDaemonSetStatusStatusConditionsArgs']]] conditions: Represents the latest available observations of a DaemonSet's current state.
         :param pulumi.Input[int] number_available: The number of nodes that should be running the daemon pod and have one or more of the daemon pod running and available (ready for at least spec.minReadySeconds)
         :param pulumi.Input[int] number_unavailable: The number of nodes that should be running the daemon pod and have none of the daemon pod running and available (ready for at least spec.minReadySeconds)
         :param pulumi.Input[int] observed_generation: The most recent generation observed by the daemon set controller.
@@ -634,14 +914,14 @@ class SubmarinerStatusEngineDaemonSetStatusArgs:
 
     @property
     @pulumi.getter
-    def conditions(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['SubmarinerStatusEngineDaemonSetStatusConditionsArgs']]]]:
+    def conditions(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['SubmarinerStatusEngineDaemonSetStatusStatusConditionsArgs']]]]:
         """
         Represents the latest available observations of a DaemonSet's current state.
         """
         return pulumi.get(self, "conditions")
 
     @conditions.setter
-    def conditions(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['SubmarinerStatusEngineDaemonSetStatusConditionsArgs']]]]):
+    def conditions(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['SubmarinerStatusEngineDaemonSetStatusStatusConditionsArgs']]]]):
         pulumi.set(self, "conditions", value)
 
     @property
@@ -694,7 +974,7 @@ class SubmarinerStatusEngineDaemonSetStatusArgs:
 
 
 @pulumi.input_type
-class SubmarinerStatusEngineDaemonSetStatusConditionsArgs:
+class SubmarinerStatusEngineDaemonSetStatusStatusConditionsArgs:
     def __init__(__self__, *,
                  status: pulumi.Input[str],
                  type: pulumi.Input[str],
@@ -782,71 +1062,9 @@ class SubmarinerStatusEngineDaemonSetStatusConditionsArgs:
 @pulumi.input_type
 class SubmarinerStatusGatewaysArgs:
     def __init__(__self__, *,
-                 status: pulumi.Input['SubmarinerStatusGatewaysStatusArgs'],
-                 api_version: Optional[pulumi.Input[str]] = None,
-                 kind: Optional[pulumi.Input[str]] = None,
-                 metadata: Optional[pulumi.Input[Mapping[str, Any]]] = None):
-        """
-        :param pulumi.Input[str] api_version: APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#resources
-        :param pulumi.Input[str] kind: Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds
-        """
-        pulumi.set(__self__, "status", status)
-        if api_version is not None:
-            pulumi.set(__self__, "api_version", api_version)
-        if kind is not None:
-            pulumi.set(__self__, "kind", kind)
-        if metadata is not None:
-            pulumi.set(__self__, "metadata", metadata)
-
-    @property
-    @pulumi.getter
-    def status(self) -> pulumi.Input['SubmarinerStatusGatewaysStatusArgs']:
-        return pulumi.get(self, "status")
-
-    @status.setter
-    def status(self, value: pulumi.Input['SubmarinerStatusGatewaysStatusArgs']):
-        pulumi.set(self, "status", value)
-
-    @property
-    @pulumi.getter(name="apiVersion")
-    def api_version(self) -> Optional[pulumi.Input[str]]:
-        """
-        APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#resources
-        """
-        return pulumi.get(self, "api_version")
-
-    @api_version.setter
-    def api_version(self, value: Optional[pulumi.Input[str]]):
-        pulumi.set(self, "api_version", value)
-
-    @property
-    @pulumi.getter
-    def kind(self) -> Optional[pulumi.Input[str]]:
-        """
-        Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds
-        """
-        return pulumi.get(self, "kind")
-
-    @kind.setter
-    def kind(self, value: Optional[pulumi.Input[str]]):
-        pulumi.set(self, "kind", value)
-
-    @property
-    @pulumi.getter
-    def metadata(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
-        return pulumi.get(self, "metadata")
-
-    @metadata.setter
-    def metadata(self, value: Optional[pulumi.Input[Mapping[str, Any]]]):
-        pulumi.set(self, "metadata", value)
-
-
-@pulumi.input_type
-class SubmarinerStatusGatewaysStatusArgs:
-    def __init__(__self__, *,
-                 connections: pulumi.Input[Sequence[pulumi.Input['SubmarinerStatusGatewaysStatusConnectionsArgs']]],
+                 connections: pulumi.Input[Sequence[pulumi.Input['SubmarinerStatusGatewaysConnectionsArgs']]],
                  ha_status: pulumi.Input[str],
-                 local_endpoint: pulumi.Input['SubmarinerStatusGatewaysStatusLocalEndpointArgs'],
+                 local_endpoint: pulumi.Input['SubmarinerStatusGatewaysLocalEndpointArgs'],
                  status_failure: pulumi.Input[str],
                  version: pulumi.Input[str]):
         pulumi.set(__self__, "connections", connections)
@@ -857,11 +1075,11 @@ class SubmarinerStatusGatewaysStatusArgs:
 
     @property
     @pulumi.getter
-    def connections(self) -> pulumi.Input[Sequence[pulumi.Input['SubmarinerStatusGatewaysStatusConnectionsArgs']]]:
+    def connections(self) -> pulumi.Input[Sequence[pulumi.Input['SubmarinerStatusGatewaysConnectionsArgs']]]:
         return pulumi.get(self, "connections")
 
     @connections.setter
-    def connections(self, value: pulumi.Input[Sequence[pulumi.Input['SubmarinerStatusGatewaysStatusConnectionsArgs']]]):
+    def connections(self, value: pulumi.Input[Sequence[pulumi.Input['SubmarinerStatusGatewaysConnectionsArgs']]]):
         pulumi.set(self, "connections", value)
 
     @property
@@ -875,11 +1093,11 @@ class SubmarinerStatusGatewaysStatusArgs:
 
     @property
     @pulumi.getter(name="localEndpoint")
-    def local_endpoint(self) -> pulumi.Input['SubmarinerStatusGatewaysStatusLocalEndpointArgs']:
+    def local_endpoint(self) -> pulumi.Input['SubmarinerStatusGatewaysLocalEndpointArgs']:
         return pulumi.get(self, "local_endpoint")
 
     @local_endpoint.setter
-    def local_endpoint(self, value: pulumi.Input['SubmarinerStatusGatewaysStatusLocalEndpointArgs']):
+    def local_endpoint(self, value: pulumi.Input['SubmarinerStatusGatewaysLocalEndpointArgs']):
         pulumi.set(self, "local_endpoint", value)
 
     @property
@@ -902,22 +1120,28 @@ class SubmarinerStatusGatewaysStatusArgs:
 
 
 @pulumi.input_type
-class SubmarinerStatusGatewaysStatusConnectionsArgs:
+class SubmarinerStatusGatewaysConnectionsArgs:
     def __init__(__self__, *,
-                 endpoint: pulumi.Input['SubmarinerStatusGatewaysStatusConnectionsEndpointArgs'],
+                 endpoint: pulumi.Input['SubmarinerStatusGatewaysConnectionsEndpointArgs'],
                  status: pulumi.Input[str],
-                 status_message: pulumi.Input[str]):
+                 status_message: pulumi.Input[str],
+                 latency_rtt: Optional[pulumi.Input['SubmarinerStatusGatewaysConnectionsLatencyRTTArgs']] = None):
+        """
+        :param pulumi.Input['SubmarinerStatusGatewaysConnectionsLatencyRTTArgs'] latency_rtt: LatencySpec describes the round trip time information for a packet between the gateway pods of two clusters.
+        """
         pulumi.set(__self__, "endpoint", endpoint)
         pulumi.set(__self__, "status", status)
         pulumi.set(__self__, "status_message", status_message)
+        if latency_rtt is not None:
+            pulumi.set(__self__, "latency_rtt", latency_rtt)
 
     @property
     @pulumi.getter
-    def endpoint(self) -> pulumi.Input['SubmarinerStatusGatewaysStatusConnectionsEndpointArgs']:
+    def endpoint(self) -> pulumi.Input['SubmarinerStatusGatewaysConnectionsEndpointArgs']:
         return pulumi.get(self, "endpoint")
 
     @endpoint.setter
-    def endpoint(self, value: pulumi.Input['SubmarinerStatusGatewaysStatusConnectionsEndpointArgs']):
+    def endpoint(self, value: pulumi.Input['SubmarinerStatusGatewaysConnectionsEndpointArgs']):
         pulumi.set(self, "endpoint", value)
 
     @property
@@ -938,9 +1162,21 @@ class SubmarinerStatusGatewaysStatusConnectionsArgs:
     def status_message(self, value: pulumi.Input[str]):
         pulumi.set(self, "status_message", value)
 
+    @property
+    @pulumi.getter(name="latencyRTT")
+    def latency_rtt(self) -> Optional[pulumi.Input['SubmarinerStatusGatewaysConnectionsLatencyRTTArgs']]:
+        """
+        LatencySpec describes the round trip time information for a packet between the gateway pods of two clusters.
+        """
+        return pulumi.get(self, "latency_rtt")
+
+    @latency_rtt.setter
+    def latency_rtt(self, value: Optional[pulumi.Input['SubmarinerStatusGatewaysConnectionsLatencyRTTArgs']]):
+        pulumi.set(self, "latency_rtt", value)
+
 
 @pulumi.input_type
-class SubmarinerStatusGatewaysStatusConnectionsEndpointArgs:
+class SubmarinerStatusGatewaysConnectionsEndpointArgs:
     def __init__(__self__, *,
                  backend: pulumi.Input[str],
                  cable_name: pulumi.Input[str],
@@ -950,7 +1186,8 @@ class SubmarinerStatusGatewaysStatusConnectionsEndpointArgs:
                  private_ip: pulumi.Input[str],
                  public_ip: pulumi.Input[str],
                  subnets: pulumi.Input[Sequence[pulumi.Input[str]]],
-                 backend_config: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None):
+                 backend_config: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
+                 health_check_ip: Optional[pulumi.Input[str]] = None):
         pulumi.set(__self__, "backend", backend)
         pulumi.set(__self__, "cable_name", cable_name)
         pulumi.set(__self__, "cluster_id", cluster_id)
@@ -961,6 +1198,8 @@ class SubmarinerStatusGatewaysStatusConnectionsEndpointArgs:
         pulumi.set(__self__, "subnets", subnets)
         if backend_config is not None:
             pulumi.set(__self__, "backend_config", backend_config)
+        if health_check_ip is not None:
+            pulumi.set(__self__, "health_check_ip", health_check_ip)
 
     @property
     @pulumi.getter
@@ -1043,9 +1282,86 @@ class SubmarinerStatusGatewaysStatusConnectionsEndpointArgs:
     def backend_config(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
         pulumi.set(self, "backend_config", value)
 
+    @property
+    @pulumi.getter(name="healthCheckIP")
+    def health_check_ip(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "health_check_ip")
+
+    @health_check_ip.setter
+    def health_check_ip(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "health_check_ip", value)
+
 
 @pulumi.input_type
-class SubmarinerStatusGatewaysStatusLocalEndpointArgs:
+class SubmarinerStatusGatewaysConnectionsLatencyRTTArgs:
+    def __init__(__self__, *,
+                 average: Optional[pulumi.Input[str]] = None,
+                 last: Optional[pulumi.Input[str]] = None,
+                 max: Optional[pulumi.Input[str]] = None,
+                 min: Optional[pulumi.Input[str]] = None,
+                 std_dev: Optional[pulumi.Input[str]] = None):
+        """
+        LatencySpec describes the round trip time information for a packet between the gateway pods of two clusters.
+        """
+        if average is not None:
+            pulumi.set(__self__, "average", average)
+        if last is not None:
+            pulumi.set(__self__, "last", last)
+        if max is not None:
+            pulumi.set(__self__, "max", max)
+        if min is not None:
+            pulumi.set(__self__, "min", min)
+        if std_dev is not None:
+            pulumi.set(__self__, "std_dev", std_dev)
+
+    @property
+    @pulumi.getter
+    def average(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "average")
+
+    @average.setter
+    def average(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "average", value)
+
+    @property
+    @pulumi.getter
+    def last(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "last")
+
+    @last.setter
+    def last(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "last", value)
+
+    @property
+    @pulumi.getter
+    def max(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "max")
+
+    @max.setter
+    def max(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "max", value)
+
+    @property
+    @pulumi.getter
+    def min(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "min")
+
+    @min.setter
+    def min(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "min", value)
+
+    @property
+    @pulumi.getter(name="stdDev")
+    def std_dev(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "std_dev")
+
+    @std_dev.setter
+    def std_dev(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "std_dev", value)
+
+
+@pulumi.input_type
+class SubmarinerStatusGatewaysLocalEndpointArgs:
     def __init__(__self__, *,
                  backend: pulumi.Input[str],
                  cable_name: pulumi.Input[str],
@@ -1055,7 +1371,8 @@ class SubmarinerStatusGatewaysStatusLocalEndpointArgs:
                  private_ip: pulumi.Input[str],
                  public_ip: pulumi.Input[str],
                  subnets: pulumi.Input[Sequence[pulumi.Input[str]]],
-                 backend_config: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None):
+                 backend_config: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
+                 health_check_ip: Optional[pulumi.Input[str]] = None):
         pulumi.set(__self__, "backend", backend)
         pulumi.set(__self__, "cable_name", cable_name)
         pulumi.set(__self__, "cluster_id", cluster_id)
@@ -1066,6 +1383,8 @@ class SubmarinerStatusGatewaysStatusLocalEndpointArgs:
         pulumi.set(__self__, "subnets", subnets)
         if backend_config is not None:
             pulumi.set(__self__, "backend_config", backend_config)
+        if health_check_ip is not None:
+            pulumi.set(__self__, "health_check_ip", health_check_ip)
 
     @property
     @pulumi.getter
@@ -1147,17 +1466,323 @@ class SubmarinerStatusGatewaysStatusLocalEndpointArgs:
     @backend_config.setter
     def backend_config(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
         pulumi.set(self, "backend_config", value)
+
+    @property
+    @pulumi.getter(name="healthCheckIP")
+    def health_check_ip(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "health_check_ip")
+
+    @health_check_ip.setter
+    def health_check_ip(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "health_check_ip", value)
 
 
 @pulumi.input_type
 class SubmarinerStatusGlobalnetDaemonSetStatusArgs:
+    def __init__(__self__, *,
+                 mismatched_container_images: pulumi.Input[bool],
+                 last_resource_version: Optional[pulumi.Input[str]] = None,
+                 non_ready_container_states: Optional[pulumi.Input[Sequence[pulumi.Input['SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesArgs']]]] = None,
+                 status: Optional[pulumi.Input['SubmarinerStatusGlobalnetDaemonSetStatusStatusArgs']] = None):
+        """
+        :param pulumi.Input['SubmarinerStatusGlobalnetDaemonSetStatusStatusArgs'] status: DaemonSetStatus represents the current status of a daemon set.
+        """
+        pulumi.set(__self__, "mismatched_container_images", mismatched_container_images)
+        if last_resource_version is not None:
+            pulumi.set(__self__, "last_resource_version", last_resource_version)
+        if non_ready_container_states is not None:
+            pulumi.set(__self__, "non_ready_container_states", non_ready_container_states)
+        if status is not None:
+            pulumi.set(__self__, "status", status)
+
+    @property
+    @pulumi.getter(name="mismatchedContainerImages")
+    def mismatched_container_images(self) -> pulumi.Input[bool]:
+        return pulumi.get(self, "mismatched_container_images")
+
+    @mismatched_container_images.setter
+    def mismatched_container_images(self, value: pulumi.Input[bool]):
+        pulumi.set(self, "mismatched_container_images", value)
+
+    @property
+    @pulumi.getter(name="lastResourceVersion")
+    def last_resource_version(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "last_resource_version")
+
+    @last_resource_version.setter
+    def last_resource_version(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "last_resource_version", value)
+
+    @property
+    @pulumi.getter(name="nonReadyContainerStates")
+    def non_ready_container_states(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesArgs']]]]:
+        return pulumi.get(self, "non_ready_container_states")
+
+    @non_ready_container_states.setter
+    def non_ready_container_states(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesArgs']]]]):
+        pulumi.set(self, "non_ready_container_states", value)
+
+    @property
+    @pulumi.getter
+    def status(self) -> Optional[pulumi.Input['SubmarinerStatusGlobalnetDaemonSetStatusStatusArgs']]:
+        """
+        DaemonSetStatus represents the current status of a daemon set.
+        """
+        return pulumi.get(self, "status")
+
+    @status.setter
+    def status(self, value: Optional[pulumi.Input['SubmarinerStatusGlobalnetDaemonSetStatusStatusArgs']]):
+        pulumi.set(self, "status", value)
+
+
+@pulumi.input_type
+class SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesArgs:
+    def __init__(__self__, *,
+                 running: Optional[pulumi.Input['SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunningArgs']] = None,
+                 terminated: Optional[pulumi.Input['SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminatedArgs']] = None,
+                 waiting: Optional[pulumi.Input['SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaitingArgs']] = None):
+        """
+        ContainerState holds a possible state of container. Only one of its members may be specified. If none of them is specified, the default one is ContainerStateWaiting.
+        :param pulumi.Input['SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunningArgs'] running: Details about a running container
+        :param pulumi.Input['SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminatedArgs'] terminated: Details about a terminated container
+        :param pulumi.Input['SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaitingArgs'] waiting: Details about a waiting container
+        """
+        if running is not None:
+            pulumi.set(__self__, "running", running)
+        if terminated is not None:
+            pulumi.set(__self__, "terminated", terminated)
+        if waiting is not None:
+            pulumi.set(__self__, "waiting", waiting)
+
+    @property
+    @pulumi.getter
+    def running(self) -> Optional[pulumi.Input['SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunningArgs']]:
+        """
+        Details about a running container
+        """
+        return pulumi.get(self, "running")
+
+    @running.setter
+    def running(self, value: Optional[pulumi.Input['SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunningArgs']]):
+        pulumi.set(self, "running", value)
+
+    @property
+    @pulumi.getter
+    def terminated(self) -> Optional[pulumi.Input['SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminatedArgs']]:
+        """
+        Details about a terminated container
+        """
+        return pulumi.get(self, "terminated")
+
+    @terminated.setter
+    def terminated(self, value: Optional[pulumi.Input['SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminatedArgs']]):
+        pulumi.set(self, "terminated", value)
+
+    @property
+    @pulumi.getter
+    def waiting(self) -> Optional[pulumi.Input['SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaitingArgs']]:
+        """
+        Details about a waiting container
+        """
+        return pulumi.get(self, "waiting")
+
+    @waiting.setter
+    def waiting(self, value: Optional[pulumi.Input['SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaitingArgs']]):
+        pulumi.set(self, "waiting", value)
+
+
+@pulumi.input_type
+class SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunningArgs:
+    def __init__(__self__, *,
+                 started_at: Optional[pulumi.Input[str]] = None):
+        """
+        Details about a running container
+        :param pulumi.Input[str] started_at: Time at which the container was last (re-)started
+        """
+        if started_at is not None:
+            pulumi.set(__self__, "started_at", started_at)
+
+    @property
+    @pulumi.getter(name="startedAt")
+    def started_at(self) -> Optional[pulumi.Input[str]]:
+        """
+        Time at which the container was last (re-)started
+        """
+        return pulumi.get(self, "started_at")
+
+    @started_at.setter
+    def started_at(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "started_at", value)
+
+
+@pulumi.input_type
+class SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminatedArgs:
+    def __init__(__self__, *,
+                 exit_code: pulumi.Input[int],
+                 container_id: Optional[pulumi.Input[str]] = None,
+                 finished_at: Optional[pulumi.Input[str]] = None,
+                 message: Optional[pulumi.Input[str]] = None,
+                 reason: Optional[pulumi.Input[str]] = None,
+                 signal: Optional[pulumi.Input[int]] = None,
+                 started_at: Optional[pulumi.Input[str]] = None):
+        """
+        Details about a terminated container
+        :param pulumi.Input[int] exit_code: Exit status from the last termination of the container
+        :param pulumi.Input[str] container_id: Container's ID in the format 'docker://<container_id>'
+        :param pulumi.Input[str] finished_at: Time at which the container last terminated
+        :param pulumi.Input[str] message: Message regarding the last termination of the container
+        :param pulumi.Input[str] reason: (brief) reason from the last termination of the container
+        :param pulumi.Input[int] signal: Signal from the last termination of the container
+        :param pulumi.Input[str] started_at: Time at which previous execution of the container started
+        """
+        pulumi.set(__self__, "exit_code", exit_code)
+        if container_id is not None:
+            pulumi.set(__self__, "container_id", container_id)
+        if finished_at is not None:
+            pulumi.set(__self__, "finished_at", finished_at)
+        if message is not None:
+            pulumi.set(__self__, "message", message)
+        if reason is not None:
+            pulumi.set(__self__, "reason", reason)
+        if signal is not None:
+            pulumi.set(__self__, "signal", signal)
+        if started_at is not None:
+            pulumi.set(__self__, "started_at", started_at)
+
+    @property
+    @pulumi.getter(name="exitCode")
+    def exit_code(self) -> pulumi.Input[int]:
+        """
+        Exit status from the last termination of the container
+        """
+        return pulumi.get(self, "exit_code")
+
+    @exit_code.setter
+    def exit_code(self, value: pulumi.Input[int]):
+        pulumi.set(self, "exit_code", value)
+
+    @property
+    @pulumi.getter(name="containerID")
+    def container_id(self) -> Optional[pulumi.Input[str]]:
+        """
+        Container's ID in the format 'docker://<container_id>'
+        """
+        return pulumi.get(self, "container_id")
+
+    @container_id.setter
+    def container_id(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "container_id", value)
+
+    @property
+    @pulumi.getter(name="finishedAt")
+    def finished_at(self) -> Optional[pulumi.Input[str]]:
+        """
+        Time at which the container last terminated
+        """
+        return pulumi.get(self, "finished_at")
+
+    @finished_at.setter
+    def finished_at(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "finished_at", value)
+
+    @property
+    @pulumi.getter
+    def message(self) -> Optional[pulumi.Input[str]]:
+        """
+        Message regarding the last termination of the container
+        """
+        return pulumi.get(self, "message")
+
+    @message.setter
+    def message(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "message", value)
+
+    @property
+    @pulumi.getter
+    def reason(self) -> Optional[pulumi.Input[str]]:
+        """
+        (brief) reason from the last termination of the container
+        """
+        return pulumi.get(self, "reason")
+
+    @reason.setter
+    def reason(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "reason", value)
+
+    @property
+    @pulumi.getter
+    def signal(self) -> Optional[pulumi.Input[int]]:
+        """
+        Signal from the last termination of the container
+        """
+        return pulumi.get(self, "signal")
+
+    @signal.setter
+    def signal(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "signal", value)
+
+    @property
+    @pulumi.getter(name="startedAt")
+    def started_at(self) -> Optional[pulumi.Input[str]]:
+        """
+        Time at which previous execution of the container started
+        """
+        return pulumi.get(self, "started_at")
+
+    @started_at.setter
+    def started_at(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "started_at", value)
+
+
+@pulumi.input_type
+class SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaitingArgs:
+    def __init__(__self__, *,
+                 message: Optional[pulumi.Input[str]] = None,
+                 reason: Optional[pulumi.Input[str]] = None):
+        """
+        Details about a waiting container
+        :param pulumi.Input[str] message: Message regarding why the container is not yet running.
+        :param pulumi.Input[str] reason: (brief) reason the container is not yet running.
+        """
+        if message is not None:
+            pulumi.set(__self__, "message", message)
+        if reason is not None:
+            pulumi.set(__self__, "reason", reason)
+
+    @property
+    @pulumi.getter
+    def message(self) -> Optional[pulumi.Input[str]]:
+        """
+        Message regarding why the container is not yet running.
+        """
+        return pulumi.get(self, "message")
+
+    @message.setter
+    def message(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "message", value)
+
+    @property
+    @pulumi.getter
+    def reason(self) -> Optional[pulumi.Input[str]]:
+        """
+        (brief) reason the container is not yet running.
+        """
+        return pulumi.get(self, "reason")
+
+    @reason.setter
+    def reason(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "reason", value)
+
+
+@pulumi.input_type
+class SubmarinerStatusGlobalnetDaemonSetStatusStatusArgs:
     def __init__(__self__, *,
                  current_number_scheduled: pulumi.Input[int],
                  desired_number_scheduled: pulumi.Input[int],
                  number_misscheduled: pulumi.Input[int],
                  number_ready: pulumi.Input[int],
                  collision_count: Optional[pulumi.Input[int]] = None,
-                 conditions: Optional[pulumi.Input[Sequence[pulumi.Input['SubmarinerStatusGlobalnetDaemonSetStatusConditionsArgs']]]] = None,
+                 conditions: Optional[pulumi.Input[Sequence[pulumi.Input['SubmarinerStatusGlobalnetDaemonSetStatusStatusConditionsArgs']]]] = None,
                  number_available: Optional[pulumi.Input[int]] = None,
                  number_unavailable: Optional[pulumi.Input[int]] = None,
                  observed_generation: Optional[pulumi.Input[int]] = None,
@@ -1169,7 +1794,7 @@ class SubmarinerStatusGlobalnetDaemonSetStatusArgs:
         :param pulumi.Input[int] number_misscheduled: The number of nodes that are running the daemon pod, but are not supposed to run the daemon pod. More info: https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/
         :param pulumi.Input[int] number_ready: The number of nodes that should be running the daemon pod and have one or more of the daemon pod running and ready.
         :param pulumi.Input[int] collision_count: Count of hash collisions for the DaemonSet. The DaemonSet controller uses this field as a collision avoidance mechanism when it needs to create the name for the newest ControllerRevision.
-        :param pulumi.Input[Sequence[pulumi.Input['SubmarinerStatusGlobalnetDaemonSetStatusConditionsArgs']]] conditions: Represents the latest available observations of a DaemonSet's current state.
+        :param pulumi.Input[Sequence[pulumi.Input['SubmarinerStatusGlobalnetDaemonSetStatusStatusConditionsArgs']]] conditions: Represents the latest available observations of a DaemonSet's current state.
         :param pulumi.Input[int] number_available: The number of nodes that should be running the daemon pod and have one or more of the daemon pod running and available (ready for at least spec.minReadySeconds)
         :param pulumi.Input[int] number_unavailable: The number of nodes that should be running the daemon pod and have none of the daemon pod running and available (ready for at least spec.minReadySeconds)
         :param pulumi.Input[int] observed_generation: The most recent generation observed by the daemon set controller.
@@ -1254,14 +1879,14 @@ class SubmarinerStatusGlobalnetDaemonSetStatusArgs:
 
     @property
     @pulumi.getter
-    def conditions(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['SubmarinerStatusGlobalnetDaemonSetStatusConditionsArgs']]]]:
+    def conditions(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['SubmarinerStatusGlobalnetDaemonSetStatusStatusConditionsArgs']]]]:
         """
         Represents the latest available observations of a DaemonSet's current state.
         """
         return pulumi.get(self, "conditions")
 
     @conditions.setter
-    def conditions(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['SubmarinerStatusGlobalnetDaemonSetStatusConditionsArgs']]]]):
+    def conditions(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['SubmarinerStatusGlobalnetDaemonSetStatusStatusConditionsArgs']]]]):
         pulumi.set(self, "conditions", value)
 
     @property
@@ -1314,7 +1939,7 @@ class SubmarinerStatusGlobalnetDaemonSetStatusArgs:
 
 
 @pulumi.input_type
-class SubmarinerStatusGlobalnetDaemonSetStatusConditionsArgs:
+class SubmarinerStatusGlobalnetDaemonSetStatusStatusConditionsArgs:
     def __init__(__self__, *,
                  status: pulumi.Input[str],
                  type: pulumi.Input[str],
@@ -1402,12 +2027,309 @@ class SubmarinerStatusGlobalnetDaemonSetStatusConditionsArgs:
 @pulumi.input_type
 class SubmarinerStatusRouteAgentDaemonSetStatusArgs:
     def __init__(__self__, *,
+                 mismatched_container_images: pulumi.Input[bool],
+                 last_resource_version: Optional[pulumi.Input[str]] = None,
+                 non_ready_container_states: Optional[pulumi.Input[Sequence[pulumi.Input['SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesArgs']]]] = None,
+                 status: Optional[pulumi.Input['SubmarinerStatusRouteAgentDaemonSetStatusStatusArgs']] = None):
+        """
+        :param pulumi.Input['SubmarinerStatusRouteAgentDaemonSetStatusStatusArgs'] status: DaemonSetStatus represents the current status of a daemon set.
+        """
+        pulumi.set(__self__, "mismatched_container_images", mismatched_container_images)
+        if last_resource_version is not None:
+            pulumi.set(__self__, "last_resource_version", last_resource_version)
+        if non_ready_container_states is not None:
+            pulumi.set(__self__, "non_ready_container_states", non_ready_container_states)
+        if status is not None:
+            pulumi.set(__self__, "status", status)
+
+    @property
+    @pulumi.getter(name="mismatchedContainerImages")
+    def mismatched_container_images(self) -> pulumi.Input[bool]:
+        return pulumi.get(self, "mismatched_container_images")
+
+    @mismatched_container_images.setter
+    def mismatched_container_images(self, value: pulumi.Input[bool]):
+        pulumi.set(self, "mismatched_container_images", value)
+
+    @property
+    @pulumi.getter(name="lastResourceVersion")
+    def last_resource_version(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "last_resource_version")
+
+    @last_resource_version.setter
+    def last_resource_version(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "last_resource_version", value)
+
+    @property
+    @pulumi.getter(name="nonReadyContainerStates")
+    def non_ready_container_states(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesArgs']]]]:
+        return pulumi.get(self, "non_ready_container_states")
+
+    @non_ready_container_states.setter
+    def non_ready_container_states(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesArgs']]]]):
+        pulumi.set(self, "non_ready_container_states", value)
+
+    @property
+    @pulumi.getter
+    def status(self) -> Optional[pulumi.Input['SubmarinerStatusRouteAgentDaemonSetStatusStatusArgs']]:
+        """
+        DaemonSetStatus represents the current status of a daemon set.
+        """
+        return pulumi.get(self, "status")
+
+    @status.setter
+    def status(self, value: Optional[pulumi.Input['SubmarinerStatusRouteAgentDaemonSetStatusStatusArgs']]):
+        pulumi.set(self, "status", value)
+
+
+@pulumi.input_type
+class SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesArgs:
+    def __init__(__self__, *,
+                 running: Optional[pulumi.Input['SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunningArgs']] = None,
+                 terminated: Optional[pulumi.Input['SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminatedArgs']] = None,
+                 waiting: Optional[pulumi.Input['SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaitingArgs']] = None):
+        """
+        ContainerState holds a possible state of container. Only one of its members may be specified. If none of them is specified, the default one is ContainerStateWaiting.
+        :param pulumi.Input['SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunningArgs'] running: Details about a running container
+        :param pulumi.Input['SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminatedArgs'] terminated: Details about a terminated container
+        :param pulumi.Input['SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaitingArgs'] waiting: Details about a waiting container
+        """
+        if running is not None:
+            pulumi.set(__self__, "running", running)
+        if terminated is not None:
+            pulumi.set(__self__, "terminated", terminated)
+        if waiting is not None:
+            pulumi.set(__self__, "waiting", waiting)
+
+    @property
+    @pulumi.getter
+    def running(self) -> Optional[pulumi.Input['SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunningArgs']]:
+        """
+        Details about a running container
+        """
+        return pulumi.get(self, "running")
+
+    @running.setter
+    def running(self, value: Optional[pulumi.Input['SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunningArgs']]):
+        pulumi.set(self, "running", value)
+
+    @property
+    @pulumi.getter
+    def terminated(self) -> Optional[pulumi.Input['SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminatedArgs']]:
+        """
+        Details about a terminated container
+        """
+        return pulumi.get(self, "terminated")
+
+    @terminated.setter
+    def terminated(self, value: Optional[pulumi.Input['SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminatedArgs']]):
+        pulumi.set(self, "terminated", value)
+
+    @property
+    @pulumi.getter
+    def waiting(self) -> Optional[pulumi.Input['SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaitingArgs']]:
+        """
+        Details about a waiting container
+        """
+        return pulumi.get(self, "waiting")
+
+    @waiting.setter
+    def waiting(self, value: Optional[pulumi.Input['SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaitingArgs']]):
+        pulumi.set(self, "waiting", value)
+
+
+@pulumi.input_type
+class SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunningArgs:
+    def __init__(__self__, *,
+                 started_at: Optional[pulumi.Input[str]] = None):
+        """
+        Details about a running container
+        :param pulumi.Input[str] started_at: Time at which the container was last (re-)started
+        """
+        if started_at is not None:
+            pulumi.set(__self__, "started_at", started_at)
+
+    @property
+    @pulumi.getter(name="startedAt")
+    def started_at(self) -> Optional[pulumi.Input[str]]:
+        """
+        Time at which the container was last (re-)started
+        """
+        return pulumi.get(self, "started_at")
+
+    @started_at.setter
+    def started_at(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "started_at", value)
+
+
+@pulumi.input_type
+class SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminatedArgs:
+    def __init__(__self__, *,
+                 exit_code: pulumi.Input[int],
+                 container_id: Optional[pulumi.Input[str]] = None,
+                 finished_at: Optional[pulumi.Input[str]] = None,
+                 message: Optional[pulumi.Input[str]] = None,
+                 reason: Optional[pulumi.Input[str]] = None,
+                 signal: Optional[pulumi.Input[int]] = None,
+                 started_at: Optional[pulumi.Input[str]] = None):
+        """
+        Details about a terminated container
+        :param pulumi.Input[int] exit_code: Exit status from the last termination of the container
+        :param pulumi.Input[str] container_id: Container's ID in the format 'docker://<container_id>'
+        :param pulumi.Input[str] finished_at: Time at which the container last terminated
+        :param pulumi.Input[str] message: Message regarding the last termination of the container
+        :param pulumi.Input[str] reason: (brief) reason from the last termination of the container
+        :param pulumi.Input[int] signal: Signal from the last termination of the container
+        :param pulumi.Input[str] started_at: Time at which previous execution of the container started
+        """
+        pulumi.set(__self__, "exit_code", exit_code)
+        if container_id is not None:
+            pulumi.set(__self__, "container_id", container_id)
+        if finished_at is not None:
+            pulumi.set(__self__, "finished_at", finished_at)
+        if message is not None:
+            pulumi.set(__self__, "message", message)
+        if reason is not None:
+            pulumi.set(__self__, "reason", reason)
+        if signal is not None:
+            pulumi.set(__self__, "signal", signal)
+        if started_at is not None:
+            pulumi.set(__self__, "started_at", started_at)
+
+    @property
+    @pulumi.getter(name="exitCode")
+    def exit_code(self) -> pulumi.Input[int]:
+        """
+        Exit status from the last termination of the container
+        """
+        return pulumi.get(self, "exit_code")
+
+    @exit_code.setter
+    def exit_code(self, value: pulumi.Input[int]):
+        pulumi.set(self, "exit_code", value)
+
+    @property
+    @pulumi.getter(name="containerID")
+    def container_id(self) -> Optional[pulumi.Input[str]]:
+        """
+        Container's ID in the format 'docker://<container_id>'
+        """
+        return pulumi.get(self, "container_id")
+
+    @container_id.setter
+    def container_id(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "container_id", value)
+
+    @property
+    @pulumi.getter(name="finishedAt")
+    def finished_at(self) -> Optional[pulumi.Input[str]]:
+        """
+        Time at which the container last terminated
+        """
+        return pulumi.get(self, "finished_at")
+
+    @finished_at.setter
+    def finished_at(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "finished_at", value)
+
+    @property
+    @pulumi.getter
+    def message(self) -> Optional[pulumi.Input[str]]:
+        """
+        Message regarding the last termination of the container
+        """
+        return pulumi.get(self, "message")
+
+    @message.setter
+    def message(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "message", value)
+
+    @property
+    @pulumi.getter
+    def reason(self) -> Optional[pulumi.Input[str]]:
+        """
+        (brief) reason from the last termination of the container
+        """
+        return pulumi.get(self, "reason")
+
+    @reason.setter
+    def reason(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "reason", value)
+
+    @property
+    @pulumi.getter
+    def signal(self) -> Optional[pulumi.Input[int]]:
+        """
+        Signal from the last termination of the container
+        """
+        return pulumi.get(self, "signal")
+
+    @signal.setter
+    def signal(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "signal", value)
+
+    @property
+    @pulumi.getter(name="startedAt")
+    def started_at(self) -> Optional[pulumi.Input[str]]:
+        """
+        Time at which previous execution of the container started
+        """
+        return pulumi.get(self, "started_at")
+
+    @started_at.setter
+    def started_at(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "started_at", value)
+
+
+@pulumi.input_type
+class SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaitingArgs:
+    def __init__(__self__, *,
+                 message: Optional[pulumi.Input[str]] = None,
+                 reason: Optional[pulumi.Input[str]] = None):
+        """
+        Details about a waiting container
+        :param pulumi.Input[str] message: Message regarding why the container is not yet running.
+        :param pulumi.Input[str] reason: (brief) reason the container is not yet running.
+        """
+        if message is not None:
+            pulumi.set(__self__, "message", message)
+        if reason is not None:
+            pulumi.set(__self__, "reason", reason)
+
+    @property
+    @pulumi.getter
+    def message(self) -> Optional[pulumi.Input[str]]:
+        """
+        Message regarding why the container is not yet running.
+        """
+        return pulumi.get(self, "message")
+
+    @message.setter
+    def message(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "message", value)
+
+    @property
+    @pulumi.getter
+    def reason(self) -> Optional[pulumi.Input[str]]:
+        """
+        (brief) reason the container is not yet running.
+        """
+        return pulumi.get(self, "reason")
+
+    @reason.setter
+    def reason(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "reason", value)
+
+
+@pulumi.input_type
+class SubmarinerStatusRouteAgentDaemonSetStatusStatusArgs:
+    def __init__(__self__, *,
                  current_number_scheduled: pulumi.Input[int],
                  desired_number_scheduled: pulumi.Input[int],
                  number_misscheduled: pulumi.Input[int],
                  number_ready: pulumi.Input[int],
                  collision_count: Optional[pulumi.Input[int]] = None,
-                 conditions: Optional[pulumi.Input[Sequence[pulumi.Input['SubmarinerStatusRouteAgentDaemonSetStatusConditionsArgs']]]] = None,
+                 conditions: Optional[pulumi.Input[Sequence[pulumi.Input['SubmarinerStatusRouteAgentDaemonSetStatusStatusConditionsArgs']]]] = None,
                  number_available: Optional[pulumi.Input[int]] = None,
                  number_unavailable: Optional[pulumi.Input[int]] = None,
                  observed_generation: Optional[pulumi.Input[int]] = None,
@@ -1419,7 +2341,7 @@ class SubmarinerStatusRouteAgentDaemonSetStatusArgs:
         :param pulumi.Input[int] number_misscheduled: The number of nodes that are running the daemon pod, but are not supposed to run the daemon pod. More info: https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/
         :param pulumi.Input[int] number_ready: The number of nodes that should be running the daemon pod and have one or more of the daemon pod running and ready.
         :param pulumi.Input[int] collision_count: Count of hash collisions for the DaemonSet. The DaemonSet controller uses this field as a collision avoidance mechanism when it needs to create the name for the newest ControllerRevision.
-        :param pulumi.Input[Sequence[pulumi.Input['SubmarinerStatusRouteAgentDaemonSetStatusConditionsArgs']]] conditions: Represents the latest available observations of a DaemonSet's current state.
+        :param pulumi.Input[Sequence[pulumi.Input['SubmarinerStatusRouteAgentDaemonSetStatusStatusConditionsArgs']]] conditions: Represents the latest available observations of a DaemonSet's current state.
         :param pulumi.Input[int] number_available: The number of nodes that should be running the daemon pod and have one or more of the daemon pod running and available (ready for at least spec.minReadySeconds)
         :param pulumi.Input[int] number_unavailable: The number of nodes that should be running the daemon pod and have none of the daemon pod running and available (ready for at least spec.minReadySeconds)
         :param pulumi.Input[int] observed_generation: The most recent generation observed by the daemon set controller.
@@ -1504,14 +2426,14 @@ class SubmarinerStatusRouteAgentDaemonSetStatusArgs:
 
     @property
     @pulumi.getter
-    def conditions(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['SubmarinerStatusRouteAgentDaemonSetStatusConditionsArgs']]]]:
+    def conditions(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['SubmarinerStatusRouteAgentDaemonSetStatusStatusConditionsArgs']]]]:
         """
         Represents the latest available observations of a DaemonSet's current state.
         """
         return pulumi.get(self, "conditions")
 
     @conditions.setter
-    def conditions(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['SubmarinerStatusRouteAgentDaemonSetStatusConditionsArgs']]]]):
+    def conditions(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['SubmarinerStatusRouteAgentDaemonSetStatusStatusConditionsArgs']]]]):
         pulumi.set(self, "conditions", value)
 
     @property
@@ -1564,7 +2486,7 @@ class SubmarinerStatusRouteAgentDaemonSetStatusArgs:
 
 
 @pulumi.input_type
-class SubmarinerStatusRouteAgentDaemonSetStatusConditionsArgs:
+class SubmarinerStatusRouteAgentDaemonSetStatusStatusConditionsArgs:
     def __init__(__self__, *,
                  status: pulumi.Input[str],
                  type: pulumi.Input[str],

@@ -16,10 +16,16 @@ namespace Pulumi.Kubernetes.Types.Inputs.Operator.V1
     public class ClusterManagerSpecArgs : Pulumi.ResourceArgs
     {
         /// <summary>
-        /// RegistrationImagePullSpec represents the desired image of registration controller installed on hub.
+        /// RegistrationImagePullSpec represents the desired image of registration controller/webhook installed on hub.
         /// </summary>
         [Input("registrationImagePullSpec")]
         public Input<string>? RegistrationImagePullSpec { get; set; }
+
+        /// <summary>
+        /// WorkImagePullSpec represents the desired image configuration of work controller/webhook installed on hub.
+        /// </summary>
+        [Input("workImagePullSpec")]
+        public Input<string>? WorkImagePullSpec { get; set; }
 
         public ClusterManagerSpecArgs()
         {

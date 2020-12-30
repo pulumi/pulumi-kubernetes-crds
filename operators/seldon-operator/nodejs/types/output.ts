@@ -21,6 +21,10 @@ export namespace machinelearning {
             oauth_key?: string;
             oauth_secret?: string;
             predictors: outputs.machinelearning.v1.SeldonDeploymentSpecPredictors[];
+            protocol?: string;
+            replicas?: number;
+            serverType?: string;
+            transport?: string;
         }
 
         export interface SeldonDeploymentSpecPredictors {
@@ -34,17 +38,22 @@ export namespace machinelearning {
             graph: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsGraph;
             labels?: {[key: string]: string};
             name: string;
-            protocol?: string;
             replicas?: number;
             shadow?: boolean;
+            ssl?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsSsl;
             svcOrchSpec?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsSvcOrchSpec;
             traffic?: number;
-            transport?: string;
         }
 
         export interface SeldonDeploymentSpecPredictorsComponentSpecs {
             hpaSpec?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsHpaSpec;
+            /**
+             * SeldonScaledObjectSpec is the spec for a KEDA ScaledObject resource
+             */
+            kedaSpec?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsKedaSpec;
             metadata?: {[key: string]: any};
+            pdbSpec?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsPdbSpec;
+            replicas?: number;
             /**
              * PodSpec is a description of a pod.
              */
@@ -98,11 +107,11 @@ export namespace machinelearning {
             /**
              * targetAverageValue is the target per-pod value of global metric (as a quantity). Mutually exclusive with TargetValue.
              */
-            targetAverageValue?: string;
+            targetAverageValue?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsHpaSpecMetricsExternalTargetAverageValue;
             /**
              * targetValue is the target value of the metric (as a quantity). Mutually exclusive with TargetAverageValue.
              */
-            targetValue?: string;
+            targetValue?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsHpaSpecMetricsExternalTargetValue;
         }
 
         /**
@@ -137,6 +146,12 @@ export namespace machinelearning {
             values?: string[];
         }
 
+        export interface SeldonDeploymentSpecPredictorsComponentSpecsHpaSpecMetricsExternalTargetAverageValue {
+        }
+
+        export interface SeldonDeploymentSpecPredictorsComponentSpecsHpaSpecMetricsExternalTargetValue {
+        }
+
         /**
          * object refers to a metric describing a single kubernetes object (for example, hits-per-second on an Ingress object).
          */
@@ -144,7 +159,7 @@ export namespace machinelearning {
             /**
              * averageValue is the target value of the average of the metric across all relevant pods (as a quantity)
              */
-            averageValue?: string;
+            averageValue?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsHpaSpecMetricsObjectAverageValue;
             /**
              * metricName is the name of the metric in question.
              */
@@ -160,7 +175,10 @@ export namespace machinelearning {
             /**
              * targetValue is the target value of the metric (as a quantity).
              */
-            targetValue: string;
+            targetValue: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsHpaSpecMetricsObjectTargetValue;
+        }
+
+        export interface SeldonDeploymentSpecPredictorsComponentSpecsHpaSpecMetricsObjectAverageValue {
         }
 
         /**
@@ -204,13 +222,16 @@ export namespace machinelearning {
              */
             apiVersion?: string;
             /**
-             * Kind of the referent; More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds"
+             * Kind of the referent; More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds"
              */
             kind: string;
             /**
              * Name of the referent; More info: http://kubernetes.io/docs/user-guide/identifiers#names
              */
             name: string;
+        }
+
+        export interface SeldonDeploymentSpecPredictorsComponentSpecsHpaSpecMetricsObjectTargetValue {
         }
 
         /**
@@ -228,7 +249,7 @@ export namespace machinelearning {
             /**
              * targetAverageValue is the target value of the average of the metric across all relevant pods (as a quantity)
              */
-            targetAverageValue: string;
+            targetAverageValue: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsHpaSpecMetricsPodsTargetAverageValue;
         }
 
         /**
@@ -263,6 +284,9 @@ export namespace machinelearning {
             values?: string[];
         }
 
+        export interface SeldonDeploymentSpecPredictorsComponentSpecsHpaSpecMetricsPodsTargetAverageValue {
+        }
+
         /**
          * resource refers to a resource metric (such as those specified in requests and limits) known to Kubernetes describing each pod in the current scale target (e.g. CPU or memory). Such metrics are built in to Kubernetes, and have special scaling options on top of those available to normal per-pod metrics using the "pods" source.
          */
@@ -278,7 +302,212 @@ export namespace machinelearning {
             /**
              * targetAverageValue is the target value of the average of the resource metric across all relevant pods, as a raw value (instead of as a percentage of the request), similar to the "pods" metric source type.
              */
-            targetAverageValue?: string;
+            targetAverageValue?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsHpaSpecMetricsResourceTargetAverageValue;
+        }
+
+        export interface SeldonDeploymentSpecPredictorsComponentSpecsHpaSpecMetricsResourceTargetAverageValue {
+        }
+
+        /**
+         * SeldonScaledObjectSpec is the spec for a KEDA ScaledObject resource
+         */
+        export interface SeldonDeploymentSpecPredictorsComponentSpecsKedaSpec {
+            /**
+             * AdvancedConfig specifies advance scaling options
+             */
+            advanced?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsKedaSpecAdvanced;
+            cooldownPeriod?: number;
+            maxReplicaCount?: number;
+            minReplicaCount?: number;
+            pollingInterval?: number;
+            triggers: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsKedaSpecTriggers[];
+        }
+
+        /**
+         * AdvancedConfig specifies advance scaling options
+         */
+        export interface SeldonDeploymentSpecPredictorsComponentSpecsKedaSpecAdvanced {
+            /**
+             * HorizontalPodAutoscalerConfig specifies horizontal scale config
+             */
+            horizontalPodAutoscalerConfig?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsKedaSpecAdvancedHorizontalPodAutoscalerConfig;
+            restoreToOriginalReplicaCount?: boolean;
+        }
+
+        /**
+         * HorizontalPodAutoscalerConfig specifies horizontal scale config
+         */
+        export interface SeldonDeploymentSpecPredictorsComponentSpecsKedaSpecAdvancedHorizontalPodAutoscalerConfig {
+            /**
+             * HorizontalPodAutoscalerBehavior configures the scaling behavior of the target in both Up and Down directions (scaleUp and scaleDown fields respectively).
+             */
+            behavior?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsKedaSpecAdvancedHorizontalPodAutoscalerConfigBehavior;
+            resourceMetrics?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsKedaSpecAdvancedHorizontalPodAutoscalerConfigResourceMetrics[];
+        }
+
+        /**
+         * HorizontalPodAutoscalerBehavior configures the scaling behavior of the target in both Up and Down directions (scaleUp and scaleDown fields respectively).
+         */
+        export interface SeldonDeploymentSpecPredictorsComponentSpecsKedaSpecAdvancedHorizontalPodAutoscalerConfigBehavior {
+            /**
+             * scaleDown is scaling policy for scaling Down. If not set, the default value is to allow to scale down to minReplicas pods, with a 300 second stabilization window (i.e., the highest recommendation for the last 300sec is used).
+             */
+            scaleDown?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsKedaSpecAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDown;
+            /**
+             * scaleUp is scaling policy for scaling Up. If not set, the default value is the higher of:   * increase no more than 4 pods per 60 seconds   * double the number of pods per 60 seconds No stabilization is used.
+             */
+            scaleUp?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsKedaSpecAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUp;
+        }
+
+        /**
+         * scaleDown is scaling policy for scaling Down. If not set, the default value is to allow to scale down to minReplicas pods, with a 300 second stabilization window (i.e., the highest recommendation for the last 300sec is used).
+         */
+        export interface SeldonDeploymentSpecPredictorsComponentSpecsKedaSpecAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDown {
+            /**
+             * policies is a list of potential scaling polices which can be used during scaling. At least one policy must be specified, otherwise the HPAScalingRules will be discarded as invalid
+             */
+            policies?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsKedaSpecAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicies[];
+            /**
+             * selectPolicy is used to specify which policy should be used. If not set, the default value MaxPolicySelect is used.
+             */
+            selectPolicy?: string;
+            /**
+             * StabilizationWindowSeconds is the number of seconds for which past recommendations should be considered while scaling up or scaling down. StabilizationWindowSeconds must be greater than or equal to zero and less than or equal to 3600 (one hour). If not set, use the default values: - For scale up: 0 (i.e. no stabilization is done). - For scale down: 300 (i.e. the stabilization window is 300 seconds long).
+             */
+            stabilizationWindowSeconds?: number;
+        }
+
+        /**
+         * HPAScalingPolicy is a single policy which must hold true for a specified past interval.
+         */
+        export interface SeldonDeploymentSpecPredictorsComponentSpecsKedaSpecAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicies {
+            /**
+             * PeriodSeconds specifies the window of time for which the policy should hold true. PeriodSeconds must be greater than zero and less than or equal to 1800 (30 min).
+             */
+            periodSeconds: number;
+            /**
+             * Type is used to specify the scaling policy.
+             */
+            type: string;
+            /**
+             * Value contains the amount of change which is permitted by the policy. It must be greater than zero
+             */
+            value: number;
+        }
+
+        /**
+         * scaleUp is scaling policy for scaling Up. If not set, the default value is the higher of:   * increase no more than 4 pods per 60 seconds   * double the number of pods per 60 seconds No stabilization is used.
+         */
+        export interface SeldonDeploymentSpecPredictorsComponentSpecsKedaSpecAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUp {
+            /**
+             * policies is a list of potential scaling polices which can be used during scaling. At least one policy must be specified, otherwise the HPAScalingRules will be discarded as invalid
+             */
+            policies?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsKedaSpecAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicies[];
+            /**
+             * selectPolicy is used to specify which policy should be used. If not set, the default value MaxPolicySelect is used.
+             */
+            selectPolicy?: string;
+            /**
+             * StabilizationWindowSeconds is the number of seconds for which past recommendations should be considered while scaling up or scaling down. StabilizationWindowSeconds must be greater than or equal to zero and less than or equal to 3600 (one hour). If not set, use the default values: - For scale up: 0 (i.e. no stabilization is done). - For scale down: 300 (i.e. the stabilization window is 300 seconds long).
+             */
+            stabilizationWindowSeconds?: number;
+        }
+
+        /**
+         * HPAScalingPolicy is a single policy which must hold true for a specified past interval.
+         */
+        export interface SeldonDeploymentSpecPredictorsComponentSpecsKedaSpecAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicies {
+            /**
+             * PeriodSeconds specifies the window of time for which the policy should hold true. PeriodSeconds must be greater than zero and less than or equal to 1800 (30 min).
+             */
+            periodSeconds: number;
+            /**
+             * Type is used to specify the scaling policy.
+             */
+            type: string;
+            /**
+             * Value contains the amount of change which is permitted by the policy. It must be greater than zero
+             */
+            value: number;
+        }
+
+        /**
+         * ResourceMetricSource indicates how to scale on a resource metric known to Kubernetes, as specified in requests and limits, describing each pod in the current scale target (e.g. CPU or memory).  The values will be averaged together before being compared to the target.  Such metrics are built in to Kubernetes, and have special scaling options on top of those available to normal per-pod metrics using the "pods" source.  Only one "target" type should be set.
+         */
+        export interface SeldonDeploymentSpecPredictorsComponentSpecsKedaSpecAdvancedHorizontalPodAutoscalerConfigResourceMetrics {
+            /**
+             * name is the name of the resource in question.
+             */
+            name: string;
+            /**
+             * target specifies the target value for the given metric
+             */
+            target: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsKedaSpecAdvancedHorizontalPodAutoscalerConfigResourceMetricsTarget;
+        }
+
+        /**
+         * target specifies the target value for the given metric
+         */
+        export interface SeldonDeploymentSpecPredictorsComponentSpecsKedaSpecAdvancedHorizontalPodAutoscalerConfigResourceMetricsTarget {
+            /**
+             * averageUtilization is the target value of the average of the resource metric across all relevant pods, represented as a percentage of the requested value of the resource for the pods. Currently only valid for Resource metric source type
+             */
+            averageUtilization?: number;
+            /**
+             * averageValue is the target value of the average of the metric across all relevant pods (as a quantity)
+             */
+            averageValue?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsKedaSpecAdvancedHorizontalPodAutoscalerConfigResourceMetricsTargetAverageValue;
+            /**
+             * type represents whether the metric type is Utilization, Value, or AverageValue
+             */
+            type: string;
+            /**
+             * value is the target value of the metric (as a quantity).
+             */
+            value?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsKedaSpecAdvancedHorizontalPodAutoscalerConfigResourceMetricsTargetValue;
+        }
+
+        export interface SeldonDeploymentSpecPredictorsComponentSpecsKedaSpecAdvancedHorizontalPodAutoscalerConfigResourceMetricsTargetAverageValue {
+        }
+
+        export interface SeldonDeploymentSpecPredictorsComponentSpecsKedaSpecAdvancedHorizontalPodAutoscalerConfigResourceMetricsTargetValue {
+        }
+
+        /**
+         * ScaleTriggers reference the scaler that will be used
+         */
+        export interface SeldonDeploymentSpecPredictorsComponentSpecsKedaSpecTriggers {
+            /**
+             * ScaledObjectAuthRef points to the TriggerAuthentication object that is used to authenticate the scaler with the environment
+             */
+            authenticationRef?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsKedaSpecTriggersAuthenticationRef;
+            metadata: {[key: string]: string};
+            name?: string;
+            type: string;
+        }
+
+        /**
+         * ScaledObjectAuthRef points to the TriggerAuthentication object that is used to authenticate the scaler with the environment
+         */
+        export interface SeldonDeploymentSpecPredictorsComponentSpecsKedaSpecTriggersAuthenticationRef {
+            name: string;
+        }
+
+        export interface SeldonDeploymentSpecPredictorsComponentSpecsPdbSpec {
+            /**
+             * An eviction is allowed if at most "maxUnavailable" pods in the deployment corresponding to a componentSpec are unavailable after the eviction, i.e. even in absence of the evicted pod. For example, one can prevent all voluntary evictions by specifying 0. MaxUnavailable and MinAvailable are mutually exclusive.
+             */
+            maxUnavailable?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsPdbSpecMaxUnavailable;
+            /**
+             * An eviction is allowed if at least "minAvailable" pods in the deployment corresponding to a componentSpec will still be available after the eviction, i.e. even in the absence of the evicted pod.  So for example you can prevent all voluntary evictions by specifying "100%".
+             */
+            minAvailable?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsPdbSpecMinAvailable;
+        }
+
+        export interface SeldonDeploymentSpecPredictorsComponentSpecsPdbSpecMaxUnavailable {
+        }
+
+        export interface SeldonDeploymentSpecPredictorsComponentSpecsPdbSpecMinAvailable {
         }
 
         /**
@@ -314,6 +543,10 @@ export namespace machinelearning {
              */
             enableServiceLinks?: boolean;
             /**
+             * List of ephemeral containers run in this pod. Ephemeral containers may be run in an existing pod to perform user-initiated actions such as debugging. This list cannot be specified when creating a pod, and it cannot be modified by updating the pod spec. In order to add an ephemeral container to an existing pod, use the pod's ephemeralcontainers subresource. This field is alpha-level and is only honored by servers that enable the EphemeralContainers feature.
+             */
+            ephemeralContainers?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainers[];
+            /**
              * HostAliases is an optional list of hosts and IPs that will be injected into the pod's hosts file if specified. This is only valid for non-hostNetwork pods.
              */
             hostAliases?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsSpecHostAliases[];
@@ -338,7 +571,7 @@ export namespace machinelearning {
              */
             imagePullSecrets?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsSpecImagePullSecrets[];
             /**
-             * List of initialization containers belonging to the pod. Init containers are executed in order prior to containers being started. If any init container fails, the pod is considered to have failed and is handled according to its restartPolicy. The name for an init container or normal container must be unique among all containers. Init containers may not have Lifecycle actions, Readiness probes, or Liveness probes. The resourceRequirements of an init container are taken into account during scheduling by finding the highest request/limit for each resource type, and then using the max of of that value or the sum of the normal containers. Limits are applied to init containers in a similar fashion. Init containers cannot currently be added or removed. Cannot be updated. More info: https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
+             * List of initialization containers belonging to the pod. Init containers are executed in order prior to containers being started. If any init container fails, the pod is considered to have failed and is handled according to its restartPolicy. The name for an init container or normal container must be unique among all containers. Init containers may not have Lifecycle actions, Readiness probes, Liveness probes, or Startup probes. The resourceRequirements of an init container are taken into account during scheduling by finding the highest request/limit for each resource type, and then using the max of of that value or the sum of the normal containers. Limits are applied to init containers in a similar fashion. Init containers cannot currently be added or removed. Cannot be updated. More info: https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
              */
             initContainers?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainers[];
             /**
@@ -349,6 +582,14 @@ export namespace machinelearning {
              * NodeSelector is a selector which must be true for the pod to fit on a node. Selector which must match a node's labels for the pod to be scheduled on that node. More info: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
              */
             nodeSelector?: {[key: string]: string};
+            /**
+             * Overhead represents the resource overhead associated with running a pod for a given RuntimeClass. This field will be autopopulated at admission time by the RuntimeClass admission controller. If the RuntimeClass admission controller is enabled, overhead must not be set in Pod create requests. The RuntimeClass admission controller will reject Pod create requests which have the overhead already set. If RuntimeClass is configured and selected in the PodSpec, Overhead will be set to the value defined in the corresponding RuntimeClass, otherwise it will remain unset and treated as zero. More info: https://git.k8s.io/enhancements/keps/sig-node/20190226-pod-overhead.md This field is alpha-level as of Kubernetes v1.16, and is only honored by servers that enable the PodOverhead feature.
+             */
+            overhead?: {[key: string]: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsSpecOverhead};
+            /**
+             * PreemptionPolicy is the Policy for preempting pods with lower priority. One of Never, PreemptLowerPriority. Defaults to PreemptLowerPriority if unset. This field is alpha-level and is only honored by servers that enable the NonPreemptingPriority feature.
+             */
+            preemptionPolicy?: string;
             /**
              * The priority value. Various system components use this field to find the priority of the pod. When Priority Admission Controller is enabled, it prevents users from setting this field. The admission controller populates this field from PriorityClassName. The higher the value, the higher the priority.
              */
@@ -366,7 +607,7 @@ export namespace machinelearning {
              */
             restartPolicy?: string;
             /**
-             * RuntimeClassName refers to a RuntimeClass object in the node.k8s.io group, which should be used to run this pod.  If no RuntimeClass resource matches the named class, the pod will not be run. If unset or empty, the "legacy" RuntimeClass will be used, which is an implicit class with an empty definition that uses the default runtime handler. More info: https://git.k8s.io/enhancements/keps/sig-node/runtime-class.md This is an alpha feature and may change in the future.
+             * RuntimeClassName refers to a RuntimeClass object in the node.k8s.io group, which should be used to run this pod.  If no RuntimeClass resource matches the named class, the pod will not be run. If unset or empty, the "legacy" RuntimeClass will be used, which is an implicit class with an empty definition that uses the default runtime handler. More info: https://git.k8s.io/enhancements/keps/sig-node/runtime-class.md This is a beta feature as of Kubernetes v1.14.
              */
             runtimeClassName?: string;
             /**
@@ -386,7 +627,7 @@ export namespace machinelearning {
              */
             serviceAccountName?: string;
             /**
-             * Share a single process namespace between all of the containers in a pod. When this is set containers will be able to view and signal processes from other containers in the same pod, and the first process in each container will not be assigned PID 1. HostPID and ShareProcessNamespace cannot both be set. Optional: Default to false. This field is beta-level and may be disabled with the PodShareProcessNamespace feature.
+             * Share a single process namespace between all of the containers in a pod. When this is set containers will be able to view and signal processes from other containers in the same pod, and the first process in each container will not be assigned PID 1. HostPID and ShareProcessNamespace cannot both be set. Optional: Default to false.
              */
             shareProcessNamespace?: boolean;
             /**
@@ -401,6 +642,10 @@ export namespace machinelearning {
              * If specified, the pod's tolerations.
              */
             tolerations?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsSpecTolerations[];
+            /**
+             * TopologySpreadConstraints describes how a group of pods ought to spread across topology domains. Scheduler will schedule pods in a way which abides by the constraints. This field is only honored by clusters that enable the EvenPodsSpread feature. All topologySpreadConstraints are ANDed.
+             */
+            topologySpreadConstraints?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsSpecTopologySpreadConstraints[];
             /**
              * List of volumes that can be mounted by containers belonging to the pod. More info: https://kubernetes.io/docs/concepts/storage/volumes
              */
@@ -876,6 +1121,10 @@ export namespace machinelearning {
              */
             securityContext?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersSecurityContext;
             /**
+             * StartupProbe indicates that the Pod has successfully initialized. If specified, no other probes are executed until this completes successfully. If this probe fails, the Pod will be restarted, just as if the livenessProbe failed. This can be used to provide different probe parameters at the beginning of a Pod's lifecycle, when it might take a long time to load data or warm a cache, than during steady-state operation. This cannot be updated. This is a beta feature enabled by the StartupProbe feature flag. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
+             */
+            startupProbe?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersStartupProbe;
+            /**
              * Whether this container should allocate a buffer for stdin in the container runtime. If this is not set, reads from stdin in the container will always result in EOF. Default is false.
              */
             stdin?: boolean;
@@ -896,7 +1145,7 @@ export namespace machinelearning {
              */
             tty?: boolean;
             /**
-             * volumeDevices is the list of block devices to be used by the container. This is a beta feature.
+             * volumeDevices is the list of block devices to be used by the container.
              */
             volumeDevices?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersVolumeDevices[];
             /**
@@ -982,7 +1231,7 @@ export namespace machinelearning {
              */
             configMapKeyRef?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersEnvValueFromConfigMapKeyRef;
             /**
-             * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+             * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
              */
             fieldRef?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersEnvValueFromFieldRef;
             /**
@@ -1008,13 +1257,13 @@ export namespace machinelearning {
              */
             name?: string;
             /**
-             * Specify whether the ConfigMap or it's key must be defined
+             * Specify whether the ConfigMap or its key must be defined
              */
             optional?: boolean;
         }
 
         /**
-         * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+         * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
          */
         export interface SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersEnvValueFromFieldRef {
             /**
@@ -1038,11 +1287,14 @@ export namespace machinelearning {
             /**
              * Specifies the output format of the exposed resources, defaults to "1"
              */
-            divisor?: string;
+            divisor?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersEnvValueFromResourceFieldRefDivisor;
             /**
              * Required: resource to select
              */
             resource: string;
+        }
+
+        export interface SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersEnvValueFromResourceFieldRefDivisor {
         }
 
         /**
@@ -1058,7 +1310,7 @@ export namespace machinelearning {
              */
             name?: string;
             /**
-             * Specify whether the Secret or it's key must be defined
+             * Specify whether the Secret or its key must be defined
              */
             optional?: boolean;
         }
@@ -1072,7 +1324,7 @@ export namespace machinelearning {
              */
             postStart?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersLifecyclePostStart;
             /**
-             * PreStop is called immediately before a container is terminated due to an API request or management event such as liveness probe failure, preemption, resource contention, etc. The handler is not called if the container crashes or exits. The reason for termination is passed to the handler. The Pod's termination grace period countdown begins before the PreStop hooked is executed. Regardless of the outcome of the handler, the container will eventually terminate within the Pod's termination grace period. Other management of the container blocks until the hook completes or until the termination grace period is reached. More info: https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/#container-hooks
+             * PreStop is called immediately before a container is terminated due to an API request or management event such as liveness/startup probe failure, preemption, resource contention, etc. The handler is not called if the container crashes or exits. The reason for termination is passed to the handler. The Pod's termination grace period countdown begins before the PreStop hooked is executed. Regardless of the outcome of the handler, the container will eventually terminate within the Pod's termination grace period. Other management of the container blocks until the hook completes or until the termination grace period is reached. More info: https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/#container-hooks
              */
             preStop?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersLifecyclePreStop;
         }
@@ -1160,7 +1412,7 @@ export namespace machinelearning {
         }
 
         /**
-         * PreStop is called immediately before a container is terminated due to an API request or management event such as liveness probe failure, preemption, resource contention, etc. The handler is not called if the container crashes or exits. The reason for termination is passed to the handler. The Pod's termination grace period countdown begins before the PreStop hooked is executed. Regardless of the outcome of the handler, the container will eventually terminate within the Pod's termination grace period. Other management of the container blocks until the hook completes or until the termination grace period is reached. More info: https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/#container-hooks
+         * PreStop is called immediately before a container is terminated due to an API request or management event such as liveness/startup probe failure, preemption, resource contention, etc. The handler is not called if the container crashes or exits. The reason for termination is passed to the handler. The Pod's termination grace period countdown begins before the PreStop hooked is executed. Regardless of the outcome of the handler, the container will eventually terminate within the Pod's termination grace period. Other management of the container blocks until the hook completes or until the termination grace period is reached. More info: https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/#container-hooks
          */
         export interface SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersLifecyclePreStop {
             /**
@@ -1266,7 +1518,7 @@ export namespace machinelearning {
              */
             periodSeconds?: number;
             /**
-             * Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1. Must be 1 for liveness. Minimum value is 1.
+             * Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1. Must be 1 for liveness and startup. Minimum value is 1.
              */
             successThreshold?: number;
             /**
@@ -1366,7 +1618,7 @@ export namespace machinelearning {
             /**
              * Protocol for port. Must be UDP, TCP, or SCTP. Defaults to "TCP".
              */
-            protocol?: string;
+            protocol: string;
         }
 
         /**
@@ -1394,7 +1646,7 @@ export namespace machinelearning {
              */
             periodSeconds?: number;
             /**
-             * Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1. Must be 1 for liveness. Minimum value is 1.
+             * Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1. Must be 1 for liveness and startup. Minimum value is 1.
              */
             successThreshold?: number;
             /**
@@ -1478,11 +1730,17 @@ export namespace machinelearning {
             /**
              * Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
              */
-            limits?: {[key: string]: string};
+            limits?: {[key: string]: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersResourcesLimits};
             /**
              * Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
              */
-            requests?: {[key: string]: string};
+            requests?: {[key: string]: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersResourcesRequests};
+        }
+
+        export interface SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersResourcesLimits {
+        }
+
+        export interface SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersResourcesRequests {
         }
 
         /**
@@ -1525,6 +1783,10 @@ export namespace machinelearning {
              * The SELinux context to be applied to the container. If unspecified, the container runtime will allocate a random SELinux context for each container.  May also be set in PodSecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
              */
             seLinuxOptions?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersSecurityContextSeLinuxOptions;
+            /**
+             * The Windows specific settings applied to all containers. If unspecified, the options from the PodSecurityContext will be used. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
+             */
+            windowsOptions?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersSecurityContextWindowsOptions;
         }
 
         /**
@@ -1561,6 +1823,132 @@ export namespace machinelearning {
              * User is a SELinux user label that applies to the container.
              */
             user?: string;
+        }
+
+        /**
+         * The Windows specific settings applied to all containers. If unspecified, the options from the PodSecurityContext will be used. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
+         */
+        export interface SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersSecurityContextWindowsOptions {
+            /**
+             * GMSACredentialSpec is where the GMSA admission webhook (https://github.com/kubernetes-sigs/windows-gmsa) inlines the contents of the GMSA credential spec named by the GMSACredentialSpecName field.
+             */
+            gmsaCredentialSpec?: string;
+            /**
+             * GMSACredentialSpecName is the name of the GMSA credential spec to use.
+             */
+            gmsaCredentialSpecName?: string;
+            /**
+             * The UserName in Windows to run the entrypoint of the container process. Defaults to the user specified in image metadata if unspecified. May also be set in PodSecurityContext. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
+             */
+            runAsUserName?: string;
+        }
+
+        /**
+         * StartupProbe indicates that the Pod has successfully initialized. If specified, no other probes are executed until this completes successfully. If this probe fails, the Pod will be restarted, just as if the livenessProbe failed. This can be used to provide different probe parameters at the beginning of a Pod's lifecycle, when it might take a long time to load data or warm a cache, than during steady-state operation. This cannot be updated. This is a beta feature enabled by the StartupProbe feature flag. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
+         */
+        export interface SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersStartupProbe {
+            /**
+             * One and only one of the following should be specified. Exec specifies the action to take.
+             */
+            exec?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersStartupProbeExec;
+            /**
+             * Minimum consecutive failures for the probe to be considered failed after having succeeded. Defaults to 3. Minimum value is 1.
+             */
+            failureThreshold?: number;
+            /**
+             * HTTPGet specifies the http request to perform.
+             */
+            httpGet?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersStartupProbeHttpGet;
+            /**
+             * Number of seconds after the container has started before liveness probes are initiated. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
+             */
+            initialDelaySeconds?: number;
+            /**
+             * How often (in seconds) to perform the probe. Default to 10 seconds. Minimum value is 1.
+             */
+            periodSeconds?: number;
+            /**
+             * Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1. Must be 1 for liveness and startup. Minimum value is 1.
+             */
+            successThreshold?: number;
+            /**
+             * TCPSocket specifies an action involving a TCP port. TCP hooks not yet supported TODO: implement a realistic TCP lifecycle hook
+             */
+            tcpSocket?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersStartupProbeTcpSocket;
+            /**
+             * Number of seconds after which the probe times out. Defaults to 1 second. Minimum value is 1. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
+             */
+            timeoutSeconds?: number;
+        }
+
+        /**
+         * One and only one of the following should be specified. Exec specifies the action to take.
+         */
+        export interface SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersStartupProbeExec {
+            /**
+             * Command is the command line to execute inside the container, the working directory for the command  is root ('/') in the container's filesystem. The command is simply exec'd, it is not run inside a shell, so traditional shell instructions ('|', etc) won't work. To use a shell, you need to explicitly call out to that shell. Exit status of 0 is treated as live/healthy and non-zero is unhealthy.
+             */
+            command?: string[];
+        }
+
+        /**
+         * HTTPGet specifies the http request to perform.
+         */
+        export interface SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersStartupProbeHttpGet {
+            /**
+             * Host name to connect to, defaults to the pod IP. You probably want to set "Host" in httpHeaders instead.
+             */
+            host?: string;
+            /**
+             * Custom headers to set in the request. HTTP allows repeated headers.
+             */
+            httpHeaders?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersStartupProbeHttpGetHttpHeaders[];
+            /**
+             * Path to access on the HTTP server.
+             */
+            path?: string;
+            /**
+             * Name or number of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME.
+             */
+            port: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersStartupProbeHttpGetPort;
+            /**
+             * Scheme to use for connecting to the host. Defaults to HTTP.
+             */
+            scheme?: string;
+        }
+
+        /**
+         * HTTPHeader describes a custom header to be used in HTTP probes
+         */
+        export interface SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersStartupProbeHttpGetHttpHeaders {
+            /**
+             * The header field name
+             */
+            name: string;
+            /**
+             * The header field value
+             */
+            value: string;
+        }
+
+        export interface SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersStartupProbeHttpGetPort {
+        }
+
+        /**
+         * TCPSocket specifies an action involving a TCP port. TCP hooks not yet supported TODO: implement a realistic TCP lifecycle hook
+         */
+        export interface SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersStartupProbeTcpSocket {
+            /**
+             * Optional: Host name to connect to, defaults to the pod IP.
+             */
+            host?: string;
+            /**
+             * Number or name of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME.
+             */
+            port: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersStartupProbeTcpSocketPort;
+        }
+
+        export interface SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersStartupProbeTcpSocketPort {
         }
 
         /**
@@ -1602,7 +1990,7 @@ export namespace machinelearning {
              */
             subPath?: string;
             /**
-             * Expanded path within the volume from which the container's volume should be mounted. Behaves similarly to SubPath but environment variable references $(VAR_NAME) are expanded using the container's environment. Defaults to "" (volume's root). SubPathExpr and SubPath are mutually exclusive. This field is alpha in 1.14.
+             * Expanded path within the volume from which the container's volume should be mounted. Behaves similarly to SubPath but environment variable references $(VAR_NAME) are expanded using the container's environment. Defaults to "" (volume's root). SubPathExpr and SubPath are mutually exclusive.
              */
             subPathExpr?: string;
         }
@@ -1634,6 +2022,965 @@ export namespace machinelearning {
              */
             name?: string;
             value?: string;
+        }
+
+        /**
+         * An EphemeralContainer is a container that may be added temporarily to an existing pod for user-initiated activities such as debugging. Ephemeral containers have no resource or scheduling guarantees, and they will not be restarted when they exit or when a pod is removed or restarted. If an ephemeral container causes a pod to exceed its resource allocation, the pod may be evicted. Ephemeral containers may not be added by directly updating the pod spec. They must be added via the pod's ephemeralcontainers subresource, and they will appear in the pod spec once added. This is an alpha feature enabled by the EphemeralContainers feature flag.
+         */
+        export interface SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainers {
+            /**
+             * Arguments to the entrypoint. The docker image's CMD is used if this is not provided. Variable references $(VAR_NAME) are expanded using the container's environment. If a variable cannot be resolved, the reference in the input string will be unchanged. The $(VAR_NAME) syntax can be escaped with a double $$, ie: $$(VAR_NAME). Escaped references will never be expanded, regardless of whether the variable exists or not. Cannot be updated. More info: https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#running-a-command-in-a-shell
+             */
+            args?: string[];
+            /**
+             * Entrypoint array. Not executed within a shell. The docker image's ENTRYPOINT is used if this is not provided. Variable references $(VAR_NAME) are expanded using the container's environment. If a variable cannot be resolved, the reference in the input string will be unchanged. The $(VAR_NAME) syntax can be escaped with a double $$, ie: $$(VAR_NAME). Escaped references will never be expanded, regardless of whether the variable exists or not. Cannot be updated. More info: https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#running-a-command-in-a-shell
+             */
+            command?: string[];
+            /**
+             * List of environment variables to set in the container. Cannot be updated.
+             */
+            env?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersEnv[];
+            /**
+             * List of sources to populate environment variables in the container. The keys defined within a source must be a C_IDENTIFIER. All invalid keys will be reported as an event when the container is starting. When a key exists in multiple sources, the value associated with the last source will take precedence. Values defined by an Env with a duplicate key will take precedence. Cannot be updated.
+             */
+            envFrom?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersEnvFrom[];
+            /**
+             * Docker image name. More info: https://kubernetes.io/docs/concepts/containers/images
+             */
+            image?: string;
+            /**
+             * Image pull policy. One of Always, Never, IfNotPresent. Defaults to Always if :latest tag is specified, or IfNotPresent otherwise. Cannot be updated. More info: https://kubernetes.io/docs/concepts/containers/images#updating-images
+             */
+            imagePullPolicy?: string;
+            /**
+             * Lifecycle is not allowed for ephemeral containers.
+             */
+            lifecycle?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecycle;
+            /**
+             * Probes are not allowed for ephemeral containers.
+             */
+            livenessProbe?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLivenessProbe;
+            /**
+             * Name of the ephemeral container specified as a DNS_LABEL. This name must be unique among all containers, init containers and ephemeral containers.
+             */
+            name: string;
+            /**
+             * Ports are not allowed for ephemeral containers.
+             */
+            ports?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersPorts[];
+            /**
+             * Probes are not allowed for ephemeral containers.
+             */
+            readinessProbe?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersReadinessProbe;
+            /**
+             * Resources are not allowed for ephemeral containers. Ephemeral containers use spare resources already allocated to the pod.
+             */
+            resources?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersResources;
+            /**
+             * SecurityContext is not allowed for ephemeral containers.
+             */
+            securityContext?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersSecurityContext;
+            /**
+             * Probes are not allowed for ephemeral containers.
+             */
+            startupProbe?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersStartupProbe;
+            /**
+             * Whether this container should allocate a buffer for stdin in the container runtime. If this is not set, reads from stdin in the container will always result in EOF. Default is false.
+             */
+            stdin?: boolean;
+            /**
+             * Whether the container runtime should close the stdin channel after it has been opened by a single attach. When stdin is true the stdin stream will remain open across multiple attach sessions. If stdinOnce is set to true, stdin is opened on container start, is empty until the first client attaches to stdin, and then remains open and accepts data until the client disconnects, at which time stdin is closed and remains closed until the container is restarted. If this flag is false, a container processes that reads from stdin will never receive an EOF. Default is false
+             */
+            stdinOnce?: boolean;
+            /**
+             * If set, the name of the container from PodSpec that this ephemeral container targets. The ephemeral container will be run in the namespaces (IPC, PID, etc) of this container. If not set then the ephemeral container is run in whatever namespaces are shared for the pod. Note that the container runtime must support this feature.
+             */
+            targetContainerName?: string;
+            /**
+             * Optional: Path at which the file to which the container's termination message will be written is mounted into the container's filesystem. Message written is intended to be brief final status, such as an assertion failure message. Will be truncated by the node if greater than 4096 bytes. The total message length across all containers will be limited to 12kb. Defaults to /dev/termination-log. Cannot be updated.
+             */
+            terminationMessagePath?: string;
+            /**
+             * Indicate how the termination message should be populated. File will use the contents of terminationMessagePath to populate the container status message on both success and failure. FallbackToLogsOnError will use the last chunk of container log output if the termination message file is empty and the container exited with an error. The log output is limited to 2048 bytes or 80 lines, whichever is smaller. Defaults to File. Cannot be updated.
+             */
+            terminationMessagePolicy?: string;
+            /**
+             * Whether this container should allocate a TTY for itself, also requires 'stdin' to be true. Default is false.
+             */
+            tty?: boolean;
+            /**
+             * volumeDevices is the list of block devices to be used by the container.
+             */
+            volumeDevices?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersVolumeDevices[];
+            /**
+             * Pod volumes to mount into the container's filesystem. Cannot be updated.
+             */
+            volumeMounts?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersVolumeMounts[];
+            /**
+             * Container's working directory. If not specified, the container runtime's default will be used, which might be configured in the container image. Cannot be updated.
+             */
+            workingDir?: string;
+        }
+
+        /**
+         * EnvVar represents an environment variable present in a Container.
+         */
+        export interface SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersEnv {
+            /**
+             * Name of the environment variable. Must be a C_IDENTIFIER.
+             */
+            name: string;
+            /**
+             * Variable references $(VAR_NAME) are expanded using the previous defined environment variables in the container and any service environment variables. If a variable cannot be resolved, the reference in the input string will be unchanged. The $(VAR_NAME) syntax can be escaped with a double $$, ie: $$(VAR_NAME). Escaped references will never be expanded, regardless of whether the variable exists or not. Defaults to "".
+             */
+            value?: string;
+            /**
+             * Source for the environment variable's value. Cannot be used if value is not empty.
+             */
+            valueFrom?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersEnvValueFrom;
+        }
+
+        /**
+         * EnvFromSource represents the source of a set of ConfigMaps
+         */
+        export interface SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersEnvFrom {
+            /**
+             * The ConfigMap to select from
+             */
+            configMapRef?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersEnvFromConfigMapRef;
+            /**
+             * An optional identifier to prepend to each key in the ConfigMap. Must be a C_IDENTIFIER.
+             */
+            prefix?: string;
+            /**
+             * The Secret to select from
+             */
+            secretRef?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersEnvFromSecretRef;
+        }
+
+        /**
+         * The ConfigMap to select from
+         */
+        export interface SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersEnvFromConfigMapRef {
+            /**
+             * Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+             */
+            name?: string;
+            /**
+             * Specify whether the ConfigMap must be defined
+             */
+            optional?: boolean;
+        }
+
+        /**
+         * The Secret to select from
+         */
+        export interface SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersEnvFromSecretRef {
+            /**
+             * Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+             */
+            name?: string;
+            /**
+             * Specify whether the Secret must be defined
+             */
+            optional?: boolean;
+        }
+
+        /**
+         * Source for the environment variable's value. Cannot be used if value is not empty.
+         */
+        export interface SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersEnvValueFrom {
+            /**
+             * Selects a key of a ConfigMap.
+             */
+            configMapKeyRef?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersEnvValueFromConfigMapKeyRef;
+            /**
+             * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
+             */
+            fieldRef?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersEnvValueFromFieldRef;
+            /**
+             * Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
+             */
+            resourceFieldRef?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersEnvValueFromResourceFieldRef;
+            /**
+             * Selects a key of a secret in the pod's namespace
+             */
+            secretKeyRef?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersEnvValueFromSecretKeyRef;
+        }
+
+        /**
+         * Selects a key of a ConfigMap.
+         */
+        export interface SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersEnvValueFromConfigMapKeyRef {
+            /**
+             * The key to select.
+             */
+            key: string;
+            /**
+             * Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+             */
+            name?: string;
+            /**
+             * Specify whether the ConfigMap or its key must be defined
+             */
+            optional?: boolean;
+        }
+
+        /**
+         * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
+         */
+        export interface SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersEnvValueFromFieldRef {
+            /**
+             * Version of the schema the FieldPath is written in terms of, defaults to "v1".
+             */
+            apiVersion?: string;
+            /**
+             * Path of the field to select in the specified API version.
+             */
+            fieldPath: string;
+        }
+
+        /**
+         * Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
+         */
+        export interface SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersEnvValueFromResourceFieldRef {
+            /**
+             * Container name: required for volumes, optional for env vars
+             */
+            containerName?: string;
+            /**
+             * Specifies the output format of the exposed resources, defaults to "1"
+             */
+            divisor?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersEnvValueFromResourceFieldRefDivisor;
+            /**
+             * Required: resource to select
+             */
+            resource: string;
+        }
+
+        export interface SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersEnvValueFromResourceFieldRefDivisor {
+        }
+
+        /**
+         * Selects a key of a secret in the pod's namespace
+         */
+        export interface SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersEnvValueFromSecretKeyRef {
+            /**
+             * The key of the secret to select from.  Must be a valid secret key.
+             */
+            key: string;
+            /**
+             * Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+             */
+            name?: string;
+            /**
+             * Specify whether the Secret or its key must be defined
+             */
+            optional?: boolean;
+        }
+
+        /**
+         * Lifecycle is not allowed for ephemeral containers.
+         */
+        export interface SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecycle {
+            /**
+             * PostStart is called immediately after a container is created. If the handler fails, the container is terminated and restarted according to its restart policy. Other management of the container blocks until the hook completes. More info: https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/#container-hooks
+             */
+            postStart?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePostStart;
+            /**
+             * PreStop is called immediately before a container is terminated due to an API request or management event such as liveness/startup probe failure, preemption, resource contention, etc. The handler is not called if the container crashes or exits. The reason for termination is passed to the handler. The Pod's termination grace period countdown begins before the PreStop hooked is executed. Regardless of the outcome of the handler, the container will eventually terminate within the Pod's termination grace period. Other management of the container blocks until the hook completes or until the termination grace period is reached. More info: https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/#container-hooks
+             */
+            preStop?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePreStop;
+        }
+
+        /**
+         * PostStart is called immediately after a container is created. If the handler fails, the container is terminated and restarted according to its restart policy. Other management of the container blocks until the hook completes. More info: https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/#container-hooks
+         */
+        export interface SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePostStart {
+            /**
+             * One and only one of the following should be specified. Exec specifies the action to take.
+             */
+            exec?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePostStartExec;
+            /**
+             * HTTPGet specifies the http request to perform.
+             */
+            httpGet?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePostStartHttpGet;
+            /**
+             * TCPSocket specifies an action involving a TCP port. TCP hooks not yet supported TODO: implement a realistic TCP lifecycle hook
+             */
+            tcpSocket?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePostStartTcpSocket;
+        }
+
+        /**
+         * One and only one of the following should be specified. Exec specifies the action to take.
+         */
+        export interface SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePostStartExec {
+            /**
+             * Command is the command line to execute inside the container, the working directory for the command  is root ('/') in the container's filesystem. The command is simply exec'd, it is not run inside a shell, so traditional shell instructions ('|', etc) won't work. To use a shell, you need to explicitly call out to that shell. Exit status of 0 is treated as live/healthy and non-zero is unhealthy.
+             */
+            command?: string[];
+        }
+
+        /**
+         * HTTPGet specifies the http request to perform.
+         */
+        export interface SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePostStartHttpGet {
+            /**
+             * Host name to connect to, defaults to the pod IP. You probably want to set "Host" in httpHeaders instead.
+             */
+            host?: string;
+            /**
+             * Custom headers to set in the request. HTTP allows repeated headers.
+             */
+            httpHeaders?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePostStartHttpGetHttpHeaders[];
+            /**
+             * Path to access on the HTTP server.
+             */
+            path?: string;
+            /**
+             * Name or number of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME.
+             */
+            port: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePostStartHttpGetPort;
+            /**
+             * Scheme to use for connecting to the host. Defaults to HTTP.
+             */
+            scheme?: string;
+        }
+
+        /**
+         * HTTPHeader describes a custom header to be used in HTTP probes
+         */
+        export interface SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePostStartHttpGetHttpHeaders {
+            /**
+             * The header field name
+             */
+            name: string;
+            /**
+             * The header field value
+             */
+            value: string;
+        }
+
+        export interface SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePostStartHttpGetPort {
+        }
+
+        /**
+         * TCPSocket specifies an action involving a TCP port. TCP hooks not yet supported TODO: implement a realistic TCP lifecycle hook
+         */
+        export interface SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePostStartTcpSocket {
+            /**
+             * Optional: Host name to connect to, defaults to the pod IP.
+             */
+            host?: string;
+            /**
+             * Number or name of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME.
+             */
+            port: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePostStartTcpSocketPort;
+        }
+
+        export interface SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePostStartTcpSocketPort {
+        }
+
+        /**
+         * PreStop is called immediately before a container is terminated due to an API request or management event such as liveness/startup probe failure, preemption, resource contention, etc. The handler is not called if the container crashes or exits. The reason for termination is passed to the handler. The Pod's termination grace period countdown begins before the PreStop hooked is executed. Regardless of the outcome of the handler, the container will eventually terminate within the Pod's termination grace period. Other management of the container blocks until the hook completes or until the termination grace period is reached. More info: https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/#container-hooks
+         */
+        export interface SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePreStop {
+            /**
+             * One and only one of the following should be specified. Exec specifies the action to take.
+             */
+            exec?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePreStopExec;
+            /**
+             * HTTPGet specifies the http request to perform.
+             */
+            httpGet?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePreStopHttpGet;
+            /**
+             * TCPSocket specifies an action involving a TCP port. TCP hooks not yet supported TODO: implement a realistic TCP lifecycle hook
+             */
+            tcpSocket?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePreStopTcpSocket;
+        }
+
+        /**
+         * One and only one of the following should be specified. Exec specifies the action to take.
+         */
+        export interface SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePreStopExec {
+            /**
+             * Command is the command line to execute inside the container, the working directory for the command  is root ('/') in the container's filesystem. The command is simply exec'd, it is not run inside a shell, so traditional shell instructions ('|', etc) won't work. To use a shell, you need to explicitly call out to that shell. Exit status of 0 is treated as live/healthy and non-zero is unhealthy.
+             */
+            command?: string[];
+        }
+
+        /**
+         * HTTPGet specifies the http request to perform.
+         */
+        export interface SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePreStopHttpGet {
+            /**
+             * Host name to connect to, defaults to the pod IP. You probably want to set "Host" in httpHeaders instead.
+             */
+            host?: string;
+            /**
+             * Custom headers to set in the request. HTTP allows repeated headers.
+             */
+            httpHeaders?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePreStopHttpGetHttpHeaders[];
+            /**
+             * Path to access on the HTTP server.
+             */
+            path?: string;
+            /**
+             * Name or number of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME.
+             */
+            port: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePreStopHttpGetPort;
+            /**
+             * Scheme to use for connecting to the host. Defaults to HTTP.
+             */
+            scheme?: string;
+        }
+
+        /**
+         * HTTPHeader describes a custom header to be used in HTTP probes
+         */
+        export interface SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePreStopHttpGetHttpHeaders {
+            /**
+             * The header field name
+             */
+            name: string;
+            /**
+             * The header field value
+             */
+            value: string;
+        }
+
+        export interface SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePreStopHttpGetPort {
+        }
+
+        /**
+         * TCPSocket specifies an action involving a TCP port. TCP hooks not yet supported TODO: implement a realistic TCP lifecycle hook
+         */
+        export interface SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePreStopTcpSocket {
+            /**
+             * Optional: Host name to connect to, defaults to the pod IP.
+             */
+            host?: string;
+            /**
+             * Number or name of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME.
+             */
+            port: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePreStopTcpSocketPort;
+        }
+
+        export interface SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePreStopTcpSocketPort {
+        }
+
+        /**
+         * Probes are not allowed for ephemeral containers.
+         */
+        export interface SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLivenessProbe {
+            /**
+             * One and only one of the following should be specified. Exec specifies the action to take.
+             */
+            exec?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLivenessProbeExec;
+            /**
+             * Minimum consecutive failures for the probe to be considered failed after having succeeded. Defaults to 3. Minimum value is 1.
+             */
+            failureThreshold?: number;
+            /**
+             * HTTPGet specifies the http request to perform.
+             */
+            httpGet?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLivenessProbeHttpGet;
+            /**
+             * Number of seconds after the container has started before liveness probes are initiated. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
+             */
+            initialDelaySeconds?: number;
+            /**
+             * How often (in seconds) to perform the probe. Default to 10 seconds. Minimum value is 1.
+             */
+            periodSeconds?: number;
+            /**
+             * Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1. Must be 1 for liveness and startup. Minimum value is 1.
+             */
+            successThreshold?: number;
+            /**
+             * TCPSocket specifies an action involving a TCP port. TCP hooks not yet supported TODO: implement a realistic TCP lifecycle hook
+             */
+            tcpSocket?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLivenessProbeTcpSocket;
+            /**
+             * Number of seconds after which the probe times out. Defaults to 1 second. Minimum value is 1. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
+             */
+            timeoutSeconds?: number;
+        }
+
+        /**
+         * One and only one of the following should be specified. Exec specifies the action to take.
+         */
+        export interface SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLivenessProbeExec {
+            /**
+             * Command is the command line to execute inside the container, the working directory for the command  is root ('/') in the container's filesystem. The command is simply exec'd, it is not run inside a shell, so traditional shell instructions ('|', etc) won't work. To use a shell, you need to explicitly call out to that shell. Exit status of 0 is treated as live/healthy and non-zero is unhealthy.
+             */
+            command?: string[];
+        }
+
+        /**
+         * HTTPGet specifies the http request to perform.
+         */
+        export interface SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLivenessProbeHttpGet {
+            /**
+             * Host name to connect to, defaults to the pod IP. You probably want to set "Host" in httpHeaders instead.
+             */
+            host?: string;
+            /**
+             * Custom headers to set in the request. HTTP allows repeated headers.
+             */
+            httpHeaders?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLivenessProbeHttpGetHttpHeaders[];
+            /**
+             * Path to access on the HTTP server.
+             */
+            path?: string;
+            /**
+             * Name or number of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME.
+             */
+            port: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLivenessProbeHttpGetPort;
+            /**
+             * Scheme to use for connecting to the host. Defaults to HTTP.
+             */
+            scheme?: string;
+        }
+
+        /**
+         * HTTPHeader describes a custom header to be used in HTTP probes
+         */
+        export interface SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLivenessProbeHttpGetHttpHeaders {
+            /**
+             * The header field name
+             */
+            name: string;
+            /**
+             * The header field value
+             */
+            value: string;
+        }
+
+        export interface SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLivenessProbeHttpGetPort {
+        }
+
+        /**
+         * TCPSocket specifies an action involving a TCP port. TCP hooks not yet supported TODO: implement a realistic TCP lifecycle hook
+         */
+        export interface SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLivenessProbeTcpSocket {
+            /**
+             * Optional: Host name to connect to, defaults to the pod IP.
+             */
+            host?: string;
+            /**
+             * Number or name of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME.
+             */
+            port: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLivenessProbeTcpSocketPort;
+        }
+
+        export interface SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLivenessProbeTcpSocketPort {
+        }
+
+        /**
+         * ContainerPort represents a network port in a single container.
+         */
+        export interface SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersPorts {
+            /**
+             * Number of port to expose on the pod's IP address. This must be a valid port number, 0 < x < 65536.
+             */
+            containerPort: number;
+            /**
+             * What host IP to bind the external port to.
+             */
+            hostIP?: string;
+            /**
+             * Number of port to expose on the host. If specified, this must be a valid port number, 0 < x < 65536. If HostNetwork is specified, this must match ContainerPort. Most containers do not need this.
+             */
+            hostPort?: number;
+            /**
+             * If specified, this must be an IANA_SVC_NAME and unique within the pod. Each named port in a pod must have a unique name. Name for the port that can be referred to by services.
+             */
+            name?: string;
+            /**
+             * Protocol for port. Must be UDP, TCP, or SCTP. Defaults to "TCP".
+             */
+            protocol?: string;
+        }
+
+        /**
+         * Probes are not allowed for ephemeral containers.
+         */
+        export interface SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersReadinessProbe {
+            /**
+             * One and only one of the following should be specified. Exec specifies the action to take.
+             */
+            exec?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersReadinessProbeExec;
+            /**
+             * Minimum consecutive failures for the probe to be considered failed after having succeeded. Defaults to 3. Minimum value is 1.
+             */
+            failureThreshold?: number;
+            /**
+             * HTTPGet specifies the http request to perform.
+             */
+            httpGet?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersReadinessProbeHttpGet;
+            /**
+             * Number of seconds after the container has started before liveness probes are initiated. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
+             */
+            initialDelaySeconds?: number;
+            /**
+             * How often (in seconds) to perform the probe. Default to 10 seconds. Minimum value is 1.
+             */
+            periodSeconds?: number;
+            /**
+             * Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1. Must be 1 for liveness and startup. Minimum value is 1.
+             */
+            successThreshold?: number;
+            /**
+             * TCPSocket specifies an action involving a TCP port. TCP hooks not yet supported TODO: implement a realistic TCP lifecycle hook
+             */
+            tcpSocket?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersReadinessProbeTcpSocket;
+            /**
+             * Number of seconds after which the probe times out. Defaults to 1 second. Minimum value is 1. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
+             */
+            timeoutSeconds?: number;
+        }
+
+        /**
+         * One and only one of the following should be specified. Exec specifies the action to take.
+         */
+        export interface SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersReadinessProbeExec {
+            /**
+             * Command is the command line to execute inside the container, the working directory for the command  is root ('/') in the container's filesystem. The command is simply exec'd, it is not run inside a shell, so traditional shell instructions ('|', etc) won't work. To use a shell, you need to explicitly call out to that shell. Exit status of 0 is treated as live/healthy and non-zero is unhealthy.
+             */
+            command?: string[];
+        }
+
+        /**
+         * HTTPGet specifies the http request to perform.
+         */
+        export interface SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersReadinessProbeHttpGet {
+            /**
+             * Host name to connect to, defaults to the pod IP. You probably want to set "Host" in httpHeaders instead.
+             */
+            host?: string;
+            /**
+             * Custom headers to set in the request. HTTP allows repeated headers.
+             */
+            httpHeaders?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersReadinessProbeHttpGetHttpHeaders[];
+            /**
+             * Path to access on the HTTP server.
+             */
+            path?: string;
+            /**
+             * Name or number of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME.
+             */
+            port: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersReadinessProbeHttpGetPort;
+            /**
+             * Scheme to use for connecting to the host. Defaults to HTTP.
+             */
+            scheme?: string;
+        }
+
+        /**
+         * HTTPHeader describes a custom header to be used in HTTP probes
+         */
+        export interface SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersReadinessProbeHttpGetHttpHeaders {
+            /**
+             * The header field name
+             */
+            name: string;
+            /**
+             * The header field value
+             */
+            value: string;
+        }
+
+        export interface SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersReadinessProbeHttpGetPort {
+        }
+
+        /**
+         * TCPSocket specifies an action involving a TCP port. TCP hooks not yet supported TODO: implement a realistic TCP lifecycle hook
+         */
+        export interface SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersReadinessProbeTcpSocket {
+            /**
+             * Optional: Host name to connect to, defaults to the pod IP.
+             */
+            host?: string;
+            /**
+             * Number or name of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME.
+             */
+            port: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersReadinessProbeTcpSocketPort;
+        }
+
+        export interface SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersReadinessProbeTcpSocketPort {
+        }
+
+        /**
+         * Resources are not allowed for ephemeral containers. Ephemeral containers use spare resources already allocated to the pod.
+         */
+        export interface SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersResources {
+            /**
+             * Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
+             */
+            limits?: {[key: string]: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersResourcesLimits};
+            /**
+             * Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
+             */
+            requests?: {[key: string]: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersResourcesRequests};
+        }
+
+        export interface SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersResourcesLimits {
+        }
+
+        export interface SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersResourcesRequests {
+        }
+
+        /**
+         * SecurityContext is not allowed for ephemeral containers.
+         */
+        export interface SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersSecurityContext {
+            /**
+             * AllowPrivilegeEscalation controls whether a process can gain more privileges than its parent process. This bool directly controls if the no_new_privs flag will be set on the container process. AllowPrivilegeEscalation is true always when the container is: 1) run as Privileged 2) has CAP_SYS_ADMIN
+             */
+            allowPrivilegeEscalation?: boolean;
+            /**
+             * The capabilities to add/drop when running containers. Defaults to the default set of capabilities granted by the container runtime.
+             */
+            capabilities?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersSecurityContextCapabilities;
+            /**
+             * Run container in privileged mode. Processes in privileged containers are essentially equivalent to root on the host. Defaults to false.
+             */
+            privileged?: boolean;
+            /**
+             * procMount denotes the type of proc mount to use for the containers. The default is DefaultProcMount which uses the container runtime defaults for readonly paths and masked paths. This requires the ProcMountType feature flag to be enabled.
+             */
+            procMount?: string;
+            /**
+             * Whether this container has a read-only root filesystem. Default is false.
+             */
+            readOnlyRootFilesystem?: boolean;
+            /**
+             * The GID to run the entrypoint of the container process. Uses runtime default if unset. May also be set in PodSecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
+             */
+            runAsGroup?: number;
+            /**
+             * Indicates that the container must run as a non-root user. If true, the Kubelet will validate the image at runtime to ensure that it does not run as UID 0 (root) and fail to start the container if it does. If unset or false, no such validation will be performed. May also be set in PodSecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
+             */
+            runAsNonRoot?: boolean;
+            /**
+             * The UID to run the entrypoint of the container process. Defaults to user specified in image metadata if unspecified. May also be set in PodSecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
+             */
+            runAsUser?: number;
+            /**
+             * The SELinux context to be applied to the container. If unspecified, the container runtime will allocate a random SELinux context for each container.  May also be set in PodSecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
+             */
+            seLinuxOptions?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersSecurityContextSeLinuxOptions;
+            /**
+             * The Windows specific settings applied to all containers. If unspecified, the options from the PodSecurityContext will be used. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
+             */
+            windowsOptions?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersSecurityContextWindowsOptions;
+        }
+
+        /**
+         * The capabilities to add/drop when running containers. Defaults to the default set of capabilities granted by the container runtime.
+         */
+        export interface SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersSecurityContextCapabilities {
+            /**
+             * Added capabilities
+             */
+            add?: string[];
+            /**
+             * Removed capabilities
+             */
+            drop?: string[];
+        }
+
+        /**
+         * The SELinux context to be applied to the container. If unspecified, the container runtime will allocate a random SELinux context for each container.  May also be set in PodSecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
+         */
+        export interface SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersSecurityContextSeLinuxOptions {
+            /**
+             * Level is SELinux level label that applies to the container.
+             */
+            level?: string;
+            /**
+             * Role is a SELinux role label that applies to the container.
+             */
+            role?: string;
+            /**
+             * Type is a SELinux type label that applies to the container.
+             */
+            type?: string;
+            /**
+             * User is a SELinux user label that applies to the container.
+             */
+            user?: string;
+        }
+
+        /**
+         * The Windows specific settings applied to all containers. If unspecified, the options from the PodSecurityContext will be used. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
+         */
+        export interface SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersSecurityContextWindowsOptions {
+            /**
+             * GMSACredentialSpec is where the GMSA admission webhook (https://github.com/kubernetes-sigs/windows-gmsa) inlines the contents of the GMSA credential spec named by the GMSACredentialSpecName field.
+             */
+            gmsaCredentialSpec?: string;
+            /**
+             * GMSACredentialSpecName is the name of the GMSA credential spec to use.
+             */
+            gmsaCredentialSpecName?: string;
+            /**
+             * The UserName in Windows to run the entrypoint of the container process. Defaults to the user specified in image metadata if unspecified. May also be set in PodSecurityContext. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
+             */
+            runAsUserName?: string;
+        }
+
+        /**
+         * Probes are not allowed for ephemeral containers.
+         */
+        export interface SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersStartupProbe {
+            /**
+             * One and only one of the following should be specified. Exec specifies the action to take.
+             */
+            exec?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersStartupProbeExec;
+            /**
+             * Minimum consecutive failures for the probe to be considered failed after having succeeded. Defaults to 3. Minimum value is 1.
+             */
+            failureThreshold?: number;
+            /**
+             * HTTPGet specifies the http request to perform.
+             */
+            httpGet?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersStartupProbeHttpGet;
+            /**
+             * Number of seconds after the container has started before liveness probes are initiated. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
+             */
+            initialDelaySeconds?: number;
+            /**
+             * How often (in seconds) to perform the probe. Default to 10 seconds. Minimum value is 1.
+             */
+            periodSeconds?: number;
+            /**
+             * Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1. Must be 1 for liveness and startup. Minimum value is 1.
+             */
+            successThreshold?: number;
+            /**
+             * TCPSocket specifies an action involving a TCP port. TCP hooks not yet supported TODO: implement a realistic TCP lifecycle hook
+             */
+            tcpSocket?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersStartupProbeTcpSocket;
+            /**
+             * Number of seconds after which the probe times out. Defaults to 1 second. Minimum value is 1. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
+             */
+            timeoutSeconds?: number;
+        }
+
+        /**
+         * One and only one of the following should be specified. Exec specifies the action to take.
+         */
+        export interface SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersStartupProbeExec {
+            /**
+             * Command is the command line to execute inside the container, the working directory for the command  is root ('/') in the container's filesystem. The command is simply exec'd, it is not run inside a shell, so traditional shell instructions ('|', etc) won't work. To use a shell, you need to explicitly call out to that shell. Exit status of 0 is treated as live/healthy and non-zero is unhealthy.
+             */
+            command?: string[];
+        }
+
+        /**
+         * HTTPGet specifies the http request to perform.
+         */
+        export interface SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersStartupProbeHttpGet {
+            /**
+             * Host name to connect to, defaults to the pod IP. You probably want to set "Host" in httpHeaders instead.
+             */
+            host?: string;
+            /**
+             * Custom headers to set in the request. HTTP allows repeated headers.
+             */
+            httpHeaders?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersStartupProbeHttpGetHttpHeaders[];
+            /**
+             * Path to access on the HTTP server.
+             */
+            path?: string;
+            /**
+             * Name or number of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME.
+             */
+            port: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersStartupProbeHttpGetPort;
+            /**
+             * Scheme to use for connecting to the host. Defaults to HTTP.
+             */
+            scheme?: string;
+        }
+
+        /**
+         * HTTPHeader describes a custom header to be used in HTTP probes
+         */
+        export interface SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersStartupProbeHttpGetHttpHeaders {
+            /**
+             * The header field name
+             */
+            name: string;
+            /**
+             * The header field value
+             */
+            value: string;
+        }
+
+        export interface SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersStartupProbeHttpGetPort {
+        }
+
+        /**
+         * TCPSocket specifies an action involving a TCP port. TCP hooks not yet supported TODO: implement a realistic TCP lifecycle hook
+         */
+        export interface SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersStartupProbeTcpSocket {
+            /**
+             * Optional: Host name to connect to, defaults to the pod IP.
+             */
+            host?: string;
+            /**
+             * Number or name of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME.
+             */
+            port: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersStartupProbeTcpSocketPort;
+        }
+
+        export interface SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersStartupProbeTcpSocketPort {
+        }
+
+        /**
+         * volumeDevice describes a mapping of a raw block device within a container.
+         */
+        export interface SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersVolumeDevices {
+            /**
+             * devicePath is the path inside of the container that the device will be mapped to.
+             */
+            devicePath: string;
+            /**
+             * name must match the name of a persistentVolumeClaim in the pod
+             */
+            name: string;
+        }
+
+        /**
+         * VolumeMount describes a mounting of a Volume within a container.
+         */
+        export interface SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersVolumeMounts {
+            /**
+             * Path within the container at which the volume should be mounted.  Must not contain ':'.
+             */
+            mountPath: string;
+            /**
+             * mountPropagation determines how mounts are propagated from the host to container and the other way around. When not set, MountPropagationNone is used. This field is beta in 1.10.
+             */
+            mountPropagation?: string;
+            /**
+             * This must match the Name of a Volume.
+             */
+            name: string;
+            /**
+             * Mounted read-only if true, read-write otherwise (false or unspecified). Defaults to false.
+             */
+            readOnly?: boolean;
+            /**
+             * Path within the volume from which the container's volume should be mounted. Defaults to "" (volume's root).
+             */
+            subPath?: string;
+            /**
+             * Expanded path within the volume from which the container's volume should be mounted. Behaves similarly to SubPath but environment variable references $(VAR_NAME) are expanded using the container's environment. Defaults to "" (volume's root). SubPathExpr and SubPath are mutually exclusive.
+             */
+            subPathExpr?: string;
         }
 
         /**
@@ -1717,6 +3064,10 @@ export namespace machinelearning {
              */
             securityContext?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersSecurityContext;
             /**
+             * StartupProbe indicates that the Pod has successfully initialized. If specified, no other probes are executed until this completes successfully. If this probe fails, the Pod will be restarted, just as if the livenessProbe failed. This can be used to provide different probe parameters at the beginning of a Pod's lifecycle, when it might take a long time to load data or warm a cache, than during steady-state operation. This cannot be updated. This is a beta feature enabled by the StartupProbe feature flag. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
+             */
+            startupProbe?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersStartupProbe;
+            /**
              * Whether this container should allocate a buffer for stdin in the container runtime. If this is not set, reads from stdin in the container will always result in EOF. Default is false.
              */
             stdin?: boolean;
@@ -1737,7 +3088,7 @@ export namespace machinelearning {
              */
             tty?: boolean;
             /**
-             * volumeDevices is the list of block devices to be used by the container. This is a beta feature.
+             * volumeDevices is the list of block devices to be used by the container.
              */
             volumeDevices?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersVolumeDevices[];
             /**
@@ -1823,7 +3174,7 @@ export namespace machinelearning {
              */
             configMapKeyRef?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersEnvValueFromConfigMapKeyRef;
             /**
-             * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+             * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
              */
             fieldRef?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersEnvValueFromFieldRef;
             /**
@@ -1849,13 +3200,13 @@ export namespace machinelearning {
              */
             name?: string;
             /**
-             * Specify whether the ConfigMap or it's key must be defined
+             * Specify whether the ConfigMap or its key must be defined
              */
             optional?: boolean;
         }
 
         /**
-         * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+         * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
          */
         export interface SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersEnvValueFromFieldRef {
             /**
@@ -1879,11 +3230,14 @@ export namespace machinelearning {
             /**
              * Specifies the output format of the exposed resources, defaults to "1"
              */
-            divisor?: string;
+            divisor?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersEnvValueFromResourceFieldRefDivisor;
             /**
              * Required: resource to select
              */
             resource: string;
+        }
+
+        export interface SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersEnvValueFromResourceFieldRefDivisor {
         }
 
         /**
@@ -1899,7 +3253,7 @@ export namespace machinelearning {
              */
             name?: string;
             /**
-             * Specify whether the Secret or it's key must be defined
+             * Specify whether the Secret or its key must be defined
              */
             optional?: boolean;
         }
@@ -1913,7 +3267,7 @@ export namespace machinelearning {
              */
             postStart?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersLifecyclePostStart;
             /**
-             * PreStop is called immediately before a container is terminated due to an API request or management event such as liveness probe failure, preemption, resource contention, etc. The handler is not called if the container crashes or exits. The reason for termination is passed to the handler. The Pod's termination grace period countdown begins before the PreStop hooked is executed. Regardless of the outcome of the handler, the container will eventually terminate within the Pod's termination grace period. Other management of the container blocks until the hook completes or until the termination grace period is reached. More info: https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/#container-hooks
+             * PreStop is called immediately before a container is terminated due to an API request or management event such as liveness/startup probe failure, preemption, resource contention, etc. The handler is not called if the container crashes or exits. The reason for termination is passed to the handler. The Pod's termination grace period countdown begins before the PreStop hooked is executed. Regardless of the outcome of the handler, the container will eventually terminate within the Pod's termination grace period. Other management of the container blocks until the hook completes or until the termination grace period is reached. More info: https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/#container-hooks
              */
             preStop?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersLifecyclePreStop;
         }
@@ -2001,7 +3355,7 @@ export namespace machinelearning {
         }
 
         /**
-         * PreStop is called immediately before a container is terminated due to an API request or management event such as liveness probe failure, preemption, resource contention, etc. The handler is not called if the container crashes or exits. The reason for termination is passed to the handler. The Pod's termination grace period countdown begins before the PreStop hooked is executed. Regardless of the outcome of the handler, the container will eventually terminate within the Pod's termination grace period. Other management of the container blocks until the hook completes or until the termination grace period is reached. More info: https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/#container-hooks
+         * PreStop is called immediately before a container is terminated due to an API request or management event such as liveness/startup probe failure, preemption, resource contention, etc. The handler is not called if the container crashes or exits. The reason for termination is passed to the handler. The Pod's termination grace period countdown begins before the PreStop hooked is executed. Regardless of the outcome of the handler, the container will eventually terminate within the Pod's termination grace period. Other management of the container blocks until the hook completes or until the termination grace period is reached. More info: https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/#container-hooks
          */
         export interface SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersLifecyclePreStop {
             /**
@@ -2107,7 +3461,7 @@ export namespace machinelearning {
              */
             periodSeconds?: number;
             /**
-             * Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1. Must be 1 for liveness. Minimum value is 1.
+             * Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1. Must be 1 for liveness and startup. Minimum value is 1.
              */
             successThreshold?: number;
             /**
@@ -2207,7 +3561,7 @@ export namespace machinelearning {
             /**
              * Protocol for port. Must be UDP, TCP, or SCTP. Defaults to "TCP".
              */
-            protocol?: string;
+            protocol: string;
         }
 
         /**
@@ -2235,7 +3589,7 @@ export namespace machinelearning {
              */
             periodSeconds?: number;
             /**
-             * Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1. Must be 1 for liveness. Minimum value is 1.
+             * Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1. Must be 1 for liveness and startup. Minimum value is 1.
              */
             successThreshold?: number;
             /**
@@ -2319,11 +3673,17 @@ export namespace machinelearning {
             /**
              * Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
              */
-            limits?: {[key: string]: string};
+            limits?: {[key: string]: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersResourcesLimits};
             /**
              * Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
              */
-            requests?: {[key: string]: string};
+            requests?: {[key: string]: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersResourcesRequests};
+        }
+
+        export interface SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersResourcesLimits {
+        }
+
+        export interface SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersResourcesRequests {
         }
 
         /**
@@ -2366,6 +3726,10 @@ export namespace machinelearning {
              * The SELinux context to be applied to the container. If unspecified, the container runtime will allocate a random SELinux context for each container.  May also be set in PodSecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
              */
             seLinuxOptions?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersSecurityContextSeLinuxOptions;
+            /**
+             * The Windows specific settings applied to all containers. If unspecified, the options from the PodSecurityContext will be used. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
+             */
+            windowsOptions?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersSecurityContextWindowsOptions;
         }
 
         /**
@@ -2402,6 +3766,132 @@ export namespace machinelearning {
              * User is a SELinux user label that applies to the container.
              */
             user?: string;
+        }
+
+        /**
+         * The Windows specific settings applied to all containers. If unspecified, the options from the PodSecurityContext will be used. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
+         */
+        export interface SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersSecurityContextWindowsOptions {
+            /**
+             * GMSACredentialSpec is where the GMSA admission webhook (https://github.com/kubernetes-sigs/windows-gmsa) inlines the contents of the GMSA credential spec named by the GMSACredentialSpecName field.
+             */
+            gmsaCredentialSpec?: string;
+            /**
+             * GMSACredentialSpecName is the name of the GMSA credential spec to use.
+             */
+            gmsaCredentialSpecName?: string;
+            /**
+             * The UserName in Windows to run the entrypoint of the container process. Defaults to the user specified in image metadata if unspecified. May also be set in PodSecurityContext. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
+             */
+            runAsUserName?: string;
+        }
+
+        /**
+         * StartupProbe indicates that the Pod has successfully initialized. If specified, no other probes are executed until this completes successfully. If this probe fails, the Pod will be restarted, just as if the livenessProbe failed. This can be used to provide different probe parameters at the beginning of a Pod's lifecycle, when it might take a long time to load data or warm a cache, than during steady-state operation. This cannot be updated. This is a beta feature enabled by the StartupProbe feature flag. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
+         */
+        export interface SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersStartupProbe {
+            /**
+             * One and only one of the following should be specified. Exec specifies the action to take.
+             */
+            exec?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersStartupProbeExec;
+            /**
+             * Minimum consecutive failures for the probe to be considered failed after having succeeded. Defaults to 3. Minimum value is 1.
+             */
+            failureThreshold?: number;
+            /**
+             * HTTPGet specifies the http request to perform.
+             */
+            httpGet?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersStartupProbeHttpGet;
+            /**
+             * Number of seconds after the container has started before liveness probes are initiated. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
+             */
+            initialDelaySeconds?: number;
+            /**
+             * How often (in seconds) to perform the probe. Default to 10 seconds. Minimum value is 1.
+             */
+            periodSeconds?: number;
+            /**
+             * Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1. Must be 1 for liveness and startup. Minimum value is 1.
+             */
+            successThreshold?: number;
+            /**
+             * TCPSocket specifies an action involving a TCP port. TCP hooks not yet supported TODO: implement a realistic TCP lifecycle hook
+             */
+            tcpSocket?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersStartupProbeTcpSocket;
+            /**
+             * Number of seconds after which the probe times out. Defaults to 1 second. Minimum value is 1. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
+             */
+            timeoutSeconds?: number;
+        }
+
+        /**
+         * One and only one of the following should be specified. Exec specifies the action to take.
+         */
+        export interface SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersStartupProbeExec {
+            /**
+             * Command is the command line to execute inside the container, the working directory for the command  is root ('/') in the container's filesystem. The command is simply exec'd, it is not run inside a shell, so traditional shell instructions ('|', etc) won't work. To use a shell, you need to explicitly call out to that shell. Exit status of 0 is treated as live/healthy and non-zero is unhealthy.
+             */
+            command?: string[];
+        }
+
+        /**
+         * HTTPGet specifies the http request to perform.
+         */
+        export interface SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersStartupProbeHttpGet {
+            /**
+             * Host name to connect to, defaults to the pod IP. You probably want to set "Host" in httpHeaders instead.
+             */
+            host?: string;
+            /**
+             * Custom headers to set in the request. HTTP allows repeated headers.
+             */
+            httpHeaders?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersStartupProbeHttpGetHttpHeaders[];
+            /**
+             * Path to access on the HTTP server.
+             */
+            path?: string;
+            /**
+             * Name or number of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME.
+             */
+            port: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersStartupProbeHttpGetPort;
+            /**
+             * Scheme to use for connecting to the host. Defaults to HTTP.
+             */
+            scheme?: string;
+        }
+
+        /**
+         * HTTPHeader describes a custom header to be used in HTTP probes
+         */
+        export interface SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersStartupProbeHttpGetHttpHeaders {
+            /**
+             * The header field name
+             */
+            name: string;
+            /**
+             * The header field value
+             */
+            value: string;
+        }
+
+        export interface SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersStartupProbeHttpGetPort {
+        }
+
+        /**
+         * TCPSocket specifies an action involving a TCP port. TCP hooks not yet supported TODO: implement a realistic TCP lifecycle hook
+         */
+        export interface SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersStartupProbeTcpSocket {
+            /**
+             * Optional: Host name to connect to, defaults to the pod IP.
+             */
+            host?: string;
+            /**
+             * Number or name of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME.
+             */
+            port: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersStartupProbeTcpSocketPort;
+        }
+
+        export interface SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersStartupProbeTcpSocketPort {
         }
 
         /**
@@ -2443,9 +3933,12 @@ export namespace machinelearning {
              */
             subPath?: string;
             /**
-             * Expanded path within the volume from which the container's volume should be mounted. Behaves similarly to SubPath but environment variable references $(VAR_NAME) are expanded using the container's environment. Defaults to "" (volume's root). SubPathExpr and SubPath are mutually exclusive. This field is alpha in 1.14.
+             * Expanded path within the volume from which the container's volume should be mounted. Behaves similarly to SubPath but environment variable references $(VAR_NAME) are expanded using the container's environment. Defaults to "" (volume's root). SubPathExpr and SubPath are mutually exclusive.
              */
             subPathExpr?: string;
+        }
+
+        export interface SeldonDeploymentSpecPredictorsComponentSpecsSpecOverhead {
         }
 
         /**
@@ -2468,6 +3961,10 @@ export namespace machinelearning {
              *  If unset, the Kubelet will not modify the ownership and permissions of any volume.
              */
             fsGroup?: number;
+            /**
+             * fsGroupChangePolicy defines behavior of changing ownership and permission of the volume before being exposed inside Pod. This field will only apply to volume types which support fsGroup based ownership(and permissions). It will have no effect on ephemeral volume types such as: secret, configmaps and emptydir. Valid values are "OnRootMismatch" and "Always". If not specified defaults to "Always".
+             */
+            fsGroupChangePolicy?: string;
             /**
              * The GID to run the entrypoint of the container process. Uses runtime default if unset. May also be set in SecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence for that container.
              */
@@ -2492,6 +3989,10 @@ export namespace machinelearning {
              * Sysctls hold a list of namespaced sysctls used for the pod. Pods with unsupported sysctls (by the container runtime) might fail to launch.
              */
             sysctls?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsSpecSecurityContextSysctls[];
+            /**
+             * The Windows specific settings applied to all containers. If unspecified, the options within a container's SecurityContext will be used. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
+             */
+            windowsOptions?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsSpecSecurityContextWindowsOptions;
         }
 
         /**
@@ -2531,6 +4032,24 @@ export namespace machinelearning {
         }
 
         /**
+         * The Windows specific settings applied to all containers. If unspecified, the options within a container's SecurityContext will be used. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
+         */
+        export interface SeldonDeploymentSpecPredictorsComponentSpecsSpecSecurityContextWindowsOptions {
+            /**
+             * GMSACredentialSpec is where the GMSA admission webhook (https://github.com/kubernetes-sigs/windows-gmsa) inlines the contents of the GMSA credential spec named by the GMSACredentialSpecName field.
+             */
+            gmsaCredentialSpec?: string;
+            /**
+             * GMSACredentialSpecName is the name of the GMSA credential spec to use.
+             */
+            gmsaCredentialSpecName?: string;
+            /**
+             * The UserName in Windows to run the entrypoint of the container process. Defaults to the user specified in image metadata if unspecified. May also be set in PodSecurityContext. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
+             */
+            runAsUserName?: string;
+        }
+
+        /**
          * The pod this Toleration is attached to tolerates any taint that matches the triple <key,value,effect> using the matching operator <operator>.
          */
         export interface SeldonDeploymentSpecPredictorsComponentSpecsSpecTolerations {
@@ -2557,17 +4076,77 @@ export namespace machinelearning {
         }
 
         /**
+         * TopologySpreadConstraint specifies how to spread matching pods among the given topology.
+         */
+        export interface SeldonDeploymentSpecPredictorsComponentSpecsSpecTopologySpreadConstraints {
+            /**
+             * LabelSelector is used to find matching pods. Pods that match this label selector are counted to determine the number of pods in their corresponding topology domain.
+             */
+            labelSelector?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsSpecTopologySpreadConstraintsLabelSelector;
+            /**
+             * MaxSkew describes the degree to which pods may be unevenly distributed. It's the maximum permitted difference between the number of matching pods in any two topology domains of a given topology type. For example, in a 3-zone cluster, MaxSkew is set to 1, and pods with the same labelSelector spread as 1/1/0: | zone1 | zone2 | zone3 | |   P   |   P   |       | - if MaxSkew is 1, incoming pod can only be scheduled to zone3 to become 1/1/1; scheduling it onto zone1(zone2) would make the ActualSkew(2-0) on zone1(zone2) violate MaxSkew(1). - if MaxSkew is 2, incoming pod can be scheduled onto any zone. It's a required field. Default value is 1 and 0 is not allowed.
+             */
+            maxSkew: number;
+            /**
+             * TopologyKey is the key of node labels. Nodes that have a label with this key and identical values are considered to be in the same topology. We consider each <key, value> as a "bucket", and try to put balanced number of pods into each bucket. It's a required field.
+             */
+            topologyKey: string;
+            /**
+             * WhenUnsatisfiable indicates how to deal with a pod if it doesn't satisfy the spread constraint. - DoNotSchedule (default) tells the scheduler not to schedule it - ScheduleAnyway tells the scheduler to still schedule it It's considered as "Unsatisfiable" if and only if placing incoming pod on any topology violates "MaxSkew". For example, in a 3-zone cluster, MaxSkew is set to 1, and pods with the same labelSelector spread as 3/1/1: | zone1 | zone2 | zone3 | | P P P |   P   |   P   | If WhenUnsatisfiable is set to DoNotSchedule, incoming pod can only be scheduled to zone2(zone3) to become 3/2/1(3/1/2) as ActualSkew(2-1) on zone2(zone3) satisfies MaxSkew(1). In other words, the cluster can still be imbalanced, but scheduler won't make it *more* imbalanced. It's a required field.
+             */
+            whenUnsatisfiable: string;
+        }
+
+        /**
+         * LabelSelector is used to find matching pods. Pods that match this label selector are counted to determine the number of pods in their corresponding topology domain.
+         */
+        export interface SeldonDeploymentSpecPredictorsComponentSpecsSpecTopologySpreadConstraintsLabelSelector {
+            /**
+             * matchExpressions is a list of label selector requirements. The requirements are ANDed.
+             */
+            matchExpressions?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsComponentSpecsSpecTopologySpreadConstraintsLabelSelectorMatchExpressions[];
+            /**
+             * matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+             */
+            matchLabels?: {[key: string]: string};
+        }
+
+        /**
+         * A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface SeldonDeploymentSpecPredictorsComponentSpecsSpecTopologySpreadConstraintsLabelSelectorMatchExpressions {
+            /**
+             * key is the label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+             */
+            operator: string;
+            /**
+             * values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
          * ResourceRequirements describes the compute resource requirements.
          */
         export interface SeldonDeploymentSpecPredictorsEngineResources {
             /**
              * Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
              */
-            limits?: {[key: string]: string};
+            limits?: {[key: string]: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsEngineResourcesLimits};
             /**
              * Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
              */
-            requests?: {[key: string]: string};
+            requests?: {[key: string]: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsEngineResourcesRequests};
+        }
+
+        export interface SeldonDeploymentSpecPredictorsEngineResourcesLimits {
+        }
+
+        export interface SeldonDeploymentSpecPredictorsEngineResourcesRequests {
         }
 
         export interface SeldonDeploymentSpecPredictorsExplainer {
@@ -2640,6 +4219,10 @@ export namespace machinelearning {
              */
             securityContext?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsExplainerContainerSpecSecurityContext;
             /**
+             * StartupProbe indicates that the Pod has successfully initialized. If specified, no other probes are executed until this completes successfully. If this probe fails, the Pod will be restarted, just as if the livenessProbe failed. This can be used to provide different probe parameters at the beginning of a Pod's lifecycle, when it might take a long time to load data or warm a cache, than during steady-state operation. This cannot be updated. This is a beta feature enabled by the StartupProbe feature flag. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
+             */
+            startupProbe?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsExplainerContainerSpecStartupProbe;
+            /**
              * Whether this container should allocate a buffer for stdin in the container runtime. If this is not set, reads from stdin in the container will always result in EOF. Default is false.
              */
             stdin?: boolean;
@@ -2660,7 +4243,7 @@ export namespace machinelearning {
              */
             tty?: boolean;
             /**
-             * volumeDevices is the list of block devices to be used by the container. This is a beta feature.
+             * volumeDevices is the list of block devices to be used by the container.
              */
             volumeDevices?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsExplainerContainerSpecVolumeDevices[];
             /**
@@ -2746,7 +4329,7 @@ export namespace machinelearning {
              */
             configMapKeyRef?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsExplainerContainerSpecEnvValueFromConfigMapKeyRef;
             /**
-             * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+             * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
              */
             fieldRef?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsExplainerContainerSpecEnvValueFromFieldRef;
             /**
@@ -2772,13 +4355,13 @@ export namespace machinelearning {
              */
             name?: string;
             /**
-             * Specify whether the ConfigMap or it's key must be defined
+             * Specify whether the ConfigMap or its key must be defined
              */
             optional?: boolean;
         }
 
         /**
-         * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+         * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
          */
         export interface SeldonDeploymentSpecPredictorsExplainerContainerSpecEnvValueFromFieldRef {
             /**
@@ -2802,11 +4385,14 @@ export namespace machinelearning {
             /**
              * Specifies the output format of the exposed resources, defaults to "1"
              */
-            divisor?: string;
+            divisor?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsExplainerContainerSpecEnvValueFromResourceFieldRefDivisor;
             /**
              * Required: resource to select
              */
             resource: string;
+        }
+
+        export interface SeldonDeploymentSpecPredictorsExplainerContainerSpecEnvValueFromResourceFieldRefDivisor {
         }
 
         /**
@@ -2822,7 +4408,7 @@ export namespace machinelearning {
              */
             name?: string;
             /**
-             * Specify whether the Secret or it's key must be defined
+             * Specify whether the Secret or its key must be defined
              */
             optional?: boolean;
         }
@@ -2836,7 +4422,7 @@ export namespace machinelearning {
              */
             postStart?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsExplainerContainerSpecLifecyclePostStart;
             /**
-             * PreStop is called immediately before a container is terminated due to an API request or management event such as liveness probe failure, preemption, resource contention, etc. The handler is not called if the container crashes or exits. The reason for termination is passed to the handler. The Pod's termination grace period countdown begins before the PreStop hooked is executed. Regardless of the outcome of the handler, the container will eventually terminate within the Pod's termination grace period. Other management of the container blocks until the hook completes or until the termination grace period is reached. More info: https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/#container-hooks
+             * PreStop is called immediately before a container is terminated due to an API request or management event such as liveness/startup probe failure, preemption, resource contention, etc. The handler is not called if the container crashes or exits. The reason for termination is passed to the handler. The Pod's termination grace period countdown begins before the PreStop hooked is executed. Regardless of the outcome of the handler, the container will eventually terminate within the Pod's termination grace period. Other management of the container blocks until the hook completes or until the termination grace period is reached. More info: https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/#container-hooks
              */
             preStop?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsExplainerContainerSpecLifecyclePreStop;
         }
@@ -2924,7 +4510,7 @@ export namespace machinelearning {
         }
 
         /**
-         * PreStop is called immediately before a container is terminated due to an API request or management event such as liveness probe failure, preemption, resource contention, etc. The handler is not called if the container crashes or exits. The reason for termination is passed to the handler. The Pod's termination grace period countdown begins before the PreStop hooked is executed. Regardless of the outcome of the handler, the container will eventually terminate within the Pod's termination grace period. Other management of the container blocks until the hook completes or until the termination grace period is reached. More info: https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/#container-hooks
+         * PreStop is called immediately before a container is terminated due to an API request or management event such as liveness/startup probe failure, preemption, resource contention, etc. The handler is not called if the container crashes or exits. The reason for termination is passed to the handler. The Pod's termination grace period countdown begins before the PreStop hooked is executed. Regardless of the outcome of the handler, the container will eventually terminate within the Pod's termination grace period. Other management of the container blocks until the hook completes or until the termination grace period is reached. More info: https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/#container-hooks
          */
         export interface SeldonDeploymentSpecPredictorsExplainerContainerSpecLifecyclePreStop {
             /**
@@ -3030,7 +4616,7 @@ export namespace machinelearning {
              */
             periodSeconds?: number;
             /**
-             * Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1. Must be 1 for liveness. Minimum value is 1.
+             * Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1. Must be 1 for liveness and startup. Minimum value is 1.
              */
             successThreshold?: number;
             /**
@@ -3130,7 +4716,7 @@ export namespace machinelearning {
             /**
              * Protocol for port. Must be UDP, TCP, or SCTP. Defaults to "TCP".
              */
-            protocol?: string;
+            protocol: string;
         }
 
         /**
@@ -3158,7 +4744,7 @@ export namespace machinelearning {
              */
             periodSeconds?: number;
             /**
-             * Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1. Must be 1 for liveness. Minimum value is 1.
+             * Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1. Must be 1 for liveness and startup. Minimum value is 1.
              */
             successThreshold?: number;
             /**
@@ -3242,11 +4828,17 @@ export namespace machinelearning {
             /**
              * Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
              */
-            limits?: {[key: string]: string};
+            limits?: {[key: string]: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsExplainerContainerSpecResourcesLimits};
             /**
              * Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
              */
-            requests?: {[key: string]: string};
+            requests?: {[key: string]: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsExplainerContainerSpecResourcesRequests};
+        }
+
+        export interface SeldonDeploymentSpecPredictorsExplainerContainerSpecResourcesLimits {
+        }
+
+        export interface SeldonDeploymentSpecPredictorsExplainerContainerSpecResourcesRequests {
         }
 
         /**
@@ -3289,6 +4881,10 @@ export namespace machinelearning {
              * The SELinux context to be applied to the container. If unspecified, the container runtime will allocate a random SELinux context for each container.  May also be set in PodSecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
              */
             seLinuxOptions?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsExplainerContainerSpecSecurityContextSeLinuxOptions;
+            /**
+             * The Windows specific settings applied to all containers. If unspecified, the options from the PodSecurityContext will be used. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
+             */
+            windowsOptions?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsExplainerContainerSpecSecurityContextWindowsOptions;
         }
 
         /**
@@ -3325,6 +4921,132 @@ export namespace machinelearning {
              * User is a SELinux user label that applies to the container.
              */
             user?: string;
+        }
+
+        /**
+         * The Windows specific settings applied to all containers. If unspecified, the options from the PodSecurityContext will be used. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
+         */
+        export interface SeldonDeploymentSpecPredictorsExplainerContainerSpecSecurityContextWindowsOptions {
+            /**
+             * GMSACredentialSpec is where the GMSA admission webhook (https://github.com/kubernetes-sigs/windows-gmsa) inlines the contents of the GMSA credential spec named by the GMSACredentialSpecName field.
+             */
+            gmsaCredentialSpec?: string;
+            /**
+             * GMSACredentialSpecName is the name of the GMSA credential spec to use.
+             */
+            gmsaCredentialSpecName?: string;
+            /**
+             * The UserName in Windows to run the entrypoint of the container process. Defaults to the user specified in image metadata if unspecified. May also be set in PodSecurityContext. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
+             */
+            runAsUserName?: string;
+        }
+
+        /**
+         * StartupProbe indicates that the Pod has successfully initialized. If specified, no other probes are executed until this completes successfully. If this probe fails, the Pod will be restarted, just as if the livenessProbe failed. This can be used to provide different probe parameters at the beginning of a Pod's lifecycle, when it might take a long time to load data or warm a cache, than during steady-state operation. This cannot be updated. This is a beta feature enabled by the StartupProbe feature flag. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
+         */
+        export interface SeldonDeploymentSpecPredictorsExplainerContainerSpecStartupProbe {
+            /**
+             * One and only one of the following should be specified. Exec specifies the action to take.
+             */
+            exec?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsExplainerContainerSpecStartupProbeExec;
+            /**
+             * Minimum consecutive failures for the probe to be considered failed after having succeeded. Defaults to 3. Minimum value is 1.
+             */
+            failureThreshold?: number;
+            /**
+             * HTTPGet specifies the http request to perform.
+             */
+            httpGet?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsExplainerContainerSpecStartupProbeHttpGet;
+            /**
+             * Number of seconds after the container has started before liveness probes are initiated. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
+             */
+            initialDelaySeconds?: number;
+            /**
+             * How often (in seconds) to perform the probe. Default to 10 seconds. Minimum value is 1.
+             */
+            periodSeconds?: number;
+            /**
+             * Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1. Must be 1 for liveness and startup. Minimum value is 1.
+             */
+            successThreshold?: number;
+            /**
+             * TCPSocket specifies an action involving a TCP port. TCP hooks not yet supported TODO: implement a realistic TCP lifecycle hook
+             */
+            tcpSocket?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsExplainerContainerSpecStartupProbeTcpSocket;
+            /**
+             * Number of seconds after which the probe times out. Defaults to 1 second. Minimum value is 1. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
+             */
+            timeoutSeconds?: number;
+        }
+
+        /**
+         * One and only one of the following should be specified. Exec specifies the action to take.
+         */
+        export interface SeldonDeploymentSpecPredictorsExplainerContainerSpecStartupProbeExec {
+            /**
+             * Command is the command line to execute inside the container, the working directory for the command  is root ('/') in the container's filesystem. The command is simply exec'd, it is not run inside a shell, so traditional shell instructions ('|', etc) won't work. To use a shell, you need to explicitly call out to that shell. Exit status of 0 is treated as live/healthy and non-zero is unhealthy.
+             */
+            command?: string[];
+        }
+
+        /**
+         * HTTPGet specifies the http request to perform.
+         */
+        export interface SeldonDeploymentSpecPredictorsExplainerContainerSpecStartupProbeHttpGet {
+            /**
+             * Host name to connect to, defaults to the pod IP. You probably want to set "Host" in httpHeaders instead.
+             */
+            host?: string;
+            /**
+             * Custom headers to set in the request. HTTP allows repeated headers.
+             */
+            httpHeaders?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsExplainerContainerSpecStartupProbeHttpGetHttpHeaders[];
+            /**
+             * Path to access on the HTTP server.
+             */
+            path?: string;
+            /**
+             * Name or number of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME.
+             */
+            port: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsExplainerContainerSpecStartupProbeHttpGetPort;
+            /**
+             * Scheme to use for connecting to the host. Defaults to HTTP.
+             */
+            scheme?: string;
+        }
+
+        /**
+         * HTTPHeader describes a custom header to be used in HTTP probes
+         */
+        export interface SeldonDeploymentSpecPredictorsExplainerContainerSpecStartupProbeHttpGetHttpHeaders {
+            /**
+             * The header field name
+             */
+            name: string;
+            /**
+             * The header field value
+             */
+            value: string;
+        }
+
+        export interface SeldonDeploymentSpecPredictorsExplainerContainerSpecStartupProbeHttpGetPort {
+        }
+
+        /**
+         * TCPSocket specifies an action involving a TCP port. TCP hooks not yet supported TODO: implement a realistic TCP lifecycle hook
+         */
+        export interface SeldonDeploymentSpecPredictorsExplainerContainerSpecStartupProbeTcpSocket {
+            /**
+             * Optional: Host name to connect to, defaults to the pod IP.
+             */
+            host?: string;
+            /**
+             * Number or name of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME.
+             */
+            port: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsExplainerContainerSpecStartupProbeTcpSocketPort;
+        }
+
+        export interface SeldonDeploymentSpecPredictorsExplainerContainerSpecStartupProbeTcpSocketPort {
         }
 
         /**
@@ -3366,12 +5088,14 @@ export namespace machinelearning {
              */
             subPath?: string;
             /**
-             * Expanded path within the volume from which the container's volume should be mounted. Behaves similarly to SubPath but environment variable references $(VAR_NAME) are expanded using the container's environment. Defaults to "" (volume's root). SubPathExpr and SubPath are mutually exclusive. This field is alpha in 1.14.
+             * Expanded path within the volume from which the container's volume should be mounted. Behaves similarly to SubPath but environment variable references $(VAR_NAME) are expanded using the container's environment. Defaults to "" (volume's root). SubPathExpr and SubPath are mutually exclusive.
              */
             subPathExpr?: string;
         }
 
         export interface SeldonDeploymentSpecPredictorsExplainerEndpoint {
+            grpcPort?: number;
+            httpPort?: number;
             service_host?: string;
             service_port?: number;
             type?: string;
@@ -3566,6 +5290,8 @@ export namespace machinelearning {
         }
 
         export interface SeldonDeploymentSpecPredictorsGraphEndpoint {
+            grpcPort?: number;
+            httpPort?: number;
             service_host?: string;
             service_port?: number;
             type?: string;
@@ -3591,8 +5317,13 @@ export namespace machinelearning {
             value: string;
         }
 
+        export interface SeldonDeploymentSpecPredictorsSsl {
+            certSecretName?: string;
+        }
+
         export interface SeldonDeploymentSpecPredictorsSvcOrchSpec {
             env?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsSvcOrchSpecEnv[];
+            replicas?: number;
             /**
              * ResourceRequirements describes the compute resource requirements.
              */
@@ -3626,7 +5357,7 @@ export namespace machinelearning {
              */
             configMapKeyRef?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsSvcOrchSpecEnvValueFromConfigMapKeyRef;
             /**
-             * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+             * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
              */
             fieldRef?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsSvcOrchSpecEnvValueFromFieldRef;
             /**
@@ -3652,13 +5383,13 @@ export namespace machinelearning {
              */
             name?: string;
             /**
-             * Specify whether the ConfigMap or it's key must be defined
+             * Specify whether the ConfigMap or its key must be defined
              */
             optional?: boolean;
         }
 
         /**
-         * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+         * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
          */
         export interface SeldonDeploymentSpecPredictorsSvcOrchSpecEnvValueFromFieldRef {
             /**
@@ -3682,11 +5413,14 @@ export namespace machinelearning {
             /**
              * Specifies the output format of the exposed resources, defaults to "1"
              */
-            divisor?: string;
+            divisor?: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsSvcOrchSpecEnvValueFromResourceFieldRefDivisor;
             /**
              * Required: resource to select
              */
             resource: string;
+        }
+
+        export interface SeldonDeploymentSpecPredictorsSvcOrchSpecEnvValueFromResourceFieldRefDivisor {
         }
 
         /**
@@ -3702,7 +5436,7 @@ export namespace machinelearning {
              */
             name?: string;
             /**
-             * Specify whether the Secret or it's key must be defined
+             * Specify whether the Secret or its key must be defined
              */
             optional?: boolean;
         }
@@ -3714,21 +5448,39 @@ export namespace machinelearning {
             /**
              * Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
              */
-            limits?: {[key: string]: string};
+            limits?: {[key: string]: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsSvcOrchSpecResourcesLimits};
             /**
              * Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
              */
-            requests?: {[key: string]: string};
+            requests?: {[key: string]: outputs.machinelearning.v1.SeldonDeploymentSpecPredictorsSvcOrchSpecResourcesRequests};
+        }
+
+        export interface SeldonDeploymentSpecPredictorsSvcOrchSpecResourcesLimits {
+        }
+
+        export interface SeldonDeploymentSpecPredictorsSvcOrchSpecResourcesRequests {
         }
 
         /**
          * SeldonDeploymentStatus defines the observed state of SeldonDeployment
          */
         export interface SeldonDeploymentStatus {
+            /**
+             * Addressable placeholder until duckv1 issue is fixed:    https://github.com/kubernetes-sigs/controller-tools/issues/391
+             */
+            address?: outputs.machinelearning.v1.SeldonDeploymentStatusAddress;
             deploymentStatus?: {[key: string]: outputs.machinelearning.v1.SeldonDeploymentStatusDeploymentStatus};
             description?: string;
+            replicas?: number;
             serviceStatus?: {[key: string]: outputs.machinelearning.v1.SeldonDeploymentStatusServiceStatus};
             state?: string;
+        }
+
+        /**
+         * Addressable placeholder until duckv1 issue is fixed:    https://github.com/kubernetes-sigs/controller-tools/issues/391
+         */
+        export interface SeldonDeploymentStatusAddress {
+            url?: string;
         }
 
         export interface SeldonDeploymentStatusDeploymentStatus {

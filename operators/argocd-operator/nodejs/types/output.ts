@@ -14,6 +14,10 @@ export namespace argoproj {
          */
         export interface AppProjectSpec {
             /**
+             * ClusterResourceBlacklist contains list of blacklisted cluster level resources
+             */
+            clusterResourceBlacklist?: outputs.argoproj.v1alpha1.AppProjectSpecClusterResourceBlacklist[];
+            /**
              * ClusterResourceWhitelist contains list of whitelisted cluster level resources
              */
             clusterResourceWhitelist?: outputs.argoproj.v1alpha1.AppProjectSpecClusterResourceWhitelist[];
@@ -42,6 +46,10 @@ export namespace argoproj {
              */
             roles?: outputs.argoproj.v1alpha1.AppProjectSpecRoles[];
             /**
+             * List of PGP key IDs that commits to be synced to must be signed with
+             */
+            signatureKeys?: outputs.argoproj.v1alpha1.AppProjectSpecSignatureKeys[];
+            /**
              * SourceRepos contains list of repository URLs which can be used for deployment
              */
             sourceRepos?: string[];
@@ -49,6 +57,14 @@ export namespace argoproj {
              * SyncWindows controls when syncs can be run for apps in this project
              */
             syncWindows?: outputs.argoproj.v1alpha1.AppProjectSpecSyncWindows[];
+        }
+
+        /**
+         * GroupKind specifies a Group and a Kind, but does not force a version.  This is useful for identifying concepts during lookup stages without having partially valid types
+         */
+        export interface AppProjectSpecClusterResourceBlacklist {
+            group: string;
+            kind: string;
         }
 
         /**
@@ -63,6 +79,10 @@ export namespace argoproj {
          * ApplicationDestination contains deployment destination information
          */
         export interface AppProjectSpecDestinations {
+            /**
+             * Name of the destination cluster which can be used instead of server (url) field
+             */
+            name?: string;
             /**
              * Namespace overrides the environment namespace value in the ksonnet app.yaml
              */
@@ -93,10 +113,17 @@ export namespace argoproj {
          * OrphanedResources specifies if controller should monitor orphaned resources of apps in this project
          */
         export interface AppProjectSpecOrphanedResources {
+            ignore?: outputs.argoproj.v1alpha1.AppProjectSpecOrphanedResourcesIgnore[];
             /**
              * Warn indicates if warning condition should be created for apps which have orphaned resources
              */
             warn?: boolean;
+        }
+
+        export interface AppProjectSpecOrphanedResourcesIgnore {
+            group?: string;
+            kind?: string;
+            name?: string;
         }
 
         /**
@@ -132,6 +159,16 @@ export namespace argoproj {
             exp?: number;
             iat: number;
             id?: string;
+        }
+
+        /**
+         * SignatureKey is the specification of a key required to verify commit signatures with
+         */
+        export interface AppProjectSpecSignatureKeys {
+            /**
+             * The ID of the key in hexadecimal notation
+             */
+            keyID: string;
         }
 
         /**
@@ -178,6 +215,10 @@ export namespace argoproj {
              */
             initiatedBy?: outputs.argoproj.v1alpha1.ApplicationOperationInitiatedBy;
             /**
+             * Retry controls failed sync retry behavior
+             */
+            retry?: outputs.argoproj.v1alpha1.ApplicationOperationRetry;
+            /**
              * SyncOperation contains sync operation details.
              */
             sync?: outputs.argoproj.v1alpha1.ApplicationOperationSync;
@@ -200,6 +241,38 @@ export namespace argoproj {
              * Name of a user who started operation.
              */
             username?: string;
+        }
+
+        /**
+         * Retry controls failed sync retry behavior
+         */
+        export interface ApplicationOperationRetry {
+            /**
+             * Backoff is a backoff strategy
+             */
+            backoff?: outputs.argoproj.v1alpha1.ApplicationOperationRetryBackoff;
+            /**
+             * Limit is the maximum number of attempts when retrying a container
+             */
+            limit?: number;
+        }
+
+        /**
+         * Backoff is a backoff strategy
+         */
+        export interface ApplicationOperationRetryBackoff {
+            /**
+             * Duration is the amount to back off. Default unit is seconds, but could also be a duration (e.g. "2m", "1h")
+             */
+            duration?: string;
+            /**
+             * Factor is a factor to multiply the base duration after each failed retry
+             */
+            factor?: number;
+            /**
+             * MaxDuration is the maximum amount of time allowed for the backoff strategy
+             */
+            maxDuration?: string;
         }
 
         /**
@@ -247,6 +320,7 @@ export namespace argoproj {
             group?: string;
             kind: string;
             name: string;
+            namespace?: string;
         }
 
         /**
@@ -310,6 +384,10 @@ export namespace argoproj {
              * ExtVars is a list of Jsonnet External Variables
              */
             extVars?: outputs.argoproj.v1alpha1.ApplicationOperationSyncSourceDirectoryJsonnetExtVars[];
+            /**
+             * Additional library search dirs
+             */
+            libs?: string[];
             /**
              * TLAS is a list of Jsonnet Top-level Arguments
              */
@@ -533,6 +611,10 @@ export namespace argoproj {
          */
         export interface ApplicationSpecDestination {
             /**
+             * Name of the destination cluster which can be used instead of server (url) field
+             */
+            name?: string;
+            /**
              * Namespace overrides the environment namespace value in the ksonnet app.yaml
              */
             namespace?: string;
@@ -619,6 +701,10 @@ export namespace argoproj {
              * ExtVars is a list of Jsonnet External Variables
              */
             extVars?: outputs.argoproj.v1alpha1.ApplicationSpecSourceDirectoryJsonnetExtVars[];
+            /**
+             * Additional library search dirs
+             */
+            libs?: string[];
             /**
              * TLAS is a list of Jsonnet Top-level Arguments
              */
@@ -778,6 +864,10 @@ export namespace argoproj {
              */
             automated?: outputs.argoproj.v1alpha1.ApplicationSpecSyncPolicyAutomated;
             /**
+             * Retry controls failed sync retry behavior
+             */
+            retry?: outputs.argoproj.v1alpha1.ApplicationSpecSyncPolicyRetry;
+            /**
              * Options allow you to specify whole app sync-options
              */
             syncOptions?: string[];
@@ -798,6 +888,38 @@ export namespace argoproj {
         }
 
         /**
+         * Retry controls failed sync retry behavior
+         */
+        export interface ApplicationSpecSyncPolicyRetry {
+            /**
+             * Backoff is a backoff strategy
+             */
+            backoff?: outputs.argoproj.v1alpha1.ApplicationSpecSyncPolicyRetryBackoff;
+            /**
+             * Limit is the maximum number of attempts when retrying a container
+             */
+            limit?: number;
+        }
+
+        /**
+         * Backoff is a backoff strategy
+         */
+        export interface ApplicationSpecSyncPolicyRetryBackoff {
+            /**
+             * Duration is the amount to back off. Default unit is seconds, but could also be a duration (e.g. "2m", "1h")
+             */
+            duration?: string;
+            /**
+             * Factor is a factor to multiply the base duration after each failed retry
+             */
+            factor?: number;
+            /**
+             * MaxDuration is the maximum amount of time allowed for the backoff strategy
+             */
+            maxDuration?: string;
+        }
+
+        /**
          * ApplicationStatus contains information about application sync, health status
          */
         export interface ApplicationStatus {
@@ -808,7 +930,7 @@ export namespace argoproj {
              */
             history?: outputs.argoproj.v1alpha1.ApplicationStatusHistory[];
             /**
-             * ObservedAt indicates when the application state was updated without querying latest git state
+             * ObservedAt indicates when the application state was updated without querying latest git state Deprecated: controller no longer updates ObservedAt field
              */
             observedAt?: string;
             /**
@@ -858,8 +980,21 @@ export namespace argoproj {
          * RevisionHistory contains information relevant to an application deployment
          */
         export interface ApplicationStatusHistory {
+            /**
+             * DeployStartedAt holds the time the deployment started
+             */
+            deployStartedAt?: string;
+            /**
+             * DeployedAt holds the time the deployment completed
+             */
             deployedAt: string;
+            /**
+             * ID is an auto incrementing identifier of the RevisionHistory
+             */
             id: number;
+            /**
+             * Revision holds the revision of the sync
+             */
             revision: string;
             /**
              * ApplicationSource contains information about github repository, path within repository and target application environment.
@@ -928,6 +1063,10 @@ export namespace argoproj {
              * ExtVars is a list of Jsonnet External Variables
              */
             extVars?: outputs.argoproj.v1alpha1.ApplicationStatusHistorySourceDirectoryJsonnetExtVars[];
+            /**
+             * Additional library search dirs
+             */
+            libs?: string[];
             /**
              * TLAS is a list of Jsonnet Top-level Arguments
              */
@@ -1099,6 +1238,10 @@ export namespace argoproj {
              */
             phase: string;
             /**
+             * RetryCount contains time of operation retries
+             */
+            retryCount?: number;
+            /**
              * StartedAt contains time of operation start
              */
             startedAt: string;
@@ -1117,6 +1260,10 @@ export namespace argoproj {
              * OperationInitiator holds information about the operation initiator
              */
             initiatedBy?: outputs.argoproj.v1alpha1.ApplicationStatusOperationStateOperationInitiatedBy;
+            /**
+             * Retry controls failed sync retry behavior
+             */
+            retry?: outputs.argoproj.v1alpha1.ApplicationStatusOperationStateOperationRetry;
             /**
              * SyncOperation contains sync operation details.
              */
@@ -1140,6 +1287,38 @@ export namespace argoproj {
              * Name of a user who started operation.
              */
             username?: string;
+        }
+
+        /**
+         * Retry controls failed sync retry behavior
+         */
+        export interface ApplicationStatusOperationStateOperationRetry {
+            /**
+             * Backoff is a backoff strategy
+             */
+            backoff?: outputs.argoproj.v1alpha1.ApplicationStatusOperationStateOperationRetryBackoff;
+            /**
+             * Limit is the maximum number of attempts when retrying a container
+             */
+            limit?: number;
+        }
+
+        /**
+         * Backoff is a backoff strategy
+         */
+        export interface ApplicationStatusOperationStateOperationRetryBackoff {
+            /**
+             * Duration is the amount to back off. Default unit is seconds, but could also be a duration (e.g. "2m", "1h")
+             */
+            duration?: string;
+            /**
+             * Factor is a factor to multiply the base duration after each failed retry
+             */
+            factor?: number;
+            /**
+             * MaxDuration is the maximum amount of time allowed for the backoff strategy
+             */
+            maxDuration?: string;
         }
 
         /**
@@ -1187,6 +1366,7 @@ export namespace argoproj {
             group?: string;
             kind: string;
             name: string;
+            namespace?: string;
         }
 
         /**
@@ -1250,6 +1430,10 @@ export namespace argoproj {
              * ExtVars is a list of Jsonnet External Variables
              */
             extVars?: outputs.argoproj.v1alpha1.ApplicationStatusOperationStateOperationSyncSourceDirectoryJsonnetExtVars[];
+            /**
+             * Additional library search dirs
+             */
+            libs?: string[];
             /**
              * TLAS is a list of Jsonnet Top-level Arguments
              */
@@ -1545,6 +1729,10 @@ export namespace argoproj {
              */
             extVars?: outputs.argoproj.v1alpha1.ApplicationStatusOperationStateSyncResultSourceDirectoryJsonnetExtVars[];
             /**
+             * Additional library search dirs
+             */
+            libs?: string[];
+            /**
              * TLAS is a list of Jsonnet Top-level Arguments
              */
             tlas?: outputs.argoproj.v1alpha1.ApplicationStatusOperationStateSyncResultSourceDirectoryJsonnetTlas[];
@@ -1765,6 +1953,10 @@ export namespace argoproj {
          */
         export interface ApplicationStatusSyncComparedToDestination {
             /**
+             * Name of the destination cluster which can be used instead of server (url) field
+             */
+            name?: string;
+            /**
              * Namespace overrides the environment namespace value in the ksonnet app.yaml
              */
             namespace?: string;
@@ -1835,6 +2027,10 @@ export namespace argoproj {
              * ExtVars is a list of Jsonnet External Variables
              */
             extVars?: outputs.argoproj.v1alpha1.ApplicationStatusSyncComparedToSourceDirectoryJsonnetExtVars[];
+            /**
+             * Additional library search dirs
+             */
+            libs?: string[];
             /**
              * TLAS is a list of Jsonnet Top-level Arguments
              */
@@ -2038,7 +2234,7 @@ export namespace argoproj {
              */
             accessModes?: string[];
             /**
-             * This field requires the VolumeSnapshotDataSource alpha feature gate to be enabled and currently VolumeSnapshot is the only supported data source. If the provisioner can support VolumeSnapshot data source, it will create a new volume and data will be restored to the volume at the same time. If the provisioner does not support VolumeSnapshot data source, volume will not be created and the failure will be reported as an event. In the future, we plan to support more data source types and the behavior of the provisioner may change.
+             * This field can be used to specify either: * An existing VolumeSnapshot object (snapshot.storage.k8s.io/VolumeSnapshot - Beta) * An existing PVC (PersistentVolumeClaim) * An existing custom resource/object that implements data population (Alpha) In order to use VolumeSnapshot object types, the appropriate feature gate must be enabled (VolumeSnapshotDataSource or AnyVolumeDataSource) If the provisioner or an external controller can support the specified data source, it will create a new volume based on the contents of the specified data source. If the specified data source is not supported, the volume will not be created and the failure will be reported as an event. In the future, we plan to support more data source types and the behavior of the provisioner may change.
              */
             dataSource?: outputs.argoproj.v1alpha1.ArgoCDExportSpecStoragePvcDataSource;
             /**
@@ -2054,7 +2250,7 @@ export namespace argoproj {
              */
             storageClassName?: string;
             /**
-             * volumeMode defines what type of volume is required by the claim. Value of Filesystem is implied when not included in claim spec. This is a beta feature.
+             * volumeMode defines what type of volume is required by the claim. Value of Filesystem is implied when not included in claim spec.
              */
             volumeMode?: string;
             /**
@@ -2064,7 +2260,7 @@ export namespace argoproj {
         }
 
         /**
-         * This field requires the VolumeSnapshotDataSource alpha feature gate to be enabled and currently VolumeSnapshot is the only supported data source. If the provisioner can support VolumeSnapshot data source, it will create a new volume and data will be restored to the volume at the same time. If the provisioner does not support VolumeSnapshot data source, volume will not be created and the failure will be reported as an event. In the future, we plan to support more data source types and the behavior of the provisioner may change.
+         * This field can be used to specify either: * An existing VolumeSnapshot object (snapshot.storage.k8s.io/VolumeSnapshot - Beta) * An existing PVC (PersistentVolumeClaim) * An existing custom resource/object that implements data population (Alpha) In order to use VolumeSnapshot object types, the appropriate feature gate must be enabled (VolumeSnapshotDataSource or AnyVolumeDataSource) If the provisioner or an external controller can support the specified data source, it will create a new volume based on the contents of the specified data source. If the specified data source is not supported, the volume will not be created and the failure will be reported as an event. In the future, we plan to support more data source types and the behavior of the provisioner may change.
          */
         export interface ArgoCDExportSpecStoragePvcDataSource {
             /**
@@ -2202,7 +2398,7 @@ export namespace argoproj {
             /**
              * InitialSSHKnownHosts defines the SSH known hosts data upon creation of the cluster for connecting Git repositories via SSH.
              */
-            initialSSHKnownHosts?: string;
+            initialSSHKnownHosts?: outputs.argoproj.v1alpha1.ArgoCDSpecInitialSSHKnownHosts;
             /**
              * KustomizeBuildOptions is used to specify build options/parameters to use with `kustomize build`.
              */
@@ -2240,6 +2436,10 @@ export namespace argoproj {
              */
             resourceExclusions?: string;
             /**
+             * ResourceInclusions is used to only include specific group/kinds in the reconciliation process.
+             */
+            resourceInclusions?: string;
+            /**
              * Server defines the options for the ArgoCD Server component.
              */
             server?: outputs.argoproj.v1alpha1.ArgoCDSpecServer;
@@ -2265,6 +2465,11 @@ export namespace argoproj {
          * Controller defines the Application Controller options for ArgoCD.
          */
         export interface ArgoCDSpecController {
+            /**
+             * AppSync is used to control the sync frequency, by default the ArgoCD controller polls Git every 3m by default. 
+             *  Set this to a duration, e.g. 10m or 600s to control the synchronisation frequency.
+             */
+            appSync?: string;
             /**
              * Processors contains the options for the Application Controller processors.
              */
@@ -2514,6 +2719,14 @@ export namespace argoproj {
              * Enabled will toggle HA support globally for Argo CD.
              */
             enabled: boolean;
+            /**
+             * RedisProxyImage is the Redis HAProxy container image.
+             */
+            redisProxyImage?: string;
+            /**
+             * RedisProxyVersion is the Redis HAProxy container image tag.
+             */
+            redisProxyVersion?: string;
         }
 
         /**
@@ -2528,6 +2741,20 @@ export namespace argoproj {
              * Namespace for the ArgoCDExport, defaults to the same namespace as the ArgoCD.
              */
             namespace?: string;
+        }
+
+        /**
+         * InitialSSHKnownHosts defines the SSH known hosts data upon creation of the cluster for connecting Git repositories via SSH.
+         */
+        export interface ArgoCDSpecInitialSSHKnownHosts {
+            /**
+             * ExcludeDefaultHosts describes whether you would like to include the default list of SSH Known Hosts provided by ArgoCD.
+             */
+            excludedefaulthosts?: boolean;
+            /**
+             * Keys describes a custom set of SSH Known Hosts that you would like to have included in your ArgoCD server.
+             */
+            keys?: string;
         }
 
         /**

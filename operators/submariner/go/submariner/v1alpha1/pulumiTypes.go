@@ -11,441 +11,6 @@ import (
 	"github.com/pulumi/pulumi/sdk/v2/go/pulumi"
 )
 
-// ServiceDiscovery is the Schema for the servicediscoveries API
-type ServiceDiscoveryType struct {
-	ApiVersion *string            `pulumi:"apiVersion"`
-	Kind       *string            `pulumi:"kind"`
-	Metadata   *metav1.ObjectMeta `pulumi:"metadata"`
-	// ServiceDiscoverySpec defines the desired state of ServiceDiscovery
-	Spec *ServiceDiscoverySpec `pulumi:"spec"`
-	// ServiceDiscoveryStatus defines the observed state of ServiceDiscovery
-	Status map[string]interface{} `pulumi:"status"`
-}
-
-// ServiceDiscoveryTypeInput is an input type that accepts ServiceDiscoveryTypeArgs and ServiceDiscoveryTypeOutput values.
-// You can construct a concrete instance of `ServiceDiscoveryTypeInput` via:
-//
-//          ServiceDiscoveryTypeArgs{...}
-type ServiceDiscoveryTypeInput interface {
-	pulumi.Input
-
-	ToServiceDiscoveryTypeOutput() ServiceDiscoveryTypeOutput
-	ToServiceDiscoveryTypeOutputWithContext(context.Context) ServiceDiscoveryTypeOutput
-}
-
-// ServiceDiscovery is the Schema for the servicediscoveries API
-type ServiceDiscoveryTypeArgs struct {
-	ApiVersion pulumi.StringPtrInput     `pulumi:"apiVersion"`
-	Kind       pulumi.StringPtrInput     `pulumi:"kind"`
-	Metadata   metav1.ObjectMetaPtrInput `pulumi:"metadata"`
-	// ServiceDiscoverySpec defines the desired state of ServiceDiscovery
-	Spec ServiceDiscoverySpecPtrInput `pulumi:"spec"`
-	// ServiceDiscoveryStatus defines the observed state of ServiceDiscovery
-	Status pulumi.MapInput `pulumi:"status"`
-}
-
-func (ServiceDiscoveryTypeArgs) ElementType() reflect.Type {
-	return reflect.TypeOf((*ServiceDiscoveryType)(nil)).Elem()
-}
-
-func (i ServiceDiscoveryTypeArgs) ToServiceDiscoveryTypeOutput() ServiceDiscoveryTypeOutput {
-	return i.ToServiceDiscoveryTypeOutputWithContext(context.Background())
-}
-
-func (i ServiceDiscoveryTypeArgs) ToServiceDiscoveryTypeOutputWithContext(ctx context.Context) ServiceDiscoveryTypeOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(ServiceDiscoveryTypeOutput)
-}
-
-// ServiceDiscovery is the Schema for the servicediscoveries API
-type ServiceDiscoveryTypeOutput struct{ *pulumi.OutputState }
-
-func (ServiceDiscoveryTypeOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*ServiceDiscoveryType)(nil)).Elem()
-}
-
-func (o ServiceDiscoveryTypeOutput) ToServiceDiscoveryTypeOutput() ServiceDiscoveryTypeOutput {
-	return o
-}
-
-func (o ServiceDiscoveryTypeOutput) ToServiceDiscoveryTypeOutputWithContext(ctx context.Context) ServiceDiscoveryTypeOutput {
-	return o
-}
-
-func (o ServiceDiscoveryTypeOutput) ApiVersion() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v ServiceDiscoveryType) *string { return v.ApiVersion }).(pulumi.StringPtrOutput)
-}
-
-func (o ServiceDiscoveryTypeOutput) Kind() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v ServiceDiscoveryType) *string { return v.Kind }).(pulumi.StringPtrOutput)
-}
-
-func (o ServiceDiscoveryTypeOutput) Metadata() metav1.ObjectMetaPtrOutput {
-	return o.ApplyT(func(v ServiceDiscoveryType) *metav1.ObjectMeta { return v.Metadata }).(metav1.ObjectMetaPtrOutput)
-}
-
-// ServiceDiscoverySpec defines the desired state of ServiceDiscovery
-func (o ServiceDiscoveryTypeOutput) Spec() ServiceDiscoverySpecPtrOutput {
-	return o.ApplyT(func(v ServiceDiscoveryType) *ServiceDiscoverySpec { return v.Spec }).(ServiceDiscoverySpecPtrOutput)
-}
-
-// ServiceDiscoveryStatus defines the observed state of ServiceDiscovery
-func (o ServiceDiscoveryTypeOutput) Status() pulumi.MapOutput {
-	return o.ApplyT(func(v ServiceDiscoveryType) map[string]interface{} { return v.Status }).(pulumi.MapOutput)
-}
-
-type ServiceDiscoveryMetadata struct {
-}
-
-// ServiceDiscoveryMetadataInput is an input type that accepts ServiceDiscoveryMetadataArgs and ServiceDiscoveryMetadataOutput values.
-// You can construct a concrete instance of `ServiceDiscoveryMetadataInput` via:
-//
-//          ServiceDiscoveryMetadataArgs{...}
-type ServiceDiscoveryMetadataInput interface {
-	pulumi.Input
-
-	ToServiceDiscoveryMetadataOutput() ServiceDiscoveryMetadataOutput
-	ToServiceDiscoveryMetadataOutputWithContext(context.Context) ServiceDiscoveryMetadataOutput
-}
-
-type ServiceDiscoveryMetadataArgs struct {
-}
-
-func (ServiceDiscoveryMetadataArgs) ElementType() reflect.Type {
-	return reflect.TypeOf((*ServiceDiscoveryMetadata)(nil)).Elem()
-}
-
-func (i ServiceDiscoveryMetadataArgs) ToServiceDiscoveryMetadataOutput() ServiceDiscoveryMetadataOutput {
-	return i.ToServiceDiscoveryMetadataOutputWithContext(context.Background())
-}
-
-func (i ServiceDiscoveryMetadataArgs) ToServiceDiscoveryMetadataOutputWithContext(ctx context.Context) ServiceDiscoveryMetadataOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(ServiceDiscoveryMetadataOutput)
-}
-
-type ServiceDiscoveryMetadataOutput struct{ *pulumi.OutputState }
-
-func (ServiceDiscoveryMetadataOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*ServiceDiscoveryMetadata)(nil)).Elem()
-}
-
-func (o ServiceDiscoveryMetadataOutput) ToServiceDiscoveryMetadataOutput() ServiceDiscoveryMetadataOutput {
-	return o
-}
-
-func (o ServiceDiscoveryMetadataOutput) ToServiceDiscoveryMetadataOutputWithContext(ctx context.Context) ServiceDiscoveryMetadataOutput {
-	return o
-}
-
-// ServiceDiscoverySpec defines the desired state of ServiceDiscovery
-type ServiceDiscoverySpec struct {
-	BrokerK8sApiServer       string  `pulumi:"brokerK8sApiServer"`
-	BrokerK8sApiServerToken  string  `pulumi:"brokerK8sApiServerToken"`
-	BrokerK8sCA              string  `pulumi:"brokerK8sCA"`
-	BrokerK8sRemoteNamespace string  `pulumi:"brokerK8sRemoteNamespace"`
-	ClusterID                string  `pulumi:"clusterID"`
-	Debug                    bool    `pulumi:"debug"`
-	GlobalnetEnabled         *bool   `pulumi:"globalnetEnabled"`
-	Namespace                string  `pulumi:"namespace"`
-	Repository               *string `pulumi:"repository"`
-	Version                  *string `pulumi:"version"`
-}
-
-// ServiceDiscoverySpecInput is an input type that accepts ServiceDiscoverySpecArgs and ServiceDiscoverySpecOutput values.
-// You can construct a concrete instance of `ServiceDiscoverySpecInput` via:
-//
-//          ServiceDiscoverySpecArgs{...}
-type ServiceDiscoverySpecInput interface {
-	pulumi.Input
-
-	ToServiceDiscoverySpecOutput() ServiceDiscoverySpecOutput
-	ToServiceDiscoverySpecOutputWithContext(context.Context) ServiceDiscoverySpecOutput
-}
-
-// ServiceDiscoverySpec defines the desired state of ServiceDiscovery
-type ServiceDiscoverySpecArgs struct {
-	BrokerK8sApiServer       pulumi.StringInput    `pulumi:"brokerK8sApiServer"`
-	BrokerK8sApiServerToken  pulumi.StringInput    `pulumi:"brokerK8sApiServerToken"`
-	BrokerK8sCA              pulumi.StringInput    `pulumi:"brokerK8sCA"`
-	BrokerK8sRemoteNamespace pulumi.StringInput    `pulumi:"brokerK8sRemoteNamespace"`
-	ClusterID                pulumi.StringInput    `pulumi:"clusterID"`
-	Debug                    pulumi.BoolInput      `pulumi:"debug"`
-	GlobalnetEnabled         pulumi.BoolPtrInput   `pulumi:"globalnetEnabled"`
-	Namespace                pulumi.StringInput    `pulumi:"namespace"`
-	Repository               pulumi.StringPtrInput `pulumi:"repository"`
-	Version                  pulumi.StringPtrInput `pulumi:"version"`
-}
-
-func (ServiceDiscoverySpecArgs) ElementType() reflect.Type {
-	return reflect.TypeOf((*ServiceDiscoverySpec)(nil)).Elem()
-}
-
-func (i ServiceDiscoverySpecArgs) ToServiceDiscoverySpecOutput() ServiceDiscoverySpecOutput {
-	return i.ToServiceDiscoverySpecOutputWithContext(context.Background())
-}
-
-func (i ServiceDiscoverySpecArgs) ToServiceDiscoverySpecOutputWithContext(ctx context.Context) ServiceDiscoverySpecOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(ServiceDiscoverySpecOutput)
-}
-
-func (i ServiceDiscoverySpecArgs) ToServiceDiscoverySpecPtrOutput() ServiceDiscoverySpecPtrOutput {
-	return i.ToServiceDiscoverySpecPtrOutputWithContext(context.Background())
-}
-
-func (i ServiceDiscoverySpecArgs) ToServiceDiscoverySpecPtrOutputWithContext(ctx context.Context) ServiceDiscoverySpecPtrOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(ServiceDiscoverySpecOutput).ToServiceDiscoverySpecPtrOutputWithContext(ctx)
-}
-
-// ServiceDiscoverySpecPtrInput is an input type that accepts ServiceDiscoverySpecArgs, ServiceDiscoverySpecPtr and ServiceDiscoverySpecPtrOutput values.
-// You can construct a concrete instance of `ServiceDiscoverySpecPtrInput` via:
-//
-//          ServiceDiscoverySpecArgs{...}
-//
-//  or:
-//
-//          nil
-type ServiceDiscoverySpecPtrInput interface {
-	pulumi.Input
-
-	ToServiceDiscoverySpecPtrOutput() ServiceDiscoverySpecPtrOutput
-	ToServiceDiscoverySpecPtrOutputWithContext(context.Context) ServiceDiscoverySpecPtrOutput
-}
-
-type serviceDiscoverySpecPtrType ServiceDiscoverySpecArgs
-
-func ServiceDiscoverySpecPtr(v *ServiceDiscoverySpecArgs) ServiceDiscoverySpecPtrInput {
-	return (*serviceDiscoverySpecPtrType)(v)
-}
-
-func (*serviceDiscoverySpecPtrType) ElementType() reflect.Type {
-	return reflect.TypeOf((**ServiceDiscoverySpec)(nil)).Elem()
-}
-
-func (i *serviceDiscoverySpecPtrType) ToServiceDiscoverySpecPtrOutput() ServiceDiscoverySpecPtrOutput {
-	return i.ToServiceDiscoverySpecPtrOutputWithContext(context.Background())
-}
-
-func (i *serviceDiscoverySpecPtrType) ToServiceDiscoverySpecPtrOutputWithContext(ctx context.Context) ServiceDiscoverySpecPtrOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(ServiceDiscoverySpecPtrOutput)
-}
-
-// ServiceDiscoverySpec defines the desired state of ServiceDiscovery
-type ServiceDiscoverySpecOutput struct{ *pulumi.OutputState }
-
-func (ServiceDiscoverySpecOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*ServiceDiscoverySpec)(nil)).Elem()
-}
-
-func (o ServiceDiscoverySpecOutput) ToServiceDiscoverySpecOutput() ServiceDiscoverySpecOutput {
-	return o
-}
-
-func (o ServiceDiscoverySpecOutput) ToServiceDiscoverySpecOutputWithContext(ctx context.Context) ServiceDiscoverySpecOutput {
-	return o
-}
-
-func (o ServiceDiscoverySpecOutput) ToServiceDiscoverySpecPtrOutput() ServiceDiscoverySpecPtrOutput {
-	return o.ToServiceDiscoverySpecPtrOutputWithContext(context.Background())
-}
-
-func (o ServiceDiscoverySpecOutput) ToServiceDiscoverySpecPtrOutputWithContext(ctx context.Context) ServiceDiscoverySpecPtrOutput {
-	return o.ApplyT(func(v ServiceDiscoverySpec) *ServiceDiscoverySpec {
-		return &v
-	}).(ServiceDiscoverySpecPtrOutput)
-}
-func (o ServiceDiscoverySpecOutput) BrokerK8sApiServer() pulumi.StringOutput {
-	return o.ApplyT(func(v ServiceDiscoverySpec) string { return v.BrokerK8sApiServer }).(pulumi.StringOutput)
-}
-
-func (o ServiceDiscoverySpecOutput) BrokerK8sApiServerToken() pulumi.StringOutput {
-	return o.ApplyT(func(v ServiceDiscoverySpec) string { return v.BrokerK8sApiServerToken }).(pulumi.StringOutput)
-}
-
-func (o ServiceDiscoverySpecOutput) BrokerK8sCA() pulumi.StringOutput {
-	return o.ApplyT(func(v ServiceDiscoverySpec) string { return v.BrokerK8sCA }).(pulumi.StringOutput)
-}
-
-func (o ServiceDiscoverySpecOutput) BrokerK8sRemoteNamespace() pulumi.StringOutput {
-	return o.ApplyT(func(v ServiceDiscoverySpec) string { return v.BrokerK8sRemoteNamespace }).(pulumi.StringOutput)
-}
-
-func (o ServiceDiscoverySpecOutput) ClusterID() pulumi.StringOutput {
-	return o.ApplyT(func(v ServiceDiscoverySpec) string { return v.ClusterID }).(pulumi.StringOutput)
-}
-
-func (o ServiceDiscoverySpecOutput) Debug() pulumi.BoolOutput {
-	return o.ApplyT(func(v ServiceDiscoverySpec) bool { return v.Debug }).(pulumi.BoolOutput)
-}
-
-func (o ServiceDiscoverySpecOutput) GlobalnetEnabled() pulumi.BoolPtrOutput {
-	return o.ApplyT(func(v ServiceDiscoverySpec) *bool { return v.GlobalnetEnabled }).(pulumi.BoolPtrOutput)
-}
-
-func (o ServiceDiscoverySpecOutput) Namespace() pulumi.StringOutput {
-	return o.ApplyT(func(v ServiceDiscoverySpec) string { return v.Namespace }).(pulumi.StringOutput)
-}
-
-func (o ServiceDiscoverySpecOutput) Repository() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v ServiceDiscoverySpec) *string { return v.Repository }).(pulumi.StringPtrOutput)
-}
-
-func (o ServiceDiscoverySpecOutput) Version() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v ServiceDiscoverySpec) *string { return v.Version }).(pulumi.StringPtrOutput)
-}
-
-type ServiceDiscoverySpecPtrOutput struct{ *pulumi.OutputState }
-
-func (ServiceDiscoverySpecPtrOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((**ServiceDiscoverySpec)(nil)).Elem()
-}
-
-func (o ServiceDiscoverySpecPtrOutput) ToServiceDiscoverySpecPtrOutput() ServiceDiscoverySpecPtrOutput {
-	return o
-}
-
-func (o ServiceDiscoverySpecPtrOutput) ToServiceDiscoverySpecPtrOutputWithContext(ctx context.Context) ServiceDiscoverySpecPtrOutput {
-	return o
-}
-
-func (o ServiceDiscoverySpecPtrOutput) Elem() ServiceDiscoverySpecOutput {
-	return o.ApplyT(func(v *ServiceDiscoverySpec) ServiceDiscoverySpec { return *v }).(ServiceDiscoverySpecOutput)
-}
-
-func (o ServiceDiscoverySpecPtrOutput) BrokerK8sApiServer() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *ServiceDiscoverySpec) *string {
-		if v == nil {
-			return nil
-		}
-		return &v.BrokerK8sApiServer
-	}).(pulumi.StringPtrOutput)
-}
-
-func (o ServiceDiscoverySpecPtrOutput) BrokerK8sApiServerToken() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *ServiceDiscoverySpec) *string {
-		if v == nil {
-			return nil
-		}
-		return &v.BrokerK8sApiServerToken
-	}).(pulumi.StringPtrOutput)
-}
-
-func (o ServiceDiscoverySpecPtrOutput) BrokerK8sCA() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *ServiceDiscoverySpec) *string {
-		if v == nil {
-			return nil
-		}
-		return &v.BrokerK8sCA
-	}).(pulumi.StringPtrOutput)
-}
-
-func (o ServiceDiscoverySpecPtrOutput) BrokerK8sRemoteNamespace() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *ServiceDiscoverySpec) *string {
-		if v == nil {
-			return nil
-		}
-		return &v.BrokerK8sRemoteNamespace
-	}).(pulumi.StringPtrOutput)
-}
-
-func (o ServiceDiscoverySpecPtrOutput) ClusterID() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *ServiceDiscoverySpec) *string {
-		if v == nil {
-			return nil
-		}
-		return &v.ClusterID
-	}).(pulumi.StringPtrOutput)
-}
-
-func (o ServiceDiscoverySpecPtrOutput) Debug() pulumi.BoolPtrOutput {
-	return o.ApplyT(func(v *ServiceDiscoverySpec) *bool {
-		if v == nil {
-			return nil
-		}
-		return &v.Debug
-	}).(pulumi.BoolPtrOutput)
-}
-
-func (o ServiceDiscoverySpecPtrOutput) GlobalnetEnabled() pulumi.BoolPtrOutput {
-	return o.ApplyT(func(v *ServiceDiscoverySpec) *bool {
-		if v == nil {
-			return nil
-		}
-		return v.GlobalnetEnabled
-	}).(pulumi.BoolPtrOutput)
-}
-
-func (o ServiceDiscoverySpecPtrOutput) Namespace() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *ServiceDiscoverySpec) *string {
-		if v == nil {
-			return nil
-		}
-		return &v.Namespace
-	}).(pulumi.StringPtrOutput)
-}
-
-func (o ServiceDiscoverySpecPtrOutput) Repository() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *ServiceDiscoverySpec) *string {
-		if v == nil {
-			return nil
-		}
-		return v.Repository
-	}).(pulumi.StringPtrOutput)
-}
-
-func (o ServiceDiscoverySpecPtrOutput) Version() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *ServiceDiscoverySpec) *string {
-		if v == nil {
-			return nil
-		}
-		return v.Version
-	}).(pulumi.StringPtrOutput)
-}
-
-// ServiceDiscoveryStatus defines the observed state of ServiceDiscovery
-type ServiceDiscoveryStatus struct {
-}
-
-// ServiceDiscoveryStatusInput is an input type that accepts ServiceDiscoveryStatusArgs and ServiceDiscoveryStatusOutput values.
-// You can construct a concrete instance of `ServiceDiscoveryStatusInput` via:
-//
-//          ServiceDiscoveryStatusArgs{...}
-type ServiceDiscoveryStatusInput interface {
-	pulumi.Input
-
-	ToServiceDiscoveryStatusOutput() ServiceDiscoveryStatusOutput
-	ToServiceDiscoveryStatusOutputWithContext(context.Context) ServiceDiscoveryStatusOutput
-}
-
-// ServiceDiscoveryStatus defines the observed state of ServiceDiscovery
-type ServiceDiscoveryStatusArgs struct {
-}
-
-func (ServiceDiscoveryStatusArgs) ElementType() reflect.Type {
-	return reflect.TypeOf((*ServiceDiscoveryStatus)(nil)).Elem()
-}
-
-func (i ServiceDiscoveryStatusArgs) ToServiceDiscoveryStatusOutput() ServiceDiscoveryStatusOutput {
-	return i.ToServiceDiscoveryStatusOutputWithContext(context.Background())
-}
-
-func (i ServiceDiscoveryStatusArgs) ToServiceDiscoveryStatusOutputWithContext(ctx context.Context) ServiceDiscoveryStatusOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(ServiceDiscoveryStatusOutput)
-}
-
-// ServiceDiscoveryStatus defines the observed state of ServiceDiscovery
-type ServiceDiscoveryStatusOutput struct{ *pulumi.OutputState }
-
-func (ServiceDiscoveryStatusOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*ServiceDiscoveryStatus)(nil)).Elem()
-}
-
-func (o ServiceDiscoveryStatusOutput) ToServiceDiscoveryStatusOutput() ServiceDiscoveryStatusOutput {
-	return o
-}
-
-func (o ServiceDiscoveryStatusOutput) ToServiceDiscoveryStatusOutputWithContext(ctx context.Context) ServiceDiscoveryStatusOutput {
-	return o
-}
-
 // Submariner is the Schema for the submariners API
 type SubmarinerType struct {
 	ApiVersion *string            `pulumi:"apiVersion"`
@@ -573,27 +138,30 @@ func (o SubmarinerMetadataOutput) ToSubmarinerMetadataOutputWithContext(ctx cont
 
 // SubmarinerSpec defines the desired state of Submariner
 type SubmarinerSpec struct {
-	Broker                   string  `pulumi:"broker"`
-	BrokerK8sApiServer       string  `pulumi:"brokerK8sApiServer"`
-	BrokerK8sApiServerToken  string  `pulumi:"brokerK8sApiServerToken"`
-	BrokerK8sCA              string  `pulumi:"brokerK8sCA"`
-	BrokerK8sRemoteNamespace string  `pulumi:"brokerK8sRemoteNamespace"`
-	CableDriver              *string `pulumi:"cableDriver"`
-	CeIPSecDebug             bool    `pulumi:"ceIPSecDebug"`
-	CeIPSecIKEPort           *int    `pulumi:"ceIPSecIKEPort"`
-	CeIPSecNATTPort          *int    `pulumi:"ceIPSecNATTPort"`
-	CeIPSecPSK               string  `pulumi:"ceIPSecPSK"`
-	ClusterCIDR              string  `pulumi:"clusterCIDR"`
-	ClusterID                string  `pulumi:"clusterID"`
-	ColorCodes               *string `pulumi:"colorCodes"`
-	Debug                    bool    `pulumi:"debug"`
-	GlobalCIDR               *string `pulumi:"globalCIDR"`
-	Namespace                string  `pulumi:"namespace"`
-	NatEnabled               bool    `pulumi:"natEnabled"`
-	Repository               *string `pulumi:"repository"`
-	ServiceCIDR              string  `pulumi:"serviceCIDR"`
-	ServiceDiscoveryEnabled  *bool   `pulumi:"serviceDiscoveryEnabled"`
-	Version                  *string `pulumi:"version"`
+	Broker                   string                               `pulumi:"broker"`
+	BrokerK8sApiServer       string                               `pulumi:"brokerK8sApiServer"`
+	BrokerK8sApiServerToken  string                               `pulumi:"brokerK8sApiServerToken"`
+	BrokerK8sCA              string                               `pulumi:"brokerK8sCA"`
+	BrokerK8sRemoteNamespace string                               `pulumi:"brokerK8sRemoteNamespace"`
+	CableDriver              *string                              `pulumi:"cableDriver"`
+	CeIPSecDebug             bool                                 `pulumi:"ceIPSecDebug"`
+	CeIPSecIKEPort           *int                                 `pulumi:"ceIPSecIKEPort"`
+	CeIPSecNATTPort          *int                                 `pulumi:"ceIPSecNATTPort"`
+	CeIPSecPSK               string                               `pulumi:"ceIPSecPSK"`
+	ClusterCIDR              string                               `pulumi:"clusterCIDR"`
+	ClusterID                string                               `pulumi:"clusterID"`
+	ColorCodes               *string                              `pulumi:"colorCodes"`
+	ConnectionHealthCheck    *SubmarinerSpecConnectionHealthCheck `pulumi:"connectionHealthCheck"`
+	CustomDomains            []string                             `pulumi:"customDomains"`
+	Debug                    bool                                 `pulumi:"debug"`
+	GlobalCIDR               *string                              `pulumi:"globalCIDR"`
+	ImageOverrides           map[string]string                    `pulumi:"imageOverrides"`
+	Namespace                string                               `pulumi:"namespace"`
+	NatEnabled               bool                                 `pulumi:"natEnabled"`
+	Repository               *string                              `pulumi:"repository"`
+	ServiceCIDR              string                               `pulumi:"serviceCIDR"`
+	ServiceDiscoveryEnabled  *bool                                `pulumi:"serviceDiscoveryEnabled"`
+	Version                  *string                              `pulumi:"version"`
 }
 
 // SubmarinerSpecInput is an input type that accepts SubmarinerSpecArgs and SubmarinerSpecOutput values.
@@ -609,27 +177,30 @@ type SubmarinerSpecInput interface {
 
 // SubmarinerSpec defines the desired state of Submariner
 type SubmarinerSpecArgs struct {
-	Broker                   pulumi.StringInput    `pulumi:"broker"`
-	BrokerK8sApiServer       pulumi.StringInput    `pulumi:"brokerK8sApiServer"`
-	BrokerK8sApiServerToken  pulumi.StringInput    `pulumi:"brokerK8sApiServerToken"`
-	BrokerK8sCA              pulumi.StringInput    `pulumi:"brokerK8sCA"`
-	BrokerK8sRemoteNamespace pulumi.StringInput    `pulumi:"brokerK8sRemoteNamespace"`
-	CableDriver              pulumi.StringPtrInput `pulumi:"cableDriver"`
-	CeIPSecDebug             pulumi.BoolInput      `pulumi:"ceIPSecDebug"`
-	CeIPSecIKEPort           pulumi.IntPtrInput    `pulumi:"ceIPSecIKEPort"`
-	CeIPSecNATTPort          pulumi.IntPtrInput    `pulumi:"ceIPSecNATTPort"`
-	CeIPSecPSK               pulumi.StringInput    `pulumi:"ceIPSecPSK"`
-	ClusterCIDR              pulumi.StringInput    `pulumi:"clusterCIDR"`
-	ClusterID                pulumi.StringInput    `pulumi:"clusterID"`
-	ColorCodes               pulumi.StringPtrInput `pulumi:"colorCodes"`
-	Debug                    pulumi.BoolInput      `pulumi:"debug"`
-	GlobalCIDR               pulumi.StringPtrInput `pulumi:"globalCIDR"`
-	Namespace                pulumi.StringInput    `pulumi:"namespace"`
-	NatEnabled               pulumi.BoolInput      `pulumi:"natEnabled"`
-	Repository               pulumi.StringPtrInput `pulumi:"repository"`
-	ServiceCIDR              pulumi.StringInput    `pulumi:"serviceCIDR"`
-	ServiceDiscoveryEnabled  pulumi.BoolPtrInput   `pulumi:"serviceDiscoveryEnabled"`
-	Version                  pulumi.StringPtrInput `pulumi:"version"`
+	Broker                   pulumi.StringInput                          `pulumi:"broker"`
+	BrokerK8sApiServer       pulumi.StringInput                          `pulumi:"brokerK8sApiServer"`
+	BrokerK8sApiServerToken  pulumi.StringInput                          `pulumi:"brokerK8sApiServerToken"`
+	BrokerK8sCA              pulumi.StringInput                          `pulumi:"brokerK8sCA"`
+	BrokerK8sRemoteNamespace pulumi.StringInput                          `pulumi:"brokerK8sRemoteNamespace"`
+	CableDriver              pulumi.StringPtrInput                       `pulumi:"cableDriver"`
+	CeIPSecDebug             pulumi.BoolInput                            `pulumi:"ceIPSecDebug"`
+	CeIPSecIKEPort           pulumi.IntPtrInput                          `pulumi:"ceIPSecIKEPort"`
+	CeIPSecNATTPort          pulumi.IntPtrInput                          `pulumi:"ceIPSecNATTPort"`
+	CeIPSecPSK               pulumi.StringInput                          `pulumi:"ceIPSecPSK"`
+	ClusterCIDR              pulumi.StringInput                          `pulumi:"clusterCIDR"`
+	ClusterID                pulumi.StringInput                          `pulumi:"clusterID"`
+	ColorCodes               pulumi.StringPtrInput                       `pulumi:"colorCodes"`
+	ConnectionHealthCheck    SubmarinerSpecConnectionHealthCheckPtrInput `pulumi:"connectionHealthCheck"`
+	CustomDomains            pulumi.StringArrayInput                     `pulumi:"customDomains"`
+	Debug                    pulumi.BoolInput                            `pulumi:"debug"`
+	GlobalCIDR               pulumi.StringPtrInput                       `pulumi:"globalCIDR"`
+	ImageOverrides           pulumi.StringMapInput                       `pulumi:"imageOverrides"`
+	Namespace                pulumi.StringInput                          `pulumi:"namespace"`
+	NatEnabled               pulumi.BoolInput                            `pulumi:"natEnabled"`
+	Repository               pulumi.StringPtrInput                       `pulumi:"repository"`
+	ServiceCIDR              pulumi.StringInput                          `pulumi:"serviceCIDR"`
+	ServiceDiscoveryEnabled  pulumi.BoolPtrInput                         `pulumi:"serviceDiscoveryEnabled"`
+	Version                  pulumi.StringPtrInput                       `pulumi:"version"`
 }
 
 func (SubmarinerSpecArgs) ElementType() reflect.Type {
@@ -761,12 +332,24 @@ func (o SubmarinerSpecOutput) ColorCodes() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v SubmarinerSpec) *string { return v.ColorCodes }).(pulumi.StringPtrOutput)
 }
 
+func (o SubmarinerSpecOutput) ConnectionHealthCheck() SubmarinerSpecConnectionHealthCheckPtrOutput {
+	return o.ApplyT(func(v SubmarinerSpec) *SubmarinerSpecConnectionHealthCheck { return v.ConnectionHealthCheck }).(SubmarinerSpecConnectionHealthCheckPtrOutput)
+}
+
+func (o SubmarinerSpecOutput) CustomDomains() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v SubmarinerSpec) []string { return v.CustomDomains }).(pulumi.StringArrayOutput)
+}
+
 func (o SubmarinerSpecOutput) Debug() pulumi.BoolOutput {
 	return o.ApplyT(func(v SubmarinerSpec) bool { return v.Debug }).(pulumi.BoolOutput)
 }
 
 func (o SubmarinerSpecOutput) GlobalCIDR() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v SubmarinerSpec) *string { return v.GlobalCIDR }).(pulumi.StringPtrOutput)
+}
+
+func (o SubmarinerSpecOutput) ImageOverrides() pulumi.StringMapOutput {
+	return o.ApplyT(func(v SubmarinerSpec) map[string]string { return v.ImageOverrides }).(pulumi.StringMapOutput)
 }
 
 func (o SubmarinerSpecOutput) Namespace() pulumi.StringOutput {
@@ -928,6 +511,24 @@ func (o SubmarinerSpecPtrOutput) ColorCodes() pulumi.StringPtrOutput {
 	}).(pulumi.StringPtrOutput)
 }
 
+func (o SubmarinerSpecPtrOutput) ConnectionHealthCheck() SubmarinerSpecConnectionHealthCheckPtrOutput {
+	return o.ApplyT(func(v *SubmarinerSpec) *SubmarinerSpecConnectionHealthCheck {
+		if v == nil {
+			return nil
+		}
+		return v.ConnectionHealthCheck
+	}).(SubmarinerSpecConnectionHealthCheckPtrOutput)
+}
+
+func (o SubmarinerSpecPtrOutput) CustomDomains() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v *SubmarinerSpec) []string {
+		if v == nil {
+			return nil
+		}
+		return v.CustomDomains
+	}).(pulumi.StringArrayOutput)
+}
+
 func (o SubmarinerSpecPtrOutput) Debug() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v *SubmarinerSpec) *bool {
 		if v == nil {
@@ -944,6 +545,15 @@ func (o SubmarinerSpecPtrOutput) GlobalCIDR() pulumi.StringPtrOutput {
 		}
 		return v.GlobalCIDR
 	}).(pulumi.StringPtrOutput)
+}
+
+func (o SubmarinerSpecPtrOutput) ImageOverrides() pulumi.StringMapOutput {
+	return o.ApplyT(func(v *SubmarinerSpec) map[string]string {
+		if v == nil {
+			return nil
+		}
+		return v.ImageOverrides
+	}).(pulumi.StringMapOutput)
 }
 
 func (o SubmarinerSpecPtrOutput) Namespace() pulumi.StringPtrOutput {
@@ -1000,21 +610,226 @@ func (o SubmarinerSpecPtrOutput) Version() pulumi.StringPtrOutput {
 	}).(pulumi.StringPtrOutput)
 }
 
+type SubmarinerSpecConnectionHealthCheck struct {
+	Enabled *bool `pulumi:"enabled"`
+	// The interval at which health check pings are sent.
+	IntervalSeconds *int `pulumi:"intervalSeconds"`
+	// The maximum number of packets lost at which the health checker will mark the connection as down.
+	MaxPacketLossCount *int `pulumi:"maxPacketLossCount"`
+}
+
+// SubmarinerSpecConnectionHealthCheckInput is an input type that accepts SubmarinerSpecConnectionHealthCheckArgs and SubmarinerSpecConnectionHealthCheckOutput values.
+// You can construct a concrete instance of `SubmarinerSpecConnectionHealthCheckInput` via:
+//
+//          SubmarinerSpecConnectionHealthCheckArgs{...}
+type SubmarinerSpecConnectionHealthCheckInput interface {
+	pulumi.Input
+
+	ToSubmarinerSpecConnectionHealthCheckOutput() SubmarinerSpecConnectionHealthCheckOutput
+	ToSubmarinerSpecConnectionHealthCheckOutputWithContext(context.Context) SubmarinerSpecConnectionHealthCheckOutput
+}
+
+type SubmarinerSpecConnectionHealthCheckArgs struct {
+	Enabled pulumi.BoolPtrInput `pulumi:"enabled"`
+	// The interval at which health check pings are sent.
+	IntervalSeconds pulumi.IntPtrInput `pulumi:"intervalSeconds"`
+	// The maximum number of packets lost at which the health checker will mark the connection as down.
+	MaxPacketLossCount pulumi.IntPtrInput `pulumi:"maxPacketLossCount"`
+}
+
+func (SubmarinerSpecConnectionHealthCheckArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*SubmarinerSpecConnectionHealthCheck)(nil)).Elem()
+}
+
+func (i SubmarinerSpecConnectionHealthCheckArgs) ToSubmarinerSpecConnectionHealthCheckOutput() SubmarinerSpecConnectionHealthCheckOutput {
+	return i.ToSubmarinerSpecConnectionHealthCheckOutputWithContext(context.Background())
+}
+
+func (i SubmarinerSpecConnectionHealthCheckArgs) ToSubmarinerSpecConnectionHealthCheckOutputWithContext(ctx context.Context) SubmarinerSpecConnectionHealthCheckOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(SubmarinerSpecConnectionHealthCheckOutput)
+}
+
+func (i SubmarinerSpecConnectionHealthCheckArgs) ToSubmarinerSpecConnectionHealthCheckPtrOutput() SubmarinerSpecConnectionHealthCheckPtrOutput {
+	return i.ToSubmarinerSpecConnectionHealthCheckPtrOutputWithContext(context.Background())
+}
+
+func (i SubmarinerSpecConnectionHealthCheckArgs) ToSubmarinerSpecConnectionHealthCheckPtrOutputWithContext(ctx context.Context) SubmarinerSpecConnectionHealthCheckPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(SubmarinerSpecConnectionHealthCheckOutput).ToSubmarinerSpecConnectionHealthCheckPtrOutputWithContext(ctx)
+}
+
+// SubmarinerSpecConnectionHealthCheckPtrInput is an input type that accepts SubmarinerSpecConnectionHealthCheckArgs, SubmarinerSpecConnectionHealthCheckPtr and SubmarinerSpecConnectionHealthCheckPtrOutput values.
+// You can construct a concrete instance of `SubmarinerSpecConnectionHealthCheckPtrInput` via:
+//
+//          SubmarinerSpecConnectionHealthCheckArgs{...}
+//
+//  or:
+//
+//          nil
+type SubmarinerSpecConnectionHealthCheckPtrInput interface {
+	pulumi.Input
+
+	ToSubmarinerSpecConnectionHealthCheckPtrOutput() SubmarinerSpecConnectionHealthCheckPtrOutput
+	ToSubmarinerSpecConnectionHealthCheckPtrOutputWithContext(context.Context) SubmarinerSpecConnectionHealthCheckPtrOutput
+}
+
+type submarinerSpecConnectionHealthCheckPtrType SubmarinerSpecConnectionHealthCheckArgs
+
+func SubmarinerSpecConnectionHealthCheckPtr(v *SubmarinerSpecConnectionHealthCheckArgs) SubmarinerSpecConnectionHealthCheckPtrInput {
+	return (*submarinerSpecConnectionHealthCheckPtrType)(v)
+}
+
+func (*submarinerSpecConnectionHealthCheckPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**SubmarinerSpecConnectionHealthCheck)(nil)).Elem()
+}
+
+func (i *submarinerSpecConnectionHealthCheckPtrType) ToSubmarinerSpecConnectionHealthCheckPtrOutput() SubmarinerSpecConnectionHealthCheckPtrOutput {
+	return i.ToSubmarinerSpecConnectionHealthCheckPtrOutputWithContext(context.Background())
+}
+
+func (i *submarinerSpecConnectionHealthCheckPtrType) ToSubmarinerSpecConnectionHealthCheckPtrOutputWithContext(ctx context.Context) SubmarinerSpecConnectionHealthCheckPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(SubmarinerSpecConnectionHealthCheckPtrOutput)
+}
+
+type SubmarinerSpecConnectionHealthCheckOutput struct{ *pulumi.OutputState }
+
+func (SubmarinerSpecConnectionHealthCheckOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*SubmarinerSpecConnectionHealthCheck)(nil)).Elem()
+}
+
+func (o SubmarinerSpecConnectionHealthCheckOutput) ToSubmarinerSpecConnectionHealthCheckOutput() SubmarinerSpecConnectionHealthCheckOutput {
+	return o
+}
+
+func (o SubmarinerSpecConnectionHealthCheckOutput) ToSubmarinerSpecConnectionHealthCheckOutputWithContext(ctx context.Context) SubmarinerSpecConnectionHealthCheckOutput {
+	return o
+}
+
+func (o SubmarinerSpecConnectionHealthCheckOutput) ToSubmarinerSpecConnectionHealthCheckPtrOutput() SubmarinerSpecConnectionHealthCheckPtrOutput {
+	return o.ToSubmarinerSpecConnectionHealthCheckPtrOutputWithContext(context.Background())
+}
+
+func (o SubmarinerSpecConnectionHealthCheckOutput) ToSubmarinerSpecConnectionHealthCheckPtrOutputWithContext(ctx context.Context) SubmarinerSpecConnectionHealthCheckPtrOutput {
+	return o.ApplyT(func(v SubmarinerSpecConnectionHealthCheck) *SubmarinerSpecConnectionHealthCheck {
+		return &v
+	}).(SubmarinerSpecConnectionHealthCheckPtrOutput)
+}
+func (o SubmarinerSpecConnectionHealthCheckOutput) Enabled() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v SubmarinerSpecConnectionHealthCheck) *bool { return v.Enabled }).(pulumi.BoolPtrOutput)
+}
+
+// The interval at which health check pings are sent.
+func (o SubmarinerSpecConnectionHealthCheckOutput) IntervalSeconds() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v SubmarinerSpecConnectionHealthCheck) *int { return v.IntervalSeconds }).(pulumi.IntPtrOutput)
+}
+
+// The maximum number of packets lost at which the health checker will mark the connection as down.
+func (o SubmarinerSpecConnectionHealthCheckOutput) MaxPacketLossCount() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v SubmarinerSpecConnectionHealthCheck) *int { return v.MaxPacketLossCount }).(pulumi.IntPtrOutput)
+}
+
+type SubmarinerSpecConnectionHealthCheckPtrOutput struct{ *pulumi.OutputState }
+
+func (SubmarinerSpecConnectionHealthCheckPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**SubmarinerSpecConnectionHealthCheck)(nil)).Elem()
+}
+
+func (o SubmarinerSpecConnectionHealthCheckPtrOutput) ToSubmarinerSpecConnectionHealthCheckPtrOutput() SubmarinerSpecConnectionHealthCheckPtrOutput {
+	return o
+}
+
+func (o SubmarinerSpecConnectionHealthCheckPtrOutput) ToSubmarinerSpecConnectionHealthCheckPtrOutputWithContext(ctx context.Context) SubmarinerSpecConnectionHealthCheckPtrOutput {
+	return o
+}
+
+func (o SubmarinerSpecConnectionHealthCheckPtrOutput) Elem() SubmarinerSpecConnectionHealthCheckOutput {
+	return o.ApplyT(func(v *SubmarinerSpecConnectionHealthCheck) SubmarinerSpecConnectionHealthCheck { return *v }).(SubmarinerSpecConnectionHealthCheckOutput)
+}
+
+func (o SubmarinerSpecConnectionHealthCheckPtrOutput) Enabled() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *SubmarinerSpecConnectionHealthCheck) *bool {
+		if v == nil {
+			return nil
+		}
+		return v.Enabled
+	}).(pulumi.BoolPtrOutput)
+}
+
+// The interval at which health check pings are sent.
+func (o SubmarinerSpecConnectionHealthCheckPtrOutput) IntervalSeconds() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *SubmarinerSpecConnectionHealthCheck) *int {
+		if v == nil {
+			return nil
+		}
+		return v.IntervalSeconds
+	}).(pulumi.IntPtrOutput)
+}
+
+// The maximum number of packets lost at which the health checker will mark the connection as down.
+func (o SubmarinerSpecConnectionHealthCheckPtrOutput) MaxPacketLossCount() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *SubmarinerSpecConnectionHealthCheck) *int {
+		if v == nil {
+			return nil
+		}
+		return v.MaxPacketLossCount
+	}).(pulumi.IntPtrOutput)
+}
+
+type SubmarinerSpecImageOverrides struct {
+}
+
+// SubmarinerSpecImageOverridesInput is an input type that accepts SubmarinerSpecImageOverridesArgs and SubmarinerSpecImageOverridesOutput values.
+// You can construct a concrete instance of `SubmarinerSpecImageOverridesInput` via:
+//
+//          SubmarinerSpecImageOverridesArgs{...}
+type SubmarinerSpecImageOverridesInput interface {
+	pulumi.Input
+
+	ToSubmarinerSpecImageOverridesOutput() SubmarinerSpecImageOverridesOutput
+	ToSubmarinerSpecImageOverridesOutputWithContext(context.Context) SubmarinerSpecImageOverridesOutput
+}
+
+type SubmarinerSpecImageOverridesArgs struct {
+}
+
+func (SubmarinerSpecImageOverridesArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*SubmarinerSpecImageOverrides)(nil)).Elem()
+}
+
+func (i SubmarinerSpecImageOverridesArgs) ToSubmarinerSpecImageOverridesOutput() SubmarinerSpecImageOverridesOutput {
+	return i.ToSubmarinerSpecImageOverridesOutputWithContext(context.Background())
+}
+
+func (i SubmarinerSpecImageOverridesArgs) ToSubmarinerSpecImageOverridesOutputWithContext(ctx context.Context) SubmarinerSpecImageOverridesOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(SubmarinerSpecImageOverridesOutput)
+}
+
+type SubmarinerSpecImageOverridesOutput struct{ *pulumi.OutputState }
+
+func (SubmarinerSpecImageOverridesOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*SubmarinerSpecImageOverrides)(nil)).Elem()
+}
+
+func (o SubmarinerSpecImageOverridesOutput) ToSubmarinerSpecImageOverridesOutput() SubmarinerSpecImageOverridesOutput {
+	return o
+}
+
+func (o SubmarinerSpecImageOverridesOutput) ToSubmarinerSpecImageOverridesOutputWithContext(ctx context.Context) SubmarinerSpecImageOverridesOutput {
+	return o
+}
+
 // SubmarinerStatus defines the observed state of Submariner
 type SubmarinerStatus struct {
-	ClusterCIDR string  `pulumi:"clusterCIDR"`
-	ClusterID   string  `pulumi:"clusterID"`
-	ColorCodes  *string `pulumi:"colorCodes"`
-	// DaemonSetStatus represents the current status of a daemon set.
-	EngineDaemonSetStatus *SubmarinerStatusEngineDaemonSetStatus `pulumi:"engineDaemonSetStatus"`
-	Gateways              []SubmarinerStatusGateways             `pulumi:"gateways"`
-	GlobalCIDR            *string                                `pulumi:"globalCIDR"`
-	// DaemonSetStatus represents the current status of a daemon set.
-	GlobalnetDaemonSetStatus *SubmarinerStatusGlobalnetDaemonSetStatus `pulumi:"globalnetDaemonSetStatus"`
-	NatEnabled               bool                                      `pulumi:"natEnabled"`
-	// DaemonSetStatus represents the current status of a daemon set.
+	ClusterCIDR               *string                                    `pulumi:"clusterCIDR"`
+	ClusterID                 string                                     `pulumi:"clusterID"`
+	ColorCodes                *string                                    `pulumi:"colorCodes"`
+	EngineDaemonSetStatus     *SubmarinerStatusEngineDaemonSetStatus     `pulumi:"engineDaemonSetStatus"`
+	Gateways                  []SubmarinerStatusGateways                 `pulumi:"gateways"`
+	GlobalCIDR                *string                                    `pulumi:"globalCIDR"`
+	GlobalnetDaemonSetStatus  *SubmarinerStatusGlobalnetDaemonSetStatus  `pulumi:"globalnetDaemonSetStatus"`
+	NatEnabled                bool                                       `pulumi:"natEnabled"`
+	NetworkPlugin             *string                                    `pulumi:"networkPlugin"`
 	RouteAgentDaemonSetStatus *SubmarinerStatusRouteAgentDaemonSetStatus `pulumi:"routeAgentDaemonSetStatus"`
-	ServiceCIDR               string                                     `pulumi:"serviceCIDR"`
+	ServiceCIDR               *string                                    `pulumi:"serviceCIDR"`
 }
 
 // SubmarinerStatusInput is an input type that accepts SubmarinerStatusArgs and SubmarinerStatusOutput values.
@@ -1030,19 +845,17 @@ type SubmarinerStatusInput interface {
 
 // SubmarinerStatus defines the observed state of Submariner
 type SubmarinerStatusArgs struct {
-	ClusterCIDR pulumi.StringInput    `pulumi:"clusterCIDR"`
-	ClusterID   pulumi.StringInput    `pulumi:"clusterID"`
-	ColorCodes  pulumi.StringPtrInput `pulumi:"colorCodes"`
-	// DaemonSetStatus represents the current status of a daemon set.
-	EngineDaemonSetStatus SubmarinerStatusEngineDaemonSetStatusPtrInput `pulumi:"engineDaemonSetStatus"`
-	Gateways              SubmarinerStatusGatewaysArrayInput            `pulumi:"gateways"`
-	GlobalCIDR            pulumi.StringPtrInput                         `pulumi:"globalCIDR"`
-	// DaemonSetStatus represents the current status of a daemon set.
-	GlobalnetDaemonSetStatus SubmarinerStatusGlobalnetDaemonSetStatusPtrInput `pulumi:"globalnetDaemonSetStatus"`
-	NatEnabled               pulumi.BoolInput                                 `pulumi:"natEnabled"`
-	// DaemonSetStatus represents the current status of a daemon set.
+	ClusterCIDR               pulumi.StringPtrInput                             `pulumi:"clusterCIDR"`
+	ClusterID                 pulumi.StringInput                                `pulumi:"clusterID"`
+	ColorCodes                pulumi.StringPtrInput                             `pulumi:"colorCodes"`
+	EngineDaemonSetStatus     SubmarinerStatusEngineDaemonSetStatusPtrInput     `pulumi:"engineDaemonSetStatus"`
+	Gateways                  SubmarinerStatusGatewaysArrayInput                `pulumi:"gateways"`
+	GlobalCIDR                pulumi.StringPtrInput                             `pulumi:"globalCIDR"`
+	GlobalnetDaemonSetStatus  SubmarinerStatusGlobalnetDaemonSetStatusPtrInput  `pulumi:"globalnetDaemonSetStatus"`
+	NatEnabled                pulumi.BoolInput                                  `pulumi:"natEnabled"`
+	NetworkPlugin             pulumi.StringPtrInput                             `pulumi:"networkPlugin"`
 	RouteAgentDaemonSetStatus SubmarinerStatusRouteAgentDaemonSetStatusPtrInput `pulumi:"routeAgentDaemonSetStatus"`
-	ServiceCIDR               pulumi.StringInput                                `pulumi:"serviceCIDR"`
+	ServiceCIDR               pulumi.StringPtrInput                             `pulumi:"serviceCIDR"`
 }
 
 func (SubmarinerStatusArgs) ElementType() reflect.Type {
@@ -1122,8 +935,8 @@ func (o SubmarinerStatusOutput) ToSubmarinerStatusPtrOutputWithContext(ctx conte
 		return &v
 	}).(SubmarinerStatusPtrOutput)
 }
-func (o SubmarinerStatusOutput) ClusterCIDR() pulumi.StringOutput {
-	return o.ApplyT(func(v SubmarinerStatus) string { return v.ClusterCIDR }).(pulumi.StringOutput)
+func (o SubmarinerStatusOutput) ClusterCIDR() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v SubmarinerStatus) *string { return v.ClusterCIDR }).(pulumi.StringPtrOutput)
 }
 
 func (o SubmarinerStatusOutput) ClusterID() pulumi.StringOutput {
@@ -1134,7 +947,6 @@ func (o SubmarinerStatusOutput) ColorCodes() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v SubmarinerStatus) *string { return v.ColorCodes }).(pulumi.StringPtrOutput)
 }
 
-// DaemonSetStatus represents the current status of a daemon set.
 func (o SubmarinerStatusOutput) EngineDaemonSetStatus() SubmarinerStatusEngineDaemonSetStatusPtrOutput {
 	return o.ApplyT(func(v SubmarinerStatus) *SubmarinerStatusEngineDaemonSetStatus { return v.EngineDaemonSetStatus }).(SubmarinerStatusEngineDaemonSetStatusPtrOutput)
 }
@@ -1147,7 +959,6 @@ func (o SubmarinerStatusOutput) GlobalCIDR() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v SubmarinerStatus) *string { return v.GlobalCIDR }).(pulumi.StringPtrOutput)
 }
 
-// DaemonSetStatus represents the current status of a daemon set.
 func (o SubmarinerStatusOutput) GlobalnetDaemonSetStatus() SubmarinerStatusGlobalnetDaemonSetStatusPtrOutput {
 	return o.ApplyT(func(v SubmarinerStatus) *SubmarinerStatusGlobalnetDaemonSetStatus { return v.GlobalnetDaemonSetStatus }).(SubmarinerStatusGlobalnetDaemonSetStatusPtrOutput)
 }
@@ -1156,15 +967,18 @@ func (o SubmarinerStatusOutput) NatEnabled() pulumi.BoolOutput {
 	return o.ApplyT(func(v SubmarinerStatus) bool { return v.NatEnabled }).(pulumi.BoolOutput)
 }
 
-// DaemonSetStatus represents the current status of a daemon set.
+func (o SubmarinerStatusOutput) NetworkPlugin() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v SubmarinerStatus) *string { return v.NetworkPlugin }).(pulumi.StringPtrOutput)
+}
+
 func (o SubmarinerStatusOutput) RouteAgentDaemonSetStatus() SubmarinerStatusRouteAgentDaemonSetStatusPtrOutput {
 	return o.ApplyT(func(v SubmarinerStatus) *SubmarinerStatusRouteAgentDaemonSetStatus {
 		return v.RouteAgentDaemonSetStatus
 	}).(SubmarinerStatusRouteAgentDaemonSetStatusPtrOutput)
 }
 
-func (o SubmarinerStatusOutput) ServiceCIDR() pulumi.StringOutput {
-	return o.ApplyT(func(v SubmarinerStatus) string { return v.ServiceCIDR }).(pulumi.StringOutput)
+func (o SubmarinerStatusOutput) ServiceCIDR() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v SubmarinerStatus) *string { return v.ServiceCIDR }).(pulumi.StringPtrOutput)
 }
 
 type SubmarinerStatusPtrOutput struct{ *pulumi.OutputState }
@@ -1190,7 +1004,7 @@ func (o SubmarinerStatusPtrOutput) ClusterCIDR() pulumi.StringPtrOutput {
 		if v == nil {
 			return nil
 		}
-		return &v.ClusterCIDR
+		return v.ClusterCIDR
 	}).(pulumi.StringPtrOutput)
 }
 
@@ -1212,7 +1026,6 @@ func (o SubmarinerStatusPtrOutput) ColorCodes() pulumi.StringPtrOutput {
 	}).(pulumi.StringPtrOutput)
 }
 
-// DaemonSetStatus represents the current status of a daemon set.
 func (o SubmarinerStatusPtrOutput) EngineDaemonSetStatus() SubmarinerStatusEngineDaemonSetStatusPtrOutput {
 	return o.ApplyT(func(v *SubmarinerStatus) *SubmarinerStatusEngineDaemonSetStatus {
 		if v == nil {
@@ -1240,7 +1053,6 @@ func (o SubmarinerStatusPtrOutput) GlobalCIDR() pulumi.StringPtrOutput {
 	}).(pulumi.StringPtrOutput)
 }
 
-// DaemonSetStatus represents the current status of a daemon set.
 func (o SubmarinerStatusPtrOutput) GlobalnetDaemonSetStatus() SubmarinerStatusGlobalnetDaemonSetStatusPtrOutput {
 	return o.ApplyT(func(v *SubmarinerStatus) *SubmarinerStatusGlobalnetDaemonSetStatus {
 		if v == nil {
@@ -1259,7 +1071,15 @@ func (o SubmarinerStatusPtrOutput) NatEnabled() pulumi.BoolPtrOutput {
 	}).(pulumi.BoolPtrOutput)
 }
 
-// DaemonSetStatus represents the current status of a daemon set.
+func (o SubmarinerStatusPtrOutput) NetworkPlugin() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *SubmarinerStatus) *string {
+		if v == nil {
+			return nil
+		}
+		return v.NetworkPlugin
+	}).(pulumi.StringPtrOutput)
+}
+
 func (o SubmarinerStatusPtrOutput) RouteAgentDaemonSetStatus() SubmarinerStatusRouteAgentDaemonSetStatusPtrOutput {
 	return o.ApplyT(func(v *SubmarinerStatus) *SubmarinerStatusRouteAgentDaemonSetStatus {
 		if v == nil {
@@ -1274,32 +1094,16 @@ func (o SubmarinerStatusPtrOutput) ServiceCIDR() pulumi.StringPtrOutput {
 		if v == nil {
 			return nil
 		}
-		return &v.ServiceCIDR
+		return v.ServiceCIDR
 	}).(pulumi.StringPtrOutput)
 }
 
-// DaemonSetStatus represents the current status of a daemon set.
 type SubmarinerStatusEngineDaemonSetStatus struct {
-	// Count of hash collisions for the DaemonSet. The DaemonSet controller uses this field as a collision avoidance mechanism when it needs to create the name for the newest ControllerRevision.
-	CollisionCount *int `pulumi:"collisionCount"`
-	// Represents the latest available observations of a DaemonSet's current state.
-	Conditions []SubmarinerStatusEngineDaemonSetStatusConditions `pulumi:"conditions"`
-	// The number of nodes that are running at least 1 daemon pod and are supposed to run the daemon pod. More info: https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/
-	CurrentNumberScheduled int `pulumi:"currentNumberScheduled"`
-	// The total number of nodes that should be running the daemon pod (including nodes correctly running the daemon pod). More info: https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/
-	DesiredNumberScheduled int `pulumi:"desiredNumberScheduled"`
-	// The number of nodes that should be running the daemon pod and have one or more of the daemon pod running and available (ready for at least spec.minReadySeconds)
-	NumberAvailable *int `pulumi:"numberAvailable"`
-	// The number of nodes that are running the daemon pod, but are not supposed to run the daemon pod. More info: https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/
-	NumberMisscheduled int `pulumi:"numberMisscheduled"`
-	// The number of nodes that should be running the daemon pod and have one or more of the daemon pod running and ready.
-	NumberReady int `pulumi:"numberReady"`
-	// The number of nodes that should be running the daemon pod and have none of the daemon pod running and available (ready for at least spec.minReadySeconds)
-	NumberUnavailable *int `pulumi:"numberUnavailable"`
-	// The most recent generation observed by the daemon set controller.
-	ObservedGeneration *int `pulumi:"observedGeneration"`
-	// The total number of nodes that are running updated daemon pod
-	UpdatedNumberScheduled *int `pulumi:"updatedNumberScheduled"`
+	LastResourceVersion       *string                                                        `pulumi:"lastResourceVersion"`
+	MismatchedContainerImages bool                                                           `pulumi:"mismatchedContainerImages"`
+	NonReadyContainerStates   []SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStates `pulumi:"nonReadyContainerStates"`
+	// DaemonSetStatus represents the current status of a daemon set.
+	Status *SubmarinerStatusEngineDaemonSetStatusStatus `pulumi:"status"`
 }
 
 // SubmarinerStatusEngineDaemonSetStatusInput is an input type that accepts SubmarinerStatusEngineDaemonSetStatusArgs and SubmarinerStatusEngineDaemonSetStatusOutput values.
@@ -1313,28 +1117,12 @@ type SubmarinerStatusEngineDaemonSetStatusInput interface {
 	ToSubmarinerStatusEngineDaemonSetStatusOutputWithContext(context.Context) SubmarinerStatusEngineDaemonSetStatusOutput
 }
 
-// DaemonSetStatus represents the current status of a daemon set.
 type SubmarinerStatusEngineDaemonSetStatusArgs struct {
-	// Count of hash collisions for the DaemonSet. The DaemonSet controller uses this field as a collision avoidance mechanism when it needs to create the name for the newest ControllerRevision.
-	CollisionCount pulumi.IntPtrInput `pulumi:"collisionCount"`
-	// Represents the latest available observations of a DaemonSet's current state.
-	Conditions SubmarinerStatusEngineDaemonSetStatusConditionsArrayInput `pulumi:"conditions"`
-	// The number of nodes that are running at least 1 daemon pod and are supposed to run the daemon pod. More info: https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/
-	CurrentNumberScheduled pulumi.IntInput `pulumi:"currentNumberScheduled"`
-	// The total number of nodes that should be running the daemon pod (including nodes correctly running the daemon pod). More info: https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/
-	DesiredNumberScheduled pulumi.IntInput `pulumi:"desiredNumberScheduled"`
-	// The number of nodes that should be running the daemon pod and have one or more of the daemon pod running and available (ready for at least spec.minReadySeconds)
-	NumberAvailable pulumi.IntPtrInput `pulumi:"numberAvailable"`
-	// The number of nodes that are running the daemon pod, but are not supposed to run the daemon pod. More info: https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/
-	NumberMisscheduled pulumi.IntInput `pulumi:"numberMisscheduled"`
-	// The number of nodes that should be running the daemon pod and have one or more of the daemon pod running and ready.
-	NumberReady pulumi.IntInput `pulumi:"numberReady"`
-	// The number of nodes that should be running the daemon pod and have none of the daemon pod running and available (ready for at least spec.minReadySeconds)
-	NumberUnavailable pulumi.IntPtrInput `pulumi:"numberUnavailable"`
-	// The most recent generation observed by the daemon set controller.
-	ObservedGeneration pulumi.IntPtrInput `pulumi:"observedGeneration"`
-	// The total number of nodes that are running updated daemon pod
-	UpdatedNumberScheduled pulumi.IntPtrInput `pulumi:"updatedNumberScheduled"`
+	LastResourceVersion       pulumi.StringPtrInput                                                  `pulumi:"lastResourceVersion"`
+	MismatchedContainerImages pulumi.BoolInput                                                       `pulumi:"mismatchedContainerImages"`
+	NonReadyContainerStates   SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesArrayInput `pulumi:"nonReadyContainerStates"`
+	// DaemonSetStatus represents the current status of a daemon set.
+	Status SubmarinerStatusEngineDaemonSetStatusStatusPtrInput `pulumi:"status"`
 }
 
 func (SubmarinerStatusEngineDaemonSetStatusArgs) ElementType() reflect.Type {
@@ -1390,7 +1178,6 @@ func (i *submarinerStatusEngineDaemonSetStatusPtrType) ToSubmarinerStatusEngineD
 	return pulumi.ToOutputWithContext(ctx, i).(SubmarinerStatusEngineDaemonSetStatusPtrOutput)
 }
 
-// DaemonSetStatus represents the current status of a daemon set.
 type SubmarinerStatusEngineDaemonSetStatusOutput struct{ *pulumi.OutputState }
 
 func (SubmarinerStatusEngineDaemonSetStatusOutput) ElementType() reflect.Type {
@@ -1414,57 +1201,25 @@ func (o SubmarinerStatusEngineDaemonSetStatusOutput) ToSubmarinerStatusEngineDae
 		return &v
 	}).(SubmarinerStatusEngineDaemonSetStatusPtrOutput)
 }
-
-// Count of hash collisions for the DaemonSet. The DaemonSet controller uses this field as a collision avoidance mechanism when it needs to create the name for the newest ControllerRevision.
-func (o SubmarinerStatusEngineDaemonSetStatusOutput) CollisionCount() pulumi.IntPtrOutput {
-	return o.ApplyT(func(v SubmarinerStatusEngineDaemonSetStatus) *int { return v.CollisionCount }).(pulumi.IntPtrOutput)
+func (o SubmarinerStatusEngineDaemonSetStatusOutput) LastResourceVersion() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v SubmarinerStatusEngineDaemonSetStatus) *string { return v.LastResourceVersion }).(pulumi.StringPtrOutput)
 }
 
-// Represents the latest available observations of a DaemonSet's current state.
-func (o SubmarinerStatusEngineDaemonSetStatusOutput) Conditions() SubmarinerStatusEngineDaemonSetStatusConditionsArrayOutput {
-	return o.ApplyT(func(v SubmarinerStatusEngineDaemonSetStatus) []SubmarinerStatusEngineDaemonSetStatusConditions {
-		return v.Conditions
-	}).(SubmarinerStatusEngineDaemonSetStatusConditionsArrayOutput)
+func (o SubmarinerStatusEngineDaemonSetStatusOutput) MismatchedContainerImages() pulumi.BoolOutput {
+	return o.ApplyT(func(v SubmarinerStatusEngineDaemonSetStatus) bool { return v.MismatchedContainerImages }).(pulumi.BoolOutput)
 }
 
-// The number of nodes that are running at least 1 daemon pod and are supposed to run the daemon pod. More info: https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/
-func (o SubmarinerStatusEngineDaemonSetStatusOutput) CurrentNumberScheduled() pulumi.IntOutput {
-	return o.ApplyT(func(v SubmarinerStatusEngineDaemonSetStatus) int { return v.CurrentNumberScheduled }).(pulumi.IntOutput)
+func (o SubmarinerStatusEngineDaemonSetStatusOutput) NonReadyContainerStates() SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesArrayOutput {
+	return o.ApplyT(func(v SubmarinerStatusEngineDaemonSetStatus) []SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStates {
+		return v.NonReadyContainerStates
+	}).(SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesArrayOutput)
 }
 
-// The total number of nodes that should be running the daemon pod (including nodes correctly running the daemon pod). More info: https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/
-func (o SubmarinerStatusEngineDaemonSetStatusOutput) DesiredNumberScheduled() pulumi.IntOutput {
-	return o.ApplyT(func(v SubmarinerStatusEngineDaemonSetStatus) int { return v.DesiredNumberScheduled }).(pulumi.IntOutput)
-}
-
-// The number of nodes that should be running the daemon pod and have one or more of the daemon pod running and available (ready for at least spec.minReadySeconds)
-func (o SubmarinerStatusEngineDaemonSetStatusOutput) NumberAvailable() pulumi.IntPtrOutput {
-	return o.ApplyT(func(v SubmarinerStatusEngineDaemonSetStatus) *int { return v.NumberAvailable }).(pulumi.IntPtrOutput)
-}
-
-// The number of nodes that are running the daemon pod, but are not supposed to run the daemon pod. More info: https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/
-func (o SubmarinerStatusEngineDaemonSetStatusOutput) NumberMisscheduled() pulumi.IntOutput {
-	return o.ApplyT(func(v SubmarinerStatusEngineDaemonSetStatus) int { return v.NumberMisscheduled }).(pulumi.IntOutput)
-}
-
-// The number of nodes that should be running the daemon pod and have one or more of the daemon pod running and ready.
-func (o SubmarinerStatusEngineDaemonSetStatusOutput) NumberReady() pulumi.IntOutput {
-	return o.ApplyT(func(v SubmarinerStatusEngineDaemonSetStatus) int { return v.NumberReady }).(pulumi.IntOutput)
-}
-
-// The number of nodes that should be running the daemon pod and have none of the daemon pod running and available (ready for at least spec.minReadySeconds)
-func (o SubmarinerStatusEngineDaemonSetStatusOutput) NumberUnavailable() pulumi.IntPtrOutput {
-	return o.ApplyT(func(v SubmarinerStatusEngineDaemonSetStatus) *int { return v.NumberUnavailable }).(pulumi.IntPtrOutput)
-}
-
-// The most recent generation observed by the daemon set controller.
-func (o SubmarinerStatusEngineDaemonSetStatusOutput) ObservedGeneration() pulumi.IntPtrOutput {
-	return o.ApplyT(func(v SubmarinerStatusEngineDaemonSetStatus) *int { return v.ObservedGeneration }).(pulumi.IntPtrOutput)
-}
-
-// The total number of nodes that are running updated daemon pod
-func (o SubmarinerStatusEngineDaemonSetStatusOutput) UpdatedNumberScheduled() pulumi.IntPtrOutput {
-	return o.ApplyT(func(v SubmarinerStatusEngineDaemonSetStatus) *int { return v.UpdatedNumberScheduled }).(pulumi.IntPtrOutput)
+// DaemonSetStatus represents the current status of a daemon set.
+func (o SubmarinerStatusEngineDaemonSetStatusOutput) Status() SubmarinerStatusEngineDaemonSetStatusStatusPtrOutput {
+	return o.ApplyT(func(v SubmarinerStatusEngineDaemonSetStatus) *SubmarinerStatusEngineDaemonSetStatusStatus {
+		return v.Status
+	}).(SubmarinerStatusEngineDaemonSetStatusStatusPtrOutput)
 }
 
 type SubmarinerStatusEngineDaemonSetStatusPtrOutput struct{ *pulumi.OutputState }
@@ -1485,9 +1240,932 @@ func (o SubmarinerStatusEngineDaemonSetStatusPtrOutput) Elem() SubmarinerStatusE
 	return o.ApplyT(func(v *SubmarinerStatusEngineDaemonSetStatus) SubmarinerStatusEngineDaemonSetStatus { return *v }).(SubmarinerStatusEngineDaemonSetStatusOutput)
 }
 
+func (o SubmarinerStatusEngineDaemonSetStatusPtrOutput) LastResourceVersion() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *SubmarinerStatusEngineDaemonSetStatus) *string {
+		if v == nil {
+			return nil
+		}
+		return v.LastResourceVersion
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o SubmarinerStatusEngineDaemonSetStatusPtrOutput) MismatchedContainerImages() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *SubmarinerStatusEngineDaemonSetStatus) *bool {
+		if v == nil {
+			return nil
+		}
+		return &v.MismatchedContainerImages
+	}).(pulumi.BoolPtrOutput)
+}
+
+func (o SubmarinerStatusEngineDaemonSetStatusPtrOutput) NonReadyContainerStates() SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesArrayOutput {
+	return o.ApplyT(func(v *SubmarinerStatusEngineDaemonSetStatus) []SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStates {
+		if v == nil {
+			return nil
+		}
+		return v.NonReadyContainerStates
+	}).(SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesArrayOutput)
+}
+
+// DaemonSetStatus represents the current status of a daemon set.
+func (o SubmarinerStatusEngineDaemonSetStatusPtrOutput) Status() SubmarinerStatusEngineDaemonSetStatusStatusPtrOutput {
+	return o.ApplyT(func(v *SubmarinerStatusEngineDaemonSetStatus) *SubmarinerStatusEngineDaemonSetStatusStatus {
+		if v == nil {
+			return nil
+		}
+		return v.Status
+	}).(SubmarinerStatusEngineDaemonSetStatusStatusPtrOutput)
+}
+
+// ContainerState holds a possible state of container. Only one of its members may be specified. If none of them is specified, the default one is ContainerStateWaiting.
+type SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStates struct {
+	// Details about a running container
+	Running *SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunning `pulumi:"running"`
+	// Details about a terminated container
+	Terminated *SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminated `pulumi:"terminated"`
+	// Details about a waiting container
+	Waiting *SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaiting `pulumi:"waiting"`
+}
+
+// SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesInput is an input type that accepts SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesArgs and SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesOutput values.
+// You can construct a concrete instance of `SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesInput` via:
+//
+//          SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesArgs{...}
+type SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesInput interface {
+	pulumi.Input
+
+	ToSubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesOutput() SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesOutput
+	ToSubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesOutputWithContext(context.Context) SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesOutput
+}
+
+// ContainerState holds a possible state of container. Only one of its members may be specified. If none of them is specified, the default one is ContainerStateWaiting.
+type SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesArgs struct {
+	// Details about a running container
+	Running SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunningPtrInput `pulumi:"running"`
+	// Details about a terminated container
+	Terminated SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminatedPtrInput `pulumi:"terminated"`
+	// Details about a waiting container
+	Waiting SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaitingPtrInput `pulumi:"waiting"`
+}
+
+func (SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStates)(nil)).Elem()
+}
+
+func (i SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesArgs) ToSubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesOutput() SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesOutput {
+	return i.ToSubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesOutputWithContext(context.Background())
+}
+
+func (i SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesArgs) ToSubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesOutputWithContext(ctx context.Context) SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesOutput)
+}
+
+// SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesArrayInput is an input type that accepts SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesArray and SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesArrayOutput values.
+// You can construct a concrete instance of `SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesArrayInput` via:
+//
+//          SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesArray{ SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesArgs{...} }
+type SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesArrayInput interface {
+	pulumi.Input
+
+	ToSubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesArrayOutput() SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesArrayOutput
+	ToSubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesArrayOutputWithContext(context.Context) SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesArrayOutput
+}
+
+type SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesArray []SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesInput
+
+func (SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStates)(nil)).Elem()
+}
+
+func (i SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesArray) ToSubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesArrayOutput() SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesArrayOutput {
+	return i.ToSubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesArrayOutputWithContext(context.Background())
+}
+
+func (i SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesArray) ToSubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesArrayOutputWithContext(ctx context.Context) SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesArrayOutput)
+}
+
+// ContainerState holds a possible state of container. Only one of its members may be specified. If none of them is specified, the default one is ContainerStateWaiting.
+type SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesOutput struct{ *pulumi.OutputState }
+
+func (SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStates)(nil)).Elem()
+}
+
+func (o SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesOutput) ToSubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesOutput() SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesOutput {
+	return o
+}
+
+func (o SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesOutput) ToSubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesOutputWithContext(ctx context.Context) SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesOutput {
+	return o
+}
+
+// Details about a running container
+func (o SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesOutput) Running() SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunningPtrOutput {
+	return o.ApplyT(func(v SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStates) *SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunning {
+		return v.Running
+	}).(SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunningPtrOutput)
+}
+
+// Details about a terminated container
+func (o SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesOutput) Terminated() SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutput {
+	return o.ApplyT(func(v SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStates) *SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminated {
+		return v.Terminated
+	}).(SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutput)
+}
+
+// Details about a waiting container
+func (o SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesOutput) Waiting() SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaitingPtrOutput {
+	return o.ApplyT(func(v SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStates) *SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaiting {
+		return v.Waiting
+	}).(SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaitingPtrOutput)
+}
+
+type SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesArrayOutput struct{ *pulumi.OutputState }
+
+func (SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStates)(nil)).Elem()
+}
+
+func (o SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesArrayOutput) ToSubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesArrayOutput() SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesArrayOutput {
+	return o
+}
+
+func (o SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesArrayOutput) ToSubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesArrayOutputWithContext(ctx context.Context) SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesArrayOutput {
+	return o
+}
+
+func (o SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesArrayOutput) Index(i pulumi.IntInput) SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStates {
+		return vs[0].([]SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStates)[vs[1].(int)]
+	}).(SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesOutput)
+}
+
+// Details about a running container
+type SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunning struct {
+	// Time at which the container was last (re-)started
+	StartedAt *string `pulumi:"startedAt"`
+}
+
+// SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunningInput is an input type that accepts SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunningArgs and SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunningOutput values.
+// You can construct a concrete instance of `SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunningInput` via:
+//
+//          SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunningArgs{...}
+type SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunningInput interface {
+	pulumi.Input
+
+	ToSubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunningOutput() SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunningOutput
+	ToSubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunningOutputWithContext(context.Context) SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunningOutput
+}
+
+// Details about a running container
+type SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunningArgs struct {
+	// Time at which the container was last (re-)started
+	StartedAt pulumi.StringPtrInput `pulumi:"startedAt"`
+}
+
+func (SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunningArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunning)(nil)).Elem()
+}
+
+func (i SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunningArgs) ToSubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunningOutput() SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunningOutput {
+	return i.ToSubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunningOutputWithContext(context.Background())
+}
+
+func (i SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunningArgs) ToSubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunningOutputWithContext(ctx context.Context) SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunningOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunningOutput)
+}
+
+func (i SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunningArgs) ToSubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunningPtrOutput() SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunningPtrOutput {
+	return i.ToSubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunningPtrOutputWithContext(context.Background())
+}
+
+func (i SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunningArgs) ToSubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunningPtrOutputWithContext(ctx context.Context) SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunningPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunningOutput).ToSubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunningPtrOutputWithContext(ctx)
+}
+
+// SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunningPtrInput is an input type that accepts SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunningArgs, SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunningPtr and SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunningPtrOutput values.
+// You can construct a concrete instance of `SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunningPtrInput` via:
+//
+//          SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunningArgs{...}
+//
+//  or:
+//
+//          nil
+type SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunningPtrInput interface {
+	pulumi.Input
+
+	ToSubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunningPtrOutput() SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunningPtrOutput
+	ToSubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunningPtrOutputWithContext(context.Context) SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunningPtrOutput
+}
+
+type submarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunningPtrType SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunningArgs
+
+func SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunningPtr(v *SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunningArgs) SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunningPtrInput {
+	return (*submarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunningPtrType)(v)
+}
+
+func (*submarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunningPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunning)(nil)).Elem()
+}
+
+func (i *submarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunningPtrType) ToSubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunningPtrOutput() SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunningPtrOutput {
+	return i.ToSubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunningPtrOutputWithContext(context.Background())
+}
+
+func (i *submarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunningPtrType) ToSubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunningPtrOutputWithContext(ctx context.Context) SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunningPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunningPtrOutput)
+}
+
+// Details about a running container
+type SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunningOutput struct{ *pulumi.OutputState }
+
+func (SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunningOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunning)(nil)).Elem()
+}
+
+func (o SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunningOutput) ToSubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunningOutput() SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunningOutput {
+	return o
+}
+
+func (o SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunningOutput) ToSubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunningOutputWithContext(ctx context.Context) SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunningOutput {
+	return o
+}
+
+func (o SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunningOutput) ToSubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunningPtrOutput() SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunningPtrOutput {
+	return o.ToSubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunningPtrOutputWithContext(context.Background())
+}
+
+func (o SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunningOutput) ToSubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunningPtrOutputWithContext(ctx context.Context) SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunningPtrOutput {
+	return o.ApplyT(func(v SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunning) *SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunning {
+		return &v
+	}).(SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunningPtrOutput)
+}
+
+// Time at which the container was last (re-)started
+func (o SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunningOutput) StartedAt() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunning) *string {
+		return v.StartedAt
+	}).(pulumi.StringPtrOutput)
+}
+
+type SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunningPtrOutput struct{ *pulumi.OutputState }
+
+func (SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunningPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunning)(nil)).Elem()
+}
+
+func (o SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunningPtrOutput) ToSubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunningPtrOutput() SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunningPtrOutput {
+	return o
+}
+
+func (o SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunningPtrOutput) ToSubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunningPtrOutputWithContext(ctx context.Context) SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunningPtrOutput {
+	return o
+}
+
+func (o SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunningPtrOutput) Elem() SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunningOutput {
+	return o.ApplyT(func(v *SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunning) SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunning {
+		return *v
+	}).(SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunningOutput)
+}
+
+// Time at which the container was last (re-)started
+func (o SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunningPtrOutput) StartedAt() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunning) *string {
+		if v == nil {
+			return nil
+		}
+		return v.StartedAt
+	}).(pulumi.StringPtrOutput)
+}
+
+// Details about a terminated container
+type SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminated struct {
+	// Container's ID in the format 'docker://<container_id>'
+	ContainerID *string `pulumi:"containerID"`
+	// Exit status from the last termination of the container
+	ExitCode int `pulumi:"exitCode"`
+	// Time at which the container last terminated
+	FinishedAt *string `pulumi:"finishedAt"`
+	// Message regarding the last termination of the container
+	Message *string `pulumi:"message"`
+	// (brief) reason from the last termination of the container
+	Reason *string `pulumi:"reason"`
+	// Signal from the last termination of the container
+	Signal *int `pulumi:"signal"`
+	// Time at which previous execution of the container started
+	StartedAt *string `pulumi:"startedAt"`
+}
+
+// SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminatedInput is an input type that accepts SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminatedArgs and SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminatedOutput values.
+// You can construct a concrete instance of `SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminatedInput` via:
+//
+//          SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminatedArgs{...}
+type SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminatedInput interface {
+	pulumi.Input
+
+	ToSubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminatedOutput() SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminatedOutput
+	ToSubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminatedOutputWithContext(context.Context) SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminatedOutput
+}
+
+// Details about a terminated container
+type SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminatedArgs struct {
+	// Container's ID in the format 'docker://<container_id>'
+	ContainerID pulumi.StringPtrInput `pulumi:"containerID"`
+	// Exit status from the last termination of the container
+	ExitCode pulumi.IntInput `pulumi:"exitCode"`
+	// Time at which the container last terminated
+	FinishedAt pulumi.StringPtrInput `pulumi:"finishedAt"`
+	// Message regarding the last termination of the container
+	Message pulumi.StringPtrInput `pulumi:"message"`
+	// (brief) reason from the last termination of the container
+	Reason pulumi.StringPtrInput `pulumi:"reason"`
+	// Signal from the last termination of the container
+	Signal pulumi.IntPtrInput `pulumi:"signal"`
+	// Time at which previous execution of the container started
+	StartedAt pulumi.StringPtrInput `pulumi:"startedAt"`
+}
+
+func (SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminatedArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminated)(nil)).Elem()
+}
+
+func (i SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminatedArgs) ToSubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminatedOutput() SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminatedOutput {
+	return i.ToSubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminatedOutputWithContext(context.Background())
+}
+
+func (i SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminatedArgs) ToSubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminatedOutputWithContext(ctx context.Context) SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminatedOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminatedOutput)
+}
+
+func (i SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminatedArgs) ToSubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutput() SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutput {
+	return i.ToSubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutputWithContext(context.Background())
+}
+
+func (i SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminatedArgs) ToSubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutputWithContext(ctx context.Context) SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminatedOutput).ToSubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutputWithContext(ctx)
+}
+
+// SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminatedPtrInput is an input type that accepts SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminatedArgs, SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminatedPtr and SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutput values.
+// You can construct a concrete instance of `SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminatedPtrInput` via:
+//
+//          SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminatedArgs{...}
+//
+//  or:
+//
+//          nil
+type SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminatedPtrInput interface {
+	pulumi.Input
+
+	ToSubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutput() SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutput
+	ToSubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutputWithContext(context.Context) SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutput
+}
+
+type submarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminatedPtrType SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminatedArgs
+
+func SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminatedPtr(v *SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminatedArgs) SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminatedPtrInput {
+	return (*submarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminatedPtrType)(v)
+}
+
+func (*submarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminatedPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminated)(nil)).Elem()
+}
+
+func (i *submarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminatedPtrType) ToSubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutput() SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutput {
+	return i.ToSubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutputWithContext(context.Background())
+}
+
+func (i *submarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminatedPtrType) ToSubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutputWithContext(ctx context.Context) SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutput)
+}
+
+// Details about a terminated container
+type SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminatedOutput struct{ *pulumi.OutputState }
+
+func (SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminatedOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminated)(nil)).Elem()
+}
+
+func (o SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminatedOutput) ToSubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminatedOutput() SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminatedOutput {
+	return o
+}
+
+func (o SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminatedOutput) ToSubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminatedOutputWithContext(ctx context.Context) SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminatedOutput {
+	return o
+}
+
+func (o SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminatedOutput) ToSubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutput() SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutput {
+	return o.ToSubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutputWithContext(context.Background())
+}
+
+func (o SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminatedOutput) ToSubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutputWithContext(ctx context.Context) SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutput {
+	return o.ApplyT(func(v SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminated) *SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminated {
+		return &v
+	}).(SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutput)
+}
+
+// Container's ID in the format 'docker://<container_id>'
+func (o SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminatedOutput) ContainerID() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminated) *string {
+		return v.ContainerID
+	}).(pulumi.StringPtrOutput)
+}
+
+// Exit status from the last termination of the container
+func (o SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminatedOutput) ExitCode() pulumi.IntOutput {
+	return o.ApplyT(func(v SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminated) int { return v.ExitCode }).(pulumi.IntOutput)
+}
+
+// Time at which the container last terminated
+func (o SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminatedOutput) FinishedAt() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminated) *string {
+		return v.FinishedAt
+	}).(pulumi.StringPtrOutput)
+}
+
+// Message regarding the last termination of the container
+func (o SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminatedOutput) Message() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminated) *string {
+		return v.Message
+	}).(pulumi.StringPtrOutput)
+}
+
+// (brief) reason from the last termination of the container
+func (o SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminatedOutput) Reason() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminated) *string {
+		return v.Reason
+	}).(pulumi.StringPtrOutput)
+}
+
+// Signal from the last termination of the container
+func (o SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminatedOutput) Signal() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminated) *int { return v.Signal }).(pulumi.IntPtrOutput)
+}
+
+// Time at which previous execution of the container started
+func (o SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminatedOutput) StartedAt() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminated) *string {
+		return v.StartedAt
+	}).(pulumi.StringPtrOutput)
+}
+
+type SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutput struct{ *pulumi.OutputState }
+
+func (SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminated)(nil)).Elem()
+}
+
+func (o SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutput) ToSubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutput() SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutput {
+	return o
+}
+
+func (o SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutput) ToSubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutputWithContext(ctx context.Context) SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutput {
+	return o
+}
+
+func (o SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutput) Elem() SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminatedOutput {
+	return o.ApplyT(func(v *SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminated) SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminated {
+		return *v
+	}).(SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminatedOutput)
+}
+
+// Container's ID in the format 'docker://<container_id>'
+func (o SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutput) ContainerID() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminated) *string {
+		if v == nil {
+			return nil
+		}
+		return v.ContainerID
+	}).(pulumi.StringPtrOutput)
+}
+
+// Exit status from the last termination of the container
+func (o SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutput) ExitCode() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminated) *int {
+		if v == nil {
+			return nil
+		}
+		return &v.ExitCode
+	}).(pulumi.IntPtrOutput)
+}
+
+// Time at which the container last terminated
+func (o SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutput) FinishedAt() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminated) *string {
+		if v == nil {
+			return nil
+		}
+		return v.FinishedAt
+	}).(pulumi.StringPtrOutput)
+}
+
+// Message regarding the last termination of the container
+func (o SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutput) Message() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminated) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Message
+	}).(pulumi.StringPtrOutput)
+}
+
+// (brief) reason from the last termination of the container
+func (o SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutput) Reason() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminated) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Reason
+	}).(pulumi.StringPtrOutput)
+}
+
+// Signal from the last termination of the container
+func (o SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutput) Signal() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminated) *int {
+		if v == nil {
+			return nil
+		}
+		return v.Signal
+	}).(pulumi.IntPtrOutput)
+}
+
+// Time at which previous execution of the container started
+func (o SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutput) StartedAt() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminated) *string {
+		if v == nil {
+			return nil
+		}
+		return v.StartedAt
+	}).(pulumi.StringPtrOutput)
+}
+
+// Details about a waiting container
+type SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaiting struct {
+	// Message regarding why the container is not yet running.
+	Message *string `pulumi:"message"`
+	// (brief) reason the container is not yet running.
+	Reason *string `pulumi:"reason"`
+}
+
+// SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaitingInput is an input type that accepts SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaitingArgs and SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaitingOutput values.
+// You can construct a concrete instance of `SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaitingInput` via:
+//
+//          SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaitingArgs{...}
+type SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaitingInput interface {
+	pulumi.Input
+
+	ToSubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaitingOutput() SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaitingOutput
+	ToSubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaitingOutputWithContext(context.Context) SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaitingOutput
+}
+
+// Details about a waiting container
+type SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaitingArgs struct {
+	// Message regarding why the container is not yet running.
+	Message pulumi.StringPtrInput `pulumi:"message"`
+	// (brief) reason the container is not yet running.
+	Reason pulumi.StringPtrInput `pulumi:"reason"`
+}
+
+func (SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaitingArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaiting)(nil)).Elem()
+}
+
+func (i SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaitingArgs) ToSubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaitingOutput() SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaitingOutput {
+	return i.ToSubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaitingOutputWithContext(context.Background())
+}
+
+func (i SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaitingArgs) ToSubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaitingOutputWithContext(ctx context.Context) SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaitingOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaitingOutput)
+}
+
+func (i SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaitingArgs) ToSubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaitingPtrOutput() SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaitingPtrOutput {
+	return i.ToSubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaitingPtrOutputWithContext(context.Background())
+}
+
+func (i SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaitingArgs) ToSubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaitingPtrOutputWithContext(ctx context.Context) SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaitingPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaitingOutput).ToSubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaitingPtrOutputWithContext(ctx)
+}
+
+// SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaitingPtrInput is an input type that accepts SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaitingArgs, SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaitingPtr and SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaitingPtrOutput values.
+// You can construct a concrete instance of `SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaitingPtrInput` via:
+//
+//          SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaitingArgs{...}
+//
+//  or:
+//
+//          nil
+type SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaitingPtrInput interface {
+	pulumi.Input
+
+	ToSubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaitingPtrOutput() SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaitingPtrOutput
+	ToSubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaitingPtrOutputWithContext(context.Context) SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaitingPtrOutput
+}
+
+type submarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaitingPtrType SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaitingArgs
+
+func SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaitingPtr(v *SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaitingArgs) SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaitingPtrInput {
+	return (*submarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaitingPtrType)(v)
+}
+
+func (*submarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaitingPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaiting)(nil)).Elem()
+}
+
+func (i *submarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaitingPtrType) ToSubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaitingPtrOutput() SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaitingPtrOutput {
+	return i.ToSubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaitingPtrOutputWithContext(context.Background())
+}
+
+func (i *submarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaitingPtrType) ToSubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaitingPtrOutputWithContext(ctx context.Context) SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaitingPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaitingPtrOutput)
+}
+
+// Details about a waiting container
+type SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaitingOutput struct{ *pulumi.OutputState }
+
+func (SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaitingOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaiting)(nil)).Elem()
+}
+
+func (o SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaitingOutput) ToSubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaitingOutput() SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaitingOutput {
+	return o
+}
+
+func (o SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaitingOutput) ToSubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaitingOutputWithContext(ctx context.Context) SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaitingOutput {
+	return o
+}
+
+func (o SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaitingOutput) ToSubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaitingPtrOutput() SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaitingPtrOutput {
+	return o.ToSubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaitingPtrOutputWithContext(context.Background())
+}
+
+func (o SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaitingOutput) ToSubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaitingPtrOutputWithContext(ctx context.Context) SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaitingPtrOutput {
+	return o.ApplyT(func(v SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaiting) *SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaiting {
+		return &v
+	}).(SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaitingPtrOutput)
+}
+
+// Message regarding why the container is not yet running.
+func (o SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaitingOutput) Message() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaiting) *string { return v.Message }).(pulumi.StringPtrOutput)
+}
+
+// (brief) reason the container is not yet running.
+func (o SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaitingOutput) Reason() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaiting) *string { return v.Reason }).(pulumi.StringPtrOutput)
+}
+
+type SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaitingPtrOutput struct{ *pulumi.OutputState }
+
+func (SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaitingPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaiting)(nil)).Elem()
+}
+
+func (o SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaitingPtrOutput) ToSubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaitingPtrOutput() SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaitingPtrOutput {
+	return o
+}
+
+func (o SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaitingPtrOutput) ToSubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaitingPtrOutputWithContext(ctx context.Context) SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaitingPtrOutput {
+	return o
+}
+
+func (o SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaitingPtrOutput) Elem() SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaitingOutput {
+	return o.ApplyT(func(v *SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaiting) SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaiting {
+		return *v
+	}).(SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaitingOutput)
+}
+
+// Message regarding why the container is not yet running.
+func (o SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaitingPtrOutput) Message() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaiting) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Message
+	}).(pulumi.StringPtrOutput)
+}
+
+// (brief) reason the container is not yet running.
+func (o SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaitingPtrOutput) Reason() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaiting) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Reason
+	}).(pulumi.StringPtrOutput)
+}
+
+// DaemonSetStatus represents the current status of a daemon set.
+type SubmarinerStatusEngineDaemonSetStatusStatus struct {
+	// Count of hash collisions for the DaemonSet. The DaemonSet controller uses this field as a collision avoidance mechanism when it needs to create the name for the newest ControllerRevision.
+	CollisionCount *int `pulumi:"collisionCount"`
+	// Represents the latest available observations of a DaemonSet's current state.
+	Conditions []SubmarinerStatusEngineDaemonSetStatusStatusConditions `pulumi:"conditions"`
+	// The number of nodes that are running at least 1 daemon pod and are supposed to run the daemon pod. More info: https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/
+	CurrentNumberScheduled int `pulumi:"currentNumberScheduled"`
+	// The total number of nodes that should be running the daemon pod (including nodes correctly running the daemon pod). More info: https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/
+	DesiredNumberScheduled int `pulumi:"desiredNumberScheduled"`
+	// The number of nodes that should be running the daemon pod and have one or more of the daemon pod running and available (ready for at least spec.minReadySeconds)
+	NumberAvailable *int `pulumi:"numberAvailable"`
+	// The number of nodes that are running the daemon pod, but are not supposed to run the daemon pod. More info: https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/
+	NumberMisscheduled int `pulumi:"numberMisscheduled"`
+	// The number of nodes that should be running the daemon pod and have one or more of the daemon pod running and ready.
+	NumberReady int `pulumi:"numberReady"`
+	// The number of nodes that should be running the daemon pod and have none of the daemon pod running and available (ready for at least spec.minReadySeconds)
+	NumberUnavailable *int `pulumi:"numberUnavailable"`
+	// The most recent generation observed by the daemon set controller.
+	ObservedGeneration *int `pulumi:"observedGeneration"`
+	// The total number of nodes that are running updated daemon pod
+	UpdatedNumberScheduled *int `pulumi:"updatedNumberScheduled"`
+}
+
+// SubmarinerStatusEngineDaemonSetStatusStatusInput is an input type that accepts SubmarinerStatusEngineDaemonSetStatusStatusArgs and SubmarinerStatusEngineDaemonSetStatusStatusOutput values.
+// You can construct a concrete instance of `SubmarinerStatusEngineDaemonSetStatusStatusInput` via:
+//
+//          SubmarinerStatusEngineDaemonSetStatusStatusArgs{...}
+type SubmarinerStatusEngineDaemonSetStatusStatusInput interface {
+	pulumi.Input
+
+	ToSubmarinerStatusEngineDaemonSetStatusStatusOutput() SubmarinerStatusEngineDaemonSetStatusStatusOutput
+	ToSubmarinerStatusEngineDaemonSetStatusStatusOutputWithContext(context.Context) SubmarinerStatusEngineDaemonSetStatusStatusOutput
+}
+
+// DaemonSetStatus represents the current status of a daemon set.
+type SubmarinerStatusEngineDaemonSetStatusStatusArgs struct {
+	// Count of hash collisions for the DaemonSet. The DaemonSet controller uses this field as a collision avoidance mechanism when it needs to create the name for the newest ControllerRevision.
+	CollisionCount pulumi.IntPtrInput `pulumi:"collisionCount"`
+	// Represents the latest available observations of a DaemonSet's current state.
+	Conditions SubmarinerStatusEngineDaemonSetStatusStatusConditionsArrayInput `pulumi:"conditions"`
+	// The number of nodes that are running at least 1 daemon pod and are supposed to run the daemon pod. More info: https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/
+	CurrentNumberScheduled pulumi.IntInput `pulumi:"currentNumberScheduled"`
+	// The total number of nodes that should be running the daemon pod (including nodes correctly running the daemon pod). More info: https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/
+	DesiredNumberScheduled pulumi.IntInput `pulumi:"desiredNumberScheduled"`
+	// The number of nodes that should be running the daemon pod and have one or more of the daemon pod running and available (ready for at least spec.minReadySeconds)
+	NumberAvailable pulumi.IntPtrInput `pulumi:"numberAvailable"`
+	// The number of nodes that are running the daemon pod, but are not supposed to run the daemon pod. More info: https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/
+	NumberMisscheduled pulumi.IntInput `pulumi:"numberMisscheduled"`
+	// The number of nodes that should be running the daemon pod and have one or more of the daemon pod running and ready.
+	NumberReady pulumi.IntInput `pulumi:"numberReady"`
+	// The number of nodes that should be running the daemon pod and have none of the daemon pod running and available (ready for at least spec.minReadySeconds)
+	NumberUnavailable pulumi.IntPtrInput `pulumi:"numberUnavailable"`
+	// The most recent generation observed by the daemon set controller.
+	ObservedGeneration pulumi.IntPtrInput `pulumi:"observedGeneration"`
+	// The total number of nodes that are running updated daemon pod
+	UpdatedNumberScheduled pulumi.IntPtrInput `pulumi:"updatedNumberScheduled"`
+}
+
+func (SubmarinerStatusEngineDaemonSetStatusStatusArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*SubmarinerStatusEngineDaemonSetStatusStatus)(nil)).Elem()
+}
+
+func (i SubmarinerStatusEngineDaemonSetStatusStatusArgs) ToSubmarinerStatusEngineDaemonSetStatusStatusOutput() SubmarinerStatusEngineDaemonSetStatusStatusOutput {
+	return i.ToSubmarinerStatusEngineDaemonSetStatusStatusOutputWithContext(context.Background())
+}
+
+func (i SubmarinerStatusEngineDaemonSetStatusStatusArgs) ToSubmarinerStatusEngineDaemonSetStatusStatusOutputWithContext(ctx context.Context) SubmarinerStatusEngineDaemonSetStatusStatusOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(SubmarinerStatusEngineDaemonSetStatusStatusOutput)
+}
+
+func (i SubmarinerStatusEngineDaemonSetStatusStatusArgs) ToSubmarinerStatusEngineDaemonSetStatusStatusPtrOutput() SubmarinerStatusEngineDaemonSetStatusStatusPtrOutput {
+	return i.ToSubmarinerStatusEngineDaemonSetStatusStatusPtrOutputWithContext(context.Background())
+}
+
+func (i SubmarinerStatusEngineDaemonSetStatusStatusArgs) ToSubmarinerStatusEngineDaemonSetStatusStatusPtrOutputWithContext(ctx context.Context) SubmarinerStatusEngineDaemonSetStatusStatusPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(SubmarinerStatusEngineDaemonSetStatusStatusOutput).ToSubmarinerStatusEngineDaemonSetStatusStatusPtrOutputWithContext(ctx)
+}
+
+// SubmarinerStatusEngineDaemonSetStatusStatusPtrInput is an input type that accepts SubmarinerStatusEngineDaemonSetStatusStatusArgs, SubmarinerStatusEngineDaemonSetStatusStatusPtr and SubmarinerStatusEngineDaemonSetStatusStatusPtrOutput values.
+// You can construct a concrete instance of `SubmarinerStatusEngineDaemonSetStatusStatusPtrInput` via:
+//
+//          SubmarinerStatusEngineDaemonSetStatusStatusArgs{...}
+//
+//  or:
+//
+//          nil
+type SubmarinerStatusEngineDaemonSetStatusStatusPtrInput interface {
+	pulumi.Input
+
+	ToSubmarinerStatusEngineDaemonSetStatusStatusPtrOutput() SubmarinerStatusEngineDaemonSetStatusStatusPtrOutput
+	ToSubmarinerStatusEngineDaemonSetStatusStatusPtrOutputWithContext(context.Context) SubmarinerStatusEngineDaemonSetStatusStatusPtrOutput
+}
+
+type submarinerStatusEngineDaemonSetStatusStatusPtrType SubmarinerStatusEngineDaemonSetStatusStatusArgs
+
+func SubmarinerStatusEngineDaemonSetStatusStatusPtr(v *SubmarinerStatusEngineDaemonSetStatusStatusArgs) SubmarinerStatusEngineDaemonSetStatusStatusPtrInput {
+	return (*submarinerStatusEngineDaemonSetStatusStatusPtrType)(v)
+}
+
+func (*submarinerStatusEngineDaemonSetStatusStatusPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**SubmarinerStatusEngineDaemonSetStatusStatus)(nil)).Elem()
+}
+
+func (i *submarinerStatusEngineDaemonSetStatusStatusPtrType) ToSubmarinerStatusEngineDaemonSetStatusStatusPtrOutput() SubmarinerStatusEngineDaemonSetStatusStatusPtrOutput {
+	return i.ToSubmarinerStatusEngineDaemonSetStatusStatusPtrOutputWithContext(context.Background())
+}
+
+func (i *submarinerStatusEngineDaemonSetStatusStatusPtrType) ToSubmarinerStatusEngineDaemonSetStatusStatusPtrOutputWithContext(ctx context.Context) SubmarinerStatusEngineDaemonSetStatusStatusPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(SubmarinerStatusEngineDaemonSetStatusStatusPtrOutput)
+}
+
+// DaemonSetStatus represents the current status of a daemon set.
+type SubmarinerStatusEngineDaemonSetStatusStatusOutput struct{ *pulumi.OutputState }
+
+func (SubmarinerStatusEngineDaemonSetStatusStatusOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*SubmarinerStatusEngineDaemonSetStatusStatus)(nil)).Elem()
+}
+
+func (o SubmarinerStatusEngineDaemonSetStatusStatusOutput) ToSubmarinerStatusEngineDaemonSetStatusStatusOutput() SubmarinerStatusEngineDaemonSetStatusStatusOutput {
+	return o
+}
+
+func (o SubmarinerStatusEngineDaemonSetStatusStatusOutput) ToSubmarinerStatusEngineDaemonSetStatusStatusOutputWithContext(ctx context.Context) SubmarinerStatusEngineDaemonSetStatusStatusOutput {
+	return o
+}
+
+func (o SubmarinerStatusEngineDaemonSetStatusStatusOutput) ToSubmarinerStatusEngineDaemonSetStatusStatusPtrOutput() SubmarinerStatusEngineDaemonSetStatusStatusPtrOutput {
+	return o.ToSubmarinerStatusEngineDaemonSetStatusStatusPtrOutputWithContext(context.Background())
+}
+
+func (o SubmarinerStatusEngineDaemonSetStatusStatusOutput) ToSubmarinerStatusEngineDaemonSetStatusStatusPtrOutputWithContext(ctx context.Context) SubmarinerStatusEngineDaemonSetStatusStatusPtrOutput {
+	return o.ApplyT(func(v SubmarinerStatusEngineDaemonSetStatusStatus) *SubmarinerStatusEngineDaemonSetStatusStatus {
+		return &v
+	}).(SubmarinerStatusEngineDaemonSetStatusStatusPtrOutput)
+}
+
 // Count of hash collisions for the DaemonSet. The DaemonSet controller uses this field as a collision avoidance mechanism when it needs to create the name for the newest ControllerRevision.
-func (o SubmarinerStatusEngineDaemonSetStatusPtrOutput) CollisionCount() pulumi.IntPtrOutput {
-	return o.ApplyT(func(v *SubmarinerStatusEngineDaemonSetStatus) *int {
+func (o SubmarinerStatusEngineDaemonSetStatusStatusOutput) CollisionCount() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v SubmarinerStatusEngineDaemonSetStatusStatus) *int { return v.CollisionCount }).(pulumi.IntPtrOutput)
+}
+
+// Represents the latest available observations of a DaemonSet's current state.
+func (o SubmarinerStatusEngineDaemonSetStatusStatusOutput) Conditions() SubmarinerStatusEngineDaemonSetStatusStatusConditionsArrayOutput {
+	return o.ApplyT(func(v SubmarinerStatusEngineDaemonSetStatusStatus) []SubmarinerStatusEngineDaemonSetStatusStatusConditions {
+		return v.Conditions
+	}).(SubmarinerStatusEngineDaemonSetStatusStatusConditionsArrayOutput)
+}
+
+// The number of nodes that are running at least 1 daemon pod and are supposed to run the daemon pod. More info: https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/
+func (o SubmarinerStatusEngineDaemonSetStatusStatusOutput) CurrentNumberScheduled() pulumi.IntOutput {
+	return o.ApplyT(func(v SubmarinerStatusEngineDaemonSetStatusStatus) int { return v.CurrentNumberScheduled }).(pulumi.IntOutput)
+}
+
+// The total number of nodes that should be running the daemon pod (including nodes correctly running the daemon pod). More info: https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/
+func (o SubmarinerStatusEngineDaemonSetStatusStatusOutput) DesiredNumberScheduled() pulumi.IntOutput {
+	return o.ApplyT(func(v SubmarinerStatusEngineDaemonSetStatusStatus) int { return v.DesiredNumberScheduled }).(pulumi.IntOutput)
+}
+
+// The number of nodes that should be running the daemon pod and have one or more of the daemon pod running and available (ready for at least spec.minReadySeconds)
+func (o SubmarinerStatusEngineDaemonSetStatusStatusOutput) NumberAvailable() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v SubmarinerStatusEngineDaemonSetStatusStatus) *int { return v.NumberAvailable }).(pulumi.IntPtrOutput)
+}
+
+// The number of nodes that are running the daemon pod, but are not supposed to run the daemon pod. More info: https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/
+func (o SubmarinerStatusEngineDaemonSetStatusStatusOutput) NumberMisscheduled() pulumi.IntOutput {
+	return o.ApplyT(func(v SubmarinerStatusEngineDaemonSetStatusStatus) int { return v.NumberMisscheduled }).(pulumi.IntOutput)
+}
+
+// The number of nodes that should be running the daemon pod and have one or more of the daemon pod running and ready.
+func (o SubmarinerStatusEngineDaemonSetStatusStatusOutput) NumberReady() pulumi.IntOutput {
+	return o.ApplyT(func(v SubmarinerStatusEngineDaemonSetStatusStatus) int { return v.NumberReady }).(pulumi.IntOutput)
+}
+
+// The number of nodes that should be running the daemon pod and have none of the daemon pod running and available (ready for at least spec.minReadySeconds)
+func (o SubmarinerStatusEngineDaemonSetStatusStatusOutput) NumberUnavailable() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v SubmarinerStatusEngineDaemonSetStatusStatus) *int { return v.NumberUnavailable }).(pulumi.IntPtrOutput)
+}
+
+// The most recent generation observed by the daemon set controller.
+func (o SubmarinerStatusEngineDaemonSetStatusStatusOutput) ObservedGeneration() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v SubmarinerStatusEngineDaemonSetStatusStatus) *int { return v.ObservedGeneration }).(pulumi.IntPtrOutput)
+}
+
+// The total number of nodes that are running updated daemon pod
+func (o SubmarinerStatusEngineDaemonSetStatusStatusOutput) UpdatedNumberScheduled() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v SubmarinerStatusEngineDaemonSetStatusStatus) *int { return v.UpdatedNumberScheduled }).(pulumi.IntPtrOutput)
+}
+
+type SubmarinerStatusEngineDaemonSetStatusStatusPtrOutput struct{ *pulumi.OutputState }
+
+func (SubmarinerStatusEngineDaemonSetStatusStatusPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**SubmarinerStatusEngineDaemonSetStatusStatus)(nil)).Elem()
+}
+
+func (o SubmarinerStatusEngineDaemonSetStatusStatusPtrOutput) ToSubmarinerStatusEngineDaemonSetStatusStatusPtrOutput() SubmarinerStatusEngineDaemonSetStatusStatusPtrOutput {
+	return o
+}
+
+func (o SubmarinerStatusEngineDaemonSetStatusStatusPtrOutput) ToSubmarinerStatusEngineDaemonSetStatusStatusPtrOutputWithContext(ctx context.Context) SubmarinerStatusEngineDaemonSetStatusStatusPtrOutput {
+	return o
+}
+
+func (o SubmarinerStatusEngineDaemonSetStatusStatusPtrOutput) Elem() SubmarinerStatusEngineDaemonSetStatusStatusOutput {
+	return o.ApplyT(func(v *SubmarinerStatusEngineDaemonSetStatusStatus) SubmarinerStatusEngineDaemonSetStatusStatus {
+		return *v
+	}).(SubmarinerStatusEngineDaemonSetStatusStatusOutput)
+}
+
+// Count of hash collisions for the DaemonSet. The DaemonSet controller uses this field as a collision avoidance mechanism when it needs to create the name for the newest ControllerRevision.
+func (o SubmarinerStatusEngineDaemonSetStatusStatusPtrOutput) CollisionCount() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *SubmarinerStatusEngineDaemonSetStatusStatus) *int {
 		if v == nil {
 			return nil
 		}
@@ -1496,18 +2174,18 @@ func (o SubmarinerStatusEngineDaemonSetStatusPtrOutput) CollisionCount() pulumi.
 }
 
 // Represents the latest available observations of a DaemonSet's current state.
-func (o SubmarinerStatusEngineDaemonSetStatusPtrOutput) Conditions() SubmarinerStatusEngineDaemonSetStatusConditionsArrayOutput {
-	return o.ApplyT(func(v *SubmarinerStatusEngineDaemonSetStatus) []SubmarinerStatusEngineDaemonSetStatusConditions {
+func (o SubmarinerStatusEngineDaemonSetStatusStatusPtrOutput) Conditions() SubmarinerStatusEngineDaemonSetStatusStatusConditionsArrayOutput {
+	return o.ApplyT(func(v *SubmarinerStatusEngineDaemonSetStatusStatus) []SubmarinerStatusEngineDaemonSetStatusStatusConditions {
 		if v == nil {
 			return nil
 		}
 		return v.Conditions
-	}).(SubmarinerStatusEngineDaemonSetStatusConditionsArrayOutput)
+	}).(SubmarinerStatusEngineDaemonSetStatusStatusConditionsArrayOutput)
 }
 
 // The number of nodes that are running at least 1 daemon pod and are supposed to run the daemon pod. More info: https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/
-func (o SubmarinerStatusEngineDaemonSetStatusPtrOutput) CurrentNumberScheduled() pulumi.IntPtrOutput {
-	return o.ApplyT(func(v *SubmarinerStatusEngineDaemonSetStatus) *int {
+func (o SubmarinerStatusEngineDaemonSetStatusStatusPtrOutput) CurrentNumberScheduled() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *SubmarinerStatusEngineDaemonSetStatusStatus) *int {
 		if v == nil {
 			return nil
 		}
@@ -1516,8 +2194,8 @@ func (o SubmarinerStatusEngineDaemonSetStatusPtrOutput) CurrentNumberScheduled()
 }
 
 // The total number of nodes that should be running the daemon pod (including nodes correctly running the daemon pod). More info: https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/
-func (o SubmarinerStatusEngineDaemonSetStatusPtrOutput) DesiredNumberScheduled() pulumi.IntPtrOutput {
-	return o.ApplyT(func(v *SubmarinerStatusEngineDaemonSetStatus) *int {
+func (o SubmarinerStatusEngineDaemonSetStatusStatusPtrOutput) DesiredNumberScheduled() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *SubmarinerStatusEngineDaemonSetStatusStatus) *int {
 		if v == nil {
 			return nil
 		}
@@ -1526,8 +2204,8 @@ func (o SubmarinerStatusEngineDaemonSetStatusPtrOutput) DesiredNumberScheduled()
 }
 
 // The number of nodes that should be running the daemon pod and have one or more of the daemon pod running and available (ready for at least spec.minReadySeconds)
-func (o SubmarinerStatusEngineDaemonSetStatusPtrOutput) NumberAvailable() pulumi.IntPtrOutput {
-	return o.ApplyT(func(v *SubmarinerStatusEngineDaemonSetStatus) *int {
+func (o SubmarinerStatusEngineDaemonSetStatusStatusPtrOutput) NumberAvailable() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *SubmarinerStatusEngineDaemonSetStatusStatus) *int {
 		if v == nil {
 			return nil
 		}
@@ -1536,8 +2214,8 @@ func (o SubmarinerStatusEngineDaemonSetStatusPtrOutput) NumberAvailable() pulumi
 }
 
 // The number of nodes that are running the daemon pod, but are not supposed to run the daemon pod. More info: https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/
-func (o SubmarinerStatusEngineDaemonSetStatusPtrOutput) NumberMisscheduled() pulumi.IntPtrOutput {
-	return o.ApplyT(func(v *SubmarinerStatusEngineDaemonSetStatus) *int {
+func (o SubmarinerStatusEngineDaemonSetStatusStatusPtrOutput) NumberMisscheduled() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *SubmarinerStatusEngineDaemonSetStatusStatus) *int {
 		if v == nil {
 			return nil
 		}
@@ -1546,8 +2224,8 @@ func (o SubmarinerStatusEngineDaemonSetStatusPtrOutput) NumberMisscheduled() pul
 }
 
 // The number of nodes that should be running the daemon pod and have one or more of the daemon pod running and ready.
-func (o SubmarinerStatusEngineDaemonSetStatusPtrOutput) NumberReady() pulumi.IntPtrOutput {
-	return o.ApplyT(func(v *SubmarinerStatusEngineDaemonSetStatus) *int {
+func (o SubmarinerStatusEngineDaemonSetStatusStatusPtrOutput) NumberReady() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *SubmarinerStatusEngineDaemonSetStatusStatus) *int {
 		if v == nil {
 			return nil
 		}
@@ -1556,8 +2234,8 @@ func (o SubmarinerStatusEngineDaemonSetStatusPtrOutput) NumberReady() pulumi.Int
 }
 
 // The number of nodes that should be running the daemon pod and have none of the daemon pod running and available (ready for at least spec.minReadySeconds)
-func (o SubmarinerStatusEngineDaemonSetStatusPtrOutput) NumberUnavailable() pulumi.IntPtrOutput {
-	return o.ApplyT(func(v *SubmarinerStatusEngineDaemonSetStatus) *int {
+func (o SubmarinerStatusEngineDaemonSetStatusStatusPtrOutput) NumberUnavailable() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *SubmarinerStatusEngineDaemonSetStatusStatus) *int {
 		if v == nil {
 			return nil
 		}
@@ -1566,8 +2244,8 @@ func (o SubmarinerStatusEngineDaemonSetStatusPtrOutput) NumberUnavailable() pulu
 }
 
 // The most recent generation observed by the daemon set controller.
-func (o SubmarinerStatusEngineDaemonSetStatusPtrOutput) ObservedGeneration() pulumi.IntPtrOutput {
-	return o.ApplyT(func(v *SubmarinerStatusEngineDaemonSetStatus) *int {
+func (o SubmarinerStatusEngineDaemonSetStatusStatusPtrOutput) ObservedGeneration() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *SubmarinerStatusEngineDaemonSetStatusStatus) *int {
 		if v == nil {
 			return nil
 		}
@@ -1576,8 +2254,8 @@ func (o SubmarinerStatusEngineDaemonSetStatusPtrOutput) ObservedGeneration() pul
 }
 
 // The total number of nodes that are running updated daemon pod
-func (o SubmarinerStatusEngineDaemonSetStatusPtrOutput) UpdatedNumberScheduled() pulumi.IntPtrOutput {
-	return o.ApplyT(func(v *SubmarinerStatusEngineDaemonSetStatus) *int {
+func (o SubmarinerStatusEngineDaemonSetStatusStatusPtrOutput) UpdatedNumberScheduled() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *SubmarinerStatusEngineDaemonSetStatusStatus) *int {
 		if v == nil {
 			return nil
 		}
@@ -1586,7 +2264,7 @@ func (o SubmarinerStatusEngineDaemonSetStatusPtrOutput) UpdatedNumberScheduled()
 }
 
 // DaemonSetCondition describes the state of a DaemonSet at a certain point.
-type SubmarinerStatusEngineDaemonSetStatusConditions struct {
+type SubmarinerStatusEngineDaemonSetStatusStatusConditions struct {
 	// Last time the condition transitioned from one status to another.
 	LastTransitionTime *string `pulumi:"lastTransitionTime"`
 	// A human readable message indicating details about the transition.
@@ -1599,19 +2277,19 @@ type SubmarinerStatusEngineDaemonSetStatusConditions struct {
 	Type string `pulumi:"type"`
 }
 
-// SubmarinerStatusEngineDaemonSetStatusConditionsInput is an input type that accepts SubmarinerStatusEngineDaemonSetStatusConditionsArgs and SubmarinerStatusEngineDaemonSetStatusConditionsOutput values.
-// You can construct a concrete instance of `SubmarinerStatusEngineDaemonSetStatusConditionsInput` via:
+// SubmarinerStatusEngineDaemonSetStatusStatusConditionsInput is an input type that accepts SubmarinerStatusEngineDaemonSetStatusStatusConditionsArgs and SubmarinerStatusEngineDaemonSetStatusStatusConditionsOutput values.
+// You can construct a concrete instance of `SubmarinerStatusEngineDaemonSetStatusStatusConditionsInput` via:
 //
-//          SubmarinerStatusEngineDaemonSetStatusConditionsArgs{...}
-type SubmarinerStatusEngineDaemonSetStatusConditionsInput interface {
+//          SubmarinerStatusEngineDaemonSetStatusStatusConditionsArgs{...}
+type SubmarinerStatusEngineDaemonSetStatusStatusConditionsInput interface {
 	pulumi.Input
 
-	ToSubmarinerStatusEngineDaemonSetStatusConditionsOutput() SubmarinerStatusEngineDaemonSetStatusConditionsOutput
-	ToSubmarinerStatusEngineDaemonSetStatusConditionsOutputWithContext(context.Context) SubmarinerStatusEngineDaemonSetStatusConditionsOutput
+	ToSubmarinerStatusEngineDaemonSetStatusStatusConditionsOutput() SubmarinerStatusEngineDaemonSetStatusStatusConditionsOutput
+	ToSubmarinerStatusEngineDaemonSetStatusStatusConditionsOutputWithContext(context.Context) SubmarinerStatusEngineDaemonSetStatusStatusConditionsOutput
 }
 
 // DaemonSetCondition describes the state of a DaemonSet at a certain point.
-type SubmarinerStatusEngineDaemonSetStatusConditionsArgs struct {
+type SubmarinerStatusEngineDaemonSetStatusStatusConditionsArgs struct {
 	// Last time the condition transitioned from one status to another.
 	LastTransitionTime pulumi.StringPtrInput `pulumi:"lastTransitionTime"`
 	// A human readable message indicating details about the transition.
@@ -1624,110 +2302,109 @@ type SubmarinerStatusEngineDaemonSetStatusConditionsArgs struct {
 	Type pulumi.StringInput `pulumi:"type"`
 }
 
-func (SubmarinerStatusEngineDaemonSetStatusConditionsArgs) ElementType() reflect.Type {
-	return reflect.TypeOf((*SubmarinerStatusEngineDaemonSetStatusConditions)(nil)).Elem()
+func (SubmarinerStatusEngineDaemonSetStatusStatusConditionsArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*SubmarinerStatusEngineDaemonSetStatusStatusConditions)(nil)).Elem()
 }
 
-func (i SubmarinerStatusEngineDaemonSetStatusConditionsArgs) ToSubmarinerStatusEngineDaemonSetStatusConditionsOutput() SubmarinerStatusEngineDaemonSetStatusConditionsOutput {
-	return i.ToSubmarinerStatusEngineDaemonSetStatusConditionsOutputWithContext(context.Background())
+func (i SubmarinerStatusEngineDaemonSetStatusStatusConditionsArgs) ToSubmarinerStatusEngineDaemonSetStatusStatusConditionsOutput() SubmarinerStatusEngineDaemonSetStatusStatusConditionsOutput {
+	return i.ToSubmarinerStatusEngineDaemonSetStatusStatusConditionsOutputWithContext(context.Background())
 }
 
-func (i SubmarinerStatusEngineDaemonSetStatusConditionsArgs) ToSubmarinerStatusEngineDaemonSetStatusConditionsOutputWithContext(ctx context.Context) SubmarinerStatusEngineDaemonSetStatusConditionsOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(SubmarinerStatusEngineDaemonSetStatusConditionsOutput)
+func (i SubmarinerStatusEngineDaemonSetStatusStatusConditionsArgs) ToSubmarinerStatusEngineDaemonSetStatusStatusConditionsOutputWithContext(ctx context.Context) SubmarinerStatusEngineDaemonSetStatusStatusConditionsOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(SubmarinerStatusEngineDaemonSetStatusStatusConditionsOutput)
 }
 
-// SubmarinerStatusEngineDaemonSetStatusConditionsArrayInput is an input type that accepts SubmarinerStatusEngineDaemonSetStatusConditionsArray and SubmarinerStatusEngineDaemonSetStatusConditionsArrayOutput values.
-// You can construct a concrete instance of `SubmarinerStatusEngineDaemonSetStatusConditionsArrayInput` via:
+// SubmarinerStatusEngineDaemonSetStatusStatusConditionsArrayInput is an input type that accepts SubmarinerStatusEngineDaemonSetStatusStatusConditionsArray and SubmarinerStatusEngineDaemonSetStatusStatusConditionsArrayOutput values.
+// You can construct a concrete instance of `SubmarinerStatusEngineDaemonSetStatusStatusConditionsArrayInput` via:
 //
-//          SubmarinerStatusEngineDaemonSetStatusConditionsArray{ SubmarinerStatusEngineDaemonSetStatusConditionsArgs{...} }
-type SubmarinerStatusEngineDaemonSetStatusConditionsArrayInput interface {
+//          SubmarinerStatusEngineDaemonSetStatusStatusConditionsArray{ SubmarinerStatusEngineDaemonSetStatusStatusConditionsArgs{...} }
+type SubmarinerStatusEngineDaemonSetStatusStatusConditionsArrayInput interface {
 	pulumi.Input
 
-	ToSubmarinerStatusEngineDaemonSetStatusConditionsArrayOutput() SubmarinerStatusEngineDaemonSetStatusConditionsArrayOutput
-	ToSubmarinerStatusEngineDaemonSetStatusConditionsArrayOutputWithContext(context.Context) SubmarinerStatusEngineDaemonSetStatusConditionsArrayOutput
+	ToSubmarinerStatusEngineDaemonSetStatusStatusConditionsArrayOutput() SubmarinerStatusEngineDaemonSetStatusStatusConditionsArrayOutput
+	ToSubmarinerStatusEngineDaemonSetStatusStatusConditionsArrayOutputWithContext(context.Context) SubmarinerStatusEngineDaemonSetStatusStatusConditionsArrayOutput
 }
 
-type SubmarinerStatusEngineDaemonSetStatusConditionsArray []SubmarinerStatusEngineDaemonSetStatusConditionsInput
+type SubmarinerStatusEngineDaemonSetStatusStatusConditionsArray []SubmarinerStatusEngineDaemonSetStatusStatusConditionsInput
 
-func (SubmarinerStatusEngineDaemonSetStatusConditionsArray) ElementType() reflect.Type {
-	return reflect.TypeOf((*[]SubmarinerStatusEngineDaemonSetStatusConditions)(nil)).Elem()
+func (SubmarinerStatusEngineDaemonSetStatusStatusConditionsArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]SubmarinerStatusEngineDaemonSetStatusStatusConditions)(nil)).Elem()
 }
 
-func (i SubmarinerStatusEngineDaemonSetStatusConditionsArray) ToSubmarinerStatusEngineDaemonSetStatusConditionsArrayOutput() SubmarinerStatusEngineDaemonSetStatusConditionsArrayOutput {
-	return i.ToSubmarinerStatusEngineDaemonSetStatusConditionsArrayOutputWithContext(context.Background())
+func (i SubmarinerStatusEngineDaemonSetStatusStatusConditionsArray) ToSubmarinerStatusEngineDaemonSetStatusStatusConditionsArrayOutput() SubmarinerStatusEngineDaemonSetStatusStatusConditionsArrayOutput {
+	return i.ToSubmarinerStatusEngineDaemonSetStatusStatusConditionsArrayOutputWithContext(context.Background())
 }
 
-func (i SubmarinerStatusEngineDaemonSetStatusConditionsArray) ToSubmarinerStatusEngineDaemonSetStatusConditionsArrayOutputWithContext(ctx context.Context) SubmarinerStatusEngineDaemonSetStatusConditionsArrayOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(SubmarinerStatusEngineDaemonSetStatusConditionsArrayOutput)
+func (i SubmarinerStatusEngineDaemonSetStatusStatusConditionsArray) ToSubmarinerStatusEngineDaemonSetStatusStatusConditionsArrayOutputWithContext(ctx context.Context) SubmarinerStatusEngineDaemonSetStatusStatusConditionsArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(SubmarinerStatusEngineDaemonSetStatusStatusConditionsArrayOutput)
 }
 
 // DaemonSetCondition describes the state of a DaemonSet at a certain point.
-type SubmarinerStatusEngineDaemonSetStatusConditionsOutput struct{ *pulumi.OutputState }
+type SubmarinerStatusEngineDaemonSetStatusStatusConditionsOutput struct{ *pulumi.OutputState }
 
-func (SubmarinerStatusEngineDaemonSetStatusConditionsOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*SubmarinerStatusEngineDaemonSetStatusConditions)(nil)).Elem()
+func (SubmarinerStatusEngineDaemonSetStatusStatusConditionsOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*SubmarinerStatusEngineDaemonSetStatusStatusConditions)(nil)).Elem()
 }
 
-func (o SubmarinerStatusEngineDaemonSetStatusConditionsOutput) ToSubmarinerStatusEngineDaemonSetStatusConditionsOutput() SubmarinerStatusEngineDaemonSetStatusConditionsOutput {
+func (o SubmarinerStatusEngineDaemonSetStatusStatusConditionsOutput) ToSubmarinerStatusEngineDaemonSetStatusStatusConditionsOutput() SubmarinerStatusEngineDaemonSetStatusStatusConditionsOutput {
 	return o
 }
 
-func (o SubmarinerStatusEngineDaemonSetStatusConditionsOutput) ToSubmarinerStatusEngineDaemonSetStatusConditionsOutputWithContext(ctx context.Context) SubmarinerStatusEngineDaemonSetStatusConditionsOutput {
+func (o SubmarinerStatusEngineDaemonSetStatusStatusConditionsOutput) ToSubmarinerStatusEngineDaemonSetStatusStatusConditionsOutputWithContext(ctx context.Context) SubmarinerStatusEngineDaemonSetStatusStatusConditionsOutput {
 	return o
 }
 
 // Last time the condition transitioned from one status to another.
-func (o SubmarinerStatusEngineDaemonSetStatusConditionsOutput) LastTransitionTime() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v SubmarinerStatusEngineDaemonSetStatusConditions) *string { return v.LastTransitionTime }).(pulumi.StringPtrOutput)
+func (o SubmarinerStatusEngineDaemonSetStatusStatusConditionsOutput) LastTransitionTime() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v SubmarinerStatusEngineDaemonSetStatusStatusConditions) *string { return v.LastTransitionTime }).(pulumi.StringPtrOutput)
 }
 
 // A human readable message indicating details about the transition.
-func (o SubmarinerStatusEngineDaemonSetStatusConditionsOutput) Message() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v SubmarinerStatusEngineDaemonSetStatusConditions) *string { return v.Message }).(pulumi.StringPtrOutput)
+func (o SubmarinerStatusEngineDaemonSetStatusStatusConditionsOutput) Message() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v SubmarinerStatusEngineDaemonSetStatusStatusConditions) *string { return v.Message }).(pulumi.StringPtrOutput)
 }
 
 // The reason for the condition's last transition.
-func (o SubmarinerStatusEngineDaemonSetStatusConditionsOutput) Reason() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v SubmarinerStatusEngineDaemonSetStatusConditions) *string { return v.Reason }).(pulumi.StringPtrOutput)
+func (o SubmarinerStatusEngineDaemonSetStatusStatusConditionsOutput) Reason() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v SubmarinerStatusEngineDaemonSetStatusStatusConditions) *string { return v.Reason }).(pulumi.StringPtrOutput)
 }
 
 // Status of the condition, one of True, False, Unknown.
-func (o SubmarinerStatusEngineDaemonSetStatusConditionsOutput) Status() pulumi.StringOutput {
-	return o.ApplyT(func(v SubmarinerStatusEngineDaemonSetStatusConditions) string { return v.Status }).(pulumi.StringOutput)
+func (o SubmarinerStatusEngineDaemonSetStatusStatusConditionsOutput) Status() pulumi.StringOutput {
+	return o.ApplyT(func(v SubmarinerStatusEngineDaemonSetStatusStatusConditions) string { return v.Status }).(pulumi.StringOutput)
 }
 
 // Type of DaemonSet condition.
-func (o SubmarinerStatusEngineDaemonSetStatusConditionsOutput) Type() pulumi.StringOutput {
-	return o.ApplyT(func(v SubmarinerStatusEngineDaemonSetStatusConditions) string { return v.Type }).(pulumi.StringOutput)
+func (o SubmarinerStatusEngineDaemonSetStatusStatusConditionsOutput) Type() pulumi.StringOutput {
+	return o.ApplyT(func(v SubmarinerStatusEngineDaemonSetStatusStatusConditions) string { return v.Type }).(pulumi.StringOutput)
 }
 
-type SubmarinerStatusEngineDaemonSetStatusConditionsArrayOutput struct{ *pulumi.OutputState }
+type SubmarinerStatusEngineDaemonSetStatusStatusConditionsArrayOutput struct{ *pulumi.OutputState }
 
-func (SubmarinerStatusEngineDaemonSetStatusConditionsArrayOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*[]SubmarinerStatusEngineDaemonSetStatusConditions)(nil)).Elem()
+func (SubmarinerStatusEngineDaemonSetStatusStatusConditionsArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]SubmarinerStatusEngineDaemonSetStatusStatusConditions)(nil)).Elem()
 }
 
-func (o SubmarinerStatusEngineDaemonSetStatusConditionsArrayOutput) ToSubmarinerStatusEngineDaemonSetStatusConditionsArrayOutput() SubmarinerStatusEngineDaemonSetStatusConditionsArrayOutput {
+func (o SubmarinerStatusEngineDaemonSetStatusStatusConditionsArrayOutput) ToSubmarinerStatusEngineDaemonSetStatusStatusConditionsArrayOutput() SubmarinerStatusEngineDaemonSetStatusStatusConditionsArrayOutput {
 	return o
 }
 
-func (o SubmarinerStatusEngineDaemonSetStatusConditionsArrayOutput) ToSubmarinerStatusEngineDaemonSetStatusConditionsArrayOutputWithContext(ctx context.Context) SubmarinerStatusEngineDaemonSetStatusConditionsArrayOutput {
+func (o SubmarinerStatusEngineDaemonSetStatusStatusConditionsArrayOutput) ToSubmarinerStatusEngineDaemonSetStatusStatusConditionsArrayOutputWithContext(ctx context.Context) SubmarinerStatusEngineDaemonSetStatusStatusConditionsArrayOutput {
 	return o
 }
 
-func (o SubmarinerStatusEngineDaemonSetStatusConditionsArrayOutput) Index(i pulumi.IntInput) SubmarinerStatusEngineDaemonSetStatusConditionsOutput {
-	return pulumi.All(o, i).ApplyT(func(vs []interface{}) SubmarinerStatusEngineDaemonSetStatusConditions {
-		return vs[0].([]SubmarinerStatusEngineDaemonSetStatusConditions)[vs[1].(int)]
-	}).(SubmarinerStatusEngineDaemonSetStatusConditionsOutput)
+func (o SubmarinerStatusEngineDaemonSetStatusStatusConditionsArrayOutput) Index(i pulumi.IntInput) SubmarinerStatusEngineDaemonSetStatusStatusConditionsOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) SubmarinerStatusEngineDaemonSetStatusStatusConditions {
+		return vs[0].([]SubmarinerStatusEngineDaemonSetStatusStatusConditions)[vs[1].(int)]
+	}).(SubmarinerStatusEngineDaemonSetStatusStatusConditionsOutput)
 }
 
 type SubmarinerStatusGateways struct {
-	// APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#resources
-	ApiVersion *string `pulumi:"apiVersion"`
-	// Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds
-	Kind     *string                        `pulumi:"kind"`
-	Metadata map[string]interface{}         `pulumi:"metadata"`
-	Status   SubmarinerStatusGatewaysStatus `pulumi:"status"`
+	Connections   []SubmarinerStatusGatewaysConnections `pulumi:"connections"`
+	HaStatus      string                                `pulumi:"haStatus"`
+	LocalEndpoint SubmarinerStatusGatewaysLocalEndpoint `pulumi:"localEndpoint"`
+	StatusFailure string                                `pulumi:"statusFailure"`
+	Version       string                                `pulumi:"version"`
 }
 
 // SubmarinerStatusGatewaysInput is an input type that accepts SubmarinerStatusGatewaysArgs and SubmarinerStatusGatewaysOutput values.
@@ -1742,12 +2419,11 @@ type SubmarinerStatusGatewaysInput interface {
 }
 
 type SubmarinerStatusGatewaysArgs struct {
-	// APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#resources
-	ApiVersion pulumi.StringPtrInput `pulumi:"apiVersion"`
-	// Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds
-	Kind     pulumi.StringPtrInput               `pulumi:"kind"`
-	Metadata pulumi.MapInput                     `pulumi:"metadata"`
-	Status   SubmarinerStatusGatewaysStatusInput `pulumi:"status"`
+	Connections   SubmarinerStatusGatewaysConnectionsArrayInput `pulumi:"connections"`
+	HaStatus      pulumi.StringInput                            `pulumi:"haStatus"`
+	LocalEndpoint SubmarinerStatusGatewaysLocalEndpointInput    `pulumi:"localEndpoint"`
+	StatusFailure pulumi.StringInput                            `pulumi:"statusFailure"`
+	Version       pulumi.StringInput                            `pulumi:"version"`
 }
 
 func (SubmarinerStatusGatewaysArgs) ElementType() reflect.Type {
@@ -1801,22 +2477,24 @@ func (o SubmarinerStatusGatewaysOutput) ToSubmarinerStatusGatewaysOutputWithCont
 	return o
 }
 
-// APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#resources
-func (o SubmarinerStatusGatewaysOutput) ApiVersion() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v SubmarinerStatusGateways) *string { return v.ApiVersion }).(pulumi.StringPtrOutput)
+func (o SubmarinerStatusGatewaysOutput) Connections() SubmarinerStatusGatewaysConnectionsArrayOutput {
+	return o.ApplyT(func(v SubmarinerStatusGateways) []SubmarinerStatusGatewaysConnections { return v.Connections }).(SubmarinerStatusGatewaysConnectionsArrayOutput)
 }
 
-// Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds
-func (o SubmarinerStatusGatewaysOutput) Kind() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v SubmarinerStatusGateways) *string { return v.Kind }).(pulumi.StringPtrOutput)
+func (o SubmarinerStatusGatewaysOutput) HaStatus() pulumi.StringOutput {
+	return o.ApplyT(func(v SubmarinerStatusGateways) string { return v.HaStatus }).(pulumi.StringOutput)
 }
 
-func (o SubmarinerStatusGatewaysOutput) Metadata() pulumi.MapOutput {
-	return o.ApplyT(func(v SubmarinerStatusGateways) map[string]interface{} { return v.Metadata }).(pulumi.MapOutput)
+func (o SubmarinerStatusGatewaysOutput) LocalEndpoint() SubmarinerStatusGatewaysLocalEndpointOutput {
+	return o.ApplyT(func(v SubmarinerStatusGateways) SubmarinerStatusGatewaysLocalEndpoint { return v.LocalEndpoint }).(SubmarinerStatusGatewaysLocalEndpointOutput)
 }
 
-func (o SubmarinerStatusGatewaysOutput) Status() SubmarinerStatusGatewaysStatusOutput {
-	return o.ApplyT(func(v SubmarinerStatusGateways) SubmarinerStatusGatewaysStatus { return v.Status }).(SubmarinerStatusGatewaysStatusOutput)
+func (o SubmarinerStatusGatewaysOutput) StatusFailure() pulumi.StringOutput {
+	return o.ApplyT(func(v SubmarinerStatusGateways) string { return v.StatusFailure }).(pulumi.StringOutput)
+}
+
+func (o SubmarinerStatusGatewaysOutput) Version() pulumi.StringOutput {
+	return o.ApplyT(func(v SubmarinerStatusGateways) string { return v.Version }).(pulumi.StringOutput)
 }
 
 type SubmarinerStatusGatewaysArrayOutput struct{ *pulumi.OutputState }
@@ -1839,239 +2517,131 @@ func (o SubmarinerStatusGatewaysArrayOutput) Index(i pulumi.IntInput) Submariner
 	}).(SubmarinerStatusGatewaysOutput)
 }
 
-type SubmarinerStatusGatewaysMetadata struct {
+type SubmarinerStatusGatewaysConnections struct {
+	Endpoint SubmarinerStatusGatewaysConnectionsEndpoint `pulumi:"endpoint"`
+	// LatencySpec describes the round trip time information for a packet between the gateway pods of two clusters.
+	LatencyRTT    *SubmarinerStatusGatewaysConnectionsLatencyRTT `pulumi:"latencyRTT"`
+	Status        string                                         `pulumi:"status"`
+	StatusMessage string                                         `pulumi:"statusMessage"`
 }
 
-// SubmarinerStatusGatewaysMetadataInput is an input type that accepts SubmarinerStatusGatewaysMetadataArgs and SubmarinerStatusGatewaysMetadataOutput values.
-// You can construct a concrete instance of `SubmarinerStatusGatewaysMetadataInput` via:
+// SubmarinerStatusGatewaysConnectionsInput is an input type that accepts SubmarinerStatusGatewaysConnectionsArgs and SubmarinerStatusGatewaysConnectionsOutput values.
+// You can construct a concrete instance of `SubmarinerStatusGatewaysConnectionsInput` via:
 //
-//          SubmarinerStatusGatewaysMetadataArgs{...}
-type SubmarinerStatusGatewaysMetadataInput interface {
+//          SubmarinerStatusGatewaysConnectionsArgs{...}
+type SubmarinerStatusGatewaysConnectionsInput interface {
 	pulumi.Input
 
-	ToSubmarinerStatusGatewaysMetadataOutput() SubmarinerStatusGatewaysMetadataOutput
-	ToSubmarinerStatusGatewaysMetadataOutputWithContext(context.Context) SubmarinerStatusGatewaysMetadataOutput
+	ToSubmarinerStatusGatewaysConnectionsOutput() SubmarinerStatusGatewaysConnectionsOutput
+	ToSubmarinerStatusGatewaysConnectionsOutputWithContext(context.Context) SubmarinerStatusGatewaysConnectionsOutput
 }
 
-type SubmarinerStatusGatewaysMetadataArgs struct {
+type SubmarinerStatusGatewaysConnectionsArgs struct {
+	Endpoint SubmarinerStatusGatewaysConnectionsEndpointInput `pulumi:"endpoint"`
+	// LatencySpec describes the round trip time information for a packet between the gateway pods of two clusters.
+	LatencyRTT    SubmarinerStatusGatewaysConnectionsLatencyRTTPtrInput `pulumi:"latencyRTT"`
+	Status        pulumi.StringInput                                    `pulumi:"status"`
+	StatusMessage pulumi.StringInput                                    `pulumi:"statusMessage"`
 }
 
-func (SubmarinerStatusGatewaysMetadataArgs) ElementType() reflect.Type {
-	return reflect.TypeOf((*SubmarinerStatusGatewaysMetadata)(nil)).Elem()
+func (SubmarinerStatusGatewaysConnectionsArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*SubmarinerStatusGatewaysConnections)(nil)).Elem()
 }
 
-func (i SubmarinerStatusGatewaysMetadataArgs) ToSubmarinerStatusGatewaysMetadataOutput() SubmarinerStatusGatewaysMetadataOutput {
-	return i.ToSubmarinerStatusGatewaysMetadataOutputWithContext(context.Background())
+func (i SubmarinerStatusGatewaysConnectionsArgs) ToSubmarinerStatusGatewaysConnectionsOutput() SubmarinerStatusGatewaysConnectionsOutput {
+	return i.ToSubmarinerStatusGatewaysConnectionsOutputWithContext(context.Background())
 }
 
-func (i SubmarinerStatusGatewaysMetadataArgs) ToSubmarinerStatusGatewaysMetadataOutputWithContext(ctx context.Context) SubmarinerStatusGatewaysMetadataOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(SubmarinerStatusGatewaysMetadataOutput)
+func (i SubmarinerStatusGatewaysConnectionsArgs) ToSubmarinerStatusGatewaysConnectionsOutputWithContext(ctx context.Context) SubmarinerStatusGatewaysConnectionsOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(SubmarinerStatusGatewaysConnectionsOutput)
 }
 
-type SubmarinerStatusGatewaysMetadataOutput struct{ *pulumi.OutputState }
-
-func (SubmarinerStatusGatewaysMetadataOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*SubmarinerStatusGatewaysMetadata)(nil)).Elem()
-}
-
-func (o SubmarinerStatusGatewaysMetadataOutput) ToSubmarinerStatusGatewaysMetadataOutput() SubmarinerStatusGatewaysMetadataOutput {
-	return o
-}
-
-func (o SubmarinerStatusGatewaysMetadataOutput) ToSubmarinerStatusGatewaysMetadataOutputWithContext(ctx context.Context) SubmarinerStatusGatewaysMetadataOutput {
-	return o
-}
-
-type SubmarinerStatusGatewaysStatus struct {
-	Connections   []SubmarinerStatusGatewaysStatusConnections `pulumi:"connections"`
-	HaStatus      string                                      `pulumi:"haStatus"`
-	LocalEndpoint SubmarinerStatusGatewaysStatusLocalEndpoint `pulumi:"localEndpoint"`
-	StatusFailure string                                      `pulumi:"statusFailure"`
-	Version       string                                      `pulumi:"version"`
-}
-
-// SubmarinerStatusGatewaysStatusInput is an input type that accepts SubmarinerStatusGatewaysStatusArgs and SubmarinerStatusGatewaysStatusOutput values.
-// You can construct a concrete instance of `SubmarinerStatusGatewaysStatusInput` via:
+// SubmarinerStatusGatewaysConnectionsArrayInput is an input type that accepts SubmarinerStatusGatewaysConnectionsArray and SubmarinerStatusGatewaysConnectionsArrayOutput values.
+// You can construct a concrete instance of `SubmarinerStatusGatewaysConnectionsArrayInput` via:
 //
-//          SubmarinerStatusGatewaysStatusArgs{...}
-type SubmarinerStatusGatewaysStatusInput interface {
+//          SubmarinerStatusGatewaysConnectionsArray{ SubmarinerStatusGatewaysConnectionsArgs{...} }
+type SubmarinerStatusGatewaysConnectionsArrayInput interface {
 	pulumi.Input
 
-	ToSubmarinerStatusGatewaysStatusOutput() SubmarinerStatusGatewaysStatusOutput
-	ToSubmarinerStatusGatewaysStatusOutputWithContext(context.Context) SubmarinerStatusGatewaysStatusOutput
+	ToSubmarinerStatusGatewaysConnectionsArrayOutput() SubmarinerStatusGatewaysConnectionsArrayOutput
+	ToSubmarinerStatusGatewaysConnectionsArrayOutputWithContext(context.Context) SubmarinerStatusGatewaysConnectionsArrayOutput
 }
 
-type SubmarinerStatusGatewaysStatusArgs struct {
-	Connections   SubmarinerStatusGatewaysStatusConnectionsArrayInput `pulumi:"connections"`
-	HaStatus      pulumi.StringInput                                  `pulumi:"haStatus"`
-	LocalEndpoint SubmarinerStatusGatewaysStatusLocalEndpointInput    `pulumi:"localEndpoint"`
-	StatusFailure pulumi.StringInput                                  `pulumi:"statusFailure"`
-	Version       pulumi.StringInput                                  `pulumi:"version"`
+type SubmarinerStatusGatewaysConnectionsArray []SubmarinerStatusGatewaysConnectionsInput
+
+func (SubmarinerStatusGatewaysConnectionsArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]SubmarinerStatusGatewaysConnections)(nil)).Elem()
 }
 
-func (SubmarinerStatusGatewaysStatusArgs) ElementType() reflect.Type {
-	return reflect.TypeOf((*SubmarinerStatusGatewaysStatus)(nil)).Elem()
+func (i SubmarinerStatusGatewaysConnectionsArray) ToSubmarinerStatusGatewaysConnectionsArrayOutput() SubmarinerStatusGatewaysConnectionsArrayOutput {
+	return i.ToSubmarinerStatusGatewaysConnectionsArrayOutputWithContext(context.Background())
 }
 
-func (i SubmarinerStatusGatewaysStatusArgs) ToSubmarinerStatusGatewaysStatusOutput() SubmarinerStatusGatewaysStatusOutput {
-	return i.ToSubmarinerStatusGatewaysStatusOutputWithContext(context.Background())
+func (i SubmarinerStatusGatewaysConnectionsArray) ToSubmarinerStatusGatewaysConnectionsArrayOutputWithContext(ctx context.Context) SubmarinerStatusGatewaysConnectionsArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(SubmarinerStatusGatewaysConnectionsArrayOutput)
 }
 
-func (i SubmarinerStatusGatewaysStatusArgs) ToSubmarinerStatusGatewaysStatusOutputWithContext(ctx context.Context) SubmarinerStatusGatewaysStatusOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(SubmarinerStatusGatewaysStatusOutput)
+type SubmarinerStatusGatewaysConnectionsOutput struct{ *pulumi.OutputState }
+
+func (SubmarinerStatusGatewaysConnectionsOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*SubmarinerStatusGatewaysConnections)(nil)).Elem()
 }
 
-type SubmarinerStatusGatewaysStatusOutput struct{ *pulumi.OutputState }
-
-func (SubmarinerStatusGatewaysStatusOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*SubmarinerStatusGatewaysStatus)(nil)).Elem()
-}
-
-func (o SubmarinerStatusGatewaysStatusOutput) ToSubmarinerStatusGatewaysStatusOutput() SubmarinerStatusGatewaysStatusOutput {
+func (o SubmarinerStatusGatewaysConnectionsOutput) ToSubmarinerStatusGatewaysConnectionsOutput() SubmarinerStatusGatewaysConnectionsOutput {
 	return o
 }
 
-func (o SubmarinerStatusGatewaysStatusOutput) ToSubmarinerStatusGatewaysStatusOutputWithContext(ctx context.Context) SubmarinerStatusGatewaysStatusOutput {
+func (o SubmarinerStatusGatewaysConnectionsOutput) ToSubmarinerStatusGatewaysConnectionsOutputWithContext(ctx context.Context) SubmarinerStatusGatewaysConnectionsOutput {
 	return o
 }
 
-func (o SubmarinerStatusGatewaysStatusOutput) Connections() SubmarinerStatusGatewaysStatusConnectionsArrayOutput {
-	return o.ApplyT(func(v SubmarinerStatusGatewaysStatus) []SubmarinerStatusGatewaysStatusConnections {
-		return v.Connections
-	}).(SubmarinerStatusGatewaysStatusConnectionsArrayOutput)
-}
-
-func (o SubmarinerStatusGatewaysStatusOutput) HaStatus() pulumi.StringOutput {
-	return o.ApplyT(func(v SubmarinerStatusGatewaysStatus) string { return v.HaStatus }).(pulumi.StringOutput)
-}
-
-func (o SubmarinerStatusGatewaysStatusOutput) LocalEndpoint() SubmarinerStatusGatewaysStatusLocalEndpointOutput {
-	return o.ApplyT(func(v SubmarinerStatusGatewaysStatus) SubmarinerStatusGatewaysStatusLocalEndpoint {
-		return v.LocalEndpoint
-	}).(SubmarinerStatusGatewaysStatusLocalEndpointOutput)
-}
-
-func (o SubmarinerStatusGatewaysStatusOutput) StatusFailure() pulumi.StringOutput {
-	return o.ApplyT(func(v SubmarinerStatusGatewaysStatus) string { return v.StatusFailure }).(pulumi.StringOutput)
-}
-
-func (o SubmarinerStatusGatewaysStatusOutput) Version() pulumi.StringOutput {
-	return o.ApplyT(func(v SubmarinerStatusGatewaysStatus) string { return v.Version }).(pulumi.StringOutput)
-}
-
-type SubmarinerStatusGatewaysStatusConnections struct {
-	Endpoint      SubmarinerStatusGatewaysStatusConnectionsEndpoint `pulumi:"endpoint"`
-	Status        string                                            `pulumi:"status"`
-	StatusMessage string                                            `pulumi:"statusMessage"`
-}
-
-// SubmarinerStatusGatewaysStatusConnectionsInput is an input type that accepts SubmarinerStatusGatewaysStatusConnectionsArgs and SubmarinerStatusGatewaysStatusConnectionsOutput values.
-// You can construct a concrete instance of `SubmarinerStatusGatewaysStatusConnectionsInput` via:
-//
-//          SubmarinerStatusGatewaysStatusConnectionsArgs{...}
-type SubmarinerStatusGatewaysStatusConnectionsInput interface {
-	pulumi.Input
-
-	ToSubmarinerStatusGatewaysStatusConnectionsOutput() SubmarinerStatusGatewaysStatusConnectionsOutput
-	ToSubmarinerStatusGatewaysStatusConnectionsOutputWithContext(context.Context) SubmarinerStatusGatewaysStatusConnectionsOutput
-}
-
-type SubmarinerStatusGatewaysStatusConnectionsArgs struct {
-	Endpoint      SubmarinerStatusGatewaysStatusConnectionsEndpointInput `pulumi:"endpoint"`
-	Status        pulumi.StringInput                                     `pulumi:"status"`
-	StatusMessage pulumi.StringInput                                     `pulumi:"statusMessage"`
-}
-
-func (SubmarinerStatusGatewaysStatusConnectionsArgs) ElementType() reflect.Type {
-	return reflect.TypeOf((*SubmarinerStatusGatewaysStatusConnections)(nil)).Elem()
-}
-
-func (i SubmarinerStatusGatewaysStatusConnectionsArgs) ToSubmarinerStatusGatewaysStatusConnectionsOutput() SubmarinerStatusGatewaysStatusConnectionsOutput {
-	return i.ToSubmarinerStatusGatewaysStatusConnectionsOutputWithContext(context.Background())
-}
-
-func (i SubmarinerStatusGatewaysStatusConnectionsArgs) ToSubmarinerStatusGatewaysStatusConnectionsOutputWithContext(ctx context.Context) SubmarinerStatusGatewaysStatusConnectionsOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(SubmarinerStatusGatewaysStatusConnectionsOutput)
-}
-
-// SubmarinerStatusGatewaysStatusConnectionsArrayInput is an input type that accepts SubmarinerStatusGatewaysStatusConnectionsArray and SubmarinerStatusGatewaysStatusConnectionsArrayOutput values.
-// You can construct a concrete instance of `SubmarinerStatusGatewaysStatusConnectionsArrayInput` via:
-//
-//          SubmarinerStatusGatewaysStatusConnectionsArray{ SubmarinerStatusGatewaysStatusConnectionsArgs{...} }
-type SubmarinerStatusGatewaysStatusConnectionsArrayInput interface {
-	pulumi.Input
-
-	ToSubmarinerStatusGatewaysStatusConnectionsArrayOutput() SubmarinerStatusGatewaysStatusConnectionsArrayOutput
-	ToSubmarinerStatusGatewaysStatusConnectionsArrayOutputWithContext(context.Context) SubmarinerStatusGatewaysStatusConnectionsArrayOutput
-}
-
-type SubmarinerStatusGatewaysStatusConnectionsArray []SubmarinerStatusGatewaysStatusConnectionsInput
-
-func (SubmarinerStatusGatewaysStatusConnectionsArray) ElementType() reflect.Type {
-	return reflect.TypeOf((*[]SubmarinerStatusGatewaysStatusConnections)(nil)).Elem()
-}
-
-func (i SubmarinerStatusGatewaysStatusConnectionsArray) ToSubmarinerStatusGatewaysStatusConnectionsArrayOutput() SubmarinerStatusGatewaysStatusConnectionsArrayOutput {
-	return i.ToSubmarinerStatusGatewaysStatusConnectionsArrayOutputWithContext(context.Background())
-}
-
-func (i SubmarinerStatusGatewaysStatusConnectionsArray) ToSubmarinerStatusGatewaysStatusConnectionsArrayOutputWithContext(ctx context.Context) SubmarinerStatusGatewaysStatusConnectionsArrayOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(SubmarinerStatusGatewaysStatusConnectionsArrayOutput)
-}
-
-type SubmarinerStatusGatewaysStatusConnectionsOutput struct{ *pulumi.OutputState }
-
-func (SubmarinerStatusGatewaysStatusConnectionsOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*SubmarinerStatusGatewaysStatusConnections)(nil)).Elem()
-}
-
-func (o SubmarinerStatusGatewaysStatusConnectionsOutput) ToSubmarinerStatusGatewaysStatusConnectionsOutput() SubmarinerStatusGatewaysStatusConnectionsOutput {
-	return o
-}
-
-func (o SubmarinerStatusGatewaysStatusConnectionsOutput) ToSubmarinerStatusGatewaysStatusConnectionsOutputWithContext(ctx context.Context) SubmarinerStatusGatewaysStatusConnectionsOutput {
-	return o
-}
-
-func (o SubmarinerStatusGatewaysStatusConnectionsOutput) Endpoint() SubmarinerStatusGatewaysStatusConnectionsEndpointOutput {
-	return o.ApplyT(func(v SubmarinerStatusGatewaysStatusConnections) SubmarinerStatusGatewaysStatusConnectionsEndpoint {
+func (o SubmarinerStatusGatewaysConnectionsOutput) Endpoint() SubmarinerStatusGatewaysConnectionsEndpointOutput {
+	return o.ApplyT(func(v SubmarinerStatusGatewaysConnections) SubmarinerStatusGatewaysConnectionsEndpoint {
 		return v.Endpoint
-	}).(SubmarinerStatusGatewaysStatusConnectionsEndpointOutput)
+	}).(SubmarinerStatusGatewaysConnectionsEndpointOutput)
 }
 
-func (o SubmarinerStatusGatewaysStatusConnectionsOutput) Status() pulumi.StringOutput {
-	return o.ApplyT(func(v SubmarinerStatusGatewaysStatusConnections) string { return v.Status }).(pulumi.StringOutput)
+// LatencySpec describes the round trip time information for a packet between the gateway pods of two clusters.
+func (o SubmarinerStatusGatewaysConnectionsOutput) LatencyRTT() SubmarinerStatusGatewaysConnectionsLatencyRTTPtrOutput {
+	return o.ApplyT(func(v SubmarinerStatusGatewaysConnections) *SubmarinerStatusGatewaysConnectionsLatencyRTT {
+		return v.LatencyRTT
+	}).(SubmarinerStatusGatewaysConnectionsLatencyRTTPtrOutput)
 }
 
-func (o SubmarinerStatusGatewaysStatusConnectionsOutput) StatusMessage() pulumi.StringOutput {
-	return o.ApplyT(func(v SubmarinerStatusGatewaysStatusConnections) string { return v.StatusMessage }).(pulumi.StringOutput)
+func (o SubmarinerStatusGatewaysConnectionsOutput) Status() pulumi.StringOutput {
+	return o.ApplyT(func(v SubmarinerStatusGatewaysConnections) string { return v.Status }).(pulumi.StringOutput)
 }
 
-type SubmarinerStatusGatewaysStatusConnectionsArrayOutput struct{ *pulumi.OutputState }
-
-func (SubmarinerStatusGatewaysStatusConnectionsArrayOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*[]SubmarinerStatusGatewaysStatusConnections)(nil)).Elem()
+func (o SubmarinerStatusGatewaysConnectionsOutput) StatusMessage() pulumi.StringOutput {
+	return o.ApplyT(func(v SubmarinerStatusGatewaysConnections) string { return v.StatusMessage }).(pulumi.StringOutput)
 }
 
-func (o SubmarinerStatusGatewaysStatusConnectionsArrayOutput) ToSubmarinerStatusGatewaysStatusConnectionsArrayOutput() SubmarinerStatusGatewaysStatusConnectionsArrayOutput {
+type SubmarinerStatusGatewaysConnectionsArrayOutput struct{ *pulumi.OutputState }
+
+func (SubmarinerStatusGatewaysConnectionsArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]SubmarinerStatusGatewaysConnections)(nil)).Elem()
+}
+
+func (o SubmarinerStatusGatewaysConnectionsArrayOutput) ToSubmarinerStatusGatewaysConnectionsArrayOutput() SubmarinerStatusGatewaysConnectionsArrayOutput {
 	return o
 }
 
-func (o SubmarinerStatusGatewaysStatusConnectionsArrayOutput) ToSubmarinerStatusGatewaysStatusConnectionsArrayOutputWithContext(ctx context.Context) SubmarinerStatusGatewaysStatusConnectionsArrayOutput {
+func (o SubmarinerStatusGatewaysConnectionsArrayOutput) ToSubmarinerStatusGatewaysConnectionsArrayOutputWithContext(ctx context.Context) SubmarinerStatusGatewaysConnectionsArrayOutput {
 	return o
 }
 
-func (o SubmarinerStatusGatewaysStatusConnectionsArrayOutput) Index(i pulumi.IntInput) SubmarinerStatusGatewaysStatusConnectionsOutput {
-	return pulumi.All(o, i).ApplyT(func(vs []interface{}) SubmarinerStatusGatewaysStatusConnections {
-		return vs[0].([]SubmarinerStatusGatewaysStatusConnections)[vs[1].(int)]
-	}).(SubmarinerStatusGatewaysStatusConnectionsOutput)
+func (o SubmarinerStatusGatewaysConnectionsArrayOutput) Index(i pulumi.IntInput) SubmarinerStatusGatewaysConnectionsOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) SubmarinerStatusGatewaysConnections {
+		return vs[0].([]SubmarinerStatusGatewaysConnections)[vs[1].(int)]
+	}).(SubmarinerStatusGatewaysConnectionsOutput)
 }
 
-type SubmarinerStatusGatewaysStatusConnectionsEndpoint struct {
+type SubmarinerStatusGatewaysConnectionsEndpoint struct {
 	Backend        string            `pulumi:"backend"`
 	Backend_config map[string]string `pulumi:"backend_config"`
 	Cable_name     string            `pulumi:"cable_name"`
 	Cluster_id     string            `pulumi:"cluster_id"`
+	HealthCheckIP  *string           `pulumi:"healthCheckIP"`
 	Hostname       string            `pulumi:"hostname"`
 	Nat_enabled    bool              `pulumi:"nat_enabled"`
 	Private_ip     string            `pulumi:"private_ip"`
@@ -2079,22 +2649,23 @@ type SubmarinerStatusGatewaysStatusConnectionsEndpoint struct {
 	Subnets        []string          `pulumi:"subnets"`
 }
 
-// SubmarinerStatusGatewaysStatusConnectionsEndpointInput is an input type that accepts SubmarinerStatusGatewaysStatusConnectionsEndpointArgs and SubmarinerStatusGatewaysStatusConnectionsEndpointOutput values.
-// You can construct a concrete instance of `SubmarinerStatusGatewaysStatusConnectionsEndpointInput` via:
+// SubmarinerStatusGatewaysConnectionsEndpointInput is an input type that accepts SubmarinerStatusGatewaysConnectionsEndpointArgs and SubmarinerStatusGatewaysConnectionsEndpointOutput values.
+// You can construct a concrete instance of `SubmarinerStatusGatewaysConnectionsEndpointInput` via:
 //
-//          SubmarinerStatusGatewaysStatusConnectionsEndpointArgs{...}
-type SubmarinerStatusGatewaysStatusConnectionsEndpointInput interface {
+//          SubmarinerStatusGatewaysConnectionsEndpointArgs{...}
+type SubmarinerStatusGatewaysConnectionsEndpointInput interface {
 	pulumi.Input
 
-	ToSubmarinerStatusGatewaysStatusConnectionsEndpointOutput() SubmarinerStatusGatewaysStatusConnectionsEndpointOutput
-	ToSubmarinerStatusGatewaysStatusConnectionsEndpointOutputWithContext(context.Context) SubmarinerStatusGatewaysStatusConnectionsEndpointOutput
+	ToSubmarinerStatusGatewaysConnectionsEndpointOutput() SubmarinerStatusGatewaysConnectionsEndpointOutput
+	ToSubmarinerStatusGatewaysConnectionsEndpointOutputWithContext(context.Context) SubmarinerStatusGatewaysConnectionsEndpointOutput
 }
 
-type SubmarinerStatusGatewaysStatusConnectionsEndpointArgs struct {
+type SubmarinerStatusGatewaysConnectionsEndpointArgs struct {
 	Backend        pulumi.StringInput      `pulumi:"backend"`
 	Backend_config pulumi.StringMapInput   `pulumi:"backend_config"`
 	Cable_name     pulumi.StringInput      `pulumi:"cable_name"`
 	Cluster_id     pulumi.StringInput      `pulumi:"cluster_id"`
+	HealthCheckIP  pulumi.StringPtrInput   `pulumi:"healthCheckIP"`
 	Hostname       pulumi.StringInput      `pulumi:"hostname"`
 	Nat_enabled    pulumi.BoolInput        `pulumi:"nat_enabled"`
 	Private_ip     pulumi.StringInput      `pulumi:"private_ip"`
@@ -2102,116 +2673,312 @@ type SubmarinerStatusGatewaysStatusConnectionsEndpointArgs struct {
 	Subnets        pulumi.StringArrayInput `pulumi:"subnets"`
 }
 
-func (SubmarinerStatusGatewaysStatusConnectionsEndpointArgs) ElementType() reflect.Type {
-	return reflect.TypeOf((*SubmarinerStatusGatewaysStatusConnectionsEndpoint)(nil)).Elem()
+func (SubmarinerStatusGatewaysConnectionsEndpointArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*SubmarinerStatusGatewaysConnectionsEndpoint)(nil)).Elem()
 }
 
-func (i SubmarinerStatusGatewaysStatusConnectionsEndpointArgs) ToSubmarinerStatusGatewaysStatusConnectionsEndpointOutput() SubmarinerStatusGatewaysStatusConnectionsEndpointOutput {
-	return i.ToSubmarinerStatusGatewaysStatusConnectionsEndpointOutputWithContext(context.Background())
+func (i SubmarinerStatusGatewaysConnectionsEndpointArgs) ToSubmarinerStatusGatewaysConnectionsEndpointOutput() SubmarinerStatusGatewaysConnectionsEndpointOutput {
+	return i.ToSubmarinerStatusGatewaysConnectionsEndpointOutputWithContext(context.Background())
 }
 
-func (i SubmarinerStatusGatewaysStatusConnectionsEndpointArgs) ToSubmarinerStatusGatewaysStatusConnectionsEndpointOutputWithContext(ctx context.Context) SubmarinerStatusGatewaysStatusConnectionsEndpointOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(SubmarinerStatusGatewaysStatusConnectionsEndpointOutput)
+func (i SubmarinerStatusGatewaysConnectionsEndpointArgs) ToSubmarinerStatusGatewaysConnectionsEndpointOutputWithContext(ctx context.Context) SubmarinerStatusGatewaysConnectionsEndpointOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(SubmarinerStatusGatewaysConnectionsEndpointOutput)
 }
 
-type SubmarinerStatusGatewaysStatusConnectionsEndpointOutput struct{ *pulumi.OutputState }
+type SubmarinerStatusGatewaysConnectionsEndpointOutput struct{ *pulumi.OutputState }
 
-func (SubmarinerStatusGatewaysStatusConnectionsEndpointOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*SubmarinerStatusGatewaysStatusConnectionsEndpoint)(nil)).Elem()
+func (SubmarinerStatusGatewaysConnectionsEndpointOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*SubmarinerStatusGatewaysConnectionsEndpoint)(nil)).Elem()
 }
 
-func (o SubmarinerStatusGatewaysStatusConnectionsEndpointOutput) ToSubmarinerStatusGatewaysStatusConnectionsEndpointOutput() SubmarinerStatusGatewaysStatusConnectionsEndpointOutput {
+func (o SubmarinerStatusGatewaysConnectionsEndpointOutput) ToSubmarinerStatusGatewaysConnectionsEndpointOutput() SubmarinerStatusGatewaysConnectionsEndpointOutput {
 	return o
 }
 
-func (o SubmarinerStatusGatewaysStatusConnectionsEndpointOutput) ToSubmarinerStatusGatewaysStatusConnectionsEndpointOutputWithContext(ctx context.Context) SubmarinerStatusGatewaysStatusConnectionsEndpointOutput {
+func (o SubmarinerStatusGatewaysConnectionsEndpointOutput) ToSubmarinerStatusGatewaysConnectionsEndpointOutputWithContext(ctx context.Context) SubmarinerStatusGatewaysConnectionsEndpointOutput {
 	return o
 }
 
-func (o SubmarinerStatusGatewaysStatusConnectionsEndpointOutput) Backend() pulumi.StringOutput {
-	return o.ApplyT(func(v SubmarinerStatusGatewaysStatusConnectionsEndpoint) string { return v.Backend }).(pulumi.StringOutput)
+func (o SubmarinerStatusGatewaysConnectionsEndpointOutput) Backend() pulumi.StringOutput {
+	return o.ApplyT(func(v SubmarinerStatusGatewaysConnectionsEndpoint) string { return v.Backend }).(pulumi.StringOutput)
 }
 
-func (o SubmarinerStatusGatewaysStatusConnectionsEndpointOutput) Backend_config() pulumi.StringMapOutput {
-	return o.ApplyT(func(v SubmarinerStatusGatewaysStatusConnectionsEndpoint) map[string]string { return v.Backend_config }).(pulumi.StringMapOutput)
+func (o SubmarinerStatusGatewaysConnectionsEndpointOutput) Backend_config() pulumi.StringMapOutput {
+	return o.ApplyT(func(v SubmarinerStatusGatewaysConnectionsEndpoint) map[string]string { return v.Backend_config }).(pulumi.StringMapOutput)
 }
 
-func (o SubmarinerStatusGatewaysStatusConnectionsEndpointOutput) Cable_name() pulumi.StringOutput {
-	return o.ApplyT(func(v SubmarinerStatusGatewaysStatusConnectionsEndpoint) string { return v.Cable_name }).(pulumi.StringOutput)
+func (o SubmarinerStatusGatewaysConnectionsEndpointOutput) Cable_name() pulumi.StringOutput {
+	return o.ApplyT(func(v SubmarinerStatusGatewaysConnectionsEndpoint) string { return v.Cable_name }).(pulumi.StringOutput)
 }
 
-func (o SubmarinerStatusGatewaysStatusConnectionsEndpointOutput) Cluster_id() pulumi.StringOutput {
-	return o.ApplyT(func(v SubmarinerStatusGatewaysStatusConnectionsEndpoint) string { return v.Cluster_id }).(pulumi.StringOutput)
+func (o SubmarinerStatusGatewaysConnectionsEndpointOutput) Cluster_id() pulumi.StringOutput {
+	return o.ApplyT(func(v SubmarinerStatusGatewaysConnectionsEndpoint) string { return v.Cluster_id }).(pulumi.StringOutput)
 }
 
-func (o SubmarinerStatusGatewaysStatusConnectionsEndpointOutput) Hostname() pulumi.StringOutput {
-	return o.ApplyT(func(v SubmarinerStatusGatewaysStatusConnectionsEndpoint) string { return v.Hostname }).(pulumi.StringOutput)
+func (o SubmarinerStatusGatewaysConnectionsEndpointOutput) HealthCheckIP() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v SubmarinerStatusGatewaysConnectionsEndpoint) *string { return v.HealthCheckIP }).(pulumi.StringPtrOutput)
 }
 
-func (o SubmarinerStatusGatewaysStatusConnectionsEndpointOutput) Nat_enabled() pulumi.BoolOutput {
-	return o.ApplyT(func(v SubmarinerStatusGatewaysStatusConnectionsEndpoint) bool { return v.Nat_enabled }).(pulumi.BoolOutput)
+func (o SubmarinerStatusGatewaysConnectionsEndpointOutput) Hostname() pulumi.StringOutput {
+	return o.ApplyT(func(v SubmarinerStatusGatewaysConnectionsEndpoint) string { return v.Hostname }).(pulumi.StringOutput)
 }
 
-func (o SubmarinerStatusGatewaysStatusConnectionsEndpointOutput) Private_ip() pulumi.StringOutput {
-	return o.ApplyT(func(v SubmarinerStatusGatewaysStatusConnectionsEndpoint) string { return v.Private_ip }).(pulumi.StringOutput)
+func (o SubmarinerStatusGatewaysConnectionsEndpointOutput) Nat_enabled() pulumi.BoolOutput {
+	return o.ApplyT(func(v SubmarinerStatusGatewaysConnectionsEndpoint) bool { return v.Nat_enabled }).(pulumi.BoolOutput)
 }
 
-func (o SubmarinerStatusGatewaysStatusConnectionsEndpointOutput) Public_ip() pulumi.StringOutput {
-	return o.ApplyT(func(v SubmarinerStatusGatewaysStatusConnectionsEndpoint) string { return v.Public_ip }).(pulumi.StringOutput)
+func (o SubmarinerStatusGatewaysConnectionsEndpointOutput) Private_ip() pulumi.StringOutput {
+	return o.ApplyT(func(v SubmarinerStatusGatewaysConnectionsEndpoint) string { return v.Private_ip }).(pulumi.StringOutput)
 }
 
-func (o SubmarinerStatusGatewaysStatusConnectionsEndpointOutput) Subnets() pulumi.StringArrayOutput {
-	return o.ApplyT(func(v SubmarinerStatusGatewaysStatusConnectionsEndpoint) []string { return v.Subnets }).(pulumi.StringArrayOutput)
+func (o SubmarinerStatusGatewaysConnectionsEndpointOutput) Public_ip() pulumi.StringOutput {
+	return o.ApplyT(func(v SubmarinerStatusGatewaysConnectionsEndpoint) string { return v.Public_ip }).(pulumi.StringOutput)
 }
 
-type SubmarinerStatusGatewaysStatusConnectionsEndpointBackend_config struct {
+func (o SubmarinerStatusGatewaysConnectionsEndpointOutput) Subnets() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v SubmarinerStatusGatewaysConnectionsEndpoint) []string { return v.Subnets }).(pulumi.StringArrayOutput)
 }
 
-// SubmarinerStatusGatewaysStatusConnectionsEndpointBackend_configInput is an input type that accepts SubmarinerStatusGatewaysStatusConnectionsEndpointBackend_configArgs and SubmarinerStatusGatewaysStatusConnectionsEndpointBackend_configOutput values.
-// You can construct a concrete instance of `SubmarinerStatusGatewaysStatusConnectionsEndpointBackend_configInput` via:
+type SubmarinerStatusGatewaysConnectionsEndpointBackend_config struct {
+}
+
+// SubmarinerStatusGatewaysConnectionsEndpointBackend_configInput is an input type that accepts SubmarinerStatusGatewaysConnectionsEndpointBackend_configArgs and SubmarinerStatusGatewaysConnectionsEndpointBackend_configOutput values.
+// You can construct a concrete instance of `SubmarinerStatusGatewaysConnectionsEndpointBackend_configInput` via:
 //
-//          SubmarinerStatusGatewaysStatusConnectionsEndpointBackend_configArgs{...}
-type SubmarinerStatusGatewaysStatusConnectionsEndpointBackend_configInput interface {
+//          SubmarinerStatusGatewaysConnectionsEndpointBackend_configArgs{...}
+type SubmarinerStatusGatewaysConnectionsEndpointBackend_configInput interface {
 	pulumi.Input
 
-	ToSubmarinerStatusGatewaysStatusConnectionsEndpointBackend_configOutput() SubmarinerStatusGatewaysStatusConnectionsEndpointBackend_configOutput
-	ToSubmarinerStatusGatewaysStatusConnectionsEndpointBackend_configOutputWithContext(context.Context) SubmarinerStatusGatewaysStatusConnectionsEndpointBackend_configOutput
+	ToSubmarinerStatusGatewaysConnectionsEndpointBackend_configOutput() SubmarinerStatusGatewaysConnectionsEndpointBackend_configOutput
+	ToSubmarinerStatusGatewaysConnectionsEndpointBackend_configOutputWithContext(context.Context) SubmarinerStatusGatewaysConnectionsEndpointBackend_configOutput
 }
 
-type SubmarinerStatusGatewaysStatusConnectionsEndpointBackend_configArgs struct {
+type SubmarinerStatusGatewaysConnectionsEndpointBackend_configArgs struct {
 }
 
-func (SubmarinerStatusGatewaysStatusConnectionsEndpointBackend_configArgs) ElementType() reflect.Type {
-	return reflect.TypeOf((*SubmarinerStatusGatewaysStatusConnectionsEndpointBackend_config)(nil)).Elem()
+func (SubmarinerStatusGatewaysConnectionsEndpointBackend_configArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*SubmarinerStatusGatewaysConnectionsEndpointBackend_config)(nil)).Elem()
 }
 
-func (i SubmarinerStatusGatewaysStatusConnectionsEndpointBackend_configArgs) ToSubmarinerStatusGatewaysStatusConnectionsEndpointBackend_configOutput() SubmarinerStatusGatewaysStatusConnectionsEndpointBackend_configOutput {
-	return i.ToSubmarinerStatusGatewaysStatusConnectionsEndpointBackend_configOutputWithContext(context.Background())
+func (i SubmarinerStatusGatewaysConnectionsEndpointBackend_configArgs) ToSubmarinerStatusGatewaysConnectionsEndpointBackend_configOutput() SubmarinerStatusGatewaysConnectionsEndpointBackend_configOutput {
+	return i.ToSubmarinerStatusGatewaysConnectionsEndpointBackend_configOutputWithContext(context.Background())
 }
 
-func (i SubmarinerStatusGatewaysStatusConnectionsEndpointBackend_configArgs) ToSubmarinerStatusGatewaysStatusConnectionsEndpointBackend_configOutputWithContext(ctx context.Context) SubmarinerStatusGatewaysStatusConnectionsEndpointBackend_configOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(SubmarinerStatusGatewaysStatusConnectionsEndpointBackend_configOutput)
+func (i SubmarinerStatusGatewaysConnectionsEndpointBackend_configArgs) ToSubmarinerStatusGatewaysConnectionsEndpointBackend_configOutputWithContext(ctx context.Context) SubmarinerStatusGatewaysConnectionsEndpointBackend_configOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(SubmarinerStatusGatewaysConnectionsEndpointBackend_configOutput)
 }
 
-type SubmarinerStatusGatewaysStatusConnectionsEndpointBackend_configOutput struct{ *pulumi.OutputState }
+type SubmarinerStatusGatewaysConnectionsEndpointBackend_configOutput struct{ *pulumi.OutputState }
 
-func (SubmarinerStatusGatewaysStatusConnectionsEndpointBackend_configOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*SubmarinerStatusGatewaysStatusConnectionsEndpointBackend_config)(nil)).Elem()
+func (SubmarinerStatusGatewaysConnectionsEndpointBackend_configOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*SubmarinerStatusGatewaysConnectionsEndpointBackend_config)(nil)).Elem()
 }
 
-func (o SubmarinerStatusGatewaysStatusConnectionsEndpointBackend_configOutput) ToSubmarinerStatusGatewaysStatusConnectionsEndpointBackend_configOutput() SubmarinerStatusGatewaysStatusConnectionsEndpointBackend_configOutput {
+func (o SubmarinerStatusGatewaysConnectionsEndpointBackend_configOutput) ToSubmarinerStatusGatewaysConnectionsEndpointBackend_configOutput() SubmarinerStatusGatewaysConnectionsEndpointBackend_configOutput {
 	return o
 }
 
-func (o SubmarinerStatusGatewaysStatusConnectionsEndpointBackend_configOutput) ToSubmarinerStatusGatewaysStatusConnectionsEndpointBackend_configOutputWithContext(ctx context.Context) SubmarinerStatusGatewaysStatusConnectionsEndpointBackend_configOutput {
+func (o SubmarinerStatusGatewaysConnectionsEndpointBackend_configOutput) ToSubmarinerStatusGatewaysConnectionsEndpointBackend_configOutputWithContext(ctx context.Context) SubmarinerStatusGatewaysConnectionsEndpointBackend_configOutput {
 	return o
 }
 
-type SubmarinerStatusGatewaysStatusLocalEndpoint struct {
+// LatencySpec describes the round trip time information for a packet between the gateway pods of two clusters.
+type SubmarinerStatusGatewaysConnectionsLatencyRTT struct {
+	Average *string `pulumi:"average"`
+	Last    *string `pulumi:"last"`
+	Max     *string `pulumi:"max"`
+	Min     *string `pulumi:"min"`
+	StdDev  *string `pulumi:"stdDev"`
+}
+
+// SubmarinerStatusGatewaysConnectionsLatencyRTTInput is an input type that accepts SubmarinerStatusGatewaysConnectionsLatencyRTTArgs and SubmarinerStatusGatewaysConnectionsLatencyRTTOutput values.
+// You can construct a concrete instance of `SubmarinerStatusGatewaysConnectionsLatencyRTTInput` via:
+//
+//          SubmarinerStatusGatewaysConnectionsLatencyRTTArgs{...}
+type SubmarinerStatusGatewaysConnectionsLatencyRTTInput interface {
+	pulumi.Input
+
+	ToSubmarinerStatusGatewaysConnectionsLatencyRTTOutput() SubmarinerStatusGatewaysConnectionsLatencyRTTOutput
+	ToSubmarinerStatusGatewaysConnectionsLatencyRTTOutputWithContext(context.Context) SubmarinerStatusGatewaysConnectionsLatencyRTTOutput
+}
+
+// LatencySpec describes the round trip time information for a packet between the gateway pods of two clusters.
+type SubmarinerStatusGatewaysConnectionsLatencyRTTArgs struct {
+	Average pulumi.StringPtrInput `pulumi:"average"`
+	Last    pulumi.StringPtrInput `pulumi:"last"`
+	Max     pulumi.StringPtrInput `pulumi:"max"`
+	Min     pulumi.StringPtrInput `pulumi:"min"`
+	StdDev  pulumi.StringPtrInput `pulumi:"stdDev"`
+}
+
+func (SubmarinerStatusGatewaysConnectionsLatencyRTTArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*SubmarinerStatusGatewaysConnectionsLatencyRTT)(nil)).Elem()
+}
+
+func (i SubmarinerStatusGatewaysConnectionsLatencyRTTArgs) ToSubmarinerStatusGatewaysConnectionsLatencyRTTOutput() SubmarinerStatusGatewaysConnectionsLatencyRTTOutput {
+	return i.ToSubmarinerStatusGatewaysConnectionsLatencyRTTOutputWithContext(context.Background())
+}
+
+func (i SubmarinerStatusGatewaysConnectionsLatencyRTTArgs) ToSubmarinerStatusGatewaysConnectionsLatencyRTTOutputWithContext(ctx context.Context) SubmarinerStatusGatewaysConnectionsLatencyRTTOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(SubmarinerStatusGatewaysConnectionsLatencyRTTOutput)
+}
+
+func (i SubmarinerStatusGatewaysConnectionsLatencyRTTArgs) ToSubmarinerStatusGatewaysConnectionsLatencyRTTPtrOutput() SubmarinerStatusGatewaysConnectionsLatencyRTTPtrOutput {
+	return i.ToSubmarinerStatusGatewaysConnectionsLatencyRTTPtrOutputWithContext(context.Background())
+}
+
+func (i SubmarinerStatusGatewaysConnectionsLatencyRTTArgs) ToSubmarinerStatusGatewaysConnectionsLatencyRTTPtrOutputWithContext(ctx context.Context) SubmarinerStatusGatewaysConnectionsLatencyRTTPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(SubmarinerStatusGatewaysConnectionsLatencyRTTOutput).ToSubmarinerStatusGatewaysConnectionsLatencyRTTPtrOutputWithContext(ctx)
+}
+
+// SubmarinerStatusGatewaysConnectionsLatencyRTTPtrInput is an input type that accepts SubmarinerStatusGatewaysConnectionsLatencyRTTArgs, SubmarinerStatusGatewaysConnectionsLatencyRTTPtr and SubmarinerStatusGatewaysConnectionsLatencyRTTPtrOutput values.
+// You can construct a concrete instance of `SubmarinerStatusGatewaysConnectionsLatencyRTTPtrInput` via:
+//
+//          SubmarinerStatusGatewaysConnectionsLatencyRTTArgs{...}
+//
+//  or:
+//
+//          nil
+type SubmarinerStatusGatewaysConnectionsLatencyRTTPtrInput interface {
+	pulumi.Input
+
+	ToSubmarinerStatusGatewaysConnectionsLatencyRTTPtrOutput() SubmarinerStatusGatewaysConnectionsLatencyRTTPtrOutput
+	ToSubmarinerStatusGatewaysConnectionsLatencyRTTPtrOutputWithContext(context.Context) SubmarinerStatusGatewaysConnectionsLatencyRTTPtrOutput
+}
+
+type submarinerStatusGatewaysConnectionsLatencyRTTPtrType SubmarinerStatusGatewaysConnectionsLatencyRTTArgs
+
+func SubmarinerStatusGatewaysConnectionsLatencyRTTPtr(v *SubmarinerStatusGatewaysConnectionsLatencyRTTArgs) SubmarinerStatusGatewaysConnectionsLatencyRTTPtrInput {
+	return (*submarinerStatusGatewaysConnectionsLatencyRTTPtrType)(v)
+}
+
+func (*submarinerStatusGatewaysConnectionsLatencyRTTPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**SubmarinerStatusGatewaysConnectionsLatencyRTT)(nil)).Elem()
+}
+
+func (i *submarinerStatusGatewaysConnectionsLatencyRTTPtrType) ToSubmarinerStatusGatewaysConnectionsLatencyRTTPtrOutput() SubmarinerStatusGatewaysConnectionsLatencyRTTPtrOutput {
+	return i.ToSubmarinerStatusGatewaysConnectionsLatencyRTTPtrOutputWithContext(context.Background())
+}
+
+func (i *submarinerStatusGatewaysConnectionsLatencyRTTPtrType) ToSubmarinerStatusGatewaysConnectionsLatencyRTTPtrOutputWithContext(ctx context.Context) SubmarinerStatusGatewaysConnectionsLatencyRTTPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(SubmarinerStatusGatewaysConnectionsLatencyRTTPtrOutput)
+}
+
+// LatencySpec describes the round trip time information for a packet between the gateway pods of two clusters.
+type SubmarinerStatusGatewaysConnectionsLatencyRTTOutput struct{ *pulumi.OutputState }
+
+func (SubmarinerStatusGatewaysConnectionsLatencyRTTOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*SubmarinerStatusGatewaysConnectionsLatencyRTT)(nil)).Elem()
+}
+
+func (o SubmarinerStatusGatewaysConnectionsLatencyRTTOutput) ToSubmarinerStatusGatewaysConnectionsLatencyRTTOutput() SubmarinerStatusGatewaysConnectionsLatencyRTTOutput {
+	return o
+}
+
+func (o SubmarinerStatusGatewaysConnectionsLatencyRTTOutput) ToSubmarinerStatusGatewaysConnectionsLatencyRTTOutputWithContext(ctx context.Context) SubmarinerStatusGatewaysConnectionsLatencyRTTOutput {
+	return o
+}
+
+func (o SubmarinerStatusGatewaysConnectionsLatencyRTTOutput) ToSubmarinerStatusGatewaysConnectionsLatencyRTTPtrOutput() SubmarinerStatusGatewaysConnectionsLatencyRTTPtrOutput {
+	return o.ToSubmarinerStatusGatewaysConnectionsLatencyRTTPtrOutputWithContext(context.Background())
+}
+
+func (o SubmarinerStatusGatewaysConnectionsLatencyRTTOutput) ToSubmarinerStatusGatewaysConnectionsLatencyRTTPtrOutputWithContext(ctx context.Context) SubmarinerStatusGatewaysConnectionsLatencyRTTPtrOutput {
+	return o.ApplyT(func(v SubmarinerStatusGatewaysConnectionsLatencyRTT) *SubmarinerStatusGatewaysConnectionsLatencyRTT {
+		return &v
+	}).(SubmarinerStatusGatewaysConnectionsLatencyRTTPtrOutput)
+}
+func (o SubmarinerStatusGatewaysConnectionsLatencyRTTOutput) Average() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v SubmarinerStatusGatewaysConnectionsLatencyRTT) *string { return v.Average }).(pulumi.StringPtrOutput)
+}
+
+func (o SubmarinerStatusGatewaysConnectionsLatencyRTTOutput) Last() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v SubmarinerStatusGatewaysConnectionsLatencyRTT) *string { return v.Last }).(pulumi.StringPtrOutput)
+}
+
+func (o SubmarinerStatusGatewaysConnectionsLatencyRTTOutput) Max() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v SubmarinerStatusGatewaysConnectionsLatencyRTT) *string { return v.Max }).(pulumi.StringPtrOutput)
+}
+
+func (o SubmarinerStatusGatewaysConnectionsLatencyRTTOutput) Min() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v SubmarinerStatusGatewaysConnectionsLatencyRTT) *string { return v.Min }).(pulumi.StringPtrOutput)
+}
+
+func (o SubmarinerStatusGatewaysConnectionsLatencyRTTOutput) StdDev() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v SubmarinerStatusGatewaysConnectionsLatencyRTT) *string { return v.StdDev }).(pulumi.StringPtrOutput)
+}
+
+type SubmarinerStatusGatewaysConnectionsLatencyRTTPtrOutput struct{ *pulumi.OutputState }
+
+func (SubmarinerStatusGatewaysConnectionsLatencyRTTPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**SubmarinerStatusGatewaysConnectionsLatencyRTT)(nil)).Elem()
+}
+
+func (o SubmarinerStatusGatewaysConnectionsLatencyRTTPtrOutput) ToSubmarinerStatusGatewaysConnectionsLatencyRTTPtrOutput() SubmarinerStatusGatewaysConnectionsLatencyRTTPtrOutput {
+	return o
+}
+
+func (o SubmarinerStatusGatewaysConnectionsLatencyRTTPtrOutput) ToSubmarinerStatusGatewaysConnectionsLatencyRTTPtrOutputWithContext(ctx context.Context) SubmarinerStatusGatewaysConnectionsLatencyRTTPtrOutput {
+	return o
+}
+
+func (o SubmarinerStatusGatewaysConnectionsLatencyRTTPtrOutput) Elem() SubmarinerStatusGatewaysConnectionsLatencyRTTOutput {
+	return o.ApplyT(func(v *SubmarinerStatusGatewaysConnectionsLatencyRTT) SubmarinerStatusGatewaysConnectionsLatencyRTT {
+		return *v
+	}).(SubmarinerStatusGatewaysConnectionsLatencyRTTOutput)
+}
+
+func (o SubmarinerStatusGatewaysConnectionsLatencyRTTPtrOutput) Average() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *SubmarinerStatusGatewaysConnectionsLatencyRTT) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Average
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o SubmarinerStatusGatewaysConnectionsLatencyRTTPtrOutput) Last() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *SubmarinerStatusGatewaysConnectionsLatencyRTT) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Last
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o SubmarinerStatusGatewaysConnectionsLatencyRTTPtrOutput) Max() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *SubmarinerStatusGatewaysConnectionsLatencyRTT) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Max
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o SubmarinerStatusGatewaysConnectionsLatencyRTTPtrOutput) Min() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *SubmarinerStatusGatewaysConnectionsLatencyRTT) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Min
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o SubmarinerStatusGatewaysConnectionsLatencyRTTPtrOutput) StdDev() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *SubmarinerStatusGatewaysConnectionsLatencyRTT) *string {
+		if v == nil {
+			return nil
+		}
+		return v.StdDev
+	}).(pulumi.StringPtrOutput)
+}
+
+type SubmarinerStatusGatewaysLocalEndpoint struct {
 	Backend        string            `pulumi:"backend"`
 	Backend_config map[string]string `pulumi:"backend_config"`
 	Cable_name     string            `pulumi:"cable_name"`
 	Cluster_id     string            `pulumi:"cluster_id"`
+	HealthCheckIP  *string           `pulumi:"healthCheckIP"`
 	Hostname       string            `pulumi:"hostname"`
 	Nat_enabled    bool              `pulumi:"nat_enabled"`
 	Private_ip     string            `pulumi:"private_ip"`
@@ -2219,22 +2986,23 @@ type SubmarinerStatusGatewaysStatusLocalEndpoint struct {
 	Subnets        []string          `pulumi:"subnets"`
 }
 
-// SubmarinerStatusGatewaysStatusLocalEndpointInput is an input type that accepts SubmarinerStatusGatewaysStatusLocalEndpointArgs and SubmarinerStatusGatewaysStatusLocalEndpointOutput values.
-// You can construct a concrete instance of `SubmarinerStatusGatewaysStatusLocalEndpointInput` via:
+// SubmarinerStatusGatewaysLocalEndpointInput is an input type that accepts SubmarinerStatusGatewaysLocalEndpointArgs and SubmarinerStatusGatewaysLocalEndpointOutput values.
+// You can construct a concrete instance of `SubmarinerStatusGatewaysLocalEndpointInput` via:
 //
-//          SubmarinerStatusGatewaysStatusLocalEndpointArgs{...}
-type SubmarinerStatusGatewaysStatusLocalEndpointInput interface {
+//          SubmarinerStatusGatewaysLocalEndpointArgs{...}
+type SubmarinerStatusGatewaysLocalEndpointInput interface {
 	pulumi.Input
 
-	ToSubmarinerStatusGatewaysStatusLocalEndpointOutput() SubmarinerStatusGatewaysStatusLocalEndpointOutput
-	ToSubmarinerStatusGatewaysStatusLocalEndpointOutputWithContext(context.Context) SubmarinerStatusGatewaysStatusLocalEndpointOutput
+	ToSubmarinerStatusGatewaysLocalEndpointOutput() SubmarinerStatusGatewaysLocalEndpointOutput
+	ToSubmarinerStatusGatewaysLocalEndpointOutputWithContext(context.Context) SubmarinerStatusGatewaysLocalEndpointOutput
 }
 
-type SubmarinerStatusGatewaysStatusLocalEndpointArgs struct {
+type SubmarinerStatusGatewaysLocalEndpointArgs struct {
 	Backend        pulumi.StringInput      `pulumi:"backend"`
 	Backend_config pulumi.StringMapInput   `pulumi:"backend_config"`
 	Cable_name     pulumi.StringInput      `pulumi:"cable_name"`
 	Cluster_id     pulumi.StringInput      `pulumi:"cluster_id"`
+	HealthCheckIP  pulumi.StringPtrInput   `pulumi:"healthCheckIP"`
 	Hostname       pulumi.StringInput      `pulumi:"hostname"`
 	Nat_enabled    pulumi.BoolInput        `pulumi:"nat_enabled"`
 	Private_ip     pulumi.StringInput      `pulumi:"private_ip"`
@@ -2242,133 +3010,121 @@ type SubmarinerStatusGatewaysStatusLocalEndpointArgs struct {
 	Subnets        pulumi.StringArrayInput `pulumi:"subnets"`
 }
 
-func (SubmarinerStatusGatewaysStatusLocalEndpointArgs) ElementType() reflect.Type {
-	return reflect.TypeOf((*SubmarinerStatusGatewaysStatusLocalEndpoint)(nil)).Elem()
+func (SubmarinerStatusGatewaysLocalEndpointArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*SubmarinerStatusGatewaysLocalEndpoint)(nil)).Elem()
 }
 
-func (i SubmarinerStatusGatewaysStatusLocalEndpointArgs) ToSubmarinerStatusGatewaysStatusLocalEndpointOutput() SubmarinerStatusGatewaysStatusLocalEndpointOutput {
-	return i.ToSubmarinerStatusGatewaysStatusLocalEndpointOutputWithContext(context.Background())
+func (i SubmarinerStatusGatewaysLocalEndpointArgs) ToSubmarinerStatusGatewaysLocalEndpointOutput() SubmarinerStatusGatewaysLocalEndpointOutput {
+	return i.ToSubmarinerStatusGatewaysLocalEndpointOutputWithContext(context.Background())
 }
 
-func (i SubmarinerStatusGatewaysStatusLocalEndpointArgs) ToSubmarinerStatusGatewaysStatusLocalEndpointOutputWithContext(ctx context.Context) SubmarinerStatusGatewaysStatusLocalEndpointOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(SubmarinerStatusGatewaysStatusLocalEndpointOutput)
+func (i SubmarinerStatusGatewaysLocalEndpointArgs) ToSubmarinerStatusGatewaysLocalEndpointOutputWithContext(ctx context.Context) SubmarinerStatusGatewaysLocalEndpointOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(SubmarinerStatusGatewaysLocalEndpointOutput)
 }
 
-type SubmarinerStatusGatewaysStatusLocalEndpointOutput struct{ *pulumi.OutputState }
+type SubmarinerStatusGatewaysLocalEndpointOutput struct{ *pulumi.OutputState }
 
-func (SubmarinerStatusGatewaysStatusLocalEndpointOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*SubmarinerStatusGatewaysStatusLocalEndpoint)(nil)).Elem()
+func (SubmarinerStatusGatewaysLocalEndpointOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*SubmarinerStatusGatewaysLocalEndpoint)(nil)).Elem()
 }
 
-func (o SubmarinerStatusGatewaysStatusLocalEndpointOutput) ToSubmarinerStatusGatewaysStatusLocalEndpointOutput() SubmarinerStatusGatewaysStatusLocalEndpointOutput {
+func (o SubmarinerStatusGatewaysLocalEndpointOutput) ToSubmarinerStatusGatewaysLocalEndpointOutput() SubmarinerStatusGatewaysLocalEndpointOutput {
 	return o
 }
 
-func (o SubmarinerStatusGatewaysStatusLocalEndpointOutput) ToSubmarinerStatusGatewaysStatusLocalEndpointOutputWithContext(ctx context.Context) SubmarinerStatusGatewaysStatusLocalEndpointOutput {
+func (o SubmarinerStatusGatewaysLocalEndpointOutput) ToSubmarinerStatusGatewaysLocalEndpointOutputWithContext(ctx context.Context) SubmarinerStatusGatewaysLocalEndpointOutput {
 	return o
 }
 
-func (o SubmarinerStatusGatewaysStatusLocalEndpointOutput) Backend() pulumi.StringOutput {
-	return o.ApplyT(func(v SubmarinerStatusGatewaysStatusLocalEndpoint) string { return v.Backend }).(pulumi.StringOutput)
+func (o SubmarinerStatusGatewaysLocalEndpointOutput) Backend() pulumi.StringOutput {
+	return o.ApplyT(func(v SubmarinerStatusGatewaysLocalEndpoint) string { return v.Backend }).(pulumi.StringOutput)
 }
 
-func (o SubmarinerStatusGatewaysStatusLocalEndpointOutput) Backend_config() pulumi.StringMapOutput {
-	return o.ApplyT(func(v SubmarinerStatusGatewaysStatusLocalEndpoint) map[string]string { return v.Backend_config }).(pulumi.StringMapOutput)
+func (o SubmarinerStatusGatewaysLocalEndpointOutput) Backend_config() pulumi.StringMapOutput {
+	return o.ApplyT(func(v SubmarinerStatusGatewaysLocalEndpoint) map[string]string { return v.Backend_config }).(pulumi.StringMapOutput)
 }
 
-func (o SubmarinerStatusGatewaysStatusLocalEndpointOutput) Cable_name() pulumi.StringOutput {
-	return o.ApplyT(func(v SubmarinerStatusGatewaysStatusLocalEndpoint) string { return v.Cable_name }).(pulumi.StringOutput)
+func (o SubmarinerStatusGatewaysLocalEndpointOutput) Cable_name() pulumi.StringOutput {
+	return o.ApplyT(func(v SubmarinerStatusGatewaysLocalEndpoint) string { return v.Cable_name }).(pulumi.StringOutput)
 }
 
-func (o SubmarinerStatusGatewaysStatusLocalEndpointOutput) Cluster_id() pulumi.StringOutput {
-	return o.ApplyT(func(v SubmarinerStatusGatewaysStatusLocalEndpoint) string { return v.Cluster_id }).(pulumi.StringOutput)
+func (o SubmarinerStatusGatewaysLocalEndpointOutput) Cluster_id() pulumi.StringOutput {
+	return o.ApplyT(func(v SubmarinerStatusGatewaysLocalEndpoint) string { return v.Cluster_id }).(pulumi.StringOutput)
 }
 
-func (o SubmarinerStatusGatewaysStatusLocalEndpointOutput) Hostname() pulumi.StringOutput {
-	return o.ApplyT(func(v SubmarinerStatusGatewaysStatusLocalEndpoint) string { return v.Hostname }).(pulumi.StringOutput)
+func (o SubmarinerStatusGatewaysLocalEndpointOutput) HealthCheckIP() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v SubmarinerStatusGatewaysLocalEndpoint) *string { return v.HealthCheckIP }).(pulumi.StringPtrOutput)
 }
 
-func (o SubmarinerStatusGatewaysStatusLocalEndpointOutput) Nat_enabled() pulumi.BoolOutput {
-	return o.ApplyT(func(v SubmarinerStatusGatewaysStatusLocalEndpoint) bool { return v.Nat_enabled }).(pulumi.BoolOutput)
+func (o SubmarinerStatusGatewaysLocalEndpointOutput) Hostname() pulumi.StringOutput {
+	return o.ApplyT(func(v SubmarinerStatusGatewaysLocalEndpoint) string { return v.Hostname }).(pulumi.StringOutput)
 }
 
-func (o SubmarinerStatusGatewaysStatusLocalEndpointOutput) Private_ip() pulumi.StringOutput {
-	return o.ApplyT(func(v SubmarinerStatusGatewaysStatusLocalEndpoint) string { return v.Private_ip }).(pulumi.StringOutput)
+func (o SubmarinerStatusGatewaysLocalEndpointOutput) Nat_enabled() pulumi.BoolOutput {
+	return o.ApplyT(func(v SubmarinerStatusGatewaysLocalEndpoint) bool { return v.Nat_enabled }).(pulumi.BoolOutput)
 }
 
-func (o SubmarinerStatusGatewaysStatusLocalEndpointOutput) Public_ip() pulumi.StringOutput {
-	return o.ApplyT(func(v SubmarinerStatusGatewaysStatusLocalEndpoint) string { return v.Public_ip }).(pulumi.StringOutput)
+func (o SubmarinerStatusGatewaysLocalEndpointOutput) Private_ip() pulumi.StringOutput {
+	return o.ApplyT(func(v SubmarinerStatusGatewaysLocalEndpoint) string { return v.Private_ip }).(pulumi.StringOutput)
 }
 
-func (o SubmarinerStatusGatewaysStatusLocalEndpointOutput) Subnets() pulumi.StringArrayOutput {
-	return o.ApplyT(func(v SubmarinerStatusGatewaysStatusLocalEndpoint) []string { return v.Subnets }).(pulumi.StringArrayOutput)
+func (o SubmarinerStatusGatewaysLocalEndpointOutput) Public_ip() pulumi.StringOutput {
+	return o.ApplyT(func(v SubmarinerStatusGatewaysLocalEndpoint) string { return v.Public_ip }).(pulumi.StringOutput)
 }
 
-type SubmarinerStatusGatewaysStatusLocalEndpointBackend_config struct {
+func (o SubmarinerStatusGatewaysLocalEndpointOutput) Subnets() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v SubmarinerStatusGatewaysLocalEndpoint) []string { return v.Subnets }).(pulumi.StringArrayOutput)
 }
 
-// SubmarinerStatusGatewaysStatusLocalEndpointBackend_configInput is an input type that accepts SubmarinerStatusGatewaysStatusLocalEndpointBackend_configArgs and SubmarinerStatusGatewaysStatusLocalEndpointBackend_configOutput values.
-// You can construct a concrete instance of `SubmarinerStatusGatewaysStatusLocalEndpointBackend_configInput` via:
+type SubmarinerStatusGatewaysLocalEndpointBackend_config struct {
+}
+
+// SubmarinerStatusGatewaysLocalEndpointBackend_configInput is an input type that accepts SubmarinerStatusGatewaysLocalEndpointBackend_configArgs and SubmarinerStatusGatewaysLocalEndpointBackend_configOutput values.
+// You can construct a concrete instance of `SubmarinerStatusGatewaysLocalEndpointBackend_configInput` via:
 //
-//          SubmarinerStatusGatewaysStatusLocalEndpointBackend_configArgs{...}
-type SubmarinerStatusGatewaysStatusLocalEndpointBackend_configInput interface {
+//          SubmarinerStatusGatewaysLocalEndpointBackend_configArgs{...}
+type SubmarinerStatusGatewaysLocalEndpointBackend_configInput interface {
 	pulumi.Input
 
-	ToSubmarinerStatusGatewaysStatusLocalEndpointBackend_configOutput() SubmarinerStatusGatewaysStatusLocalEndpointBackend_configOutput
-	ToSubmarinerStatusGatewaysStatusLocalEndpointBackend_configOutputWithContext(context.Context) SubmarinerStatusGatewaysStatusLocalEndpointBackend_configOutput
+	ToSubmarinerStatusGatewaysLocalEndpointBackend_configOutput() SubmarinerStatusGatewaysLocalEndpointBackend_configOutput
+	ToSubmarinerStatusGatewaysLocalEndpointBackend_configOutputWithContext(context.Context) SubmarinerStatusGatewaysLocalEndpointBackend_configOutput
 }
 
-type SubmarinerStatusGatewaysStatusLocalEndpointBackend_configArgs struct {
+type SubmarinerStatusGatewaysLocalEndpointBackend_configArgs struct {
 }
 
-func (SubmarinerStatusGatewaysStatusLocalEndpointBackend_configArgs) ElementType() reflect.Type {
-	return reflect.TypeOf((*SubmarinerStatusGatewaysStatusLocalEndpointBackend_config)(nil)).Elem()
+func (SubmarinerStatusGatewaysLocalEndpointBackend_configArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*SubmarinerStatusGatewaysLocalEndpointBackend_config)(nil)).Elem()
 }
 
-func (i SubmarinerStatusGatewaysStatusLocalEndpointBackend_configArgs) ToSubmarinerStatusGatewaysStatusLocalEndpointBackend_configOutput() SubmarinerStatusGatewaysStatusLocalEndpointBackend_configOutput {
-	return i.ToSubmarinerStatusGatewaysStatusLocalEndpointBackend_configOutputWithContext(context.Background())
+func (i SubmarinerStatusGatewaysLocalEndpointBackend_configArgs) ToSubmarinerStatusGatewaysLocalEndpointBackend_configOutput() SubmarinerStatusGatewaysLocalEndpointBackend_configOutput {
+	return i.ToSubmarinerStatusGatewaysLocalEndpointBackend_configOutputWithContext(context.Background())
 }
 
-func (i SubmarinerStatusGatewaysStatusLocalEndpointBackend_configArgs) ToSubmarinerStatusGatewaysStatusLocalEndpointBackend_configOutputWithContext(ctx context.Context) SubmarinerStatusGatewaysStatusLocalEndpointBackend_configOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(SubmarinerStatusGatewaysStatusLocalEndpointBackend_configOutput)
+func (i SubmarinerStatusGatewaysLocalEndpointBackend_configArgs) ToSubmarinerStatusGatewaysLocalEndpointBackend_configOutputWithContext(ctx context.Context) SubmarinerStatusGatewaysLocalEndpointBackend_configOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(SubmarinerStatusGatewaysLocalEndpointBackend_configOutput)
 }
 
-type SubmarinerStatusGatewaysStatusLocalEndpointBackend_configOutput struct{ *pulumi.OutputState }
+type SubmarinerStatusGatewaysLocalEndpointBackend_configOutput struct{ *pulumi.OutputState }
 
-func (SubmarinerStatusGatewaysStatusLocalEndpointBackend_configOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*SubmarinerStatusGatewaysStatusLocalEndpointBackend_config)(nil)).Elem()
+func (SubmarinerStatusGatewaysLocalEndpointBackend_configOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*SubmarinerStatusGatewaysLocalEndpointBackend_config)(nil)).Elem()
 }
 
-func (o SubmarinerStatusGatewaysStatusLocalEndpointBackend_configOutput) ToSubmarinerStatusGatewaysStatusLocalEndpointBackend_configOutput() SubmarinerStatusGatewaysStatusLocalEndpointBackend_configOutput {
+func (o SubmarinerStatusGatewaysLocalEndpointBackend_configOutput) ToSubmarinerStatusGatewaysLocalEndpointBackend_configOutput() SubmarinerStatusGatewaysLocalEndpointBackend_configOutput {
 	return o
 }
 
-func (o SubmarinerStatusGatewaysStatusLocalEndpointBackend_configOutput) ToSubmarinerStatusGatewaysStatusLocalEndpointBackend_configOutputWithContext(ctx context.Context) SubmarinerStatusGatewaysStatusLocalEndpointBackend_configOutput {
+func (o SubmarinerStatusGatewaysLocalEndpointBackend_configOutput) ToSubmarinerStatusGatewaysLocalEndpointBackend_configOutputWithContext(ctx context.Context) SubmarinerStatusGatewaysLocalEndpointBackend_configOutput {
 	return o
 }
 
-// DaemonSetStatus represents the current status of a daemon set.
 type SubmarinerStatusGlobalnetDaemonSetStatus struct {
-	// Count of hash collisions for the DaemonSet. The DaemonSet controller uses this field as a collision avoidance mechanism when it needs to create the name for the newest ControllerRevision.
-	CollisionCount *int `pulumi:"collisionCount"`
-	// Represents the latest available observations of a DaemonSet's current state.
-	Conditions []SubmarinerStatusGlobalnetDaemonSetStatusConditions `pulumi:"conditions"`
-	// The number of nodes that are running at least 1 daemon pod and are supposed to run the daemon pod. More info: https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/
-	CurrentNumberScheduled int `pulumi:"currentNumberScheduled"`
-	// The total number of nodes that should be running the daemon pod (including nodes correctly running the daemon pod). More info: https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/
-	DesiredNumberScheduled int `pulumi:"desiredNumberScheduled"`
-	// The number of nodes that should be running the daemon pod and have one or more of the daemon pod running and available (ready for at least spec.minReadySeconds)
-	NumberAvailable *int `pulumi:"numberAvailable"`
-	// The number of nodes that are running the daemon pod, but are not supposed to run the daemon pod. More info: https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/
-	NumberMisscheduled int `pulumi:"numberMisscheduled"`
-	// The number of nodes that should be running the daemon pod and have one or more of the daemon pod running and ready.
-	NumberReady int `pulumi:"numberReady"`
-	// The number of nodes that should be running the daemon pod and have none of the daemon pod running and available (ready for at least spec.minReadySeconds)
-	NumberUnavailable *int `pulumi:"numberUnavailable"`
-	// The most recent generation observed by the daemon set controller.
-	ObservedGeneration *int `pulumi:"observedGeneration"`
-	// The total number of nodes that are running updated daemon pod
-	UpdatedNumberScheduled *int `pulumi:"updatedNumberScheduled"`
+	LastResourceVersion       *string                                                           `pulumi:"lastResourceVersion"`
+	MismatchedContainerImages bool                                                              `pulumi:"mismatchedContainerImages"`
+	NonReadyContainerStates   []SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStates `pulumi:"nonReadyContainerStates"`
+	// DaemonSetStatus represents the current status of a daemon set.
+	Status *SubmarinerStatusGlobalnetDaemonSetStatusStatus `pulumi:"status"`
 }
 
 // SubmarinerStatusGlobalnetDaemonSetStatusInput is an input type that accepts SubmarinerStatusGlobalnetDaemonSetStatusArgs and SubmarinerStatusGlobalnetDaemonSetStatusOutput values.
@@ -2382,28 +3138,12 @@ type SubmarinerStatusGlobalnetDaemonSetStatusInput interface {
 	ToSubmarinerStatusGlobalnetDaemonSetStatusOutputWithContext(context.Context) SubmarinerStatusGlobalnetDaemonSetStatusOutput
 }
 
-// DaemonSetStatus represents the current status of a daemon set.
 type SubmarinerStatusGlobalnetDaemonSetStatusArgs struct {
-	// Count of hash collisions for the DaemonSet. The DaemonSet controller uses this field as a collision avoidance mechanism when it needs to create the name for the newest ControllerRevision.
-	CollisionCount pulumi.IntPtrInput `pulumi:"collisionCount"`
-	// Represents the latest available observations of a DaemonSet's current state.
-	Conditions SubmarinerStatusGlobalnetDaemonSetStatusConditionsArrayInput `pulumi:"conditions"`
-	// The number of nodes that are running at least 1 daemon pod and are supposed to run the daemon pod. More info: https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/
-	CurrentNumberScheduled pulumi.IntInput `pulumi:"currentNumberScheduled"`
-	// The total number of nodes that should be running the daemon pod (including nodes correctly running the daemon pod). More info: https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/
-	DesiredNumberScheduled pulumi.IntInput `pulumi:"desiredNumberScheduled"`
-	// The number of nodes that should be running the daemon pod and have one or more of the daemon pod running and available (ready for at least spec.minReadySeconds)
-	NumberAvailable pulumi.IntPtrInput `pulumi:"numberAvailable"`
-	// The number of nodes that are running the daemon pod, but are not supposed to run the daemon pod. More info: https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/
-	NumberMisscheduled pulumi.IntInput `pulumi:"numberMisscheduled"`
-	// The number of nodes that should be running the daemon pod and have one or more of the daemon pod running and ready.
-	NumberReady pulumi.IntInput `pulumi:"numberReady"`
-	// The number of nodes that should be running the daemon pod and have none of the daemon pod running and available (ready for at least spec.minReadySeconds)
-	NumberUnavailable pulumi.IntPtrInput `pulumi:"numberUnavailable"`
-	// The most recent generation observed by the daemon set controller.
-	ObservedGeneration pulumi.IntPtrInput `pulumi:"observedGeneration"`
-	// The total number of nodes that are running updated daemon pod
-	UpdatedNumberScheduled pulumi.IntPtrInput `pulumi:"updatedNumberScheduled"`
+	LastResourceVersion       pulumi.StringPtrInput                                                     `pulumi:"lastResourceVersion"`
+	MismatchedContainerImages pulumi.BoolInput                                                          `pulumi:"mismatchedContainerImages"`
+	NonReadyContainerStates   SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesArrayInput `pulumi:"nonReadyContainerStates"`
+	// DaemonSetStatus represents the current status of a daemon set.
+	Status SubmarinerStatusGlobalnetDaemonSetStatusStatusPtrInput `pulumi:"status"`
 }
 
 func (SubmarinerStatusGlobalnetDaemonSetStatusArgs) ElementType() reflect.Type {
@@ -2459,7 +3199,6 @@ func (i *submarinerStatusGlobalnetDaemonSetStatusPtrType) ToSubmarinerStatusGlob
 	return pulumi.ToOutputWithContext(ctx, i).(SubmarinerStatusGlobalnetDaemonSetStatusPtrOutput)
 }
 
-// DaemonSetStatus represents the current status of a daemon set.
 type SubmarinerStatusGlobalnetDaemonSetStatusOutput struct{ *pulumi.OutputState }
 
 func (SubmarinerStatusGlobalnetDaemonSetStatusOutput) ElementType() reflect.Type {
@@ -2483,57 +3222,25 @@ func (o SubmarinerStatusGlobalnetDaemonSetStatusOutput) ToSubmarinerStatusGlobal
 		return &v
 	}).(SubmarinerStatusGlobalnetDaemonSetStatusPtrOutput)
 }
-
-// Count of hash collisions for the DaemonSet. The DaemonSet controller uses this field as a collision avoidance mechanism when it needs to create the name for the newest ControllerRevision.
-func (o SubmarinerStatusGlobalnetDaemonSetStatusOutput) CollisionCount() pulumi.IntPtrOutput {
-	return o.ApplyT(func(v SubmarinerStatusGlobalnetDaemonSetStatus) *int { return v.CollisionCount }).(pulumi.IntPtrOutput)
+func (o SubmarinerStatusGlobalnetDaemonSetStatusOutput) LastResourceVersion() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v SubmarinerStatusGlobalnetDaemonSetStatus) *string { return v.LastResourceVersion }).(pulumi.StringPtrOutput)
 }
 
-// Represents the latest available observations of a DaemonSet's current state.
-func (o SubmarinerStatusGlobalnetDaemonSetStatusOutput) Conditions() SubmarinerStatusGlobalnetDaemonSetStatusConditionsArrayOutput {
-	return o.ApplyT(func(v SubmarinerStatusGlobalnetDaemonSetStatus) []SubmarinerStatusGlobalnetDaemonSetStatusConditions {
-		return v.Conditions
-	}).(SubmarinerStatusGlobalnetDaemonSetStatusConditionsArrayOutput)
+func (o SubmarinerStatusGlobalnetDaemonSetStatusOutput) MismatchedContainerImages() pulumi.BoolOutput {
+	return o.ApplyT(func(v SubmarinerStatusGlobalnetDaemonSetStatus) bool { return v.MismatchedContainerImages }).(pulumi.BoolOutput)
 }
 
-// The number of nodes that are running at least 1 daemon pod and are supposed to run the daemon pod. More info: https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/
-func (o SubmarinerStatusGlobalnetDaemonSetStatusOutput) CurrentNumberScheduled() pulumi.IntOutput {
-	return o.ApplyT(func(v SubmarinerStatusGlobalnetDaemonSetStatus) int { return v.CurrentNumberScheduled }).(pulumi.IntOutput)
+func (o SubmarinerStatusGlobalnetDaemonSetStatusOutput) NonReadyContainerStates() SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesArrayOutput {
+	return o.ApplyT(func(v SubmarinerStatusGlobalnetDaemonSetStatus) []SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStates {
+		return v.NonReadyContainerStates
+	}).(SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesArrayOutput)
 }
 
-// The total number of nodes that should be running the daemon pod (including nodes correctly running the daemon pod). More info: https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/
-func (o SubmarinerStatusGlobalnetDaemonSetStatusOutput) DesiredNumberScheduled() pulumi.IntOutput {
-	return o.ApplyT(func(v SubmarinerStatusGlobalnetDaemonSetStatus) int { return v.DesiredNumberScheduled }).(pulumi.IntOutput)
-}
-
-// The number of nodes that should be running the daemon pod and have one or more of the daemon pod running and available (ready for at least spec.minReadySeconds)
-func (o SubmarinerStatusGlobalnetDaemonSetStatusOutput) NumberAvailable() pulumi.IntPtrOutput {
-	return o.ApplyT(func(v SubmarinerStatusGlobalnetDaemonSetStatus) *int { return v.NumberAvailable }).(pulumi.IntPtrOutput)
-}
-
-// The number of nodes that are running the daemon pod, but are not supposed to run the daemon pod. More info: https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/
-func (o SubmarinerStatusGlobalnetDaemonSetStatusOutput) NumberMisscheduled() pulumi.IntOutput {
-	return o.ApplyT(func(v SubmarinerStatusGlobalnetDaemonSetStatus) int { return v.NumberMisscheduled }).(pulumi.IntOutput)
-}
-
-// The number of nodes that should be running the daemon pod and have one or more of the daemon pod running and ready.
-func (o SubmarinerStatusGlobalnetDaemonSetStatusOutput) NumberReady() pulumi.IntOutput {
-	return o.ApplyT(func(v SubmarinerStatusGlobalnetDaemonSetStatus) int { return v.NumberReady }).(pulumi.IntOutput)
-}
-
-// The number of nodes that should be running the daemon pod and have none of the daemon pod running and available (ready for at least spec.minReadySeconds)
-func (o SubmarinerStatusGlobalnetDaemonSetStatusOutput) NumberUnavailable() pulumi.IntPtrOutput {
-	return o.ApplyT(func(v SubmarinerStatusGlobalnetDaemonSetStatus) *int { return v.NumberUnavailable }).(pulumi.IntPtrOutput)
-}
-
-// The most recent generation observed by the daemon set controller.
-func (o SubmarinerStatusGlobalnetDaemonSetStatusOutput) ObservedGeneration() pulumi.IntPtrOutput {
-	return o.ApplyT(func(v SubmarinerStatusGlobalnetDaemonSetStatus) *int { return v.ObservedGeneration }).(pulumi.IntPtrOutput)
-}
-
-// The total number of nodes that are running updated daemon pod
-func (o SubmarinerStatusGlobalnetDaemonSetStatusOutput) UpdatedNumberScheduled() pulumi.IntPtrOutput {
-	return o.ApplyT(func(v SubmarinerStatusGlobalnetDaemonSetStatus) *int { return v.UpdatedNumberScheduled }).(pulumi.IntPtrOutput)
+// DaemonSetStatus represents the current status of a daemon set.
+func (o SubmarinerStatusGlobalnetDaemonSetStatusOutput) Status() SubmarinerStatusGlobalnetDaemonSetStatusStatusPtrOutput {
+	return o.ApplyT(func(v SubmarinerStatusGlobalnetDaemonSetStatus) *SubmarinerStatusGlobalnetDaemonSetStatusStatus {
+		return v.Status
+	}).(SubmarinerStatusGlobalnetDaemonSetStatusStatusPtrOutput)
 }
 
 type SubmarinerStatusGlobalnetDaemonSetStatusPtrOutput struct{ *pulumi.OutputState }
@@ -2554,248 +3261,734 @@ func (o SubmarinerStatusGlobalnetDaemonSetStatusPtrOutput) Elem() SubmarinerStat
 	return o.ApplyT(func(v *SubmarinerStatusGlobalnetDaemonSetStatus) SubmarinerStatusGlobalnetDaemonSetStatus { return *v }).(SubmarinerStatusGlobalnetDaemonSetStatusOutput)
 }
 
-// Count of hash collisions for the DaemonSet. The DaemonSet controller uses this field as a collision avoidance mechanism when it needs to create the name for the newest ControllerRevision.
-func (o SubmarinerStatusGlobalnetDaemonSetStatusPtrOutput) CollisionCount() pulumi.IntPtrOutput {
-	return o.ApplyT(func(v *SubmarinerStatusGlobalnetDaemonSetStatus) *int {
+func (o SubmarinerStatusGlobalnetDaemonSetStatusPtrOutput) LastResourceVersion() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *SubmarinerStatusGlobalnetDaemonSetStatus) *string {
 		if v == nil {
 			return nil
 		}
-		return v.CollisionCount
-	}).(pulumi.IntPtrOutput)
+		return v.LastResourceVersion
+	}).(pulumi.StringPtrOutput)
 }
 
-// Represents the latest available observations of a DaemonSet's current state.
-func (o SubmarinerStatusGlobalnetDaemonSetStatusPtrOutput) Conditions() SubmarinerStatusGlobalnetDaemonSetStatusConditionsArrayOutput {
-	return o.ApplyT(func(v *SubmarinerStatusGlobalnetDaemonSetStatus) []SubmarinerStatusGlobalnetDaemonSetStatusConditions {
+func (o SubmarinerStatusGlobalnetDaemonSetStatusPtrOutput) MismatchedContainerImages() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *SubmarinerStatusGlobalnetDaemonSetStatus) *bool {
 		if v == nil {
 			return nil
 		}
-		return v.Conditions
-	}).(SubmarinerStatusGlobalnetDaemonSetStatusConditionsArrayOutput)
+		return &v.MismatchedContainerImages
+	}).(pulumi.BoolPtrOutput)
 }
 
-// The number of nodes that are running at least 1 daemon pod and are supposed to run the daemon pod. More info: https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/
-func (o SubmarinerStatusGlobalnetDaemonSetStatusPtrOutput) CurrentNumberScheduled() pulumi.IntPtrOutput {
-	return o.ApplyT(func(v *SubmarinerStatusGlobalnetDaemonSetStatus) *int {
+func (o SubmarinerStatusGlobalnetDaemonSetStatusPtrOutput) NonReadyContainerStates() SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesArrayOutput {
+	return o.ApplyT(func(v *SubmarinerStatusGlobalnetDaemonSetStatus) []SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStates {
 		if v == nil {
 			return nil
 		}
-		return &v.CurrentNumberScheduled
-	}).(pulumi.IntPtrOutput)
-}
-
-// The total number of nodes that should be running the daemon pod (including nodes correctly running the daemon pod). More info: https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/
-func (o SubmarinerStatusGlobalnetDaemonSetStatusPtrOutput) DesiredNumberScheduled() pulumi.IntPtrOutput {
-	return o.ApplyT(func(v *SubmarinerStatusGlobalnetDaemonSetStatus) *int {
-		if v == nil {
-			return nil
-		}
-		return &v.DesiredNumberScheduled
-	}).(pulumi.IntPtrOutput)
-}
-
-// The number of nodes that should be running the daemon pod and have one or more of the daemon pod running and available (ready for at least spec.minReadySeconds)
-func (o SubmarinerStatusGlobalnetDaemonSetStatusPtrOutput) NumberAvailable() pulumi.IntPtrOutput {
-	return o.ApplyT(func(v *SubmarinerStatusGlobalnetDaemonSetStatus) *int {
-		if v == nil {
-			return nil
-		}
-		return v.NumberAvailable
-	}).(pulumi.IntPtrOutput)
-}
-
-// The number of nodes that are running the daemon pod, but are not supposed to run the daemon pod. More info: https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/
-func (o SubmarinerStatusGlobalnetDaemonSetStatusPtrOutput) NumberMisscheduled() pulumi.IntPtrOutput {
-	return o.ApplyT(func(v *SubmarinerStatusGlobalnetDaemonSetStatus) *int {
-		if v == nil {
-			return nil
-		}
-		return &v.NumberMisscheduled
-	}).(pulumi.IntPtrOutput)
-}
-
-// The number of nodes that should be running the daemon pod and have one or more of the daemon pod running and ready.
-func (o SubmarinerStatusGlobalnetDaemonSetStatusPtrOutput) NumberReady() pulumi.IntPtrOutput {
-	return o.ApplyT(func(v *SubmarinerStatusGlobalnetDaemonSetStatus) *int {
-		if v == nil {
-			return nil
-		}
-		return &v.NumberReady
-	}).(pulumi.IntPtrOutput)
-}
-
-// The number of nodes that should be running the daemon pod and have none of the daemon pod running and available (ready for at least spec.minReadySeconds)
-func (o SubmarinerStatusGlobalnetDaemonSetStatusPtrOutput) NumberUnavailable() pulumi.IntPtrOutput {
-	return o.ApplyT(func(v *SubmarinerStatusGlobalnetDaemonSetStatus) *int {
-		if v == nil {
-			return nil
-		}
-		return v.NumberUnavailable
-	}).(pulumi.IntPtrOutput)
-}
-
-// The most recent generation observed by the daemon set controller.
-func (o SubmarinerStatusGlobalnetDaemonSetStatusPtrOutput) ObservedGeneration() pulumi.IntPtrOutput {
-	return o.ApplyT(func(v *SubmarinerStatusGlobalnetDaemonSetStatus) *int {
-		if v == nil {
-			return nil
-		}
-		return v.ObservedGeneration
-	}).(pulumi.IntPtrOutput)
-}
-
-// The total number of nodes that are running updated daemon pod
-func (o SubmarinerStatusGlobalnetDaemonSetStatusPtrOutput) UpdatedNumberScheduled() pulumi.IntPtrOutput {
-	return o.ApplyT(func(v *SubmarinerStatusGlobalnetDaemonSetStatus) *int {
-		if v == nil {
-			return nil
-		}
-		return v.UpdatedNumberScheduled
-	}).(pulumi.IntPtrOutput)
-}
-
-// DaemonSetCondition describes the state of a DaemonSet at a certain point.
-type SubmarinerStatusGlobalnetDaemonSetStatusConditions struct {
-	// Last time the condition transitioned from one status to another.
-	LastTransitionTime *string `pulumi:"lastTransitionTime"`
-	// A human readable message indicating details about the transition.
-	Message *string `pulumi:"message"`
-	// The reason for the condition's last transition.
-	Reason *string `pulumi:"reason"`
-	// Status of the condition, one of True, False, Unknown.
-	Status string `pulumi:"status"`
-	// Type of DaemonSet condition.
-	Type string `pulumi:"type"`
-}
-
-// SubmarinerStatusGlobalnetDaemonSetStatusConditionsInput is an input type that accepts SubmarinerStatusGlobalnetDaemonSetStatusConditionsArgs and SubmarinerStatusGlobalnetDaemonSetStatusConditionsOutput values.
-// You can construct a concrete instance of `SubmarinerStatusGlobalnetDaemonSetStatusConditionsInput` via:
-//
-//          SubmarinerStatusGlobalnetDaemonSetStatusConditionsArgs{...}
-type SubmarinerStatusGlobalnetDaemonSetStatusConditionsInput interface {
-	pulumi.Input
-
-	ToSubmarinerStatusGlobalnetDaemonSetStatusConditionsOutput() SubmarinerStatusGlobalnetDaemonSetStatusConditionsOutput
-	ToSubmarinerStatusGlobalnetDaemonSetStatusConditionsOutputWithContext(context.Context) SubmarinerStatusGlobalnetDaemonSetStatusConditionsOutput
-}
-
-// DaemonSetCondition describes the state of a DaemonSet at a certain point.
-type SubmarinerStatusGlobalnetDaemonSetStatusConditionsArgs struct {
-	// Last time the condition transitioned from one status to another.
-	LastTransitionTime pulumi.StringPtrInput `pulumi:"lastTransitionTime"`
-	// A human readable message indicating details about the transition.
-	Message pulumi.StringPtrInput `pulumi:"message"`
-	// The reason for the condition's last transition.
-	Reason pulumi.StringPtrInput `pulumi:"reason"`
-	// Status of the condition, one of True, False, Unknown.
-	Status pulumi.StringInput `pulumi:"status"`
-	// Type of DaemonSet condition.
-	Type pulumi.StringInput `pulumi:"type"`
-}
-
-func (SubmarinerStatusGlobalnetDaemonSetStatusConditionsArgs) ElementType() reflect.Type {
-	return reflect.TypeOf((*SubmarinerStatusGlobalnetDaemonSetStatusConditions)(nil)).Elem()
-}
-
-func (i SubmarinerStatusGlobalnetDaemonSetStatusConditionsArgs) ToSubmarinerStatusGlobalnetDaemonSetStatusConditionsOutput() SubmarinerStatusGlobalnetDaemonSetStatusConditionsOutput {
-	return i.ToSubmarinerStatusGlobalnetDaemonSetStatusConditionsOutputWithContext(context.Background())
-}
-
-func (i SubmarinerStatusGlobalnetDaemonSetStatusConditionsArgs) ToSubmarinerStatusGlobalnetDaemonSetStatusConditionsOutputWithContext(ctx context.Context) SubmarinerStatusGlobalnetDaemonSetStatusConditionsOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(SubmarinerStatusGlobalnetDaemonSetStatusConditionsOutput)
-}
-
-// SubmarinerStatusGlobalnetDaemonSetStatusConditionsArrayInput is an input type that accepts SubmarinerStatusGlobalnetDaemonSetStatusConditionsArray and SubmarinerStatusGlobalnetDaemonSetStatusConditionsArrayOutput values.
-// You can construct a concrete instance of `SubmarinerStatusGlobalnetDaemonSetStatusConditionsArrayInput` via:
-//
-//          SubmarinerStatusGlobalnetDaemonSetStatusConditionsArray{ SubmarinerStatusGlobalnetDaemonSetStatusConditionsArgs{...} }
-type SubmarinerStatusGlobalnetDaemonSetStatusConditionsArrayInput interface {
-	pulumi.Input
-
-	ToSubmarinerStatusGlobalnetDaemonSetStatusConditionsArrayOutput() SubmarinerStatusGlobalnetDaemonSetStatusConditionsArrayOutput
-	ToSubmarinerStatusGlobalnetDaemonSetStatusConditionsArrayOutputWithContext(context.Context) SubmarinerStatusGlobalnetDaemonSetStatusConditionsArrayOutput
-}
-
-type SubmarinerStatusGlobalnetDaemonSetStatusConditionsArray []SubmarinerStatusGlobalnetDaemonSetStatusConditionsInput
-
-func (SubmarinerStatusGlobalnetDaemonSetStatusConditionsArray) ElementType() reflect.Type {
-	return reflect.TypeOf((*[]SubmarinerStatusGlobalnetDaemonSetStatusConditions)(nil)).Elem()
-}
-
-func (i SubmarinerStatusGlobalnetDaemonSetStatusConditionsArray) ToSubmarinerStatusGlobalnetDaemonSetStatusConditionsArrayOutput() SubmarinerStatusGlobalnetDaemonSetStatusConditionsArrayOutput {
-	return i.ToSubmarinerStatusGlobalnetDaemonSetStatusConditionsArrayOutputWithContext(context.Background())
-}
-
-func (i SubmarinerStatusGlobalnetDaemonSetStatusConditionsArray) ToSubmarinerStatusGlobalnetDaemonSetStatusConditionsArrayOutputWithContext(ctx context.Context) SubmarinerStatusGlobalnetDaemonSetStatusConditionsArrayOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(SubmarinerStatusGlobalnetDaemonSetStatusConditionsArrayOutput)
-}
-
-// DaemonSetCondition describes the state of a DaemonSet at a certain point.
-type SubmarinerStatusGlobalnetDaemonSetStatusConditionsOutput struct{ *pulumi.OutputState }
-
-func (SubmarinerStatusGlobalnetDaemonSetStatusConditionsOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*SubmarinerStatusGlobalnetDaemonSetStatusConditions)(nil)).Elem()
-}
-
-func (o SubmarinerStatusGlobalnetDaemonSetStatusConditionsOutput) ToSubmarinerStatusGlobalnetDaemonSetStatusConditionsOutput() SubmarinerStatusGlobalnetDaemonSetStatusConditionsOutput {
-	return o
-}
-
-func (o SubmarinerStatusGlobalnetDaemonSetStatusConditionsOutput) ToSubmarinerStatusGlobalnetDaemonSetStatusConditionsOutputWithContext(ctx context.Context) SubmarinerStatusGlobalnetDaemonSetStatusConditionsOutput {
-	return o
-}
-
-// Last time the condition transitioned from one status to another.
-func (o SubmarinerStatusGlobalnetDaemonSetStatusConditionsOutput) LastTransitionTime() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v SubmarinerStatusGlobalnetDaemonSetStatusConditions) *string { return v.LastTransitionTime }).(pulumi.StringPtrOutput)
-}
-
-// A human readable message indicating details about the transition.
-func (o SubmarinerStatusGlobalnetDaemonSetStatusConditionsOutput) Message() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v SubmarinerStatusGlobalnetDaemonSetStatusConditions) *string { return v.Message }).(pulumi.StringPtrOutput)
-}
-
-// The reason for the condition's last transition.
-func (o SubmarinerStatusGlobalnetDaemonSetStatusConditionsOutput) Reason() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v SubmarinerStatusGlobalnetDaemonSetStatusConditions) *string { return v.Reason }).(pulumi.StringPtrOutput)
-}
-
-// Status of the condition, one of True, False, Unknown.
-func (o SubmarinerStatusGlobalnetDaemonSetStatusConditionsOutput) Status() pulumi.StringOutput {
-	return o.ApplyT(func(v SubmarinerStatusGlobalnetDaemonSetStatusConditions) string { return v.Status }).(pulumi.StringOutput)
-}
-
-// Type of DaemonSet condition.
-func (o SubmarinerStatusGlobalnetDaemonSetStatusConditionsOutput) Type() pulumi.StringOutput {
-	return o.ApplyT(func(v SubmarinerStatusGlobalnetDaemonSetStatusConditions) string { return v.Type }).(pulumi.StringOutput)
-}
-
-type SubmarinerStatusGlobalnetDaemonSetStatusConditionsArrayOutput struct{ *pulumi.OutputState }
-
-func (SubmarinerStatusGlobalnetDaemonSetStatusConditionsArrayOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*[]SubmarinerStatusGlobalnetDaemonSetStatusConditions)(nil)).Elem()
-}
-
-func (o SubmarinerStatusGlobalnetDaemonSetStatusConditionsArrayOutput) ToSubmarinerStatusGlobalnetDaemonSetStatusConditionsArrayOutput() SubmarinerStatusGlobalnetDaemonSetStatusConditionsArrayOutput {
-	return o
-}
-
-func (o SubmarinerStatusGlobalnetDaemonSetStatusConditionsArrayOutput) ToSubmarinerStatusGlobalnetDaemonSetStatusConditionsArrayOutputWithContext(ctx context.Context) SubmarinerStatusGlobalnetDaemonSetStatusConditionsArrayOutput {
-	return o
-}
-
-func (o SubmarinerStatusGlobalnetDaemonSetStatusConditionsArrayOutput) Index(i pulumi.IntInput) SubmarinerStatusGlobalnetDaemonSetStatusConditionsOutput {
-	return pulumi.All(o, i).ApplyT(func(vs []interface{}) SubmarinerStatusGlobalnetDaemonSetStatusConditions {
-		return vs[0].([]SubmarinerStatusGlobalnetDaemonSetStatusConditions)[vs[1].(int)]
-	}).(SubmarinerStatusGlobalnetDaemonSetStatusConditionsOutput)
+		return v.NonReadyContainerStates
+	}).(SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesArrayOutput)
 }
 
 // DaemonSetStatus represents the current status of a daemon set.
-type SubmarinerStatusRouteAgentDaemonSetStatus struct {
+func (o SubmarinerStatusGlobalnetDaemonSetStatusPtrOutput) Status() SubmarinerStatusGlobalnetDaemonSetStatusStatusPtrOutput {
+	return o.ApplyT(func(v *SubmarinerStatusGlobalnetDaemonSetStatus) *SubmarinerStatusGlobalnetDaemonSetStatusStatus {
+		if v == nil {
+			return nil
+		}
+		return v.Status
+	}).(SubmarinerStatusGlobalnetDaemonSetStatusStatusPtrOutput)
+}
+
+// ContainerState holds a possible state of container. Only one of its members may be specified. If none of them is specified, the default one is ContainerStateWaiting.
+type SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStates struct {
+	// Details about a running container
+	Running *SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunning `pulumi:"running"`
+	// Details about a terminated container
+	Terminated *SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminated `pulumi:"terminated"`
+	// Details about a waiting container
+	Waiting *SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaiting `pulumi:"waiting"`
+}
+
+// SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesInput is an input type that accepts SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesArgs and SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesOutput values.
+// You can construct a concrete instance of `SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesInput` via:
+//
+//          SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesArgs{...}
+type SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesInput interface {
+	pulumi.Input
+
+	ToSubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesOutput() SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesOutput
+	ToSubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesOutputWithContext(context.Context) SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesOutput
+}
+
+// ContainerState holds a possible state of container. Only one of its members may be specified. If none of them is specified, the default one is ContainerStateWaiting.
+type SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesArgs struct {
+	// Details about a running container
+	Running SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunningPtrInput `pulumi:"running"`
+	// Details about a terminated container
+	Terminated SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminatedPtrInput `pulumi:"terminated"`
+	// Details about a waiting container
+	Waiting SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaitingPtrInput `pulumi:"waiting"`
+}
+
+func (SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStates)(nil)).Elem()
+}
+
+func (i SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesArgs) ToSubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesOutput() SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesOutput {
+	return i.ToSubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesOutputWithContext(context.Background())
+}
+
+func (i SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesArgs) ToSubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesOutputWithContext(ctx context.Context) SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesOutput)
+}
+
+// SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesArrayInput is an input type that accepts SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesArray and SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesArrayOutput values.
+// You can construct a concrete instance of `SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesArrayInput` via:
+//
+//          SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesArray{ SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesArgs{...} }
+type SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesArrayInput interface {
+	pulumi.Input
+
+	ToSubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesArrayOutput() SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesArrayOutput
+	ToSubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesArrayOutputWithContext(context.Context) SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesArrayOutput
+}
+
+type SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesArray []SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesInput
+
+func (SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStates)(nil)).Elem()
+}
+
+func (i SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesArray) ToSubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesArrayOutput() SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesArrayOutput {
+	return i.ToSubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesArrayOutputWithContext(context.Background())
+}
+
+func (i SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesArray) ToSubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesArrayOutputWithContext(ctx context.Context) SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesArrayOutput)
+}
+
+// ContainerState holds a possible state of container. Only one of its members may be specified. If none of them is specified, the default one is ContainerStateWaiting.
+type SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesOutput struct{ *pulumi.OutputState }
+
+func (SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStates)(nil)).Elem()
+}
+
+func (o SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesOutput) ToSubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesOutput() SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesOutput {
+	return o
+}
+
+func (o SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesOutput) ToSubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesOutputWithContext(ctx context.Context) SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesOutput {
+	return o
+}
+
+// Details about a running container
+func (o SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesOutput) Running() SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunningPtrOutput {
+	return o.ApplyT(func(v SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStates) *SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunning {
+		return v.Running
+	}).(SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunningPtrOutput)
+}
+
+// Details about a terminated container
+func (o SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesOutput) Terminated() SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutput {
+	return o.ApplyT(func(v SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStates) *SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminated {
+		return v.Terminated
+	}).(SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutput)
+}
+
+// Details about a waiting container
+func (o SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesOutput) Waiting() SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaitingPtrOutput {
+	return o.ApplyT(func(v SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStates) *SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaiting {
+		return v.Waiting
+	}).(SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaitingPtrOutput)
+}
+
+type SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesArrayOutput struct{ *pulumi.OutputState }
+
+func (SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStates)(nil)).Elem()
+}
+
+func (o SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesArrayOutput) ToSubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesArrayOutput() SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesArrayOutput {
+	return o
+}
+
+func (o SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesArrayOutput) ToSubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesArrayOutputWithContext(ctx context.Context) SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesArrayOutput {
+	return o
+}
+
+func (o SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesArrayOutput) Index(i pulumi.IntInput) SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStates {
+		return vs[0].([]SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStates)[vs[1].(int)]
+	}).(SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesOutput)
+}
+
+// Details about a running container
+type SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunning struct {
+	// Time at which the container was last (re-)started
+	StartedAt *string `pulumi:"startedAt"`
+}
+
+// SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunningInput is an input type that accepts SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunningArgs and SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunningOutput values.
+// You can construct a concrete instance of `SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunningInput` via:
+//
+//          SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunningArgs{...}
+type SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunningInput interface {
+	pulumi.Input
+
+	ToSubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunningOutput() SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunningOutput
+	ToSubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunningOutputWithContext(context.Context) SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunningOutput
+}
+
+// Details about a running container
+type SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunningArgs struct {
+	// Time at which the container was last (re-)started
+	StartedAt pulumi.StringPtrInput `pulumi:"startedAt"`
+}
+
+func (SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunningArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunning)(nil)).Elem()
+}
+
+func (i SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunningArgs) ToSubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunningOutput() SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunningOutput {
+	return i.ToSubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunningOutputWithContext(context.Background())
+}
+
+func (i SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunningArgs) ToSubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunningOutputWithContext(ctx context.Context) SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunningOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunningOutput)
+}
+
+func (i SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunningArgs) ToSubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunningPtrOutput() SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunningPtrOutput {
+	return i.ToSubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunningPtrOutputWithContext(context.Background())
+}
+
+func (i SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunningArgs) ToSubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunningPtrOutputWithContext(ctx context.Context) SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunningPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunningOutput).ToSubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunningPtrOutputWithContext(ctx)
+}
+
+// SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunningPtrInput is an input type that accepts SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunningArgs, SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunningPtr and SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunningPtrOutput values.
+// You can construct a concrete instance of `SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunningPtrInput` via:
+//
+//          SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunningArgs{...}
+//
+//  or:
+//
+//          nil
+type SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunningPtrInput interface {
+	pulumi.Input
+
+	ToSubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunningPtrOutput() SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunningPtrOutput
+	ToSubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunningPtrOutputWithContext(context.Context) SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunningPtrOutput
+}
+
+type submarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunningPtrType SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunningArgs
+
+func SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunningPtr(v *SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunningArgs) SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunningPtrInput {
+	return (*submarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunningPtrType)(v)
+}
+
+func (*submarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunningPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunning)(nil)).Elem()
+}
+
+func (i *submarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunningPtrType) ToSubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunningPtrOutput() SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunningPtrOutput {
+	return i.ToSubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunningPtrOutputWithContext(context.Background())
+}
+
+func (i *submarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunningPtrType) ToSubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunningPtrOutputWithContext(ctx context.Context) SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunningPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunningPtrOutput)
+}
+
+// Details about a running container
+type SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunningOutput struct{ *pulumi.OutputState }
+
+func (SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunningOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunning)(nil)).Elem()
+}
+
+func (o SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunningOutput) ToSubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunningOutput() SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunningOutput {
+	return o
+}
+
+func (o SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunningOutput) ToSubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunningOutputWithContext(ctx context.Context) SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunningOutput {
+	return o
+}
+
+func (o SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunningOutput) ToSubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunningPtrOutput() SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunningPtrOutput {
+	return o.ToSubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunningPtrOutputWithContext(context.Background())
+}
+
+func (o SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunningOutput) ToSubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunningPtrOutputWithContext(ctx context.Context) SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunningPtrOutput {
+	return o.ApplyT(func(v SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunning) *SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunning {
+		return &v
+	}).(SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunningPtrOutput)
+}
+
+// Time at which the container was last (re-)started
+func (o SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunningOutput) StartedAt() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunning) *string {
+		return v.StartedAt
+	}).(pulumi.StringPtrOutput)
+}
+
+type SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunningPtrOutput struct{ *pulumi.OutputState }
+
+func (SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunningPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunning)(nil)).Elem()
+}
+
+func (o SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunningPtrOutput) ToSubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunningPtrOutput() SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunningPtrOutput {
+	return o
+}
+
+func (o SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunningPtrOutput) ToSubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunningPtrOutputWithContext(ctx context.Context) SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunningPtrOutput {
+	return o
+}
+
+func (o SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunningPtrOutput) Elem() SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunningOutput {
+	return o.ApplyT(func(v *SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunning) SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunning {
+		return *v
+	}).(SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunningOutput)
+}
+
+// Time at which the container was last (re-)started
+func (o SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunningPtrOutput) StartedAt() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunning) *string {
+		if v == nil {
+			return nil
+		}
+		return v.StartedAt
+	}).(pulumi.StringPtrOutput)
+}
+
+// Details about a terminated container
+type SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminated struct {
+	// Container's ID in the format 'docker://<container_id>'
+	ContainerID *string `pulumi:"containerID"`
+	// Exit status from the last termination of the container
+	ExitCode int `pulumi:"exitCode"`
+	// Time at which the container last terminated
+	FinishedAt *string `pulumi:"finishedAt"`
+	// Message regarding the last termination of the container
+	Message *string `pulumi:"message"`
+	// (brief) reason from the last termination of the container
+	Reason *string `pulumi:"reason"`
+	// Signal from the last termination of the container
+	Signal *int `pulumi:"signal"`
+	// Time at which previous execution of the container started
+	StartedAt *string `pulumi:"startedAt"`
+}
+
+// SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminatedInput is an input type that accepts SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminatedArgs and SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminatedOutput values.
+// You can construct a concrete instance of `SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminatedInput` via:
+//
+//          SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminatedArgs{...}
+type SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminatedInput interface {
+	pulumi.Input
+
+	ToSubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminatedOutput() SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminatedOutput
+	ToSubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminatedOutputWithContext(context.Context) SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminatedOutput
+}
+
+// Details about a terminated container
+type SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminatedArgs struct {
+	// Container's ID in the format 'docker://<container_id>'
+	ContainerID pulumi.StringPtrInput `pulumi:"containerID"`
+	// Exit status from the last termination of the container
+	ExitCode pulumi.IntInput `pulumi:"exitCode"`
+	// Time at which the container last terminated
+	FinishedAt pulumi.StringPtrInput `pulumi:"finishedAt"`
+	// Message regarding the last termination of the container
+	Message pulumi.StringPtrInput `pulumi:"message"`
+	// (brief) reason from the last termination of the container
+	Reason pulumi.StringPtrInput `pulumi:"reason"`
+	// Signal from the last termination of the container
+	Signal pulumi.IntPtrInput `pulumi:"signal"`
+	// Time at which previous execution of the container started
+	StartedAt pulumi.StringPtrInput `pulumi:"startedAt"`
+}
+
+func (SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminatedArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminated)(nil)).Elem()
+}
+
+func (i SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminatedArgs) ToSubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminatedOutput() SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminatedOutput {
+	return i.ToSubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminatedOutputWithContext(context.Background())
+}
+
+func (i SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminatedArgs) ToSubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminatedOutputWithContext(ctx context.Context) SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminatedOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminatedOutput)
+}
+
+func (i SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminatedArgs) ToSubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutput() SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutput {
+	return i.ToSubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutputWithContext(context.Background())
+}
+
+func (i SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminatedArgs) ToSubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutputWithContext(ctx context.Context) SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminatedOutput).ToSubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutputWithContext(ctx)
+}
+
+// SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminatedPtrInput is an input type that accepts SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminatedArgs, SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminatedPtr and SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutput values.
+// You can construct a concrete instance of `SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminatedPtrInput` via:
+//
+//          SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminatedArgs{...}
+//
+//  or:
+//
+//          nil
+type SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminatedPtrInput interface {
+	pulumi.Input
+
+	ToSubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutput() SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutput
+	ToSubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutputWithContext(context.Context) SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutput
+}
+
+type submarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminatedPtrType SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminatedArgs
+
+func SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminatedPtr(v *SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminatedArgs) SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminatedPtrInput {
+	return (*submarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminatedPtrType)(v)
+}
+
+func (*submarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminatedPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminated)(nil)).Elem()
+}
+
+func (i *submarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminatedPtrType) ToSubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutput() SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutput {
+	return i.ToSubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutputWithContext(context.Background())
+}
+
+func (i *submarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminatedPtrType) ToSubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutputWithContext(ctx context.Context) SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutput)
+}
+
+// Details about a terminated container
+type SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminatedOutput struct{ *pulumi.OutputState }
+
+func (SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminatedOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminated)(nil)).Elem()
+}
+
+func (o SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminatedOutput) ToSubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminatedOutput() SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminatedOutput {
+	return o
+}
+
+func (o SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminatedOutput) ToSubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminatedOutputWithContext(ctx context.Context) SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminatedOutput {
+	return o
+}
+
+func (o SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminatedOutput) ToSubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutput() SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutput {
+	return o.ToSubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutputWithContext(context.Background())
+}
+
+func (o SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminatedOutput) ToSubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutputWithContext(ctx context.Context) SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutput {
+	return o.ApplyT(func(v SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminated) *SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminated {
+		return &v
+	}).(SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutput)
+}
+
+// Container's ID in the format 'docker://<container_id>'
+func (o SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminatedOutput) ContainerID() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminated) *string {
+		return v.ContainerID
+	}).(pulumi.StringPtrOutput)
+}
+
+// Exit status from the last termination of the container
+func (o SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminatedOutput) ExitCode() pulumi.IntOutput {
+	return o.ApplyT(func(v SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminated) int {
+		return v.ExitCode
+	}).(pulumi.IntOutput)
+}
+
+// Time at which the container last terminated
+func (o SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminatedOutput) FinishedAt() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminated) *string {
+		return v.FinishedAt
+	}).(pulumi.StringPtrOutput)
+}
+
+// Message regarding the last termination of the container
+func (o SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminatedOutput) Message() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminated) *string {
+		return v.Message
+	}).(pulumi.StringPtrOutput)
+}
+
+// (brief) reason from the last termination of the container
+func (o SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminatedOutput) Reason() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminated) *string {
+		return v.Reason
+	}).(pulumi.StringPtrOutput)
+}
+
+// Signal from the last termination of the container
+func (o SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminatedOutput) Signal() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminated) *int {
+		return v.Signal
+	}).(pulumi.IntPtrOutput)
+}
+
+// Time at which previous execution of the container started
+func (o SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminatedOutput) StartedAt() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminated) *string {
+		return v.StartedAt
+	}).(pulumi.StringPtrOutput)
+}
+
+type SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutput struct{ *pulumi.OutputState }
+
+func (SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminated)(nil)).Elem()
+}
+
+func (o SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutput) ToSubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutput() SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutput {
+	return o
+}
+
+func (o SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutput) ToSubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutputWithContext(ctx context.Context) SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutput {
+	return o
+}
+
+func (o SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutput) Elem() SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminatedOutput {
+	return o.ApplyT(func(v *SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminated) SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminated {
+		return *v
+	}).(SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminatedOutput)
+}
+
+// Container's ID in the format 'docker://<container_id>'
+func (o SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutput) ContainerID() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminated) *string {
+		if v == nil {
+			return nil
+		}
+		return v.ContainerID
+	}).(pulumi.StringPtrOutput)
+}
+
+// Exit status from the last termination of the container
+func (o SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutput) ExitCode() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminated) *int {
+		if v == nil {
+			return nil
+		}
+		return &v.ExitCode
+	}).(pulumi.IntPtrOutput)
+}
+
+// Time at which the container last terminated
+func (o SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutput) FinishedAt() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminated) *string {
+		if v == nil {
+			return nil
+		}
+		return v.FinishedAt
+	}).(pulumi.StringPtrOutput)
+}
+
+// Message regarding the last termination of the container
+func (o SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutput) Message() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminated) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Message
+	}).(pulumi.StringPtrOutput)
+}
+
+// (brief) reason from the last termination of the container
+func (o SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutput) Reason() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminated) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Reason
+	}).(pulumi.StringPtrOutput)
+}
+
+// Signal from the last termination of the container
+func (o SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutput) Signal() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminated) *int {
+		if v == nil {
+			return nil
+		}
+		return v.Signal
+	}).(pulumi.IntPtrOutput)
+}
+
+// Time at which previous execution of the container started
+func (o SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutput) StartedAt() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminated) *string {
+		if v == nil {
+			return nil
+		}
+		return v.StartedAt
+	}).(pulumi.StringPtrOutput)
+}
+
+// Details about a waiting container
+type SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaiting struct {
+	// Message regarding why the container is not yet running.
+	Message *string `pulumi:"message"`
+	// (brief) reason the container is not yet running.
+	Reason *string `pulumi:"reason"`
+}
+
+// SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaitingInput is an input type that accepts SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaitingArgs and SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaitingOutput values.
+// You can construct a concrete instance of `SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaitingInput` via:
+//
+//          SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaitingArgs{...}
+type SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaitingInput interface {
+	pulumi.Input
+
+	ToSubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaitingOutput() SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaitingOutput
+	ToSubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaitingOutputWithContext(context.Context) SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaitingOutput
+}
+
+// Details about a waiting container
+type SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaitingArgs struct {
+	// Message regarding why the container is not yet running.
+	Message pulumi.StringPtrInput `pulumi:"message"`
+	// (brief) reason the container is not yet running.
+	Reason pulumi.StringPtrInput `pulumi:"reason"`
+}
+
+func (SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaitingArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaiting)(nil)).Elem()
+}
+
+func (i SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaitingArgs) ToSubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaitingOutput() SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaitingOutput {
+	return i.ToSubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaitingOutputWithContext(context.Background())
+}
+
+func (i SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaitingArgs) ToSubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaitingOutputWithContext(ctx context.Context) SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaitingOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaitingOutput)
+}
+
+func (i SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaitingArgs) ToSubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaitingPtrOutput() SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaitingPtrOutput {
+	return i.ToSubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaitingPtrOutputWithContext(context.Background())
+}
+
+func (i SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaitingArgs) ToSubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaitingPtrOutputWithContext(ctx context.Context) SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaitingPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaitingOutput).ToSubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaitingPtrOutputWithContext(ctx)
+}
+
+// SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaitingPtrInput is an input type that accepts SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaitingArgs, SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaitingPtr and SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaitingPtrOutput values.
+// You can construct a concrete instance of `SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaitingPtrInput` via:
+//
+//          SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaitingArgs{...}
+//
+//  or:
+//
+//          nil
+type SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaitingPtrInput interface {
+	pulumi.Input
+
+	ToSubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaitingPtrOutput() SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaitingPtrOutput
+	ToSubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaitingPtrOutputWithContext(context.Context) SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaitingPtrOutput
+}
+
+type submarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaitingPtrType SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaitingArgs
+
+func SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaitingPtr(v *SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaitingArgs) SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaitingPtrInput {
+	return (*submarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaitingPtrType)(v)
+}
+
+func (*submarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaitingPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaiting)(nil)).Elem()
+}
+
+func (i *submarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaitingPtrType) ToSubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaitingPtrOutput() SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaitingPtrOutput {
+	return i.ToSubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaitingPtrOutputWithContext(context.Background())
+}
+
+func (i *submarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaitingPtrType) ToSubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaitingPtrOutputWithContext(ctx context.Context) SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaitingPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaitingPtrOutput)
+}
+
+// Details about a waiting container
+type SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaitingOutput struct{ *pulumi.OutputState }
+
+func (SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaitingOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaiting)(nil)).Elem()
+}
+
+func (o SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaitingOutput) ToSubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaitingOutput() SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaitingOutput {
+	return o
+}
+
+func (o SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaitingOutput) ToSubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaitingOutputWithContext(ctx context.Context) SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaitingOutput {
+	return o
+}
+
+func (o SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaitingOutput) ToSubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaitingPtrOutput() SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaitingPtrOutput {
+	return o.ToSubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaitingPtrOutputWithContext(context.Background())
+}
+
+func (o SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaitingOutput) ToSubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaitingPtrOutputWithContext(ctx context.Context) SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaitingPtrOutput {
+	return o.ApplyT(func(v SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaiting) *SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaiting {
+		return &v
+	}).(SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaitingPtrOutput)
+}
+
+// Message regarding why the container is not yet running.
+func (o SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaitingOutput) Message() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaiting) *string {
+		return v.Message
+	}).(pulumi.StringPtrOutput)
+}
+
+// (brief) reason the container is not yet running.
+func (o SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaitingOutput) Reason() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaiting) *string {
+		return v.Reason
+	}).(pulumi.StringPtrOutput)
+}
+
+type SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaitingPtrOutput struct{ *pulumi.OutputState }
+
+func (SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaitingPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaiting)(nil)).Elem()
+}
+
+func (o SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaitingPtrOutput) ToSubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaitingPtrOutput() SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaitingPtrOutput {
+	return o
+}
+
+func (o SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaitingPtrOutput) ToSubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaitingPtrOutputWithContext(ctx context.Context) SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaitingPtrOutput {
+	return o
+}
+
+func (o SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaitingPtrOutput) Elem() SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaitingOutput {
+	return o.ApplyT(func(v *SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaiting) SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaiting {
+		return *v
+	}).(SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaitingOutput)
+}
+
+// Message regarding why the container is not yet running.
+func (o SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaitingPtrOutput) Message() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaiting) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Message
+	}).(pulumi.StringPtrOutput)
+}
+
+// (brief) reason the container is not yet running.
+func (o SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaitingPtrOutput) Reason() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaiting) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Reason
+	}).(pulumi.StringPtrOutput)
+}
+
+// DaemonSetStatus represents the current status of a daemon set.
+type SubmarinerStatusGlobalnetDaemonSetStatusStatus struct {
 	// Count of hash collisions for the DaemonSet. The DaemonSet controller uses this field as a collision avoidance mechanism when it needs to create the name for the newest ControllerRevision.
 	CollisionCount *int `pulumi:"collisionCount"`
 	// Represents the latest available observations of a DaemonSet's current state.
-	Conditions []SubmarinerStatusRouteAgentDaemonSetStatusConditions `pulumi:"conditions"`
+	Conditions []SubmarinerStatusGlobalnetDaemonSetStatusStatusConditions `pulumi:"conditions"`
 	// The number of nodes that are running at least 1 daemon pod and are supposed to run the daemon pod. More info: https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/
 	CurrentNumberScheduled int `pulumi:"currentNumberScheduled"`
 	// The total number of nodes that should be running the daemon pod (including nodes correctly running the daemon pod). More info: https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/
@@ -2814,23 +4007,23 @@ type SubmarinerStatusRouteAgentDaemonSetStatus struct {
 	UpdatedNumberScheduled *int `pulumi:"updatedNumberScheduled"`
 }
 
-// SubmarinerStatusRouteAgentDaemonSetStatusInput is an input type that accepts SubmarinerStatusRouteAgentDaemonSetStatusArgs and SubmarinerStatusRouteAgentDaemonSetStatusOutput values.
-// You can construct a concrete instance of `SubmarinerStatusRouteAgentDaemonSetStatusInput` via:
+// SubmarinerStatusGlobalnetDaemonSetStatusStatusInput is an input type that accepts SubmarinerStatusGlobalnetDaemonSetStatusStatusArgs and SubmarinerStatusGlobalnetDaemonSetStatusStatusOutput values.
+// You can construct a concrete instance of `SubmarinerStatusGlobalnetDaemonSetStatusStatusInput` via:
 //
-//          SubmarinerStatusRouteAgentDaemonSetStatusArgs{...}
-type SubmarinerStatusRouteAgentDaemonSetStatusInput interface {
+//          SubmarinerStatusGlobalnetDaemonSetStatusStatusArgs{...}
+type SubmarinerStatusGlobalnetDaemonSetStatusStatusInput interface {
 	pulumi.Input
 
-	ToSubmarinerStatusRouteAgentDaemonSetStatusOutput() SubmarinerStatusRouteAgentDaemonSetStatusOutput
-	ToSubmarinerStatusRouteAgentDaemonSetStatusOutputWithContext(context.Context) SubmarinerStatusRouteAgentDaemonSetStatusOutput
+	ToSubmarinerStatusGlobalnetDaemonSetStatusStatusOutput() SubmarinerStatusGlobalnetDaemonSetStatusStatusOutput
+	ToSubmarinerStatusGlobalnetDaemonSetStatusStatusOutputWithContext(context.Context) SubmarinerStatusGlobalnetDaemonSetStatusStatusOutput
 }
 
 // DaemonSetStatus represents the current status of a daemon set.
-type SubmarinerStatusRouteAgentDaemonSetStatusArgs struct {
+type SubmarinerStatusGlobalnetDaemonSetStatusStatusArgs struct {
 	// Count of hash collisions for the DaemonSet. The DaemonSet controller uses this field as a collision avoidance mechanism when it needs to create the name for the newest ControllerRevision.
 	CollisionCount pulumi.IntPtrInput `pulumi:"collisionCount"`
 	// Represents the latest available observations of a DaemonSet's current state.
-	Conditions SubmarinerStatusRouteAgentDaemonSetStatusConditionsArrayInput `pulumi:"conditions"`
+	Conditions SubmarinerStatusGlobalnetDaemonSetStatusStatusConditionsArrayInput `pulumi:"conditions"`
 	// The number of nodes that are running at least 1 daemon pod and are supposed to run the daemon pod. More info: https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/
 	CurrentNumberScheduled pulumi.IntInput `pulumi:"currentNumberScheduled"`
 	// The total number of nodes that should be running the daemon pod (including nodes correctly running the daemon pod). More info: https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/
@@ -2847,6 +4040,419 @@ type SubmarinerStatusRouteAgentDaemonSetStatusArgs struct {
 	ObservedGeneration pulumi.IntPtrInput `pulumi:"observedGeneration"`
 	// The total number of nodes that are running updated daemon pod
 	UpdatedNumberScheduled pulumi.IntPtrInput `pulumi:"updatedNumberScheduled"`
+}
+
+func (SubmarinerStatusGlobalnetDaemonSetStatusStatusArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*SubmarinerStatusGlobalnetDaemonSetStatusStatus)(nil)).Elem()
+}
+
+func (i SubmarinerStatusGlobalnetDaemonSetStatusStatusArgs) ToSubmarinerStatusGlobalnetDaemonSetStatusStatusOutput() SubmarinerStatusGlobalnetDaemonSetStatusStatusOutput {
+	return i.ToSubmarinerStatusGlobalnetDaemonSetStatusStatusOutputWithContext(context.Background())
+}
+
+func (i SubmarinerStatusGlobalnetDaemonSetStatusStatusArgs) ToSubmarinerStatusGlobalnetDaemonSetStatusStatusOutputWithContext(ctx context.Context) SubmarinerStatusGlobalnetDaemonSetStatusStatusOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(SubmarinerStatusGlobalnetDaemonSetStatusStatusOutput)
+}
+
+func (i SubmarinerStatusGlobalnetDaemonSetStatusStatusArgs) ToSubmarinerStatusGlobalnetDaemonSetStatusStatusPtrOutput() SubmarinerStatusGlobalnetDaemonSetStatusStatusPtrOutput {
+	return i.ToSubmarinerStatusGlobalnetDaemonSetStatusStatusPtrOutputWithContext(context.Background())
+}
+
+func (i SubmarinerStatusGlobalnetDaemonSetStatusStatusArgs) ToSubmarinerStatusGlobalnetDaemonSetStatusStatusPtrOutputWithContext(ctx context.Context) SubmarinerStatusGlobalnetDaemonSetStatusStatusPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(SubmarinerStatusGlobalnetDaemonSetStatusStatusOutput).ToSubmarinerStatusGlobalnetDaemonSetStatusStatusPtrOutputWithContext(ctx)
+}
+
+// SubmarinerStatusGlobalnetDaemonSetStatusStatusPtrInput is an input type that accepts SubmarinerStatusGlobalnetDaemonSetStatusStatusArgs, SubmarinerStatusGlobalnetDaemonSetStatusStatusPtr and SubmarinerStatusGlobalnetDaemonSetStatusStatusPtrOutput values.
+// You can construct a concrete instance of `SubmarinerStatusGlobalnetDaemonSetStatusStatusPtrInput` via:
+//
+//          SubmarinerStatusGlobalnetDaemonSetStatusStatusArgs{...}
+//
+//  or:
+//
+//          nil
+type SubmarinerStatusGlobalnetDaemonSetStatusStatusPtrInput interface {
+	pulumi.Input
+
+	ToSubmarinerStatusGlobalnetDaemonSetStatusStatusPtrOutput() SubmarinerStatusGlobalnetDaemonSetStatusStatusPtrOutput
+	ToSubmarinerStatusGlobalnetDaemonSetStatusStatusPtrOutputWithContext(context.Context) SubmarinerStatusGlobalnetDaemonSetStatusStatusPtrOutput
+}
+
+type submarinerStatusGlobalnetDaemonSetStatusStatusPtrType SubmarinerStatusGlobalnetDaemonSetStatusStatusArgs
+
+func SubmarinerStatusGlobalnetDaemonSetStatusStatusPtr(v *SubmarinerStatusGlobalnetDaemonSetStatusStatusArgs) SubmarinerStatusGlobalnetDaemonSetStatusStatusPtrInput {
+	return (*submarinerStatusGlobalnetDaemonSetStatusStatusPtrType)(v)
+}
+
+func (*submarinerStatusGlobalnetDaemonSetStatusStatusPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**SubmarinerStatusGlobalnetDaemonSetStatusStatus)(nil)).Elem()
+}
+
+func (i *submarinerStatusGlobalnetDaemonSetStatusStatusPtrType) ToSubmarinerStatusGlobalnetDaemonSetStatusStatusPtrOutput() SubmarinerStatusGlobalnetDaemonSetStatusStatusPtrOutput {
+	return i.ToSubmarinerStatusGlobalnetDaemonSetStatusStatusPtrOutputWithContext(context.Background())
+}
+
+func (i *submarinerStatusGlobalnetDaemonSetStatusStatusPtrType) ToSubmarinerStatusGlobalnetDaemonSetStatusStatusPtrOutputWithContext(ctx context.Context) SubmarinerStatusGlobalnetDaemonSetStatusStatusPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(SubmarinerStatusGlobalnetDaemonSetStatusStatusPtrOutput)
+}
+
+// DaemonSetStatus represents the current status of a daemon set.
+type SubmarinerStatusGlobalnetDaemonSetStatusStatusOutput struct{ *pulumi.OutputState }
+
+func (SubmarinerStatusGlobalnetDaemonSetStatusStatusOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*SubmarinerStatusGlobalnetDaemonSetStatusStatus)(nil)).Elem()
+}
+
+func (o SubmarinerStatusGlobalnetDaemonSetStatusStatusOutput) ToSubmarinerStatusGlobalnetDaemonSetStatusStatusOutput() SubmarinerStatusGlobalnetDaemonSetStatusStatusOutput {
+	return o
+}
+
+func (o SubmarinerStatusGlobalnetDaemonSetStatusStatusOutput) ToSubmarinerStatusGlobalnetDaemonSetStatusStatusOutputWithContext(ctx context.Context) SubmarinerStatusGlobalnetDaemonSetStatusStatusOutput {
+	return o
+}
+
+func (o SubmarinerStatusGlobalnetDaemonSetStatusStatusOutput) ToSubmarinerStatusGlobalnetDaemonSetStatusStatusPtrOutput() SubmarinerStatusGlobalnetDaemonSetStatusStatusPtrOutput {
+	return o.ToSubmarinerStatusGlobalnetDaemonSetStatusStatusPtrOutputWithContext(context.Background())
+}
+
+func (o SubmarinerStatusGlobalnetDaemonSetStatusStatusOutput) ToSubmarinerStatusGlobalnetDaemonSetStatusStatusPtrOutputWithContext(ctx context.Context) SubmarinerStatusGlobalnetDaemonSetStatusStatusPtrOutput {
+	return o.ApplyT(func(v SubmarinerStatusGlobalnetDaemonSetStatusStatus) *SubmarinerStatusGlobalnetDaemonSetStatusStatus {
+		return &v
+	}).(SubmarinerStatusGlobalnetDaemonSetStatusStatusPtrOutput)
+}
+
+// Count of hash collisions for the DaemonSet. The DaemonSet controller uses this field as a collision avoidance mechanism when it needs to create the name for the newest ControllerRevision.
+func (o SubmarinerStatusGlobalnetDaemonSetStatusStatusOutput) CollisionCount() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v SubmarinerStatusGlobalnetDaemonSetStatusStatus) *int { return v.CollisionCount }).(pulumi.IntPtrOutput)
+}
+
+// Represents the latest available observations of a DaemonSet's current state.
+func (o SubmarinerStatusGlobalnetDaemonSetStatusStatusOutput) Conditions() SubmarinerStatusGlobalnetDaemonSetStatusStatusConditionsArrayOutput {
+	return o.ApplyT(func(v SubmarinerStatusGlobalnetDaemonSetStatusStatus) []SubmarinerStatusGlobalnetDaemonSetStatusStatusConditions {
+		return v.Conditions
+	}).(SubmarinerStatusGlobalnetDaemonSetStatusStatusConditionsArrayOutput)
+}
+
+// The number of nodes that are running at least 1 daemon pod and are supposed to run the daemon pod. More info: https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/
+func (o SubmarinerStatusGlobalnetDaemonSetStatusStatusOutput) CurrentNumberScheduled() pulumi.IntOutput {
+	return o.ApplyT(func(v SubmarinerStatusGlobalnetDaemonSetStatusStatus) int { return v.CurrentNumberScheduled }).(pulumi.IntOutput)
+}
+
+// The total number of nodes that should be running the daemon pod (including nodes correctly running the daemon pod). More info: https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/
+func (o SubmarinerStatusGlobalnetDaemonSetStatusStatusOutput) DesiredNumberScheduled() pulumi.IntOutput {
+	return o.ApplyT(func(v SubmarinerStatusGlobalnetDaemonSetStatusStatus) int { return v.DesiredNumberScheduled }).(pulumi.IntOutput)
+}
+
+// The number of nodes that should be running the daemon pod and have one or more of the daemon pod running and available (ready for at least spec.minReadySeconds)
+func (o SubmarinerStatusGlobalnetDaemonSetStatusStatusOutput) NumberAvailable() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v SubmarinerStatusGlobalnetDaemonSetStatusStatus) *int { return v.NumberAvailable }).(pulumi.IntPtrOutput)
+}
+
+// The number of nodes that are running the daemon pod, but are not supposed to run the daemon pod. More info: https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/
+func (o SubmarinerStatusGlobalnetDaemonSetStatusStatusOutput) NumberMisscheduled() pulumi.IntOutput {
+	return o.ApplyT(func(v SubmarinerStatusGlobalnetDaemonSetStatusStatus) int { return v.NumberMisscheduled }).(pulumi.IntOutput)
+}
+
+// The number of nodes that should be running the daemon pod and have one or more of the daemon pod running and ready.
+func (o SubmarinerStatusGlobalnetDaemonSetStatusStatusOutput) NumberReady() pulumi.IntOutput {
+	return o.ApplyT(func(v SubmarinerStatusGlobalnetDaemonSetStatusStatus) int { return v.NumberReady }).(pulumi.IntOutput)
+}
+
+// The number of nodes that should be running the daemon pod and have none of the daemon pod running and available (ready for at least spec.minReadySeconds)
+func (o SubmarinerStatusGlobalnetDaemonSetStatusStatusOutput) NumberUnavailable() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v SubmarinerStatusGlobalnetDaemonSetStatusStatus) *int { return v.NumberUnavailable }).(pulumi.IntPtrOutput)
+}
+
+// The most recent generation observed by the daemon set controller.
+func (o SubmarinerStatusGlobalnetDaemonSetStatusStatusOutput) ObservedGeneration() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v SubmarinerStatusGlobalnetDaemonSetStatusStatus) *int { return v.ObservedGeneration }).(pulumi.IntPtrOutput)
+}
+
+// The total number of nodes that are running updated daemon pod
+func (o SubmarinerStatusGlobalnetDaemonSetStatusStatusOutput) UpdatedNumberScheduled() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v SubmarinerStatusGlobalnetDaemonSetStatusStatus) *int { return v.UpdatedNumberScheduled }).(pulumi.IntPtrOutput)
+}
+
+type SubmarinerStatusGlobalnetDaemonSetStatusStatusPtrOutput struct{ *pulumi.OutputState }
+
+func (SubmarinerStatusGlobalnetDaemonSetStatusStatusPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**SubmarinerStatusGlobalnetDaemonSetStatusStatus)(nil)).Elem()
+}
+
+func (o SubmarinerStatusGlobalnetDaemonSetStatusStatusPtrOutput) ToSubmarinerStatusGlobalnetDaemonSetStatusStatusPtrOutput() SubmarinerStatusGlobalnetDaemonSetStatusStatusPtrOutput {
+	return o
+}
+
+func (o SubmarinerStatusGlobalnetDaemonSetStatusStatusPtrOutput) ToSubmarinerStatusGlobalnetDaemonSetStatusStatusPtrOutputWithContext(ctx context.Context) SubmarinerStatusGlobalnetDaemonSetStatusStatusPtrOutput {
+	return o
+}
+
+func (o SubmarinerStatusGlobalnetDaemonSetStatusStatusPtrOutput) Elem() SubmarinerStatusGlobalnetDaemonSetStatusStatusOutput {
+	return o.ApplyT(func(v *SubmarinerStatusGlobalnetDaemonSetStatusStatus) SubmarinerStatusGlobalnetDaemonSetStatusStatus {
+		return *v
+	}).(SubmarinerStatusGlobalnetDaemonSetStatusStatusOutput)
+}
+
+// Count of hash collisions for the DaemonSet. The DaemonSet controller uses this field as a collision avoidance mechanism when it needs to create the name for the newest ControllerRevision.
+func (o SubmarinerStatusGlobalnetDaemonSetStatusStatusPtrOutput) CollisionCount() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *SubmarinerStatusGlobalnetDaemonSetStatusStatus) *int {
+		if v == nil {
+			return nil
+		}
+		return v.CollisionCount
+	}).(pulumi.IntPtrOutput)
+}
+
+// Represents the latest available observations of a DaemonSet's current state.
+func (o SubmarinerStatusGlobalnetDaemonSetStatusStatusPtrOutput) Conditions() SubmarinerStatusGlobalnetDaemonSetStatusStatusConditionsArrayOutput {
+	return o.ApplyT(func(v *SubmarinerStatusGlobalnetDaemonSetStatusStatus) []SubmarinerStatusGlobalnetDaemonSetStatusStatusConditions {
+		if v == nil {
+			return nil
+		}
+		return v.Conditions
+	}).(SubmarinerStatusGlobalnetDaemonSetStatusStatusConditionsArrayOutput)
+}
+
+// The number of nodes that are running at least 1 daemon pod and are supposed to run the daemon pod. More info: https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/
+func (o SubmarinerStatusGlobalnetDaemonSetStatusStatusPtrOutput) CurrentNumberScheduled() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *SubmarinerStatusGlobalnetDaemonSetStatusStatus) *int {
+		if v == nil {
+			return nil
+		}
+		return &v.CurrentNumberScheduled
+	}).(pulumi.IntPtrOutput)
+}
+
+// The total number of nodes that should be running the daemon pod (including nodes correctly running the daemon pod). More info: https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/
+func (o SubmarinerStatusGlobalnetDaemonSetStatusStatusPtrOutput) DesiredNumberScheduled() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *SubmarinerStatusGlobalnetDaemonSetStatusStatus) *int {
+		if v == nil {
+			return nil
+		}
+		return &v.DesiredNumberScheduled
+	}).(pulumi.IntPtrOutput)
+}
+
+// The number of nodes that should be running the daemon pod and have one or more of the daemon pod running and available (ready for at least spec.minReadySeconds)
+func (o SubmarinerStatusGlobalnetDaemonSetStatusStatusPtrOutput) NumberAvailable() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *SubmarinerStatusGlobalnetDaemonSetStatusStatus) *int {
+		if v == nil {
+			return nil
+		}
+		return v.NumberAvailable
+	}).(pulumi.IntPtrOutput)
+}
+
+// The number of nodes that are running the daemon pod, but are not supposed to run the daemon pod. More info: https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/
+func (o SubmarinerStatusGlobalnetDaemonSetStatusStatusPtrOutput) NumberMisscheduled() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *SubmarinerStatusGlobalnetDaemonSetStatusStatus) *int {
+		if v == nil {
+			return nil
+		}
+		return &v.NumberMisscheduled
+	}).(pulumi.IntPtrOutput)
+}
+
+// The number of nodes that should be running the daemon pod and have one or more of the daemon pod running and ready.
+func (o SubmarinerStatusGlobalnetDaemonSetStatusStatusPtrOutput) NumberReady() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *SubmarinerStatusGlobalnetDaemonSetStatusStatus) *int {
+		if v == nil {
+			return nil
+		}
+		return &v.NumberReady
+	}).(pulumi.IntPtrOutput)
+}
+
+// The number of nodes that should be running the daemon pod and have none of the daemon pod running and available (ready for at least spec.minReadySeconds)
+func (o SubmarinerStatusGlobalnetDaemonSetStatusStatusPtrOutput) NumberUnavailable() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *SubmarinerStatusGlobalnetDaemonSetStatusStatus) *int {
+		if v == nil {
+			return nil
+		}
+		return v.NumberUnavailable
+	}).(pulumi.IntPtrOutput)
+}
+
+// The most recent generation observed by the daemon set controller.
+func (o SubmarinerStatusGlobalnetDaemonSetStatusStatusPtrOutput) ObservedGeneration() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *SubmarinerStatusGlobalnetDaemonSetStatusStatus) *int {
+		if v == nil {
+			return nil
+		}
+		return v.ObservedGeneration
+	}).(pulumi.IntPtrOutput)
+}
+
+// The total number of nodes that are running updated daemon pod
+func (o SubmarinerStatusGlobalnetDaemonSetStatusStatusPtrOutput) UpdatedNumberScheduled() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *SubmarinerStatusGlobalnetDaemonSetStatusStatus) *int {
+		if v == nil {
+			return nil
+		}
+		return v.UpdatedNumberScheduled
+	}).(pulumi.IntPtrOutput)
+}
+
+// DaemonSetCondition describes the state of a DaemonSet at a certain point.
+type SubmarinerStatusGlobalnetDaemonSetStatusStatusConditions struct {
+	// Last time the condition transitioned from one status to another.
+	LastTransitionTime *string `pulumi:"lastTransitionTime"`
+	// A human readable message indicating details about the transition.
+	Message *string `pulumi:"message"`
+	// The reason for the condition's last transition.
+	Reason *string `pulumi:"reason"`
+	// Status of the condition, one of True, False, Unknown.
+	Status string `pulumi:"status"`
+	// Type of DaemonSet condition.
+	Type string `pulumi:"type"`
+}
+
+// SubmarinerStatusGlobalnetDaemonSetStatusStatusConditionsInput is an input type that accepts SubmarinerStatusGlobalnetDaemonSetStatusStatusConditionsArgs and SubmarinerStatusGlobalnetDaemonSetStatusStatusConditionsOutput values.
+// You can construct a concrete instance of `SubmarinerStatusGlobalnetDaemonSetStatusStatusConditionsInput` via:
+//
+//          SubmarinerStatusGlobalnetDaemonSetStatusStatusConditionsArgs{...}
+type SubmarinerStatusGlobalnetDaemonSetStatusStatusConditionsInput interface {
+	pulumi.Input
+
+	ToSubmarinerStatusGlobalnetDaemonSetStatusStatusConditionsOutput() SubmarinerStatusGlobalnetDaemonSetStatusStatusConditionsOutput
+	ToSubmarinerStatusGlobalnetDaemonSetStatusStatusConditionsOutputWithContext(context.Context) SubmarinerStatusGlobalnetDaemonSetStatusStatusConditionsOutput
+}
+
+// DaemonSetCondition describes the state of a DaemonSet at a certain point.
+type SubmarinerStatusGlobalnetDaemonSetStatusStatusConditionsArgs struct {
+	// Last time the condition transitioned from one status to another.
+	LastTransitionTime pulumi.StringPtrInput `pulumi:"lastTransitionTime"`
+	// A human readable message indicating details about the transition.
+	Message pulumi.StringPtrInput `pulumi:"message"`
+	// The reason for the condition's last transition.
+	Reason pulumi.StringPtrInput `pulumi:"reason"`
+	// Status of the condition, one of True, False, Unknown.
+	Status pulumi.StringInput `pulumi:"status"`
+	// Type of DaemonSet condition.
+	Type pulumi.StringInput `pulumi:"type"`
+}
+
+func (SubmarinerStatusGlobalnetDaemonSetStatusStatusConditionsArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*SubmarinerStatusGlobalnetDaemonSetStatusStatusConditions)(nil)).Elem()
+}
+
+func (i SubmarinerStatusGlobalnetDaemonSetStatusStatusConditionsArgs) ToSubmarinerStatusGlobalnetDaemonSetStatusStatusConditionsOutput() SubmarinerStatusGlobalnetDaemonSetStatusStatusConditionsOutput {
+	return i.ToSubmarinerStatusGlobalnetDaemonSetStatusStatusConditionsOutputWithContext(context.Background())
+}
+
+func (i SubmarinerStatusGlobalnetDaemonSetStatusStatusConditionsArgs) ToSubmarinerStatusGlobalnetDaemonSetStatusStatusConditionsOutputWithContext(ctx context.Context) SubmarinerStatusGlobalnetDaemonSetStatusStatusConditionsOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(SubmarinerStatusGlobalnetDaemonSetStatusStatusConditionsOutput)
+}
+
+// SubmarinerStatusGlobalnetDaemonSetStatusStatusConditionsArrayInput is an input type that accepts SubmarinerStatusGlobalnetDaemonSetStatusStatusConditionsArray and SubmarinerStatusGlobalnetDaemonSetStatusStatusConditionsArrayOutput values.
+// You can construct a concrete instance of `SubmarinerStatusGlobalnetDaemonSetStatusStatusConditionsArrayInput` via:
+//
+//          SubmarinerStatusGlobalnetDaemonSetStatusStatusConditionsArray{ SubmarinerStatusGlobalnetDaemonSetStatusStatusConditionsArgs{...} }
+type SubmarinerStatusGlobalnetDaemonSetStatusStatusConditionsArrayInput interface {
+	pulumi.Input
+
+	ToSubmarinerStatusGlobalnetDaemonSetStatusStatusConditionsArrayOutput() SubmarinerStatusGlobalnetDaemonSetStatusStatusConditionsArrayOutput
+	ToSubmarinerStatusGlobalnetDaemonSetStatusStatusConditionsArrayOutputWithContext(context.Context) SubmarinerStatusGlobalnetDaemonSetStatusStatusConditionsArrayOutput
+}
+
+type SubmarinerStatusGlobalnetDaemonSetStatusStatusConditionsArray []SubmarinerStatusGlobalnetDaemonSetStatusStatusConditionsInput
+
+func (SubmarinerStatusGlobalnetDaemonSetStatusStatusConditionsArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]SubmarinerStatusGlobalnetDaemonSetStatusStatusConditions)(nil)).Elem()
+}
+
+func (i SubmarinerStatusGlobalnetDaemonSetStatusStatusConditionsArray) ToSubmarinerStatusGlobalnetDaemonSetStatusStatusConditionsArrayOutput() SubmarinerStatusGlobalnetDaemonSetStatusStatusConditionsArrayOutput {
+	return i.ToSubmarinerStatusGlobalnetDaemonSetStatusStatusConditionsArrayOutputWithContext(context.Background())
+}
+
+func (i SubmarinerStatusGlobalnetDaemonSetStatusStatusConditionsArray) ToSubmarinerStatusGlobalnetDaemonSetStatusStatusConditionsArrayOutputWithContext(ctx context.Context) SubmarinerStatusGlobalnetDaemonSetStatusStatusConditionsArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(SubmarinerStatusGlobalnetDaemonSetStatusStatusConditionsArrayOutput)
+}
+
+// DaemonSetCondition describes the state of a DaemonSet at a certain point.
+type SubmarinerStatusGlobalnetDaemonSetStatusStatusConditionsOutput struct{ *pulumi.OutputState }
+
+func (SubmarinerStatusGlobalnetDaemonSetStatusStatusConditionsOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*SubmarinerStatusGlobalnetDaemonSetStatusStatusConditions)(nil)).Elem()
+}
+
+func (o SubmarinerStatusGlobalnetDaemonSetStatusStatusConditionsOutput) ToSubmarinerStatusGlobalnetDaemonSetStatusStatusConditionsOutput() SubmarinerStatusGlobalnetDaemonSetStatusStatusConditionsOutput {
+	return o
+}
+
+func (o SubmarinerStatusGlobalnetDaemonSetStatusStatusConditionsOutput) ToSubmarinerStatusGlobalnetDaemonSetStatusStatusConditionsOutputWithContext(ctx context.Context) SubmarinerStatusGlobalnetDaemonSetStatusStatusConditionsOutput {
+	return o
+}
+
+// Last time the condition transitioned from one status to another.
+func (o SubmarinerStatusGlobalnetDaemonSetStatusStatusConditionsOutput) LastTransitionTime() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v SubmarinerStatusGlobalnetDaemonSetStatusStatusConditions) *string { return v.LastTransitionTime }).(pulumi.StringPtrOutput)
+}
+
+// A human readable message indicating details about the transition.
+func (o SubmarinerStatusGlobalnetDaemonSetStatusStatusConditionsOutput) Message() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v SubmarinerStatusGlobalnetDaemonSetStatusStatusConditions) *string { return v.Message }).(pulumi.StringPtrOutput)
+}
+
+// The reason for the condition's last transition.
+func (o SubmarinerStatusGlobalnetDaemonSetStatusStatusConditionsOutput) Reason() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v SubmarinerStatusGlobalnetDaemonSetStatusStatusConditions) *string { return v.Reason }).(pulumi.StringPtrOutput)
+}
+
+// Status of the condition, one of True, False, Unknown.
+func (o SubmarinerStatusGlobalnetDaemonSetStatusStatusConditionsOutput) Status() pulumi.StringOutput {
+	return o.ApplyT(func(v SubmarinerStatusGlobalnetDaemonSetStatusStatusConditions) string { return v.Status }).(pulumi.StringOutput)
+}
+
+// Type of DaemonSet condition.
+func (o SubmarinerStatusGlobalnetDaemonSetStatusStatusConditionsOutput) Type() pulumi.StringOutput {
+	return o.ApplyT(func(v SubmarinerStatusGlobalnetDaemonSetStatusStatusConditions) string { return v.Type }).(pulumi.StringOutput)
+}
+
+type SubmarinerStatusGlobalnetDaemonSetStatusStatusConditionsArrayOutput struct{ *pulumi.OutputState }
+
+func (SubmarinerStatusGlobalnetDaemonSetStatusStatusConditionsArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]SubmarinerStatusGlobalnetDaemonSetStatusStatusConditions)(nil)).Elem()
+}
+
+func (o SubmarinerStatusGlobalnetDaemonSetStatusStatusConditionsArrayOutput) ToSubmarinerStatusGlobalnetDaemonSetStatusStatusConditionsArrayOutput() SubmarinerStatusGlobalnetDaemonSetStatusStatusConditionsArrayOutput {
+	return o
+}
+
+func (o SubmarinerStatusGlobalnetDaemonSetStatusStatusConditionsArrayOutput) ToSubmarinerStatusGlobalnetDaemonSetStatusStatusConditionsArrayOutputWithContext(ctx context.Context) SubmarinerStatusGlobalnetDaemonSetStatusStatusConditionsArrayOutput {
+	return o
+}
+
+func (o SubmarinerStatusGlobalnetDaemonSetStatusStatusConditionsArrayOutput) Index(i pulumi.IntInput) SubmarinerStatusGlobalnetDaemonSetStatusStatusConditionsOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) SubmarinerStatusGlobalnetDaemonSetStatusStatusConditions {
+		return vs[0].([]SubmarinerStatusGlobalnetDaemonSetStatusStatusConditions)[vs[1].(int)]
+	}).(SubmarinerStatusGlobalnetDaemonSetStatusStatusConditionsOutput)
+}
+
+type SubmarinerStatusRouteAgentDaemonSetStatus struct {
+	LastResourceVersion       *string                                                            `pulumi:"lastResourceVersion"`
+	MismatchedContainerImages bool                                                               `pulumi:"mismatchedContainerImages"`
+	NonReadyContainerStates   []SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStates `pulumi:"nonReadyContainerStates"`
+	// DaemonSetStatus represents the current status of a daemon set.
+	Status *SubmarinerStatusRouteAgentDaemonSetStatusStatus `pulumi:"status"`
+}
+
+// SubmarinerStatusRouteAgentDaemonSetStatusInput is an input type that accepts SubmarinerStatusRouteAgentDaemonSetStatusArgs and SubmarinerStatusRouteAgentDaemonSetStatusOutput values.
+// You can construct a concrete instance of `SubmarinerStatusRouteAgentDaemonSetStatusInput` via:
+//
+//          SubmarinerStatusRouteAgentDaemonSetStatusArgs{...}
+type SubmarinerStatusRouteAgentDaemonSetStatusInput interface {
+	pulumi.Input
+
+	ToSubmarinerStatusRouteAgentDaemonSetStatusOutput() SubmarinerStatusRouteAgentDaemonSetStatusOutput
+	ToSubmarinerStatusRouteAgentDaemonSetStatusOutputWithContext(context.Context) SubmarinerStatusRouteAgentDaemonSetStatusOutput
+}
+
+type SubmarinerStatusRouteAgentDaemonSetStatusArgs struct {
+	LastResourceVersion       pulumi.StringPtrInput                                                      `pulumi:"lastResourceVersion"`
+	MismatchedContainerImages pulumi.BoolInput                                                           `pulumi:"mismatchedContainerImages"`
+	NonReadyContainerStates   SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesArrayInput `pulumi:"nonReadyContainerStates"`
+	// DaemonSetStatus represents the current status of a daemon set.
+	Status SubmarinerStatusRouteAgentDaemonSetStatusStatusPtrInput `pulumi:"status"`
 }
 
 func (SubmarinerStatusRouteAgentDaemonSetStatusArgs) ElementType() reflect.Type {
@@ -2902,7 +4508,6 @@ func (i *submarinerStatusRouteAgentDaemonSetStatusPtrType) ToSubmarinerStatusRou
 	return pulumi.ToOutputWithContext(ctx, i).(SubmarinerStatusRouteAgentDaemonSetStatusPtrOutput)
 }
 
-// DaemonSetStatus represents the current status of a daemon set.
 type SubmarinerStatusRouteAgentDaemonSetStatusOutput struct{ *pulumi.OutputState }
 
 func (SubmarinerStatusRouteAgentDaemonSetStatusOutput) ElementType() reflect.Type {
@@ -2926,57 +4531,25 @@ func (o SubmarinerStatusRouteAgentDaemonSetStatusOutput) ToSubmarinerStatusRoute
 		return &v
 	}).(SubmarinerStatusRouteAgentDaemonSetStatusPtrOutput)
 }
-
-// Count of hash collisions for the DaemonSet. The DaemonSet controller uses this field as a collision avoidance mechanism when it needs to create the name for the newest ControllerRevision.
-func (o SubmarinerStatusRouteAgentDaemonSetStatusOutput) CollisionCount() pulumi.IntPtrOutput {
-	return o.ApplyT(func(v SubmarinerStatusRouteAgentDaemonSetStatus) *int { return v.CollisionCount }).(pulumi.IntPtrOutput)
+func (o SubmarinerStatusRouteAgentDaemonSetStatusOutput) LastResourceVersion() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v SubmarinerStatusRouteAgentDaemonSetStatus) *string { return v.LastResourceVersion }).(pulumi.StringPtrOutput)
 }
 
-// Represents the latest available observations of a DaemonSet's current state.
-func (o SubmarinerStatusRouteAgentDaemonSetStatusOutput) Conditions() SubmarinerStatusRouteAgentDaemonSetStatusConditionsArrayOutput {
-	return o.ApplyT(func(v SubmarinerStatusRouteAgentDaemonSetStatus) []SubmarinerStatusRouteAgentDaemonSetStatusConditions {
-		return v.Conditions
-	}).(SubmarinerStatusRouteAgentDaemonSetStatusConditionsArrayOutput)
+func (o SubmarinerStatusRouteAgentDaemonSetStatusOutput) MismatchedContainerImages() pulumi.BoolOutput {
+	return o.ApplyT(func(v SubmarinerStatusRouteAgentDaemonSetStatus) bool { return v.MismatchedContainerImages }).(pulumi.BoolOutput)
 }
 
-// The number of nodes that are running at least 1 daemon pod and are supposed to run the daemon pod. More info: https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/
-func (o SubmarinerStatusRouteAgentDaemonSetStatusOutput) CurrentNumberScheduled() pulumi.IntOutput {
-	return o.ApplyT(func(v SubmarinerStatusRouteAgentDaemonSetStatus) int { return v.CurrentNumberScheduled }).(pulumi.IntOutput)
+func (o SubmarinerStatusRouteAgentDaemonSetStatusOutput) NonReadyContainerStates() SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesArrayOutput {
+	return o.ApplyT(func(v SubmarinerStatusRouteAgentDaemonSetStatus) []SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStates {
+		return v.NonReadyContainerStates
+	}).(SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesArrayOutput)
 }
 
-// The total number of nodes that should be running the daemon pod (including nodes correctly running the daemon pod). More info: https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/
-func (o SubmarinerStatusRouteAgentDaemonSetStatusOutput) DesiredNumberScheduled() pulumi.IntOutput {
-	return o.ApplyT(func(v SubmarinerStatusRouteAgentDaemonSetStatus) int { return v.DesiredNumberScheduled }).(pulumi.IntOutput)
-}
-
-// The number of nodes that should be running the daemon pod and have one or more of the daemon pod running and available (ready for at least spec.minReadySeconds)
-func (o SubmarinerStatusRouteAgentDaemonSetStatusOutput) NumberAvailable() pulumi.IntPtrOutput {
-	return o.ApplyT(func(v SubmarinerStatusRouteAgentDaemonSetStatus) *int { return v.NumberAvailable }).(pulumi.IntPtrOutput)
-}
-
-// The number of nodes that are running the daemon pod, but are not supposed to run the daemon pod. More info: https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/
-func (o SubmarinerStatusRouteAgentDaemonSetStatusOutput) NumberMisscheduled() pulumi.IntOutput {
-	return o.ApplyT(func(v SubmarinerStatusRouteAgentDaemonSetStatus) int { return v.NumberMisscheduled }).(pulumi.IntOutput)
-}
-
-// The number of nodes that should be running the daemon pod and have one or more of the daemon pod running and ready.
-func (o SubmarinerStatusRouteAgentDaemonSetStatusOutput) NumberReady() pulumi.IntOutput {
-	return o.ApplyT(func(v SubmarinerStatusRouteAgentDaemonSetStatus) int { return v.NumberReady }).(pulumi.IntOutput)
-}
-
-// The number of nodes that should be running the daemon pod and have none of the daemon pod running and available (ready for at least spec.minReadySeconds)
-func (o SubmarinerStatusRouteAgentDaemonSetStatusOutput) NumberUnavailable() pulumi.IntPtrOutput {
-	return o.ApplyT(func(v SubmarinerStatusRouteAgentDaemonSetStatus) *int { return v.NumberUnavailable }).(pulumi.IntPtrOutput)
-}
-
-// The most recent generation observed by the daemon set controller.
-func (o SubmarinerStatusRouteAgentDaemonSetStatusOutput) ObservedGeneration() pulumi.IntPtrOutput {
-	return o.ApplyT(func(v SubmarinerStatusRouteAgentDaemonSetStatus) *int { return v.ObservedGeneration }).(pulumi.IntPtrOutput)
-}
-
-// The total number of nodes that are running updated daemon pod
-func (o SubmarinerStatusRouteAgentDaemonSetStatusOutput) UpdatedNumberScheduled() pulumi.IntPtrOutput {
-	return o.ApplyT(func(v SubmarinerStatusRouteAgentDaemonSetStatus) *int { return v.UpdatedNumberScheduled }).(pulumi.IntPtrOutput)
+// DaemonSetStatus represents the current status of a daemon set.
+func (o SubmarinerStatusRouteAgentDaemonSetStatusOutput) Status() SubmarinerStatusRouteAgentDaemonSetStatusStatusPtrOutput {
+	return o.ApplyT(func(v SubmarinerStatusRouteAgentDaemonSetStatus) *SubmarinerStatusRouteAgentDaemonSetStatusStatus {
+		return v.Status
+	}).(SubmarinerStatusRouteAgentDaemonSetStatusStatusPtrOutput)
 }
 
 type SubmarinerStatusRouteAgentDaemonSetStatusPtrOutput struct{ *pulumi.OutputState }
@@ -2999,9 +4572,940 @@ func (o SubmarinerStatusRouteAgentDaemonSetStatusPtrOutput) Elem() SubmarinerSta
 	}).(SubmarinerStatusRouteAgentDaemonSetStatusOutput)
 }
 
+func (o SubmarinerStatusRouteAgentDaemonSetStatusPtrOutput) LastResourceVersion() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *SubmarinerStatusRouteAgentDaemonSetStatus) *string {
+		if v == nil {
+			return nil
+		}
+		return v.LastResourceVersion
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o SubmarinerStatusRouteAgentDaemonSetStatusPtrOutput) MismatchedContainerImages() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *SubmarinerStatusRouteAgentDaemonSetStatus) *bool {
+		if v == nil {
+			return nil
+		}
+		return &v.MismatchedContainerImages
+	}).(pulumi.BoolPtrOutput)
+}
+
+func (o SubmarinerStatusRouteAgentDaemonSetStatusPtrOutput) NonReadyContainerStates() SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesArrayOutput {
+	return o.ApplyT(func(v *SubmarinerStatusRouteAgentDaemonSetStatus) []SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStates {
+		if v == nil {
+			return nil
+		}
+		return v.NonReadyContainerStates
+	}).(SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesArrayOutput)
+}
+
+// DaemonSetStatus represents the current status of a daemon set.
+func (o SubmarinerStatusRouteAgentDaemonSetStatusPtrOutput) Status() SubmarinerStatusRouteAgentDaemonSetStatusStatusPtrOutput {
+	return o.ApplyT(func(v *SubmarinerStatusRouteAgentDaemonSetStatus) *SubmarinerStatusRouteAgentDaemonSetStatusStatus {
+		if v == nil {
+			return nil
+		}
+		return v.Status
+	}).(SubmarinerStatusRouteAgentDaemonSetStatusStatusPtrOutput)
+}
+
+// ContainerState holds a possible state of container. Only one of its members may be specified. If none of them is specified, the default one is ContainerStateWaiting.
+type SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStates struct {
+	// Details about a running container
+	Running *SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunning `pulumi:"running"`
+	// Details about a terminated container
+	Terminated *SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminated `pulumi:"terminated"`
+	// Details about a waiting container
+	Waiting *SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaiting `pulumi:"waiting"`
+}
+
+// SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesInput is an input type that accepts SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesArgs and SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesOutput values.
+// You can construct a concrete instance of `SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesInput` via:
+//
+//          SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesArgs{...}
+type SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesInput interface {
+	pulumi.Input
+
+	ToSubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesOutput() SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesOutput
+	ToSubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesOutputWithContext(context.Context) SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesOutput
+}
+
+// ContainerState holds a possible state of container. Only one of its members may be specified. If none of them is specified, the default one is ContainerStateWaiting.
+type SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesArgs struct {
+	// Details about a running container
+	Running SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunningPtrInput `pulumi:"running"`
+	// Details about a terminated container
+	Terminated SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminatedPtrInput `pulumi:"terminated"`
+	// Details about a waiting container
+	Waiting SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaitingPtrInput `pulumi:"waiting"`
+}
+
+func (SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStates)(nil)).Elem()
+}
+
+func (i SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesArgs) ToSubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesOutput() SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesOutput {
+	return i.ToSubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesOutputWithContext(context.Background())
+}
+
+func (i SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesArgs) ToSubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesOutputWithContext(ctx context.Context) SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesOutput)
+}
+
+// SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesArrayInput is an input type that accepts SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesArray and SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesArrayOutput values.
+// You can construct a concrete instance of `SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesArrayInput` via:
+//
+//          SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesArray{ SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesArgs{...} }
+type SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesArrayInput interface {
+	pulumi.Input
+
+	ToSubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesArrayOutput() SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesArrayOutput
+	ToSubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesArrayOutputWithContext(context.Context) SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesArrayOutput
+}
+
+type SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesArray []SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesInput
+
+func (SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStates)(nil)).Elem()
+}
+
+func (i SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesArray) ToSubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesArrayOutput() SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesArrayOutput {
+	return i.ToSubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesArrayOutputWithContext(context.Background())
+}
+
+func (i SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesArray) ToSubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesArrayOutputWithContext(ctx context.Context) SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesArrayOutput)
+}
+
+// ContainerState holds a possible state of container. Only one of its members may be specified. If none of them is specified, the default one is ContainerStateWaiting.
+type SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesOutput struct{ *pulumi.OutputState }
+
+func (SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStates)(nil)).Elem()
+}
+
+func (o SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesOutput) ToSubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesOutput() SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesOutput {
+	return o
+}
+
+func (o SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesOutput) ToSubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesOutputWithContext(ctx context.Context) SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesOutput {
+	return o
+}
+
+// Details about a running container
+func (o SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesOutput) Running() SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunningPtrOutput {
+	return o.ApplyT(func(v SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStates) *SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunning {
+		return v.Running
+	}).(SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunningPtrOutput)
+}
+
+// Details about a terminated container
+func (o SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesOutput) Terminated() SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutput {
+	return o.ApplyT(func(v SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStates) *SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminated {
+		return v.Terminated
+	}).(SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutput)
+}
+
+// Details about a waiting container
+func (o SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesOutput) Waiting() SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaitingPtrOutput {
+	return o.ApplyT(func(v SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStates) *SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaiting {
+		return v.Waiting
+	}).(SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaitingPtrOutput)
+}
+
+type SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesArrayOutput struct{ *pulumi.OutputState }
+
+func (SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStates)(nil)).Elem()
+}
+
+func (o SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesArrayOutput) ToSubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesArrayOutput() SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesArrayOutput {
+	return o
+}
+
+func (o SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesArrayOutput) ToSubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesArrayOutputWithContext(ctx context.Context) SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesArrayOutput {
+	return o
+}
+
+func (o SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesArrayOutput) Index(i pulumi.IntInput) SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStates {
+		return vs[0].([]SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStates)[vs[1].(int)]
+	}).(SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesOutput)
+}
+
+// Details about a running container
+type SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunning struct {
+	// Time at which the container was last (re-)started
+	StartedAt *string `pulumi:"startedAt"`
+}
+
+// SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunningInput is an input type that accepts SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunningArgs and SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunningOutput values.
+// You can construct a concrete instance of `SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunningInput` via:
+//
+//          SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunningArgs{...}
+type SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunningInput interface {
+	pulumi.Input
+
+	ToSubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunningOutput() SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunningOutput
+	ToSubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunningOutputWithContext(context.Context) SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunningOutput
+}
+
+// Details about a running container
+type SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunningArgs struct {
+	// Time at which the container was last (re-)started
+	StartedAt pulumi.StringPtrInput `pulumi:"startedAt"`
+}
+
+func (SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunningArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunning)(nil)).Elem()
+}
+
+func (i SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunningArgs) ToSubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunningOutput() SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunningOutput {
+	return i.ToSubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunningOutputWithContext(context.Background())
+}
+
+func (i SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunningArgs) ToSubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunningOutputWithContext(ctx context.Context) SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunningOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunningOutput)
+}
+
+func (i SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunningArgs) ToSubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunningPtrOutput() SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunningPtrOutput {
+	return i.ToSubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunningPtrOutputWithContext(context.Background())
+}
+
+func (i SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunningArgs) ToSubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunningPtrOutputWithContext(ctx context.Context) SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunningPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunningOutput).ToSubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunningPtrOutputWithContext(ctx)
+}
+
+// SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunningPtrInput is an input type that accepts SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunningArgs, SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunningPtr and SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunningPtrOutput values.
+// You can construct a concrete instance of `SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunningPtrInput` via:
+//
+//          SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunningArgs{...}
+//
+//  or:
+//
+//          nil
+type SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunningPtrInput interface {
+	pulumi.Input
+
+	ToSubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunningPtrOutput() SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunningPtrOutput
+	ToSubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunningPtrOutputWithContext(context.Context) SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunningPtrOutput
+}
+
+type submarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunningPtrType SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunningArgs
+
+func SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunningPtr(v *SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunningArgs) SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunningPtrInput {
+	return (*submarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunningPtrType)(v)
+}
+
+func (*submarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunningPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunning)(nil)).Elem()
+}
+
+func (i *submarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunningPtrType) ToSubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunningPtrOutput() SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunningPtrOutput {
+	return i.ToSubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunningPtrOutputWithContext(context.Background())
+}
+
+func (i *submarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunningPtrType) ToSubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunningPtrOutputWithContext(ctx context.Context) SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunningPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunningPtrOutput)
+}
+
+// Details about a running container
+type SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunningOutput struct{ *pulumi.OutputState }
+
+func (SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunningOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunning)(nil)).Elem()
+}
+
+func (o SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunningOutput) ToSubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunningOutput() SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunningOutput {
+	return o
+}
+
+func (o SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunningOutput) ToSubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunningOutputWithContext(ctx context.Context) SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunningOutput {
+	return o
+}
+
+func (o SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunningOutput) ToSubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunningPtrOutput() SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunningPtrOutput {
+	return o.ToSubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunningPtrOutputWithContext(context.Background())
+}
+
+func (o SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunningOutput) ToSubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunningPtrOutputWithContext(ctx context.Context) SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunningPtrOutput {
+	return o.ApplyT(func(v SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunning) *SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunning {
+		return &v
+	}).(SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunningPtrOutput)
+}
+
+// Time at which the container was last (re-)started
+func (o SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunningOutput) StartedAt() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunning) *string {
+		return v.StartedAt
+	}).(pulumi.StringPtrOutput)
+}
+
+type SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunningPtrOutput struct{ *pulumi.OutputState }
+
+func (SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunningPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunning)(nil)).Elem()
+}
+
+func (o SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunningPtrOutput) ToSubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunningPtrOutput() SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunningPtrOutput {
+	return o
+}
+
+func (o SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunningPtrOutput) ToSubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunningPtrOutputWithContext(ctx context.Context) SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunningPtrOutput {
+	return o
+}
+
+func (o SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunningPtrOutput) Elem() SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunningOutput {
+	return o.ApplyT(func(v *SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunning) SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunning {
+		return *v
+	}).(SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunningOutput)
+}
+
+// Time at which the container was last (re-)started
+func (o SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunningPtrOutput) StartedAt() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunning) *string {
+		if v == nil {
+			return nil
+		}
+		return v.StartedAt
+	}).(pulumi.StringPtrOutput)
+}
+
+// Details about a terminated container
+type SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminated struct {
+	// Container's ID in the format 'docker://<container_id>'
+	ContainerID *string `pulumi:"containerID"`
+	// Exit status from the last termination of the container
+	ExitCode int `pulumi:"exitCode"`
+	// Time at which the container last terminated
+	FinishedAt *string `pulumi:"finishedAt"`
+	// Message regarding the last termination of the container
+	Message *string `pulumi:"message"`
+	// (brief) reason from the last termination of the container
+	Reason *string `pulumi:"reason"`
+	// Signal from the last termination of the container
+	Signal *int `pulumi:"signal"`
+	// Time at which previous execution of the container started
+	StartedAt *string `pulumi:"startedAt"`
+}
+
+// SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminatedInput is an input type that accepts SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminatedArgs and SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminatedOutput values.
+// You can construct a concrete instance of `SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminatedInput` via:
+//
+//          SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminatedArgs{...}
+type SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminatedInput interface {
+	pulumi.Input
+
+	ToSubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminatedOutput() SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminatedOutput
+	ToSubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminatedOutputWithContext(context.Context) SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminatedOutput
+}
+
+// Details about a terminated container
+type SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminatedArgs struct {
+	// Container's ID in the format 'docker://<container_id>'
+	ContainerID pulumi.StringPtrInput `pulumi:"containerID"`
+	// Exit status from the last termination of the container
+	ExitCode pulumi.IntInput `pulumi:"exitCode"`
+	// Time at which the container last terminated
+	FinishedAt pulumi.StringPtrInput `pulumi:"finishedAt"`
+	// Message regarding the last termination of the container
+	Message pulumi.StringPtrInput `pulumi:"message"`
+	// (brief) reason from the last termination of the container
+	Reason pulumi.StringPtrInput `pulumi:"reason"`
+	// Signal from the last termination of the container
+	Signal pulumi.IntPtrInput `pulumi:"signal"`
+	// Time at which previous execution of the container started
+	StartedAt pulumi.StringPtrInput `pulumi:"startedAt"`
+}
+
+func (SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminatedArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminated)(nil)).Elem()
+}
+
+func (i SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminatedArgs) ToSubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminatedOutput() SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminatedOutput {
+	return i.ToSubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminatedOutputWithContext(context.Background())
+}
+
+func (i SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminatedArgs) ToSubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminatedOutputWithContext(ctx context.Context) SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminatedOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminatedOutput)
+}
+
+func (i SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminatedArgs) ToSubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutput() SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutput {
+	return i.ToSubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutputWithContext(context.Background())
+}
+
+func (i SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminatedArgs) ToSubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutputWithContext(ctx context.Context) SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminatedOutput).ToSubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutputWithContext(ctx)
+}
+
+// SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminatedPtrInput is an input type that accepts SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminatedArgs, SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminatedPtr and SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutput values.
+// You can construct a concrete instance of `SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminatedPtrInput` via:
+//
+//          SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminatedArgs{...}
+//
+//  or:
+//
+//          nil
+type SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminatedPtrInput interface {
+	pulumi.Input
+
+	ToSubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutput() SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutput
+	ToSubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutputWithContext(context.Context) SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutput
+}
+
+type submarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminatedPtrType SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminatedArgs
+
+func SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminatedPtr(v *SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminatedArgs) SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminatedPtrInput {
+	return (*submarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminatedPtrType)(v)
+}
+
+func (*submarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminatedPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminated)(nil)).Elem()
+}
+
+func (i *submarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminatedPtrType) ToSubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutput() SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutput {
+	return i.ToSubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutputWithContext(context.Background())
+}
+
+func (i *submarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminatedPtrType) ToSubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutputWithContext(ctx context.Context) SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutput)
+}
+
+// Details about a terminated container
+type SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminatedOutput struct{ *pulumi.OutputState }
+
+func (SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminatedOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminated)(nil)).Elem()
+}
+
+func (o SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminatedOutput) ToSubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminatedOutput() SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminatedOutput {
+	return o
+}
+
+func (o SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminatedOutput) ToSubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminatedOutputWithContext(ctx context.Context) SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminatedOutput {
+	return o
+}
+
+func (o SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminatedOutput) ToSubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutput() SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutput {
+	return o.ToSubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutputWithContext(context.Background())
+}
+
+func (o SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminatedOutput) ToSubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutputWithContext(ctx context.Context) SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutput {
+	return o.ApplyT(func(v SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminated) *SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminated {
+		return &v
+	}).(SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutput)
+}
+
+// Container's ID in the format 'docker://<container_id>'
+func (o SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminatedOutput) ContainerID() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminated) *string {
+		return v.ContainerID
+	}).(pulumi.StringPtrOutput)
+}
+
+// Exit status from the last termination of the container
+func (o SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminatedOutput) ExitCode() pulumi.IntOutput {
+	return o.ApplyT(func(v SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminated) int {
+		return v.ExitCode
+	}).(pulumi.IntOutput)
+}
+
+// Time at which the container last terminated
+func (o SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminatedOutput) FinishedAt() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminated) *string {
+		return v.FinishedAt
+	}).(pulumi.StringPtrOutput)
+}
+
+// Message regarding the last termination of the container
+func (o SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminatedOutput) Message() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminated) *string {
+		return v.Message
+	}).(pulumi.StringPtrOutput)
+}
+
+// (brief) reason from the last termination of the container
+func (o SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminatedOutput) Reason() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminated) *string {
+		return v.Reason
+	}).(pulumi.StringPtrOutput)
+}
+
+// Signal from the last termination of the container
+func (o SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminatedOutput) Signal() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminated) *int {
+		return v.Signal
+	}).(pulumi.IntPtrOutput)
+}
+
+// Time at which previous execution of the container started
+func (o SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminatedOutput) StartedAt() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminated) *string {
+		return v.StartedAt
+	}).(pulumi.StringPtrOutput)
+}
+
+type SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutput struct{ *pulumi.OutputState }
+
+func (SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminated)(nil)).Elem()
+}
+
+func (o SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutput) ToSubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutput() SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutput {
+	return o
+}
+
+func (o SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutput) ToSubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutputWithContext(ctx context.Context) SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutput {
+	return o
+}
+
+func (o SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutput) Elem() SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminatedOutput {
+	return o.ApplyT(func(v *SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminated) SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminated {
+		return *v
+	}).(SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminatedOutput)
+}
+
+// Container's ID in the format 'docker://<container_id>'
+func (o SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutput) ContainerID() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminated) *string {
+		if v == nil {
+			return nil
+		}
+		return v.ContainerID
+	}).(pulumi.StringPtrOutput)
+}
+
+// Exit status from the last termination of the container
+func (o SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutput) ExitCode() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminated) *int {
+		if v == nil {
+			return nil
+		}
+		return &v.ExitCode
+	}).(pulumi.IntPtrOutput)
+}
+
+// Time at which the container last terminated
+func (o SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutput) FinishedAt() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminated) *string {
+		if v == nil {
+			return nil
+		}
+		return v.FinishedAt
+	}).(pulumi.StringPtrOutput)
+}
+
+// Message regarding the last termination of the container
+func (o SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutput) Message() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminated) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Message
+	}).(pulumi.StringPtrOutput)
+}
+
+// (brief) reason from the last termination of the container
+func (o SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutput) Reason() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminated) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Reason
+	}).(pulumi.StringPtrOutput)
+}
+
+// Signal from the last termination of the container
+func (o SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutput) Signal() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminated) *int {
+		if v == nil {
+			return nil
+		}
+		return v.Signal
+	}).(pulumi.IntPtrOutput)
+}
+
+// Time at which previous execution of the container started
+func (o SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutput) StartedAt() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminated) *string {
+		if v == nil {
+			return nil
+		}
+		return v.StartedAt
+	}).(pulumi.StringPtrOutput)
+}
+
+// Details about a waiting container
+type SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaiting struct {
+	// Message regarding why the container is not yet running.
+	Message *string `pulumi:"message"`
+	// (brief) reason the container is not yet running.
+	Reason *string `pulumi:"reason"`
+}
+
+// SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaitingInput is an input type that accepts SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaitingArgs and SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaitingOutput values.
+// You can construct a concrete instance of `SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaitingInput` via:
+//
+//          SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaitingArgs{...}
+type SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaitingInput interface {
+	pulumi.Input
+
+	ToSubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaitingOutput() SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaitingOutput
+	ToSubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaitingOutputWithContext(context.Context) SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaitingOutput
+}
+
+// Details about a waiting container
+type SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaitingArgs struct {
+	// Message regarding why the container is not yet running.
+	Message pulumi.StringPtrInput `pulumi:"message"`
+	// (brief) reason the container is not yet running.
+	Reason pulumi.StringPtrInput `pulumi:"reason"`
+}
+
+func (SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaitingArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaiting)(nil)).Elem()
+}
+
+func (i SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaitingArgs) ToSubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaitingOutput() SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaitingOutput {
+	return i.ToSubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaitingOutputWithContext(context.Background())
+}
+
+func (i SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaitingArgs) ToSubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaitingOutputWithContext(ctx context.Context) SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaitingOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaitingOutput)
+}
+
+func (i SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaitingArgs) ToSubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaitingPtrOutput() SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaitingPtrOutput {
+	return i.ToSubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaitingPtrOutputWithContext(context.Background())
+}
+
+func (i SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaitingArgs) ToSubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaitingPtrOutputWithContext(ctx context.Context) SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaitingPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaitingOutput).ToSubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaitingPtrOutputWithContext(ctx)
+}
+
+// SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaitingPtrInput is an input type that accepts SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaitingArgs, SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaitingPtr and SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaitingPtrOutput values.
+// You can construct a concrete instance of `SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaitingPtrInput` via:
+//
+//          SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaitingArgs{...}
+//
+//  or:
+//
+//          nil
+type SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaitingPtrInput interface {
+	pulumi.Input
+
+	ToSubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaitingPtrOutput() SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaitingPtrOutput
+	ToSubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaitingPtrOutputWithContext(context.Context) SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaitingPtrOutput
+}
+
+type submarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaitingPtrType SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaitingArgs
+
+func SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaitingPtr(v *SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaitingArgs) SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaitingPtrInput {
+	return (*submarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaitingPtrType)(v)
+}
+
+func (*submarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaitingPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaiting)(nil)).Elem()
+}
+
+func (i *submarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaitingPtrType) ToSubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaitingPtrOutput() SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaitingPtrOutput {
+	return i.ToSubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaitingPtrOutputWithContext(context.Background())
+}
+
+func (i *submarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaitingPtrType) ToSubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaitingPtrOutputWithContext(ctx context.Context) SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaitingPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaitingPtrOutput)
+}
+
+// Details about a waiting container
+type SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaitingOutput struct{ *pulumi.OutputState }
+
+func (SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaitingOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaiting)(nil)).Elem()
+}
+
+func (o SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaitingOutput) ToSubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaitingOutput() SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaitingOutput {
+	return o
+}
+
+func (o SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaitingOutput) ToSubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaitingOutputWithContext(ctx context.Context) SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaitingOutput {
+	return o
+}
+
+func (o SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaitingOutput) ToSubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaitingPtrOutput() SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaitingPtrOutput {
+	return o.ToSubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaitingPtrOutputWithContext(context.Background())
+}
+
+func (o SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaitingOutput) ToSubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaitingPtrOutputWithContext(ctx context.Context) SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaitingPtrOutput {
+	return o.ApplyT(func(v SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaiting) *SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaiting {
+		return &v
+	}).(SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaitingPtrOutput)
+}
+
+// Message regarding why the container is not yet running.
+func (o SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaitingOutput) Message() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaiting) *string {
+		return v.Message
+	}).(pulumi.StringPtrOutput)
+}
+
+// (brief) reason the container is not yet running.
+func (o SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaitingOutput) Reason() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaiting) *string {
+		return v.Reason
+	}).(pulumi.StringPtrOutput)
+}
+
+type SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaitingPtrOutput struct{ *pulumi.OutputState }
+
+func (SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaitingPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaiting)(nil)).Elem()
+}
+
+func (o SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaitingPtrOutput) ToSubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaitingPtrOutput() SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaitingPtrOutput {
+	return o
+}
+
+func (o SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaitingPtrOutput) ToSubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaitingPtrOutputWithContext(ctx context.Context) SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaitingPtrOutput {
+	return o
+}
+
+func (o SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaitingPtrOutput) Elem() SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaitingOutput {
+	return o.ApplyT(func(v *SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaiting) SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaiting {
+		return *v
+	}).(SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaitingOutput)
+}
+
+// Message regarding why the container is not yet running.
+func (o SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaitingPtrOutput) Message() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaiting) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Message
+	}).(pulumi.StringPtrOutput)
+}
+
+// (brief) reason the container is not yet running.
+func (o SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaitingPtrOutput) Reason() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaiting) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Reason
+	}).(pulumi.StringPtrOutput)
+}
+
+// DaemonSetStatus represents the current status of a daemon set.
+type SubmarinerStatusRouteAgentDaemonSetStatusStatus struct {
+	// Count of hash collisions for the DaemonSet. The DaemonSet controller uses this field as a collision avoidance mechanism when it needs to create the name for the newest ControllerRevision.
+	CollisionCount *int `pulumi:"collisionCount"`
+	// Represents the latest available observations of a DaemonSet's current state.
+	Conditions []SubmarinerStatusRouteAgentDaemonSetStatusStatusConditions `pulumi:"conditions"`
+	// The number of nodes that are running at least 1 daemon pod and are supposed to run the daemon pod. More info: https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/
+	CurrentNumberScheduled int `pulumi:"currentNumberScheduled"`
+	// The total number of nodes that should be running the daemon pod (including nodes correctly running the daemon pod). More info: https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/
+	DesiredNumberScheduled int `pulumi:"desiredNumberScheduled"`
+	// The number of nodes that should be running the daemon pod and have one or more of the daemon pod running and available (ready for at least spec.minReadySeconds)
+	NumberAvailable *int `pulumi:"numberAvailable"`
+	// The number of nodes that are running the daemon pod, but are not supposed to run the daemon pod. More info: https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/
+	NumberMisscheduled int `pulumi:"numberMisscheduled"`
+	// The number of nodes that should be running the daemon pod and have one or more of the daemon pod running and ready.
+	NumberReady int `pulumi:"numberReady"`
+	// The number of nodes that should be running the daemon pod and have none of the daemon pod running and available (ready for at least spec.minReadySeconds)
+	NumberUnavailable *int `pulumi:"numberUnavailable"`
+	// The most recent generation observed by the daemon set controller.
+	ObservedGeneration *int `pulumi:"observedGeneration"`
+	// The total number of nodes that are running updated daemon pod
+	UpdatedNumberScheduled *int `pulumi:"updatedNumberScheduled"`
+}
+
+// SubmarinerStatusRouteAgentDaemonSetStatusStatusInput is an input type that accepts SubmarinerStatusRouteAgentDaemonSetStatusStatusArgs and SubmarinerStatusRouteAgentDaemonSetStatusStatusOutput values.
+// You can construct a concrete instance of `SubmarinerStatusRouteAgentDaemonSetStatusStatusInput` via:
+//
+//          SubmarinerStatusRouteAgentDaemonSetStatusStatusArgs{...}
+type SubmarinerStatusRouteAgentDaemonSetStatusStatusInput interface {
+	pulumi.Input
+
+	ToSubmarinerStatusRouteAgentDaemonSetStatusStatusOutput() SubmarinerStatusRouteAgentDaemonSetStatusStatusOutput
+	ToSubmarinerStatusRouteAgentDaemonSetStatusStatusOutputWithContext(context.Context) SubmarinerStatusRouteAgentDaemonSetStatusStatusOutput
+}
+
+// DaemonSetStatus represents the current status of a daemon set.
+type SubmarinerStatusRouteAgentDaemonSetStatusStatusArgs struct {
+	// Count of hash collisions for the DaemonSet. The DaemonSet controller uses this field as a collision avoidance mechanism when it needs to create the name for the newest ControllerRevision.
+	CollisionCount pulumi.IntPtrInput `pulumi:"collisionCount"`
+	// Represents the latest available observations of a DaemonSet's current state.
+	Conditions SubmarinerStatusRouteAgentDaemonSetStatusStatusConditionsArrayInput `pulumi:"conditions"`
+	// The number of nodes that are running at least 1 daemon pod and are supposed to run the daemon pod. More info: https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/
+	CurrentNumberScheduled pulumi.IntInput `pulumi:"currentNumberScheduled"`
+	// The total number of nodes that should be running the daemon pod (including nodes correctly running the daemon pod). More info: https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/
+	DesiredNumberScheduled pulumi.IntInput `pulumi:"desiredNumberScheduled"`
+	// The number of nodes that should be running the daemon pod and have one or more of the daemon pod running and available (ready for at least spec.minReadySeconds)
+	NumberAvailable pulumi.IntPtrInput `pulumi:"numberAvailable"`
+	// The number of nodes that are running the daemon pod, but are not supposed to run the daemon pod. More info: https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/
+	NumberMisscheduled pulumi.IntInput `pulumi:"numberMisscheduled"`
+	// The number of nodes that should be running the daemon pod and have one or more of the daemon pod running and ready.
+	NumberReady pulumi.IntInput `pulumi:"numberReady"`
+	// The number of nodes that should be running the daemon pod and have none of the daemon pod running and available (ready for at least spec.minReadySeconds)
+	NumberUnavailable pulumi.IntPtrInput `pulumi:"numberUnavailable"`
+	// The most recent generation observed by the daemon set controller.
+	ObservedGeneration pulumi.IntPtrInput `pulumi:"observedGeneration"`
+	// The total number of nodes that are running updated daemon pod
+	UpdatedNumberScheduled pulumi.IntPtrInput `pulumi:"updatedNumberScheduled"`
+}
+
+func (SubmarinerStatusRouteAgentDaemonSetStatusStatusArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*SubmarinerStatusRouteAgentDaemonSetStatusStatus)(nil)).Elem()
+}
+
+func (i SubmarinerStatusRouteAgentDaemonSetStatusStatusArgs) ToSubmarinerStatusRouteAgentDaemonSetStatusStatusOutput() SubmarinerStatusRouteAgentDaemonSetStatusStatusOutput {
+	return i.ToSubmarinerStatusRouteAgentDaemonSetStatusStatusOutputWithContext(context.Background())
+}
+
+func (i SubmarinerStatusRouteAgentDaemonSetStatusStatusArgs) ToSubmarinerStatusRouteAgentDaemonSetStatusStatusOutputWithContext(ctx context.Context) SubmarinerStatusRouteAgentDaemonSetStatusStatusOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(SubmarinerStatusRouteAgentDaemonSetStatusStatusOutput)
+}
+
+func (i SubmarinerStatusRouteAgentDaemonSetStatusStatusArgs) ToSubmarinerStatusRouteAgentDaemonSetStatusStatusPtrOutput() SubmarinerStatusRouteAgentDaemonSetStatusStatusPtrOutput {
+	return i.ToSubmarinerStatusRouteAgentDaemonSetStatusStatusPtrOutputWithContext(context.Background())
+}
+
+func (i SubmarinerStatusRouteAgentDaemonSetStatusStatusArgs) ToSubmarinerStatusRouteAgentDaemonSetStatusStatusPtrOutputWithContext(ctx context.Context) SubmarinerStatusRouteAgentDaemonSetStatusStatusPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(SubmarinerStatusRouteAgentDaemonSetStatusStatusOutput).ToSubmarinerStatusRouteAgentDaemonSetStatusStatusPtrOutputWithContext(ctx)
+}
+
+// SubmarinerStatusRouteAgentDaemonSetStatusStatusPtrInput is an input type that accepts SubmarinerStatusRouteAgentDaemonSetStatusStatusArgs, SubmarinerStatusRouteAgentDaemonSetStatusStatusPtr and SubmarinerStatusRouteAgentDaemonSetStatusStatusPtrOutput values.
+// You can construct a concrete instance of `SubmarinerStatusRouteAgentDaemonSetStatusStatusPtrInput` via:
+//
+//          SubmarinerStatusRouteAgentDaemonSetStatusStatusArgs{...}
+//
+//  or:
+//
+//          nil
+type SubmarinerStatusRouteAgentDaemonSetStatusStatusPtrInput interface {
+	pulumi.Input
+
+	ToSubmarinerStatusRouteAgentDaemonSetStatusStatusPtrOutput() SubmarinerStatusRouteAgentDaemonSetStatusStatusPtrOutput
+	ToSubmarinerStatusRouteAgentDaemonSetStatusStatusPtrOutputWithContext(context.Context) SubmarinerStatusRouteAgentDaemonSetStatusStatusPtrOutput
+}
+
+type submarinerStatusRouteAgentDaemonSetStatusStatusPtrType SubmarinerStatusRouteAgentDaemonSetStatusStatusArgs
+
+func SubmarinerStatusRouteAgentDaemonSetStatusStatusPtr(v *SubmarinerStatusRouteAgentDaemonSetStatusStatusArgs) SubmarinerStatusRouteAgentDaemonSetStatusStatusPtrInput {
+	return (*submarinerStatusRouteAgentDaemonSetStatusStatusPtrType)(v)
+}
+
+func (*submarinerStatusRouteAgentDaemonSetStatusStatusPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**SubmarinerStatusRouteAgentDaemonSetStatusStatus)(nil)).Elem()
+}
+
+func (i *submarinerStatusRouteAgentDaemonSetStatusStatusPtrType) ToSubmarinerStatusRouteAgentDaemonSetStatusStatusPtrOutput() SubmarinerStatusRouteAgentDaemonSetStatusStatusPtrOutput {
+	return i.ToSubmarinerStatusRouteAgentDaemonSetStatusStatusPtrOutputWithContext(context.Background())
+}
+
+func (i *submarinerStatusRouteAgentDaemonSetStatusStatusPtrType) ToSubmarinerStatusRouteAgentDaemonSetStatusStatusPtrOutputWithContext(ctx context.Context) SubmarinerStatusRouteAgentDaemonSetStatusStatusPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(SubmarinerStatusRouteAgentDaemonSetStatusStatusPtrOutput)
+}
+
+// DaemonSetStatus represents the current status of a daemon set.
+type SubmarinerStatusRouteAgentDaemonSetStatusStatusOutput struct{ *pulumi.OutputState }
+
+func (SubmarinerStatusRouteAgentDaemonSetStatusStatusOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*SubmarinerStatusRouteAgentDaemonSetStatusStatus)(nil)).Elem()
+}
+
+func (o SubmarinerStatusRouteAgentDaemonSetStatusStatusOutput) ToSubmarinerStatusRouteAgentDaemonSetStatusStatusOutput() SubmarinerStatusRouteAgentDaemonSetStatusStatusOutput {
+	return o
+}
+
+func (o SubmarinerStatusRouteAgentDaemonSetStatusStatusOutput) ToSubmarinerStatusRouteAgentDaemonSetStatusStatusOutputWithContext(ctx context.Context) SubmarinerStatusRouteAgentDaemonSetStatusStatusOutput {
+	return o
+}
+
+func (o SubmarinerStatusRouteAgentDaemonSetStatusStatusOutput) ToSubmarinerStatusRouteAgentDaemonSetStatusStatusPtrOutput() SubmarinerStatusRouteAgentDaemonSetStatusStatusPtrOutput {
+	return o.ToSubmarinerStatusRouteAgentDaemonSetStatusStatusPtrOutputWithContext(context.Background())
+}
+
+func (o SubmarinerStatusRouteAgentDaemonSetStatusStatusOutput) ToSubmarinerStatusRouteAgentDaemonSetStatusStatusPtrOutputWithContext(ctx context.Context) SubmarinerStatusRouteAgentDaemonSetStatusStatusPtrOutput {
+	return o.ApplyT(func(v SubmarinerStatusRouteAgentDaemonSetStatusStatus) *SubmarinerStatusRouteAgentDaemonSetStatusStatus {
+		return &v
+	}).(SubmarinerStatusRouteAgentDaemonSetStatusStatusPtrOutput)
+}
+
 // Count of hash collisions for the DaemonSet. The DaemonSet controller uses this field as a collision avoidance mechanism when it needs to create the name for the newest ControllerRevision.
-func (o SubmarinerStatusRouteAgentDaemonSetStatusPtrOutput) CollisionCount() pulumi.IntPtrOutput {
-	return o.ApplyT(func(v *SubmarinerStatusRouteAgentDaemonSetStatus) *int {
+func (o SubmarinerStatusRouteAgentDaemonSetStatusStatusOutput) CollisionCount() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v SubmarinerStatusRouteAgentDaemonSetStatusStatus) *int { return v.CollisionCount }).(pulumi.IntPtrOutput)
+}
+
+// Represents the latest available observations of a DaemonSet's current state.
+func (o SubmarinerStatusRouteAgentDaemonSetStatusStatusOutput) Conditions() SubmarinerStatusRouteAgentDaemonSetStatusStatusConditionsArrayOutput {
+	return o.ApplyT(func(v SubmarinerStatusRouteAgentDaemonSetStatusStatus) []SubmarinerStatusRouteAgentDaemonSetStatusStatusConditions {
+		return v.Conditions
+	}).(SubmarinerStatusRouteAgentDaemonSetStatusStatusConditionsArrayOutput)
+}
+
+// The number of nodes that are running at least 1 daemon pod and are supposed to run the daemon pod. More info: https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/
+func (o SubmarinerStatusRouteAgentDaemonSetStatusStatusOutput) CurrentNumberScheduled() pulumi.IntOutput {
+	return o.ApplyT(func(v SubmarinerStatusRouteAgentDaemonSetStatusStatus) int { return v.CurrentNumberScheduled }).(pulumi.IntOutput)
+}
+
+// The total number of nodes that should be running the daemon pod (including nodes correctly running the daemon pod). More info: https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/
+func (o SubmarinerStatusRouteAgentDaemonSetStatusStatusOutput) DesiredNumberScheduled() pulumi.IntOutput {
+	return o.ApplyT(func(v SubmarinerStatusRouteAgentDaemonSetStatusStatus) int { return v.DesiredNumberScheduled }).(pulumi.IntOutput)
+}
+
+// The number of nodes that should be running the daemon pod and have one or more of the daemon pod running and available (ready for at least spec.minReadySeconds)
+func (o SubmarinerStatusRouteAgentDaemonSetStatusStatusOutput) NumberAvailable() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v SubmarinerStatusRouteAgentDaemonSetStatusStatus) *int { return v.NumberAvailable }).(pulumi.IntPtrOutput)
+}
+
+// The number of nodes that are running the daemon pod, but are not supposed to run the daemon pod. More info: https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/
+func (o SubmarinerStatusRouteAgentDaemonSetStatusStatusOutput) NumberMisscheduled() pulumi.IntOutput {
+	return o.ApplyT(func(v SubmarinerStatusRouteAgentDaemonSetStatusStatus) int { return v.NumberMisscheduled }).(pulumi.IntOutput)
+}
+
+// The number of nodes that should be running the daemon pod and have one or more of the daemon pod running and ready.
+func (o SubmarinerStatusRouteAgentDaemonSetStatusStatusOutput) NumberReady() pulumi.IntOutput {
+	return o.ApplyT(func(v SubmarinerStatusRouteAgentDaemonSetStatusStatus) int { return v.NumberReady }).(pulumi.IntOutput)
+}
+
+// The number of nodes that should be running the daemon pod and have none of the daemon pod running and available (ready for at least spec.minReadySeconds)
+func (o SubmarinerStatusRouteAgentDaemonSetStatusStatusOutput) NumberUnavailable() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v SubmarinerStatusRouteAgentDaemonSetStatusStatus) *int { return v.NumberUnavailable }).(pulumi.IntPtrOutput)
+}
+
+// The most recent generation observed by the daemon set controller.
+func (o SubmarinerStatusRouteAgentDaemonSetStatusStatusOutput) ObservedGeneration() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v SubmarinerStatusRouteAgentDaemonSetStatusStatus) *int { return v.ObservedGeneration }).(pulumi.IntPtrOutput)
+}
+
+// The total number of nodes that are running updated daemon pod
+func (o SubmarinerStatusRouteAgentDaemonSetStatusStatusOutput) UpdatedNumberScheduled() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v SubmarinerStatusRouteAgentDaemonSetStatusStatus) *int { return v.UpdatedNumberScheduled }).(pulumi.IntPtrOutput)
+}
+
+type SubmarinerStatusRouteAgentDaemonSetStatusStatusPtrOutput struct{ *pulumi.OutputState }
+
+func (SubmarinerStatusRouteAgentDaemonSetStatusStatusPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**SubmarinerStatusRouteAgentDaemonSetStatusStatus)(nil)).Elem()
+}
+
+func (o SubmarinerStatusRouteAgentDaemonSetStatusStatusPtrOutput) ToSubmarinerStatusRouteAgentDaemonSetStatusStatusPtrOutput() SubmarinerStatusRouteAgentDaemonSetStatusStatusPtrOutput {
+	return o
+}
+
+func (o SubmarinerStatusRouteAgentDaemonSetStatusStatusPtrOutput) ToSubmarinerStatusRouteAgentDaemonSetStatusStatusPtrOutputWithContext(ctx context.Context) SubmarinerStatusRouteAgentDaemonSetStatusStatusPtrOutput {
+	return o
+}
+
+func (o SubmarinerStatusRouteAgentDaemonSetStatusStatusPtrOutput) Elem() SubmarinerStatusRouteAgentDaemonSetStatusStatusOutput {
+	return o.ApplyT(func(v *SubmarinerStatusRouteAgentDaemonSetStatusStatus) SubmarinerStatusRouteAgentDaemonSetStatusStatus {
+		return *v
+	}).(SubmarinerStatusRouteAgentDaemonSetStatusStatusOutput)
+}
+
+// Count of hash collisions for the DaemonSet. The DaemonSet controller uses this field as a collision avoidance mechanism when it needs to create the name for the newest ControllerRevision.
+func (o SubmarinerStatusRouteAgentDaemonSetStatusStatusPtrOutput) CollisionCount() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *SubmarinerStatusRouteAgentDaemonSetStatusStatus) *int {
 		if v == nil {
 			return nil
 		}
@@ -3010,18 +5514,18 @@ func (o SubmarinerStatusRouteAgentDaemonSetStatusPtrOutput) CollisionCount() pul
 }
 
 // Represents the latest available observations of a DaemonSet's current state.
-func (o SubmarinerStatusRouteAgentDaemonSetStatusPtrOutput) Conditions() SubmarinerStatusRouteAgentDaemonSetStatusConditionsArrayOutput {
-	return o.ApplyT(func(v *SubmarinerStatusRouteAgentDaemonSetStatus) []SubmarinerStatusRouteAgentDaemonSetStatusConditions {
+func (o SubmarinerStatusRouteAgentDaemonSetStatusStatusPtrOutput) Conditions() SubmarinerStatusRouteAgentDaemonSetStatusStatusConditionsArrayOutput {
+	return o.ApplyT(func(v *SubmarinerStatusRouteAgentDaemonSetStatusStatus) []SubmarinerStatusRouteAgentDaemonSetStatusStatusConditions {
 		if v == nil {
 			return nil
 		}
 		return v.Conditions
-	}).(SubmarinerStatusRouteAgentDaemonSetStatusConditionsArrayOutput)
+	}).(SubmarinerStatusRouteAgentDaemonSetStatusStatusConditionsArrayOutput)
 }
 
 // The number of nodes that are running at least 1 daemon pod and are supposed to run the daemon pod. More info: https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/
-func (o SubmarinerStatusRouteAgentDaemonSetStatusPtrOutput) CurrentNumberScheduled() pulumi.IntPtrOutput {
-	return o.ApplyT(func(v *SubmarinerStatusRouteAgentDaemonSetStatus) *int {
+func (o SubmarinerStatusRouteAgentDaemonSetStatusStatusPtrOutput) CurrentNumberScheduled() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *SubmarinerStatusRouteAgentDaemonSetStatusStatus) *int {
 		if v == nil {
 			return nil
 		}
@@ -3030,8 +5534,8 @@ func (o SubmarinerStatusRouteAgentDaemonSetStatusPtrOutput) CurrentNumberSchedul
 }
 
 // The total number of nodes that should be running the daemon pod (including nodes correctly running the daemon pod). More info: https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/
-func (o SubmarinerStatusRouteAgentDaemonSetStatusPtrOutput) DesiredNumberScheduled() pulumi.IntPtrOutput {
-	return o.ApplyT(func(v *SubmarinerStatusRouteAgentDaemonSetStatus) *int {
+func (o SubmarinerStatusRouteAgentDaemonSetStatusStatusPtrOutput) DesiredNumberScheduled() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *SubmarinerStatusRouteAgentDaemonSetStatusStatus) *int {
 		if v == nil {
 			return nil
 		}
@@ -3040,8 +5544,8 @@ func (o SubmarinerStatusRouteAgentDaemonSetStatusPtrOutput) DesiredNumberSchedul
 }
 
 // The number of nodes that should be running the daemon pod and have one or more of the daemon pod running and available (ready for at least spec.minReadySeconds)
-func (o SubmarinerStatusRouteAgentDaemonSetStatusPtrOutput) NumberAvailable() pulumi.IntPtrOutput {
-	return o.ApplyT(func(v *SubmarinerStatusRouteAgentDaemonSetStatus) *int {
+func (o SubmarinerStatusRouteAgentDaemonSetStatusStatusPtrOutput) NumberAvailable() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *SubmarinerStatusRouteAgentDaemonSetStatusStatus) *int {
 		if v == nil {
 			return nil
 		}
@@ -3050,8 +5554,8 @@ func (o SubmarinerStatusRouteAgentDaemonSetStatusPtrOutput) NumberAvailable() pu
 }
 
 // The number of nodes that are running the daemon pod, but are not supposed to run the daemon pod. More info: https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/
-func (o SubmarinerStatusRouteAgentDaemonSetStatusPtrOutput) NumberMisscheduled() pulumi.IntPtrOutput {
-	return o.ApplyT(func(v *SubmarinerStatusRouteAgentDaemonSetStatus) *int {
+func (o SubmarinerStatusRouteAgentDaemonSetStatusStatusPtrOutput) NumberMisscheduled() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *SubmarinerStatusRouteAgentDaemonSetStatusStatus) *int {
 		if v == nil {
 			return nil
 		}
@@ -3060,8 +5564,8 @@ func (o SubmarinerStatusRouteAgentDaemonSetStatusPtrOutput) NumberMisscheduled()
 }
 
 // The number of nodes that should be running the daemon pod and have one or more of the daemon pod running and ready.
-func (o SubmarinerStatusRouteAgentDaemonSetStatusPtrOutput) NumberReady() pulumi.IntPtrOutput {
-	return o.ApplyT(func(v *SubmarinerStatusRouteAgentDaemonSetStatus) *int {
+func (o SubmarinerStatusRouteAgentDaemonSetStatusStatusPtrOutput) NumberReady() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *SubmarinerStatusRouteAgentDaemonSetStatusStatus) *int {
 		if v == nil {
 			return nil
 		}
@@ -3070,8 +5574,8 @@ func (o SubmarinerStatusRouteAgentDaemonSetStatusPtrOutput) NumberReady() pulumi
 }
 
 // The number of nodes that should be running the daemon pod and have none of the daemon pod running and available (ready for at least spec.minReadySeconds)
-func (o SubmarinerStatusRouteAgentDaemonSetStatusPtrOutput) NumberUnavailable() pulumi.IntPtrOutput {
-	return o.ApplyT(func(v *SubmarinerStatusRouteAgentDaemonSetStatus) *int {
+func (o SubmarinerStatusRouteAgentDaemonSetStatusStatusPtrOutput) NumberUnavailable() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *SubmarinerStatusRouteAgentDaemonSetStatusStatus) *int {
 		if v == nil {
 			return nil
 		}
@@ -3080,8 +5584,8 @@ func (o SubmarinerStatusRouteAgentDaemonSetStatusPtrOutput) NumberUnavailable() 
 }
 
 // The most recent generation observed by the daemon set controller.
-func (o SubmarinerStatusRouteAgentDaemonSetStatusPtrOutput) ObservedGeneration() pulumi.IntPtrOutput {
-	return o.ApplyT(func(v *SubmarinerStatusRouteAgentDaemonSetStatus) *int {
+func (o SubmarinerStatusRouteAgentDaemonSetStatusStatusPtrOutput) ObservedGeneration() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *SubmarinerStatusRouteAgentDaemonSetStatusStatus) *int {
 		if v == nil {
 			return nil
 		}
@@ -3090,8 +5594,8 @@ func (o SubmarinerStatusRouteAgentDaemonSetStatusPtrOutput) ObservedGeneration()
 }
 
 // The total number of nodes that are running updated daemon pod
-func (o SubmarinerStatusRouteAgentDaemonSetStatusPtrOutput) UpdatedNumberScheduled() pulumi.IntPtrOutput {
-	return o.ApplyT(func(v *SubmarinerStatusRouteAgentDaemonSetStatus) *int {
+func (o SubmarinerStatusRouteAgentDaemonSetStatusStatusPtrOutput) UpdatedNumberScheduled() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *SubmarinerStatusRouteAgentDaemonSetStatusStatus) *int {
 		if v == nil {
 			return nil
 		}
@@ -3100,7 +5604,7 @@ func (o SubmarinerStatusRouteAgentDaemonSetStatusPtrOutput) UpdatedNumberSchedul
 }
 
 // DaemonSetCondition describes the state of a DaemonSet at a certain point.
-type SubmarinerStatusRouteAgentDaemonSetStatusConditions struct {
+type SubmarinerStatusRouteAgentDaemonSetStatusStatusConditions struct {
 	// Last time the condition transitioned from one status to another.
 	LastTransitionTime *string `pulumi:"lastTransitionTime"`
 	// A human readable message indicating details about the transition.
@@ -3113,19 +5617,19 @@ type SubmarinerStatusRouteAgentDaemonSetStatusConditions struct {
 	Type string `pulumi:"type"`
 }
 
-// SubmarinerStatusRouteAgentDaemonSetStatusConditionsInput is an input type that accepts SubmarinerStatusRouteAgentDaemonSetStatusConditionsArgs and SubmarinerStatusRouteAgentDaemonSetStatusConditionsOutput values.
-// You can construct a concrete instance of `SubmarinerStatusRouteAgentDaemonSetStatusConditionsInput` via:
+// SubmarinerStatusRouteAgentDaemonSetStatusStatusConditionsInput is an input type that accepts SubmarinerStatusRouteAgentDaemonSetStatusStatusConditionsArgs and SubmarinerStatusRouteAgentDaemonSetStatusStatusConditionsOutput values.
+// You can construct a concrete instance of `SubmarinerStatusRouteAgentDaemonSetStatusStatusConditionsInput` via:
 //
-//          SubmarinerStatusRouteAgentDaemonSetStatusConditionsArgs{...}
-type SubmarinerStatusRouteAgentDaemonSetStatusConditionsInput interface {
+//          SubmarinerStatusRouteAgentDaemonSetStatusStatusConditionsArgs{...}
+type SubmarinerStatusRouteAgentDaemonSetStatusStatusConditionsInput interface {
 	pulumi.Input
 
-	ToSubmarinerStatusRouteAgentDaemonSetStatusConditionsOutput() SubmarinerStatusRouteAgentDaemonSetStatusConditionsOutput
-	ToSubmarinerStatusRouteAgentDaemonSetStatusConditionsOutputWithContext(context.Context) SubmarinerStatusRouteAgentDaemonSetStatusConditionsOutput
+	ToSubmarinerStatusRouteAgentDaemonSetStatusStatusConditionsOutput() SubmarinerStatusRouteAgentDaemonSetStatusStatusConditionsOutput
+	ToSubmarinerStatusRouteAgentDaemonSetStatusStatusConditionsOutputWithContext(context.Context) SubmarinerStatusRouteAgentDaemonSetStatusStatusConditionsOutput
 }
 
 // DaemonSetCondition describes the state of a DaemonSet at a certain point.
-type SubmarinerStatusRouteAgentDaemonSetStatusConditionsArgs struct {
+type SubmarinerStatusRouteAgentDaemonSetStatusStatusConditionsArgs struct {
 	// Last time the condition transitioned from one status to another.
 	LastTransitionTime pulumi.StringPtrInput `pulumi:"lastTransitionTime"`
 	// A human readable message indicating details about the transition.
@@ -3138,135 +5642,163 @@ type SubmarinerStatusRouteAgentDaemonSetStatusConditionsArgs struct {
 	Type pulumi.StringInput `pulumi:"type"`
 }
 
-func (SubmarinerStatusRouteAgentDaemonSetStatusConditionsArgs) ElementType() reflect.Type {
-	return reflect.TypeOf((*SubmarinerStatusRouteAgentDaemonSetStatusConditions)(nil)).Elem()
+func (SubmarinerStatusRouteAgentDaemonSetStatusStatusConditionsArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*SubmarinerStatusRouteAgentDaemonSetStatusStatusConditions)(nil)).Elem()
 }
 
-func (i SubmarinerStatusRouteAgentDaemonSetStatusConditionsArgs) ToSubmarinerStatusRouteAgentDaemonSetStatusConditionsOutput() SubmarinerStatusRouteAgentDaemonSetStatusConditionsOutput {
-	return i.ToSubmarinerStatusRouteAgentDaemonSetStatusConditionsOutputWithContext(context.Background())
+func (i SubmarinerStatusRouteAgentDaemonSetStatusStatusConditionsArgs) ToSubmarinerStatusRouteAgentDaemonSetStatusStatusConditionsOutput() SubmarinerStatusRouteAgentDaemonSetStatusStatusConditionsOutput {
+	return i.ToSubmarinerStatusRouteAgentDaemonSetStatusStatusConditionsOutputWithContext(context.Background())
 }
 
-func (i SubmarinerStatusRouteAgentDaemonSetStatusConditionsArgs) ToSubmarinerStatusRouteAgentDaemonSetStatusConditionsOutputWithContext(ctx context.Context) SubmarinerStatusRouteAgentDaemonSetStatusConditionsOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(SubmarinerStatusRouteAgentDaemonSetStatusConditionsOutput)
+func (i SubmarinerStatusRouteAgentDaemonSetStatusStatusConditionsArgs) ToSubmarinerStatusRouteAgentDaemonSetStatusStatusConditionsOutputWithContext(ctx context.Context) SubmarinerStatusRouteAgentDaemonSetStatusStatusConditionsOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(SubmarinerStatusRouteAgentDaemonSetStatusStatusConditionsOutput)
 }
 
-// SubmarinerStatusRouteAgentDaemonSetStatusConditionsArrayInput is an input type that accepts SubmarinerStatusRouteAgentDaemonSetStatusConditionsArray and SubmarinerStatusRouteAgentDaemonSetStatusConditionsArrayOutput values.
-// You can construct a concrete instance of `SubmarinerStatusRouteAgentDaemonSetStatusConditionsArrayInput` via:
+// SubmarinerStatusRouteAgentDaemonSetStatusStatusConditionsArrayInput is an input type that accepts SubmarinerStatusRouteAgentDaemonSetStatusStatusConditionsArray and SubmarinerStatusRouteAgentDaemonSetStatusStatusConditionsArrayOutput values.
+// You can construct a concrete instance of `SubmarinerStatusRouteAgentDaemonSetStatusStatusConditionsArrayInput` via:
 //
-//          SubmarinerStatusRouteAgentDaemonSetStatusConditionsArray{ SubmarinerStatusRouteAgentDaemonSetStatusConditionsArgs{...} }
-type SubmarinerStatusRouteAgentDaemonSetStatusConditionsArrayInput interface {
+//          SubmarinerStatusRouteAgentDaemonSetStatusStatusConditionsArray{ SubmarinerStatusRouteAgentDaemonSetStatusStatusConditionsArgs{...} }
+type SubmarinerStatusRouteAgentDaemonSetStatusStatusConditionsArrayInput interface {
 	pulumi.Input
 
-	ToSubmarinerStatusRouteAgentDaemonSetStatusConditionsArrayOutput() SubmarinerStatusRouteAgentDaemonSetStatusConditionsArrayOutput
-	ToSubmarinerStatusRouteAgentDaemonSetStatusConditionsArrayOutputWithContext(context.Context) SubmarinerStatusRouteAgentDaemonSetStatusConditionsArrayOutput
+	ToSubmarinerStatusRouteAgentDaemonSetStatusStatusConditionsArrayOutput() SubmarinerStatusRouteAgentDaemonSetStatusStatusConditionsArrayOutput
+	ToSubmarinerStatusRouteAgentDaemonSetStatusStatusConditionsArrayOutputWithContext(context.Context) SubmarinerStatusRouteAgentDaemonSetStatusStatusConditionsArrayOutput
 }
 
-type SubmarinerStatusRouteAgentDaemonSetStatusConditionsArray []SubmarinerStatusRouteAgentDaemonSetStatusConditionsInput
+type SubmarinerStatusRouteAgentDaemonSetStatusStatusConditionsArray []SubmarinerStatusRouteAgentDaemonSetStatusStatusConditionsInput
 
-func (SubmarinerStatusRouteAgentDaemonSetStatusConditionsArray) ElementType() reflect.Type {
-	return reflect.TypeOf((*[]SubmarinerStatusRouteAgentDaemonSetStatusConditions)(nil)).Elem()
+func (SubmarinerStatusRouteAgentDaemonSetStatusStatusConditionsArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]SubmarinerStatusRouteAgentDaemonSetStatusStatusConditions)(nil)).Elem()
 }
 
-func (i SubmarinerStatusRouteAgentDaemonSetStatusConditionsArray) ToSubmarinerStatusRouteAgentDaemonSetStatusConditionsArrayOutput() SubmarinerStatusRouteAgentDaemonSetStatusConditionsArrayOutput {
-	return i.ToSubmarinerStatusRouteAgentDaemonSetStatusConditionsArrayOutputWithContext(context.Background())
+func (i SubmarinerStatusRouteAgentDaemonSetStatusStatusConditionsArray) ToSubmarinerStatusRouteAgentDaemonSetStatusStatusConditionsArrayOutput() SubmarinerStatusRouteAgentDaemonSetStatusStatusConditionsArrayOutput {
+	return i.ToSubmarinerStatusRouteAgentDaemonSetStatusStatusConditionsArrayOutputWithContext(context.Background())
 }
 
-func (i SubmarinerStatusRouteAgentDaemonSetStatusConditionsArray) ToSubmarinerStatusRouteAgentDaemonSetStatusConditionsArrayOutputWithContext(ctx context.Context) SubmarinerStatusRouteAgentDaemonSetStatusConditionsArrayOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(SubmarinerStatusRouteAgentDaemonSetStatusConditionsArrayOutput)
+func (i SubmarinerStatusRouteAgentDaemonSetStatusStatusConditionsArray) ToSubmarinerStatusRouteAgentDaemonSetStatusStatusConditionsArrayOutputWithContext(ctx context.Context) SubmarinerStatusRouteAgentDaemonSetStatusStatusConditionsArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(SubmarinerStatusRouteAgentDaemonSetStatusStatusConditionsArrayOutput)
 }
 
 // DaemonSetCondition describes the state of a DaemonSet at a certain point.
-type SubmarinerStatusRouteAgentDaemonSetStatusConditionsOutput struct{ *pulumi.OutputState }
+type SubmarinerStatusRouteAgentDaemonSetStatusStatusConditionsOutput struct{ *pulumi.OutputState }
 
-func (SubmarinerStatusRouteAgentDaemonSetStatusConditionsOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*SubmarinerStatusRouteAgentDaemonSetStatusConditions)(nil)).Elem()
+func (SubmarinerStatusRouteAgentDaemonSetStatusStatusConditionsOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*SubmarinerStatusRouteAgentDaemonSetStatusStatusConditions)(nil)).Elem()
 }
 
-func (o SubmarinerStatusRouteAgentDaemonSetStatusConditionsOutput) ToSubmarinerStatusRouteAgentDaemonSetStatusConditionsOutput() SubmarinerStatusRouteAgentDaemonSetStatusConditionsOutput {
+func (o SubmarinerStatusRouteAgentDaemonSetStatusStatusConditionsOutput) ToSubmarinerStatusRouteAgentDaemonSetStatusStatusConditionsOutput() SubmarinerStatusRouteAgentDaemonSetStatusStatusConditionsOutput {
 	return o
 }
 
-func (o SubmarinerStatusRouteAgentDaemonSetStatusConditionsOutput) ToSubmarinerStatusRouteAgentDaemonSetStatusConditionsOutputWithContext(ctx context.Context) SubmarinerStatusRouteAgentDaemonSetStatusConditionsOutput {
+func (o SubmarinerStatusRouteAgentDaemonSetStatusStatusConditionsOutput) ToSubmarinerStatusRouteAgentDaemonSetStatusStatusConditionsOutputWithContext(ctx context.Context) SubmarinerStatusRouteAgentDaemonSetStatusStatusConditionsOutput {
 	return o
 }
 
 // Last time the condition transitioned from one status to another.
-func (o SubmarinerStatusRouteAgentDaemonSetStatusConditionsOutput) LastTransitionTime() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v SubmarinerStatusRouteAgentDaemonSetStatusConditions) *string { return v.LastTransitionTime }).(pulumi.StringPtrOutput)
+func (o SubmarinerStatusRouteAgentDaemonSetStatusStatusConditionsOutput) LastTransitionTime() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v SubmarinerStatusRouteAgentDaemonSetStatusStatusConditions) *string { return v.LastTransitionTime }).(pulumi.StringPtrOutput)
 }
 
 // A human readable message indicating details about the transition.
-func (o SubmarinerStatusRouteAgentDaemonSetStatusConditionsOutput) Message() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v SubmarinerStatusRouteAgentDaemonSetStatusConditions) *string { return v.Message }).(pulumi.StringPtrOutput)
+func (o SubmarinerStatusRouteAgentDaemonSetStatusStatusConditionsOutput) Message() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v SubmarinerStatusRouteAgentDaemonSetStatusStatusConditions) *string { return v.Message }).(pulumi.StringPtrOutput)
 }
 
 // The reason for the condition's last transition.
-func (o SubmarinerStatusRouteAgentDaemonSetStatusConditionsOutput) Reason() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v SubmarinerStatusRouteAgentDaemonSetStatusConditions) *string { return v.Reason }).(pulumi.StringPtrOutput)
+func (o SubmarinerStatusRouteAgentDaemonSetStatusStatusConditionsOutput) Reason() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v SubmarinerStatusRouteAgentDaemonSetStatusStatusConditions) *string { return v.Reason }).(pulumi.StringPtrOutput)
 }
 
 // Status of the condition, one of True, False, Unknown.
-func (o SubmarinerStatusRouteAgentDaemonSetStatusConditionsOutput) Status() pulumi.StringOutput {
-	return o.ApplyT(func(v SubmarinerStatusRouteAgentDaemonSetStatusConditions) string { return v.Status }).(pulumi.StringOutput)
+func (o SubmarinerStatusRouteAgentDaemonSetStatusStatusConditionsOutput) Status() pulumi.StringOutput {
+	return o.ApplyT(func(v SubmarinerStatusRouteAgentDaemonSetStatusStatusConditions) string { return v.Status }).(pulumi.StringOutput)
 }
 
 // Type of DaemonSet condition.
-func (o SubmarinerStatusRouteAgentDaemonSetStatusConditionsOutput) Type() pulumi.StringOutput {
-	return o.ApplyT(func(v SubmarinerStatusRouteAgentDaemonSetStatusConditions) string { return v.Type }).(pulumi.StringOutput)
+func (o SubmarinerStatusRouteAgentDaemonSetStatusStatusConditionsOutput) Type() pulumi.StringOutput {
+	return o.ApplyT(func(v SubmarinerStatusRouteAgentDaemonSetStatusStatusConditions) string { return v.Type }).(pulumi.StringOutput)
 }
 
-type SubmarinerStatusRouteAgentDaemonSetStatusConditionsArrayOutput struct{ *pulumi.OutputState }
+type SubmarinerStatusRouteAgentDaemonSetStatusStatusConditionsArrayOutput struct{ *pulumi.OutputState }
 
-func (SubmarinerStatusRouteAgentDaemonSetStatusConditionsArrayOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*[]SubmarinerStatusRouteAgentDaemonSetStatusConditions)(nil)).Elem()
+func (SubmarinerStatusRouteAgentDaemonSetStatusStatusConditionsArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]SubmarinerStatusRouteAgentDaemonSetStatusStatusConditions)(nil)).Elem()
 }
 
-func (o SubmarinerStatusRouteAgentDaemonSetStatusConditionsArrayOutput) ToSubmarinerStatusRouteAgentDaemonSetStatusConditionsArrayOutput() SubmarinerStatusRouteAgentDaemonSetStatusConditionsArrayOutput {
+func (o SubmarinerStatusRouteAgentDaemonSetStatusStatusConditionsArrayOutput) ToSubmarinerStatusRouteAgentDaemonSetStatusStatusConditionsArrayOutput() SubmarinerStatusRouteAgentDaemonSetStatusStatusConditionsArrayOutput {
 	return o
 }
 
-func (o SubmarinerStatusRouteAgentDaemonSetStatusConditionsArrayOutput) ToSubmarinerStatusRouteAgentDaemonSetStatusConditionsArrayOutputWithContext(ctx context.Context) SubmarinerStatusRouteAgentDaemonSetStatusConditionsArrayOutput {
+func (o SubmarinerStatusRouteAgentDaemonSetStatusStatusConditionsArrayOutput) ToSubmarinerStatusRouteAgentDaemonSetStatusStatusConditionsArrayOutputWithContext(ctx context.Context) SubmarinerStatusRouteAgentDaemonSetStatusStatusConditionsArrayOutput {
 	return o
 }
 
-func (o SubmarinerStatusRouteAgentDaemonSetStatusConditionsArrayOutput) Index(i pulumi.IntInput) SubmarinerStatusRouteAgentDaemonSetStatusConditionsOutput {
-	return pulumi.All(o, i).ApplyT(func(vs []interface{}) SubmarinerStatusRouteAgentDaemonSetStatusConditions {
-		return vs[0].([]SubmarinerStatusRouteAgentDaemonSetStatusConditions)[vs[1].(int)]
-	}).(SubmarinerStatusRouteAgentDaemonSetStatusConditionsOutput)
+func (o SubmarinerStatusRouteAgentDaemonSetStatusStatusConditionsArrayOutput) Index(i pulumi.IntInput) SubmarinerStatusRouteAgentDaemonSetStatusStatusConditionsOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) SubmarinerStatusRouteAgentDaemonSetStatusStatusConditions {
+		return vs[0].([]SubmarinerStatusRouteAgentDaemonSetStatusStatusConditions)[vs[1].(int)]
+	}).(SubmarinerStatusRouteAgentDaemonSetStatusStatusConditionsOutput)
 }
 
 func init() {
-	pulumi.RegisterOutputType(ServiceDiscoveryTypeOutput{})
-	pulumi.RegisterOutputType(ServiceDiscoveryMetadataOutput{})
-	pulumi.RegisterOutputType(ServiceDiscoverySpecOutput{})
-	pulumi.RegisterOutputType(ServiceDiscoverySpecPtrOutput{})
-	pulumi.RegisterOutputType(ServiceDiscoveryStatusOutput{})
 	pulumi.RegisterOutputType(SubmarinerTypeOutput{})
 	pulumi.RegisterOutputType(SubmarinerMetadataOutput{})
 	pulumi.RegisterOutputType(SubmarinerSpecOutput{})
 	pulumi.RegisterOutputType(SubmarinerSpecPtrOutput{})
+	pulumi.RegisterOutputType(SubmarinerSpecConnectionHealthCheckOutput{})
+	pulumi.RegisterOutputType(SubmarinerSpecConnectionHealthCheckPtrOutput{})
+	pulumi.RegisterOutputType(SubmarinerSpecImageOverridesOutput{})
 	pulumi.RegisterOutputType(SubmarinerStatusOutput{})
 	pulumi.RegisterOutputType(SubmarinerStatusPtrOutput{})
 	pulumi.RegisterOutputType(SubmarinerStatusEngineDaemonSetStatusOutput{})
 	pulumi.RegisterOutputType(SubmarinerStatusEngineDaemonSetStatusPtrOutput{})
-	pulumi.RegisterOutputType(SubmarinerStatusEngineDaemonSetStatusConditionsOutput{})
-	pulumi.RegisterOutputType(SubmarinerStatusEngineDaemonSetStatusConditionsArrayOutput{})
+	pulumi.RegisterOutputType(SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesOutput{})
+	pulumi.RegisterOutputType(SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesArrayOutput{})
+	pulumi.RegisterOutputType(SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunningOutput{})
+	pulumi.RegisterOutputType(SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunningPtrOutput{})
+	pulumi.RegisterOutputType(SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminatedOutput{})
+	pulumi.RegisterOutputType(SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutput{})
+	pulumi.RegisterOutputType(SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaitingOutput{})
+	pulumi.RegisterOutputType(SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaitingPtrOutput{})
+	pulumi.RegisterOutputType(SubmarinerStatusEngineDaemonSetStatusStatusOutput{})
+	pulumi.RegisterOutputType(SubmarinerStatusEngineDaemonSetStatusStatusPtrOutput{})
+	pulumi.RegisterOutputType(SubmarinerStatusEngineDaemonSetStatusStatusConditionsOutput{})
+	pulumi.RegisterOutputType(SubmarinerStatusEngineDaemonSetStatusStatusConditionsArrayOutput{})
 	pulumi.RegisterOutputType(SubmarinerStatusGatewaysOutput{})
 	pulumi.RegisterOutputType(SubmarinerStatusGatewaysArrayOutput{})
-	pulumi.RegisterOutputType(SubmarinerStatusGatewaysMetadataOutput{})
-	pulumi.RegisterOutputType(SubmarinerStatusGatewaysStatusOutput{})
-	pulumi.RegisterOutputType(SubmarinerStatusGatewaysStatusConnectionsOutput{})
-	pulumi.RegisterOutputType(SubmarinerStatusGatewaysStatusConnectionsArrayOutput{})
-	pulumi.RegisterOutputType(SubmarinerStatusGatewaysStatusConnectionsEndpointOutput{})
-	pulumi.RegisterOutputType(SubmarinerStatusGatewaysStatusConnectionsEndpointBackend_configOutput{})
-	pulumi.RegisterOutputType(SubmarinerStatusGatewaysStatusLocalEndpointOutput{})
-	pulumi.RegisterOutputType(SubmarinerStatusGatewaysStatusLocalEndpointBackend_configOutput{})
+	pulumi.RegisterOutputType(SubmarinerStatusGatewaysConnectionsOutput{})
+	pulumi.RegisterOutputType(SubmarinerStatusGatewaysConnectionsArrayOutput{})
+	pulumi.RegisterOutputType(SubmarinerStatusGatewaysConnectionsEndpointOutput{})
+	pulumi.RegisterOutputType(SubmarinerStatusGatewaysConnectionsEndpointBackend_configOutput{})
+	pulumi.RegisterOutputType(SubmarinerStatusGatewaysConnectionsLatencyRTTOutput{})
+	pulumi.RegisterOutputType(SubmarinerStatusGatewaysConnectionsLatencyRTTPtrOutput{})
+	pulumi.RegisterOutputType(SubmarinerStatusGatewaysLocalEndpointOutput{})
+	pulumi.RegisterOutputType(SubmarinerStatusGatewaysLocalEndpointBackend_configOutput{})
 	pulumi.RegisterOutputType(SubmarinerStatusGlobalnetDaemonSetStatusOutput{})
 	pulumi.RegisterOutputType(SubmarinerStatusGlobalnetDaemonSetStatusPtrOutput{})
-	pulumi.RegisterOutputType(SubmarinerStatusGlobalnetDaemonSetStatusConditionsOutput{})
-	pulumi.RegisterOutputType(SubmarinerStatusGlobalnetDaemonSetStatusConditionsArrayOutput{})
+	pulumi.RegisterOutputType(SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesOutput{})
+	pulumi.RegisterOutputType(SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesArrayOutput{})
+	pulumi.RegisterOutputType(SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunningOutput{})
+	pulumi.RegisterOutputType(SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunningPtrOutput{})
+	pulumi.RegisterOutputType(SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminatedOutput{})
+	pulumi.RegisterOutputType(SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutput{})
+	pulumi.RegisterOutputType(SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaitingOutput{})
+	pulumi.RegisterOutputType(SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaitingPtrOutput{})
+	pulumi.RegisterOutputType(SubmarinerStatusGlobalnetDaemonSetStatusStatusOutput{})
+	pulumi.RegisterOutputType(SubmarinerStatusGlobalnetDaemonSetStatusStatusPtrOutput{})
+	pulumi.RegisterOutputType(SubmarinerStatusGlobalnetDaemonSetStatusStatusConditionsOutput{})
+	pulumi.RegisterOutputType(SubmarinerStatusGlobalnetDaemonSetStatusStatusConditionsArrayOutput{})
 	pulumi.RegisterOutputType(SubmarinerStatusRouteAgentDaemonSetStatusOutput{})
 	pulumi.RegisterOutputType(SubmarinerStatusRouteAgentDaemonSetStatusPtrOutput{})
-	pulumi.RegisterOutputType(SubmarinerStatusRouteAgentDaemonSetStatusConditionsOutput{})
-	pulumi.RegisterOutputType(SubmarinerStatusRouteAgentDaemonSetStatusConditionsArrayOutput{})
+	pulumi.RegisterOutputType(SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesOutput{})
+	pulumi.RegisterOutputType(SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesArrayOutput{})
+	pulumi.RegisterOutputType(SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunningOutput{})
+	pulumi.RegisterOutputType(SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunningPtrOutput{})
+	pulumi.RegisterOutputType(SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminatedOutput{})
+	pulumi.RegisterOutputType(SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminatedPtrOutput{})
+	pulumi.RegisterOutputType(SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaitingOutput{})
+	pulumi.RegisterOutputType(SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaitingPtrOutput{})
+	pulumi.RegisterOutputType(SubmarinerStatusRouteAgentDaemonSetStatusStatusOutput{})
+	pulumi.RegisterOutputType(SubmarinerStatusRouteAgentDaemonSetStatusStatusPtrOutput{})
+	pulumi.RegisterOutputType(SubmarinerStatusRouteAgentDaemonSetStatusStatusConditionsOutput{})
+	pulumi.RegisterOutputType(SubmarinerStatusRouteAgentDaemonSetStatusStatusConditionsArrayOutput{})
 }

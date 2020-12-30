@@ -39,8 +39,8 @@ __all__ = [
     'DatadogAgentSpecAgentConfigResourcesLimits',
     'DatadogAgentSpecAgentConfigResourcesRequests',
     'DatadogAgentSpecAgentConfigSecurityContext',
-    'DatadogAgentSpecAgentConfigSecurityContextCapabilities',
     'DatadogAgentSpecAgentConfigSecurityContextSeLinuxOptions',
+    'DatadogAgentSpecAgentConfigSecurityContextSysctls',
     'DatadogAgentSpecAgentConfigSecurityContextWindowsOptions',
     'DatadogAgentSpecAgentConfigTolerations',
     'DatadogAgentSpecAgentConfigVolumeMounts',
@@ -103,6 +103,8 @@ __all__ = [
     'DatadogAgentSpecAgentCustomConfigConfigMap',
     'DatadogAgentSpecAgentDeploymentStrategy',
     'DatadogAgentSpecAgentDeploymentStrategyCanary',
+    'DatadogAgentSpecAgentDeploymentStrategyCanaryNodeSelector',
+    'DatadogAgentSpecAgentDeploymentStrategyCanaryNodeSelectorMatchExpressions',
     'DatadogAgentSpecAgentDeploymentStrategyCanaryReplicas',
     'DatadogAgentSpecAgentDeploymentStrategyRollingUpdate',
     'DatadogAgentSpecAgentDeploymentStrategyRollingUpdateMaxPodSchedulerFailure',
@@ -120,6 +122,7 @@ __all__ = [
     'DatadogAgentSpecAgentImage',
     'DatadogAgentSpecAgentImagePullSecrets',
     'DatadogAgentSpecAgentLog',
+    'DatadogAgentSpecAgentNetworkPolicy',
     'DatadogAgentSpecAgentProcess',
     'DatadogAgentSpecAgentProcessEnv',
     'DatadogAgentSpecAgentProcessEnvValueFrom',
@@ -132,6 +135,22 @@ __all__ = [
     'DatadogAgentSpecAgentProcessResourcesLimits',
     'DatadogAgentSpecAgentProcessResourcesRequests',
     'DatadogAgentSpecAgentRbac',
+    'DatadogAgentSpecAgentSecurity',
+    'DatadogAgentSpecAgentSecurityCompliance',
+    'DatadogAgentSpecAgentSecurityComplianceConfigDir',
+    'DatadogAgentSpecAgentSecurityEnv',
+    'DatadogAgentSpecAgentSecurityEnvValueFrom',
+    'DatadogAgentSpecAgentSecurityEnvValueFromConfigMapKeyRef',
+    'DatadogAgentSpecAgentSecurityEnvValueFromFieldRef',
+    'DatadogAgentSpecAgentSecurityEnvValueFromResourceFieldRef',
+    'DatadogAgentSpecAgentSecurityEnvValueFromResourceFieldRefDivisor',
+    'DatadogAgentSpecAgentSecurityEnvValueFromSecretKeyRef',
+    'DatadogAgentSpecAgentSecurityResources',
+    'DatadogAgentSpecAgentSecurityResourcesLimits',
+    'DatadogAgentSpecAgentSecurityResourcesRequests',
+    'DatadogAgentSpecAgentSecurityRuntime',
+    'DatadogAgentSpecAgentSecurityRuntimePoliciesDir',
+    'DatadogAgentSpecAgentSecurityRuntimeSyscallMonitor',
     'DatadogAgentSpecAgentSystemProbe',
     'DatadogAgentSpecAgentSystemProbeEnv',
     'DatadogAgentSpecAgentSystemProbeEnvValueFrom',
@@ -248,6 +267,7 @@ __all__ = [
     'DatadogAgentSpecClusterAgentCustomConfigConfigMap',
     'DatadogAgentSpecClusterAgentImage',
     'DatadogAgentSpecClusterAgentImagePullSecrets',
+    'DatadogAgentSpecClusterAgentNetworkPolicy',
     'DatadogAgentSpecClusterAgentRbac',
     'DatadogAgentSpecClusterAgentTolerations',
     'DatadogAgentSpecClusterChecksRunner',
@@ -348,6 +368,7 @@ __all__ = [
     'DatadogAgentSpecClusterChecksRunnerCustomConfigConfigMap',
     'DatadogAgentSpecClusterChecksRunnerImage',
     'DatadogAgentSpecClusterChecksRunnerImagePullSecrets',
+    'DatadogAgentSpecClusterChecksRunnerNetworkPolicy',
     'DatadogAgentSpecClusterChecksRunnerRbac',
     'DatadogAgentSpecClusterChecksRunnerTolerations',
     'DatadogAgentSpecCredentials',
@@ -468,9 +489,11 @@ class DatadogAgentSpecAgent(dict):
                  host_network: Optional[bool] = None,
                  host_pid: Optional[bool] = None,
                  log: Optional['outputs.DatadogAgentSpecAgentLog'] = None,
+                 network_policy: Optional['outputs.DatadogAgentSpecAgentNetworkPolicy'] = None,
                  priority_class_name: Optional[str] = None,
                  process: Optional['outputs.DatadogAgentSpecAgentProcess'] = None,
                  rbac: Optional['outputs.DatadogAgentSpecAgentRbac'] = None,
+                 security: Optional['outputs.DatadogAgentSpecAgentSecurity'] = None,
                  system_probe: Optional['outputs.DatadogAgentSpecAgentSystemProbe'] = None,
                  use_extended_daemonset: Optional[bool] = None):
         """
@@ -489,9 +512,11 @@ class DatadogAgentSpecAgent(dict):
         :param bool host_network: Host networking requested for this pod. Use the host's network namespace. If this option is set, the ports that will be used must be specified. Default to false.
         :param bool host_pid: Use the host's pid namespace. Optional: Default to false.
         :param 'DatadogAgentSpecAgentLogArgs' log: Log Agent configuration
+        :param 'DatadogAgentSpecAgentNetworkPolicyArgs' network_policy: Provide Agent Network Policy configuration
         :param str priority_class_name: If specified, indicates the pod's priority. "system-node-critical" and "system-cluster-critical" are two special keywords which indicate the highest priorities with the former being the highest priority. Any other name must be defined by creating a PriorityClass object with that name. If not specified, the pod priority will be default or zero if there is no default.
         :param 'DatadogAgentSpecAgentProcessArgs' process: Process Agent configuration
         :param 'DatadogAgentSpecAgentRbacArgs' rbac: RBAC configuration of the Agent
+        :param 'DatadogAgentSpecAgentSecurityArgs' security: Security Agent configuration
         :param 'DatadogAgentSpecAgentSystemProbeArgs' system_probe: SystemProbe configuration
         :param bool use_extended_daemonset: UseExtendedDaemonset use ExtendedDaemonset for Agent deployment. default value is false.
         """
@@ -522,12 +547,16 @@ class DatadogAgentSpecAgent(dict):
             pulumi.set(__self__, "host_pid", host_pid)
         if log is not None:
             pulumi.set(__self__, "log", log)
+        if network_policy is not None:
+            pulumi.set(__self__, "network_policy", network_policy)
         if priority_class_name is not None:
             pulumi.set(__self__, "priority_class_name", priority_class_name)
         if process is not None:
             pulumi.set(__self__, "process", process)
         if rbac is not None:
             pulumi.set(__self__, "rbac", rbac)
+        if security is not None:
+            pulumi.set(__self__, "security", security)
         if system_probe is not None:
             pulumi.set(__self__, "system_probe", system_probe)
         if use_extended_daemonset is not None:
@@ -646,6 +675,14 @@ class DatadogAgentSpecAgent(dict):
         return pulumi.get(self, "log")
 
     @property
+    @pulumi.getter(name="networkPolicy")
+    def network_policy(self) -> Optional['outputs.DatadogAgentSpecAgentNetworkPolicy']:
+        """
+        Provide Agent Network Policy configuration
+        """
+        return pulumi.get(self, "network_policy")
+
+    @property
     @pulumi.getter(name="priorityClassName")
     def priority_class_name(self) -> Optional[str]:
         """
@@ -668,6 +705,14 @@ class DatadogAgentSpecAgent(dict):
         RBAC configuration of the Agent
         """
         return pulumi.get(self, "rbac")
+
+    @property
+    @pulumi.getter
+    def security(self) -> Optional['outputs.DatadogAgentSpecAgentSecurity']:
+        """
+        Security Agent configuration
+        """
+        return pulumi.get(self, "security")
 
     @property
     @pulumi.getter(name="systemProbe")
@@ -1150,7 +1195,7 @@ class DatadogAgentSpecAgentConfig(dict):
         :param Mapping[str, str] pod_annotations_as_tags: Provide a mapping of Kubernetes Annotations to Datadog Tags. <KUBERNETES_ANNOTATIONS>: <DATADOG_TAG_KEY>
         :param Mapping[str, str] pod_labels_as_tags: Provide a mapping of Kubernetes Labels to Datadog Tags. <KUBERNETES_LABEL>: <DATADOG_TAG_KEY>
         :param 'DatadogAgentSpecAgentConfigResourcesArgs' resources: Datadog Agent resource requests and limits Make sure to keep requests and limits equal to keep the pods in the Guaranteed QoS class Ref: http://kubernetes.io/docs/user-guide/compute-resources/
-        :param 'DatadogAgentSpecAgentConfigSecurityContextArgs' security_context: You can modify the security context used to run the containers by modifying the label type
+        :param 'DatadogAgentSpecAgentConfigSecurityContextArgs' security_context: Pod-level SecurityContext
         :param Sequence[str] tags: List of tags to attach to every metric, event and service check collected by this Agent. Learn more about tagging: https://docs.datadoghq.com/tagging/
         :param Sequence['DatadogAgentSpecAgentConfigTolerationsArgs'] tolerations: If specified, the Agent pod's tolerations.
         :param Sequence['DatadogAgentSpecAgentConfigVolumeMountsArgs'] volume_mounts: Specify additional volume mounts in the Datadog Agent container
@@ -1301,7 +1346,7 @@ class DatadogAgentSpecAgentConfig(dict):
     @pulumi.getter(name="securityContext")
     def security_context(self) -> Optional['outputs.DatadogAgentSpecAgentConfigSecurityContext']:
         """
-        You can modify the security context used to run the containers by modifying the label type
+        Pod-level SecurityContext
         """
         return pulumi.get(self, "security_context")
 
@@ -1832,42 +1877,36 @@ class DatadogAgentSpecAgentConfigResourcesRequests(dict):
 @pulumi.output_type
 class DatadogAgentSpecAgentConfigSecurityContext(dict):
     """
-    You can modify the security context used to run the containers by modifying the label type
+    Pod-level SecurityContext
     """
     def __init__(__self__, *,
-                 allow_privilege_escalation: Optional[bool] = None,
-                 capabilities: Optional['outputs.DatadogAgentSpecAgentConfigSecurityContextCapabilities'] = None,
-                 privileged: Optional[bool] = None,
-                 proc_mount: Optional[str] = None,
-                 read_only_root_filesystem: Optional[bool] = None,
+                 fs_group: Optional[int] = None,
+                 fs_group_change_policy: Optional[str] = None,
                  run_as_group: Optional[int] = None,
                  run_as_non_root: Optional[bool] = None,
                  run_as_user: Optional[int] = None,
                  se_linux_options: Optional['outputs.DatadogAgentSpecAgentConfigSecurityContextSeLinuxOptions'] = None,
+                 supplemental_groups: Optional[Sequence[int]] = None,
+                 sysctls: Optional[Sequence['outputs.DatadogAgentSpecAgentConfigSecurityContextSysctls']] = None,
                  windows_options: Optional['outputs.DatadogAgentSpecAgentConfigSecurityContextWindowsOptions'] = None):
         """
-        You can modify the security context used to run the containers by modifying the label type
-        :param bool allow_privilege_escalation: AllowPrivilegeEscalation controls whether a process can gain more privileges than its parent process. This bool directly controls if the no_new_privs flag will be set on the container process. AllowPrivilegeEscalation is true always when the container is: 1) run as Privileged 2) has CAP_SYS_ADMIN
-        :param 'DatadogAgentSpecAgentConfigSecurityContextCapabilitiesArgs' capabilities: The capabilities to add/drop when running containers. Defaults to the default set of capabilities granted by the container runtime.
-        :param bool privileged: Run container in privileged mode. Processes in privileged containers are essentially equivalent to root on the host. Defaults to false.
-        :param str proc_mount: procMount denotes the type of proc mount to use for the containers. The default is DefaultProcMount which uses the container runtime defaults for readonly paths and masked paths. This requires the ProcMountType feature flag to be enabled.
-        :param bool read_only_root_filesystem: Whether this container has a read-only root filesystem. Default is false.
-        :param int run_as_group: The GID to run the entrypoint of the container process. Uses runtime default if unset. May also be set in PodSecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
-        :param bool run_as_non_root: Indicates that the container must run as a non-root user. If true, the Kubelet will validate the image at runtime to ensure that it does not run as UID 0 (root) and fail to start the container if it does. If unset or false, no such validation will be performed. May also be set in PodSecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
-        :param int run_as_user: The UID to run the entrypoint of the container process. Defaults to user specified in image metadata if unspecified. May also be set in PodSecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
-        :param 'DatadogAgentSpecAgentConfigSecurityContextSeLinuxOptionsArgs' se_linux_options: The SELinux context to be applied to the container. If unspecified, the container runtime will allocate a random SELinux context for each container.  May also be set in PodSecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
-        :param 'DatadogAgentSpecAgentConfigSecurityContextWindowsOptionsArgs' windows_options: The Windows specific settings applied to all containers. If unspecified, the options from the PodSecurityContext will be used. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
+        Pod-level SecurityContext
+        :param int fs_group: A special supplemental group that applies to all containers in a pod. Some volume types allow the Kubelet to change the ownership of that volume to be owned by the pod: 
+                1. The owning GID will be the FSGroup 2. The setgid bit is set (new files created in the volume will be owned by FSGroup) 3. The permission bits are OR'd with rw-rw---- 
+                If unset, the Kubelet will not modify the ownership and permissions of any volume.
+        :param str fs_group_change_policy: fsGroupChangePolicy defines behavior of changing ownership and permission of the volume before being exposed inside Pod. This field will only apply to volume types which support fsGroup based ownership(and permissions). It will have no effect on ephemeral volume types such as: secret, configmaps and emptydir. Valid values are "OnRootMismatch" and "Always". If not specified defaults to "Always".
+        :param int run_as_group: The GID to run the entrypoint of the container process. Uses runtime default if unset. May also be set in SecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence for that container.
+        :param bool run_as_non_root: Indicates that the container must run as a non-root user. If true, the Kubelet will validate the image at runtime to ensure that it does not run as UID 0 (root) and fail to start the container if it does. If unset or false, no such validation will be performed. May also be set in SecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
+        :param int run_as_user: The UID to run the entrypoint of the container process. Defaults to user specified in image metadata if unspecified. May also be set in SecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence for that container.
+        :param 'DatadogAgentSpecAgentConfigSecurityContextSeLinuxOptionsArgs' se_linux_options: The SELinux context to be applied to all containers. If unspecified, the container runtime will allocate a random SELinux context for each container.  May also be set in SecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence for that container.
+        :param Sequence[int] supplemental_groups: A list of groups applied to the first process run in each container, in addition to the container's primary GID.  If unspecified, no groups will be added to any container.
+        :param Sequence['DatadogAgentSpecAgentConfigSecurityContextSysctlsArgs'] sysctls: Sysctls hold a list of namespaced sysctls used for the pod. Pods with unsupported sysctls (by the container runtime) might fail to launch.
+        :param 'DatadogAgentSpecAgentConfigSecurityContextWindowsOptionsArgs' windows_options: The Windows specific settings applied to all containers. If unspecified, the options within a container's SecurityContext will be used. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
         """
-        if allow_privilege_escalation is not None:
-            pulumi.set(__self__, "allow_privilege_escalation", allow_privilege_escalation)
-        if capabilities is not None:
-            pulumi.set(__self__, "capabilities", capabilities)
-        if privileged is not None:
-            pulumi.set(__self__, "privileged", privileged)
-        if proc_mount is not None:
-            pulumi.set(__self__, "proc_mount", proc_mount)
-        if read_only_root_filesystem is not None:
-            pulumi.set(__self__, "read_only_root_filesystem", read_only_root_filesystem)
+        if fs_group is not None:
+            pulumi.set(__self__, "fs_group", fs_group)
+        if fs_group_change_policy is not None:
+            pulumi.set(__self__, "fs_group_change_policy", fs_group_change_policy)
         if run_as_group is not None:
             pulumi.set(__self__, "run_as_group", run_as_group)
         if run_as_non_root is not None:
@@ -1876,54 +1915,36 @@ class DatadogAgentSpecAgentConfigSecurityContext(dict):
             pulumi.set(__self__, "run_as_user", run_as_user)
         if se_linux_options is not None:
             pulumi.set(__self__, "se_linux_options", se_linux_options)
+        if supplemental_groups is not None:
+            pulumi.set(__self__, "supplemental_groups", supplemental_groups)
+        if sysctls is not None:
+            pulumi.set(__self__, "sysctls", sysctls)
         if windows_options is not None:
             pulumi.set(__self__, "windows_options", windows_options)
 
     @property
-    @pulumi.getter(name="allowPrivilegeEscalation")
-    def allow_privilege_escalation(self) -> Optional[bool]:
+    @pulumi.getter(name="fsGroup")
+    def fs_group(self) -> Optional[int]:
         """
-        AllowPrivilegeEscalation controls whether a process can gain more privileges than its parent process. This bool directly controls if the no_new_privs flag will be set on the container process. AllowPrivilegeEscalation is true always when the container is: 1) run as Privileged 2) has CAP_SYS_ADMIN
+        A special supplemental group that applies to all containers in a pod. Some volume types allow the Kubelet to change the ownership of that volume to be owned by the pod: 
+         1. The owning GID will be the FSGroup 2. The setgid bit is set (new files created in the volume will be owned by FSGroup) 3. The permission bits are OR'd with rw-rw---- 
+         If unset, the Kubelet will not modify the ownership and permissions of any volume.
         """
-        return pulumi.get(self, "allow_privilege_escalation")
+        return pulumi.get(self, "fs_group")
 
     @property
-    @pulumi.getter
-    def capabilities(self) -> Optional['outputs.DatadogAgentSpecAgentConfigSecurityContextCapabilities']:
+    @pulumi.getter(name="fsGroupChangePolicy")
+    def fs_group_change_policy(self) -> Optional[str]:
         """
-        The capabilities to add/drop when running containers. Defaults to the default set of capabilities granted by the container runtime.
+        fsGroupChangePolicy defines behavior of changing ownership and permission of the volume before being exposed inside Pod. This field will only apply to volume types which support fsGroup based ownership(and permissions). It will have no effect on ephemeral volume types such as: secret, configmaps and emptydir. Valid values are "OnRootMismatch" and "Always". If not specified defaults to "Always".
         """
-        return pulumi.get(self, "capabilities")
-
-    @property
-    @pulumi.getter
-    def privileged(self) -> Optional[bool]:
-        """
-        Run container in privileged mode. Processes in privileged containers are essentially equivalent to root on the host. Defaults to false.
-        """
-        return pulumi.get(self, "privileged")
-
-    @property
-    @pulumi.getter(name="procMount")
-    def proc_mount(self) -> Optional[str]:
-        """
-        procMount denotes the type of proc mount to use for the containers. The default is DefaultProcMount which uses the container runtime defaults for readonly paths and masked paths. This requires the ProcMountType feature flag to be enabled.
-        """
-        return pulumi.get(self, "proc_mount")
-
-    @property
-    @pulumi.getter(name="readOnlyRootFilesystem")
-    def read_only_root_filesystem(self) -> Optional[bool]:
-        """
-        Whether this container has a read-only root filesystem. Default is false.
-        """
-        return pulumi.get(self, "read_only_root_filesystem")
+        return pulumi.get(self, "fs_group_change_policy")
 
     @property
     @pulumi.getter(name="runAsGroup")
     def run_as_group(self) -> Optional[int]:
         """
-        The GID to run the entrypoint of the container process. Uses runtime default if unset. May also be set in PodSecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
+        The GID to run the entrypoint of the container process. Uses runtime default if unset. May also be set in SecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence for that container.
         """
         return pulumi.get(self, "run_as_group")
 
@@ -1931,7 +1952,7 @@ class DatadogAgentSpecAgentConfigSecurityContext(dict):
     @pulumi.getter(name="runAsNonRoot")
     def run_as_non_root(self) -> Optional[bool]:
         """
-        Indicates that the container must run as a non-root user. If true, the Kubelet will validate the image at runtime to ensure that it does not run as UID 0 (root) and fail to start the container if it does. If unset or false, no such validation will be performed. May also be set in PodSecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
+        Indicates that the container must run as a non-root user. If true, the Kubelet will validate the image at runtime to ensure that it does not run as UID 0 (root) and fail to start the container if it does. If unset or false, no such validation will be performed. May also be set in SecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
         """
         return pulumi.get(self, "run_as_non_root")
 
@@ -1939,7 +1960,7 @@ class DatadogAgentSpecAgentConfigSecurityContext(dict):
     @pulumi.getter(name="runAsUser")
     def run_as_user(self) -> Optional[int]:
         """
-        The UID to run the entrypoint of the container process. Defaults to user specified in image metadata if unspecified. May also be set in PodSecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
+        The UID to run the entrypoint of the container process. Defaults to user specified in image metadata if unspecified. May also be set in SecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence for that container.
         """
         return pulumi.get(self, "run_as_user")
 
@@ -1947,15 +1968,31 @@ class DatadogAgentSpecAgentConfigSecurityContext(dict):
     @pulumi.getter(name="seLinuxOptions")
     def se_linux_options(self) -> Optional['outputs.DatadogAgentSpecAgentConfigSecurityContextSeLinuxOptions']:
         """
-        The SELinux context to be applied to the container. If unspecified, the container runtime will allocate a random SELinux context for each container.  May also be set in PodSecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
+        The SELinux context to be applied to all containers. If unspecified, the container runtime will allocate a random SELinux context for each container.  May also be set in SecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence for that container.
         """
         return pulumi.get(self, "se_linux_options")
+
+    @property
+    @pulumi.getter(name="supplementalGroups")
+    def supplemental_groups(self) -> Optional[Sequence[int]]:
+        """
+        A list of groups applied to the first process run in each container, in addition to the container's primary GID.  If unspecified, no groups will be added to any container.
+        """
+        return pulumi.get(self, "supplemental_groups")
+
+    @property
+    @pulumi.getter
+    def sysctls(self) -> Optional[Sequence['outputs.DatadogAgentSpecAgentConfigSecurityContextSysctls']]:
+        """
+        Sysctls hold a list of namespaced sysctls used for the pod. Pods with unsupported sysctls (by the container runtime) might fail to launch.
+        """
+        return pulumi.get(self, "sysctls")
 
     @property
     @pulumi.getter(name="windowsOptions")
     def windows_options(self) -> Optional['outputs.DatadogAgentSpecAgentConfigSecurityContextWindowsOptions']:
         """
-        The Windows specific settings applied to all containers. If unspecified, the options from the PodSecurityContext will be used. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
+        The Windows specific settings applied to all containers. If unspecified, the options within a container's SecurityContext will be used. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
         """
         return pulumi.get(self, "windows_options")
 
@@ -1964,47 +2001,9 @@ class DatadogAgentSpecAgentConfigSecurityContext(dict):
 
 
 @pulumi.output_type
-class DatadogAgentSpecAgentConfigSecurityContextCapabilities(dict):
-    """
-    The capabilities to add/drop when running containers. Defaults to the default set of capabilities granted by the container runtime.
-    """
-    def __init__(__self__, *,
-                 add: Optional[Sequence[str]] = None,
-                 drop: Optional[Sequence[str]] = None):
-        """
-        The capabilities to add/drop when running containers. Defaults to the default set of capabilities granted by the container runtime.
-        :param Sequence[str] add: Added capabilities
-        :param Sequence[str] drop: Removed capabilities
-        """
-        if add is not None:
-            pulumi.set(__self__, "add", add)
-        if drop is not None:
-            pulumi.set(__self__, "drop", drop)
-
-    @property
-    @pulumi.getter
-    def add(self) -> Optional[Sequence[str]]:
-        """
-        Added capabilities
-        """
-        return pulumi.get(self, "add")
-
-    @property
-    @pulumi.getter
-    def drop(self) -> Optional[Sequence[str]]:
-        """
-        Removed capabilities
-        """
-        return pulumi.get(self, "drop")
-
-    def _translate_property(self, prop):
-        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
-
-
-@pulumi.output_type
 class DatadogAgentSpecAgentConfigSecurityContextSeLinuxOptions(dict):
     """
-    The SELinux context to be applied to the container. If unspecified, the container runtime will allocate a random SELinux context for each container.  May also be set in PodSecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
+    The SELinux context to be applied to all containers. If unspecified, the container runtime will allocate a random SELinux context for each container.  May also be set in SecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence for that container.
     """
     def __init__(__self__, *,
                  level: Optional[str] = None,
@@ -2012,7 +2011,7 @@ class DatadogAgentSpecAgentConfigSecurityContextSeLinuxOptions(dict):
                  type: Optional[str] = None,
                  user: Optional[str] = None):
         """
-        The SELinux context to be applied to the container. If unspecified, the container runtime will allocate a random SELinux context for each container.  May also be set in PodSecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
+        The SELinux context to be applied to all containers. If unspecified, the container runtime will allocate a random SELinux context for each container.  May also be set in SecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence for that container.
         :param str level: Level is SELinux level label that applies to the container.
         :param str role: Role is a SELinux role label that applies to the container.
         :param str type: Type is a SELinux type label that applies to the container.
@@ -2064,16 +2063,52 @@ class DatadogAgentSpecAgentConfigSecurityContextSeLinuxOptions(dict):
 
 
 @pulumi.output_type
+class DatadogAgentSpecAgentConfigSecurityContextSysctls(dict):
+    """
+    Sysctl defines a kernel parameter to be set
+    """
+    def __init__(__self__, *,
+                 name: str,
+                 value: str):
+        """
+        Sysctl defines a kernel parameter to be set
+        :param str name: Name of a property to set
+        :param str value: Value of a property to set
+        """
+        pulumi.set(__self__, "name", name)
+        pulumi.set(__self__, "value", value)
+
+    @property
+    @pulumi.getter
+    def name(self) -> str:
+        """
+        Name of a property to set
+        """
+        return pulumi.get(self, "name")
+
+    @property
+    @pulumi.getter
+    def value(self) -> str:
+        """
+        Value of a property to set
+        """
+        return pulumi.get(self, "value")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
 class DatadogAgentSpecAgentConfigSecurityContextWindowsOptions(dict):
     """
-    The Windows specific settings applied to all containers. If unspecified, the options from the PodSecurityContext will be used. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
+    The Windows specific settings applied to all containers. If unspecified, the options within a container's SecurityContext will be used. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
     """
     def __init__(__self__, *,
                  gmsa_credential_spec: Optional[str] = None,
                  gmsa_credential_spec_name: Optional[str] = None,
                  run_as_user_name: Optional[str] = None):
         """
-        The Windows specific settings applied to all containers. If unspecified, the options from the PodSecurityContext will be used. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
+        The Windows specific settings applied to all containers. If unspecified, the options within a container's SecurityContext will be used. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
         :param str gmsa_credential_spec: GMSACredentialSpec is where the GMSA admission webhook (https://github.com/kubernetes-sigs/windows-gmsa) inlines the contents of the GMSA credential spec named by the GMSACredentialSpecName field.
         :param str gmsa_credential_spec_name: GMSACredentialSpecName is the name of the GMSA credential spec to use.
         :param str run_as_user_name: The UserName in Windows to run the entrypoint of the container process. Defaults to the user specified in image metadata if unspecified. May also be set in PodSecurityContext. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
@@ -5536,15 +5571,19 @@ class DatadogAgentSpecAgentDeploymentStrategyCanary(dict):
     """
     def __init__(__self__, *,
                  duration: Optional[str] = None,
-                 paused: Optional[bool] = None,
+                 node_anti_affinity_keys: Optional[Sequence[str]] = None,
+                 node_selector: Optional['outputs.DatadogAgentSpecAgentDeploymentStrategyCanaryNodeSelector'] = None,
                  replicas: Optional['outputs.DatadogAgentSpecAgentDeploymentStrategyCanaryReplicas'] = None):
         """
         Configure the canary deployment configuration using ExtendedDaemonSet
+        :param 'DatadogAgentSpecAgentDeploymentStrategyCanaryNodeSelectorArgs' node_selector: A label selector is a label query over a set of resources. The result of matchLabels and matchExpressions are ANDed. An empty label selector matches all objects. A null label selector matches no objects.
         """
         if duration is not None:
             pulumi.set(__self__, "duration", duration)
-        if paused is not None:
-            pulumi.set(__self__, "paused", paused)
+        if node_anti_affinity_keys is not None:
+            pulumi.set(__self__, "node_anti_affinity_keys", node_anti_affinity_keys)
+        if node_selector is not None:
+            pulumi.set(__self__, "node_selector", node_selector)
         if replicas is not None:
             pulumi.set(__self__, "replicas", replicas)
 
@@ -5554,14 +5593,108 @@ class DatadogAgentSpecAgentDeploymentStrategyCanary(dict):
         return pulumi.get(self, "duration")
 
     @property
-    @pulumi.getter
-    def paused(self) -> Optional[bool]:
-        return pulumi.get(self, "paused")
+    @pulumi.getter(name="nodeAntiAffinityKeys")
+    def node_anti_affinity_keys(self) -> Optional[Sequence[str]]:
+        return pulumi.get(self, "node_anti_affinity_keys")
+
+    @property
+    @pulumi.getter(name="nodeSelector")
+    def node_selector(self) -> Optional['outputs.DatadogAgentSpecAgentDeploymentStrategyCanaryNodeSelector']:
+        """
+        A label selector is a label query over a set of resources. The result of matchLabels and matchExpressions are ANDed. An empty label selector matches all objects. A null label selector matches no objects.
+        """
+        return pulumi.get(self, "node_selector")
 
     @property
     @pulumi.getter
     def replicas(self) -> Optional['outputs.DatadogAgentSpecAgentDeploymentStrategyCanaryReplicas']:
         return pulumi.get(self, "replicas")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class DatadogAgentSpecAgentDeploymentStrategyCanaryNodeSelector(dict):
+    """
+    A label selector is a label query over a set of resources. The result of matchLabels and matchExpressions are ANDed. An empty label selector matches all objects. A null label selector matches no objects.
+    """
+    def __init__(__self__, *,
+                 match_expressions: Optional[Sequence['outputs.DatadogAgentSpecAgentDeploymentStrategyCanaryNodeSelectorMatchExpressions']] = None,
+                 match_labels: Optional[Mapping[str, str]] = None):
+        """
+        A label selector is a label query over a set of resources. The result of matchLabels and matchExpressions are ANDed. An empty label selector matches all objects. A null label selector matches no objects.
+        :param Sequence['DatadogAgentSpecAgentDeploymentStrategyCanaryNodeSelectorMatchExpressionsArgs'] match_expressions: matchExpressions is a list of label selector requirements. The requirements are ANDed.
+        :param Mapping[str, str] match_labels: matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+        """
+        if match_expressions is not None:
+            pulumi.set(__self__, "match_expressions", match_expressions)
+        if match_labels is not None:
+            pulumi.set(__self__, "match_labels", match_labels)
+
+    @property
+    @pulumi.getter(name="matchExpressions")
+    def match_expressions(self) -> Optional[Sequence['outputs.DatadogAgentSpecAgentDeploymentStrategyCanaryNodeSelectorMatchExpressions']]:
+        """
+        matchExpressions is a list of label selector requirements. The requirements are ANDed.
+        """
+        return pulumi.get(self, "match_expressions")
+
+    @property
+    @pulumi.getter(name="matchLabels")
+    def match_labels(self) -> Optional[Mapping[str, str]]:
+        """
+        matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+        """
+        return pulumi.get(self, "match_labels")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class DatadogAgentSpecAgentDeploymentStrategyCanaryNodeSelectorMatchExpressions(dict):
+    """
+    A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+    """
+    def __init__(__self__, *,
+                 key: str,
+                 operator: str,
+                 values: Optional[Sequence[str]] = None):
+        """
+        A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+        :param str key: key is the label key that the selector applies to.
+        :param str operator: operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+        :param Sequence[str] values: values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+        """
+        pulumi.set(__self__, "key", key)
+        pulumi.set(__self__, "operator", operator)
+        if values is not None:
+            pulumi.set(__self__, "values", values)
+
+    @property
+    @pulumi.getter
+    def key(self) -> str:
+        """
+        key is the label key that the selector applies to.
+        """
+        return pulumi.get(self, "key")
+
+    @property
+    @pulumi.getter
+    def operator(self) -> str:
+        """
+        operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+        """
+        return pulumi.get(self, "operator")
+
+    @property
+    @pulumi.getter
+    def values(self) -> Optional[Sequence[str]]:
+        """
+        values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+        """
+        return pulumi.get(self, "values")
 
     def _translate_property(self, prop):
         return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
@@ -6239,6 +6372,32 @@ class DatadogAgentSpecAgentLog(dict):
 
 
 @pulumi.output_type
+class DatadogAgentSpecAgentNetworkPolicy(dict):
+    """
+    Provide Agent Network Policy configuration
+    """
+    def __init__(__self__, *,
+                 create: Optional[bool] = None):
+        """
+        Provide Agent Network Policy configuration
+        :param bool create: If true, create a NetworkPolicy for the current agent
+        """
+        if create is not None:
+            pulumi.set(__self__, "create", create)
+
+    @property
+    @pulumi.getter
+    def create(self) -> Optional[bool]:
+        """
+        If true, create a NetworkPolicy for the current agent
+        """
+        return pulumi.get(self, "create")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
 class DatadogAgentSpecAgentProcess(dict):
     """
     Process Agent configuration
@@ -6687,6 +6846,606 @@ class DatadogAgentSpecAgentRbac(dict):
 
 
 @pulumi.output_type
+class DatadogAgentSpecAgentSecurity(dict):
+    """
+    Security Agent configuration
+    """
+    def __init__(__self__, *,
+                 compliance: Optional['outputs.DatadogAgentSpecAgentSecurityCompliance'] = None,
+                 env: Optional[Sequence['outputs.DatadogAgentSpecAgentSecurityEnv']] = None,
+                 resources: Optional['outputs.DatadogAgentSpecAgentSecurityResources'] = None,
+                 runtime: Optional['outputs.DatadogAgentSpecAgentSecurityRuntime'] = None):
+        """
+        Security Agent configuration
+        :param 'DatadogAgentSpecAgentSecurityComplianceArgs' compliance: Compliance configuration
+        :param Sequence['DatadogAgentSpecAgentSecurityEnvArgs'] env: The Datadog Security Agent supports many environment variables Ref: https://docs.datadoghq.com/agent/docker/?tab=standard#environment-variables
+        :param 'DatadogAgentSpecAgentSecurityResourcesArgs' resources: Datadog Security Agent resource requests and limits Make sure to keep requests and limits equal to keep the pods in the Guaranteed QoS class Ref: http://kubernetes.io/docs/user-guide/compute-resources/
+        :param 'DatadogAgentSpecAgentSecurityRuntimeArgs' runtime: Runtime security configuration
+        """
+        if compliance is not None:
+            pulumi.set(__self__, "compliance", compliance)
+        if env is not None:
+            pulumi.set(__self__, "env", env)
+        if resources is not None:
+            pulumi.set(__self__, "resources", resources)
+        if runtime is not None:
+            pulumi.set(__self__, "runtime", runtime)
+
+    @property
+    @pulumi.getter
+    def compliance(self) -> Optional['outputs.DatadogAgentSpecAgentSecurityCompliance']:
+        """
+        Compliance configuration
+        """
+        return pulumi.get(self, "compliance")
+
+    @property
+    @pulumi.getter
+    def env(self) -> Optional[Sequence['outputs.DatadogAgentSpecAgentSecurityEnv']]:
+        """
+        The Datadog Security Agent supports many environment variables Ref: https://docs.datadoghq.com/agent/docker/?tab=standard#environment-variables
+        """
+        return pulumi.get(self, "env")
+
+    @property
+    @pulumi.getter
+    def resources(self) -> Optional['outputs.DatadogAgentSpecAgentSecurityResources']:
+        """
+        Datadog Security Agent resource requests and limits Make sure to keep requests and limits equal to keep the pods in the Guaranteed QoS class Ref: http://kubernetes.io/docs/user-guide/compute-resources/
+        """
+        return pulumi.get(self, "resources")
+
+    @property
+    @pulumi.getter
+    def runtime(self) -> Optional['outputs.DatadogAgentSpecAgentSecurityRuntime']:
+        """
+        Runtime security configuration
+        """
+        return pulumi.get(self, "runtime")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class DatadogAgentSpecAgentSecurityCompliance(dict):
+    """
+    Compliance configuration
+    """
+    def __init__(__self__, *,
+                 check_interval: Optional[str] = None,
+                 config_dir: Optional['outputs.DatadogAgentSpecAgentSecurityComplianceConfigDir'] = None,
+                 enabled: Optional[bool] = None):
+        """
+        Compliance configuration
+        :param str check_interval: Check interval
+        :param 'DatadogAgentSpecAgentSecurityComplianceConfigDirArgs' config_dir: Config dir containing compliance benchmarks
+        :param bool enabled: Enables continuous compliance monitoring
+        """
+        if check_interval is not None:
+            pulumi.set(__self__, "check_interval", check_interval)
+        if config_dir is not None:
+            pulumi.set(__self__, "config_dir", config_dir)
+        if enabled is not None:
+            pulumi.set(__self__, "enabled", enabled)
+
+    @property
+    @pulumi.getter(name="checkInterval")
+    def check_interval(self) -> Optional[str]:
+        """
+        Check interval
+        """
+        return pulumi.get(self, "check_interval")
+
+    @property
+    @pulumi.getter(name="configDir")
+    def config_dir(self) -> Optional['outputs.DatadogAgentSpecAgentSecurityComplianceConfigDir']:
+        """
+        Config dir containing compliance benchmarks
+        """
+        return pulumi.get(self, "config_dir")
+
+    @property
+    @pulumi.getter
+    def enabled(self) -> Optional[bool]:
+        """
+        Enables continuous compliance monitoring
+        """
+        return pulumi.get(self, "enabled")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class DatadogAgentSpecAgentSecurityComplianceConfigDir(dict):
+    """
+    Config dir containing compliance benchmarks
+    """
+    def __init__(__self__, *,
+                 config_map_name: Optional[str] = None):
+        """
+        Config dir containing compliance benchmarks
+        :param str config_map_name: ConfigMapName name of a ConfigMap used to mount a directory
+        """
+        if config_map_name is not None:
+            pulumi.set(__self__, "config_map_name", config_map_name)
+
+    @property
+    @pulumi.getter(name="configMapName")
+    def config_map_name(self) -> Optional[str]:
+        """
+        ConfigMapName name of a ConfigMap used to mount a directory
+        """
+        return pulumi.get(self, "config_map_name")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class DatadogAgentSpecAgentSecurityEnv(dict):
+    """
+    EnvVar represents an environment variable present in a Container.
+    """
+    def __init__(__self__, *,
+                 name: str,
+                 value: Optional[str] = None,
+                 value_from: Optional['outputs.DatadogAgentSpecAgentSecurityEnvValueFrom'] = None):
+        """
+        EnvVar represents an environment variable present in a Container.
+        :param str name: Name of the environment variable. Must be a C_IDENTIFIER.
+        :param str value: Variable references $(VAR_NAME) are expanded using the previous defined environment variables in the container and any service environment variables. If a variable cannot be resolved, the reference in the input string will be unchanged. The $(VAR_NAME) syntax can be escaped with a double $$, ie: $$(VAR_NAME). Escaped references will never be expanded, regardless of whether the variable exists or not. Defaults to "".
+        :param 'DatadogAgentSpecAgentSecurityEnvValueFromArgs' value_from: Source for the environment variable's value. Cannot be used if value is not empty.
+        """
+        pulumi.set(__self__, "name", name)
+        if value is not None:
+            pulumi.set(__self__, "value", value)
+        if value_from is not None:
+            pulumi.set(__self__, "value_from", value_from)
+
+    @property
+    @pulumi.getter
+    def name(self) -> str:
+        """
+        Name of the environment variable. Must be a C_IDENTIFIER.
+        """
+        return pulumi.get(self, "name")
+
+    @property
+    @pulumi.getter
+    def value(self) -> Optional[str]:
+        """
+        Variable references $(VAR_NAME) are expanded using the previous defined environment variables in the container and any service environment variables. If a variable cannot be resolved, the reference in the input string will be unchanged. The $(VAR_NAME) syntax can be escaped with a double $$, ie: $$(VAR_NAME). Escaped references will never be expanded, regardless of whether the variable exists or not. Defaults to "".
+        """
+        return pulumi.get(self, "value")
+
+    @property
+    @pulumi.getter(name="valueFrom")
+    def value_from(self) -> Optional['outputs.DatadogAgentSpecAgentSecurityEnvValueFrom']:
+        """
+        Source for the environment variable's value. Cannot be used if value is not empty.
+        """
+        return pulumi.get(self, "value_from")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class DatadogAgentSpecAgentSecurityEnvValueFrom(dict):
+    """
+    Source for the environment variable's value. Cannot be used if value is not empty.
+    """
+    def __init__(__self__, *,
+                 config_map_key_ref: Optional['outputs.DatadogAgentSpecAgentSecurityEnvValueFromConfigMapKeyRef'] = None,
+                 field_ref: Optional['outputs.DatadogAgentSpecAgentSecurityEnvValueFromFieldRef'] = None,
+                 resource_field_ref: Optional['outputs.DatadogAgentSpecAgentSecurityEnvValueFromResourceFieldRef'] = None,
+                 secret_key_ref: Optional['outputs.DatadogAgentSpecAgentSecurityEnvValueFromSecretKeyRef'] = None):
+        """
+        Source for the environment variable's value. Cannot be used if value is not empty.
+        :param 'DatadogAgentSpecAgentSecurityEnvValueFromConfigMapKeyRefArgs' config_map_key_ref: Selects a key of a ConfigMap.
+        :param 'DatadogAgentSpecAgentSecurityEnvValueFromFieldRefArgs' field_ref: Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
+        :param 'DatadogAgentSpecAgentSecurityEnvValueFromResourceFieldRefArgs' resource_field_ref: Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
+        :param 'DatadogAgentSpecAgentSecurityEnvValueFromSecretKeyRefArgs' secret_key_ref: Selects a key of a secret in the pod's namespace
+        """
+        if config_map_key_ref is not None:
+            pulumi.set(__self__, "config_map_key_ref", config_map_key_ref)
+        if field_ref is not None:
+            pulumi.set(__self__, "field_ref", field_ref)
+        if resource_field_ref is not None:
+            pulumi.set(__self__, "resource_field_ref", resource_field_ref)
+        if secret_key_ref is not None:
+            pulumi.set(__self__, "secret_key_ref", secret_key_ref)
+
+    @property
+    @pulumi.getter(name="configMapKeyRef")
+    def config_map_key_ref(self) -> Optional['outputs.DatadogAgentSpecAgentSecurityEnvValueFromConfigMapKeyRef']:
+        """
+        Selects a key of a ConfigMap.
+        """
+        return pulumi.get(self, "config_map_key_ref")
+
+    @property
+    @pulumi.getter(name="fieldRef")
+    def field_ref(self) -> Optional['outputs.DatadogAgentSpecAgentSecurityEnvValueFromFieldRef']:
+        """
+        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
+        """
+        return pulumi.get(self, "field_ref")
+
+    @property
+    @pulumi.getter(name="resourceFieldRef")
+    def resource_field_ref(self) -> Optional['outputs.DatadogAgentSpecAgentSecurityEnvValueFromResourceFieldRef']:
+        """
+        Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
+        """
+        return pulumi.get(self, "resource_field_ref")
+
+    @property
+    @pulumi.getter(name="secretKeyRef")
+    def secret_key_ref(self) -> Optional['outputs.DatadogAgentSpecAgentSecurityEnvValueFromSecretKeyRef']:
+        """
+        Selects a key of a secret in the pod's namespace
+        """
+        return pulumi.get(self, "secret_key_ref")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class DatadogAgentSpecAgentSecurityEnvValueFromConfigMapKeyRef(dict):
+    """
+    Selects a key of a ConfigMap.
+    """
+    def __init__(__self__, *,
+                 key: str,
+                 name: Optional[str] = None,
+                 optional: Optional[bool] = None):
+        """
+        Selects a key of a ConfigMap.
+        :param str key: The key to select.
+        :param str name: Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+        :param bool optional: Specify whether the ConfigMap or its key must be defined
+        """
+        pulumi.set(__self__, "key", key)
+        if name is not None:
+            pulumi.set(__self__, "name", name)
+        if optional is not None:
+            pulumi.set(__self__, "optional", optional)
+
+    @property
+    @pulumi.getter
+    def key(self) -> str:
+        """
+        The key to select.
+        """
+        return pulumi.get(self, "key")
+
+    @property
+    @pulumi.getter
+    def name(self) -> Optional[str]:
+        """
+        Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+        """
+        return pulumi.get(self, "name")
+
+    @property
+    @pulumi.getter
+    def optional(self) -> Optional[bool]:
+        """
+        Specify whether the ConfigMap or its key must be defined
+        """
+        return pulumi.get(self, "optional")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class DatadogAgentSpecAgentSecurityEnvValueFromFieldRef(dict):
+    """
+    Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
+    """
+    def __init__(__self__, *,
+                 field_path: str,
+                 api_version: Optional[str] = None):
+        """
+        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
+        :param str field_path: Path of the field to select in the specified API version.
+        :param str api_version: Version of the schema the FieldPath is written in terms of, defaults to "v1".
+        """
+        pulumi.set(__self__, "field_path", field_path)
+        if api_version is not None:
+            pulumi.set(__self__, "api_version", api_version)
+
+    @property
+    @pulumi.getter(name="fieldPath")
+    def field_path(self) -> str:
+        """
+        Path of the field to select in the specified API version.
+        """
+        return pulumi.get(self, "field_path")
+
+    @property
+    @pulumi.getter(name="apiVersion")
+    def api_version(self) -> Optional[str]:
+        """
+        Version of the schema the FieldPath is written in terms of, defaults to "v1".
+        """
+        return pulumi.get(self, "api_version")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class DatadogAgentSpecAgentSecurityEnvValueFromResourceFieldRef(dict):
+    """
+    Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
+    """
+    def __init__(__self__, *,
+                 resource: str,
+                 container_name: Optional[str] = None,
+                 divisor: Optional['outputs.DatadogAgentSpecAgentSecurityEnvValueFromResourceFieldRefDivisor'] = None):
+        """
+        Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
+        :param str resource: Required: resource to select
+        :param str container_name: Container name: required for volumes, optional for env vars
+        :param 'DatadogAgentSpecAgentSecurityEnvValueFromResourceFieldRefDivisorArgs' divisor: Specifies the output format of the exposed resources, defaults to "1"
+        """
+        pulumi.set(__self__, "resource", resource)
+        if container_name is not None:
+            pulumi.set(__self__, "container_name", container_name)
+        if divisor is not None:
+            pulumi.set(__self__, "divisor", divisor)
+
+    @property
+    @pulumi.getter
+    def resource(self) -> str:
+        """
+        Required: resource to select
+        """
+        return pulumi.get(self, "resource")
+
+    @property
+    @pulumi.getter(name="containerName")
+    def container_name(self) -> Optional[str]:
+        """
+        Container name: required for volumes, optional for env vars
+        """
+        return pulumi.get(self, "container_name")
+
+    @property
+    @pulumi.getter
+    def divisor(self) -> Optional['outputs.DatadogAgentSpecAgentSecurityEnvValueFromResourceFieldRefDivisor']:
+        """
+        Specifies the output format of the exposed resources, defaults to "1"
+        """
+        return pulumi.get(self, "divisor")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class DatadogAgentSpecAgentSecurityEnvValueFromResourceFieldRefDivisor(dict):
+    def __init__(__self__):
+        pass
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class DatadogAgentSpecAgentSecurityEnvValueFromSecretKeyRef(dict):
+    """
+    Selects a key of a secret in the pod's namespace
+    """
+    def __init__(__self__, *,
+                 key: str,
+                 name: Optional[str] = None,
+                 optional: Optional[bool] = None):
+        """
+        Selects a key of a secret in the pod's namespace
+        :param str key: The key of the secret to select from.  Must be a valid secret key.
+        :param str name: Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+        :param bool optional: Specify whether the Secret or its key must be defined
+        """
+        pulumi.set(__self__, "key", key)
+        if name is not None:
+            pulumi.set(__self__, "name", name)
+        if optional is not None:
+            pulumi.set(__self__, "optional", optional)
+
+    @property
+    @pulumi.getter
+    def key(self) -> str:
+        """
+        The key of the secret to select from.  Must be a valid secret key.
+        """
+        return pulumi.get(self, "key")
+
+    @property
+    @pulumi.getter
+    def name(self) -> Optional[str]:
+        """
+        Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+        """
+        return pulumi.get(self, "name")
+
+    @property
+    @pulumi.getter
+    def optional(self) -> Optional[bool]:
+        """
+        Specify whether the Secret or its key must be defined
+        """
+        return pulumi.get(self, "optional")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class DatadogAgentSpecAgentSecurityResources(dict):
+    """
+    Datadog Security Agent resource requests and limits Make sure to keep requests and limits equal to keep the pods in the Guaranteed QoS class Ref: http://kubernetes.io/docs/user-guide/compute-resources/
+    """
+    def __init__(__self__, *,
+                 limits: Optional[Mapping[str, 'outputs.DatadogAgentSpecAgentSecurityResourcesLimits']] = None,
+                 requests: Optional[Mapping[str, 'outputs.DatadogAgentSpecAgentSecurityResourcesRequests']] = None):
+        """
+        Datadog Security Agent resource requests and limits Make sure to keep requests and limits equal to keep the pods in the Guaranteed QoS class Ref: http://kubernetes.io/docs/user-guide/compute-resources/
+        :param Mapping[str, 'DatadogAgentSpecAgentSecurityResourcesLimitsArgs'] limits: Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
+        :param Mapping[str, 'DatadogAgentSpecAgentSecurityResourcesRequestsArgs'] requests: Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
+        """
+        if limits is not None:
+            pulumi.set(__self__, "limits", limits)
+        if requests is not None:
+            pulumi.set(__self__, "requests", requests)
+
+    @property
+    @pulumi.getter
+    def limits(self) -> Optional[Mapping[str, 'outputs.DatadogAgentSpecAgentSecurityResourcesLimits']]:
+        """
+        Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
+        """
+        return pulumi.get(self, "limits")
+
+    @property
+    @pulumi.getter
+    def requests(self) -> Optional[Mapping[str, 'outputs.DatadogAgentSpecAgentSecurityResourcesRequests']]:
+        """
+        Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
+        """
+        return pulumi.get(self, "requests")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class DatadogAgentSpecAgentSecurityResourcesLimits(dict):
+    def __init__(__self__):
+        pass
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class DatadogAgentSpecAgentSecurityResourcesRequests(dict):
+    def __init__(__self__):
+        pass
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class DatadogAgentSpecAgentSecurityRuntime(dict):
+    """
+    Runtime security configuration
+    """
+    def __init__(__self__, *,
+                 enabled: Optional[bool] = None,
+                 policies_dir: Optional['outputs.DatadogAgentSpecAgentSecurityRuntimePoliciesDir'] = None,
+                 syscall_monitor: Optional['outputs.DatadogAgentSpecAgentSecurityRuntimeSyscallMonitor'] = None):
+        """
+        Runtime security configuration
+        :param bool enabled: Enables runtime security features
+        :param 'DatadogAgentSpecAgentSecurityRuntimePoliciesDirArgs' policies_dir: ConfigDir containing security policies
+        :param 'DatadogAgentSpecAgentSecurityRuntimeSyscallMonitorArgs' syscall_monitor: Syscall monitor configuration
+        """
+        if enabled is not None:
+            pulumi.set(__self__, "enabled", enabled)
+        if policies_dir is not None:
+            pulumi.set(__self__, "policies_dir", policies_dir)
+        if syscall_monitor is not None:
+            pulumi.set(__self__, "syscall_monitor", syscall_monitor)
+
+    @property
+    @pulumi.getter
+    def enabled(self) -> Optional[bool]:
+        """
+        Enables runtime security features
+        """
+        return pulumi.get(self, "enabled")
+
+    @property
+    @pulumi.getter(name="policiesDir")
+    def policies_dir(self) -> Optional['outputs.DatadogAgentSpecAgentSecurityRuntimePoliciesDir']:
+        """
+        ConfigDir containing security policies
+        """
+        return pulumi.get(self, "policies_dir")
+
+    @property
+    @pulumi.getter(name="syscallMonitor")
+    def syscall_monitor(self) -> Optional['outputs.DatadogAgentSpecAgentSecurityRuntimeSyscallMonitor']:
+        """
+        Syscall monitor configuration
+        """
+        return pulumi.get(self, "syscall_monitor")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class DatadogAgentSpecAgentSecurityRuntimePoliciesDir(dict):
+    """
+    ConfigDir containing security policies
+    """
+    def __init__(__self__, *,
+                 config_map_name: Optional[str] = None):
+        """
+        ConfigDir containing security policies
+        :param str config_map_name: ConfigMapName name of a ConfigMap used to mount a directory
+        """
+        if config_map_name is not None:
+            pulumi.set(__self__, "config_map_name", config_map_name)
+
+    @property
+    @pulumi.getter(name="configMapName")
+    def config_map_name(self) -> Optional[str]:
+        """
+        ConfigMapName name of a ConfigMap used to mount a directory
+        """
+        return pulumi.get(self, "config_map_name")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class DatadogAgentSpecAgentSecurityRuntimeSyscallMonitor(dict):
+    """
+    Syscall monitor configuration
+    """
+    def __init__(__self__, *,
+                 enabled: Optional[bool] = None):
+        """
+        Syscall monitor configuration
+        :param bool enabled: Enabled enables syscall monitor
+        """
+        if enabled is not None:
+            pulumi.set(__self__, "enabled", enabled)
+
+    @property
+    @pulumi.getter
+    def enabled(self) -> Optional[bool]:
+        """
+        Enabled enables syscall monitor
+        """
+        return pulumi.get(self, "enabled")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
 class DatadogAgentSpecAgentSystemProbe(dict):
     """
     SystemProbe configuration
@@ -6694,8 +7453,11 @@ class DatadogAgentSpecAgentSystemProbe(dict):
     def __init__(__self__, *,
                  app_armor_profile_name: Optional[str] = None,
                  bpf_debug_enabled: Optional[bool] = None,
+                 collect_dns_stats: Optional[bool] = None,
                  conntrack_enabled: Optional[bool] = None,
                  debug_port: Optional[int] = None,
+                 enable_oom_kill: Optional[bool] = None,
+                 enable_tcp_queue_length: Optional[bool] = None,
                  enabled: Optional[bool] = None,
                  env: Optional[Sequence['outputs.DatadogAgentSpecAgentSystemProbeEnv']] = None,
                  resources: Optional['outputs.DatadogAgentSpecAgentSystemProbeResources'] = None,
@@ -6707,8 +7469,11 @@ class DatadogAgentSpecAgentSystemProbe(dict):
         SystemProbe configuration
         :param str app_armor_profile_name: AppArmorProfileName specify a apparmor profile
         :param bool bpf_debug_enabled: BPFDebugEnabled logging for kernel debug
+        :param bool collect_dns_stats: CollectDNSStats enables DNS stat collection
         :param bool conntrack_enabled: ConntrackEnabled enable the system-probe agent to connect to the netlink/conntrack subsystem to add NAT information to connection data Ref: http://conntrack-tools.netfilter.org/
         :param int debug_port: DebugPort Specify the port to expose pprof and expvar for system-probe agent
+        :param bool enable_oom_kill: EnableOOMKill enables the OOM kill eBPF-based check
+        :param bool enable_tcp_queue_length: EnableTCPQueueLength enables the TCP queue length eBPF-based check
         :param bool enabled: Enable this to activate live process monitoring. Note: /etc/passwd is automatically mounted to allow username resolution. ref: https://docs.datadoghq.com/graphing/infrastructure/process/#kubernetes-daemonset
         :param Sequence['DatadogAgentSpecAgentSystemProbeEnvArgs'] env: The Datadog SystemProbe supports many environment variables Ref: https://docs.datadoghq.com/agent/docker/?tab=standard#environment-variables
         :param 'DatadogAgentSpecAgentSystemProbeResourcesArgs' resources: Datadog SystemProbe resource requests and limits Make sure to keep requests and limits equal to keep the pods in the Guaranteed QoS class Ref: http://kubernetes.io/docs/user-guide/compute-resources/
@@ -6721,10 +7486,16 @@ class DatadogAgentSpecAgentSystemProbe(dict):
             pulumi.set(__self__, "app_armor_profile_name", app_armor_profile_name)
         if bpf_debug_enabled is not None:
             pulumi.set(__self__, "bpf_debug_enabled", bpf_debug_enabled)
+        if collect_dns_stats is not None:
+            pulumi.set(__self__, "collect_dns_stats", collect_dns_stats)
         if conntrack_enabled is not None:
             pulumi.set(__self__, "conntrack_enabled", conntrack_enabled)
         if debug_port is not None:
             pulumi.set(__self__, "debug_port", debug_port)
+        if enable_oom_kill is not None:
+            pulumi.set(__self__, "enable_oom_kill", enable_oom_kill)
+        if enable_tcp_queue_length is not None:
+            pulumi.set(__self__, "enable_tcp_queue_length", enable_tcp_queue_length)
         if enabled is not None:
             pulumi.set(__self__, "enabled", enabled)
         if env is not None:
@@ -6757,6 +7528,14 @@ class DatadogAgentSpecAgentSystemProbe(dict):
         return pulumi.get(self, "bpf_debug_enabled")
 
     @property
+    @pulumi.getter(name="collectDNSStats")
+    def collect_dns_stats(self) -> Optional[bool]:
+        """
+        CollectDNSStats enables DNS stat collection
+        """
+        return pulumi.get(self, "collect_dns_stats")
+
+    @property
     @pulumi.getter(name="conntrackEnabled")
     def conntrack_enabled(self) -> Optional[bool]:
         """
@@ -6771,6 +7550,22 @@ class DatadogAgentSpecAgentSystemProbe(dict):
         DebugPort Specify the port to expose pprof and expvar for system-probe agent
         """
         return pulumi.get(self, "debug_port")
+
+    @property
+    @pulumi.getter(name="enableOOMKill")
+    def enable_oom_kill(self) -> Optional[bool]:
+        """
+        EnableOOMKill enables the OOM kill eBPF-based check
+        """
+        return pulumi.get(self, "enable_oom_kill")
+
+    @property
+    @pulumi.getter(name="enableTCPQueueLength")
+    def enable_tcp_queue_length(self) -> Optional[bool]:
+        """
+        EnableTCPQueueLength enables the TCP queue length eBPF-based check
+        """
+        return pulumi.get(self, "enable_tcp_queue_length")
 
     @property
     @pulumi.getter
@@ -7489,6 +8284,7 @@ class DatadogAgentSpecClusterAgent(dict):
                  config: Optional['outputs.DatadogAgentSpecClusterAgentConfig'] = None,
                  custom_config: Optional['outputs.DatadogAgentSpecClusterAgentCustomConfig'] = None,
                  deployment_name: Optional[str] = None,
+                 network_policy: Optional['outputs.DatadogAgentSpecClusterAgentNetworkPolicy'] = None,
                  node_selector: Optional[Mapping[str, str]] = None,
                  priority_class_name: Optional[str] = None,
                  rbac: Optional['outputs.DatadogAgentSpecClusterAgentRbac'] = None,
@@ -7503,6 +8299,7 @@ class DatadogAgentSpecClusterAgent(dict):
         :param 'DatadogAgentSpecClusterAgentConfigArgs' config: Cluster Agent configuration
         :param 'DatadogAgentSpecClusterAgentCustomConfigArgs' custom_config: Allow to put custom configuration for the agent, corresponding to the datadog-cluster.yaml config file
         :param str deployment_name: Name of the Cluster Agent Deployment to create or migrate from
+        :param 'DatadogAgentSpecClusterAgentNetworkPolicyArgs' network_policy: Provide Cluster Agent Network Policy configuration
         :param Mapping[str, str] node_selector: NodeSelector is a selector which must be true for the pod to fit on a node. Selector which must match a node's labels for the pod to be scheduled on that node. More info: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
         :param str priority_class_name: If specified, indicates the pod's priority. "system-node-critical" and "system-cluster-critical" are two special keywords which indicate the highest priorities with the former being the highest priority. Any other name must be defined by creating a PriorityClass object with that name. If not specified, the pod priority will be default or zero if there is no default.
         :param 'DatadogAgentSpecClusterAgentRbacArgs' rbac: RBAC configuration of the Datadog Cluster Agent
@@ -7522,6 +8319,8 @@ class DatadogAgentSpecClusterAgent(dict):
             pulumi.set(__self__, "custom_config", custom_config)
         if deployment_name is not None:
             pulumi.set(__self__, "deployment_name", deployment_name)
+        if network_policy is not None:
+            pulumi.set(__self__, "network_policy", network_policy)
         if node_selector is not None:
             pulumi.set(__self__, "node_selector", node_selector)
         if priority_class_name is not None:
@@ -7588,6 +8387,14 @@ class DatadogAgentSpecClusterAgent(dict):
         Name of the Cluster Agent Deployment to create or migrate from
         """
         return pulumi.get(self, "deployment_name")
+
+    @property
+    @pulumi.getter(name="networkPolicy")
+    def network_policy(self) -> Optional['outputs.DatadogAgentSpecClusterAgentNetworkPolicy']:
+        """
+        Provide Cluster Agent Network Policy configuration
+        """
+        return pulumi.get(self, "network_policy")
 
     @property
     @pulumi.getter(name="nodeSelector")
@@ -8746,6 +9553,7 @@ class DatadogAgentSpecClusterAgentConfig(dict):
     def __init__(__self__, *,
                  admission_controller: Optional['outputs.DatadogAgentSpecClusterAgentConfigAdmissionController'] = None,
                  cluster_checks_enabled: Optional[bool] = None,
+                 collect_events: Optional[bool] = None,
                  confd: Optional['outputs.DatadogAgentSpecClusterAgentConfigConfd'] = None,
                  env: Optional[Sequence['outputs.DatadogAgentSpecClusterAgentConfigEnv']] = None,
                  external_metrics: Optional['outputs.DatadogAgentSpecClusterAgentConfigExternalMetrics'] = None,
@@ -8757,6 +9565,7 @@ class DatadogAgentSpecClusterAgentConfig(dict):
         Cluster Agent configuration
         :param 'DatadogAgentSpecClusterAgentConfigAdmissionControllerArgs' admission_controller: Configure the Admission Controller
         :param bool cluster_checks_enabled: Enable the Cluster Checks and Endpoint Checks feature on both the cluster-agents and the daemonset ref: https://docs.datadoghq.com/agent/cluster_agent/clusterchecks/ https://docs.datadoghq.com/agent/cluster_agent/endpointschecks/ Autodiscovery via Kube Service annotations is automatically enabled
+        :param bool collect_events: Enables this to start event collection from the kubernetes API ref: https://docs.datadoghq.com/agent/cluster_agent/event_collection/
         :param 'DatadogAgentSpecClusterAgentConfigConfdArgs' confd: Confd Provide additional cluster check configurations. Each key will become a file in /conf.d see https://docs.datadoghq.com/agent/autodiscovery/ for more details.
         :param Sequence['DatadogAgentSpecClusterAgentConfigEnvArgs'] env: The Datadog Agent supports many environment variables Ref: https://docs.datadoghq.com/agent/docker/?tab=standard#environment-variables
         :param 'DatadogAgentSpecClusterAgentConfigExternalMetricsArgs' external_metrics: ExternalMetricsConfig contains the configuration of the external metrics provider in Cluster Agent
@@ -8769,6 +9578,8 @@ class DatadogAgentSpecClusterAgentConfig(dict):
             pulumi.set(__self__, "admission_controller", admission_controller)
         if cluster_checks_enabled is not None:
             pulumi.set(__self__, "cluster_checks_enabled", cluster_checks_enabled)
+        if collect_events is not None:
+            pulumi.set(__self__, "collect_events", collect_events)
         if confd is not None:
             pulumi.set(__self__, "confd", confd)
         if env is not None:
@@ -8799,6 +9610,14 @@ class DatadogAgentSpecClusterAgentConfig(dict):
         Enable the Cluster Checks and Endpoint Checks feature on both the cluster-agents and the daemonset ref: https://docs.datadoghq.com/agent/cluster_agent/clusterchecks/ https://docs.datadoghq.com/agent/cluster_agent/endpointschecks/ Autodiscovery via Kube Service annotations is automatically enabled
         """
         return pulumi.get(self, "cluster_checks_enabled")
+
+    @property
+    @pulumi.getter(name="collectEvents")
+    def collect_events(self) -> Optional[bool]:
+        """
+        Enables this to start event collection from the kubernetes API ref: https://docs.datadoghq.com/agent/cluster_agent/event_collection/
+        """
+        return pulumi.get(self, "collect_events")
 
     @property
     @pulumi.getter
@@ -9247,20 +10066,28 @@ class DatadogAgentSpecClusterAgentConfigExternalMetrics(dict):
     """
     def __init__(__self__, *,
                  enabled: Optional[bool] = None,
+                 endpoint: Optional[str] = None,
                  port: Optional[int] = None,
-                 use_datadog_metrics: Optional[bool] = None):
+                 use_datadog_metrics: Optional[bool] = None,
+                 wpa_controller: Optional[bool] = None):
         """
         ExternalMetricsConfig contains the configuration of the external metrics provider in Cluster Agent
         :param bool enabled: Enable the metricsProvider to be able to scale based on metrics in Datadog
+        :param str endpoint: Override the API endpoint for the external metrics server. Defaults to .spec.agent.config.ddUrl or "https://app.datadoghq.com" if that's empty.
         :param int port: If specified configures the metricsProvider external metrics service port
         :param bool use_datadog_metrics: Enable usage of DatadogMetrics CRD (allow to scale on arbitrary queries)
+        :param bool wpa_controller: Enable informer and controller of the watermark pod autoscaler NOTE: The WatermarkPodAutoscaler controller needs to be installed see https://github.com/DataDog/watermarkpodautoscaler for more details.
         """
         if enabled is not None:
             pulumi.set(__self__, "enabled", enabled)
+        if endpoint is not None:
+            pulumi.set(__self__, "endpoint", endpoint)
         if port is not None:
             pulumi.set(__self__, "port", port)
         if use_datadog_metrics is not None:
             pulumi.set(__self__, "use_datadog_metrics", use_datadog_metrics)
+        if wpa_controller is not None:
+            pulumi.set(__self__, "wpa_controller", wpa_controller)
 
     @property
     @pulumi.getter
@@ -9269,6 +10096,14 @@ class DatadogAgentSpecClusterAgentConfigExternalMetrics(dict):
         Enable the metricsProvider to be able to scale based on metrics in Datadog
         """
         return pulumi.get(self, "enabled")
+
+    @property
+    @pulumi.getter
+    def endpoint(self) -> Optional[str]:
+        """
+        Override the API endpoint for the external metrics server. Defaults to .spec.agent.config.ddUrl or "https://app.datadoghq.com" if that's empty.
+        """
+        return pulumi.get(self, "endpoint")
 
     @property
     @pulumi.getter
@@ -9285,6 +10120,14 @@ class DatadogAgentSpecClusterAgentConfigExternalMetrics(dict):
         Enable usage of DatadogMetrics CRD (allow to scale on arbitrary queries)
         """
         return pulumi.get(self, "use_datadog_metrics")
+
+    @property
+    @pulumi.getter(name="wpaController")
+    def wpa_controller(self) -> Optional[bool]:
+        """
+        Enable informer and controller of the watermark pod autoscaler NOTE: The WatermarkPodAutoscaler controller needs to be installed see https://github.com/DataDog/watermarkpodautoscaler for more details.
+        """
+        return pulumi.get(self, "wpa_controller")
 
     def _translate_property(self, prop):
         return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
@@ -12702,6 +13545,32 @@ class DatadogAgentSpecClusterAgentImagePullSecrets(dict):
 
 
 @pulumi.output_type
+class DatadogAgentSpecClusterAgentNetworkPolicy(dict):
+    """
+    Provide Cluster Agent Network Policy configuration
+    """
+    def __init__(__self__, *,
+                 create: Optional[bool] = None):
+        """
+        Provide Cluster Agent Network Policy configuration
+        :param bool create: If true, create a NetworkPolicy for the current agent
+        """
+        if create is not None:
+            pulumi.set(__self__, "create", create)
+
+    @property
+    @pulumi.getter
+    def create(self) -> Optional[bool]:
+        """
+        If true, create a NetworkPolicy for the current agent
+        """
+        return pulumi.get(self, "create")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
 class DatadogAgentSpecClusterAgentRbac(dict):
     """
     RBAC configuration of the Datadog Cluster Agent
@@ -12826,6 +13695,7 @@ class DatadogAgentSpecClusterChecksRunner(dict):
                  config: Optional['outputs.DatadogAgentSpecClusterChecksRunnerConfig'] = None,
                  custom_config: Optional['outputs.DatadogAgentSpecClusterChecksRunnerCustomConfig'] = None,
                  deployment_name: Optional[str] = None,
+                 network_policy: Optional['outputs.DatadogAgentSpecClusterChecksRunnerNetworkPolicy'] = None,
                  node_selector: Optional[Mapping[str, str]] = None,
                  priority_class_name: Optional[str] = None,
                  rbac: Optional['outputs.DatadogAgentSpecClusterChecksRunnerRbac'] = None,
@@ -12840,6 +13710,7 @@ class DatadogAgentSpecClusterChecksRunner(dict):
         :param 'DatadogAgentSpecClusterChecksRunnerConfigArgs' config: Agent configuration
         :param 'DatadogAgentSpecClusterChecksRunnerCustomConfigArgs' custom_config: Allow to put custom configuration for the agent, corresponding to the datadog.yaml config file See https://docs.datadoghq.com/agent/guide/agent-configuration-files/?tab=agentv6 for more details.
         :param str deployment_name: Name of the cluster checks deployment to create or migrate from
+        :param 'DatadogAgentSpecClusterChecksRunnerNetworkPolicyArgs' network_policy: Provide Cluster Checks Runner Network Policy configuration
         :param Mapping[str, str] node_selector: NodeSelector is a selector which must be true for the pod to fit on a node. Selector which must match a node's labels for the pod to be scheduled on that node. More info: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
         :param str priority_class_name: If specified, indicates the pod's priority. "system-node-critical" and "system-cluster-critical" are two special keywords which indicate the highest priorities with the former being the highest priority. Any other name must be defined by creating a PriorityClass object with that name. If not specified, the pod priority will be default or zero if there is no default.
         :param 'DatadogAgentSpecClusterChecksRunnerRbacArgs' rbac: RBAC configuration of the Datadog Cluster Checks Runner
@@ -12859,6 +13730,8 @@ class DatadogAgentSpecClusterChecksRunner(dict):
             pulumi.set(__self__, "custom_config", custom_config)
         if deployment_name is not None:
             pulumi.set(__self__, "deployment_name", deployment_name)
+        if network_policy is not None:
+            pulumi.set(__self__, "network_policy", network_policy)
         if node_selector is not None:
             pulumi.set(__self__, "node_selector", node_selector)
         if priority_class_name is not None:
@@ -12925,6 +13798,14 @@ class DatadogAgentSpecClusterChecksRunner(dict):
         Name of the cluster checks deployment to create or migrate from
         """
         return pulumi.get(self, "deployment_name")
+
+    @property
+    @pulumi.getter(name="networkPolicy")
+    def network_policy(self) -> Optional['outputs.DatadogAgentSpecClusterChecksRunnerNetworkPolicy']:
+        """
+        Provide Cluster Checks Runner Network Policy configuration
+        """
+        return pulumi.get(self, "network_policy")
 
     @property
     @pulumi.getter(name="nodeSelector")
@@ -17859,6 +18740,32 @@ class DatadogAgentSpecClusterChecksRunnerImagePullSecrets(dict):
         Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
         """
         return pulumi.get(self, "name")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class DatadogAgentSpecClusterChecksRunnerNetworkPolicy(dict):
+    """
+    Provide Cluster Checks Runner Network Policy configuration
+    """
+    def __init__(__self__, *,
+                 create: Optional[bool] = None):
+        """
+        Provide Cluster Checks Runner Network Policy configuration
+        :param bool create: If true, create a NetworkPolicy for the current agent
+        """
+        if create is not None:
+            pulumi.set(__self__, "create", create)
+
+    @property
+    @pulumi.getter
+    def create(self) -> Optional[bool]:
+        """
+        If true, create a NetworkPolicy for the current agent
+        """
+        return pulumi.get(self, "create")
 
     def _translate_property(self, prop):
         return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop

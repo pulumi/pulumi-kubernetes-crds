@@ -15,6 +15,9 @@ namespace Pulumi.Kubernetes.Types.Inputs.Apps.V1
     /// </summary>
     public class SubscriptionStatusArgs : Pulumi.ResourceArgs
     {
+        [Input("ansiblejobs")]
+        public Input<Pulumi.Kubernetes.Types.Inputs.Apps.V1.SubscriptionStatusAnsiblejobsArgs>? Ansiblejobs { get; set; }
+
         [Input("lastUpdateTime")]
         public Input<string>? LastUpdateTime { get; set; }
 
@@ -30,11 +33,17 @@ namespace Pulumi.Kubernetes.Types.Inputs.Apps.V1
         [Input("reason")]
         public Input<string>? Reason { get; set; }
 
+        [Input("statuses")]
+        private InputMap<Pulumi.Kubernetes.Types.Inputs.Apps.V1.SubscriptionStatusStatusesArgs>? _statuses;
+
         /// <summary>
         /// For endpoint, it is the status of subscription, key is packagename, For hub, it aggregates all status, key is cluster name
         /// </summary>
-        [Input("statuses")]
-        public Input<object>? Statuses { get; set; }
+        public InputMap<Pulumi.Kubernetes.Types.Inputs.Apps.V1.SubscriptionStatusStatusesArgs> Statuses
+        {
+            get => _statuses ?? (_statuses = new InputMap<Pulumi.Kubernetes.Types.Inputs.Apps.V1.SubscriptionStatusStatusesArgs>());
+            set => _statuses = value;
+        }
 
         public SubscriptionStatusArgs()
         {

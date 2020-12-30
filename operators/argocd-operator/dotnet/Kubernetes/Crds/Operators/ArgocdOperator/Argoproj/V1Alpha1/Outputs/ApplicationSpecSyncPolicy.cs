@@ -18,6 +18,10 @@ namespace Pulumi.Kubernetes.Types.Outputs.Argoproj.V1Alpha1
         /// </summary>
         public readonly Pulumi.Kubernetes.Types.Outputs.Argoproj.V1Alpha1.ApplicationSpecSyncPolicyAutomated Automated;
         /// <summary>
+        /// Retry controls failed sync retry behavior
+        /// </summary>
+        public readonly Pulumi.Kubernetes.Types.Outputs.Argoproj.V1Alpha1.ApplicationSpecSyncPolicyRetry Retry;
+        /// <summary>
         /// Options allow you to specify whole app sync-options
         /// </summary>
         public readonly ImmutableArray<string> SyncOptions;
@@ -26,9 +30,12 @@ namespace Pulumi.Kubernetes.Types.Outputs.Argoproj.V1Alpha1
         private ApplicationSpecSyncPolicy(
             Pulumi.Kubernetes.Types.Outputs.Argoproj.V1Alpha1.ApplicationSpecSyncPolicyAutomated automated,
 
+            Pulumi.Kubernetes.Types.Outputs.Argoproj.V1Alpha1.ApplicationSpecSyncPolicyRetry retry,
+
             ImmutableArray<string> syncOptions)
         {
             Automated = automated;
+            Retry = retry;
             SyncOptions = syncOptions;
         }
     }

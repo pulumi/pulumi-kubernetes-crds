@@ -9,6 +9,7 @@ SNAKE_TO_CAMEL_CASE_TABLE = {
     "observed_generation": "observedGeneration",
     "registration_image_pull_spec": "registrationImagePullSpec",
     "related_resources": "relatedResources",
+    "work_image_pull_spec": "workImagePullSpec",
 }
 
 CAMEL_TO_SNAKE_CASE_TABLE = {
@@ -18,4 +19,5 @@ CAMEL_TO_SNAKE_CASE_TABLE = {
     "observedGeneration": "observed_generation",
     "registrationImagePullSpec": "registration_image_pull_spec",
     "relatedResources": "related_resources",
+    "workImagePullSpec": "work_image_pull_spec",
 }

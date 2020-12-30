@@ -26,7 +26,7 @@ namespace Pulumi.Kubernetes.Types.Outputs.Kafka.V1Beta1
         /// </summary>
         public readonly string BrokerRackInitImage;
         /// <summary>
-        /// Kafka broker config properties with the following prefixes cannot be set: listeners, advertised., broker., listener., host.name, port, inter.broker.listener.name, sasl., ssl., security., password., principal.builder.class, log.dir, zookeeper.connect, zookeeper.set.acl, authorizer., super.user, cruise.control.metrics.topic, cruise.control.metrics.reporter.bootstrap.servers (with the exception of: zookeeper.connection.timeout.ms, ssl.cipher.suites, ssl.protocol, ssl.enabled.protocols,cruise.control.metrics.topic.num.partitions, cruise.control.metrics.topic.replication.factor, cruise.control.metrics.topic.retention.ms,cruise.control.metrics.topic.auto.create.retries, cruise.control.metrics.topic.auto.create.timeout.ms).
+        /// Kafka broker config properties with the following prefixes cannot be set: listeners, advertised., broker., listener., host.name, port, inter.broker.listener.name, sasl., ssl., security., password., principal.builder.class, log.dir, zookeeper.connect, zookeeper.set.acl, zookeeper.ssl, zookeeper.clientCnxnSocket, authorizer., super.user, cruise.control.metrics.topic, cruise.control.metrics.reporter.bootstrap.servers (with the exception of: zookeeper.connection.timeout.ms, ssl.cipher.suites, ssl.protocol, ssl.enabled.protocols,cruise.control.metrics.topic.num.partitions, cruise.control.metrics.topic.replication.factor, cruise.control.metrics.topic.retention.ms,cruise.control.metrics.topic.auto.create.retries, cruise.control.metrics.topic.auto.create.timeout.ms).
         /// </summary>
         public readonly ImmutableDictionary<string, object> Config;
         /// <summary>
@@ -41,10 +41,7 @@ namespace Pulumi.Kubernetes.Types.Outputs.Kafka.V1Beta1
         /// JVM Options for pods.
         /// </summary>
         public readonly Pulumi.Kubernetes.Types.Outputs.Kafka.V1Beta1.KafkaSpecKafkaJvmOptions JvmOptions;
-        /// <summary>
-        /// Configures listeners of Kafka brokers.
-        /// </summary>
-        public readonly Pulumi.Kubernetes.Types.Outputs.Kafka.V1Beta1.KafkaSpecKafkaListeners Listeners;
+        public readonly Union<ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Kafka.V1Beta1.KafkaSpecKafkaListenersOneOf0>, Pulumi.Kubernetes.Types.Outputs.Kafka.V1Beta1.KafkaSpecKafkaListenersOneOf1> Listeners;
         /// <summary>
         /// Pod liveness checking.
         /// </summary>
@@ -110,7 +107,7 @@ namespace Pulumi.Kubernetes.Types.Outputs.Kafka.V1Beta1
 
             Pulumi.Kubernetes.Types.Outputs.Kafka.V1Beta1.KafkaSpecKafkaJvmOptions jvmOptions,
 
-            Pulumi.Kubernetes.Types.Outputs.Kafka.V1Beta1.KafkaSpecKafkaListeners listeners,
+            Union<ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Kafka.V1Beta1.KafkaSpecKafkaListenersOneOf0>, Pulumi.Kubernetes.Types.Outputs.Kafka.V1Beta1.KafkaSpecKafkaListenersOneOf1> listeners,
 
             Pulumi.Kubernetes.Types.Outputs.Kafka.V1Beta1.KafkaSpecKafkaLivenessProbe livenessProbe,
 

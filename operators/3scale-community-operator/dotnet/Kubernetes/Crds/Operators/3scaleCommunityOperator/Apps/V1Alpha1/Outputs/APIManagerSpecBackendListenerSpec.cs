@@ -13,12 +13,24 @@ namespace Pulumi.Kubernetes.Types.Outputs.Apps.V1Alpha1
     [OutputType]
     public sealed class APIManagerSpecBackendListenerSpec
     {
+        /// <summary>
+        /// Affinity is a group of affinity scheduling rules.
+        /// </summary>
+        public readonly Pulumi.Kubernetes.Types.Outputs.Apps.V1Alpha1.APIManagerSpecBackendListenerSpecAffinity Affinity;
         public readonly int Replicas;
+        public readonly ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Apps.V1Alpha1.APIManagerSpecBackendListenerSpecTolerations> Tolerations;
 
         [OutputConstructor]
-        private APIManagerSpecBackendListenerSpec(int replicas)
+        private APIManagerSpecBackendListenerSpec(
+            Pulumi.Kubernetes.Types.Outputs.Apps.V1Alpha1.APIManagerSpecBackendListenerSpecAffinity affinity,
+
+            int replicas,
+
+            ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Apps.V1Alpha1.APIManagerSpecBackendListenerSpecTolerations> tolerations)
         {
+            Affinity = affinity;
             Replicas = replicas;
+            Tolerations = tolerations;
         }
     }
 }

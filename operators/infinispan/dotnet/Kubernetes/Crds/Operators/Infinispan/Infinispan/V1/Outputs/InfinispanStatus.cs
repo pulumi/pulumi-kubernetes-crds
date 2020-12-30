@@ -13,9 +13,6 @@ namespace Pulumi.Kubernetes.Types.Outputs.Infinispan.V1
     [OutputType]
     public sealed class InfinispanStatus
     {
-        /// <summary>
-        /// Important: Run "operator-sdk generate k8s" to regenerate code after modifying this file
-        /// </summary>
         public readonly ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Infinispan.V1.InfinispanStatusConditions> Conditions;
         public readonly int ReplicasWantedAtRestart;
         /// <summary>

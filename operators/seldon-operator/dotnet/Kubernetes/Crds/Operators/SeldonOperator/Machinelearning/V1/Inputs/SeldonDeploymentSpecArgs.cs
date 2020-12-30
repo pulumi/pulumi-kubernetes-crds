@@ -43,6 +43,18 @@ namespace Pulumi.Kubernetes.Types.Inputs.Machinelearning.V1
             set => _predictors = value;
         }
 
+        [Input("protocol")]
+        public Input<string>? Protocol { get; set; }
+
+        [Input("replicas")]
+        public Input<int>? Replicas { get; set; }
+
+        [Input("serverType")]
+        public Input<string>? ServerType { get; set; }
+
+        [Input("transport")]
+        public Input<string>? Transport { get; set; }
+
         public SeldonDeploymentSpecArgs()
         {
         }

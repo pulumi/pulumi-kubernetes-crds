@@ -8,5 +8,6 @@ from .provider import *
 # Make subpackages available:
 from . import (
     hive,
+    hiveinternal,
     meta_v1,
 )

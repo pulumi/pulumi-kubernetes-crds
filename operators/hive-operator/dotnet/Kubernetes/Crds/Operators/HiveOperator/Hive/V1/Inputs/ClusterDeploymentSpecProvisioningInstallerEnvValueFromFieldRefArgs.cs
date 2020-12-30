@@ -11,7 +11,7 @@ namespace Pulumi.Kubernetes.Types.Inputs.Hive.V1
 {
 
     /// <summary>
-    /// Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
+    /// Selects a field of the pod: supports metadata.name, metadata.namespace, `metadata.labels['&lt;KEY&gt;']`, `metadata.annotations['&lt;KEY&gt;']`, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
     /// </summary>
     public class ClusterDeploymentSpecProvisioningInstallerEnvValueFromFieldRefArgs : Pulumi.ResourceArgs
     {

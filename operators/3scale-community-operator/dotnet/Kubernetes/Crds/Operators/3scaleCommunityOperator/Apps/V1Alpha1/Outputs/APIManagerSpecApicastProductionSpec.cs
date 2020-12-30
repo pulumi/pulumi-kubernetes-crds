@@ -13,12 +13,24 @@ namespace Pulumi.Kubernetes.Types.Outputs.Apps.V1Alpha1
     [OutputType]
     public sealed class APIManagerSpecApicastProductionSpec
     {
+        /// <summary>
+        /// Affinity is a group of affinity scheduling rules.
+        /// </summary>
+        public readonly Pulumi.Kubernetes.Types.Outputs.Apps.V1Alpha1.APIManagerSpecApicastProductionSpecAffinity Affinity;
         public readonly int Replicas;
+        public readonly ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Apps.V1Alpha1.APIManagerSpecApicastProductionSpecTolerations> Tolerations;
 
         [OutputConstructor]
-        private APIManagerSpecApicastProductionSpec(int replicas)
+        private APIManagerSpecApicastProductionSpec(
+            Pulumi.Kubernetes.Types.Outputs.Apps.V1Alpha1.APIManagerSpecApicastProductionSpecAffinity affinity,
+
+            int replicas,
+
+            ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Apps.V1Alpha1.APIManagerSpecApicastProductionSpecTolerations> tolerations)
         {
+            Affinity = affinity;
             Replicas = replicas;
+            Tolerations = tolerations;
         }
     }
 }

@@ -22,6 +22,10 @@ namespace Pulumi.Kubernetes.Types.Outputs.Datadoghq.V1Alpha1
         /// </summary>
         public readonly bool BpfDebugEnabled;
         /// <summary>
+        /// CollectDNSStats enables DNS stat collection
+        /// </summary>
+        public readonly bool CollectDNSStats;
+        /// <summary>
         /// ConntrackEnabled enable the system-probe agent to connect to the netlink/conntrack subsystem to add NAT information to connection data Ref: http://conntrack-tools.netfilter.org/
         /// </summary>
         public readonly bool ConntrackEnabled;
@@ -29,6 +33,14 @@ namespace Pulumi.Kubernetes.Types.Outputs.Datadoghq.V1Alpha1
         /// DebugPort Specify the port to expose pprof and expvar for system-probe agent
         /// </summary>
         public readonly int DebugPort;
+        /// <summary>
+        /// EnableOOMKill enables the OOM kill eBPF-based check
+        /// </summary>
+        public readonly bool EnableOOMKill;
+        /// <summary>
+        /// EnableTCPQueueLength enables the TCP queue length eBPF-based check
+        /// </summary>
+        public readonly bool EnableTCPQueueLength;
         /// <summary>
         /// Enable this to activate live process monitoring. Note: /etc/passwd is automatically mounted to allow username resolution. ref: https://docs.datadoghq.com/graphing/infrastructure/process/#kubernetes-daemonset
         /// </summary>
@@ -64,9 +76,15 @@ namespace Pulumi.Kubernetes.Types.Outputs.Datadoghq.V1Alpha1
 
             bool bpfDebugEnabled,
 
+            bool collectDNSStats,
+
             bool conntrackEnabled,
 
             int debugPort,
+
+            bool enableOOMKill,
+
+            bool enableTCPQueueLength,
 
             bool enabled,
 
@@ -84,8 +102,11 @@ namespace Pulumi.Kubernetes.Types.Outputs.Datadoghq.V1Alpha1
         {
             AppArmorProfileName = appArmorProfileName;
             BpfDebugEnabled = bpfDebugEnabled;
+            CollectDNSStats = collectDNSStats;
             ConntrackEnabled = conntrackEnabled;
             DebugPort = debugPort;
+            EnableOOMKill = enableOOMKill;
+            EnableTCPQueueLength = enableTCPQueueLength;
             Enabled = enabled;
             Env = env;
             Resources = resources;

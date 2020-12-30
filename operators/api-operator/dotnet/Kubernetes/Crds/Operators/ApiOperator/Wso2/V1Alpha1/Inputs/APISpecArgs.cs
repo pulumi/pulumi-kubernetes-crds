@@ -10,26 +10,71 @@ using Pulumi.Serialization;
 namespace Pulumi.Kubernetes.Types.Inputs.Wso2.V1Alpha1
 {
 
+    /// <summary>
+    /// APISpec defines the desired state of API
+    /// </summary>
     public class APISpecArgs : Pulumi.ResourceArgs
     {
+        [Input("apiEndPoint")]
+        public Input<string>? ApiEndPoint { get; set; }
+
+        /// <summary>
+        /// Definition of the API.
+        /// </summary>
         [Input("definition", required: true)]
         public Input<Pulumi.Kubernetes.Types.Inputs.Wso2.V1Alpha1.APISpecDefinitionArgs> Definition { get; set; } = null!;
 
+        [Input("environmentVariables")]
+        private InputList<string>? _environmentVariables;
+
         /// <summary>
-        /// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster Important: Run "operator-sdk generate k8s" to regenerate code after modifying this file Add custom validation using kubebuilder tags: https://book.kubebuilder.io/beyond_basics/generating_crd.html
+        /// Environment variables to be added to the API deployment. Default value "&lt;empty&gt;".
+        /// </summary>
+        public InputList<string> EnvironmentVariables
+        {
+            get => _environmentVariables ?? (_environmentVariables = new InputList<string>());
+            set => _environmentVariables = value;
+        }
+
+        /// <summary>
+        /// Docker image of the API to be deployed. If specified, ignores the values of `UpdateTimeStamp`, `Override`. Uses the given image for the deployment. Default value "&lt;empty&gt;".
+        /// </summary>
+        [Input("image")]
+        public Input<string>? Image { get; set; }
+
+        /// <summary>
+        /// Ingress Hostname that the API is being exposed. Default value "&lt;empty&gt;".
+        /// </summary>
+        [Input("ingressHostname")]
+        public Input<string>? IngressHostname { get; set; }
+
+        /// <summary>
+        /// Mode of the API. The mode from the swagger definition will be overridden by this value. Supports "privateJet", "sidecar", "&lt;empty&gt;". Default value "&lt;empty&gt;".
         /// </summary>
         [Input("mode")]
         public Input<string>? Mode { get; set; }
 
+        /// <summary>
+        /// Override the exiting API docker image. Default value "false".
+        /// </summary>
         [Input("override")]
         public Input<bool>? Override { get; set; }
 
+        /// <summary>
+        /// Replica count of the API.
+        /// </summary>
         [Input("replicas", required: true)]
         public Input<int> Replicas { get; set; } = null!;
 
+        /// <summary>
+        /// Update API definition creating a new docker image. Make a rolling update to the existing API. with prefixing the timestamp value. Default value "&lt;empty&gt;".
+        /// </summary>
         [Input("updateTimeStamp")]
         public Input<string>? UpdateTimeStamp { get; set; }
 
+        /// <summary>
+        /// Version of the API. The version from the swagger definition will be overridden by this value. Default value "&lt;empty&gt;".
+        /// </summary>
         [Input("version")]
         public Input<string>? Version { get; set; }
 

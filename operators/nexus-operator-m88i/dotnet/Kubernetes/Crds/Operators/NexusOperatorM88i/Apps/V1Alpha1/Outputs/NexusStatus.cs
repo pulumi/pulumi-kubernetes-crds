@@ -22,9 +22,21 @@ namespace Pulumi.Kubernetes.Types.Outputs.Apps.V1Alpha1
         /// </summary>
         public readonly string NexusRoute;
         /// <summary>
-        /// Will be "OK" when all objects are created successfully
+        /// Will be "OK" when this Nexus instance is up
         /// </summary>
         public readonly string NexusStatus;
+        /// <summary>
+        /// Gives more information about a failure status
+        /// </summary>
+        public readonly string Reason;
+        /// <summary>
+        /// ServerOperationsStatus describes the general status for the operations performed in the Nexus server instance
+        /// </summary>
+        public readonly Pulumi.Kubernetes.Types.Outputs.Apps.V1Alpha1.NexusStatusServerOperationsStatus ServerOperationsStatus;
+        /// <summary>
+        /// Conditions reached during an update
+        /// </summary>
+        public readonly ImmutableArray<string> UpdateConditions;
 
         [OutputConstructor]
         private NexusStatus(
@@ -32,11 +44,20 @@ namespace Pulumi.Kubernetes.Types.Outputs.Apps.V1Alpha1
 
             string nexusRoute,
 
-            string nexusStatus)
+            string nexusStatus,
+
+            string reason,
+
+            Pulumi.Kubernetes.Types.Outputs.Apps.V1Alpha1.NexusStatusServerOperationsStatus serverOperationsStatus,
+
+            ImmutableArray<string> updateConditions)
         {
             DeploymentStatus = deploymentStatus;
             NexusRoute = nexusRoute;
             NexusStatus = nexusStatus;
+            Reason = reason;
+            ServerOperationsStatus = serverOperationsStatus;
+            UpdateConditions = updateConditions;
         }
     }
 }

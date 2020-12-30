@@ -13,6 +13,9 @@ namespace Pulumi.Kubernetes.Types.Outputs.Elasticsearch.V1
     [OutputType]
     public sealed class ElasticsearchStatus
     {
+        /// <summary>
+        /// AvailableNodes is the number of available instances.
+        /// </summary>
         public readonly int AvailableNodes;
         /// <summary>
         /// ElasticsearchHealth is the health of the cluster as returned by the health API.
@@ -22,6 +25,10 @@ namespace Pulumi.Kubernetes.Types.Outputs.Elasticsearch.V1
         /// ElasticsearchOrchestrationPhase is the phase Elasticsearch is in from the controller point of view.
         /// </summary>
         public readonly string Phase;
+        /// <summary>
+        /// Version of the stack resource currently running. During version upgrades, multiple versions may run in parallel: this value specifies the lowest version currently running.
+        /// </summary>
+        public readonly string Version;
 
         [OutputConstructor]
         private ElasticsearchStatus(
@@ -29,11 +36,14 @@ namespace Pulumi.Kubernetes.Types.Outputs.Elasticsearch.V1
 
             string health,
 
-            string phase)
+            string phase,
+
+            string version)
         {
             AvailableNodes = availableNodes;
             Health = health;
             Phase = phase;
+            Version = version;
         }
     }
 }

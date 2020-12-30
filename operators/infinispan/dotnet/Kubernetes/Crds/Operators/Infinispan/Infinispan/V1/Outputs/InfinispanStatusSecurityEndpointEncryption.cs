@@ -15,6 +15,9 @@ namespace Pulumi.Kubernetes.Types.Outputs.Infinispan.V1
     {
         public readonly string CertSecretName;
         public readonly string CertServiceName;
+        /// <summary>
+        /// CertificateSourceType specifies all the possible sources for the encryption certificate
+        /// </summary>
         public readonly string Type;
 
         [OutputConstructor]

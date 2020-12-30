@@ -47,6 +47,7 @@ namespace Pulumi.Kubernetes.Types.Inputs.Build.V1Alpha1
 
         public ClusterBuildStrategySpecBuildStepsPortsArgs()
         {
+            Protocol = "TCP";
         }
     }
 }

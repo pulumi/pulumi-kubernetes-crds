@@ -17,11 +17,19 @@ namespace Pulumi.Kubernetes.Types.Outputs.Hive.V1
         /// Enabled dictates if Velero backup integration is enabled. If not specified, the default is disabled.
         /// </summary>
         public readonly bool Enabled;
+        /// <summary>
+        /// Namespace specifies in which namespace velero backup objects should be created. If not specified, the default is a namespace named "velero".
+        /// </summary>
+        public readonly string Namespace;
 
         [OutputConstructor]
-        private HiveConfigSpecBackupVelero(bool enabled)
+        private HiveConfigSpecBackupVelero(
+            bool enabled,
+
+            string @namespace)
         {
             Enabled = enabled;
+            Namespace = @namespace;
         }
     }
 }

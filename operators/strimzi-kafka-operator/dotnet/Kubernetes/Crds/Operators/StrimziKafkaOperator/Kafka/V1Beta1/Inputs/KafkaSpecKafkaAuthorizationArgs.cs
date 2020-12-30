@@ -28,7 +28,7 @@ namespace Pulumi.Kubernetes.Types.Inputs.Kafka.V1Beta1
         public Input<string>? ClientId { get; set; }
 
         /// <summary>
-        /// Whether authorization decision should be delegated to the 'Simple' authorizer if DENIED by Keycloak Authorization Services policies.Default value is `false`.
+        /// Whether authorization decision should be delegated to the 'Simple' authorizer if DENIED by Keycloak Authorization Services policies. Default value is `false`.
         /// </summary>
         [Input("delegateToKafkaAcls")]
         public Input<bool>? DelegateToKafkaAcls { get; set; }
@@ -44,6 +44,18 @@ namespace Pulumi.Kubernetes.Types.Inputs.Kafka.V1Beta1
         /// </summary>
         [Input("expireAfterMs")]
         public Input<int>? ExpireAfterMs { get; set; }
+
+        /// <summary>
+        /// The time between two consecutive grants refresh runs in seconds. The default value is 60.
+        /// </summary>
+        [Input("grantsRefreshPeriodSeconds")]
+        public Input<int>? GrantsRefreshPeriodSeconds { get; set; }
+
+        /// <summary>
+        /// The number of threads to use to refresh grants for active sessions. The more threads, the more parallelism, so the sooner the job completes. However, using more threads places a heavier load on the authorization server. The default value is 5.
+        /// </summary>
+        [Input("grantsRefreshPoolSize")]
+        public Input<int>? GrantsRefreshPoolSize { get; set; }
 
         /// <summary>
         /// Initial capacity of the local cache used by the authorizer to avoid querying the Open Policy Agent for every request Defaults to `5000`.
@@ -88,7 +100,7 @@ namespace Pulumi.Kubernetes.Types.Inputs.Kafka.V1Beta1
         public Input<string>? TokenEndpointUri { get; set; }
 
         /// <summary>
-        /// Authorization type. Currently, the supported types are `simple`, `keycloak`, and `opa`. `simple` authorization type uses Kafka's `kafka.security.auth.SimpleAclAuthorizer` class for authorization. `keycloak` authorization type uses Keycloak Authorization Services for authorization. `opa` authorization type uses Open Policy Agent based authorization.
+        /// Authorization type. Currently, the supported types are `simple`, `keycloak`, and `opa`. `simple` authorization type uses Kafka's `kafka.security.authorizer.AclAuthorizer` class for authorization. `keycloak` authorization type uses Keycloak Authorization Services for authorization. `opa` authorization type uses Open Policy Agent based authorization.
         /// </summary>
         [Input("type", required: true)]
         public Input<string> Type { get; set; } = null!;

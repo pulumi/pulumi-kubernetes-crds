@@ -31,7 +31,7 @@ namespace Pulumi.Kubernetes.Types.Inputs.Machinelearning.V1
         /// targetAverageValue is the target value of the average of the metric across all relevant pods (as a quantity)
         /// </summary>
         [Input("targetAverageValue", required: true)]
-        public Input<string> TargetAverageValue { get; set; } = null!;
+        public Input<Pulumi.Kubernetes.Types.Inputs.Machinelearning.V1.SeldonDeploymentSpecPredictorsComponentSpecsHpaSpecMetricsPodsTargetAverageValueArgs> TargetAverageValue { get; set; } = null!;
 
         public SeldonDeploymentSpecPredictorsComponentSpecsHpaSpecMetricsPodsArgs()
         {

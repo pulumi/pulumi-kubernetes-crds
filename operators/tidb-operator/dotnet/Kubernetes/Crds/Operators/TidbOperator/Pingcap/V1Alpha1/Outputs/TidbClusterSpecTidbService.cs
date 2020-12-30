@@ -15,15 +15,23 @@ namespace Pulumi.Kubernetes.Types.Outputs.Pingcap.V1Alpha1
     {
         public readonly bool ExposeStatus;
         public readonly string ExternalTrafficPolicy;
+        public readonly int MysqlNodePort;
+        public readonly int StatusNodePort;
 
         [OutputConstructor]
         private TidbClusterSpecTidbService(
             bool exposeStatus,
 
-            string externalTrafficPolicy)
+            string externalTrafficPolicy,
+
+            int mysqlNodePort,
+
+            int statusNodePort)
         {
             ExposeStatus = exposeStatus;
             ExternalTrafficPolicy = externalTrafficPolicy;
+            MysqlNodePort = mysqlNodePort;
+            StatusNodePort = statusNodePort;
         }
     }
 }

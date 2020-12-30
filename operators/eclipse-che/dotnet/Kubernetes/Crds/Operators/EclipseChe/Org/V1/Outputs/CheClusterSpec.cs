@@ -22,6 +22,10 @@ namespace Pulumi.Kubernetes.Types.Outputs.Org.V1
         /// </summary>
         public readonly Pulumi.Kubernetes.Types.Outputs.Org.V1.CheClusterSpecDatabase Database;
         /// <summary>
+        /// Kubernetes Image Puller configuration
+        /// </summary>
+        public readonly Pulumi.Kubernetes.Types.Outputs.Org.V1.CheClusterSpecImagePuller ImagePuller;
+        /// <summary>
         /// Configuration settings specific to Che installations made on upstream Kubernetes.
         /// </summary>
         public readonly Pulumi.Kubernetes.Types.Outputs.Org.V1.CheClusterSpecK8s K8s;
@@ -44,6 +48,8 @@ namespace Pulumi.Kubernetes.Types.Outputs.Org.V1
 
             Pulumi.Kubernetes.Types.Outputs.Org.V1.CheClusterSpecDatabase database,
 
+            Pulumi.Kubernetes.Types.Outputs.Org.V1.CheClusterSpecImagePuller imagePuller,
+
             Pulumi.Kubernetes.Types.Outputs.Org.V1.CheClusterSpecK8s k8s,
 
             Pulumi.Kubernetes.Types.Outputs.Org.V1.CheClusterSpecMetrics metrics,
@@ -54,6 +60,7 @@ namespace Pulumi.Kubernetes.Types.Outputs.Org.V1
         {
             Auth = auth;
             Database = database;
+            ImagePuller = imagePuller;
             K8s = k8s;
             Metrics = metrics;
             Server = server;

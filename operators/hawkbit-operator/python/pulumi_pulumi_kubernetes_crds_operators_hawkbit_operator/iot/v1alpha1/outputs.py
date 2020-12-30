@@ -12,6 +12,10 @@ from . import outputs
 __all__ = [
     'HawkbitSpec',
     'HawkbitSpecImageOverrides',
+    'HawkbitSpecSignOn',
+    'HawkbitSpecSignOnKeycloak',
+    'HawkbitSpecSignOnKeycloakInstanceSelector',
+    'HawkbitSpecSignOnKeycloakInstanceSelectorMatchExpressions',
     'HawkbitStatus',
 ]
 
@@ -20,13 +24,16 @@ class HawkbitSpec(dict):
     def __init__(__self__, *,
                  database: Optional[Any] = None,
                  image_overrides: Optional[Mapping[str, 'outputs.HawkbitSpecImageOverrides']] = None,
-                 rabbit: Optional[Any] = None):
+                 rabbit: Optional[Any] = None,
+                 sign_on: Optional['outputs.HawkbitSpecSignOn'] = None):
         if database is not None:
             pulumi.set(__self__, "database", database)
         if image_overrides is not None:
             pulumi.set(__self__, "image_overrides", image_overrides)
         if rabbit is not None:
             pulumi.set(__self__, "rabbit", rabbit)
+        if sign_on is not None:
+            pulumi.set(__self__, "sign_on", sign_on)
 
     @property
     @pulumi.getter
@@ -42,6 +49,11 @@ class HawkbitSpec(dict):
     @pulumi.getter
     def rabbit(self) -> Optional[Any]:
         return pulumi.get(self, "rabbit")
+
+    @property
+    @pulumi.getter(name="signOn")
+    def sign_on(self) -> Optional['outputs.HawkbitSpecSignOn']:
+        return pulumi.get(self, "sign_on")
 
     def _translate_property(self, prop):
         return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
@@ -66,6 +78,138 @@ class HawkbitSpecImageOverrides(dict):
     @pulumi.getter(name="pullPolicy")
     def pull_policy(self) -> Optional[str]:
         return pulumi.get(self, "pull_policy")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class HawkbitSpecSignOn(dict):
+    def __init__(__self__, *,
+                 keycloak: Optional['outputs.HawkbitSpecSignOnKeycloak'] = None):
+        if keycloak is not None:
+            pulumi.set(__self__, "keycloak", keycloak)
+
+    @property
+    @pulumi.getter
+    def keycloak(self) -> Optional['outputs.HawkbitSpecSignOnKeycloak']:
+        return pulumi.get(self, "keycloak")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class HawkbitSpecSignOnKeycloak(dict):
+    def __init__(__self__, *,
+                 hawkbit_url: Optional[str] = None,
+                 instance_selector: Optional['outputs.HawkbitSpecSignOnKeycloakInstanceSelector'] = None):
+        """
+        :param 'HawkbitSpecSignOnKeycloakInstanceSelectorArgs' instance_selector: Selector for looking up Keycloak Custom Resources.
+        """
+        if hawkbit_url is not None:
+            pulumi.set(__self__, "hawkbit_url", hawkbit_url)
+        if instance_selector is not None:
+            pulumi.set(__self__, "instance_selector", instance_selector)
+
+    @property
+    @pulumi.getter(name="hawkbitUrl")
+    def hawkbit_url(self) -> Optional[str]:
+        return pulumi.get(self, "hawkbit_url")
+
+    @property
+    @pulumi.getter(name="instanceSelector")
+    def instance_selector(self) -> Optional['outputs.HawkbitSpecSignOnKeycloakInstanceSelector']:
+        """
+        Selector for looking up Keycloak Custom Resources.
+        """
+        return pulumi.get(self, "instance_selector")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class HawkbitSpecSignOnKeycloakInstanceSelector(dict):
+    """
+    Selector for looking up Keycloak Custom Resources.
+    """
+    def __init__(__self__, *,
+                 match_expressions: Optional[Sequence['outputs.HawkbitSpecSignOnKeycloakInstanceSelectorMatchExpressions']] = None,
+                 match_labels: Optional[Mapping[str, str]] = None):
+        """
+        Selector for looking up Keycloak Custom Resources.
+        :param Sequence['HawkbitSpecSignOnKeycloakInstanceSelectorMatchExpressionsArgs'] match_expressions: matchExpressions is a list of label selector requirements. The requirements are ANDed.
+        :param Mapping[str, str] match_labels: matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+        """
+        if match_expressions is not None:
+            pulumi.set(__self__, "match_expressions", match_expressions)
+        if match_labels is not None:
+            pulumi.set(__self__, "match_labels", match_labels)
+
+    @property
+    @pulumi.getter(name="matchExpressions")
+    def match_expressions(self) -> Optional[Sequence['outputs.HawkbitSpecSignOnKeycloakInstanceSelectorMatchExpressions']]:
+        """
+        matchExpressions is a list of label selector requirements. The requirements are ANDed.
+        """
+        return pulumi.get(self, "match_expressions")
+
+    @property
+    @pulumi.getter(name="matchLabels")
+    def match_labels(self) -> Optional[Mapping[str, str]]:
+        """
+        matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+        """
+        return pulumi.get(self, "match_labels")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class HawkbitSpecSignOnKeycloakInstanceSelectorMatchExpressions(dict):
+    """
+    A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+    """
+    def __init__(__self__, *,
+                 key: str,
+                 operator: str,
+                 values: Optional[Sequence[str]] = None):
+        """
+        A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+        :param str key: key is the label key that the selector applies to.
+        :param str operator: operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+        :param Sequence[str] values: values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+        """
+        pulumi.set(__self__, "key", key)
+        pulumi.set(__self__, "operator", operator)
+        if values is not None:
+            pulumi.set(__self__, "values", values)
+
+    @property
+    @pulumi.getter
+    def key(self) -> str:
+        """
+        key is the label key that the selector applies to.
+        """
+        return pulumi.get(self, "key")
+
+    @property
+    @pulumi.getter
+    def operator(self) -> str:
+        """
+        operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+        """
+        return pulumi.get(self, "operator")
+
+    @property
+    @pulumi.getter
+    def values(self) -> Optional[Sequence[str]]:
+        """
+        values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+        """
+        return pulumi.get(self, "values")
 
     def _translate_property(self, prop):
         return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop

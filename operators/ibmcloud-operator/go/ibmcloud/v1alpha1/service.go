@@ -10,14 +10,17 @@ import (
 	"github.com/pulumi/pulumi/sdk/v2/go/pulumi"
 )
 
+// Service is the Schema for the services API
 type Service struct {
 	pulumi.CustomResourceState
 
 	ApiVersion pulumi.StringPtrOutput     `pulumi:"apiVersion"`
 	Kind       pulumi.StringPtrOutput     `pulumi:"kind"`
 	Metadata   metav1.ObjectMetaPtrOutput `pulumi:"metadata"`
-	Spec       ServiceSpecPtrOutput       `pulumi:"spec"`
-	Status     ServiceStatusPtrOutput     `pulumi:"status"`
+	// ServiceSpec defines the desired state of Service
+	Spec ServiceSpecPtrOutput `pulumi:"spec"`
+	// ServiceStatus defines the observed state of Service
+	Status ServiceStatusPtrOutput `pulumi:"status"`
 }
 
 // NewService registers a new resource with the given unique name, arguments, and options.
@@ -53,16 +56,20 @@ type serviceState struct {
 	ApiVersion *string            `pulumi:"apiVersion"`
 	Kind       *string            `pulumi:"kind"`
 	Metadata   *metav1.ObjectMeta `pulumi:"metadata"`
-	Spec       *ServiceSpec       `pulumi:"spec"`
-	Status     *ServiceStatus     `pulumi:"status"`
+	// ServiceSpec defines the desired state of Service
+	Spec *ServiceSpec `pulumi:"spec"`
+	// ServiceStatus defines the observed state of Service
+	Status *ServiceStatus `pulumi:"status"`
 }
 
 type ServiceState struct {
 	ApiVersion pulumi.StringPtrInput
 	Kind       pulumi.StringPtrInput
 	Metadata   metav1.ObjectMetaPtrInput
-	Spec       ServiceSpecPtrInput
-	Status     ServiceStatusPtrInput
+	// ServiceSpec defines the desired state of Service
+	Spec ServiceSpecPtrInput
+	// ServiceStatus defines the observed state of Service
+	Status ServiceStatusPtrInput
 }
 
 func (ServiceState) ElementType() reflect.Type {
@@ -73,8 +80,10 @@ type serviceArgs struct {
 	ApiVersion *string            `pulumi:"apiVersion"`
 	Kind       *string            `pulumi:"kind"`
 	Metadata   *metav1.ObjectMeta `pulumi:"metadata"`
-	Spec       *ServiceSpec       `pulumi:"spec"`
-	Status     *ServiceStatus     `pulumi:"status"`
+	// ServiceSpec defines the desired state of Service
+	Spec *ServiceSpec `pulumi:"spec"`
+	// ServiceStatus defines the observed state of Service
+	Status *ServiceStatus `pulumi:"status"`
 }
 
 // The set of arguments for constructing a Service resource.
@@ -82,8 +91,10 @@ type ServiceArgs struct {
 	ApiVersion pulumi.StringPtrInput
 	Kind       pulumi.StringPtrInput
 	Metadata   metav1.ObjectMetaPtrInput
-	Spec       ServiceSpecPtrInput
-	Status     ServiceStatusPtrInput
+	// ServiceSpec defines the desired state of Service
+	Spec ServiceSpecPtrInput
+	// ServiceStatus defines the observed state of Service
+	Status ServiceStatusPtrInput
 }
 
 func (ServiceArgs) ElementType() reflect.Type {

@@ -18,6 +18,10 @@ namespace Pulumi.Kubernetes.Types.Outputs.Storage.V1
         /// </summary>
         public readonly bool AllowVolumeExpansion;
         /// <summary>
+        /// Restrict the node topologies where volumes can be dynamically provisioned.
+        /// </summary>
+        public readonly ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Storage.V1.CSIVXFlexOSSpecDriverStorageClassAllowedTopologies> AllowedTopologies;
+        /// <summary>
         /// DefaultSc is a boolean flag to indicate if the storage class is going to be marked as default
         /// </summary>
         public readonly bool Default;
@@ -38,6 +42,8 @@ namespace Pulumi.Kubernetes.Types.Outputs.Storage.V1
         private CSIVXFlexOSSpecDriverStorageClass(
             bool allowVolumeExpansion,
 
+            ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Storage.V1.CSIVXFlexOSSpecDriverStorageClassAllowedTopologies> allowedTopologies,
+
             bool @default,
 
             string name,
@@ -47,6 +53,7 @@ namespace Pulumi.Kubernetes.Types.Outputs.Storage.V1
             string reclaimPolicy)
         {
             AllowVolumeExpansion = allowVolumeExpansion;
+            AllowedTopologies = allowedTopologies;
             Default = @default;
             Name = name;
             Parameters = parameters;

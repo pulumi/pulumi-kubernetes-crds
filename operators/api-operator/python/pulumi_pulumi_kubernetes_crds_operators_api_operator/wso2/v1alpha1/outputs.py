@@ -13,6 +13,7 @@ __all__ = [
     'APISpec',
     'APISpecDefinition',
     'APISpecDefinitionInterceptors',
+    'APIStatus',
     'RateLimitingSpec',
     'RateLimitingSpecBandwidth',
     'RateLimitingSpecConditions',
@@ -23,23 +24,47 @@ __all__ = [
     'SecuritySpecSecurityConfig',
     'TargetEndpointSpec',
     'TargetEndpointSpecDeploy',
-    'TargetEndpointSpecEndpointSecurity',
+    'TargetEndpointSpecPorts',
 ]
 
 @pulumi.output_type
 class APISpec(dict):
+    """
+    APISpec defines the desired state of API
+    """
     def __init__(__self__, *,
                  definition: 'outputs.APISpecDefinition',
                  replicas: int,
+                 api_end_point: Optional[str] = None,
+                 environment_variables: Optional[Sequence[str]] = None,
+                 image: Optional[str] = None,
+                 ingress_hostname: Optional[str] = None,
                  mode: Optional[str] = None,
                  override: Optional[bool] = None,
                  update_time_stamp: Optional[str] = None,
                  version: Optional[str] = None):
         """
-        :param str mode: INSERT ADDITIONAL SPEC FIELDS - desired state of cluster Important: Run "operator-sdk generate k8s" to regenerate code after modifying this file Add custom validation using kubebuilder tags: https://book.kubebuilder.io/beyond_basics/generating_crd.html
+        APISpec defines the desired state of API
+        :param 'APISpecDefinitionArgs' definition: Definition of the API.
+        :param int replicas: Replica count of the API.
+        :param Sequence[str] environment_variables: Environment variables to be added to the API deployment. Default value "<empty>".
+        :param str image: Docker image of the API to be deployed. If specified, ignores the values of `UpdateTimeStamp`, `Override`. Uses the given image for the deployment. Default value "<empty>".
+        :param str ingress_hostname: Ingress Hostname that the API is being exposed. Default value "<empty>".
+        :param str mode: Mode of the API. The mode from the swagger definition will be overridden by this value. Supports "privateJet", "sidecar", "<empty>". Default value "<empty>".
+        :param bool override: Override the exiting API docker image. Default value "false".
+        :param str update_time_stamp: Update API definition creating a new docker image. Make a rolling update to the existing API. with prefixing the timestamp value. Default value "<empty>".
+        :param str version: Version of the API. The version from the swagger definition will be overridden by this value. Default value "<empty>".
         """
         pulumi.set(__self__, "definition", definition)
         pulumi.set(__self__, "replicas", replicas)
+        if api_end_point is not None:
+            pulumi.set(__self__, "api_end_point", api_end_point)
+        if environment_variables is not None:
+            pulumi.set(__self__, "environment_variables", environment_variables)
+        if image is not None:
+            pulumi.set(__self__, "image", image)
+        if ingress_hostname is not None:
+            pulumi.set(__self__, "ingress_hostname", ingress_hostname)
         if mode is not None:
             pulumi.set(__self__, "mode", mode)
         if override is not None:
@@ -52,34 +77,78 @@ class APISpec(dict):
     @property
     @pulumi.getter
     def definition(self) -> 'outputs.APISpecDefinition':
+        """
+        Definition of the API.
+        """
         return pulumi.get(self, "definition")
 
     @property
     @pulumi.getter
     def replicas(self) -> int:
+        """
+        Replica count of the API.
+        """
         return pulumi.get(self, "replicas")
+
+    @property
+    @pulumi.getter(name="apiEndPoint")
+    def api_end_point(self) -> Optional[str]:
+        return pulumi.get(self, "api_end_point")
+
+    @property
+    @pulumi.getter(name="environmentVariables")
+    def environment_variables(self) -> Optional[Sequence[str]]:
+        """
+        Environment variables to be added to the API deployment. Default value "<empty>".
+        """
+        return pulumi.get(self, "environment_variables")
+
+    @property
+    @pulumi.getter
+    def image(self) -> Optional[str]:
+        """
+        Docker image of the API to be deployed. If specified, ignores the values of `UpdateTimeStamp`, `Override`. Uses the given image for the deployment. Default value "<empty>".
+        """
+        return pulumi.get(self, "image")
+
+    @property
+    @pulumi.getter(name="ingressHostname")
+    def ingress_hostname(self) -> Optional[str]:
+        """
+        Ingress Hostname that the API is being exposed. Default value "<empty>".
+        """
+        return pulumi.get(self, "ingress_hostname")
 
     @property
     @pulumi.getter
     def mode(self) -> Optional[str]:
         """
-        INSERT ADDITIONAL SPEC FIELDS - desired state of cluster Important: Run "operator-sdk generate k8s" to regenerate code after modifying this file Add custom validation using kubebuilder tags: https://book.kubebuilder.io/beyond_basics/generating_crd.html
+        Mode of the API. The mode from the swagger definition will be overridden by this value. Supports "privateJet", "sidecar", "<empty>". Default value "<empty>".
         """
         return pulumi.get(self, "mode")
 
     @property
     @pulumi.getter
     def override(self) -> Optional[bool]:
+        """
+        Override the exiting API docker image. Default value "false".
+        """
         return pulumi.get(self, "override")
 
     @property
     @pulumi.getter(name="updateTimeStamp")
     def update_time_stamp(self) -> Optional[str]:
+        """
+        Update API definition creating a new docker image. Make a rolling update to the existing API. with prefixing the timestamp value. Default value "<empty>".
+        """
         return pulumi.get(self, "update_time_stamp")
 
     @property
     @pulumi.getter
     def version(self) -> Optional[str]:
+        """
+        Version of the API. The version from the swagger definition will be overridden by this value. Default value "<empty>".
+        """
         return pulumi.get(self, "version")
 
     def _translate_property(self, prop):
@@ -88,10 +157,18 @@ class APISpec(dict):
 
 @pulumi.output_type
 class APISpecDefinition(dict):
+    """
+    Definition of the API.
+    """
     def __init__(__self__, *,
                  swagger_configmap_names: Sequence[str],
                  interceptors: Optional['outputs.APISpecDefinitionInterceptors'] = None,
                  type: Optional[str] = None):
+        """
+        Definition of the API.
+        :param Sequence[str] swagger_configmap_names: Array of config map names of swagger definitions for the API.
+        :param 'APISpecDefinitionInterceptorsArgs' interceptors: Interceptors for API. Default value "<empty>".
+        """
         pulumi.set(__self__, "swagger_configmap_names", swagger_configmap_names)
         if interceptors is not None:
             pulumi.set(__self__, "interceptors", interceptors)
@@ -101,11 +178,17 @@ class APISpecDefinition(dict):
     @property
     @pulumi.getter(name="swaggerConfigmapNames")
     def swagger_configmap_names(self) -> Sequence[str]:
+        """
+        Array of config map names of swagger definitions for the API.
+        """
         return pulumi.get(self, "swagger_configmap_names")
 
     @property
     @pulumi.getter
     def interceptors(self) -> Optional['outputs.APISpecDefinitionInterceptors']:
+        """
+        Interceptors for API. Default value "<empty>".
+        """
         return pulumi.get(self, "interceptors")
 
     @property
@@ -119,9 +202,17 @@ class APISpecDefinition(dict):
 
 @pulumi.output_type
 class APISpecDefinitionInterceptors(dict):
+    """
+    Interceptors for API. Default value "<empty>".
+    """
     def __init__(__self__, *,
                  ballerina: Optional[Sequence[str]] = None,
                  java: Optional[Sequence[str]] = None):
+        """
+        Interceptors for API. Default value "<empty>".
+        :param Sequence[str] ballerina: Ballerina interceptors. Default value "<empty>".
+        :param Sequence[str] java: Java interceptors. Default value "<empty>".
+        """
         if ballerina is not None:
             pulumi.set(__self__, "ballerina", ballerina)
         if java is not None:
@@ -130,11 +221,17 @@ class APISpecDefinitionInterceptors(dict):
     @property
     @pulumi.getter
     def ballerina(self) -> Optional[Sequence[str]]:
+        """
+        Ballerina interceptors. Default value "<empty>".
+        """
         return pulumi.get(self, "ballerina")
 
     @property
     @pulumi.getter
     def java(self) -> Optional[Sequence[str]]:
+        """
+        Java interceptors. Default value "<empty>".
+        """
         return pulumi.get(self, "java")
 
     def _translate_property(self, prop):
@@ -142,7 +239,35 @@ class APISpecDefinitionInterceptors(dict):
 
 
 @pulumi.output_type
+class APIStatus(dict):
+    """
+    APIStatus defines the observed state of API
+    """
+    def __init__(__self__, *,
+                 replicas: int):
+        """
+        APIStatus defines the observed state of API
+        :param int replicas: replicas field in the status sub-resource will define the initial replica count allocated to the API.This will be the minimum replica count for a single API
+        """
+        pulumi.set(__self__, "replicas", replicas)
+
+    @property
+    @pulumi.getter
+    def replicas(self) -> int:
+        """
+        replicas field in the status sub-resource will define the initial replica count allocated to the API.This will be the minimum replica count for a single API
+        """
+        return pulumi.get(self, "replicas")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
 class RateLimitingSpec(dict):
+    """
+    RateLimitingSpec defines the desired state of RateLimiting
+    """
     def __init__(__self__, *,
                  request_count: 'outputs.RateLimitingSpecRequestCount',
                  time_unit: str,
@@ -152,6 +277,12 @@ class RateLimitingSpec(dict):
                  conditions: Optional['outputs.RateLimitingSpecConditions'] = None,
                  description: Optional[str] = None,
                  stop_on_quota_reach: Optional[bool] = None):
+        """
+        RateLimitingSpec defines the desired state of RateLimiting
+        :param 'RateLimitingSpecRequestCountArgs' request_count: RequestCount is exported type in Ratelimiting Spec
+        :param 'RateLimitingSpecBandwidthArgs' bandwidth: Bandwidth is exported type in Ratelimiting Spec
+        :param 'RateLimitingSpecConditionsArgs' conditions: Conditions is exported type in Ratelimiting Spec
+        """
         pulumi.set(__self__, "request_count", request_count)
         pulumi.set(__self__, "time_unit", time_unit)
         pulumi.set(__self__, "type", type)
@@ -168,6 +299,9 @@ class RateLimitingSpec(dict):
     @property
     @pulumi.getter(name="requestCount")
     def request_count(self) -> 'outputs.RateLimitingSpecRequestCount':
+        """
+        RequestCount is exported type in Ratelimiting Spec
+        """
         return pulumi.get(self, "request_count")
 
     @property
@@ -188,11 +322,17 @@ class RateLimitingSpec(dict):
     @property
     @pulumi.getter
     def bandwidth(self) -> Optional['outputs.RateLimitingSpecBandwidth']:
+        """
+        Bandwidth is exported type in Ratelimiting Spec
+        """
         return pulumi.get(self, "bandwidth")
 
     @property
     @pulumi.getter
     def conditions(self) -> Optional['outputs.RateLimitingSpecConditions']:
+        """
+        Conditions is exported type in Ratelimiting Spec
+        """
         return pulumi.get(self, "conditions")
 
     @property
@@ -211,9 +351,15 @@ class RateLimitingSpec(dict):
 
 @pulumi.output_type
 class RateLimitingSpecBandwidth(dict):
+    """
+    Bandwidth is exported type in Ratelimiting Spec
+    """
     def __init__(__self__, *,
                  data_amount: str,
                  data_unit: str):
+        """
+        Bandwidth is exported type in Ratelimiting Spec
+        """
         pulumi.set(__self__, "data_amount", data_amount)
         pulumi.set(__self__, "data_unit", data_unit)
 
@@ -233,20 +379,34 @@ class RateLimitingSpecBandwidth(dict):
 
 @pulumi.output_type
 class RateLimitingSpecConditions(dict):
+    """
+    Conditions is exported type in Ratelimiting Spec
+    """
     def __init__(__self__, *,
                  header_condition: 'outputs.RateLimitingSpecConditionsHeaderCondition',
                  ip_condition: 'outputs.RateLimitingSpecConditionsIpCondition'):
+        """
+        Conditions is exported type in Ratelimiting Spec
+        :param 'RateLimitingSpecConditionsHeaderConditionArgs' header_condition: HeaderCondition is exported type in Ratelimiting Spec
+        :param 'RateLimitingSpecConditionsIpConditionArgs' ip_condition: IPCondition is exported type in Ratelimiting Spec
+        """
         pulumi.set(__self__, "header_condition", header_condition)
         pulumi.set(__self__, "ip_condition", ip_condition)
 
     @property
     @pulumi.getter(name="headerCondition")
     def header_condition(self) -> 'outputs.RateLimitingSpecConditionsHeaderCondition':
+        """
+        HeaderCondition is exported type in Ratelimiting Spec
+        """
         return pulumi.get(self, "header_condition")
 
     @property
     @pulumi.getter(name="ipCondition")
     def ip_condition(self) -> 'outputs.RateLimitingSpecConditionsIpCondition':
+        """
+        IPCondition is exported type in Ratelimiting Spec
+        """
         return pulumi.get(self, "ip_condition")
 
     def _translate_property(self, prop):
@@ -255,9 +415,15 @@ class RateLimitingSpecConditions(dict):
 
 @pulumi.output_type
 class RateLimitingSpecConditionsHeaderCondition(dict):
+    """
+    HeaderCondition is exported type in Ratelimiting Spec
+    """
     def __init__(__self__, *,
                  header_name: str,
                  header_value: str):
+        """
+        HeaderCondition is exported type in Ratelimiting Spec
+        """
         pulumi.set(__self__, "header_name", header_name)
         pulumi.set(__self__, "header_value", header_value)
 
@@ -277,12 +443,18 @@ class RateLimitingSpecConditionsHeaderCondition(dict):
 
 @pulumi.output_type
 class RateLimitingSpecConditionsIpCondition(dict):
+    """
+    IPCondition is exported type in Ratelimiting Spec
+    """
     def __init__(__self__, *,
                  end_ip: str,
                  negation: bool,
                  specific_ip: str,
                  start_ip: str,
                  type: str):
+        """
+        IPCondition is exported type in Ratelimiting Spec
+        """
         pulumi.set(__self__, "end_ip", end_ip)
         pulumi.set(__self__, "negation", negation)
         pulumi.set(__self__, "specific_ip", specific_ip)
@@ -320,8 +492,14 @@ class RateLimitingSpecConditionsIpCondition(dict):
 
 @pulumi.output_type
 class RateLimitingSpecRequestCount(dict):
+    """
+    RequestCount is exported type in Ratelimiting Spec
+    """
     def __init__(__self__, *,
                  limit: int):
+        """
+        RequestCount is exported type in Ratelimiting Spec
+        """
         pulumi.set(__self__, "limit", limit)
 
     @property
@@ -335,10 +513,14 @@ class RateLimitingSpecRequestCount(dict):
 
 @pulumi.output_type
 class SecuritySpec(dict):
+    """
+    SecuritySpec defines the desired state of Security
+    """
     def __init__(__self__, *,
                  type: str,
                  security_config: Optional[Sequence['outputs.SecuritySpecSecurityConfig']] = None):
         """
+        SecuritySpec defines the desired state of Security
         :param str type: INSERT ADDITIONAL SPEC FIELDS - desired state of cluster Important: Run "operator-sdk generate k8s" to regenerate code after modifying this file Add custom validation using kubebuilder tags: https://book.kubebuilder.io/beyond_basics/generating_crd.html
         """
         pulumi.set(__self__, "type", type)
@@ -371,6 +553,7 @@ class SecuritySpecSecurityConfig(dict):
                  credentials: Optional[str] = None,
                  endpoint: Optional[str] = None,
                  issuer: Optional[str] = None,
+                 validate_allowed_apis: Optional[bool] = None,
                  validate_subscription: Optional[bool] = None):
         if alias is not None:
             pulumi.set(__self__, "alias", alias)
@@ -384,6 +567,8 @@ class SecuritySpecSecurityConfig(dict):
             pulumi.set(__self__, "endpoint", endpoint)
         if issuer is not None:
             pulumi.set(__self__, "issuer", issuer)
+        if validate_allowed_apis is not None:
+            pulumi.set(__self__, "validate_allowed_apis", validate_allowed_apis)
         if validate_subscription is not None:
             pulumi.set(__self__, "validate_subscription", validate_subscription)
 
@@ -418,6 +603,11 @@ class SecuritySpecSecurityConfig(dict):
         return pulumi.get(self, "issuer")
 
     @property
+    @pulumi.getter(name="validateAllowedAPIs")
+    def validate_allowed_apis(self) -> Optional[bool]:
+        return pulumi.get(self, "validate_allowed_apis")
+
+    @property
     @pulumi.getter(name="validateSubscription")
     def validate_subscription(self) -> Optional[bool]:
         return pulumi.get(self, "validate_subscription")
@@ -428,81 +618,58 @@ class SecuritySpecSecurityConfig(dict):
 
 @pulumi.output_type
 class TargetEndpointSpec(dict):
+    """
+    TargetEndpointSpec defines the desired state of TargetEndpoint
+    """
     def __init__(__self__, *,
+                 application_protocol: str,
                  deploy: 'outputs.TargetEndpointSpecDeploy',
-                 port: int,
-                 protocol: str,
-                 target_port: int,
-                 endpoint_name: Optional[str] = None,
-                 endpoint_security: Optional['outputs.TargetEndpointSpecEndpointSecurity'] = None,
-                 hostname: Optional[str] = None,
-                 mode: Optional[str] = None,
-                 type: Optional[str] = None):
+                 ports: Sequence['outputs.TargetEndpointSpecPorts'],
+                 mode: Optional[str] = None):
         """
-        :param str type: INSERT ADDITIONAL SPEC FIELDS - desired state of cluster Important: Run "operator-sdk generate k8s" to regenerate code after modifying this file Add custom validation using kubebuilder tags: https://book.kubebuilder.io/beyond_basics/generating_crd.html
+        TargetEndpointSpec defines the desired state of TargetEndpoint
+        :param str application_protocol: Protocol of the application. Supports "http" and "https".
+        :param 'TargetEndpointSpecDeployArgs' deploy: Deployment details.
+        :param Sequence['TargetEndpointSpecPortsArgs'] ports: List of optional ports of the target endpoint. First port should be the port of the target endpoint which is referred in swagger definition.
+        :param str mode: Mode of the Target Endpoint. Supports "privateJet", "sidecar", "serverless". Default value "privateJet"
         """
+        pulumi.set(__self__, "application_protocol", application_protocol)
         pulumi.set(__self__, "deploy", deploy)
-        pulumi.set(__self__, "port", port)
-        pulumi.set(__self__, "protocol", protocol)
-        pulumi.set(__self__, "target_port", target_port)
-        if endpoint_name is not None:
-            pulumi.set(__self__, "endpoint_name", endpoint_name)
-        if endpoint_security is not None:
-            pulumi.set(__self__, "endpoint_security", endpoint_security)
-        if hostname is not None:
-            pulumi.set(__self__, "hostname", hostname)
+        pulumi.set(__self__, "ports", ports)
         if mode is not None:
             pulumi.set(__self__, "mode", mode)
-        if type is not None:
-            pulumi.set(__self__, "type", type)
+
+    @property
+    @pulumi.getter(name="applicationProtocol")
+    def application_protocol(self) -> str:
+        """
+        Protocol of the application. Supports "http" and "https".
+        """
+        return pulumi.get(self, "application_protocol")
 
     @property
     @pulumi.getter
     def deploy(self) -> 'outputs.TargetEndpointSpecDeploy':
+        """
+        Deployment details.
+        """
         return pulumi.get(self, "deploy")
 
     @property
     @pulumi.getter
-    def port(self) -> int:
-        return pulumi.get(self, "port")
-
-    @property
-    @pulumi.getter
-    def protocol(self) -> str:
-        return pulumi.get(self, "protocol")
-
-    @property
-    @pulumi.getter(name="targetPort")
-    def target_port(self) -> int:
-        return pulumi.get(self, "target_port")
-
-    @property
-    @pulumi.getter(name="endpointName")
-    def endpoint_name(self) -> Optional[str]:
-        return pulumi.get(self, "endpoint_name")
-
-    @property
-    @pulumi.getter(name="endpointSecurity")
-    def endpoint_security(self) -> Optional['outputs.TargetEndpointSpecEndpointSecurity']:
-        return pulumi.get(self, "endpoint_security")
-
-    @property
-    @pulumi.getter
-    def hostname(self) -> Optional[str]:
-        return pulumi.get(self, "hostname")
+    def ports(self) -> Sequence['outputs.TargetEndpointSpecPorts']:
+        """
+        List of optional ports of the target endpoint. First port should be the port of the target endpoint which is referred in swagger definition.
+        """
+        return pulumi.get(self, "ports")
 
     @property
     @pulumi.getter
     def mode(self) -> Optional[str]:
+        """
+        Mode of the Target Endpoint. Supports "privateJet", "sidecar", "serverless". Default value "privateJet"
+        """
         return pulumi.get(self, "mode")
-
-    @property
-    @pulumi.getter
-    def type(self) -> Optional[str]:
-        """
-        INSERT ADDITIONAL SPEC FIELDS - desired state of cluster Important: Run "operator-sdk generate k8s" to regenerate code after modifying this file Add custom validation using kubebuilder tags: https://book.kubebuilder.io/beyond_basics/generating_crd.html
-        """
-        return pulumi.get(self, "type")
 
     def _translate_property(self, prop):
         return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
@@ -510,6 +677,9 @@ class TargetEndpointSpec(dict):
 
 @pulumi.output_type
 class TargetEndpointSpecDeploy(dict):
+    """
+    Deployment details.
+    """
     def __init__(__self__, *,
                  docker_image: str,
                  name: str,
@@ -519,6 +689,9 @@ class TargetEndpointSpecDeploy(dict):
                  min_replicas: Optional[int] = None,
                  req_memory: Optional[str] = None,
                  request_cpu: Optional[str] = None):
+        """
+        Deployment details.
+        """
         pulumi.set(__self__, "docker_image", docker_image)
         pulumi.set(__self__, "name", name)
         if cpu_limit is not None:
@@ -579,29 +752,47 @@ class TargetEndpointSpecDeploy(dict):
 
 
 @pulumi.output_type
-class TargetEndpointSpecEndpointSecurity(dict):
+class TargetEndpointSpecPorts(dict):
+    """
+    Port represents ports of the Target Endpoint
+    """
     def __init__(__self__, *,
-                 password: str,
-                 type: str,
-                 username: str):
-        pulumi.set(__self__, "password", password)
-        pulumi.set(__self__, "type", type)
-        pulumi.set(__self__, "username", username)
+                 name: str,
+                 port: int,
+                 target_port: int):
+        """
+        Port represents ports of the Target Endpoint
+        :param str name: The name of this port within the service. This must be a DNS_LABEL. All ports within a ServiceSpec must have unique names.
+        :param int port: The port that will be exposed by this service.
+        :param int target_port: Port that is targeted to expose.
+        """
+        pulumi.set(__self__, "name", name)
+        pulumi.set(__self__, "port", port)
+        pulumi.set(__self__, "target_port", target_port)
 
     @property
     @pulumi.getter
-    def password(self) -> str:
-        return pulumi.get(self, "password")
+    def name(self) -> str:
+        """
+        The name of this port within the service. This must be a DNS_LABEL. All ports within a ServiceSpec must have unique names.
+        """
+        return pulumi.get(self, "name")
 
     @property
     @pulumi.getter
-    def type(self) -> str:
-        return pulumi.get(self, "type")
+    def port(self) -> int:
+        """
+        The port that will be exposed by this service.
+        """
+        return pulumi.get(self, "port")
 
     @property
-    @pulumi.getter
-    def username(self) -> str:
-        return pulumi.get(self, "username")
+    @pulumi.getter(name="targetPort")
+    def target_port(self) -> int:
+        """
+        Port that is targeted to expose.
+        """
+        return pulumi.get(self, "target_port")
 
     def _translate_property(self, prop):
         return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop

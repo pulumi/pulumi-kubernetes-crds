@@ -34,7 +34,7 @@ namespace Pulumi.Kubernetes.Types.Outputs.Machinelearning.V1
         /// </summary>
         public readonly int PeriodSeconds;
         /// <summary>
-        /// Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1. Must be 1 for liveness. Minimum value is 1.
+        /// Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1. Must be 1 for liveness and startup. Minimum value is 1.
         /// </summary>
         public readonly int SuccessThreshold;
         /// <summary>

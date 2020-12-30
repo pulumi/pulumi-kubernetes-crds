@@ -26,9 +26,17 @@ namespace Pulumi.Kubernetes.Types.Outputs.Velero.V1
         /// </summary>
         public readonly string Expiration;
         /// <summary>
+        /// FormatVersion is the backup format version, including major, minor, and patch version.
+        /// </summary>
+        public readonly string FormatVersion;
+        /// <summary>
         /// Phase is the current state of the Backup.
         /// </summary>
         public readonly string Phase;
+        /// <summary>
+        /// Progress contains information about the backup's execution progress. Note that this information is best-effort only -- if Velero fails to update it during a backup for any reason, it may be inaccurate/stale.
+        /// </summary>
+        public readonly Pulumi.Kubernetes.Types.Outputs.Velero.V1.BackupStatusProgress Progress;
         /// <summary>
         /// StartTimestamp records the time a backup was started. Separate from CreationTimestamp, since that value changes on restores. The server's time is used for StartTimestamps
         /// </summary>
@@ -38,7 +46,7 @@ namespace Pulumi.Kubernetes.Types.Outputs.Velero.V1
         /// </summary>
         public readonly ImmutableArray<string> ValidationErrors;
         /// <summary>
-        /// Version is the backup format version.
+        /// Version is the backup format major version. Deprecated: Please see FormatVersion
         /// </summary>
         public readonly int Version;
         /// <summary>
@@ -62,7 +70,11 @@ namespace Pulumi.Kubernetes.Types.Outputs.Velero.V1
 
             string expiration,
 
+            string formatVersion,
+
             string phase,
+
+            Pulumi.Kubernetes.Types.Outputs.Velero.V1.BackupStatusProgress progress,
 
             string startTimestamp,
 
@@ -79,7 +91,9 @@ namespace Pulumi.Kubernetes.Types.Outputs.Velero.V1
             CompletionTimestamp = completionTimestamp;
             Errors = errors;
             Expiration = expiration;
+            FormatVersion = formatVersion;
             Phase = phase;
+            Progress = progress;
             StartTimestamp = startTimestamp;
             ValidationErrors = validationErrors;
             Version = version;

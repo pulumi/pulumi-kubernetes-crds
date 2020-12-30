@@ -15,6 +15,7 @@ namespace Pulumi.Kubernetes.Types.Outputs.Pingcap.V1Alpha1
     {
         public readonly Pulumi.Kubernetes.Types.Outputs.Pingcap.V1Alpha1.TidbClusterSpecAffinity Affinity;
         public readonly ImmutableDictionary<string, object> Annotations;
+        public readonly Pulumi.Kubernetes.Types.Outputs.Pingcap.V1Alpha1.TidbClusterSpecCluster Cluster;
         public readonly string ConfigUpdateStrategy;
         public readonly Pulumi.Kubernetes.Types.Outputs.Pingcap.V1Alpha1.TidbClusterSpecDiscovery Discovery;
         public readonly bool EnableDynamicConfiguration;
@@ -26,10 +27,13 @@ namespace Pulumi.Kubernetes.Types.Outputs.Pingcap.V1Alpha1
         public readonly ImmutableDictionary<string, object> NodeSelector;
         public readonly bool Paused;
         public readonly Pulumi.Kubernetes.Types.Outputs.Pingcap.V1Alpha1.TidbClusterSpecPd Pd;
+        public readonly ImmutableArray<string> PdAddresses;
         public readonly string PriorityClassName;
         public readonly Pulumi.Kubernetes.Types.Outputs.Pingcap.V1Alpha1.TidbClusterSpecPump Pump;
         public readonly string PvReclaimPolicy;
         public readonly string SchedulerName;
+        public readonly string ServiceAccount;
+        public readonly string StatefulSetUpdateStrategy;
         public readonly Pulumi.Kubernetes.Types.Outputs.Pingcap.V1Alpha1.TidbClusterSpecTicdc Ticdc;
         public readonly Pulumi.Kubernetes.Types.Outputs.Pingcap.V1Alpha1.TidbClusterSpecTidb Tidb;
         public readonly Pulumi.Kubernetes.Types.Outputs.Pingcap.V1Alpha1.TidbClusterSpecTiflash Tiflash;
@@ -44,6 +48,8 @@ namespace Pulumi.Kubernetes.Types.Outputs.Pingcap.V1Alpha1
             Pulumi.Kubernetes.Types.Outputs.Pingcap.V1Alpha1.TidbClusterSpecAffinity affinity,
 
             ImmutableDictionary<string, object> annotations,
+
+            Pulumi.Kubernetes.Types.Outputs.Pingcap.V1Alpha1.TidbClusterSpecCluster cluster,
 
             string configUpdateStrategy,
 
@@ -67,6 +73,8 @@ namespace Pulumi.Kubernetes.Types.Outputs.Pingcap.V1Alpha1
 
             Pulumi.Kubernetes.Types.Outputs.Pingcap.V1Alpha1.TidbClusterSpecPd pd,
 
+            ImmutableArray<string> pdAddresses,
+
             string priorityClassName,
 
             Pulumi.Kubernetes.Types.Outputs.Pingcap.V1Alpha1.TidbClusterSpecPump pump,
@@ -74,6 +82,10 @@ namespace Pulumi.Kubernetes.Types.Outputs.Pingcap.V1Alpha1
             string pvReclaimPolicy,
 
             string schedulerName,
+
+            string serviceAccount,
+
+            string statefulSetUpdateStrategy,
 
             Pulumi.Kubernetes.Types.Outputs.Pingcap.V1Alpha1.TidbClusterSpecTicdc ticdc,
 
@@ -93,6 +105,7 @@ namespace Pulumi.Kubernetes.Types.Outputs.Pingcap.V1Alpha1
         {
             Affinity = affinity;
             Annotations = annotations;
+            Cluster = cluster;
             ConfigUpdateStrategy = configUpdateStrategy;
             Discovery = discovery;
             EnableDynamicConfiguration = enableDynamicConfiguration;
@@ -104,10 +117,13 @@ namespace Pulumi.Kubernetes.Types.Outputs.Pingcap.V1Alpha1
             NodeSelector = nodeSelector;
             Paused = paused;
             Pd = pd;
+            PdAddresses = pdAddresses;
             PriorityClassName = priorityClassName;
             Pump = pump;
             PvReclaimPolicy = pvReclaimPolicy;
             SchedulerName = schedulerName;
+            ServiceAccount = serviceAccount;
+            StatefulSetUpdateStrategy = statefulSetUpdateStrategy;
             Ticdc = ticdc;
             Tidb = tidb;
             Tiflash = tiflash;

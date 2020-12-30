@@ -27,8 +27,7 @@ class Nexus(pulumi.CustomResource):
                  __name__=None,
                  __opts__=None):
         """
-        Nexus custom resource to deploy the Nexus Server
-
+        Create a Nexus resource with the given unique name, props, and options.
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[pulumi.InputType['NexusSpecArgs']] spec: NexusSpec defines the desired state of Nexus

@@ -10,6 +10,9 @@ using Pulumi.Serialization;
 namespace Pulumi.Kubernetes.Types.Inputs.Apps.V1Alpha1
 {
 
+    /// <summary>
+    /// APIManager Deployment Configs
+    /// </summary>
     public class APIManagerStatusDeploymentsArgs : Pulumi.ResourceArgs
     {
         [Input("ready")]

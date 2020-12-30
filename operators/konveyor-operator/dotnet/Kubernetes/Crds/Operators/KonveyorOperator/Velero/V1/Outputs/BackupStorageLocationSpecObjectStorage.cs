@@ -18,6 +18,10 @@ namespace Pulumi.Kubernetes.Types.Outputs.Velero.V1
         /// </summary>
         public readonly string Bucket;
         /// <summary>
+        /// CACert defines a CA bundle to use when verifying TLS connections to the provider.
+        /// </summary>
+        public readonly string CaCert;
+        /// <summary>
         /// Prefix is the path inside a bucket to use for Velero storage. Optional.
         /// </summary>
         public readonly string Prefix;
@@ -26,9 +30,12 @@ namespace Pulumi.Kubernetes.Types.Outputs.Velero.V1
         private BackupStorageLocationSpecObjectStorage(
             string bucket,
 
+            string caCert,
+
             string prefix)
         {
             Bucket = bucket;
+            CaCert = caCert;
             Prefix = prefix;
         }
     }

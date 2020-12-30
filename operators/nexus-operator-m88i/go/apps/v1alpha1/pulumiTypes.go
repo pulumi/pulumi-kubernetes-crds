@@ -11,7 +11,6 @@ import (
 	"github.com/pulumi/pulumi/sdk/v2/go/pulumi"
 )
 
-// Nexus custom resource to deploy the Nexus Server
 type NexusType struct {
 	ApiVersion *string            `pulumi:"apiVersion"`
 	Kind       *string            `pulumi:"kind"`
@@ -33,7 +32,6 @@ type NexusTypeInput interface {
 	ToNexusTypeOutputWithContext(context.Context) NexusTypeOutput
 }
 
-// Nexus custom resource to deploy the Nexus Server
 type NexusTypeArgs struct {
 	ApiVersion pulumi.StringPtrInput     `pulumi:"apiVersion"`
 	Kind       pulumi.StringPtrInput     `pulumi:"kind"`
@@ -56,7 +54,6 @@ func (i NexusTypeArgs) ToNexusTypeOutputWithContext(ctx context.Context) NexusTy
 	return pulumi.ToOutputWithContext(ctx, i).(NexusTypeOutput)
 }
 
-// Nexus custom resource to deploy the Nexus Server
 type NexusTypeOutput struct{ *pulumi.OutputState }
 
 func (NexusTypeOutput) ElementType() reflect.Type {
@@ -138,19 +135,31 @@ func (o NexusMetadataOutput) ToNexusMetadataOutputWithContext(ctx context.Contex
 
 // NexusSpec defines the desired state of Nexus
 type NexusSpec struct {
-	// Full image tag name for this specific deployment Default: docker.io/sonatype/nexus3:latest
+	// Automatic updates configuration
+	AutomaticUpdate *NexusSpecAutomaticUpdate `pulumi:"automaticUpdate"`
+	// GenerateRandomAdminPassword enables the random password generation. Defaults to `false`: the default password for a newly created instance is 'admin123', which should be changed in the first login. If set to `true`, you must use the automatically generated 'admin' password, stored in the container's file system at `/nexus-data/admin.password`. The operator uses the default credentials to create a user for itself to create default repositories. If set to `true`, the repositories won't be created since the operator won't fetch for the random password.
+	GenerateRandomAdminPassword *bool `pulumi:"generateRandomAdminPassword"`
+	// Full image tag name for this specific deployment. Will be ignored if `spec.useRedHatImage` is set to `true`. Default: docker.io/sonatype/nexus3:latest
 	Image *string `pulumi:"image"`
+	// The image pull policy for the Nexus image. If left blank behavior will be determined by the image tag (`Always` if "latest" and `IfNotPresent` otherwise). Possible values: `Always`, `IfNotPresent` or `Never`.
+	ImagePullPolicy *string `pulumi:"imagePullPolicy"`
+	// LivenessProbe describes how the Nexus container liveness probe should work
+	LivenessProbe *NexusSpecLivenessProbe `pulumi:"livenessProbe"`
 	// Networking definition
 	Networking *NexusSpecNetworking `pulumi:"networking"`
 	// Persistence definition
 	Persistence NexusSpecPersistence `pulumi:"persistence"`
-	// Number of pods replicas desired Default: 1
+	// ReadinessProbe describes how the Nexus container readiness probe should work
+	ReadinessProbe *NexusSpecReadinessProbe `pulumi:"readinessProbe"`
+	// Number of pod replicas desired. Defaults to 0.
 	Replicas int `pulumi:"replicas"`
 	// Defined Resources for the Nexus instance
 	Resources *NexusSpecResources `pulumi:"resources"`
-	// ServiceAccountName is the name of the ServiceAccount used to run the Pods. If left blank, a default ServiceAccount is created with the same name as the Nexus CR.
+	// ServerOperations describes the options for the operations performed on the deployed server instance
+	ServerOperations *NexusSpecServerOperations `pulumi:"serverOperations"`
+	// ServiceAccountName is the name of the ServiceAccount used to run the Pods. If left blank, a default ServiceAccount is created with the same name as the Nexus CR (`metadata.name`).
 	ServiceAccountName *string `pulumi:"serviceAccountName"`
-	// If you have access to Red Hat Container Catalog, turn this to true to use the certified image provided by Sonatype Default: false
+	// If you have access to Red Hat Container Catalog, set this to `true` to use the certified image provided by Sonatype Defaults to `false`
 	UseRedHatImage bool `pulumi:"useRedHatImage"`
 }
 
@@ -167,19 +176,31 @@ type NexusSpecInput interface {
 
 // NexusSpec defines the desired state of Nexus
 type NexusSpecArgs struct {
-	// Full image tag name for this specific deployment Default: docker.io/sonatype/nexus3:latest
+	// Automatic updates configuration
+	AutomaticUpdate NexusSpecAutomaticUpdatePtrInput `pulumi:"automaticUpdate"`
+	// GenerateRandomAdminPassword enables the random password generation. Defaults to `false`: the default password for a newly created instance is 'admin123', which should be changed in the first login. If set to `true`, you must use the automatically generated 'admin' password, stored in the container's file system at `/nexus-data/admin.password`. The operator uses the default credentials to create a user for itself to create default repositories. If set to `true`, the repositories won't be created since the operator won't fetch for the random password.
+	GenerateRandomAdminPassword pulumi.BoolPtrInput `pulumi:"generateRandomAdminPassword"`
+	// Full image tag name for this specific deployment. Will be ignored if `spec.useRedHatImage` is set to `true`. Default: docker.io/sonatype/nexus3:latest
 	Image pulumi.StringPtrInput `pulumi:"image"`
+	// The image pull policy for the Nexus image. If left blank behavior will be determined by the image tag (`Always` if "latest" and `IfNotPresent` otherwise). Possible values: `Always`, `IfNotPresent` or `Never`.
+	ImagePullPolicy pulumi.StringPtrInput `pulumi:"imagePullPolicy"`
+	// LivenessProbe describes how the Nexus container liveness probe should work
+	LivenessProbe NexusSpecLivenessProbePtrInput `pulumi:"livenessProbe"`
 	// Networking definition
 	Networking NexusSpecNetworkingPtrInput `pulumi:"networking"`
 	// Persistence definition
 	Persistence NexusSpecPersistenceInput `pulumi:"persistence"`
-	// Number of pods replicas desired Default: 1
+	// ReadinessProbe describes how the Nexus container readiness probe should work
+	ReadinessProbe NexusSpecReadinessProbePtrInput `pulumi:"readinessProbe"`
+	// Number of pod replicas desired. Defaults to 0.
 	Replicas pulumi.IntInput `pulumi:"replicas"`
 	// Defined Resources for the Nexus instance
 	Resources NexusSpecResourcesPtrInput `pulumi:"resources"`
-	// ServiceAccountName is the name of the ServiceAccount used to run the Pods. If left blank, a default ServiceAccount is created with the same name as the Nexus CR.
+	// ServerOperations describes the options for the operations performed on the deployed server instance
+	ServerOperations NexusSpecServerOperationsPtrInput `pulumi:"serverOperations"`
+	// ServiceAccountName is the name of the ServiceAccount used to run the Pods. If left blank, a default ServiceAccount is created with the same name as the Nexus CR (`metadata.name`).
 	ServiceAccountName pulumi.StringPtrInput `pulumi:"serviceAccountName"`
-	// If you have access to Red Hat Container Catalog, turn this to true to use the certified image provided by Sonatype Default: false
+	// If you have access to Red Hat Container Catalog, set this to `true` to use the certified image provided by Sonatype Defaults to `false`
 	UseRedHatImage pulumi.BoolInput `pulumi:"useRedHatImage"`
 }
 
@@ -261,9 +282,29 @@ func (o NexusSpecOutput) ToNexusSpecPtrOutputWithContext(ctx context.Context) Ne
 	}).(NexusSpecPtrOutput)
 }
 
-// Full image tag name for this specific deployment Default: docker.io/sonatype/nexus3:latest
+// Automatic updates configuration
+func (o NexusSpecOutput) AutomaticUpdate() NexusSpecAutomaticUpdatePtrOutput {
+	return o.ApplyT(func(v NexusSpec) *NexusSpecAutomaticUpdate { return v.AutomaticUpdate }).(NexusSpecAutomaticUpdatePtrOutput)
+}
+
+// GenerateRandomAdminPassword enables the random password generation. Defaults to `false`: the default password for a newly created instance is 'admin123', which should be changed in the first login. If set to `true`, you must use the automatically generated 'admin' password, stored in the container's file system at `/nexus-data/admin.password`. The operator uses the default credentials to create a user for itself to create default repositories. If set to `true`, the repositories won't be created since the operator won't fetch for the random password.
+func (o NexusSpecOutput) GenerateRandomAdminPassword() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v NexusSpec) *bool { return v.GenerateRandomAdminPassword }).(pulumi.BoolPtrOutput)
+}
+
+// Full image tag name for this specific deployment. Will be ignored if `spec.useRedHatImage` is set to `true`. Default: docker.io/sonatype/nexus3:latest
 func (o NexusSpecOutput) Image() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v NexusSpec) *string { return v.Image }).(pulumi.StringPtrOutput)
+}
+
+// The image pull policy for the Nexus image. If left blank behavior will be determined by the image tag (`Always` if "latest" and `IfNotPresent` otherwise). Possible values: `Always`, `IfNotPresent` or `Never`.
+func (o NexusSpecOutput) ImagePullPolicy() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v NexusSpec) *string { return v.ImagePullPolicy }).(pulumi.StringPtrOutput)
+}
+
+// LivenessProbe describes how the Nexus container liveness probe should work
+func (o NexusSpecOutput) LivenessProbe() NexusSpecLivenessProbePtrOutput {
+	return o.ApplyT(func(v NexusSpec) *NexusSpecLivenessProbe { return v.LivenessProbe }).(NexusSpecLivenessProbePtrOutput)
 }
 
 // Networking definition
@@ -276,7 +317,12 @@ func (o NexusSpecOutput) Persistence() NexusSpecPersistenceOutput {
 	return o.ApplyT(func(v NexusSpec) NexusSpecPersistence { return v.Persistence }).(NexusSpecPersistenceOutput)
 }
 
-// Number of pods replicas desired Default: 1
+// ReadinessProbe describes how the Nexus container readiness probe should work
+func (o NexusSpecOutput) ReadinessProbe() NexusSpecReadinessProbePtrOutput {
+	return o.ApplyT(func(v NexusSpec) *NexusSpecReadinessProbe { return v.ReadinessProbe }).(NexusSpecReadinessProbePtrOutput)
+}
+
+// Number of pod replicas desired. Defaults to 0.
 func (o NexusSpecOutput) Replicas() pulumi.IntOutput {
 	return o.ApplyT(func(v NexusSpec) int { return v.Replicas }).(pulumi.IntOutput)
 }
@@ -286,12 +332,17 @@ func (o NexusSpecOutput) Resources() NexusSpecResourcesPtrOutput {
 	return o.ApplyT(func(v NexusSpec) *NexusSpecResources { return v.Resources }).(NexusSpecResourcesPtrOutput)
 }
 
-// ServiceAccountName is the name of the ServiceAccount used to run the Pods. If left blank, a default ServiceAccount is created with the same name as the Nexus CR.
+// ServerOperations describes the options for the operations performed on the deployed server instance
+func (o NexusSpecOutput) ServerOperations() NexusSpecServerOperationsPtrOutput {
+	return o.ApplyT(func(v NexusSpec) *NexusSpecServerOperations { return v.ServerOperations }).(NexusSpecServerOperationsPtrOutput)
+}
+
+// ServiceAccountName is the name of the ServiceAccount used to run the Pods. If left blank, a default ServiceAccount is created with the same name as the Nexus CR (`metadata.name`).
 func (o NexusSpecOutput) ServiceAccountName() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v NexusSpec) *string { return v.ServiceAccountName }).(pulumi.StringPtrOutput)
 }
 
-// If you have access to Red Hat Container Catalog, turn this to true to use the certified image provided by Sonatype Default: false
+// If you have access to Red Hat Container Catalog, set this to `true` to use the certified image provided by Sonatype Defaults to `false`
 func (o NexusSpecOutput) UseRedHatImage() pulumi.BoolOutput {
 	return o.ApplyT(func(v NexusSpec) bool { return v.UseRedHatImage }).(pulumi.BoolOutput)
 }
@@ -314,7 +365,27 @@ func (o NexusSpecPtrOutput) Elem() NexusSpecOutput {
 	return o.ApplyT(func(v *NexusSpec) NexusSpec { return *v }).(NexusSpecOutput)
 }
 
-// Full image tag name for this specific deployment Default: docker.io/sonatype/nexus3:latest
+// Automatic updates configuration
+func (o NexusSpecPtrOutput) AutomaticUpdate() NexusSpecAutomaticUpdatePtrOutput {
+	return o.ApplyT(func(v *NexusSpec) *NexusSpecAutomaticUpdate {
+		if v == nil {
+			return nil
+		}
+		return v.AutomaticUpdate
+	}).(NexusSpecAutomaticUpdatePtrOutput)
+}
+
+// GenerateRandomAdminPassword enables the random password generation. Defaults to `false`: the default password for a newly created instance is 'admin123', which should be changed in the first login. If set to `true`, you must use the automatically generated 'admin' password, stored in the container's file system at `/nexus-data/admin.password`. The operator uses the default credentials to create a user for itself to create default repositories. If set to `true`, the repositories won't be created since the operator won't fetch for the random password.
+func (o NexusSpecPtrOutput) GenerateRandomAdminPassword() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *NexusSpec) *bool {
+		if v == nil {
+			return nil
+		}
+		return v.GenerateRandomAdminPassword
+	}).(pulumi.BoolPtrOutput)
+}
+
+// Full image tag name for this specific deployment. Will be ignored if `spec.useRedHatImage` is set to `true`. Default: docker.io/sonatype/nexus3:latest
 func (o NexusSpecPtrOutput) Image() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *NexusSpec) *string {
 		if v == nil {
@@ -322,6 +393,26 @@ func (o NexusSpecPtrOutput) Image() pulumi.StringPtrOutput {
 		}
 		return v.Image
 	}).(pulumi.StringPtrOutput)
+}
+
+// The image pull policy for the Nexus image. If left blank behavior will be determined by the image tag (`Always` if "latest" and `IfNotPresent` otherwise). Possible values: `Always`, `IfNotPresent` or `Never`.
+func (o NexusSpecPtrOutput) ImagePullPolicy() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *NexusSpec) *string {
+		if v == nil {
+			return nil
+		}
+		return v.ImagePullPolicy
+	}).(pulumi.StringPtrOutput)
+}
+
+// LivenessProbe describes how the Nexus container liveness probe should work
+func (o NexusSpecPtrOutput) LivenessProbe() NexusSpecLivenessProbePtrOutput {
+	return o.ApplyT(func(v *NexusSpec) *NexusSpecLivenessProbe {
+		if v == nil {
+			return nil
+		}
+		return v.LivenessProbe
+	}).(NexusSpecLivenessProbePtrOutput)
 }
 
 // Networking definition
@@ -344,7 +435,17 @@ func (o NexusSpecPtrOutput) Persistence() NexusSpecPersistencePtrOutput {
 	}).(NexusSpecPersistencePtrOutput)
 }
 
-// Number of pods replicas desired Default: 1
+// ReadinessProbe describes how the Nexus container readiness probe should work
+func (o NexusSpecPtrOutput) ReadinessProbe() NexusSpecReadinessProbePtrOutput {
+	return o.ApplyT(func(v *NexusSpec) *NexusSpecReadinessProbe {
+		if v == nil {
+			return nil
+		}
+		return v.ReadinessProbe
+	}).(NexusSpecReadinessProbePtrOutput)
+}
+
+// Number of pod replicas desired. Defaults to 0.
 func (o NexusSpecPtrOutput) Replicas() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v *NexusSpec) *int {
 		if v == nil {
@@ -364,7 +465,17 @@ func (o NexusSpecPtrOutput) Resources() NexusSpecResourcesPtrOutput {
 	}).(NexusSpecResourcesPtrOutput)
 }
 
-// ServiceAccountName is the name of the ServiceAccount used to run the Pods. If left blank, a default ServiceAccount is created with the same name as the Nexus CR.
+// ServerOperations describes the options for the operations performed on the deployed server instance
+func (o NexusSpecPtrOutput) ServerOperations() NexusSpecServerOperationsPtrOutput {
+	return o.ApplyT(func(v *NexusSpec) *NexusSpecServerOperations {
+		if v == nil {
+			return nil
+		}
+		return v.ServerOperations
+	}).(NexusSpecServerOperationsPtrOutput)
+}
+
+// ServiceAccountName is the name of the ServiceAccount used to run the Pods. If left blank, a default ServiceAccount is created with the same name as the Nexus CR (`metadata.name`).
 func (o NexusSpecPtrOutput) ServiceAccountName() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *NexusSpec) *string {
 		if v == nil {
@@ -374,7 +485,7 @@ func (o NexusSpecPtrOutput) ServiceAccountName() pulumi.StringPtrOutput {
 	}).(pulumi.StringPtrOutput)
 }
 
-// If you have access to Red Hat Container Catalog, turn this to true to use the certified image provided by Sonatype Default: false
+// If you have access to Red Hat Container Catalog, set this to `true` to use the certified image provided by Sonatype Defaults to `false`
 func (o NexusSpecPtrOutput) UseRedHatImage() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v *NexusSpec) *bool {
 		if v == nil {
@@ -384,11 +495,374 @@ func (o NexusSpecPtrOutput) UseRedHatImage() pulumi.BoolPtrOutput {
 	}).(pulumi.BoolPtrOutput)
 }
 
+// Automatic updates configuration
+type NexusSpecAutomaticUpdate struct {
+	// Whether or not the Operator should perform automatic updates. Defaults to `false` (auto updates are enabled). Is set to `false` if `spec.image` is not empty and is different from the default community image.
+	Disabled *bool `pulumi:"disabled"`
+	// The Nexus image minor version the deployment should stay in. If left blank and automatic updates are enabled the latest minor is set.
+	MinorVersion *int `pulumi:"minorVersion"`
+}
+
+// NexusSpecAutomaticUpdateInput is an input type that accepts NexusSpecAutomaticUpdateArgs and NexusSpecAutomaticUpdateOutput values.
+// You can construct a concrete instance of `NexusSpecAutomaticUpdateInput` via:
+//
+//          NexusSpecAutomaticUpdateArgs{...}
+type NexusSpecAutomaticUpdateInput interface {
+	pulumi.Input
+
+	ToNexusSpecAutomaticUpdateOutput() NexusSpecAutomaticUpdateOutput
+	ToNexusSpecAutomaticUpdateOutputWithContext(context.Context) NexusSpecAutomaticUpdateOutput
+}
+
+// Automatic updates configuration
+type NexusSpecAutomaticUpdateArgs struct {
+	// Whether or not the Operator should perform automatic updates. Defaults to `false` (auto updates are enabled). Is set to `false` if `spec.image` is not empty and is different from the default community image.
+	Disabled pulumi.BoolPtrInput `pulumi:"disabled"`
+	// The Nexus image minor version the deployment should stay in. If left blank and automatic updates are enabled the latest minor is set.
+	MinorVersion pulumi.IntPtrInput `pulumi:"minorVersion"`
+}
+
+func (NexusSpecAutomaticUpdateArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*NexusSpecAutomaticUpdate)(nil)).Elem()
+}
+
+func (i NexusSpecAutomaticUpdateArgs) ToNexusSpecAutomaticUpdateOutput() NexusSpecAutomaticUpdateOutput {
+	return i.ToNexusSpecAutomaticUpdateOutputWithContext(context.Background())
+}
+
+func (i NexusSpecAutomaticUpdateArgs) ToNexusSpecAutomaticUpdateOutputWithContext(ctx context.Context) NexusSpecAutomaticUpdateOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(NexusSpecAutomaticUpdateOutput)
+}
+
+func (i NexusSpecAutomaticUpdateArgs) ToNexusSpecAutomaticUpdatePtrOutput() NexusSpecAutomaticUpdatePtrOutput {
+	return i.ToNexusSpecAutomaticUpdatePtrOutputWithContext(context.Background())
+}
+
+func (i NexusSpecAutomaticUpdateArgs) ToNexusSpecAutomaticUpdatePtrOutputWithContext(ctx context.Context) NexusSpecAutomaticUpdatePtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(NexusSpecAutomaticUpdateOutput).ToNexusSpecAutomaticUpdatePtrOutputWithContext(ctx)
+}
+
+// NexusSpecAutomaticUpdatePtrInput is an input type that accepts NexusSpecAutomaticUpdateArgs, NexusSpecAutomaticUpdatePtr and NexusSpecAutomaticUpdatePtrOutput values.
+// You can construct a concrete instance of `NexusSpecAutomaticUpdatePtrInput` via:
+//
+//          NexusSpecAutomaticUpdateArgs{...}
+//
+//  or:
+//
+//          nil
+type NexusSpecAutomaticUpdatePtrInput interface {
+	pulumi.Input
+
+	ToNexusSpecAutomaticUpdatePtrOutput() NexusSpecAutomaticUpdatePtrOutput
+	ToNexusSpecAutomaticUpdatePtrOutputWithContext(context.Context) NexusSpecAutomaticUpdatePtrOutput
+}
+
+type nexusSpecAutomaticUpdatePtrType NexusSpecAutomaticUpdateArgs
+
+func NexusSpecAutomaticUpdatePtr(v *NexusSpecAutomaticUpdateArgs) NexusSpecAutomaticUpdatePtrInput {
+	return (*nexusSpecAutomaticUpdatePtrType)(v)
+}
+
+func (*nexusSpecAutomaticUpdatePtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**NexusSpecAutomaticUpdate)(nil)).Elem()
+}
+
+func (i *nexusSpecAutomaticUpdatePtrType) ToNexusSpecAutomaticUpdatePtrOutput() NexusSpecAutomaticUpdatePtrOutput {
+	return i.ToNexusSpecAutomaticUpdatePtrOutputWithContext(context.Background())
+}
+
+func (i *nexusSpecAutomaticUpdatePtrType) ToNexusSpecAutomaticUpdatePtrOutputWithContext(ctx context.Context) NexusSpecAutomaticUpdatePtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(NexusSpecAutomaticUpdatePtrOutput)
+}
+
+// Automatic updates configuration
+type NexusSpecAutomaticUpdateOutput struct{ *pulumi.OutputState }
+
+func (NexusSpecAutomaticUpdateOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*NexusSpecAutomaticUpdate)(nil)).Elem()
+}
+
+func (o NexusSpecAutomaticUpdateOutput) ToNexusSpecAutomaticUpdateOutput() NexusSpecAutomaticUpdateOutput {
+	return o
+}
+
+func (o NexusSpecAutomaticUpdateOutput) ToNexusSpecAutomaticUpdateOutputWithContext(ctx context.Context) NexusSpecAutomaticUpdateOutput {
+	return o
+}
+
+func (o NexusSpecAutomaticUpdateOutput) ToNexusSpecAutomaticUpdatePtrOutput() NexusSpecAutomaticUpdatePtrOutput {
+	return o.ToNexusSpecAutomaticUpdatePtrOutputWithContext(context.Background())
+}
+
+func (o NexusSpecAutomaticUpdateOutput) ToNexusSpecAutomaticUpdatePtrOutputWithContext(ctx context.Context) NexusSpecAutomaticUpdatePtrOutput {
+	return o.ApplyT(func(v NexusSpecAutomaticUpdate) *NexusSpecAutomaticUpdate {
+		return &v
+	}).(NexusSpecAutomaticUpdatePtrOutput)
+}
+
+// Whether or not the Operator should perform automatic updates. Defaults to `false` (auto updates are enabled). Is set to `false` if `spec.image` is not empty and is different from the default community image.
+func (o NexusSpecAutomaticUpdateOutput) Disabled() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v NexusSpecAutomaticUpdate) *bool { return v.Disabled }).(pulumi.BoolPtrOutput)
+}
+
+// The Nexus image minor version the deployment should stay in. If left blank and automatic updates are enabled the latest minor is set.
+func (o NexusSpecAutomaticUpdateOutput) MinorVersion() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v NexusSpecAutomaticUpdate) *int { return v.MinorVersion }).(pulumi.IntPtrOutput)
+}
+
+type NexusSpecAutomaticUpdatePtrOutput struct{ *pulumi.OutputState }
+
+func (NexusSpecAutomaticUpdatePtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**NexusSpecAutomaticUpdate)(nil)).Elem()
+}
+
+func (o NexusSpecAutomaticUpdatePtrOutput) ToNexusSpecAutomaticUpdatePtrOutput() NexusSpecAutomaticUpdatePtrOutput {
+	return o
+}
+
+func (o NexusSpecAutomaticUpdatePtrOutput) ToNexusSpecAutomaticUpdatePtrOutputWithContext(ctx context.Context) NexusSpecAutomaticUpdatePtrOutput {
+	return o
+}
+
+func (o NexusSpecAutomaticUpdatePtrOutput) Elem() NexusSpecAutomaticUpdateOutput {
+	return o.ApplyT(func(v *NexusSpecAutomaticUpdate) NexusSpecAutomaticUpdate { return *v }).(NexusSpecAutomaticUpdateOutput)
+}
+
+// Whether or not the Operator should perform automatic updates. Defaults to `false` (auto updates are enabled). Is set to `false` if `spec.image` is not empty and is different from the default community image.
+func (o NexusSpecAutomaticUpdatePtrOutput) Disabled() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *NexusSpecAutomaticUpdate) *bool {
+		if v == nil {
+			return nil
+		}
+		return v.Disabled
+	}).(pulumi.BoolPtrOutput)
+}
+
+// The Nexus image minor version the deployment should stay in. If left blank and automatic updates are enabled the latest minor is set.
+func (o NexusSpecAutomaticUpdatePtrOutput) MinorVersion() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *NexusSpecAutomaticUpdate) *int {
+		if v == nil {
+			return nil
+		}
+		return v.MinorVersion
+	}).(pulumi.IntPtrOutput)
+}
+
+// LivenessProbe describes how the Nexus container liveness probe should work
+type NexusSpecLivenessProbe struct {
+	// Minimum consecutive failures for the probe to be considered failed after having succeeded. Defaults to 3. Minimum value is 1.
+	FailureThreshold *int `pulumi:"failureThreshold"`
+	// Number of seconds after the container has started before probes are initiated. Defaults to 240 seconds. Minimum value is 0.
+	InitialDelaySeconds *int `pulumi:"initialDelaySeconds"`
+	// How often (in seconds) to perform the probe. Defaults to 10 seconds. Minimum value is 1.
+	PeriodSeconds *int `pulumi:"periodSeconds"`
+	// Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1. Must be 1 for liveness and startup. Minimum value is 1.
+	SuccessThreshold *int `pulumi:"successThreshold"`
+	// Number of seconds after which the probe times out. Defaults to 15 seconds. Minimum value is 1.
+	TimeoutSeconds *int `pulumi:"timeoutSeconds"`
+}
+
+// NexusSpecLivenessProbeInput is an input type that accepts NexusSpecLivenessProbeArgs and NexusSpecLivenessProbeOutput values.
+// You can construct a concrete instance of `NexusSpecLivenessProbeInput` via:
+//
+//          NexusSpecLivenessProbeArgs{...}
+type NexusSpecLivenessProbeInput interface {
+	pulumi.Input
+
+	ToNexusSpecLivenessProbeOutput() NexusSpecLivenessProbeOutput
+	ToNexusSpecLivenessProbeOutputWithContext(context.Context) NexusSpecLivenessProbeOutput
+}
+
+// LivenessProbe describes how the Nexus container liveness probe should work
+type NexusSpecLivenessProbeArgs struct {
+	// Minimum consecutive failures for the probe to be considered failed after having succeeded. Defaults to 3. Minimum value is 1.
+	FailureThreshold pulumi.IntPtrInput `pulumi:"failureThreshold"`
+	// Number of seconds after the container has started before probes are initiated. Defaults to 240 seconds. Minimum value is 0.
+	InitialDelaySeconds pulumi.IntPtrInput `pulumi:"initialDelaySeconds"`
+	// How often (in seconds) to perform the probe. Defaults to 10 seconds. Minimum value is 1.
+	PeriodSeconds pulumi.IntPtrInput `pulumi:"periodSeconds"`
+	// Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1. Must be 1 for liveness and startup. Minimum value is 1.
+	SuccessThreshold pulumi.IntPtrInput `pulumi:"successThreshold"`
+	// Number of seconds after which the probe times out. Defaults to 15 seconds. Minimum value is 1.
+	TimeoutSeconds pulumi.IntPtrInput `pulumi:"timeoutSeconds"`
+}
+
+func (NexusSpecLivenessProbeArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*NexusSpecLivenessProbe)(nil)).Elem()
+}
+
+func (i NexusSpecLivenessProbeArgs) ToNexusSpecLivenessProbeOutput() NexusSpecLivenessProbeOutput {
+	return i.ToNexusSpecLivenessProbeOutputWithContext(context.Background())
+}
+
+func (i NexusSpecLivenessProbeArgs) ToNexusSpecLivenessProbeOutputWithContext(ctx context.Context) NexusSpecLivenessProbeOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(NexusSpecLivenessProbeOutput)
+}
+
+func (i NexusSpecLivenessProbeArgs) ToNexusSpecLivenessProbePtrOutput() NexusSpecLivenessProbePtrOutput {
+	return i.ToNexusSpecLivenessProbePtrOutputWithContext(context.Background())
+}
+
+func (i NexusSpecLivenessProbeArgs) ToNexusSpecLivenessProbePtrOutputWithContext(ctx context.Context) NexusSpecLivenessProbePtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(NexusSpecLivenessProbeOutput).ToNexusSpecLivenessProbePtrOutputWithContext(ctx)
+}
+
+// NexusSpecLivenessProbePtrInput is an input type that accepts NexusSpecLivenessProbeArgs, NexusSpecLivenessProbePtr and NexusSpecLivenessProbePtrOutput values.
+// You can construct a concrete instance of `NexusSpecLivenessProbePtrInput` via:
+//
+//          NexusSpecLivenessProbeArgs{...}
+//
+//  or:
+//
+//          nil
+type NexusSpecLivenessProbePtrInput interface {
+	pulumi.Input
+
+	ToNexusSpecLivenessProbePtrOutput() NexusSpecLivenessProbePtrOutput
+	ToNexusSpecLivenessProbePtrOutputWithContext(context.Context) NexusSpecLivenessProbePtrOutput
+}
+
+type nexusSpecLivenessProbePtrType NexusSpecLivenessProbeArgs
+
+func NexusSpecLivenessProbePtr(v *NexusSpecLivenessProbeArgs) NexusSpecLivenessProbePtrInput {
+	return (*nexusSpecLivenessProbePtrType)(v)
+}
+
+func (*nexusSpecLivenessProbePtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**NexusSpecLivenessProbe)(nil)).Elem()
+}
+
+func (i *nexusSpecLivenessProbePtrType) ToNexusSpecLivenessProbePtrOutput() NexusSpecLivenessProbePtrOutput {
+	return i.ToNexusSpecLivenessProbePtrOutputWithContext(context.Background())
+}
+
+func (i *nexusSpecLivenessProbePtrType) ToNexusSpecLivenessProbePtrOutputWithContext(ctx context.Context) NexusSpecLivenessProbePtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(NexusSpecLivenessProbePtrOutput)
+}
+
+// LivenessProbe describes how the Nexus container liveness probe should work
+type NexusSpecLivenessProbeOutput struct{ *pulumi.OutputState }
+
+func (NexusSpecLivenessProbeOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*NexusSpecLivenessProbe)(nil)).Elem()
+}
+
+func (o NexusSpecLivenessProbeOutput) ToNexusSpecLivenessProbeOutput() NexusSpecLivenessProbeOutput {
+	return o
+}
+
+func (o NexusSpecLivenessProbeOutput) ToNexusSpecLivenessProbeOutputWithContext(ctx context.Context) NexusSpecLivenessProbeOutput {
+	return o
+}
+
+func (o NexusSpecLivenessProbeOutput) ToNexusSpecLivenessProbePtrOutput() NexusSpecLivenessProbePtrOutput {
+	return o.ToNexusSpecLivenessProbePtrOutputWithContext(context.Background())
+}
+
+func (o NexusSpecLivenessProbeOutput) ToNexusSpecLivenessProbePtrOutputWithContext(ctx context.Context) NexusSpecLivenessProbePtrOutput {
+	return o.ApplyT(func(v NexusSpecLivenessProbe) *NexusSpecLivenessProbe {
+		return &v
+	}).(NexusSpecLivenessProbePtrOutput)
+}
+
+// Minimum consecutive failures for the probe to be considered failed after having succeeded. Defaults to 3. Minimum value is 1.
+func (o NexusSpecLivenessProbeOutput) FailureThreshold() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v NexusSpecLivenessProbe) *int { return v.FailureThreshold }).(pulumi.IntPtrOutput)
+}
+
+// Number of seconds after the container has started before probes are initiated. Defaults to 240 seconds. Minimum value is 0.
+func (o NexusSpecLivenessProbeOutput) InitialDelaySeconds() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v NexusSpecLivenessProbe) *int { return v.InitialDelaySeconds }).(pulumi.IntPtrOutput)
+}
+
+// How often (in seconds) to perform the probe. Defaults to 10 seconds. Minimum value is 1.
+func (o NexusSpecLivenessProbeOutput) PeriodSeconds() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v NexusSpecLivenessProbe) *int { return v.PeriodSeconds }).(pulumi.IntPtrOutput)
+}
+
+// Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1. Must be 1 for liveness and startup. Minimum value is 1.
+func (o NexusSpecLivenessProbeOutput) SuccessThreshold() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v NexusSpecLivenessProbe) *int { return v.SuccessThreshold }).(pulumi.IntPtrOutput)
+}
+
+// Number of seconds after which the probe times out. Defaults to 15 seconds. Minimum value is 1.
+func (o NexusSpecLivenessProbeOutput) TimeoutSeconds() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v NexusSpecLivenessProbe) *int { return v.TimeoutSeconds }).(pulumi.IntPtrOutput)
+}
+
+type NexusSpecLivenessProbePtrOutput struct{ *pulumi.OutputState }
+
+func (NexusSpecLivenessProbePtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**NexusSpecLivenessProbe)(nil)).Elem()
+}
+
+func (o NexusSpecLivenessProbePtrOutput) ToNexusSpecLivenessProbePtrOutput() NexusSpecLivenessProbePtrOutput {
+	return o
+}
+
+func (o NexusSpecLivenessProbePtrOutput) ToNexusSpecLivenessProbePtrOutputWithContext(ctx context.Context) NexusSpecLivenessProbePtrOutput {
+	return o
+}
+
+func (o NexusSpecLivenessProbePtrOutput) Elem() NexusSpecLivenessProbeOutput {
+	return o.ApplyT(func(v *NexusSpecLivenessProbe) NexusSpecLivenessProbe { return *v }).(NexusSpecLivenessProbeOutput)
+}
+
+// Minimum consecutive failures for the probe to be considered failed after having succeeded. Defaults to 3. Minimum value is 1.
+func (o NexusSpecLivenessProbePtrOutput) FailureThreshold() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *NexusSpecLivenessProbe) *int {
+		if v == nil {
+			return nil
+		}
+		return v.FailureThreshold
+	}).(pulumi.IntPtrOutput)
+}
+
+// Number of seconds after the container has started before probes are initiated. Defaults to 240 seconds. Minimum value is 0.
+func (o NexusSpecLivenessProbePtrOutput) InitialDelaySeconds() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *NexusSpecLivenessProbe) *int {
+		if v == nil {
+			return nil
+		}
+		return v.InitialDelaySeconds
+	}).(pulumi.IntPtrOutput)
+}
+
+// How often (in seconds) to perform the probe. Defaults to 10 seconds. Minimum value is 1.
+func (o NexusSpecLivenessProbePtrOutput) PeriodSeconds() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *NexusSpecLivenessProbe) *int {
+		if v == nil {
+			return nil
+		}
+		return v.PeriodSeconds
+	}).(pulumi.IntPtrOutput)
+}
+
+// Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1. Must be 1 for liveness and startup. Minimum value is 1.
+func (o NexusSpecLivenessProbePtrOutput) SuccessThreshold() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *NexusSpecLivenessProbe) *int {
+		if v == nil {
+			return nil
+		}
+		return v.SuccessThreshold
+	}).(pulumi.IntPtrOutput)
+}
+
+// Number of seconds after which the probe times out. Defaults to 15 seconds. Minimum value is 1.
+func (o NexusSpecLivenessProbePtrOutput) TimeoutSeconds() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *NexusSpecLivenessProbe) *int {
+		if v == nil {
+			return nil
+		}
+		return v.TimeoutSeconds
+	}).(pulumi.IntPtrOutput)
+}
+
 // Networking definition
 type NexusSpecNetworking struct {
-	// Set to `true` to expose the Nexus application. Default to false.
+	// Set to `true` to expose the Nexus application. Defaults to `false`.
 	Expose *bool `pulumi:"expose"`
-	// Type of networking exposure: NodePort, Route or Ingress. Default to Route on OpenShift and Ingress on Kubernetes.
+	// Type of networking exposure: NodePort, Route or Ingress. Defaults to Route on OpenShift and Ingress on Kubernetes. Routes are only available on Openshift and Ingresses are only available on Kubernetes.
 	ExposeAs *string `pulumi:"exposeAs"`
 	// Host where the Nexus service is exposed. This attribute is required if the service is exposed via Ingress.
 	Host *string `pulumi:"host"`
@@ -411,9 +885,9 @@ type NexusSpecNetworkingInput interface {
 
 // Networking definition
 type NexusSpecNetworkingArgs struct {
-	// Set to `true` to expose the Nexus application. Default to false.
+	// Set to `true` to expose the Nexus application. Defaults to `false`.
 	Expose pulumi.BoolPtrInput `pulumi:"expose"`
-	// Type of networking exposure: NodePort, Route or Ingress. Default to Route on OpenShift and Ingress on Kubernetes.
+	// Type of networking exposure: NodePort, Route or Ingress. Defaults to Route on OpenShift and Ingress on Kubernetes. Routes are only available on Openshift and Ingresses are only available on Kubernetes.
 	ExposeAs pulumi.StringPtrInput `pulumi:"exposeAs"`
 	// Host where the Nexus service is exposed. This attribute is required if the service is exposed via Ingress.
 	Host pulumi.StringPtrInput `pulumi:"host"`
@@ -501,12 +975,12 @@ func (o NexusSpecNetworkingOutput) ToNexusSpecNetworkingPtrOutputWithContext(ctx
 	}).(NexusSpecNetworkingPtrOutput)
 }
 
-// Set to `true` to expose the Nexus application. Default to false.
+// Set to `true` to expose the Nexus application. Defaults to `false`.
 func (o NexusSpecNetworkingOutput) Expose() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v NexusSpecNetworking) *bool { return v.Expose }).(pulumi.BoolPtrOutput)
 }
 
-// Type of networking exposure: NodePort, Route or Ingress. Default to Route on OpenShift and Ingress on Kubernetes.
+// Type of networking exposure: NodePort, Route or Ingress. Defaults to Route on OpenShift and Ingress on Kubernetes. Routes are only available on Openshift and Ingresses are only available on Kubernetes.
 func (o NexusSpecNetworkingOutput) ExposeAs() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v NexusSpecNetworking) *string { return v.ExposeAs }).(pulumi.StringPtrOutput)
 }
@@ -544,7 +1018,7 @@ func (o NexusSpecNetworkingPtrOutput) Elem() NexusSpecNetworkingOutput {
 	return o.ApplyT(func(v *NexusSpecNetworking) NexusSpecNetworking { return *v }).(NexusSpecNetworkingOutput)
 }
 
-// Set to `true` to expose the Nexus application. Default to false.
+// Set to `true` to expose the Nexus application. Defaults to `false`.
 func (o NexusSpecNetworkingPtrOutput) Expose() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v *NexusSpecNetworking) *bool {
 		if v == nil {
@@ -554,7 +1028,7 @@ func (o NexusSpecNetworkingPtrOutput) Expose() pulumi.BoolPtrOutput {
 	}).(pulumi.BoolPtrOutput)
 }
 
-// Type of networking exposure: NodePort, Route or Ingress. Default to Route on OpenShift and Ingress on Kubernetes.
+// Type of networking exposure: NodePort, Route or Ingress. Defaults to Route on OpenShift and Ingress on Kubernetes. Routes are only available on Openshift and Ingresses are only available on Kubernetes.
 func (o NexusSpecNetworkingPtrOutput) ExposeAs() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *NexusSpecNetworking) *string {
 		if v == nil {
@@ -596,7 +1070,7 @@ func (o NexusSpecNetworkingPtrOutput) Tls() NexusSpecNetworkingTlsPtrOutput {
 
 // TLS/SSL-related configuration
 type NexusSpecNetworkingTls struct {
-	// When exposing via Route, set to `true` to only allow encrypted traffic using TLS (disables HTTP in favor of HTTPS). Defaults to false.
+	// When exposing via Route, set to `true` to only allow encrypted traffic using TLS (disables HTTP in favor of HTTPS). Defaults to `false`.
 	Mandatory *bool `pulumi:"mandatory"`
 	// When exposing via Ingress, inform the name of the TLS secret containing certificate and private key for TLS encryption. It must be present in the same namespace as the Operator.
 	SecretName *string `pulumi:"secretName"`
@@ -615,7 +1089,7 @@ type NexusSpecNetworkingTlsInput interface {
 
 // TLS/SSL-related configuration
 type NexusSpecNetworkingTlsArgs struct {
-	// When exposing via Route, set to `true` to only allow encrypted traffic using TLS (disables HTTP in favor of HTTPS). Defaults to false.
+	// When exposing via Route, set to `true` to only allow encrypted traffic using TLS (disables HTTP in favor of HTTPS). Defaults to `false`.
 	Mandatory pulumi.BoolPtrInput `pulumi:"mandatory"`
 	// When exposing via Ingress, inform the name of the TLS secret containing certificate and private key for TLS encryption. It must be present in the same namespace as the Operator.
 	SecretName pulumi.StringPtrInput `pulumi:"secretName"`
@@ -699,7 +1173,7 @@ func (o NexusSpecNetworkingTlsOutput) ToNexusSpecNetworkingTlsPtrOutputWithConte
 	}).(NexusSpecNetworkingTlsPtrOutput)
 }
 
-// When exposing via Route, set to `true` to only allow encrypted traffic using TLS (disables HTTP in favor of HTTPS). Defaults to false.
+// When exposing via Route, set to `true` to only allow encrypted traffic using TLS (disables HTTP in favor of HTTPS). Defaults to `false`.
 func (o NexusSpecNetworkingTlsOutput) Mandatory() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v NexusSpecNetworkingTls) *bool { return v.Mandatory }).(pulumi.BoolPtrOutput)
 }
@@ -727,7 +1201,7 @@ func (o NexusSpecNetworkingTlsPtrOutput) Elem() NexusSpecNetworkingTlsOutput {
 	return o.ApplyT(func(v *NexusSpecNetworkingTls) NexusSpecNetworkingTls { return *v }).(NexusSpecNetworkingTlsOutput)
 }
 
-// When exposing via Route, set to `true` to only allow encrypted traffic using TLS (disables HTTP in favor of HTTPS). Defaults to false.
+// When exposing via Route, set to `true` to only allow encrypted traffic using TLS (disables HTTP in favor of HTTPS). Defaults to `false`.
 func (o NexusSpecNetworkingTlsPtrOutput) Mandatory() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v *NexusSpecNetworkingTls) *bool {
 		if v == nil {
@@ -917,6 +1391,216 @@ func (o NexusSpecPersistencePtrOutput) VolumeSize() pulumi.StringPtrOutput {
 		}
 		return v.VolumeSize
 	}).(pulumi.StringPtrOutput)
+}
+
+// ReadinessProbe describes how the Nexus container readiness probe should work
+type NexusSpecReadinessProbe struct {
+	// Minimum consecutive failures for the probe to be considered failed after having succeeded. Defaults to 3. Minimum value is 1.
+	FailureThreshold *int `pulumi:"failureThreshold"`
+	// Number of seconds after the container has started before probes are initiated. Defaults to 240 seconds. Minimum value is 0.
+	InitialDelaySeconds *int `pulumi:"initialDelaySeconds"`
+	// How often (in seconds) to perform the probe. Defaults to 10 seconds. Minimum value is 1.
+	PeriodSeconds *int `pulumi:"periodSeconds"`
+	// Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1. Must be 1 for liveness and startup. Minimum value is 1.
+	SuccessThreshold *int `pulumi:"successThreshold"`
+	// Number of seconds after which the probe times out. Defaults to 15 seconds. Minimum value is 1.
+	TimeoutSeconds *int `pulumi:"timeoutSeconds"`
+}
+
+// NexusSpecReadinessProbeInput is an input type that accepts NexusSpecReadinessProbeArgs and NexusSpecReadinessProbeOutput values.
+// You can construct a concrete instance of `NexusSpecReadinessProbeInput` via:
+//
+//          NexusSpecReadinessProbeArgs{...}
+type NexusSpecReadinessProbeInput interface {
+	pulumi.Input
+
+	ToNexusSpecReadinessProbeOutput() NexusSpecReadinessProbeOutput
+	ToNexusSpecReadinessProbeOutputWithContext(context.Context) NexusSpecReadinessProbeOutput
+}
+
+// ReadinessProbe describes how the Nexus container readiness probe should work
+type NexusSpecReadinessProbeArgs struct {
+	// Minimum consecutive failures for the probe to be considered failed after having succeeded. Defaults to 3. Minimum value is 1.
+	FailureThreshold pulumi.IntPtrInput `pulumi:"failureThreshold"`
+	// Number of seconds after the container has started before probes are initiated. Defaults to 240 seconds. Minimum value is 0.
+	InitialDelaySeconds pulumi.IntPtrInput `pulumi:"initialDelaySeconds"`
+	// How often (in seconds) to perform the probe. Defaults to 10 seconds. Minimum value is 1.
+	PeriodSeconds pulumi.IntPtrInput `pulumi:"periodSeconds"`
+	// Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1. Must be 1 for liveness and startup. Minimum value is 1.
+	SuccessThreshold pulumi.IntPtrInput `pulumi:"successThreshold"`
+	// Number of seconds after which the probe times out. Defaults to 15 seconds. Minimum value is 1.
+	TimeoutSeconds pulumi.IntPtrInput `pulumi:"timeoutSeconds"`
+}
+
+func (NexusSpecReadinessProbeArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*NexusSpecReadinessProbe)(nil)).Elem()
+}
+
+func (i NexusSpecReadinessProbeArgs) ToNexusSpecReadinessProbeOutput() NexusSpecReadinessProbeOutput {
+	return i.ToNexusSpecReadinessProbeOutputWithContext(context.Background())
+}
+
+func (i NexusSpecReadinessProbeArgs) ToNexusSpecReadinessProbeOutputWithContext(ctx context.Context) NexusSpecReadinessProbeOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(NexusSpecReadinessProbeOutput)
+}
+
+func (i NexusSpecReadinessProbeArgs) ToNexusSpecReadinessProbePtrOutput() NexusSpecReadinessProbePtrOutput {
+	return i.ToNexusSpecReadinessProbePtrOutputWithContext(context.Background())
+}
+
+func (i NexusSpecReadinessProbeArgs) ToNexusSpecReadinessProbePtrOutputWithContext(ctx context.Context) NexusSpecReadinessProbePtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(NexusSpecReadinessProbeOutput).ToNexusSpecReadinessProbePtrOutputWithContext(ctx)
+}
+
+// NexusSpecReadinessProbePtrInput is an input type that accepts NexusSpecReadinessProbeArgs, NexusSpecReadinessProbePtr and NexusSpecReadinessProbePtrOutput values.
+// You can construct a concrete instance of `NexusSpecReadinessProbePtrInput` via:
+//
+//          NexusSpecReadinessProbeArgs{...}
+//
+//  or:
+//
+//          nil
+type NexusSpecReadinessProbePtrInput interface {
+	pulumi.Input
+
+	ToNexusSpecReadinessProbePtrOutput() NexusSpecReadinessProbePtrOutput
+	ToNexusSpecReadinessProbePtrOutputWithContext(context.Context) NexusSpecReadinessProbePtrOutput
+}
+
+type nexusSpecReadinessProbePtrType NexusSpecReadinessProbeArgs
+
+func NexusSpecReadinessProbePtr(v *NexusSpecReadinessProbeArgs) NexusSpecReadinessProbePtrInput {
+	return (*nexusSpecReadinessProbePtrType)(v)
+}
+
+func (*nexusSpecReadinessProbePtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**NexusSpecReadinessProbe)(nil)).Elem()
+}
+
+func (i *nexusSpecReadinessProbePtrType) ToNexusSpecReadinessProbePtrOutput() NexusSpecReadinessProbePtrOutput {
+	return i.ToNexusSpecReadinessProbePtrOutputWithContext(context.Background())
+}
+
+func (i *nexusSpecReadinessProbePtrType) ToNexusSpecReadinessProbePtrOutputWithContext(ctx context.Context) NexusSpecReadinessProbePtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(NexusSpecReadinessProbePtrOutput)
+}
+
+// ReadinessProbe describes how the Nexus container readiness probe should work
+type NexusSpecReadinessProbeOutput struct{ *pulumi.OutputState }
+
+func (NexusSpecReadinessProbeOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*NexusSpecReadinessProbe)(nil)).Elem()
+}
+
+func (o NexusSpecReadinessProbeOutput) ToNexusSpecReadinessProbeOutput() NexusSpecReadinessProbeOutput {
+	return o
+}
+
+func (o NexusSpecReadinessProbeOutput) ToNexusSpecReadinessProbeOutputWithContext(ctx context.Context) NexusSpecReadinessProbeOutput {
+	return o
+}
+
+func (o NexusSpecReadinessProbeOutput) ToNexusSpecReadinessProbePtrOutput() NexusSpecReadinessProbePtrOutput {
+	return o.ToNexusSpecReadinessProbePtrOutputWithContext(context.Background())
+}
+
+func (o NexusSpecReadinessProbeOutput) ToNexusSpecReadinessProbePtrOutputWithContext(ctx context.Context) NexusSpecReadinessProbePtrOutput {
+	return o.ApplyT(func(v NexusSpecReadinessProbe) *NexusSpecReadinessProbe {
+		return &v
+	}).(NexusSpecReadinessProbePtrOutput)
+}
+
+// Minimum consecutive failures for the probe to be considered failed after having succeeded. Defaults to 3. Minimum value is 1.
+func (o NexusSpecReadinessProbeOutput) FailureThreshold() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v NexusSpecReadinessProbe) *int { return v.FailureThreshold }).(pulumi.IntPtrOutput)
+}
+
+// Number of seconds after the container has started before probes are initiated. Defaults to 240 seconds. Minimum value is 0.
+func (o NexusSpecReadinessProbeOutput) InitialDelaySeconds() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v NexusSpecReadinessProbe) *int { return v.InitialDelaySeconds }).(pulumi.IntPtrOutput)
+}
+
+// How often (in seconds) to perform the probe. Defaults to 10 seconds. Minimum value is 1.
+func (o NexusSpecReadinessProbeOutput) PeriodSeconds() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v NexusSpecReadinessProbe) *int { return v.PeriodSeconds }).(pulumi.IntPtrOutput)
+}
+
+// Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1. Must be 1 for liveness and startup. Minimum value is 1.
+func (o NexusSpecReadinessProbeOutput) SuccessThreshold() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v NexusSpecReadinessProbe) *int { return v.SuccessThreshold }).(pulumi.IntPtrOutput)
+}
+
+// Number of seconds after which the probe times out. Defaults to 15 seconds. Minimum value is 1.
+func (o NexusSpecReadinessProbeOutput) TimeoutSeconds() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v NexusSpecReadinessProbe) *int { return v.TimeoutSeconds }).(pulumi.IntPtrOutput)
+}
+
+type NexusSpecReadinessProbePtrOutput struct{ *pulumi.OutputState }
+
+func (NexusSpecReadinessProbePtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**NexusSpecReadinessProbe)(nil)).Elem()
+}
+
+func (o NexusSpecReadinessProbePtrOutput) ToNexusSpecReadinessProbePtrOutput() NexusSpecReadinessProbePtrOutput {
+	return o
+}
+
+func (o NexusSpecReadinessProbePtrOutput) ToNexusSpecReadinessProbePtrOutputWithContext(ctx context.Context) NexusSpecReadinessProbePtrOutput {
+	return o
+}
+
+func (o NexusSpecReadinessProbePtrOutput) Elem() NexusSpecReadinessProbeOutput {
+	return o.ApplyT(func(v *NexusSpecReadinessProbe) NexusSpecReadinessProbe { return *v }).(NexusSpecReadinessProbeOutput)
+}
+
+// Minimum consecutive failures for the probe to be considered failed after having succeeded. Defaults to 3. Minimum value is 1.
+func (o NexusSpecReadinessProbePtrOutput) FailureThreshold() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *NexusSpecReadinessProbe) *int {
+		if v == nil {
+			return nil
+		}
+		return v.FailureThreshold
+	}).(pulumi.IntPtrOutput)
+}
+
+// Number of seconds after the container has started before probes are initiated. Defaults to 240 seconds. Minimum value is 0.
+func (o NexusSpecReadinessProbePtrOutput) InitialDelaySeconds() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *NexusSpecReadinessProbe) *int {
+		if v == nil {
+			return nil
+		}
+		return v.InitialDelaySeconds
+	}).(pulumi.IntPtrOutput)
+}
+
+// How often (in seconds) to perform the probe. Defaults to 10 seconds. Minimum value is 1.
+func (o NexusSpecReadinessProbePtrOutput) PeriodSeconds() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *NexusSpecReadinessProbe) *int {
+		if v == nil {
+			return nil
+		}
+		return v.PeriodSeconds
+	}).(pulumi.IntPtrOutput)
+}
+
+// Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1. Must be 1 for liveness and startup. Minimum value is 1.
+func (o NexusSpecReadinessProbePtrOutput) SuccessThreshold() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *NexusSpecReadinessProbe) *int {
+		if v == nil {
+			return nil
+		}
+		return v.SuccessThreshold
+	}).(pulumi.IntPtrOutput)
+}
+
+// Number of seconds after which the probe times out. Defaults to 15 seconds. Minimum value is 1.
+func (o NexusSpecReadinessProbePtrOutput) TimeoutSeconds() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *NexusSpecReadinessProbe) *int {
+		if v == nil {
+			return nil
+		}
+		return v.TimeoutSeconds
+	}).(pulumi.IntPtrOutput)
 }
 
 // Defined Resources for the Nexus instance
@@ -1248,14 +1932,173 @@ func (o NexusSpecResourcesRequestsMapOutput) MapIndex(k pulumi.StringInput) Nexu
 	}).(NexusSpecResourcesRequestsOutput)
 }
 
+// ServerOperations describes the options for the operations performed on the deployed server instance
+type NexusSpecServerOperations struct {
+	// DisableOperatorUserCreation disables the auto-creation of the `nexus-operator` user on the deployed server. This user performs all the operations on the server (such as creating the community repos). If disabled, the Operator will use the default `admin` user. Defaults to `false` (always create the user). Setting this to `true` is not recommended as it grants the Operator more privileges than it needs and it would not be possible to tell apart operations performed by the `admin` and the Operator.
+	DisableOperatorUserCreation *bool `pulumi:"disableOperatorUserCreation"`
+	// DisableRepositoryCreation disables the auto-creation of Apache, JBoss and Red Hat repositories and their addition to the Maven Public group in this Nexus instance. Defaults to `false` (always try to create the repos). Set this to `true` to not create them. Only works if `spec.generateRandomAdminPassword` is `false`.
+	DisableRepositoryCreation *bool `pulumi:"disableRepositoryCreation"`
+}
+
+// NexusSpecServerOperationsInput is an input type that accepts NexusSpecServerOperationsArgs and NexusSpecServerOperationsOutput values.
+// You can construct a concrete instance of `NexusSpecServerOperationsInput` via:
+//
+//          NexusSpecServerOperationsArgs{...}
+type NexusSpecServerOperationsInput interface {
+	pulumi.Input
+
+	ToNexusSpecServerOperationsOutput() NexusSpecServerOperationsOutput
+	ToNexusSpecServerOperationsOutputWithContext(context.Context) NexusSpecServerOperationsOutput
+}
+
+// ServerOperations describes the options for the operations performed on the deployed server instance
+type NexusSpecServerOperationsArgs struct {
+	// DisableOperatorUserCreation disables the auto-creation of the `nexus-operator` user on the deployed server. This user performs all the operations on the server (such as creating the community repos). If disabled, the Operator will use the default `admin` user. Defaults to `false` (always create the user). Setting this to `true` is not recommended as it grants the Operator more privileges than it needs and it would not be possible to tell apart operations performed by the `admin` and the Operator.
+	DisableOperatorUserCreation pulumi.BoolPtrInput `pulumi:"disableOperatorUserCreation"`
+	// DisableRepositoryCreation disables the auto-creation of Apache, JBoss and Red Hat repositories and their addition to the Maven Public group in this Nexus instance. Defaults to `false` (always try to create the repos). Set this to `true` to not create them. Only works if `spec.generateRandomAdminPassword` is `false`.
+	DisableRepositoryCreation pulumi.BoolPtrInput `pulumi:"disableRepositoryCreation"`
+}
+
+func (NexusSpecServerOperationsArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*NexusSpecServerOperations)(nil)).Elem()
+}
+
+func (i NexusSpecServerOperationsArgs) ToNexusSpecServerOperationsOutput() NexusSpecServerOperationsOutput {
+	return i.ToNexusSpecServerOperationsOutputWithContext(context.Background())
+}
+
+func (i NexusSpecServerOperationsArgs) ToNexusSpecServerOperationsOutputWithContext(ctx context.Context) NexusSpecServerOperationsOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(NexusSpecServerOperationsOutput)
+}
+
+func (i NexusSpecServerOperationsArgs) ToNexusSpecServerOperationsPtrOutput() NexusSpecServerOperationsPtrOutput {
+	return i.ToNexusSpecServerOperationsPtrOutputWithContext(context.Background())
+}
+
+func (i NexusSpecServerOperationsArgs) ToNexusSpecServerOperationsPtrOutputWithContext(ctx context.Context) NexusSpecServerOperationsPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(NexusSpecServerOperationsOutput).ToNexusSpecServerOperationsPtrOutputWithContext(ctx)
+}
+
+// NexusSpecServerOperationsPtrInput is an input type that accepts NexusSpecServerOperationsArgs, NexusSpecServerOperationsPtr and NexusSpecServerOperationsPtrOutput values.
+// You can construct a concrete instance of `NexusSpecServerOperationsPtrInput` via:
+//
+//          NexusSpecServerOperationsArgs{...}
+//
+//  or:
+//
+//          nil
+type NexusSpecServerOperationsPtrInput interface {
+	pulumi.Input
+
+	ToNexusSpecServerOperationsPtrOutput() NexusSpecServerOperationsPtrOutput
+	ToNexusSpecServerOperationsPtrOutputWithContext(context.Context) NexusSpecServerOperationsPtrOutput
+}
+
+type nexusSpecServerOperationsPtrType NexusSpecServerOperationsArgs
+
+func NexusSpecServerOperationsPtr(v *NexusSpecServerOperationsArgs) NexusSpecServerOperationsPtrInput {
+	return (*nexusSpecServerOperationsPtrType)(v)
+}
+
+func (*nexusSpecServerOperationsPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**NexusSpecServerOperations)(nil)).Elem()
+}
+
+func (i *nexusSpecServerOperationsPtrType) ToNexusSpecServerOperationsPtrOutput() NexusSpecServerOperationsPtrOutput {
+	return i.ToNexusSpecServerOperationsPtrOutputWithContext(context.Background())
+}
+
+func (i *nexusSpecServerOperationsPtrType) ToNexusSpecServerOperationsPtrOutputWithContext(ctx context.Context) NexusSpecServerOperationsPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(NexusSpecServerOperationsPtrOutput)
+}
+
+// ServerOperations describes the options for the operations performed on the deployed server instance
+type NexusSpecServerOperationsOutput struct{ *pulumi.OutputState }
+
+func (NexusSpecServerOperationsOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*NexusSpecServerOperations)(nil)).Elem()
+}
+
+func (o NexusSpecServerOperationsOutput) ToNexusSpecServerOperationsOutput() NexusSpecServerOperationsOutput {
+	return o
+}
+
+func (o NexusSpecServerOperationsOutput) ToNexusSpecServerOperationsOutputWithContext(ctx context.Context) NexusSpecServerOperationsOutput {
+	return o
+}
+
+func (o NexusSpecServerOperationsOutput) ToNexusSpecServerOperationsPtrOutput() NexusSpecServerOperationsPtrOutput {
+	return o.ToNexusSpecServerOperationsPtrOutputWithContext(context.Background())
+}
+
+func (o NexusSpecServerOperationsOutput) ToNexusSpecServerOperationsPtrOutputWithContext(ctx context.Context) NexusSpecServerOperationsPtrOutput {
+	return o.ApplyT(func(v NexusSpecServerOperations) *NexusSpecServerOperations {
+		return &v
+	}).(NexusSpecServerOperationsPtrOutput)
+}
+
+// DisableOperatorUserCreation disables the auto-creation of the `nexus-operator` user on the deployed server. This user performs all the operations on the server (such as creating the community repos). If disabled, the Operator will use the default `admin` user. Defaults to `false` (always create the user). Setting this to `true` is not recommended as it grants the Operator more privileges than it needs and it would not be possible to tell apart operations performed by the `admin` and the Operator.
+func (o NexusSpecServerOperationsOutput) DisableOperatorUserCreation() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v NexusSpecServerOperations) *bool { return v.DisableOperatorUserCreation }).(pulumi.BoolPtrOutput)
+}
+
+// DisableRepositoryCreation disables the auto-creation of Apache, JBoss and Red Hat repositories and their addition to the Maven Public group in this Nexus instance. Defaults to `false` (always try to create the repos). Set this to `true` to not create them. Only works if `spec.generateRandomAdminPassword` is `false`.
+func (o NexusSpecServerOperationsOutput) DisableRepositoryCreation() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v NexusSpecServerOperations) *bool { return v.DisableRepositoryCreation }).(pulumi.BoolPtrOutput)
+}
+
+type NexusSpecServerOperationsPtrOutput struct{ *pulumi.OutputState }
+
+func (NexusSpecServerOperationsPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**NexusSpecServerOperations)(nil)).Elem()
+}
+
+func (o NexusSpecServerOperationsPtrOutput) ToNexusSpecServerOperationsPtrOutput() NexusSpecServerOperationsPtrOutput {
+	return o
+}
+
+func (o NexusSpecServerOperationsPtrOutput) ToNexusSpecServerOperationsPtrOutputWithContext(ctx context.Context) NexusSpecServerOperationsPtrOutput {
+	return o
+}
+
+func (o NexusSpecServerOperationsPtrOutput) Elem() NexusSpecServerOperationsOutput {
+	return o.ApplyT(func(v *NexusSpecServerOperations) NexusSpecServerOperations { return *v }).(NexusSpecServerOperationsOutput)
+}
+
+// DisableOperatorUserCreation disables the auto-creation of the `nexus-operator` user on the deployed server. This user performs all the operations on the server (such as creating the community repos). If disabled, the Operator will use the default `admin` user. Defaults to `false` (always create the user). Setting this to `true` is not recommended as it grants the Operator more privileges than it needs and it would not be possible to tell apart operations performed by the `admin` and the Operator.
+func (o NexusSpecServerOperationsPtrOutput) DisableOperatorUserCreation() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *NexusSpecServerOperations) *bool {
+		if v == nil {
+			return nil
+		}
+		return v.DisableOperatorUserCreation
+	}).(pulumi.BoolPtrOutput)
+}
+
+// DisableRepositoryCreation disables the auto-creation of Apache, JBoss and Red Hat repositories and their addition to the Maven Public group in this Nexus instance. Defaults to `false` (always try to create the repos). Set this to `true` to not create them. Only works if `spec.generateRandomAdminPassword` is `false`.
+func (o NexusSpecServerOperationsPtrOutput) DisableRepositoryCreation() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *NexusSpecServerOperations) *bool {
+		if v == nil {
+			return nil
+		}
+		return v.DisableRepositoryCreation
+	}).(pulumi.BoolPtrOutput)
+}
+
 // NexusStatus defines the observed state of Nexus
 type NexusStatus struct {
 	// Condition status for the Nexus deployment
 	DeploymentStatus *NexusStatusDeploymentStatus `pulumi:"deploymentStatus"`
 	// Route for external service access
 	NexusRoute *string `pulumi:"nexusRoute"`
-	// Will be "OK" when all objects are created successfully
+	// Will be "OK" when this Nexus instance is up
 	NexusStatus *string `pulumi:"nexusStatus"`
+	// Gives more information about a failure status
+	Reason *string `pulumi:"reason"`
+	// ServerOperationsStatus describes the general status for the operations performed in the Nexus server instance
+	ServerOperationsStatus *NexusStatusServerOperationsStatus `pulumi:"serverOperationsStatus"`
+	// Conditions reached during an update
+	UpdateConditions []string `pulumi:"updateConditions"`
 }
 
 // NexusStatusInput is an input type that accepts NexusStatusArgs and NexusStatusOutput values.
@@ -1275,8 +2118,14 @@ type NexusStatusArgs struct {
 	DeploymentStatus NexusStatusDeploymentStatusPtrInput `pulumi:"deploymentStatus"`
 	// Route for external service access
 	NexusRoute pulumi.StringPtrInput `pulumi:"nexusRoute"`
-	// Will be "OK" when all objects are created successfully
+	// Will be "OK" when this Nexus instance is up
 	NexusStatus pulumi.StringPtrInput `pulumi:"nexusStatus"`
+	// Gives more information about a failure status
+	Reason pulumi.StringPtrInput `pulumi:"reason"`
+	// ServerOperationsStatus describes the general status for the operations performed in the Nexus server instance
+	ServerOperationsStatus NexusStatusServerOperationsStatusPtrInput `pulumi:"serverOperationsStatus"`
+	// Conditions reached during an update
+	UpdateConditions pulumi.StringArrayInput `pulumi:"updateConditions"`
 }
 
 func (NexusStatusArgs) ElementType() reflect.Type {
@@ -1367,9 +2216,24 @@ func (o NexusStatusOutput) NexusRoute() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v NexusStatus) *string { return v.NexusRoute }).(pulumi.StringPtrOutput)
 }
 
-// Will be "OK" when all objects are created successfully
+// Will be "OK" when this Nexus instance is up
 func (o NexusStatusOutput) NexusStatus() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v NexusStatus) *string { return v.NexusStatus }).(pulumi.StringPtrOutput)
+}
+
+// Gives more information about a failure status
+func (o NexusStatusOutput) Reason() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v NexusStatus) *string { return v.Reason }).(pulumi.StringPtrOutput)
+}
+
+// ServerOperationsStatus describes the general status for the operations performed in the Nexus server instance
+func (o NexusStatusOutput) ServerOperationsStatus() NexusStatusServerOperationsStatusPtrOutput {
+	return o.ApplyT(func(v NexusStatus) *NexusStatusServerOperationsStatus { return v.ServerOperationsStatus }).(NexusStatusServerOperationsStatusPtrOutput)
+}
+
+// Conditions reached during an update
+func (o NexusStatusOutput) UpdateConditions() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v NexusStatus) []string { return v.UpdateConditions }).(pulumi.StringArrayOutput)
 }
 
 type NexusStatusPtrOutput struct{ *pulumi.OutputState }
@@ -1410,7 +2274,7 @@ func (o NexusStatusPtrOutput) NexusRoute() pulumi.StringPtrOutput {
 	}).(pulumi.StringPtrOutput)
 }
 
-// Will be "OK" when all objects are created successfully
+// Will be "OK" when this Nexus instance is up
 func (o NexusStatusPtrOutput) NexusStatus() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *NexusStatus) *string {
 		if v == nil {
@@ -1418,6 +2282,36 @@ func (o NexusStatusPtrOutput) NexusStatus() pulumi.StringPtrOutput {
 		}
 		return v.NexusStatus
 	}).(pulumi.StringPtrOutput)
+}
+
+// Gives more information about a failure status
+func (o NexusStatusPtrOutput) Reason() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *NexusStatus) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Reason
+	}).(pulumi.StringPtrOutput)
+}
+
+// ServerOperationsStatus describes the general status for the operations performed in the Nexus server instance
+func (o NexusStatusPtrOutput) ServerOperationsStatus() NexusStatusServerOperationsStatusPtrOutput {
+	return o.ApplyT(func(v *NexusStatus) *NexusStatusServerOperationsStatus {
+		if v == nil {
+			return nil
+		}
+		return v.ServerOperationsStatus
+	}).(NexusStatusServerOperationsStatusPtrOutput)
+}
+
+// Conditions reached during an update
+func (o NexusStatusPtrOutput) UpdateConditions() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v *NexusStatus) []string {
+		if v == nil {
+			return nil
+		}
+		return v.UpdateConditions
+	}).(pulumi.StringArrayOutput)
 }
 
 // Condition status for the Nexus deployment
@@ -1832,27 +2726,241 @@ func (o NexusStatusDeploymentStatusConditionsArrayOutput) Index(i pulumi.IntInpu
 	}).(NexusStatusDeploymentStatusConditionsOutput)
 }
 
+// ServerOperationsStatus describes the general status for the operations performed in the Nexus server instance
+type NexusStatusServerOperationsStatus struct {
+	CommunityRepositoriesCreated *bool   `pulumi:"communityRepositoriesCreated"`
+	MavenCentralUpdated          *bool   `pulumi:"mavenCentralUpdated"`
+	MavenPublicURL               *string `pulumi:"mavenPublicURL"`
+	OperatorUserCreated          *bool   `pulumi:"operatorUserCreated"`
+	Reason                       *string `pulumi:"reason"`
+	ServerReady                  *bool   `pulumi:"serverReady"`
+}
+
+// NexusStatusServerOperationsStatusInput is an input type that accepts NexusStatusServerOperationsStatusArgs and NexusStatusServerOperationsStatusOutput values.
+// You can construct a concrete instance of `NexusStatusServerOperationsStatusInput` via:
+//
+//          NexusStatusServerOperationsStatusArgs{...}
+type NexusStatusServerOperationsStatusInput interface {
+	pulumi.Input
+
+	ToNexusStatusServerOperationsStatusOutput() NexusStatusServerOperationsStatusOutput
+	ToNexusStatusServerOperationsStatusOutputWithContext(context.Context) NexusStatusServerOperationsStatusOutput
+}
+
+// ServerOperationsStatus describes the general status for the operations performed in the Nexus server instance
+type NexusStatusServerOperationsStatusArgs struct {
+	CommunityRepositoriesCreated pulumi.BoolPtrInput   `pulumi:"communityRepositoriesCreated"`
+	MavenCentralUpdated          pulumi.BoolPtrInput   `pulumi:"mavenCentralUpdated"`
+	MavenPublicURL               pulumi.StringPtrInput `pulumi:"mavenPublicURL"`
+	OperatorUserCreated          pulumi.BoolPtrInput   `pulumi:"operatorUserCreated"`
+	Reason                       pulumi.StringPtrInput `pulumi:"reason"`
+	ServerReady                  pulumi.BoolPtrInput   `pulumi:"serverReady"`
+}
+
+func (NexusStatusServerOperationsStatusArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*NexusStatusServerOperationsStatus)(nil)).Elem()
+}
+
+func (i NexusStatusServerOperationsStatusArgs) ToNexusStatusServerOperationsStatusOutput() NexusStatusServerOperationsStatusOutput {
+	return i.ToNexusStatusServerOperationsStatusOutputWithContext(context.Background())
+}
+
+func (i NexusStatusServerOperationsStatusArgs) ToNexusStatusServerOperationsStatusOutputWithContext(ctx context.Context) NexusStatusServerOperationsStatusOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(NexusStatusServerOperationsStatusOutput)
+}
+
+func (i NexusStatusServerOperationsStatusArgs) ToNexusStatusServerOperationsStatusPtrOutput() NexusStatusServerOperationsStatusPtrOutput {
+	return i.ToNexusStatusServerOperationsStatusPtrOutputWithContext(context.Background())
+}
+
+func (i NexusStatusServerOperationsStatusArgs) ToNexusStatusServerOperationsStatusPtrOutputWithContext(ctx context.Context) NexusStatusServerOperationsStatusPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(NexusStatusServerOperationsStatusOutput).ToNexusStatusServerOperationsStatusPtrOutputWithContext(ctx)
+}
+
+// NexusStatusServerOperationsStatusPtrInput is an input type that accepts NexusStatusServerOperationsStatusArgs, NexusStatusServerOperationsStatusPtr and NexusStatusServerOperationsStatusPtrOutput values.
+// You can construct a concrete instance of `NexusStatusServerOperationsStatusPtrInput` via:
+//
+//          NexusStatusServerOperationsStatusArgs{...}
+//
+//  or:
+//
+//          nil
+type NexusStatusServerOperationsStatusPtrInput interface {
+	pulumi.Input
+
+	ToNexusStatusServerOperationsStatusPtrOutput() NexusStatusServerOperationsStatusPtrOutput
+	ToNexusStatusServerOperationsStatusPtrOutputWithContext(context.Context) NexusStatusServerOperationsStatusPtrOutput
+}
+
+type nexusStatusServerOperationsStatusPtrType NexusStatusServerOperationsStatusArgs
+
+func NexusStatusServerOperationsStatusPtr(v *NexusStatusServerOperationsStatusArgs) NexusStatusServerOperationsStatusPtrInput {
+	return (*nexusStatusServerOperationsStatusPtrType)(v)
+}
+
+func (*nexusStatusServerOperationsStatusPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**NexusStatusServerOperationsStatus)(nil)).Elem()
+}
+
+func (i *nexusStatusServerOperationsStatusPtrType) ToNexusStatusServerOperationsStatusPtrOutput() NexusStatusServerOperationsStatusPtrOutput {
+	return i.ToNexusStatusServerOperationsStatusPtrOutputWithContext(context.Background())
+}
+
+func (i *nexusStatusServerOperationsStatusPtrType) ToNexusStatusServerOperationsStatusPtrOutputWithContext(ctx context.Context) NexusStatusServerOperationsStatusPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(NexusStatusServerOperationsStatusPtrOutput)
+}
+
+// ServerOperationsStatus describes the general status for the operations performed in the Nexus server instance
+type NexusStatusServerOperationsStatusOutput struct{ *pulumi.OutputState }
+
+func (NexusStatusServerOperationsStatusOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*NexusStatusServerOperationsStatus)(nil)).Elem()
+}
+
+func (o NexusStatusServerOperationsStatusOutput) ToNexusStatusServerOperationsStatusOutput() NexusStatusServerOperationsStatusOutput {
+	return o
+}
+
+func (o NexusStatusServerOperationsStatusOutput) ToNexusStatusServerOperationsStatusOutputWithContext(ctx context.Context) NexusStatusServerOperationsStatusOutput {
+	return o
+}
+
+func (o NexusStatusServerOperationsStatusOutput) ToNexusStatusServerOperationsStatusPtrOutput() NexusStatusServerOperationsStatusPtrOutput {
+	return o.ToNexusStatusServerOperationsStatusPtrOutputWithContext(context.Background())
+}
+
+func (o NexusStatusServerOperationsStatusOutput) ToNexusStatusServerOperationsStatusPtrOutputWithContext(ctx context.Context) NexusStatusServerOperationsStatusPtrOutput {
+	return o.ApplyT(func(v NexusStatusServerOperationsStatus) *NexusStatusServerOperationsStatus {
+		return &v
+	}).(NexusStatusServerOperationsStatusPtrOutput)
+}
+func (o NexusStatusServerOperationsStatusOutput) CommunityRepositoriesCreated() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v NexusStatusServerOperationsStatus) *bool { return v.CommunityRepositoriesCreated }).(pulumi.BoolPtrOutput)
+}
+
+func (o NexusStatusServerOperationsStatusOutput) MavenCentralUpdated() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v NexusStatusServerOperationsStatus) *bool { return v.MavenCentralUpdated }).(pulumi.BoolPtrOutput)
+}
+
+func (o NexusStatusServerOperationsStatusOutput) MavenPublicURL() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v NexusStatusServerOperationsStatus) *string { return v.MavenPublicURL }).(pulumi.StringPtrOutput)
+}
+
+func (o NexusStatusServerOperationsStatusOutput) OperatorUserCreated() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v NexusStatusServerOperationsStatus) *bool { return v.OperatorUserCreated }).(pulumi.BoolPtrOutput)
+}
+
+func (o NexusStatusServerOperationsStatusOutput) Reason() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v NexusStatusServerOperationsStatus) *string { return v.Reason }).(pulumi.StringPtrOutput)
+}
+
+func (o NexusStatusServerOperationsStatusOutput) ServerReady() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v NexusStatusServerOperationsStatus) *bool { return v.ServerReady }).(pulumi.BoolPtrOutput)
+}
+
+type NexusStatusServerOperationsStatusPtrOutput struct{ *pulumi.OutputState }
+
+func (NexusStatusServerOperationsStatusPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**NexusStatusServerOperationsStatus)(nil)).Elem()
+}
+
+func (o NexusStatusServerOperationsStatusPtrOutput) ToNexusStatusServerOperationsStatusPtrOutput() NexusStatusServerOperationsStatusPtrOutput {
+	return o
+}
+
+func (o NexusStatusServerOperationsStatusPtrOutput) ToNexusStatusServerOperationsStatusPtrOutputWithContext(ctx context.Context) NexusStatusServerOperationsStatusPtrOutput {
+	return o
+}
+
+func (o NexusStatusServerOperationsStatusPtrOutput) Elem() NexusStatusServerOperationsStatusOutput {
+	return o.ApplyT(func(v *NexusStatusServerOperationsStatus) NexusStatusServerOperationsStatus { return *v }).(NexusStatusServerOperationsStatusOutput)
+}
+
+func (o NexusStatusServerOperationsStatusPtrOutput) CommunityRepositoriesCreated() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *NexusStatusServerOperationsStatus) *bool {
+		if v == nil {
+			return nil
+		}
+		return v.CommunityRepositoriesCreated
+	}).(pulumi.BoolPtrOutput)
+}
+
+func (o NexusStatusServerOperationsStatusPtrOutput) MavenCentralUpdated() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *NexusStatusServerOperationsStatus) *bool {
+		if v == nil {
+			return nil
+		}
+		return v.MavenCentralUpdated
+	}).(pulumi.BoolPtrOutput)
+}
+
+func (o NexusStatusServerOperationsStatusPtrOutput) MavenPublicURL() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *NexusStatusServerOperationsStatus) *string {
+		if v == nil {
+			return nil
+		}
+		return v.MavenPublicURL
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o NexusStatusServerOperationsStatusPtrOutput) OperatorUserCreated() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *NexusStatusServerOperationsStatus) *bool {
+		if v == nil {
+			return nil
+		}
+		return v.OperatorUserCreated
+	}).(pulumi.BoolPtrOutput)
+}
+
+func (o NexusStatusServerOperationsStatusPtrOutput) Reason() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *NexusStatusServerOperationsStatus) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Reason
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o NexusStatusServerOperationsStatusPtrOutput) ServerReady() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *NexusStatusServerOperationsStatus) *bool {
+		if v == nil {
+			return nil
+		}
+		return v.ServerReady
+	}).(pulumi.BoolPtrOutput)
+}
+
 func init() {
 	pulumi.RegisterOutputType(NexusTypeOutput{})
 	pulumi.RegisterOutputType(NexusMetadataOutput{})
 	pulumi.RegisterOutputType(NexusSpecOutput{})
 	pulumi.RegisterOutputType(NexusSpecPtrOutput{})
+	pulumi.RegisterOutputType(NexusSpecAutomaticUpdateOutput{})
+	pulumi.RegisterOutputType(NexusSpecAutomaticUpdatePtrOutput{})
+	pulumi.RegisterOutputType(NexusSpecLivenessProbeOutput{})
+	pulumi.RegisterOutputType(NexusSpecLivenessProbePtrOutput{})
 	pulumi.RegisterOutputType(NexusSpecNetworkingOutput{})
 	pulumi.RegisterOutputType(NexusSpecNetworkingPtrOutput{})
 	pulumi.RegisterOutputType(NexusSpecNetworkingTlsOutput{})
 	pulumi.RegisterOutputType(NexusSpecNetworkingTlsPtrOutput{})
 	pulumi.RegisterOutputType(NexusSpecPersistenceOutput{})
 	pulumi.RegisterOutputType(NexusSpecPersistencePtrOutput{})
+	pulumi.RegisterOutputType(NexusSpecReadinessProbeOutput{})
+	pulumi.RegisterOutputType(NexusSpecReadinessProbePtrOutput{})
 	pulumi.RegisterOutputType(NexusSpecResourcesOutput{})
 	pulumi.RegisterOutputType(NexusSpecResourcesPtrOutput{})
 	pulumi.RegisterOutputType(NexusSpecResourcesLimitsOutput{})
 	pulumi.RegisterOutputType(NexusSpecResourcesLimitsMapOutput{})
 	pulumi.RegisterOutputType(NexusSpecResourcesRequestsOutput{})
 	pulumi.RegisterOutputType(NexusSpecResourcesRequestsMapOutput{})
+	pulumi.RegisterOutputType(NexusSpecServerOperationsOutput{})
+	pulumi.RegisterOutputType(NexusSpecServerOperationsPtrOutput{})
 	pulumi.RegisterOutputType(NexusStatusOutput{})
 	pulumi.RegisterOutputType(NexusStatusPtrOutput{})
 	pulumi.RegisterOutputType(NexusStatusDeploymentStatusOutput{})
 	pulumi.RegisterOutputType(NexusStatusDeploymentStatusPtrOutput{})
 	pulumi.RegisterOutputType(NexusStatusDeploymentStatusConditionsOutput{})
 	pulumi.RegisterOutputType(NexusStatusDeploymentStatusConditionsArrayOutput{})
+	pulumi.RegisterOutputType(NexusStatusServerOperationsStatusOutput{})
+	pulumi.RegisterOutputType(NexusStatusServerOperationsStatusPtrOutput{})
 }

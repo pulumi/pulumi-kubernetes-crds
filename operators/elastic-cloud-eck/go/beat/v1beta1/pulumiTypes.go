@@ -758,6 +758,8 @@ func (o BeatSpecDaemonSetPtrOutput) Elem() BeatSpecDaemonSetOutput {
 // Deployment specifies the Beat should be deployed as a Deployment, and allows providing its spec. Cannot be used along with `daemonSet`. If both are absent a default for the Type is used.
 type BeatSpecDeployment struct {
 	Replicas *int `pulumi:"replicas"`
+	// DeploymentStrategy describes how to replace existing pods with new ones.
+	Strategy *BeatSpecDeploymentStrategy `pulumi:"strategy"`
 }
 
 // BeatSpecDeploymentInput is an input type that accepts BeatSpecDeploymentArgs and BeatSpecDeploymentOutput values.
@@ -774,6 +776,8 @@ type BeatSpecDeploymentInput interface {
 // Deployment specifies the Beat should be deployed as a Deployment, and allows providing its spec. Cannot be used along with `daemonSet`. If both are absent a default for the Type is used.
 type BeatSpecDeploymentArgs struct {
 	Replicas pulumi.IntPtrInput `pulumi:"replicas"`
+	// DeploymentStrategy describes how to replace existing pods with new ones.
+	Strategy BeatSpecDeploymentStrategyPtrInput `pulumi:"strategy"`
 }
 
 func (BeatSpecDeploymentArgs) ElementType() reflect.Type {
@@ -857,6 +861,11 @@ func (o BeatSpecDeploymentOutput) Replicas() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v BeatSpecDeployment) *int { return v.Replicas }).(pulumi.IntPtrOutput)
 }
 
+// DeploymentStrategy describes how to replace existing pods with new ones.
+func (o BeatSpecDeploymentOutput) Strategy() BeatSpecDeploymentStrategyPtrOutput {
+	return o.ApplyT(func(v BeatSpecDeployment) *BeatSpecDeploymentStrategy { return v.Strategy }).(BeatSpecDeploymentStrategyPtrOutput)
+}
+
 type BeatSpecDeploymentPtrOutput struct{ *pulumi.OutputState }
 
 func (BeatSpecDeploymentPtrOutput) ElementType() reflect.Type {
@@ -882,6 +891,554 @@ func (o BeatSpecDeploymentPtrOutput) Replicas() pulumi.IntPtrOutput {
 		}
 		return v.Replicas
 	}).(pulumi.IntPtrOutput)
+}
+
+// DeploymentStrategy describes how to replace existing pods with new ones.
+func (o BeatSpecDeploymentPtrOutput) Strategy() BeatSpecDeploymentStrategyPtrOutput {
+	return o.ApplyT(func(v *BeatSpecDeployment) *BeatSpecDeploymentStrategy {
+		if v == nil {
+			return nil
+		}
+		return v.Strategy
+	}).(BeatSpecDeploymentStrategyPtrOutput)
+}
+
+// DeploymentStrategy describes how to replace existing pods with new ones.
+type BeatSpecDeploymentStrategy struct {
+	// Rolling update config params. Present only if DeploymentStrategyType = RollingUpdate. --- TODO: Update this to follow our convention for oneOf, whatever we decide it to be.
+	RollingUpdate *BeatSpecDeploymentStrategyRollingUpdate `pulumi:"rollingUpdate"`
+	// Type of deployment. Can be "Recreate" or "RollingUpdate". Default is RollingUpdate.
+	Type *string `pulumi:"type"`
+}
+
+// BeatSpecDeploymentStrategyInput is an input type that accepts BeatSpecDeploymentStrategyArgs and BeatSpecDeploymentStrategyOutput values.
+// You can construct a concrete instance of `BeatSpecDeploymentStrategyInput` via:
+//
+//          BeatSpecDeploymentStrategyArgs{...}
+type BeatSpecDeploymentStrategyInput interface {
+	pulumi.Input
+
+	ToBeatSpecDeploymentStrategyOutput() BeatSpecDeploymentStrategyOutput
+	ToBeatSpecDeploymentStrategyOutputWithContext(context.Context) BeatSpecDeploymentStrategyOutput
+}
+
+// DeploymentStrategy describes how to replace existing pods with new ones.
+type BeatSpecDeploymentStrategyArgs struct {
+	// Rolling update config params. Present only if DeploymentStrategyType = RollingUpdate. --- TODO: Update this to follow our convention for oneOf, whatever we decide it to be.
+	RollingUpdate BeatSpecDeploymentStrategyRollingUpdatePtrInput `pulumi:"rollingUpdate"`
+	// Type of deployment. Can be "Recreate" or "RollingUpdate". Default is RollingUpdate.
+	Type pulumi.StringPtrInput `pulumi:"type"`
+}
+
+func (BeatSpecDeploymentStrategyArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*BeatSpecDeploymentStrategy)(nil)).Elem()
+}
+
+func (i BeatSpecDeploymentStrategyArgs) ToBeatSpecDeploymentStrategyOutput() BeatSpecDeploymentStrategyOutput {
+	return i.ToBeatSpecDeploymentStrategyOutputWithContext(context.Background())
+}
+
+func (i BeatSpecDeploymentStrategyArgs) ToBeatSpecDeploymentStrategyOutputWithContext(ctx context.Context) BeatSpecDeploymentStrategyOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BeatSpecDeploymentStrategyOutput)
+}
+
+func (i BeatSpecDeploymentStrategyArgs) ToBeatSpecDeploymentStrategyPtrOutput() BeatSpecDeploymentStrategyPtrOutput {
+	return i.ToBeatSpecDeploymentStrategyPtrOutputWithContext(context.Background())
+}
+
+func (i BeatSpecDeploymentStrategyArgs) ToBeatSpecDeploymentStrategyPtrOutputWithContext(ctx context.Context) BeatSpecDeploymentStrategyPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BeatSpecDeploymentStrategyOutput).ToBeatSpecDeploymentStrategyPtrOutputWithContext(ctx)
+}
+
+// BeatSpecDeploymentStrategyPtrInput is an input type that accepts BeatSpecDeploymentStrategyArgs, BeatSpecDeploymentStrategyPtr and BeatSpecDeploymentStrategyPtrOutput values.
+// You can construct a concrete instance of `BeatSpecDeploymentStrategyPtrInput` via:
+//
+//          BeatSpecDeploymentStrategyArgs{...}
+//
+//  or:
+//
+//          nil
+type BeatSpecDeploymentStrategyPtrInput interface {
+	pulumi.Input
+
+	ToBeatSpecDeploymentStrategyPtrOutput() BeatSpecDeploymentStrategyPtrOutput
+	ToBeatSpecDeploymentStrategyPtrOutputWithContext(context.Context) BeatSpecDeploymentStrategyPtrOutput
+}
+
+type beatSpecDeploymentStrategyPtrType BeatSpecDeploymentStrategyArgs
+
+func BeatSpecDeploymentStrategyPtr(v *BeatSpecDeploymentStrategyArgs) BeatSpecDeploymentStrategyPtrInput {
+	return (*beatSpecDeploymentStrategyPtrType)(v)
+}
+
+func (*beatSpecDeploymentStrategyPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**BeatSpecDeploymentStrategy)(nil)).Elem()
+}
+
+func (i *beatSpecDeploymentStrategyPtrType) ToBeatSpecDeploymentStrategyPtrOutput() BeatSpecDeploymentStrategyPtrOutput {
+	return i.ToBeatSpecDeploymentStrategyPtrOutputWithContext(context.Background())
+}
+
+func (i *beatSpecDeploymentStrategyPtrType) ToBeatSpecDeploymentStrategyPtrOutputWithContext(ctx context.Context) BeatSpecDeploymentStrategyPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BeatSpecDeploymentStrategyPtrOutput)
+}
+
+// DeploymentStrategy describes how to replace existing pods with new ones.
+type BeatSpecDeploymentStrategyOutput struct{ *pulumi.OutputState }
+
+func (BeatSpecDeploymentStrategyOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*BeatSpecDeploymentStrategy)(nil)).Elem()
+}
+
+func (o BeatSpecDeploymentStrategyOutput) ToBeatSpecDeploymentStrategyOutput() BeatSpecDeploymentStrategyOutput {
+	return o
+}
+
+func (o BeatSpecDeploymentStrategyOutput) ToBeatSpecDeploymentStrategyOutputWithContext(ctx context.Context) BeatSpecDeploymentStrategyOutput {
+	return o
+}
+
+func (o BeatSpecDeploymentStrategyOutput) ToBeatSpecDeploymentStrategyPtrOutput() BeatSpecDeploymentStrategyPtrOutput {
+	return o.ToBeatSpecDeploymentStrategyPtrOutputWithContext(context.Background())
+}
+
+func (o BeatSpecDeploymentStrategyOutput) ToBeatSpecDeploymentStrategyPtrOutputWithContext(ctx context.Context) BeatSpecDeploymentStrategyPtrOutput {
+	return o.ApplyT(func(v BeatSpecDeploymentStrategy) *BeatSpecDeploymentStrategy {
+		return &v
+	}).(BeatSpecDeploymentStrategyPtrOutput)
+}
+
+// Rolling update config params. Present only if DeploymentStrategyType = RollingUpdate. --- TODO: Update this to follow our convention for oneOf, whatever we decide it to be.
+func (o BeatSpecDeploymentStrategyOutput) RollingUpdate() BeatSpecDeploymentStrategyRollingUpdatePtrOutput {
+	return o.ApplyT(func(v BeatSpecDeploymentStrategy) *BeatSpecDeploymentStrategyRollingUpdate { return v.RollingUpdate }).(BeatSpecDeploymentStrategyRollingUpdatePtrOutput)
+}
+
+// Type of deployment. Can be "Recreate" or "RollingUpdate". Default is RollingUpdate.
+func (o BeatSpecDeploymentStrategyOutput) Type() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v BeatSpecDeploymentStrategy) *string { return v.Type }).(pulumi.StringPtrOutput)
+}
+
+type BeatSpecDeploymentStrategyPtrOutput struct{ *pulumi.OutputState }
+
+func (BeatSpecDeploymentStrategyPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**BeatSpecDeploymentStrategy)(nil)).Elem()
+}
+
+func (o BeatSpecDeploymentStrategyPtrOutput) ToBeatSpecDeploymentStrategyPtrOutput() BeatSpecDeploymentStrategyPtrOutput {
+	return o
+}
+
+func (o BeatSpecDeploymentStrategyPtrOutput) ToBeatSpecDeploymentStrategyPtrOutputWithContext(ctx context.Context) BeatSpecDeploymentStrategyPtrOutput {
+	return o
+}
+
+func (o BeatSpecDeploymentStrategyPtrOutput) Elem() BeatSpecDeploymentStrategyOutput {
+	return o.ApplyT(func(v *BeatSpecDeploymentStrategy) BeatSpecDeploymentStrategy { return *v }).(BeatSpecDeploymentStrategyOutput)
+}
+
+// Rolling update config params. Present only if DeploymentStrategyType = RollingUpdate. --- TODO: Update this to follow our convention for oneOf, whatever we decide it to be.
+func (o BeatSpecDeploymentStrategyPtrOutput) RollingUpdate() BeatSpecDeploymentStrategyRollingUpdatePtrOutput {
+	return o.ApplyT(func(v *BeatSpecDeploymentStrategy) *BeatSpecDeploymentStrategyRollingUpdate {
+		if v == nil {
+			return nil
+		}
+		return v.RollingUpdate
+	}).(BeatSpecDeploymentStrategyRollingUpdatePtrOutput)
+}
+
+// Type of deployment. Can be "Recreate" or "RollingUpdate". Default is RollingUpdate.
+func (o BeatSpecDeploymentStrategyPtrOutput) Type() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *BeatSpecDeploymentStrategy) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Type
+	}).(pulumi.StringPtrOutput)
+}
+
+// Rolling update config params. Present only if DeploymentStrategyType = RollingUpdate. --- TODO: Update this to follow our convention for oneOf, whatever we decide it to be.
+type BeatSpecDeploymentStrategyRollingUpdate struct {
+	// The maximum number of pods that can be scheduled above the desired number of pods. Value can be an absolute number (ex: 5) or a percentage of desired pods (ex: 10%). This can not be 0 if MaxUnavailable is 0. Absolute number is calculated from percentage by rounding up. Defaults to 25%. Example: when this is set to 30%, the new ReplicaSet can be scaled up immediately when the rolling update starts, such that the total number of old and new pods do not exceed 130% of desired pods. Once old pods have been killed, new ReplicaSet can be scaled up further, ensuring that total number of pods running at any time during the update is at most 130% of desired pods.
+	MaxSurge *BeatSpecDeploymentStrategyRollingUpdateMaxSurge `pulumi:"maxSurge"`
+	// The maximum number of pods that can be unavailable during the update. Value can be an absolute number (ex: 5) or a percentage of desired pods (ex: 10%). Absolute number is calculated from percentage by rounding down. This can not be 0 if MaxSurge is 0. Defaults to 25%. Example: when this is set to 30%, the old ReplicaSet can be scaled down to 70% of desired pods immediately when the rolling update starts. Once new pods are ready, old ReplicaSet can be scaled down further, followed by scaling up the new ReplicaSet, ensuring that the total number of pods available at all times during the update is at least 70% of desired pods.
+	MaxUnavailable *BeatSpecDeploymentStrategyRollingUpdateMaxUnavailable `pulumi:"maxUnavailable"`
+}
+
+// BeatSpecDeploymentStrategyRollingUpdateInput is an input type that accepts BeatSpecDeploymentStrategyRollingUpdateArgs and BeatSpecDeploymentStrategyRollingUpdateOutput values.
+// You can construct a concrete instance of `BeatSpecDeploymentStrategyRollingUpdateInput` via:
+//
+//          BeatSpecDeploymentStrategyRollingUpdateArgs{...}
+type BeatSpecDeploymentStrategyRollingUpdateInput interface {
+	pulumi.Input
+
+	ToBeatSpecDeploymentStrategyRollingUpdateOutput() BeatSpecDeploymentStrategyRollingUpdateOutput
+	ToBeatSpecDeploymentStrategyRollingUpdateOutputWithContext(context.Context) BeatSpecDeploymentStrategyRollingUpdateOutput
+}
+
+// Rolling update config params. Present only if DeploymentStrategyType = RollingUpdate. --- TODO: Update this to follow our convention for oneOf, whatever we decide it to be.
+type BeatSpecDeploymentStrategyRollingUpdateArgs struct {
+	// The maximum number of pods that can be scheduled above the desired number of pods. Value can be an absolute number (ex: 5) or a percentage of desired pods (ex: 10%). This can not be 0 if MaxUnavailable is 0. Absolute number is calculated from percentage by rounding up. Defaults to 25%. Example: when this is set to 30%, the new ReplicaSet can be scaled up immediately when the rolling update starts, such that the total number of old and new pods do not exceed 130% of desired pods. Once old pods have been killed, new ReplicaSet can be scaled up further, ensuring that total number of pods running at any time during the update is at most 130% of desired pods.
+	MaxSurge BeatSpecDeploymentStrategyRollingUpdateMaxSurgePtrInput `pulumi:"maxSurge"`
+	// The maximum number of pods that can be unavailable during the update. Value can be an absolute number (ex: 5) or a percentage of desired pods (ex: 10%). Absolute number is calculated from percentage by rounding down. This can not be 0 if MaxSurge is 0. Defaults to 25%. Example: when this is set to 30%, the old ReplicaSet can be scaled down to 70% of desired pods immediately when the rolling update starts. Once new pods are ready, old ReplicaSet can be scaled down further, followed by scaling up the new ReplicaSet, ensuring that the total number of pods available at all times during the update is at least 70% of desired pods.
+	MaxUnavailable BeatSpecDeploymentStrategyRollingUpdateMaxUnavailablePtrInput `pulumi:"maxUnavailable"`
+}
+
+func (BeatSpecDeploymentStrategyRollingUpdateArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*BeatSpecDeploymentStrategyRollingUpdate)(nil)).Elem()
+}
+
+func (i BeatSpecDeploymentStrategyRollingUpdateArgs) ToBeatSpecDeploymentStrategyRollingUpdateOutput() BeatSpecDeploymentStrategyRollingUpdateOutput {
+	return i.ToBeatSpecDeploymentStrategyRollingUpdateOutputWithContext(context.Background())
+}
+
+func (i BeatSpecDeploymentStrategyRollingUpdateArgs) ToBeatSpecDeploymentStrategyRollingUpdateOutputWithContext(ctx context.Context) BeatSpecDeploymentStrategyRollingUpdateOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BeatSpecDeploymentStrategyRollingUpdateOutput)
+}
+
+func (i BeatSpecDeploymentStrategyRollingUpdateArgs) ToBeatSpecDeploymentStrategyRollingUpdatePtrOutput() BeatSpecDeploymentStrategyRollingUpdatePtrOutput {
+	return i.ToBeatSpecDeploymentStrategyRollingUpdatePtrOutputWithContext(context.Background())
+}
+
+func (i BeatSpecDeploymentStrategyRollingUpdateArgs) ToBeatSpecDeploymentStrategyRollingUpdatePtrOutputWithContext(ctx context.Context) BeatSpecDeploymentStrategyRollingUpdatePtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BeatSpecDeploymentStrategyRollingUpdateOutput).ToBeatSpecDeploymentStrategyRollingUpdatePtrOutputWithContext(ctx)
+}
+
+// BeatSpecDeploymentStrategyRollingUpdatePtrInput is an input type that accepts BeatSpecDeploymentStrategyRollingUpdateArgs, BeatSpecDeploymentStrategyRollingUpdatePtr and BeatSpecDeploymentStrategyRollingUpdatePtrOutput values.
+// You can construct a concrete instance of `BeatSpecDeploymentStrategyRollingUpdatePtrInput` via:
+//
+//          BeatSpecDeploymentStrategyRollingUpdateArgs{...}
+//
+//  or:
+//
+//          nil
+type BeatSpecDeploymentStrategyRollingUpdatePtrInput interface {
+	pulumi.Input
+
+	ToBeatSpecDeploymentStrategyRollingUpdatePtrOutput() BeatSpecDeploymentStrategyRollingUpdatePtrOutput
+	ToBeatSpecDeploymentStrategyRollingUpdatePtrOutputWithContext(context.Context) BeatSpecDeploymentStrategyRollingUpdatePtrOutput
+}
+
+type beatSpecDeploymentStrategyRollingUpdatePtrType BeatSpecDeploymentStrategyRollingUpdateArgs
+
+func BeatSpecDeploymentStrategyRollingUpdatePtr(v *BeatSpecDeploymentStrategyRollingUpdateArgs) BeatSpecDeploymentStrategyRollingUpdatePtrInput {
+	return (*beatSpecDeploymentStrategyRollingUpdatePtrType)(v)
+}
+
+func (*beatSpecDeploymentStrategyRollingUpdatePtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**BeatSpecDeploymentStrategyRollingUpdate)(nil)).Elem()
+}
+
+func (i *beatSpecDeploymentStrategyRollingUpdatePtrType) ToBeatSpecDeploymentStrategyRollingUpdatePtrOutput() BeatSpecDeploymentStrategyRollingUpdatePtrOutput {
+	return i.ToBeatSpecDeploymentStrategyRollingUpdatePtrOutputWithContext(context.Background())
+}
+
+func (i *beatSpecDeploymentStrategyRollingUpdatePtrType) ToBeatSpecDeploymentStrategyRollingUpdatePtrOutputWithContext(ctx context.Context) BeatSpecDeploymentStrategyRollingUpdatePtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BeatSpecDeploymentStrategyRollingUpdatePtrOutput)
+}
+
+// Rolling update config params. Present only if DeploymentStrategyType = RollingUpdate. --- TODO: Update this to follow our convention for oneOf, whatever we decide it to be.
+type BeatSpecDeploymentStrategyRollingUpdateOutput struct{ *pulumi.OutputState }
+
+func (BeatSpecDeploymentStrategyRollingUpdateOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*BeatSpecDeploymentStrategyRollingUpdate)(nil)).Elem()
+}
+
+func (o BeatSpecDeploymentStrategyRollingUpdateOutput) ToBeatSpecDeploymentStrategyRollingUpdateOutput() BeatSpecDeploymentStrategyRollingUpdateOutput {
+	return o
+}
+
+func (o BeatSpecDeploymentStrategyRollingUpdateOutput) ToBeatSpecDeploymentStrategyRollingUpdateOutputWithContext(ctx context.Context) BeatSpecDeploymentStrategyRollingUpdateOutput {
+	return o
+}
+
+func (o BeatSpecDeploymentStrategyRollingUpdateOutput) ToBeatSpecDeploymentStrategyRollingUpdatePtrOutput() BeatSpecDeploymentStrategyRollingUpdatePtrOutput {
+	return o.ToBeatSpecDeploymentStrategyRollingUpdatePtrOutputWithContext(context.Background())
+}
+
+func (o BeatSpecDeploymentStrategyRollingUpdateOutput) ToBeatSpecDeploymentStrategyRollingUpdatePtrOutputWithContext(ctx context.Context) BeatSpecDeploymentStrategyRollingUpdatePtrOutput {
+	return o.ApplyT(func(v BeatSpecDeploymentStrategyRollingUpdate) *BeatSpecDeploymentStrategyRollingUpdate {
+		return &v
+	}).(BeatSpecDeploymentStrategyRollingUpdatePtrOutput)
+}
+
+// The maximum number of pods that can be scheduled above the desired number of pods. Value can be an absolute number (ex: 5) or a percentage of desired pods (ex: 10%). This can not be 0 if MaxUnavailable is 0. Absolute number is calculated from percentage by rounding up. Defaults to 25%. Example: when this is set to 30%, the new ReplicaSet can be scaled up immediately when the rolling update starts, such that the total number of old and new pods do not exceed 130% of desired pods. Once old pods have been killed, new ReplicaSet can be scaled up further, ensuring that total number of pods running at any time during the update is at most 130% of desired pods.
+func (o BeatSpecDeploymentStrategyRollingUpdateOutput) MaxSurge() BeatSpecDeploymentStrategyRollingUpdateMaxSurgePtrOutput {
+	return o.ApplyT(func(v BeatSpecDeploymentStrategyRollingUpdate) *BeatSpecDeploymentStrategyRollingUpdateMaxSurge {
+		return v.MaxSurge
+	}).(BeatSpecDeploymentStrategyRollingUpdateMaxSurgePtrOutput)
+}
+
+// The maximum number of pods that can be unavailable during the update. Value can be an absolute number (ex: 5) or a percentage of desired pods (ex: 10%). Absolute number is calculated from percentage by rounding down. This can not be 0 if MaxSurge is 0. Defaults to 25%. Example: when this is set to 30%, the old ReplicaSet can be scaled down to 70% of desired pods immediately when the rolling update starts. Once new pods are ready, old ReplicaSet can be scaled down further, followed by scaling up the new ReplicaSet, ensuring that the total number of pods available at all times during the update is at least 70% of desired pods.
+func (o BeatSpecDeploymentStrategyRollingUpdateOutput) MaxUnavailable() BeatSpecDeploymentStrategyRollingUpdateMaxUnavailablePtrOutput {
+	return o.ApplyT(func(v BeatSpecDeploymentStrategyRollingUpdate) *BeatSpecDeploymentStrategyRollingUpdateMaxUnavailable {
+		return v.MaxUnavailable
+	}).(BeatSpecDeploymentStrategyRollingUpdateMaxUnavailablePtrOutput)
+}
+
+type BeatSpecDeploymentStrategyRollingUpdatePtrOutput struct{ *pulumi.OutputState }
+
+func (BeatSpecDeploymentStrategyRollingUpdatePtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**BeatSpecDeploymentStrategyRollingUpdate)(nil)).Elem()
+}
+
+func (o BeatSpecDeploymentStrategyRollingUpdatePtrOutput) ToBeatSpecDeploymentStrategyRollingUpdatePtrOutput() BeatSpecDeploymentStrategyRollingUpdatePtrOutput {
+	return o
+}
+
+func (o BeatSpecDeploymentStrategyRollingUpdatePtrOutput) ToBeatSpecDeploymentStrategyRollingUpdatePtrOutputWithContext(ctx context.Context) BeatSpecDeploymentStrategyRollingUpdatePtrOutput {
+	return o
+}
+
+func (o BeatSpecDeploymentStrategyRollingUpdatePtrOutput) Elem() BeatSpecDeploymentStrategyRollingUpdateOutput {
+	return o.ApplyT(func(v *BeatSpecDeploymentStrategyRollingUpdate) BeatSpecDeploymentStrategyRollingUpdate { return *v }).(BeatSpecDeploymentStrategyRollingUpdateOutput)
+}
+
+// The maximum number of pods that can be scheduled above the desired number of pods. Value can be an absolute number (ex: 5) or a percentage of desired pods (ex: 10%). This can not be 0 if MaxUnavailable is 0. Absolute number is calculated from percentage by rounding up. Defaults to 25%. Example: when this is set to 30%, the new ReplicaSet can be scaled up immediately when the rolling update starts, such that the total number of old and new pods do not exceed 130% of desired pods. Once old pods have been killed, new ReplicaSet can be scaled up further, ensuring that total number of pods running at any time during the update is at most 130% of desired pods.
+func (o BeatSpecDeploymentStrategyRollingUpdatePtrOutput) MaxSurge() BeatSpecDeploymentStrategyRollingUpdateMaxSurgePtrOutput {
+	return o.ApplyT(func(v *BeatSpecDeploymentStrategyRollingUpdate) *BeatSpecDeploymentStrategyRollingUpdateMaxSurge {
+		if v == nil {
+			return nil
+		}
+		return v.MaxSurge
+	}).(BeatSpecDeploymentStrategyRollingUpdateMaxSurgePtrOutput)
+}
+
+// The maximum number of pods that can be unavailable during the update. Value can be an absolute number (ex: 5) or a percentage of desired pods (ex: 10%). Absolute number is calculated from percentage by rounding down. This can not be 0 if MaxSurge is 0. Defaults to 25%. Example: when this is set to 30%, the old ReplicaSet can be scaled down to 70% of desired pods immediately when the rolling update starts. Once new pods are ready, old ReplicaSet can be scaled down further, followed by scaling up the new ReplicaSet, ensuring that the total number of pods available at all times during the update is at least 70% of desired pods.
+func (o BeatSpecDeploymentStrategyRollingUpdatePtrOutput) MaxUnavailable() BeatSpecDeploymentStrategyRollingUpdateMaxUnavailablePtrOutput {
+	return o.ApplyT(func(v *BeatSpecDeploymentStrategyRollingUpdate) *BeatSpecDeploymentStrategyRollingUpdateMaxUnavailable {
+		if v == nil {
+			return nil
+		}
+		return v.MaxUnavailable
+	}).(BeatSpecDeploymentStrategyRollingUpdateMaxUnavailablePtrOutput)
+}
+
+type BeatSpecDeploymentStrategyRollingUpdateMaxSurge struct {
+}
+
+// BeatSpecDeploymentStrategyRollingUpdateMaxSurgeInput is an input type that accepts BeatSpecDeploymentStrategyRollingUpdateMaxSurgeArgs and BeatSpecDeploymentStrategyRollingUpdateMaxSurgeOutput values.
+// You can construct a concrete instance of `BeatSpecDeploymentStrategyRollingUpdateMaxSurgeInput` via:
+//
+//          BeatSpecDeploymentStrategyRollingUpdateMaxSurgeArgs{...}
+type BeatSpecDeploymentStrategyRollingUpdateMaxSurgeInput interface {
+	pulumi.Input
+
+	ToBeatSpecDeploymentStrategyRollingUpdateMaxSurgeOutput() BeatSpecDeploymentStrategyRollingUpdateMaxSurgeOutput
+	ToBeatSpecDeploymentStrategyRollingUpdateMaxSurgeOutputWithContext(context.Context) BeatSpecDeploymentStrategyRollingUpdateMaxSurgeOutput
+}
+
+type BeatSpecDeploymentStrategyRollingUpdateMaxSurgeArgs struct {
+}
+
+func (BeatSpecDeploymentStrategyRollingUpdateMaxSurgeArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*BeatSpecDeploymentStrategyRollingUpdateMaxSurge)(nil)).Elem()
+}
+
+func (i BeatSpecDeploymentStrategyRollingUpdateMaxSurgeArgs) ToBeatSpecDeploymentStrategyRollingUpdateMaxSurgeOutput() BeatSpecDeploymentStrategyRollingUpdateMaxSurgeOutput {
+	return i.ToBeatSpecDeploymentStrategyRollingUpdateMaxSurgeOutputWithContext(context.Background())
+}
+
+func (i BeatSpecDeploymentStrategyRollingUpdateMaxSurgeArgs) ToBeatSpecDeploymentStrategyRollingUpdateMaxSurgeOutputWithContext(ctx context.Context) BeatSpecDeploymentStrategyRollingUpdateMaxSurgeOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BeatSpecDeploymentStrategyRollingUpdateMaxSurgeOutput)
+}
+
+func (i BeatSpecDeploymentStrategyRollingUpdateMaxSurgeArgs) ToBeatSpecDeploymentStrategyRollingUpdateMaxSurgePtrOutput() BeatSpecDeploymentStrategyRollingUpdateMaxSurgePtrOutput {
+	return i.ToBeatSpecDeploymentStrategyRollingUpdateMaxSurgePtrOutputWithContext(context.Background())
+}
+
+func (i BeatSpecDeploymentStrategyRollingUpdateMaxSurgeArgs) ToBeatSpecDeploymentStrategyRollingUpdateMaxSurgePtrOutputWithContext(ctx context.Context) BeatSpecDeploymentStrategyRollingUpdateMaxSurgePtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BeatSpecDeploymentStrategyRollingUpdateMaxSurgeOutput).ToBeatSpecDeploymentStrategyRollingUpdateMaxSurgePtrOutputWithContext(ctx)
+}
+
+// BeatSpecDeploymentStrategyRollingUpdateMaxSurgePtrInput is an input type that accepts BeatSpecDeploymentStrategyRollingUpdateMaxSurgeArgs, BeatSpecDeploymentStrategyRollingUpdateMaxSurgePtr and BeatSpecDeploymentStrategyRollingUpdateMaxSurgePtrOutput values.
+// You can construct a concrete instance of `BeatSpecDeploymentStrategyRollingUpdateMaxSurgePtrInput` via:
+//
+//          BeatSpecDeploymentStrategyRollingUpdateMaxSurgeArgs{...}
+//
+//  or:
+//
+//          nil
+type BeatSpecDeploymentStrategyRollingUpdateMaxSurgePtrInput interface {
+	pulumi.Input
+
+	ToBeatSpecDeploymentStrategyRollingUpdateMaxSurgePtrOutput() BeatSpecDeploymentStrategyRollingUpdateMaxSurgePtrOutput
+	ToBeatSpecDeploymentStrategyRollingUpdateMaxSurgePtrOutputWithContext(context.Context) BeatSpecDeploymentStrategyRollingUpdateMaxSurgePtrOutput
+}
+
+type beatSpecDeploymentStrategyRollingUpdateMaxSurgePtrType BeatSpecDeploymentStrategyRollingUpdateMaxSurgeArgs
+
+func BeatSpecDeploymentStrategyRollingUpdateMaxSurgePtr(v *BeatSpecDeploymentStrategyRollingUpdateMaxSurgeArgs) BeatSpecDeploymentStrategyRollingUpdateMaxSurgePtrInput {
+	return (*beatSpecDeploymentStrategyRollingUpdateMaxSurgePtrType)(v)
+}
+
+func (*beatSpecDeploymentStrategyRollingUpdateMaxSurgePtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**BeatSpecDeploymentStrategyRollingUpdateMaxSurge)(nil)).Elem()
+}
+
+func (i *beatSpecDeploymentStrategyRollingUpdateMaxSurgePtrType) ToBeatSpecDeploymentStrategyRollingUpdateMaxSurgePtrOutput() BeatSpecDeploymentStrategyRollingUpdateMaxSurgePtrOutput {
+	return i.ToBeatSpecDeploymentStrategyRollingUpdateMaxSurgePtrOutputWithContext(context.Background())
+}
+
+func (i *beatSpecDeploymentStrategyRollingUpdateMaxSurgePtrType) ToBeatSpecDeploymentStrategyRollingUpdateMaxSurgePtrOutputWithContext(ctx context.Context) BeatSpecDeploymentStrategyRollingUpdateMaxSurgePtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BeatSpecDeploymentStrategyRollingUpdateMaxSurgePtrOutput)
+}
+
+type BeatSpecDeploymentStrategyRollingUpdateMaxSurgeOutput struct{ *pulumi.OutputState }
+
+func (BeatSpecDeploymentStrategyRollingUpdateMaxSurgeOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*BeatSpecDeploymentStrategyRollingUpdateMaxSurge)(nil)).Elem()
+}
+
+func (o BeatSpecDeploymentStrategyRollingUpdateMaxSurgeOutput) ToBeatSpecDeploymentStrategyRollingUpdateMaxSurgeOutput() BeatSpecDeploymentStrategyRollingUpdateMaxSurgeOutput {
+	return o
+}
+
+func (o BeatSpecDeploymentStrategyRollingUpdateMaxSurgeOutput) ToBeatSpecDeploymentStrategyRollingUpdateMaxSurgeOutputWithContext(ctx context.Context) BeatSpecDeploymentStrategyRollingUpdateMaxSurgeOutput {
+	return o
+}
+
+func (o BeatSpecDeploymentStrategyRollingUpdateMaxSurgeOutput) ToBeatSpecDeploymentStrategyRollingUpdateMaxSurgePtrOutput() BeatSpecDeploymentStrategyRollingUpdateMaxSurgePtrOutput {
+	return o.ToBeatSpecDeploymentStrategyRollingUpdateMaxSurgePtrOutputWithContext(context.Background())
+}
+
+func (o BeatSpecDeploymentStrategyRollingUpdateMaxSurgeOutput) ToBeatSpecDeploymentStrategyRollingUpdateMaxSurgePtrOutputWithContext(ctx context.Context) BeatSpecDeploymentStrategyRollingUpdateMaxSurgePtrOutput {
+	return o.ApplyT(func(v BeatSpecDeploymentStrategyRollingUpdateMaxSurge) *BeatSpecDeploymentStrategyRollingUpdateMaxSurge {
+		return &v
+	}).(BeatSpecDeploymentStrategyRollingUpdateMaxSurgePtrOutput)
+}
+
+type BeatSpecDeploymentStrategyRollingUpdateMaxSurgePtrOutput struct{ *pulumi.OutputState }
+
+func (BeatSpecDeploymentStrategyRollingUpdateMaxSurgePtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**BeatSpecDeploymentStrategyRollingUpdateMaxSurge)(nil)).Elem()
+}
+
+func (o BeatSpecDeploymentStrategyRollingUpdateMaxSurgePtrOutput) ToBeatSpecDeploymentStrategyRollingUpdateMaxSurgePtrOutput() BeatSpecDeploymentStrategyRollingUpdateMaxSurgePtrOutput {
+	return o
+}
+
+func (o BeatSpecDeploymentStrategyRollingUpdateMaxSurgePtrOutput) ToBeatSpecDeploymentStrategyRollingUpdateMaxSurgePtrOutputWithContext(ctx context.Context) BeatSpecDeploymentStrategyRollingUpdateMaxSurgePtrOutput {
+	return o
+}
+
+func (o BeatSpecDeploymentStrategyRollingUpdateMaxSurgePtrOutput) Elem() BeatSpecDeploymentStrategyRollingUpdateMaxSurgeOutput {
+	return o.ApplyT(func(v *BeatSpecDeploymentStrategyRollingUpdateMaxSurge) BeatSpecDeploymentStrategyRollingUpdateMaxSurge {
+		return *v
+	}).(BeatSpecDeploymentStrategyRollingUpdateMaxSurgeOutput)
+}
+
+type BeatSpecDeploymentStrategyRollingUpdateMaxUnavailable struct {
+}
+
+// BeatSpecDeploymentStrategyRollingUpdateMaxUnavailableInput is an input type that accepts BeatSpecDeploymentStrategyRollingUpdateMaxUnavailableArgs and BeatSpecDeploymentStrategyRollingUpdateMaxUnavailableOutput values.
+// You can construct a concrete instance of `BeatSpecDeploymentStrategyRollingUpdateMaxUnavailableInput` via:
+//
+//          BeatSpecDeploymentStrategyRollingUpdateMaxUnavailableArgs{...}
+type BeatSpecDeploymentStrategyRollingUpdateMaxUnavailableInput interface {
+	pulumi.Input
+
+	ToBeatSpecDeploymentStrategyRollingUpdateMaxUnavailableOutput() BeatSpecDeploymentStrategyRollingUpdateMaxUnavailableOutput
+	ToBeatSpecDeploymentStrategyRollingUpdateMaxUnavailableOutputWithContext(context.Context) BeatSpecDeploymentStrategyRollingUpdateMaxUnavailableOutput
+}
+
+type BeatSpecDeploymentStrategyRollingUpdateMaxUnavailableArgs struct {
+}
+
+func (BeatSpecDeploymentStrategyRollingUpdateMaxUnavailableArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*BeatSpecDeploymentStrategyRollingUpdateMaxUnavailable)(nil)).Elem()
+}
+
+func (i BeatSpecDeploymentStrategyRollingUpdateMaxUnavailableArgs) ToBeatSpecDeploymentStrategyRollingUpdateMaxUnavailableOutput() BeatSpecDeploymentStrategyRollingUpdateMaxUnavailableOutput {
+	return i.ToBeatSpecDeploymentStrategyRollingUpdateMaxUnavailableOutputWithContext(context.Background())
+}
+
+func (i BeatSpecDeploymentStrategyRollingUpdateMaxUnavailableArgs) ToBeatSpecDeploymentStrategyRollingUpdateMaxUnavailableOutputWithContext(ctx context.Context) BeatSpecDeploymentStrategyRollingUpdateMaxUnavailableOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BeatSpecDeploymentStrategyRollingUpdateMaxUnavailableOutput)
+}
+
+func (i BeatSpecDeploymentStrategyRollingUpdateMaxUnavailableArgs) ToBeatSpecDeploymentStrategyRollingUpdateMaxUnavailablePtrOutput() BeatSpecDeploymentStrategyRollingUpdateMaxUnavailablePtrOutput {
+	return i.ToBeatSpecDeploymentStrategyRollingUpdateMaxUnavailablePtrOutputWithContext(context.Background())
+}
+
+func (i BeatSpecDeploymentStrategyRollingUpdateMaxUnavailableArgs) ToBeatSpecDeploymentStrategyRollingUpdateMaxUnavailablePtrOutputWithContext(ctx context.Context) BeatSpecDeploymentStrategyRollingUpdateMaxUnavailablePtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BeatSpecDeploymentStrategyRollingUpdateMaxUnavailableOutput).ToBeatSpecDeploymentStrategyRollingUpdateMaxUnavailablePtrOutputWithContext(ctx)
+}
+
+// BeatSpecDeploymentStrategyRollingUpdateMaxUnavailablePtrInput is an input type that accepts BeatSpecDeploymentStrategyRollingUpdateMaxUnavailableArgs, BeatSpecDeploymentStrategyRollingUpdateMaxUnavailablePtr and BeatSpecDeploymentStrategyRollingUpdateMaxUnavailablePtrOutput values.
+// You can construct a concrete instance of `BeatSpecDeploymentStrategyRollingUpdateMaxUnavailablePtrInput` via:
+//
+//          BeatSpecDeploymentStrategyRollingUpdateMaxUnavailableArgs{...}
+//
+//  or:
+//
+//          nil
+type BeatSpecDeploymentStrategyRollingUpdateMaxUnavailablePtrInput interface {
+	pulumi.Input
+
+	ToBeatSpecDeploymentStrategyRollingUpdateMaxUnavailablePtrOutput() BeatSpecDeploymentStrategyRollingUpdateMaxUnavailablePtrOutput
+	ToBeatSpecDeploymentStrategyRollingUpdateMaxUnavailablePtrOutputWithContext(context.Context) BeatSpecDeploymentStrategyRollingUpdateMaxUnavailablePtrOutput
+}
+
+type beatSpecDeploymentStrategyRollingUpdateMaxUnavailablePtrType BeatSpecDeploymentStrategyRollingUpdateMaxUnavailableArgs
+
+func BeatSpecDeploymentStrategyRollingUpdateMaxUnavailablePtr(v *BeatSpecDeploymentStrategyRollingUpdateMaxUnavailableArgs) BeatSpecDeploymentStrategyRollingUpdateMaxUnavailablePtrInput {
+	return (*beatSpecDeploymentStrategyRollingUpdateMaxUnavailablePtrType)(v)
+}
+
+func (*beatSpecDeploymentStrategyRollingUpdateMaxUnavailablePtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**BeatSpecDeploymentStrategyRollingUpdateMaxUnavailable)(nil)).Elem()
+}
+
+func (i *beatSpecDeploymentStrategyRollingUpdateMaxUnavailablePtrType) ToBeatSpecDeploymentStrategyRollingUpdateMaxUnavailablePtrOutput() BeatSpecDeploymentStrategyRollingUpdateMaxUnavailablePtrOutput {
+	return i.ToBeatSpecDeploymentStrategyRollingUpdateMaxUnavailablePtrOutputWithContext(context.Background())
+}
+
+func (i *beatSpecDeploymentStrategyRollingUpdateMaxUnavailablePtrType) ToBeatSpecDeploymentStrategyRollingUpdateMaxUnavailablePtrOutputWithContext(ctx context.Context) BeatSpecDeploymentStrategyRollingUpdateMaxUnavailablePtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BeatSpecDeploymentStrategyRollingUpdateMaxUnavailablePtrOutput)
+}
+
+type BeatSpecDeploymentStrategyRollingUpdateMaxUnavailableOutput struct{ *pulumi.OutputState }
+
+func (BeatSpecDeploymentStrategyRollingUpdateMaxUnavailableOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*BeatSpecDeploymentStrategyRollingUpdateMaxUnavailable)(nil)).Elem()
+}
+
+func (o BeatSpecDeploymentStrategyRollingUpdateMaxUnavailableOutput) ToBeatSpecDeploymentStrategyRollingUpdateMaxUnavailableOutput() BeatSpecDeploymentStrategyRollingUpdateMaxUnavailableOutput {
+	return o
+}
+
+func (o BeatSpecDeploymentStrategyRollingUpdateMaxUnavailableOutput) ToBeatSpecDeploymentStrategyRollingUpdateMaxUnavailableOutputWithContext(ctx context.Context) BeatSpecDeploymentStrategyRollingUpdateMaxUnavailableOutput {
+	return o
+}
+
+func (o BeatSpecDeploymentStrategyRollingUpdateMaxUnavailableOutput) ToBeatSpecDeploymentStrategyRollingUpdateMaxUnavailablePtrOutput() BeatSpecDeploymentStrategyRollingUpdateMaxUnavailablePtrOutput {
+	return o.ToBeatSpecDeploymentStrategyRollingUpdateMaxUnavailablePtrOutputWithContext(context.Background())
+}
+
+func (o BeatSpecDeploymentStrategyRollingUpdateMaxUnavailableOutput) ToBeatSpecDeploymentStrategyRollingUpdateMaxUnavailablePtrOutputWithContext(ctx context.Context) BeatSpecDeploymentStrategyRollingUpdateMaxUnavailablePtrOutput {
+	return o.ApplyT(func(v BeatSpecDeploymentStrategyRollingUpdateMaxUnavailable) *BeatSpecDeploymentStrategyRollingUpdateMaxUnavailable {
+		return &v
+	}).(BeatSpecDeploymentStrategyRollingUpdateMaxUnavailablePtrOutput)
+}
+
+type BeatSpecDeploymentStrategyRollingUpdateMaxUnavailablePtrOutput struct{ *pulumi.OutputState }
+
+func (BeatSpecDeploymentStrategyRollingUpdateMaxUnavailablePtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**BeatSpecDeploymentStrategyRollingUpdateMaxUnavailable)(nil)).Elem()
+}
+
+func (o BeatSpecDeploymentStrategyRollingUpdateMaxUnavailablePtrOutput) ToBeatSpecDeploymentStrategyRollingUpdateMaxUnavailablePtrOutput() BeatSpecDeploymentStrategyRollingUpdateMaxUnavailablePtrOutput {
+	return o
+}
+
+func (o BeatSpecDeploymentStrategyRollingUpdateMaxUnavailablePtrOutput) ToBeatSpecDeploymentStrategyRollingUpdateMaxUnavailablePtrOutputWithContext(ctx context.Context) BeatSpecDeploymentStrategyRollingUpdateMaxUnavailablePtrOutput {
+	return o
+}
+
+func (o BeatSpecDeploymentStrategyRollingUpdateMaxUnavailablePtrOutput) Elem() BeatSpecDeploymentStrategyRollingUpdateMaxUnavailableOutput {
+	return o.ApplyT(func(v *BeatSpecDeploymentStrategyRollingUpdateMaxUnavailable) BeatSpecDeploymentStrategyRollingUpdateMaxUnavailable {
+		return *v
+	}).(BeatSpecDeploymentStrategyRollingUpdateMaxUnavailableOutput)
 }
 
 // ElasticsearchRef is a reference to an Elasticsearch cluster running in the same Kubernetes cluster.
@@ -1417,6 +1974,8 @@ type BeatStatus struct {
 	Health                         *string `pulumi:"health"`
 	// AssociationStatus is the status of an association resource.
 	KibanaAssociationStatus *string `pulumi:"kibanaAssociationStatus"`
+	// Version of the stack resource currently running. During version upgrades, multiple versions may run in parallel: this value specifies the lowest version currently running.
+	Version *string `pulumi:"version"`
 }
 
 // BeatStatusInput is an input type that accepts BeatStatusArgs and BeatStatusOutput values.
@@ -1439,6 +1998,8 @@ type BeatStatusArgs struct {
 	Health                         pulumi.StringPtrInput `pulumi:"health"`
 	// AssociationStatus is the status of an association resource.
 	KibanaAssociationStatus pulumi.StringPtrInput `pulumi:"kibanaAssociationStatus"`
+	// Version of the stack resource currently running. During version upgrades, multiple versions may run in parallel: this value specifies the lowest version currently running.
+	Version pulumi.StringPtrInput `pulumi:"version"`
 }
 
 func (BeatStatusArgs) ElementType() reflect.Type {
@@ -1540,6 +2101,11 @@ func (o BeatStatusOutput) KibanaAssociationStatus() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v BeatStatus) *string { return v.KibanaAssociationStatus }).(pulumi.StringPtrOutput)
 }
 
+// Version of the stack resource currently running. During version upgrades, multiple versions may run in parallel: this value specifies the lowest version currently running.
+func (o BeatStatusOutput) Version() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v BeatStatus) *string { return v.Version }).(pulumi.StringPtrOutput)
+}
+
 type BeatStatusPtrOutput struct{ *pulumi.OutputState }
 
 func (BeatStatusPtrOutput) ElementType() reflect.Type {
@@ -1605,6 +2171,16 @@ func (o BeatStatusPtrOutput) KibanaAssociationStatus() pulumi.StringPtrOutput {
 	}).(pulumi.StringPtrOutput)
 }
 
+// Version of the stack resource currently running. During version upgrades, multiple versions may run in parallel: this value specifies the lowest version currently running.
+func (o BeatStatusPtrOutput) Version() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *BeatStatus) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Version
+	}).(pulumi.StringPtrOutput)
+}
+
 func init() {
 	pulumi.RegisterOutputType(BeatTypeOutput{})
 	pulumi.RegisterOutputType(BeatMetadataOutput{})
@@ -1617,6 +2193,14 @@ func init() {
 	pulumi.RegisterOutputType(BeatSpecDaemonSetPtrOutput{})
 	pulumi.RegisterOutputType(BeatSpecDeploymentOutput{})
 	pulumi.RegisterOutputType(BeatSpecDeploymentPtrOutput{})
+	pulumi.RegisterOutputType(BeatSpecDeploymentStrategyOutput{})
+	pulumi.RegisterOutputType(BeatSpecDeploymentStrategyPtrOutput{})
+	pulumi.RegisterOutputType(BeatSpecDeploymentStrategyRollingUpdateOutput{})
+	pulumi.RegisterOutputType(BeatSpecDeploymentStrategyRollingUpdatePtrOutput{})
+	pulumi.RegisterOutputType(BeatSpecDeploymentStrategyRollingUpdateMaxSurgeOutput{})
+	pulumi.RegisterOutputType(BeatSpecDeploymentStrategyRollingUpdateMaxSurgePtrOutput{})
+	pulumi.RegisterOutputType(BeatSpecDeploymentStrategyRollingUpdateMaxUnavailableOutput{})
+	pulumi.RegisterOutputType(BeatSpecDeploymentStrategyRollingUpdateMaxUnavailablePtrOutput{})
 	pulumi.RegisterOutputType(BeatSpecElasticsearchRefOutput{})
 	pulumi.RegisterOutputType(BeatSpecElasticsearchRefPtrOutput{})
 	pulumi.RegisterOutputType(BeatSpecKibanaRefOutput{})

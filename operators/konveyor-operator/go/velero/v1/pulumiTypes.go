@@ -1765,13 +1765,17 @@ type BackupStatus struct {
 	Errors *int `pulumi:"errors"`
 	// Expiration is when this Backup is eligible for garbage-collection.
 	Expiration *string `pulumi:"expiration"`
+	// FormatVersion is the backup format version, including major, minor, and patch version.
+	FormatVersion *string `pulumi:"formatVersion"`
 	// Phase is the current state of the Backup.
 	Phase *string `pulumi:"phase"`
+	// Progress contains information about the backup's execution progress. Note that this information is best-effort only -- if Velero fails to update it during a backup for any reason, it may be inaccurate/stale.
+	Progress *BackupStatusProgress `pulumi:"progress"`
 	// StartTimestamp records the time a backup was started. Separate from CreationTimestamp, since that value changes on restores. The server's time is used for StartTimestamps
 	StartTimestamp *string `pulumi:"startTimestamp"`
 	// ValidationErrors is a slice of all validation errors (if applicable).
 	ValidationErrors []string `pulumi:"validationErrors"`
-	// Version is the backup format version.
+	// Version is the backup format major version. Deprecated: Please see FormatVersion
 	Version *int `pulumi:"version"`
 	// VolumeSnapshotsAttempted is the total number of attempted volume snapshots for this backup.
 	VolumeSnapshotsAttempted *int `pulumi:"volumeSnapshotsAttempted"`
@@ -1800,13 +1804,17 @@ type BackupStatusArgs struct {
 	Errors pulumi.IntPtrInput `pulumi:"errors"`
 	// Expiration is when this Backup is eligible for garbage-collection.
 	Expiration pulumi.StringPtrInput `pulumi:"expiration"`
+	// FormatVersion is the backup format version, including major, minor, and patch version.
+	FormatVersion pulumi.StringPtrInput `pulumi:"formatVersion"`
 	// Phase is the current state of the Backup.
 	Phase pulumi.StringPtrInput `pulumi:"phase"`
+	// Progress contains information about the backup's execution progress. Note that this information is best-effort only -- if Velero fails to update it during a backup for any reason, it may be inaccurate/stale.
+	Progress BackupStatusProgressPtrInput `pulumi:"progress"`
 	// StartTimestamp records the time a backup was started. Separate from CreationTimestamp, since that value changes on restores. The server's time is used for StartTimestamps
 	StartTimestamp pulumi.StringPtrInput `pulumi:"startTimestamp"`
 	// ValidationErrors is a slice of all validation errors (if applicable).
 	ValidationErrors pulumi.StringArrayInput `pulumi:"validationErrors"`
-	// Version is the backup format version.
+	// Version is the backup format major version. Deprecated: Please see FormatVersion
 	Version pulumi.IntPtrInput `pulumi:"version"`
 	// VolumeSnapshotsAttempted is the total number of attempted volume snapshots for this backup.
 	VolumeSnapshotsAttempted pulumi.IntPtrInput `pulumi:"volumeSnapshotsAttempted"`
@@ -1909,9 +1917,19 @@ func (o BackupStatusOutput) Expiration() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v BackupStatus) *string { return v.Expiration }).(pulumi.StringPtrOutput)
 }
 
+// FormatVersion is the backup format version, including major, minor, and patch version.
+func (o BackupStatusOutput) FormatVersion() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v BackupStatus) *string { return v.FormatVersion }).(pulumi.StringPtrOutput)
+}
+
 // Phase is the current state of the Backup.
 func (o BackupStatusOutput) Phase() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v BackupStatus) *string { return v.Phase }).(pulumi.StringPtrOutput)
+}
+
+// Progress contains information about the backup's execution progress. Note that this information is best-effort only -- if Velero fails to update it during a backup for any reason, it may be inaccurate/stale.
+func (o BackupStatusOutput) Progress() BackupStatusProgressPtrOutput {
+	return o.ApplyT(func(v BackupStatus) *BackupStatusProgress { return v.Progress }).(BackupStatusProgressPtrOutput)
 }
 
 // StartTimestamp records the time a backup was started. Separate from CreationTimestamp, since that value changes on restores. The server's time is used for StartTimestamps
@@ -1924,7 +1942,7 @@ func (o BackupStatusOutput) ValidationErrors() pulumi.StringArrayOutput {
 	return o.ApplyT(func(v BackupStatus) []string { return v.ValidationErrors }).(pulumi.StringArrayOutput)
 }
 
-// Version is the backup format version.
+// Version is the backup format major version. Deprecated: Please see FormatVersion
 func (o BackupStatusOutput) Version() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v BackupStatus) *int { return v.Version }).(pulumi.IntPtrOutput)
 }
@@ -1992,6 +2010,16 @@ func (o BackupStatusPtrOutput) Expiration() pulumi.StringPtrOutput {
 	}).(pulumi.StringPtrOutput)
 }
 
+// FormatVersion is the backup format version, including major, minor, and patch version.
+func (o BackupStatusPtrOutput) FormatVersion() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *BackupStatus) *string {
+		if v == nil {
+			return nil
+		}
+		return v.FormatVersion
+	}).(pulumi.StringPtrOutput)
+}
+
 // Phase is the current state of the Backup.
 func (o BackupStatusPtrOutput) Phase() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *BackupStatus) *string {
@@ -2000,6 +2028,16 @@ func (o BackupStatusPtrOutput) Phase() pulumi.StringPtrOutput {
 		}
 		return v.Phase
 	}).(pulumi.StringPtrOutput)
+}
+
+// Progress contains information about the backup's execution progress. Note that this information is best-effort only -- if Velero fails to update it during a backup for any reason, it may be inaccurate/stale.
+func (o BackupStatusPtrOutput) Progress() BackupStatusProgressPtrOutput {
+	return o.ApplyT(func(v *BackupStatus) *BackupStatusProgress {
+		if v == nil {
+			return nil
+		}
+		return v.Progress
+	}).(BackupStatusProgressPtrOutput)
 }
 
 // StartTimestamp records the time a backup was started. Separate from CreationTimestamp, since that value changes on restores. The server's time is used for StartTimestamps
@@ -2022,7 +2060,7 @@ func (o BackupStatusPtrOutput) ValidationErrors() pulumi.StringArrayOutput {
 	}).(pulumi.StringArrayOutput)
 }
 
-// Version is the backup format version.
+// Version is the backup format major version. Deprecated: Please see FormatVersion
 func (o BackupStatusPtrOutput) Version() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v *BackupStatus) *int {
 		if v == nil {
@@ -2059,6 +2097,159 @@ func (o BackupStatusPtrOutput) Warnings() pulumi.IntPtrOutput {
 			return nil
 		}
 		return v.Warnings
+	}).(pulumi.IntPtrOutput)
+}
+
+// Progress contains information about the backup's execution progress. Note that this information is best-effort only -- if Velero fails to update it during a backup for any reason, it may be inaccurate/stale.
+type BackupStatusProgress struct {
+	// ItemsBackedUp is the number of items that have actually been written to the backup tarball so far.
+	ItemsBackedUp *int `pulumi:"itemsBackedUp"`
+	// TotalItems is the total number of items to be backed up. This number may change throughout the execution of the backup due to plugins that return additional related items to back up, the velero.io/exclude-from-backup label, and various other filters that happen as items are processed.
+	TotalItems *int `pulumi:"totalItems"`
+}
+
+// BackupStatusProgressInput is an input type that accepts BackupStatusProgressArgs and BackupStatusProgressOutput values.
+// You can construct a concrete instance of `BackupStatusProgressInput` via:
+//
+//          BackupStatusProgressArgs{...}
+type BackupStatusProgressInput interface {
+	pulumi.Input
+
+	ToBackupStatusProgressOutput() BackupStatusProgressOutput
+	ToBackupStatusProgressOutputWithContext(context.Context) BackupStatusProgressOutput
+}
+
+// Progress contains information about the backup's execution progress. Note that this information is best-effort only -- if Velero fails to update it during a backup for any reason, it may be inaccurate/stale.
+type BackupStatusProgressArgs struct {
+	// ItemsBackedUp is the number of items that have actually been written to the backup tarball so far.
+	ItemsBackedUp pulumi.IntPtrInput `pulumi:"itemsBackedUp"`
+	// TotalItems is the total number of items to be backed up. This number may change throughout the execution of the backup due to plugins that return additional related items to back up, the velero.io/exclude-from-backup label, and various other filters that happen as items are processed.
+	TotalItems pulumi.IntPtrInput `pulumi:"totalItems"`
+}
+
+func (BackupStatusProgressArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*BackupStatusProgress)(nil)).Elem()
+}
+
+func (i BackupStatusProgressArgs) ToBackupStatusProgressOutput() BackupStatusProgressOutput {
+	return i.ToBackupStatusProgressOutputWithContext(context.Background())
+}
+
+func (i BackupStatusProgressArgs) ToBackupStatusProgressOutputWithContext(ctx context.Context) BackupStatusProgressOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BackupStatusProgressOutput)
+}
+
+func (i BackupStatusProgressArgs) ToBackupStatusProgressPtrOutput() BackupStatusProgressPtrOutput {
+	return i.ToBackupStatusProgressPtrOutputWithContext(context.Background())
+}
+
+func (i BackupStatusProgressArgs) ToBackupStatusProgressPtrOutputWithContext(ctx context.Context) BackupStatusProgressPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BackupStatusProgressOutput).ToBackupStatusProgressPtrOutputWithContext(ctx)
+}
+
+// BackupStatusProgressPtrInput is an input type that accepts BackupStatusProgressArgs, BackupStatusProgressPtr and BackupStatusProgressPtrOutput values.
+// You can construct a concrete instance of `BackupStatusProgressPtrInput` via:
+//
+//          BackupStatusProgressArgs{...}
+//
+//  or:
+//
+//          nil
+type BackupStatusProgressPtrInput interface {
+	pulumi.Input
+
+	ToBackupStatusProgressPtrOutput() BackupStatusProgressPtrOutput
+	ToBackupStatusProgressPtrOutputWithContext(context.Context) BackupStatusProgressPtrOutput
+}
+
+type backupStatusProgressPtrType BackupStatusProgressArgs
+
+func BackupStatusProgressPtr(v *BackupStatusProgressArgs) BackupStatusProgressPtrInput {
+	return (*backupStatusProgressPtrType)(v)
+}
+
+func (*backupStatusProgressPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**BackupStatusProgress)(nil)).Elem()
+}
+
+func (i *backupStatusProgressPtrType) ToBackupStatusProgressPtrOutput() BackupStatusProgressPtrOutput {
+	return i.ToBackupStatusProgressPtrOutputWithContext(context.Background())
+}
+
+func (i *backupStatusProgressPtrType) ToBackupStatusProgressPtrOutputWithContext(ctx context.Context) BackupStatusProgressPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(BackupStatusProgressPtrOutput)
+}
+
+// Progress contains information about the backup's execution progress. Note that this information is best-effort only -- if Velero fails to update it during a backup for any reason, it may be inaccurate/stale.
+type BackupStatusProgressOutput struct{ *pulumi.OutputState }
+
+func (BackupStatusProgressOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*BackupStatusProgress)(nil)).Elem()
+}
+
+func (o BackupStatusProgressOutput) ToBackupStatusProgressOutput() BackupStatusProgressOutput {
+	return o
+}
+
+func (o BackupStatusProgressOutput) ToBackupStatusProgressOutputWithContext(ctx context.Context) BackupStatusProgressOutput {
+	return o
+}
+
+func (o BackupStatusProgressOutput) ToBackupStatusProgressPtrOutput() BackupStatusProgressPtrOutput {
+	return o.ToBackupStatusProgressPtrOutputWithContext(context.Background())
+}
+
+func (o BackupStatusProgressOutput) ToBackupStatusProgressPtrOutputWithContext(ctx context.Context) BackupStatusProgressPtrOutput {
+	return o.ApplyT(func(v BackupStatusProgress) *BackupStatusProgress {
+		return &v
+	}).(BackupStatusProgressPtrOutput)
+}
+
+// ItemsBackedUp is the number of items that have actually been written to the backup tarball so far.
+func (o BackupStatusProgressOutput) ItemsBackedUp() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v BackupStatusProgress) *int { return v.ItemsBackedUp }).(pulumi.IntPtrOutput)
+}
+
+// TotalItems is the total number of items to be backed up. This number may change throughout the execution of the backup due to plugins that return additional related items to back up, the velero.io/exclude-from-backup label, and various other filters that happen as items are processed.
+func (o BackupStatusProgressOutput) TotalItems() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v BackupStatusProgress) *int { return v.TotalItems }).(pulumi.IntPtrOutput)
+}
+
+type BackupStatusProgressPtrOutput struct{ *pulumi.OutputState }
+
+func (BackupStatusProgressPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**BackupStatusProgress)(nil)).Elem()
+}
+
+func (o BackupStatusProgressPtrOutput) ToBackupStatusProgressPtrOutput() BackupStatusProgressPtrOutput {
+	return o
+}
+
+func (o BackupStatusProgressPtrOutput) ToBackupStatusProgressPtrOutputWithContext(ctx context.Context) BackupStatusProgressPtrOutput {
+	return o
+}
+
+func (o BackupStatusProgressPtrOutput) Elem() BackupStatusProgressOutput {
+	return o.ApplyT(func(v *BackupStatusProgress) BackupStatusProgress { return *v }).(BackupStatusProgressOutput)
+}
+
+// ItemsBackedUp is the number of items that have actually been written to the backup tarball so far.
+func (o BackupStatusProgressPtrOutput) ItemsBackedUp() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *BackupStatusProgress) *int {
+		if v == nil {
+			return nil
+		}
+		return v.ItemsBackedUp
+	}).(pulumi.IntPtrOutput)
+}
+
+// TotalItems is the total number of items to be backed up. This number may change throughout the execution of the backup due to plugins that return additional related items to back up, the velero.io/exclude-from-backup label, and various other filters that happen as items are processed.
+func (o BackupStatusProgressPtrOutput) TotalItems() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *BackupStatusProgress) *int {
+		if v == nil {
+			return nil
+		}
+		return v.TotalItems
 	}).(pulumi.IntPtrOutput)
 }
 
@@ -2447,6 +2638,8 @@ func (o BackupStorageLocationSpecConfigOutput) ToBackupStorageLocationSpecConfig
 type BackupStorageLocationSpecObjectStorage struct {
 	// Bucket is the bucket to use for object storage.
 	Bucket string `pulumi:"bucket"`
+	// CACert defines a CA bundle to use when verifying TLS connections to the provider.
+	CaCert *string `pulumi:"caCert"`
 	// Prefix is the path inside a bucket to use for Velero storage. Optional.
 	Prefix *string `pulumi:"prefix"`
 }
@@ -2466,6 +2659,8 @@ type BackupStorageLocationSpecObjectStorageInput interface {
 type BackupStorageLocationSpecObjectStorageArgs struct {
 	// Bucket is the bucket to use for object storage.
 	Bucket pulumi.StringInput `pulumi:"bucket"`
+	// CACert defines a CA bundle to use when verifying TLS connections to the provider.
+	CaCert pulumi.StringPtrInput `pulumi:"caCert"`
 	// Prefix is the path inside a bucket to use for Velero storage. Optional.
 	Prefix pulumi.StringPtrInput `pulumi:"prefix"`
 }
@@ -2553,6 +2748,11 @@ func (o BackupStorageLocationSpecObjectStorageOutput) Bucket() pulumi.StringOutp
 	return o.ApplyT(func(v BackupStorageLocationSpecObjectStorage) string { return v.Bucket }).(pulumi.StringOutput)
 }
 
+// CACert defines a CA bundle to use when verifying TLS connections to the provider.
+func (o BackupStorageLocationSpecObjectStorageOutput) CaCert() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v BackupStorageLocationSpecObjectStorage) *string { return v.CaCert }).(pulumi.StringPtrOutput)
+}
+
 // Prefix is the path inside a bucket to use for Velero storage. Optional.
 func (o BackupStorageLocationSpecObjectStorageOutput) Prefix() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v BackupStorageLocationSpecObjectStorage) *string { return v.Prefix }).(pulumi.StringPtrOutput)
@@ -2583,6 +2783,16 @@ func (o BackupStorageLocationSpecObjectStoragePtrOutput) Bucket() pulumi.StringP
 			return nil
 		}
 		return &v.Bucket
+	}).(pulumi.StringPtrOutput)
+}
+
+// CACert defines a CA bundle to use when verifying TLS connections to the provider.
+func (o BackupStorageLocationSpecObjectStoragePtrOutput) CaCert() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *BackupStorageLocationSpecObjectStorage) *string {
+		if v == nil {
+			return nil
+		}
+		return v.CaCert
 	}).(pulumi.StringPtrOutput)
 }
 
@@ -10679,6 +10889,8 @@ func init() {
 	pulumi.RegisterOutputType(BackupSpecLabelSelectorMatchLabelsOutput{})
 	pulumi.RegisterOutputType(BackupStatusOutput{})
 	pulumi.RegisterOutputType(BackupStatusPtrOutput{})
+	pulumi.RegisterOutputType(BackupStatusProgressOutput{})
+	pulumi.RegisterOutputType(BackupStatusProgressPtrOutput{})
 	pulumi.RegisterOutputType(BackupStorageLocationTypeOutput{})
 	pulumi.RegisterOutputType(BackupStorageLocationMetadataOutput{})
 	pulumi.RegisterOutputType(BackupStorageLocationSpecOutput{})

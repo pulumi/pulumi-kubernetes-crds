@@ -14,7 +14,7 @@ namespace Pulumi.Kubernetes.Types.Outputs.Migration.V1Alpha1
     public sealed class MigMigrationStatus
     {
         public readonly ImmutableArray<string> Errors;
-        public readonly string Itenerary;
+        public readonly string Itinerary;
         public readonly string ObservedDigest;
         public readonly string Phase;
         public readonly string StartTimestamp;
@@ -23,7 +23,7 @@ namespace Pulumi.Kubernetes.Types.Outputs.Migration.V1Alpha1
         private MigMigrationStatus(
             ImmutableArray<string> errors,
 
-            string itenerary,
+            string itinerary,
 
             string observedDigest,
 
@@ -32,7 +32,7 @@ namespace Pulumi.Kubernetes.Types.Outputs.Migration.V1Alpha1
             string startTimestamp)
         {
             Errors = errors;
-            Itenerary = itenerary;
+            Itinerary = itinerary;
             ObservedDigest = observedDigest;
             Phase = phase;
             StartTimestamp = startTimestamp;

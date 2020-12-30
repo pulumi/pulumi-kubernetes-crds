@@ -16,6 +16,13 @@ namespace Pulumi.Kubernetes.Types.Inputs.Argoproj.V1Alpha1
     public class ArgoCDSpecControllerArgs : Pulumi.ResourceArgs
     {
         /// <summary>
+        /// AppSync is used to control the sync frequency, by default the ArgoCD controller polls Git every 3m by default. 
+        ///  Set this to a duration, e.g. 10m or 600s to control the synchronisation frequency.
+        /// </summary>
+        [Input("appSync")]
+        public Input<string>? AppSync { get; set; }
+
+        /// <summary>
         /// Processors contains the options for the Application Controller processors.
         /// </summary>
         [Input("processors")]

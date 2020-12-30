@@ -18,6 +18,12 @@ namespace Pulumi.Kubernetes.Types.Inputs.Beat.V1Beta1
         [Input("replicas")]
         public Input<int>? Replicas { get; set; }
 
+        /// <summary>
+        /// DeploymentStrategy describes how to replace existing pods with new ones.
+        /// </summary>
+        [Input("strategy")]
+        public Input<Pulumi.Kubernetes.Types.Inputs.Beat.V1Beta1.BeatSpecDeploymentStrategyArgs>? Strategy { get; set; }
+
         public BeatSpecDeploymentArgs()
         {
         }

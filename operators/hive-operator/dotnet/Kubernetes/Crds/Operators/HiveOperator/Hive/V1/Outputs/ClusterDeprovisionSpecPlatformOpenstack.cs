@@ -14,6 +14,10 @@ namespace Pulumi.Kubernetes.Types.Outputs.Hive.V1
     public sealed class ClusterDeprovisionSpecPlatformOpenstack
     {
         /// <summary>
+        /// CertificatesSecretRef refers to a secret that contains CA certificates necessary for communicating with the OpenStack.
+        /// </summary>
+        public readonly Pulumi.Kubernetes.Types.Outputs.Hive.V1.ClusterDeprovisionSpecPlatformOpenstackCertificatesSecretRef CertificatesSecretRef;
+        /// <summary>
         /// Cloud is the secion in the clouds.yaml secret below to use for auth/connectivity.
         /// </summary>
         public readonly string Cloud;
@@ -24,10 +28,13 @@ namespace Pulumi.Kubernetes.Types.Outputs.Hive.V1
 
         [OutputConstructor]
         private ClusterDeprovisionSpecPlatformOpenstack(
+            Pulumi.Kubernetes.Types.Outputs.Hive.V1.ClusterDeprovisionSpecPlatformOpenstackCertificatesSecretRef certificatesSecretRef,
+
             string cloud,
 
             Pulumi.Kubernetes.Types.Outputs.Hive.V1.ClusterDeprovisionSpecPlatformOpenstackCredentialsSecretRef credentialsSecretRef)
         {
+            CertificatesSecretRef = certificatesSecretRef;
             Cloud = cloud;
             CredentialsSecretRef = credentialsSecretRef;
         }

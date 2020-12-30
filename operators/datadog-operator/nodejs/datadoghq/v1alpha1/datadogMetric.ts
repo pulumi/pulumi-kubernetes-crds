@@ -9,7 +9,7 @@ import * as utilities from "../../utilities";
 import {ObjectMeta} from "../../meta/v1";
 
 /**
- * DatadogMetric is the Schema for the datadogmetrics API
+ * DatadogMetric allows autoscaling on arbitrary Datadog query
  */
 export class DatadogMetric extends pulumi.CustomResource {
     /**

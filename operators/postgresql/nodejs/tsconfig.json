@@ -16,6 +16,8 @@
         "crunchydata/index.ts",
         "crunchydata/v1/index.ts",
         "crunchydata/v1/pgcluster.ts",
+        "crunchydata/v1/pgpolicy.ts",
+        "crunchydata/v1/pgreplica.ts",
         "crunchydata/v1/pgtask.ts",
         "index.ts",
         "provider.ts",

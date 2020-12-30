@@ -24,6 +24,7 @@ SNAKE_TO_CAMEL_CASE_TABLE = {
     "secure_ssl_mode": "secureSslMode",
     "spectrum_scale": "spectrumScale",
     "spectrumscale_node": "spectrumscaleNode",
+    "toleration_seconds": "tolerationSeconds",
 }
 
 CAMEL_TO_SNAKE_CASE_TABLE = {
@@ -48,4 +49,5 @@ CAMEL_TO_SNAKE_CASE_TABLE = {
     "secureSslMode": "secure_ssl_mode",
     "spectrumScale": "spectrum_scale",
     "spectrumscaleNode": "spectrumscale_node",
+    "tolerationSeconds": "toleration_seconds",
 }

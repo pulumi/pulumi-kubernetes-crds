@@ -13,9 +13,6 @@ export namespace camel {
          * BuildSpec defines the desired state of Build
          */
         export interface BuildSpec {
-            /**
-             * INSERT ADDITIONAL SPEC FIELDS - desired state of cluster Important: Run "operator-sdk generate k8s" to regenerate code after modifying this file
-             */
             tasks?: outputs.camel.v1.BuildSpecTasks[];
         }
 
@@ -619,6 +616,14 @@ export namespace camel {
              */
             loader?: string;
             name?: string;
+            /**
+             * List of property names defined in the source (e.g. if type is "template")
+             */
+            property-names?: string[];
+            /**
+             * Type defines the kind of source described by this object
+             */
+            type?: string;
         }
 
         /**
@@ -3814,7 +3819,7 @@ export namespace camel {
          * A TraitSpec contains the configuration of a trait
          */
         export interface IntegrationKitSpecTraits {
-            configuration?: {[key: string]: string};
+            configuration: {[key: string]: any};
         }
 
         /**
@@ -3924,7 +3929,7 @@ export namespace camel {
             /**
              * IntegrationPlatformResourcesSpec contains platform related resources
              */
-            resources?: outputs.camel.v1.IntegrationPlatformSpecResources;
+            resources?: {[key: string]: any};
             traits?: {[key: string]: outputs.camel.v1.IntegrationPlatformSpecTraits};
         }
 
@@ -4043,17 +4048,10 @@ export namespace camel {
         }
 
         /**
-         * IntegrationPlatformResourcesSpec contains platform related resources
-         */
-        export interface IntegrationPlatformSpecResources {
-            kits?: string[];
-        }
-
-        /**
          * A TraitSpec contains the configuration of a trait
          */
         export interface IntegrationPlatformSpecTraits {
-            configuration?: {[key: string]: string};
+            configuration: {[key: string]: any};
         }
 
         /**
@@ -4081,7 +4079,7 @@ export namespace camel {
             /**
              * IntegrationPlatformResourcesSpec contains platform related resources
              */
-            resources?: outputs.camel.v1.IntegrationPlatformStatusResources;
+            resources?: {[key: string]: any};
             traits?: {[key: string]: outputs.camel.v1.IntegrationPlatformStatusTraits};
             version?: string;
         }
@@ -4231,17 +4229,10 @@ export namespace camel {
         }
 
         /**
-         * IntegrationPlatformResourcesSpec contains platform related resources
-         */
-        export interface IntegrationPlatformStatusResources {
-            kits?: string[];
-        }
-
-        /**
          * A TraitSpec contains the configuration of a trait
          */
         export interface IntegrationPlatformStatusTraits {
-            configuration?: {[key: string]: string};
+            configuration: {[key: string]: any};
         }
 
         /**
@@ -4309,6 +4300,14 @@ export namespace camel {
              */
             loader?: string;
             name?: string;
+            /**
+             * List of property names defined in the source (e.g. if type is "template")
+             */
+            property-names?: string[];
+            /**
+             * Type defines the kind of source described by this object
+             */
+            type?: string;
         }
 
         /**
@@ -4449,6 +4448,589 @@ export namespace camel {
              * Loader is an optional id of the org.apache.camel.k.RoutesLoader that will interpret this source at runtime
              */
             loader?: string;
+            name?: string;
+            /**
+             * List of property names defined in the source (e.g. if type is "template")
+             */
+            property-names?: string[];
+            /**
+             * Type defines the kind of source described by this object
+             */
+            type?: string;
+        }
+    }
+
+    export namespace v1alpha1 {
+        /**
+         * KameletBindingSpec --
+         */
+        export interface KameletBindingSpec {
+            /**
+             * Integration is an optional integration used to specify custom parameters
+             */
+            integration?: outputs.camel.v1alpha1.KameletBindingSpecIntegration;
+            /**
+             * Sink is the destination of the integration defined by this binding
+             */
+            sink?: outputs.camel.v1alpha1.KameletBindingSpecSink;
+            /**
+             * Source is the starting point of the integration defined by this binding
+             */
+            source?: outputs.camel.v1alpha1.KameletBindingSpecSource;
+        }
+
+        /**
+         * Integration is an optional integration used to specify custom parameters
+         */
+        export interface KameletBindingSpecIntegration {
+            configuration?: outputs.camel.v1alpha1.KameletBindingSpecIntegrationConfiguration[];
+            dependencies?: string[];
+            flows?: {[key: string]: any}[];
+            kit?: string;
+            /**
+             * TraitProfile represents lists of traits that are enabled for the specific installation/integration
+             */
+            profile?: string;
+            replicas?: number;
+            repositories?: string[];
+            resources?: outputs.camel.v1alpha1.KameletBindingSpecIntegrationResources[];
+            serviceAccountName?: string;
+            sources?: outputs.camel.v1alpha1.KameletBindingSpecIntegrationSources[];
+            traits?: {[key: string]: outputs.camel.v1alpha1.KameletBindingSpecIntegrationTraits};
+        }
+
+        /**
+         * ConfigurationSpec --
+         */
+        export interface KameletBindingSpecIntegrationConfiguration {
+            type: string;
+            value: string;
+        }
+
+        /**
+         * ResourceSpec --
+         */
+        export interface KameletBindingSpecIntegrationResources {
+            compression?: boolean;
+            content?: string;
+            contentKey?: string;
+            contentRef?: string;
+            mountPath?: string;
+            name?: string;
+            /**
+             * ResourceType --
+             */
+            type?: string;
+        }
+
+        /**
+         * SourceSpec --
+         */
+        export interface KameletBindingSpecIntegrationSources {
+            compression?: boolean;
+            content?: string;
+            contentKey?: string;
+            contentRef?: string;
+            /**
+             * Interceptors are optional identifiers the org.apache.camel.k.RoutesLoader uses to pre/post process sources
+             */
+            interceptors?: string[];
+            /**
+             * Language --
+             */
+            language?: string;
+            /**
+             * Loader is an optional id of the org.apache.camel.k.RoutesLoader that will interpret this source at runtime
+             */
+            loader?: string;
+            name?: string;
+            /**
+             * List of property names defined in the source (e.g. if type is "template")
+             */
+            property-names?: string[];
+            /**
+             * Type defines the kind of source described by this object
+             */
+            type?: string;
+        }
+
+        /**
+         * A TraitSpec contains the configuration of a trait
+         */
+        export interface KameletBindingSpecIntegrationTraits {
+            configuration: {[key: string]: any};
+        }
+
+        /**
+         * Sink is the destination of the integration defined by this binding
+         */
+        export interface KameletBindingSpecSink {
+            /**
+             * Properties are a key value representation of endpoint properties
+             */
+            properties?: {[key: string]: any};
+            /**
+             * Ref can be used to declare a Kubernetes resource as source/sink endpoint
+             */
+            ref?: outputs.camel.v1alpha1.KameletBindingSpecSinkRef;
+            /**
+             * URI can alternatively be used to specify the (Camel) endpoint explicitly
+             */
+            uri?: string;
+        }
+
+        /**
+         * Ref can be used to declare a Kubernetes resource as source/sink endpoint
+         */
+        export interface KameletBindingSpecSinkRef {
+            /**
+             * API version of the referent.
+             */
+            apiVersion?: string;
+            /**
+             * If referring to a piece of an object instead of an entire object, this string should contain a valid JSON/Go field access statement, such as desiredState.manifest.containers[2]. For example, if the object reference is to a container within a pod, this would take on a value like: "spec.containers{name}" (where "name" refers to the name of the container that triggered the event) or if no container name is specified "spec.containers[2]" (container with index 2 in this pod). This syntax is chosen only to have some well-defined way of referencing a part of an object. TODO: this design is not final and this field is subject to change in the future.
+             */
+            fieldPath?: string;
+            /**
+             * Kind of the referent. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+             */
+            kind?: string;
+            /**
+             * Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
+             */
+            name?: string;
+            /**
+             * Namespace of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/
+             */
+            namespace?: string;
+            /**
+             * Specific resourceVersion to which this reference is made, if any. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#concurrency-control-and-consistency
+             */
+            resourceVersion?: string;
+            /**
+             * UID of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#uids
+             */
+            uid?: string;
+        }
+
+        /**
+         * Source is the starting point of the integration defined by this binding
+         */
+        export interface KameletBindingSpecSource {
+            /**
+             * Properties are a key value representation of endpoint properties
+             */
+            properties?: {[key: string]: any};
+            /**
+             * Ref can be used to declare a Kubernetes resource as source/sink endpoint
+             */
+            ref?: outputs.camel.v1alpha1.KameletBindingSpecSourceRef;
+            /**
+             * URI can alternatively be used to specify the (Camel) endpoint explicitly
+             */
+            uri?: string;
+        }
+
+        /**
+         * Ref can be used to declare a Kubernetes resource as source/sink endpoint
+         */
+        export interface KameletBindingSpecSourceRef {
+            /**
+             * API version of the referent.
+             */
+            apiVersion?: string;
+            /**
+             * If referring to a piece of an object instead of an entire object, this string should contain a valid JSON/Go field access statement, such as desiredState.manifest.containers[2]. For example, if the object reference is to a container within a pod, this would take on a value like: "spec.containers{name}" (where "name" refers to the name of the container that triggered the event) or if no container name is specified "spec.containers[2]" (container with index 2 in this pod). This syntax is chosen only to have some well-defined way of referencing a part of an object. TODO: this design is not final and this field is subject to change in the future.
+             */
+            fieldPath?: string;
+            /**
+             * Kind of the referent. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+             */
+            kind?: string;
+            /**
+             * Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
+             */
+            name?: string;
+            /**
+             * Namespace of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/
+             */
+            namespace?: string;
+            /**
+             * Specific resourceVersion to which this reference is made, if any. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#concurrency-control-and-consistency
+             */
+            resourceVersion?: string;
+            /**
+             * UID of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#uids
+             */
+            uid?: string;
+        }
+
+        /**
+         * KameletBindingStatus --
+         */
+        export interface KameletBindingStatus {
+            /**
+             * Conditions --
+             */
+            conditions?: outputs.camel.v1alpha1.KameletBindingStatusConditions[];
+            /**
+             * Phase --
+             */
+            phase?: string;
+        }
+
+        /**
+         * KameletBindingCondition describes the state of a resource at a certain point.
+         */
+        export interface KameletBindingStatusConditions {
+            /**
+             * Last time the condition transitioned from one status to another.
+             */
+            lastTransitionTime?: string;
+            /**
+             * The last time this condition was updated.
+             */
+            lastUpdateTime?: string;
+            /**
+             * A human readable message indicating details about the transition.
+             */
+            message?: string;
+            /**
+             * The reason for the condition's last transition.
+             */
+            reason?: string;
+            /**
+             * Status of the condition, one of True, False, Unknown.
+             */
+            status: string;
+            /**
+             * Type of kameletBinding condition.
+             */
+            type: string;
+        }
+
+        /**
+         * KameletSpec defines the desired state of Kamelet
+         */
+        export interface KameletSpec {
+            /**
+             * AuthorizationSpec is TODO (oauth information)
+             */
+            authorization?: {[key: string]: any};
+            /**
+             * JSONSchemaProps is a JSON-Schema definition.
+             */
+            definition?: outputs.camel.v1alpha1.KameletSpecDefinition;
+            dependencies?: string[];
+            flow?: {[key: string]: any};
+            sources?: outputs.camel.v1alpha1.KameletSpecSources[];
+            types?: {[key: string]: outputs.camel.v1alpha1.KameletSpecTypes};
+        }
+
+        /**
+         * JSONSchemaProps is a JSON-Schema definition.
+         */
+        export interface KameletSpecDefinition {
+            $ref?: string;
+            /**
+             * JSONSchemaURL represents a schema url.
+             */
+            $schema?: string;
+            additionalItems?: boolean;
+            additionalProperties?: boolean;
+            allOf?: any[];
+            anyOf?: any[];
+            /**
+             * default is a default value for undefined object fields. Defaulting is a beta feature under the CustomResourceDefaulting feature gate. Defaulting requires spec.preserveUnknownFields to be false.
+             */
+            default?: any;
+            /**
+             * JSONSchemaDefinitions contains the models explicitly defined in this spec.
+             */
+            definitions?: {[key: string]: any};
+            /**
+             * JSONSchemaDependencies represent a dependencies property.
+             */
+            dependencies?: {[key: string]: string[]};
+            description?: string;
+            enum?: any[];
+            example?: any;
+            exclusiveMaximum?: boolean;
+            exclusiveMinimum?: boolean;
+            /**
+             * ExternalDocumentation allows referencing an external resource for extended documentation.
+             */
+            externalDocs?: outputs.camel.v1alpha1.KameletSpecDefinitionExternalDocs;
+            /**
+             * format is an OpenAPI v3 format string. Unknown formats are ignored. The following formats are validated: 
+             *  - bsonobjectid: a bson object ID, i.e. a 24 characters hex string - uri: an URI as parsed by Golang net/url.ParseRequestURI - email: an email address as parsed by Golang net/mail.ParseAddress - hostname: a valid representation for an Internet host name, as defined by RFC 1034, section 3.1 [RFC1034]. - ipv4: an IPv4 IP as parsed by Golang net.ParseIP - ipv6: an IPv6 IP as parsed by Golang net.ParseIP - cidr: a CIDR as parsed by Golang net.ParseCIDR - mac: a MAC address as parsed by Golang net.ParseMAC - uuid: an UUID that allows uppercase defined by the regex (?i)^[0-9a-f]{8}-?[0-9a-f]{4}-?[0-9a-f]{4}-?[0-9a-f]{4}-?[0-9a-f]{12}$ - uuid3: an UUID3 that allows uppercase defined by the regex (?i)^[0-9a-f]{8}-?[0-9a-f]{4}-?3[0-9a-f]{3}-?[0-9a-f]{4}-?[0-9a-f]{12}$ - uuid4: an UUID4 that allows uppercase defined by the regex (?i)^[0-9a-f]{8}-?[0-9a-f]{4}-?4[0-9a-f]{3}-?[89ab][0-9a-f]{3}-?[0-9a-f]{12}$ - uuid5: an UUID5 that allows uppercase defined by the regex (?i)^[0-9a-f]{8}-?[0-9a-f]{4}-?5[0-9a-f]{3}-?[89ab][0-9a-f]{3}-?[0-9a-f]{12}$ - isbn: an ISBN10 or ISBN13 number string like "0321751043" or "978-0321751041" - isbn10: an ISBN10 number string like "0321751043" - isbn13: an ISBN13 number string like "978-0321751041" - creditcard: a credit card number defined by the regex ^(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|6(?:011|5[0-9][0-9])[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35\\d{3})\\d{11})$ with any non digit characters mixed in - ssn: a U.S. social security number following the regex ^\\d{3}[- ]?\\d{2}[- ]?\\d{4}$ - hexcolor: an hexadecimal color code like "#FFFFFF: following the regex ^#?([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$ - rgbcolor: an RGB color code like rgb like "rgb(255,255,2559" - byte: base64 encoded binary data - password: any kind of string - date: a date string like "2006-01-02" as defined by full-date in RFC3339 - duration: a duration string like "22 ns" as parsed by Golang time.ParseDuration or compatible with Scala duration format - datetime: a date time string like "2014-12-15T19:30:20.000Z" as defined by date-time in RFC3339.
+             */
+            format?: string;
+            id?: string;
+            items?: any;
+            maxItems?: number;
+            maxLength?: number;
+            maxProperties?: number;
+            /**
+             * A Number represents a JSON number literal.
+             */
+            maximum?: string;
+            minItems?: number;
+            minLength?: number;
+            minProperties?: number;
+            /**
+             * A Number represents a JSON number literal.
+             */
+            minimum?: string;
+            /**
+             * A Number represents a JSON number literal.
+             */
+            multipleOf?: string;
+            not?: any;
+            nullable?: boolean;
+            oneOf?: any[];
+            pattern?: string;
+            patternProperties?: {[key: string]: any};
+            properties?: {[key: string]: any};
+            required?: string[];
+            title?: string;
+            type?: string;
+            uniqueItems?: boolean;
+            /**
+             * x-descriptors annotates an object to define additional display options.
+             */
+            x-descriptors?: string[];
+            /**
+             * x-kubernetes-embedded-resource defines that the value is an embedded Kubernetes runtime.Object, with TypeMeta and ObjectMeta. The type must be object. It is allowed to further restrict the embedded object. kind, apiVersion and metadata are validated automatically. x-kubernetes-preserve-unknown-fields is allowed to be true, but does not have to be if the object is fully specified (up to kind, apiVersion, metadata).
+             */
+            x-kubernetes-embedded-resource?: boolean;
+            /**
+             * x-kubernetes-int-or-string specifies that this value is either an integer or a string. If this is true, an empty type is allowed and type as child of anyOf is permitted if following one of the following patterns: 
+             *  1) anyOf:    - type: integer    - type: string 2) allOf:    - anyOf:      - type: integer      - type: string    - ... zero or more
+             */
+            x-kubernetes-int-or-string?: boolean;
+            /**
+             * x-kubernetes-list-map-keys annotates an array with the x-kubernetes-list-type `map` by specifying the keys used as the index of the map. 
+             *  This tag MUST only be used on lists that have the "x-kubernetes-list-type" extension set to "map". Also, the values specified for this attribute must be a scalar typed field of the child structure (no nesting is supported). 
+             *  The properties specified must either be required or have a default value, to ensure those properties are present for all list items.
+             */
+            x-kubernetes-list-map-keys?: string[];
+            /**
+             * x-kubernetes-list-type annotates an array to further describe its topology. This extension must only be used on lists and may have 3 possible values: 
+             *  1) `atomic`: the list is treated as a single entity, like a scalar.      Atomic lists will be entirely replaced when updated. This extension      may be used on any type of list (struct, scalar, ...). 2) `set`:      Sets are lists that must not have multiple items with the same value. Each      value must be a scalar, an object with x-kubernetes-map-type `atomic` or an      array with x-kubernetes-list-type `atomic`. 3) `map`:      These lists are like maps in that their elements have a non-index key      used to identify them. Order is preserved upon merge. The map tag      must only be used on a list with elements of type object. Defaults to atomic for arrays.
+             */
+            x-kubernetes-list-type?: string;
+            /**
+             * x-kubernetes-map-type annotates an object to further describe its topology. This extension must only be used when type is object and may have 2 possible values: 
+             *  1) `granular`:      These maps are actual maps (key-value pairs) and each fields are independent      from each other (they can each be manipulated by separate actors). This is      the default behaviour for all maps. 2) `atomic`: the list is treated as a single entity, like a scalar.      Atomic maps will be entirely replaced when updated.
+             */
+            x-kubernetes-map-type?: string;
+            /**
+             * x-kubernetes-preserve-unknown-fields stops the API server decoding step from pruning fields which are not specified in the validation schema. This affects fields recursively, but switches back to normal pruning behaviour if nested properties or additionalProperties are specified in the schema. This can either be true or undefined. False is forbidden.
+             */
+            x-kubernetes-preserve-unknown-fields?: boolean;
+        }
+
+        /**
+         * ExternalDocumentation allows referencing an external resource for extended documentation.
+         */
+        export interface KameletSpecDefinitionExternalDocs {
+            description?: string;
+            url?: string;
+        }
+
+        /**
+         * SourceSpec --
+         */
+        export interface KameletSpecSources {
+            compression?: boolean;
+            content?: string;
+            contentKey?: string;
+            contentRef?: string;
+            /**
+             * Interceptors are optional identifiers the org.apache.camel.k.RoutesLoader uses to pre/post process sources
+             */
+            interceptors?: string[];
+            /**
+             * Language --
+             */
+            language?: string;
+            /**
+             * Loader is an optional id of the org.apache.camel.k.RoutesLoader that will interpret this source at runtime
+             */
+            loader?: string;
+            name?: string;
+            /**
+             * List of property names defined in the source (e.g. if type is "template")
+             */
+            property-names?: string[];
+            /**
+             * Type defines the kind of source described by this object
+             */
+            type?: string;
+        }
+
+        export interface KameletSpecTypes {
+            mediaType?: string;
+            /**
+             * JSONSchemaProps is a JSON-Schema definition.
+             */
+            schema?: outputs.camel.v1alpha1.KameletSpecTypesSchema;
+        }
+
+        /**
+         * JSONSchemaProps is a JSON-Schema definition.
+         */
+        export interface KameletSpecTypesSchema {
+            $ref?: string;
+            /**
+             * JSONSchemaURL represents a schema url.
+             */
+            $schema?: string;
+            additionalItems?: boolean;
+            additionalProperties?: boolean;
+            allOf?: any[];
+            anyOf?: any[];
+            /**
+             * default is a default value for undefined object fields. Defaulting is a beta feature under the CustomResourceDefaulting feature gate. Defaulting requires spec.preserveUnknownFields to be false.
+             */
+            default?: any;
+            /**
+             * JSONSchemaDefinitions contains the models explicitly defined in this spec.
+             */
+            definitions?: {[key: string]: any};
+            /**
+             * JSONSchemaDependencies represent a dependencies property.
+             */
+            dependencies?: {[key: string]: string[]};
+            description?: string;
+            enum?: any[];
+            example?: any;
+            exclusiveMaximum?: boolean;
+            exclusiveMinimum?: boolean;
+            /**
+             * ExternalDocumentation allows referencing an external resource for extended documentation.
+             */
+            externalDocs?: outputs.camel.v1alpha1.KameletSpecTypesSchemaExternalDocs;
+            /**
+             * format is an OpenAPI v3 format string. Unknown formats are ignored. The following formats are validated: 
+             *  - bsonobjectid: a bson object ID, i.e. a 24 characters hex string - uri: an URI as parsed by Golang net/url.ParseRequestURI - email: an email address as parsed by Golang net/mail.ParseAddress - hostname: a valid representation for an Internet host name, as defined by RFC 1034, section 3.1 [RFC1034]. - ipv4: an IPv4 IP as parsed by Golang net.ParseIP - ipv6: an IPv6 IP as parsed by Golang net.ParseIP - cidr: a CIDR as parsed by Golang net.ParseCIDR - mac: a MAC address as parsed by Golang net.ParseMAC - uuid: an UUID that allows uppercase defined by the regex (?i)^[0-9a-f]{8}-?[0-9a-f]{4}-?[0-9a-f]{4}-?[0-9a-f]{4}-?[0-9a-f]{12}$ - uuid3: an UUID3 that allows uppercase defined by the regex (?i)^[0-9a-f]{8}-?[0-9a-f]{4}-?3[0-9a-f]{3}-?[0-9a-f]{4}-?[0-9a-f]{12}$ - uuid4: an UUID4 that allows uppercase defined by the regex (?i)^[0-9a-f]{8}-?[0-9a-f]{4}-?4[0-9a-f]{3}-?[89ab][0-9a-f]{3}-?[0-9a-f]{12}$ - uuid5: an UUID5 that allows uppercase defined by the regex (?i)^[0-9a-f]{8}-?[0-9a-f]{4}-?5[0-9a-f]{3}-?[89ab][0-9a-f]{3}-?[0-9a-f]{12}$ - isbn: an ISBN10 or ISBN13 number string like "0321751043" or "978-0321751041" - isbn10: an ISBN10 number string like "0321751043" - isbn13: an ISBN13 number string like "978-0321751041" - creditcard: a credit card number defined by the regex ^(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|6(?:011|5[0-9][0-9])[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35\\d{3})\\d{11})$ with any non digit characters mixed in - ssn: a U.S. social security number following the regex ^\\d{3}[- ]?\\d{2}[- ]?\\d{4}$ - hexcolor: an hexadecimal color code like "#FFFFFF: following the regex ^#?([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$ - rgbcolor: an RGB color code like rgb like "rgb(255,255,2559" - byte: base64 encoded binary data - password: any kind of string - date: a date string like "2006-01-02" as defined by full-date in RFC3339 - duration: a duration string like "22 ns" as parsed by Golang time.ParseDuration or compatible with Scala duration format - datetime: a date time string like "2014-12-15T19:30:20.000Z" as defined by date-time in RFC3339.
+             */
+            format?: string;
+            id?: string;
+            items?: any;
+            maxItems?: number;
+            maxLength?: number;
+            maxProperties?: number;
+            /**
+             * A Number represents a JSON number literal.
+             */
+            maximum?: string;
+            minItems?: number;
+            minLength?: number;
+            minProperties?: number;
+            /**
+             * A Number represents a JSON number literal.
+             */
+            minimum?: string;
+            /**
+             * A Number represents a JSON number literal.
+             */
+            multipleOf?: string;
+            not?: any;
+            nullable?: boolean;
+            oneOf?: any[];
+            pattern?: string;
+            patternProperties?: {[key: string]: any};
+            properties?: {[key: string]: any};
+            required?: string[];
+            title?: string;
+            type?: string;
+            uniqueItems?: boolean;
+            /**
+             * x-descriptors annotates an object to define additional display options.
+             */
+            x-descriptors?: string[];
+            /**
+             * x-kubernetes-embedded-resource defines that the value is an embedded Kubernetes runtime.Object, with TypeMeta and ObjectMeta. The type must be object. It is allowed to further restrict the embedded object. kind, apiVersion and metadata are validated automatically. x-kubernetes-preserve-unknown-fields is allowed to be true, but does not have to be if the object is fully specified (up to kind, apiVersion, metadata).
+             */
+            x-kubernetes-embedded-resource?: boolean;
+            /**
+             * x-kubernetes-int-or-string specifies that this value is either an integer or a string. If this is true, an empty type is allowed and type as child of anyOf is permitted if following one of the following patterns: 
+             *  1) anyOf:    - type: integer    - type: string 2) allOf:    - anyOf:      - type: integer      - type: string    - ... zero or more
+             */
+            x-kubernetes-int-or-string?: boolean;
+            /**
+             * x-kubernetes-list-map-keys annotates an array with the x-kubernetes-list-type `map` by specifying the keys used as the index of the map. 
+             *  This tag MUST only be used on lists that have the "x-kubernetes-list-type" extension set to "map". Also, the values specified for this attribute must be a scalar typed field of the child structure (no nesting is supported). 
+             *  The properties specified must either be required or have a default value, to ensure those properties are present for all list items.
+             */
+            x-kubernetes-list-map-keys?: string[];
+            /**
+             * x-kubernetes-list-type annotates an array to further describe its topology. This extension must only be used on lists and may have 3 possible values: 
+             *  1) `atomic`: the list is treated as a single entity, like a scalar.      Atomic lists will be entirely replaced when updated. This extension      may be used on any type of list (struct, scalar, ...). 2) `set`:      Sets are lists that must not have multiple items with the same value. Each      value must be a scalar, an object with x-kubernetes-map-type `atomic` or an      array with x-kubernetes-list-type `atomic`. 3) `map`:      These lists are like maps in that their elements have a non-index key      used to identify them. Order is preserved upon merge. The map tag      must only be used on a list with elements of type object. Defaults to atomic for arrays.
+             */
+            x-kubernetes-list-type?: string;
+            /**
+             * x-kubernetes-map-type annotates an object to further describe its topology. This extension must only be used when type is object and may have 2 possible values: 
+             *  1) `granular`:      These maps are actual maps (key-value pairs) and each fields are independent      from each other (they can each be manipulated by separate actors). This is      the default behaviour for all maps. 2) `atomic`: the list is treated as a single entity, like a scalar.      Atomic maps will be entirely replaced when updated.
+             */
+            x-kubernetes-map-type?: string;
+            /**
+             * x-kubernetes-preserve-unknown-fields stops the API server decoding step from pruning fields which are not specified in the validation schema. This affects fields recursively, but switches back to normal pruning behaviour if nested properties or additionalProperties are specified in the schema. This can either be true or undefined. False is forbidden.
+             */
+            x-kubernetes-preserve-unknown-fields?: boolean;
+        }
+
+        /**
+         * ExternalDocumentation allows referencing an external resource for extended documentation.
+         */
+        export interface KameletSpecTypesSchemaExternalDocs {
+            description?: string;
+            url?: string;
+        }
+
+        /**
+         * KameletStatus defines the observed state of Kamelet
+         */
+        export interface KameletStatus {
+            conditions?: outputs.camel.v1alpha1.KameletStatusConditions[];
+            phase?: string;
+            properties?: outputs.camel.v1alpha1.KameletStatusProperties[];
+        }
+
+        /**
+         * KameletCondition describes the state of a resource at a certain point.
+         */
+        export interface KameletStatusConditions {
+            /**
+             * Last time the condition transitioned from one status to another.
+             */
+            lastTransitionTime?: string;
+            /**
+             * The last time this condition was updated.
+             */
+            lastUpdateTime?: string;
+            /**
+             * A human readable message indicating details about the transition.
+             */
+            message?: string;
+            /**
+             * The reason for the condition's last transition.
+             */
+            reason?: string;
+            /**
+             * Status of the condition, one of True, False, Unknown.
+             */
+            status: string;
+            /**
+             * Type of kamelet condition.
+             */
+            type: string;
+        }
+
+        export interface KameletStatusProperties {
+            default?: string;
             name?: string;
         }
     }

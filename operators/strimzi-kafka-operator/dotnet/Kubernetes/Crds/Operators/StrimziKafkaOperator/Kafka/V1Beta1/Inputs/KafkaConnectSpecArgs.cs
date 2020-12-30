@@ -33,6 +33,12 @@ namespace Pulumi.Kubernetes.Types.Inputs.Kafka.V1Beta1
         [Input("bootstrapServers", required: true)]
         public Input<string> BootstrapServers { get; set; } = null!;
 
+        /// <summary>
+        /// The image of the init container used for initializing the `client.rack`.
+        /// </summary>
+        [Input("clientRackInitImage")]
+        public Input<string>? ClientRackInitImage { get; set; }
+
         [Input("config")]
         private InputMap<object>? _config;
 
@@ -86,6 +92,12 @@ namespace Pulumi.Kubernetes.Types.Inputs.Kafka.V1Beta1
             get => _metrics ?? (_metrics = new InputMap<object>());
             set => _metrics = value;
         }
+
+        /// <summary>
+        /// Configuration of the node label which will be used as the client.rack consumer configuration.
+        /// </summary>
+        [Input("rack")]
+        public Input<Pulumi.Kubernetes.Types.Inputs.Kafka.V1Beta1.KafkaConnectSpecRackArgs>? Rack { get; set; }
 
         /// <summary>
         /// Pod readiness checking.

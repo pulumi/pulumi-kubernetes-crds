@@ -26,6 +26,9 @@ namespace Pulumi.Kubernetes.Types.Inputs.Iot.V1Alpha1
         [Input("rabbit")]
         public Input<object>? Rabbit { get; set; }
 
+        [Input("signOn")]
+        public Input<Pulumi.Kubernetes.Types.Inputs.Iot.V1Alpha1.HawkbitSpecSignOnArgs>? SignOn { get; set; }
+
         public HawkbitSpecArgs()
         {
         }

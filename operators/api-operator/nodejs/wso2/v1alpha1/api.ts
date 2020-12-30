@@ -8,6 +8,9 @@ import * as utilities from "../../utilities";
 
 import {ObjectMeta} from "../../meta/v1";
 
+/**
+ * API is the Schema for the apis API
+ */
 export class API extends pulumi.CustomResource {
     /**
      * Get an existing API resource's state with the given name, ID, and optional extra
@@ -38,8 +41,14 @@ export class API extends pulumi.CustomResource {
     public readonly apiVersion!: pulumi.Output<"wso2.com/v1alpha1" | undefined>;
     public readonly kind!: pulumi.Output<"API" | undefined>;
     public readonly metadata!: pulumi.Output<ObjectMeta | undefined>;
+    /**
+     * APISpec defines the desired state of API
+     */
     public readonly spec!: pulumi.Output<outputs.wso2.v1alpha1.APISpec | undefined>;
-    public readonly status!: pulumi.Output<{[key: string]: any} | undefined>;
+    /**
+     * APIStatus defines the observed state of API
+     */
+    public readonly status!: pulumi.Output<outputs.wso2.v1alpha1.APIStatus | undefined>;
 
     /**
      * Create a API resource with the given unique name, arguments, and options.
@@ -81,6 +90,12 @@ export interface APIArgs {
     readonly apiVersion?: pulumi.Input<"wso2.com/v1alpha1">;
     readonly kind?: pulumi.Input<"API">;
     readonly metadata?: pulumi.Input<ObjectMeta>;
+    /**
+     * APISpec defines the desired state of API
+     */
     readonly spec?: pulumi.Input<inputs.wso2.v1alpha1.APISpec>;
-    readonly status?: pulumi.Input<{[key: string]: any}>;
+    /**
+     * APIStatus defines the observed state of API
+     */
+    readonly status?: pulumi.Input<inputs.wso2.v1alpha1.APIStatus>;
 }

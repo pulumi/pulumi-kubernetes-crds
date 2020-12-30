@@ -34,6 +34,14 @@ namespace Pulumi.Kubernetes.Types.Inputs.Jaegertracing.V1
         [Input("image")]
         public Input<string>? Image { get; set; }
 
+        [Input("imagePullSecrets")]
+        private InputList<Pulumi.Kubernetes.Types.Inputs.Jaegertracing.V1.JaegerSpecAgentImagePullSecretsArgs>? _imagePullSecrets;
+        public InputList<Pulumi.Kubernetes.Types.Inputs.Jaegertracing.V1.JaegerSpecAgentImagePullSecretsArgs> ImagePullSecrets
+        {
+            get => _imagePullSecrets ?? (_imagePullSecrets = new InputList<Pulumi.Kubernetes.Types.Inputs.Jaegertracing.V1.JaegerSpecAgentImagePullSecretsArgs>());
+            set => _imagePullSecrets = value;
+        }
+
         [Input("labels")]
         private InputMap<string>? _labels;
         public InputMap<string> Labels
@@ -58,6 +66,9 @@ namespace Pulumi.Kubernetes.Types.Inputs.Jaegertracing.V1
 
         [Input("serviceAccount")]
         public Input<string>? ServiceAccount { get; set; }
+
+        [Input("sidecarSecurityContext")]
+        public Input<Pulumi.Kubernetes.Types.Inputs.Jaegertracing.V1.JaegerSpecAgentSidecarSecurityContextArgs>? SidecarSecurityContext { get; set; }
 
         [Input("strategy")]
         public Input<string>? Strategy { get; set; }

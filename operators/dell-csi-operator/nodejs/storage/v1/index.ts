@@ -4,5 +4,7 @@
 // Export members:
 export * from "./csiisilon";
 export * from "./csipowerMax";
+export * from "./csipowerMaxRevProxy";
+export * from "./csipowerStore";
 export * from "./csiunity";
 export * from "./csivxflexOS";

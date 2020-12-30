@@ -13,6 +13,9 @@ namespace Pulumi.Kubernetes.Types.Outputs.Apps.V1Alpha1
     [OutputType]
     public sealed class APIManagerSpecSystemFileStorageSimpleStorageService
     {
+        /// <summary>
+        /// LocalObjectReference contains enough information to let you locate the referenced object inside the same namespace.
+        /// </summary>
         public readonly Pulumi.Kubernetes.Types.Outputs.Apps.V1Alpha1.APIManagerSpecSystemFileStorageSimpleStorageServiceConfigurationSecretRef ConfigurationSecretRef;
 
         [OutputConstructor]

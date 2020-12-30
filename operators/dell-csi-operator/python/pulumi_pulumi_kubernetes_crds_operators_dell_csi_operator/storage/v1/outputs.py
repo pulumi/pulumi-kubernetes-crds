@@ -18,34 +18,58 @@ __all__ = [
     'CSIIsilonSpecDriverCommonEnvsValueFromConfigMapKeyRef',
     'CSIIsilonSpecDriverCommonEnvsValueFromFieldRef',
     'CSIIsilonSpecDriverCommonEnvsValueFromResourceFieldRef',
+    'CSIIsilonSpecDriverCommonEnvsValueFromResourceFieldRefDivisor',
     'CSIIsilonSpecDriverCommonEnvsValueFromSecretKeyRef',
+    'CSIIsilonSpecDriverCommonTolerations',
     'CSIIsilonSpecDriverController',
     'CSIIsilonSpecDriverControllerEnvs',
     'CSIIsilonSpecDriverControllerEnvsValueFrom',
     'CSIIsilonSpecDriverControllerEnvsValueFromConfigMapKeyRef',
     'CSIIsilonSpecDriverControllerEnvsValueFromFieldRef',
     'CSIIsilonSpecDriverControllerEnvsValueFromResourceFieldRef',
+    'CSIIsilonSpecDriverControllerEnvsValueFromResourceFieldRefDivisor',
     'CSIIsilonSpecDriverControllerEnvsValueFromSecretKeyRef',
+    'CSIIsilonSpecDriverControllerTolerations',
     'CSIIsilonSpecDriverNode',
     'CSIIsilonSpecDriverNodeEnvs',
     'CSIIsilonSpecDriverNodeEnvsValueFrom',
     'CSIIsilonSpecDriverNodeEnvsValueFromConfigMapKeyRef',
     'CSIIsilonSpecDriverNodeEnvsValueFromFieldRef',
     'CSIIsilonSpecDriverNodeEnvsValueFromResourceFieldRef',
+    'CSIIsilonSpecDriverNodeEnvsValueFromResourceFieldRefDivisor',
     'CSIIsilonSpecDriverNodeEnvsValueFromSecretKeyRef',
+    'CSIIsilonSpecDriverNodeTolerations',
     'CSIIsilonSpecDriverSideCars',
     'CSIIsilonSpecDriverSideCarsEnvs',
     'CSIIsilonSpecDriverSideCarsEnvsValueFrom',
     'CSIIsilonSpecDriverSideCarsEnvsValueFromConfigMapKeyRef',
     'CSIIsilonSpecDriverSideCarsEnvsValueFromFieldRef',
     'CSIIsilonSpecDriverSideCarsEnvsValueFromResourceFieldRef',
+    'CSIIsilonSpecDriverSideCarsEnvsValueFromResourceFieldRefDivisor',
     'CSIIsilonSpecDriverSideCarsEnvsValueFromSecretKeyRef',
+    'CSIIsilonSpecDriverSideCarsTolerations',
     'CSIIsilonSpecDriverSnapshotClass',
     'CSIIsilonSpecDriverStorageClass',
+    'CSIIsilonSpecDriverStorageClassAllowedTopologies',
+    'CSIIsilonSpecDriverStorageClassAllowedTopologiesMatchLabelExpressions',
     'CSIIsilonStatus',
     'CSIIsilonStatusControllerStatus',
     'CSIIsilonStatusLastUpdate',
     'CSIIsilonStatusNodeStatus',
+    'CSIPowerMaxRevProxySpec',
+    'CSIPowerMaxRevProxySpecConfig',
+    'CSIPowerMaxRevProxySpecConfigLinkConfig',
+    'CSIPowerMaxRevProxySpecConfigLinkConfigBackup',
+    'CSIPowerMaxRevProxySpecConfigLinkConfigBackupLimits',
+    'CSIPowerMaxRevProxySpecConfigLinkConfigPrimary',
+    'CSIPowerMaxRevProxySpecConfigLinkConfigPrimaryLimits',
+    'CSIPowerMaxRevProxySpecConfigStandAloneConfig',
+    'CSIPowerMaxRevProxySpecConfigStandAloneConfigManagementServers',
+    'CSIPowerMaxRevProxySpecConfigStandAloneConfigManagementServersLimits',
+    'CSIPowerMaxRevProxySpecConfigStandAloneConfigStorageArrays',
+    'CSIPowerMaxRevProxyStatus',
+    'CSIPowerMaxRevProxyStatusLastUpdate',
+    'CSIPowerMaxRevProxyStatusProxyStatus',
     'CSIPowerMaxSpec',
     'CSIPowerMaxSpecDriver',
     'CSIPowerMaxSpecDriverCommon',
@@ -54,34 +78,90 @@ __all__ = [
     'CSIPowerMaxSpecDriverCommonEnvsValueFromConfigMapKeyRef',
     'CSIPowerMaxSpecDriverCommonEnvsValueFromFieldRef',
     'CSIPowerMaxSpecDriverCommonEnvsValueFromResourceFieldRef',
+    'CSIPowerMaxSpecDriverCommonEnvsValueFromResourceFieldRefDivisor',
     'CSIPowerMaxSpecDriverCommonEnvsValueFromSecretKeyRef',
+    'CSIPowerMaxSpecDriverCommonTolerations',
     'CSIPowerMaxSpecDriverController',
     'CSIPowerMaxSpecDriverControllerEnvs',
     'CSIPowerMaxSpecDriverControllerEnvsValueFrom',
     'CSIPowerMaxSpecDriverControllerEnvsValueFromConfigMapKeyRef',
     'CSIPowerMaxSpecDriverControllerEnvsValueFromFieldRef',
     'CSIPowerMaxSpecDriverControllerEnvsValueFromResourceFieldRef',
+    'CSIPowerMaxSpecDriverControllerEnvsValueFromResourceFieldRefDivisor',
     'CSIPowerMaxSpecDriverControllerEnvsValueFromSecretKeyRef',
+    'CSIPowerMaxSpecDriverControllerTolerations',
     'CSIPowerMaxSpecDriverNode',
     'CSIPowerMaxSpecDriverNodeEnvs',
     'CSIPowerMaxSpecDriverNodeEnvsValueFrom',
     'CSIPowerMaxSpecDriverNodeEnvsValueFromConfigMapKeyRef',
     'CSIPowerMaxSpecDriverNodeEnvsValueFromFieldRef',
     'CSIPowerMaxSpecDriverNodeEnvsValueFromResourceFieldRef',
+    'CSIPowerMaxSpecDriverNodeEnvsValueFromResourceFieldRefDivisor',
     'CSIPowerMaxSpecDriverNodeEnvsValueFromSecretKeyRef',
+    'CSIPowerMaxSpecDriverNodeTolerations',
     'CSIPowerMaxSpecDriverSideCars',
     'CSIPowerMaxSpecDriverSideCarsEnvs',
     'CSIPowerMaxSpecDriverSideCarsEnvsValueFrom',
     'CSIPowerMaxSpecDriverSideCarsEnvsValueFromConfigMapKeyRef',
     'CSIPowerMaxSpecDriverSideCarsEnvsValueFromFieldRef',
     'CSIPowerMaxSpecDriverSideCarsEnvsValueFromResourceFieldRef',
+    'CSIPowerMaxSpecDriverSideCarsEnvsValueFromResourceFieldRefDivisor',
     'CSIPowerMaxSpecDriverSideCarsEnvsValueFromSecretKeyRef',
+    'CSIPowerMaxSpecDriverSideCarsTolerations',
     'CSIPowerMaxSpecDriverSnapshotClass',
     'CSIPowerMaxSpecDriverStorageClass',
+    'CSIPowerMaxSpecDriverStorageClassAllowedTopologies',
+    'CSIPowerMaxSpecDriverStorageClassAllowedTopologiesMatchLabelExpressions',
     'CSIPowerMaxStatus',
     'CSIPowerMaxStatusControllerStatus',
     'CSIPowerMaxStatusLastUpdate',
     'CSIPowerMaxStatusNodeStatus',
+    'CSIPowerStoreSpec',
+    'CSIPowerStoreSpecDriver',
+    'CSIPowerStoreSpecDriverCommon',
+    'CSIPowerStoreSpecDriverCommonEnvs',
+    'CSIPowerStoreSpecDriverCommonEnvsValueFrom',
+    'CSIPowerStoreSpecDriverCommonEnvsValueFromConfigMapKeyRef',
+    'CSIPowerStoreSpecDriverCommonEnvsValueFromFieldRef',
+    'CSIPowerStoreSpecDriverCommonEnvsValueFromResourceFieldRef',
+    'CSIPowerStoreSpecDriverCommonEnvsValueFromResourceFieldRefDivisor',
+    'CSIPowerStoreSpecDriverCommonEnvsValueFromSecretKeyRef',
+    'CSIPowerStoreSpecDriverCommonTolerations',
+    'CSIPowerStoreSpecDriverController',
+    'CSIPowerStoreSpecDriverControllerEnvs',
+    'CSIPowerStoreSpecDriverControllerEnvsValueFrom',
+    'CSIPowerStoreSpecDriverControllerEnvsValueFromConfigMapKeyRef',
+    'CSIPowerStoreSpecDriverControllerEnvsValueFromFieldRef',
+    'CSIPowerStoreSpecDriverControllerEnvsValueFromResourceFieldRef',
+    'CSIPowerStoreSpecDriverControllerEnvsValueFromResourceFieldRefDivisor',
+    'CSIPowerStoreSpecDriverControllerEnvsValueFromSecretKeyRef',
+    'CSIPowerStoreSpecDriverControllerTolerations',
+    'CSIPowerStoreSpecDriverNode',
+    'CSIPowerStoreSpecDriverNodeEnvs',
+    'CSIPowerStoreSpecDriverNodeEnvsValueFrom',
+    'CSIPowerStoreSpecDriverNodeEnvsValueFromConfigMapKeyRef',
+    'CSIPowerStoreSpecDriverNodeEnvsValueFromFieldRef',
+    'CSIPowerStoreSpecDriverNodeEnvsValueFromResourceFieldRef',
+    'CSIPowerStoreSpecDriverNodeEnvsValueFromResourceFieldRefDivisor',
+    'CSIPowerStoreSpecDriverNodeEnvsValueFromSecretKeyRef',
+    'CSIPowerStoreSpecDriverNodeTolerations',
+    'CSIPowerStoreSpecDriverSideCars',
+    'CSIPowerStoreSpecDriverSideCarsEnvs',
+    'CSIPowerStoreSpecDriverSideCarsEnvsValueFrom',
+    'CSIPowerStoreSpecDriverSideCarsEnvsValueFromConfigMapKeyRef',
+    'CSIPowerStoreSpecDriverSideCarsEnvsValueFromFieldRef',
+    'CSIPowerStoreSpecDriverSideCarsEnvsValueFromResourceFieldRef',
+    'CSIPowerStoreSpecDriverSideCarsEnvsValueFromResourceFieldRefDivisor',
+    'CSIPowerStoreSpecDriverSideCarsEnvsValueFromSecretKeyRef',
+    'CSIPowerStoreSpecDriverSideCarsTolerations',
+    'CSIPowerStoreSpecDriverSnapshotClass',
+    'CSIPowerStoreSpecDriverStorageClass',
+    'CSIPowerStoreSpecDriverStorageClassAllowedTopologies',
+    'CSIPowerStoreSpecDriverStorageClassAllowedTopologiesMatchLabelExpressions',
+    'CSIPowerStoreStatus',
+    'CSIPowerStoreStatusControllerStatus',
+    'CSIPowerStoreStatusLastUpdate',
+    'CSIPowerStoreStatusNodeStatus',
     'CSIUnitySpec',
     'CSIUnitySpecDriver',
     'CSIUnitySpecDriverCommon',
@@ -90,30 +170,40 @@ __all__ = [
     'CSIUnitySpecDriverCommonEnvsValueFromConfigMapKeyRef',
     'CSIUnitySpecDriverCommonEnvsValueFromFieldRef',
     'CSIUnitySpecDriverCommonEnvsValueFromResourceFieldRef',
+    'CSIUnitySpecDriverCommonEnvsValueFromResourceFieldRefDivisor',
     'CSIUnitySpecDriverCommonEnvsValueFromSecretKeyRef',
+    'CSIUnitySpecDriverCommonTolerations',
     'CSIUnitySpecDriverController',
     'CSIUnitySpecDriverControllerEnvs',
     'CSIUnitySpecDriverControllerEnvsValueFrom',
     'CSIUnitySpecDriverControllerEnvsValueFromConfigMapKeyRef',
     'CSIUnitySpecDriverControllerEnvsValueFromFieldRef',
     'CSIUnitySpecDriverControllerEnvsValueFromResourceFieldRef',
+    'CSIUnitySpecDriverControllerEnvsValueFromResourceFieldRefDivisor',
     'CSIUnitySpecDriverControllerEnvsValueFromSecretKeyRef',
+    'CSIUnitySpecDriverControllerTolerations',
     'CSIUnitySpecDriverNode',
     'CSIUnitySpecDriverNodeEnvs',
     'CSIUnitySpecDriverNodeEnvsValueFrom',
     'CSIUnitySpecDriverNodeEnvsValueFromConfigMapKeyRef',
     'CSIUnitySpecDriverNodeEnvsValueFromFieldRef',
     'CSIUnitySpecDriverNodeEnvsValueFromResourceFieldRef',
+    'CSIUnitySpecDriverNodeEnvsValueFromResourceFieldRefDivisor',
     'CSIUnitySpecDriverNodeEnvsValueFromSecretKeyRef',
+    'CSIUnitySpecDriverNodeTolerations',
     'CSIUnitySpecDriverSideCars',
     'CSIUnitySpecDriverSideCarsEnvs',
     'CSIUnitySpecDriverSideCarsEnvsValueFrom',
     'CSIUnitySpecDriverSideCarsEnvsValueFromConfigMapKeyRef',
     'CSIUnitySpecDriverSideCarsEnvsValueFromFieldRef',
     'CSIUnitySpecDriverSideCarsEnvsValueFromResourceFieldRef',
+    'CSIUnitySpecDriverSideCarsEnvsValueFromResourceFieldRefDivisor',
     'CSIUnitySpecDriverSideCarsEnvsValueFromSecretKeyRef',
+    'CSIUnitySpecDriverSideCarsTolerations',
     'CSIUnitySpecDriverSnapshotClass',
     'CSIUnitySpecDriverStorageClass',
+    'CSIUnitySpecDriverStorageClassAllowedTopologies',
+    'CSIUnitySpecDriverStorageClassAllowedTopologiesMatchLabelExpressions',
     'CSIUnityStatus',
     'CSIUnityStatusControllerStatus',
     'CSIUnityStatusLastUpdate',
@@ -126,30 +216,40 @@ __all__ = [
     'CSIVXFlexOSSpecDriverCommonEnvsValueFromConfigMapKeyRef',
     'CSIVXFlexOSSpecDriverCommonEnvsValueFromFieldRef',
     'CSIVXFlexOSSpecDriverCommonEnvsValueFromResourceFieldRef',
+    'CSIVXFlexOSSpecDriverCommonEnvsValueFromResourceFieldRefDivisor',
     'CSIVXFlexOSSpecDriverCommonEnvsValueFromSecretKeyRef',
+    'CSIVXFlexOSSpecDriverCommonTolerations',
     'CSIVXFlexOSSpecDriverController',
     'CSIVXFlexOSSpecDriverControllerEnvs',
     'CSIVXFlexOSSpecDriverControllerEnvsValueFrom',
     'CSIVXFlexOSSpecDriverControllerEnvsValueFromConfigMapKeyRef',
     'CSIVXFlexOSSpecDriverControllerEnvsValueFromFieldRef',
     'CSIVXFlexOSSpecDriverControllerEnvsValueFromResourceFieldRef',
+    'CSIVXFlexOSSpecDriverControllerEnvsValueFromResourceFieldRefDivisor',
     'CSIVXFlexOSSpecDriverControllerEnvsValueFromSecretKeyRef',
+    'CSIVXFlexOSSpecDriverControllerTolerations',
     'CSIVXFlexOSSpecDriverNode',
     'CSIVXFlexOSSpecDriverNodeEnvs',
     'CSIVXFlexOSSpecDriverNodeEnvsValueFrom',
     'CSIVXFlexOSSpecDriverNodeEnvsValueFromConfigMapKeyRef',
     'CSIVXFlexOSSpecDriverNodeEnvsValueFromFieldRef',
     'CSIVXFlexOSSpecDriverNodeEnvsValueFromResourceFieldRef',
+    'CSIVXFlexOSSpecDriverNodeEnvsValueFromResourceFieldRefDivisor',
     'CSIVXFlexOSSpecDriverNodeEnvsValueFromSecretKeyRef',
+    'CSIVXFlexOSSpecDriverNodeTolerations',
     'CSIVXFlexOSSpecDriverSideCars',
     'CSIVXFlexOSSpecDriverSideCarsEnvs',
     'CSIVXFlexOSSpecDriverSideCarsEnvsValueFrom',
     'CSIVXFlexOSSpecDriverSideCarsEnvsValueFromConfigMapKeyRef',
     'CSIVXFlexOSSpecDriverSideCarsEnvsValueFromFieldRef',
     'CSIVXFlexOSSpecDriverSideCarsEnvsValueFromResourceFieldRef',
+    'CSIVXFlexOSSpecDriverSideCarsEnvsValueFromResourceFieldRefDivisor',
     'CSIVXFlexOSSpecDriverSideCarsEnvsValueFromSecretKeyRef',
+    'CSIVXFlexOSSpecDriverSideCarsTolerations',
     'CSIVXFlexOSSpecDriverSnapshotClass',
     'CSIVXFlexOSSpecDriverStorageClass',
+    'CSIVXFlexOSSpecDriverStorageClassAllowedTopologies',
+    'CSIVXFlexOSSpecDriverStorageClassAllowedTopologiesMatchLabelExpressions',
     'CSIVXFlexOSStatus',
     'CSIVXFlexOSStatusControllerStatus',
     'CSIVXFlexOSStatusLastUpdate',
@@ -334,7 +434,9 @@ class CSIIsilonSpecDriverCommon(dict):
                  envs: Optional[Sequence['outputs.CSIIsilonSpecDriverCommonEnvs']] = None,
                  image: Optional[str] = None,
                  image_pull_policy: Optional[str] = None,
-                 name: Optional[str] = None):
+                 name: Optional[str] = None,
+                 node_selector: Optional[Mapping[str, str]] = None,
+                 tolerations: Optional[Sequence['outputs.CSIIsilonSpecDriverCommonTolerations']] = None):
         """
         Common is the common specification for both controller and node plugins
         :param Sequence[str] args: Args is the set of arguments for the container
@@ -342,6 +444,8 @@ class CSIIsilonSpecDriverCommon(dict):
         :param str image: Image is the image tag for the Container
         :param str image_pull_policy: ImagePullPolicy is the image pull policy for the image
         :param str name: Name is the name of Container
+        :param Mapping[str, str] node_selector: NodeSelector is a selector which must be true for the pod to fit on a node. Selector which must match a node's labels for the pod to be scheduled on that node.
+        :param Sequence['CSIIsilonSpecDriverCommonTolerationsArgs'] tolerations: Tolerations is the list of tolerations for the driver pods
         """
         if args is not None:
             pulumi.set(__self__, "args", args)
@@ -353,6 +457,10 @@ class CSIIsilonSpecDriverCommon(dict):
             pulumi.set(__self__, "image_pull_policy", image_pull_policy)
         if name is not None:
             pulumi.set(__self__, "name", name)
+        if node_selector is not None:
+            pulumi.set(__self__, "node_selector", node_selector)
+        if tolerations is not None:
+            pulumi.set(__self__, "tolerations", tolerations)
 
     @property
     @pulumi.getter
@@ -393,6 +501,22 @@ class CSIIsilonSpecDriverCommon(dict):
         Name is the name of Container
         """
         return pulumi.get(self, "name")
+
+    @property
+    @pulumi.getter(name="nodeSelector")
+    def node_selector(self) -> Optional[Mapping[str, str]]:
+        """
+        NodeSelector is a selector which must be true for the pod to fit on a node. Selector which must match a node's labels for the pod to be scheduled on that node.
+        """
+        return pulumi.get(self, "node_selector")
+
+    @property
+    @pulumi.getter
+    def tolerations(self) -> Optional[Sequence['outputs.CSIIsilonSpecDriverCommonTolerations']]:
+        """
+        Tolerations is the list of tolerations for the driver pods
+        """
+        return pulumi.get(self, "tolerations")
 
     def _translate_property(self, prop):
         return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
@@ -460,7 +584,7 @@ class CSIIsilonSpecDriverCommonEnvsValueFrom(dict):
         """
         Source for the environment variable's value. Cannot be used if value is not empty.
         :param 'CSIIsilonSpecDriverCommonEnvsValueFromConfigMapKeyRefArgs' config_map_key_ref: Selects a key of a ConfigMap.
-        :param 'CSIIsilonSpecDriverCommonEnvsValueFromFieldRefArgs' field_ref: Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+        :param 'CSIIsilonSpecDriverCommonEnvsValueFromFieldRefArgs' field_ref: Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
         :param 'CSIIsilonSpecDriverCommonEnvsValueFromResourceFieldRefArgs' resource_field_ref: Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
         :param 'CSIIsilonSpecDriverCommonEnvsValueFromSecretKeyRefArgs' secret_key_ref: Selects a key of a secret in the pod's namespace
         """
@@ -485,7 +609,7 @@ class CSIIsilonSpecDriverCommonEnvsValueFrom(dict):
     @pulumi.getter(name="fieldRef")
     def field_ref(self) -> Optional['outputs.CSIIsilonSpecDriverCommonEnvsValueFromFieldRef']:
         """
-        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
         """
         return pulumi.get(self, "field_ref")
 
@@ -561,13 +685,13 @@ class CSIIsilonSpecDriverCommonEnvsValueFromConfigMapKeyRef(dict):
 @pulumi.output_type
 class CSIIsilonSpecDriverCommonEnvsValueFromFieldRef(dict):
     """
-    Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+    Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
     """
     def __init__(__self__, *,
                  field_path: str,
                  api_version: Optional[str] = None):
         """
-        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
         :param str field_path: Path of the field to select in the specified API version.
         :param str api_version: Version of the schema the FieldPath is written in terms of, defaults to "v1".
         """
@@ -603,12 +727,12 @@ class CSIIsilonSpecDriverCommonEnvsValueFromResourceFieldRef(dict):
     def __init__(__self__, *,
                  resource: str,
                  container_name: Optional[str] = None,
-                 divisor: Optional[str] = None):
+                 divisor: Optional['outputs.CSIIsilonSpecDriverCommonEnvsValueFromResourceFieldRefDivisor'] = None):
         """
         Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
         :param str resource: Required: resource to select
         :param str container_name: Container name: required for volumes, optional for env vars
-        :param str divisor: Specifies the output format of the exposed resources, defaults to "1"
+        :param 'CSIIsilonSpecDriverCommonEnvsValueFromResourceFieldRefDivisorArgs' divisor: Specifies the output format of the exposed resources, defaults to "1"
         """
         pulumi.set(__self__, "resource", resource)
         if container_name is not None:
@@ -634,11 +758,20 @@ class CSIIsilonSpecDriverCommonEnvsValueFromResourceFieldRef(dict):
 
     @property
     @pulumi.getter
-    def divisor(self) -> Optional[str]:
+    def divisor(self) -> Optional['outputs.CSIIsilonSpecDriverCommonEnvsValueFromResourceFieldRefDivisor']:
         """
         Specifies the output format of the exposed resources, defaults to "1"
         """
         return pulumi.get(self, "divisor")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class CSIIsilonSpecDriverCommonEnvsValueFromResourceFieldRefDivisor(dict):
+    def __init__(__self__):
+        pass
 
     def _translate_property(self, prop):
         return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
@@ -694,6 +827,80 @@ class CSIIsilonSpecDriverCommonEnvsValueFromSecretKeyRef(dict):
 
 
 @pulumi.output_type
+class CSIIsilonSpecDriverCommonTolerations(dict):
+    """
+    The pod this Toleration is attached to tolerates any taint that matches the triple <key,value,effect> using the matching operator <operator>.
+    """
+    def __init__(__self__, *,
+                 effect: Optional[str] = None,
+                 key: Optional[str] = None,
+                 operator: Optional[str] = None,
+                 toleration_seconds: Optional[int] = None,
+                 value: Optional[str] = None):
+        """
+        The pod this Toleration is attached to tolerates any taint that matches the triple <key,value,effect> using the matching operator <operator>.
+        :param str effect: Effect indicates the taint effect to match. Empty means match all taint effects. When specified, allowed values are NoSchedule, PreferNoSchedule and NoExecute.
+        :param str key: Key is the taint key that the toleration applies to. Empty means match all taint keys. If the key is empty, operator must be Exists; this combination means to match all values and all keys.
+        :param str operator: Operator represents a key's relationship to the value. Valid operators are Exists and Equal. Defaults to Equal. Exists is equivalent to wildcard for value, so that a pod can tolerate all taints of a particular category.
+        :param int toleration_seconds: TolerationSeconds represents the period of time the toleration (which must be of effect NoExecute, otherwise this field is ignored) tolerates the taint. By default, it is not set, which means tolerate the taint forever (do not evict). Zero and negative values will be treated as 0 (evict immediately) by the system.
+        :param str value: Value is the taint value the toleration matches to. If the operator is Exists, the value should be empty, otherwise just a regular string.
+        """
+        if effect is not None:
+            pulumi.set(__self__, "effect", effect)
+        if key is not None:
+            pulumi.set(__self__, "key", key)
+        if operator is not None:
+            pulumi.set(__self__, "operator", operator)
+        if toleration_seconds is not None:
+            pulumi.set(__self__, "toleration_seconds", toleration_seconds)
+        if value is not None:
+            pulumi.set(__self__, "value", value)
+
+    @property
+    @pulumi.getter
+    def effect(self) -> Optional[str]:
+        """
+        Effect indicates the taint effect to match. Empty means match all taint effects. When specified, allowed values are NoSchedule, PreferNoSchedule and NoExecute.
+        """
+        return pulumi.get(self, "effect")
+
+    @property
+    @pulumi.getter
+    def key(self) -> Optional[str]:
+        """
+        Key is the taint key that the toleration applies to. Empty means match all taint keys. If the key is empty, operator must be Exists; this combination means to match all values and all keys.
+        """
+        return pulumi.get(self, "key")
+
+    @property
+    @pulumi.getter
+    def operator(self) -> Optional[str]:
+        """
+        Operator represents a key's relationship to the value. Valid operators are Exists and Equal. Defaults to Equal. Exists is equivalent to wildcard for value, so that a pod can tolerate all taints of a particular category.
+        """
+        return pulumi.get(self, "operator")
+
+    @property
+    @pulumi.getter(name="tolerationSeconds")
+    def toleration_seconds(self) -> Optional[int]:
+        """
+        TolerationSeconds represents the period of time the toleration (which must be of effect NoExecute, otherwise this field is ignored) tolerates the taint. By default, it is not set, which means tolerate the taint forever (do not evict). Zero and negative values will be treated as 0 (evict immediately) by the system.
+        """
+        return pulumi.get(self, "toleration_seconds")
+
+    @property
+    @pulumi.getter
+    def value(self) -> Optional[str]:
+        """
+        Value is the taint value the toleration matches to. If the operator is Exists, the value should be empty, otherwise just a regular string.
+        """
+        return pulumi.get(self, "value")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
 class CSIIsilonSpecDriverController(dict):
     """
     Controller is the specification for Controller plugin only
@@ -703,7 +910,9 @@ class CSIIsilonSpecDriverController(dict):
                  envs: Optional[Sequence['outputs.CSIIsilonSpecDriverControllerEnvs']] = None,
                  image: Optional[str] = None,
                  image_pull_policy: Optional[str] = None,
-                 name: Optional[str] = None):
+                 name: Optional[str] = None,
+                 node_selector: Optional[Mapping[str, str]] = None,
+                 tolerations: Optional[Sequence['outputs.CSIIsilonSpecDriverControllerTolerations']] = None):
         """
         Controller is the specification for Controller plugin only
         :param Sequence[str] args: Args is the set of arguments for the container
@@ -711,6 +920,8 @@ class CSIIsilonSpecDriverController(dict):
         :param str image: Image is the image tag for the Container
         :param str image_pull_policy: ImagePullPolicy is the image pull policy for the image
         :param str name: Name is the name of Container
+        :param Mapping[str, str] node_selector: NodeSelector is a selector which must be true for the pod to fit on a node. Selector which must match a node's labels for the pod to be scheduled on that node.
+        :param Sequence['CSIIsilonSpecDriverControllerTolerationsArgs'] tolerations: Tolerations is the list of tolerations for the driver pods
         """
         if args is not None:
             pulumi.set(__self__, "args", args)
@@ -722,6 +933,10 @@ class CSIIsilonSpecDriverController(dict):
             pulumi.set(__self__, "image_pull_policy", image_pull_policy)
         if name is not None:
             pulumi.set(__self__, "name", name)
+        if node_selector is not None:
+            pulumi.set(__self__, "node_selector", node_selector)
+        if tolerations is not None:
+            pulumi.set(__self__, "tolerations", tolerations)
 
     @property
     @pulumi.getter
@@ -762,6 +977,22 @@ class CSIIsilonSpecDriverController(dict):
         Name is the name of Container
         """
         return pulumi.get(self, "name")
+
+    @property
+    @pulumi.getter(name="nodeSelector")
+    def node_selector(self) -> Optional[Mapping[str, str]]:
+        """
+        NodeSelector is a selector which must be true for the pod to fit on a node. Selector which must match a node's labels for the pod to be scheduled on that node.
+        """
+        return pulumi.get(self, "node_selector")
+
+    @property
+    @pulumi.getter
+    def tolerations(self) -> Optional[Sequence['outputs.CSIIsilonSpecDriverControllerTolerations']]:
+        """
+        Tolerations is the list of tolerations for the driver pods
+        """
+        return pulumi.get(self, "tolerations")
 
     def _translate_property(self, prop):
         return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
@@ -829,7 +1060,7 @@ class CSIIsilonSpecDriverControllerEnvsValueFrom(dict):
         """
         Source for the environment variable's value. Cannot be used if value is not empty.
         :param 'CSIIsilonSpecDriverControllerEnvsValueFromConfigMapKeyRefArgs' config_map_key_ref: Selects a key of a ConfigMap.
-        :param 'CSIIsilonSpecDriverControllerEnvsValueFromFieldRefArgs' field_ref: Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+        :param 'CSIIsilonSpecDriverControllerEnvsValueFromFieldRefArgs' field_ref: Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
         :param 'CSIIsilonSpecDriverControllerEnvsValueFromResourceFieldRefArgs' resource_field_ref: Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
         :param 'CSIIsilonSpecDriverControllerEnvsValueFromSecretKeyRefArgs' secret_key_ref: Selects a key of a secret in the pod's namespace
         """
@@ -854,7 +1085,7 @@ class CSIIsilonSpecDriverControllerEnvsValueFrom(dict):
     @pulumi.getter(name="fieldRef")
     def field_ref(self) -> Optional['outputs.CSIIsilonSpecDriverControllerEnvsValueFromFieldRef']:
         """
-        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
         """
         return pulumi.get(self, "field_ref")
 
@@ -930,13 +1161,13 @@ class CSIIsilonSpecDriverControllerEnvsValueFromConfigMapKeyRef(dict):
 @pulumi.output_type
 class CSIIsilonSpecDriverControllerEnvsValueFromFieldRef(dict):
     """
-    Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+    Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
     """
     def __init__(__self__, *,
                  field_path: str,
                  api_version: Optional[str] = None):
         """
-        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
         :param str field_path: Path of the field to select in the specified API version.
         :param str api_version: Version of the schema the FieldPath is written in terms of, defaults to "v1".
         """
@@ -972,12 +1203,12 @@ class CSIIsilonSpecDriverControllerEnvsValueFromResourceFieldRef(dict):
     def __init__(__self__, *,
                  resource: str,
                  container_name: Optional[str] = None,
-                 divisor: Optional[str] = None):
+                 divisor: Optional['outputs.CSIIsilonSpecDriverControllerEnvsValueFromResourceFieldRefDivisor'] = None):
         """
         Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
         :param str resource: Required: resource to select
         :param str container_name: Container name: required for volumes, optional for env vars
-        :param str divisor: Specifies the output format of the exposed resources, defaults to "1"
+        :param 'CSIIsilonSpecDriverControllerEnvsValueFromResourceFieldRefDivisorArgs' divisor: Specifies the output format of the exposed resources, defaults to "1"
         """
         pulumi.set(__self__, "resource", resource)
         if container_name is not None:
@@ -1003,11 +1234,20 @@ class CSIIsilonSpecDriverControllerEnvsValueFromResourceFieldRef(dict):
 
     @property
     @pulumi.getter
-    def divisor(self) -> Optional[str]:
+    def divisor(self) -> Optional['outputs.CSIIsilonSpecDriverControllerEnvsValueFromResourceFieldRefDivisor']:
         """
         Specifies the output format of the exposed resources, defaults to "1"
         """
         return pulumi.get(self, "divisor")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class CSIIsilonSpecDriverControllerEnvsValueFromResourceFieldRefDivisor(dict):
+    def __init__(__self__):
+        pass
 
     def _translate_property(self, prop):
         return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
@@ -1063,6 +1303,80 @@ class CSIIsilonSpecDriverControllerEnvsValueFromSecretKeyRef(dict):
 
 
 @pulumi.output_type
+class CSIIsilonSpecDriverControllerTolerations(dict):
+    """
+    The pod this Toleration is attached to tolerates any taint that matches the triple <key,value,effect> using the matching operator <operator>.
+    """
+    def __init__(__self__, *,
+                 effect: Optional[str] = None,
+                 key: Optional[str] = None,
+                 operator: Optional[str] = None,
+                 toleration_seconds: Optional[int] = None,
+                 value: Optional[str] = None):
+        """
+        The pod this Toleration is attached to tolerates any taint that matches the triple <key,value,effect> using the matching operator <operator>.
+        :param str effect: Effect indicates the taint effect to match. Empty means match all taint effects. When specified, allowed values are NoSchedule, PreferNoSchedule and NoExecute.
+        :param str key: Key is the taint key that the toleration applies to. Empty means match all taint keys. If the key is empty, operator must be Exists; this combination means to match all values and all keys.
+        :param str operator: Operator represents a key's relationship to the value. Valid operators are Exists and Equal. Defaults to Equal. Exists is equivalent to wildcard for value, so that a pod can tolerate all taints of a particular category.
+        :param int toleration_seconds: TolerationSeconds represents the period of time the toleration (which must be of effect NoExecute, otherwise this field is ignored) tolerates the taint. By default, it is not set, which means tolerate the taint forever (do not evict). Zero and negative values will be treated as 0 (evict immediately) by the system.
+        :param str value: Value is the taint value the toleration matches to. If the operator is Exists, the value should be empty, otherwise just a regular string.
+        """
+        if effect is not None:
+            pulumi.set(__self__, "effect", effect)
+        if key is not None:
+            pulumi.set(__self__, "key", key)
+        if operator is not None:
+            pulumi.set(__self__, "operator", operator)
+        if toleration_seconds is not None:
+            pulumi.set(__self__, "toleration_seconds", toleration_seconds)
+        if value is not None:
+            pulumi.set(__self__, "value", value)
+
+    @property
+    @pulumi.getter
+    def effect(self) -> Optional[str]:
+        """
+        Effect indicates the taint effect to match. Empty means match all taint effects. When specified, allowed values are NoSchedule, PreferNoSchedule and NoExecute.
+        """
+        return pulumi.get(self, "effect")
+
+    @property
+    @pulumi.getter
+    def key(self) -> Optional[str]:
+        """
+        Key is the taint key that the toleration applies to. Empty means match all taint keys. If the key is empty, operator must be Exists; this combination means to match all values and all keys.
+        """
+        return pulumi.get(self, "key")
+
+    @property
+    @pulumi.getter
+    def operator(self) -> Optional[str]:
+        """
+        Operator represents a key's relationship to the value. Valid operators are Exists and Equal. Defaults to Equal. Exists is equivalent to wildcard for value, so that a pod can tolerate all taints of a particular category.
+        """
+        return pulumi.get(self, "operator")
+
+    @property
+    @pulumi.getter(name="tolerationSeconds")
+    def toleration_seconds(self) -> Optional[int]:
+        """
+        TolerationSeconds represents the period of time the toleration (which must be of effect NoExecute, otherwise this field is ignored) tolerates the taint. By default, it is not set, which means tolerate the taint forever (do not evict). Zero and negative values will be treated as 0 (evict immediately) by the system.
+        """
+        return pulumi.get(self, "toleration_seconds")
+
+    @property
+    @pulumi.getter
+    def value(self) -> Optional[str]:
+        """
+        Value is the taint value the toleration matches to. If the operator is Exists, the value should be empty, otherwise just a regular string.
+        """
+        return pulumi.get(self, "value")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
 class CSIIsilonSpecDriverNode(dict):
     """
     Node is the specification for Node plugin only
@@ -1072,7 +1386,9 @@ class CSIIsilonSpecDriverNode(dict):
                  envs: Optional[Sequence['outputs.CSIIsilonSpecDriverNodeEnvs']] = None,
                  image: Optional[str] = None,
                  image_pull_policy: Optional[str] = None,
-                 name: Optional[str] = None):
+                 name: Optional[str] = None,
+                 node_selector: Optional[Mapping[str, str]] = None,
+                 tolerations: Optional[Sequence['outputs.CSIIsilonSpecDriverNodeTolerations']] = None):
         """
         Node is the specification for Node plugin only
         :param Sequence[str] args: Args is the set of arguments for the container
@@ -1080,6 +1396,8 @@ class CSIIsilonSpecDriverNode(dict):
         :param str image: Image is the image tag for the Container
         :param str image_pull_policy: ImagePullPolicy is the image pull policy for the image
         :param str name: Name is the name of Container
+        :param Mapping[str, str] node_selector: NodeSelector is a selector which must be true for the pod to fit on a node. Selector which must match a node's labels for the pod to be scheduled on that node.
+        :param Sequence['CSIIsilonSpecDriverNodeTolerationsArgs'] tolerations: Tolerations is the list of tolerations for the driver pods
         """
         if args is not None:
             pulumi.set(__self__, "args", args)
@@ -1091,6 +1409,10 @@ class CSIIsilonSpecDriverNode(dict):
             pulumi.set(__self__, "image_pull_policy", image_pull_policy)
         if name is not None:
             pulumi.set(__self__, "name", name)
+        if node_selector is not None:
+            pulumi.set(__self__, "node_selector", node_selector)
+        if tolerations is not None:
+            pulumi.set(__self__, "tolerations", tolerations)
 
     @property
     @pulumi.getter
@@ -1131,6 +1453,22 @@ class CSIIsilonSpecDriverNode(dict):
         Name is the name of Container
         """
         return pulumi.get(self, "name")
+
+    @property
+    @pulumi.getter(name="nodeSelector")
+    def node_selector(self) -> Optional[Mapping[str, str]]:
+        """
+        NodeSelector is a selector which must be true for the pod to fit on a node. Selector which must match a node's labels for the pod to be scheduled on that node.
+        """
+        return pulumi.get(self, "node_selector")
+
+    @property
+    @pulumi.getter
+    def tolerations(self) -> Optional[Sequence['outputs.CSIIsilonSpecDriverNodeTolerations']]:
+        """
+        Tolerations is the list of tolerations for the driver pods
+        """
+        return pulumi.get(self, "tolerations")
 
     def _translate_property(self, prop):
         return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
@@ -1198,7 +1536,7 @@ class CSIIsilonSpecDriverNodeEnvsValueFrom(dict):
         """
         Source for the environment variable's value. Cannot be used if value is not empty.
         :param 'CSIIsilonSpecDriverNodeEnvsValueFromConfigMapKeyRefArgs' config_map_key_ref: Selects a key of a ConfigMap.
-        :param 'CSIIsilonSpecDriverNodeEnvsValueFromFieldRefArgs' field_ref: Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+        :param 'CSIIsilonSpecDriverNodeEnvsValueFromFieldRefArgs' field_ref: Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
         :param 'CSIIsilonSpecDriverNodeEnvsValueFromResourceFieldRefArgs' resource_field_ref: Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
         :param 'CSIIsilonSpecDriverNodeEnvsValueFromSecretKeyRefArgs' secret_key_ref: Selects a key of a secret in the pod's namespace
         """
@@ -1223,7 +1561,7 @@ class CSIIsilonSpecDriverNodeEnvsValueFrom(dict):
     @pulumi.getter(name="fieldRef")
     def field_ref(self) -> Optional['outputs.CSIIsilonSpecDriverNodeEnvsValueFromFieldRef']:
         """
-        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
         """
         return pulumi.get(self, "field_ref")
 
@@ -1299,13 +1637,13 @@ class CSIIsilonSpecDriverNodeEnvsValueFromConfigMapKeyRef(dict):
 @pulumi.output_type
 class CSIIsilonSpecDriverNodeEnvsValueFromFieldRef(dict):
     """
-    Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+    Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
     """
     def __init__(__self__, *,
                  field_path: str,
                  api_version: Optional[str] = None):
         """
-        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
         :param str field_path: Path of the field to select in the specified API version.
         :param str api_version: Version of the schema the FieldPath is written in terms of, defaults to "v1".
         """
@@ -1341,12 +1679,12 @@ class CSIIsilonSpecDriverNodeEnvsValueFromResourceFieldRef(dict):
     def __init__(__self__, *,
                  resource: str,
                  container_name: Optional[str] = None,
-                 divisor: Optional[str] = None):
+                 divisor: Optional['outputs.CSIIsilonSpecDriverNodeEnvsValueFromResourceFieldRefDivisor'] = None):
         """
         Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
         :param str resource: Required: resource to select
         :param str container_name: Container name: required for volumes, optional for env vars
-        :param str divisor: Specifies the output format of the exposed resources, defaults to "1"
+        :param 'CSIIsilonSpecDriverNodeEnvsValueFromResourceFieldRefDivisorArgs' divisor: Specifies the output format of the exposed resources, defaults to "1"
         """
         pulumi.set(__self__, "resource", resource)
         if container_name is not None:
@@ -1372,11 +1710,20 @@ class CSIIsilonSpecDriverNodeEnvsValueFromResourceFieldRef(dict):
 
     @property
     @pulumi.getter
-    def divisor(self) -> Optional[str]:
+    def divisor(self) -> Optional['outputs.CSIIsilonSpecDriverNodeEnvsValueFromResourceFieldRefDivisor']:
         """
         Specifies the output format of the exposed resources, defaults to "1"
         """
         return pulumi.get(self, "divisor")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class CSIIsilonSpecDriverNodeEnvsValueFromResourceFieldRefDivisor(dict):
+    def __init__(__self__):
+        pass
 
     def _translate_property(self, prop):
         return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
@@ -1432,6 +1779,80 @@ class CSIIsilonSpecDriverNodeEnvsValueFromSecretKeyRef(dict):
 
 
 @pulumi.output_type
+class CSIIsilonSpecDriverNodeTolerations(dict):
+    """
+    The pod this Toleration is attached to tolerates any taint that matches the triple <key,value,effect> using the matching operator <operator>.
+    """
+    def __init__(__self__, *,
+                 effect: Optional[str] = None,
+                 key: Optional[str] = None,
+                 operator: Optional[str] = None,
+                 toleration_seconds: Optional[int] = None,
+                 value: Optional[str] = None):
+        """
+        The pod this Toleration is attached to tolerates any taint that matches the triple <key,value,effect> using the matching operator <operator>.
+        :param str effect: Effect indicates the taint effect to match. Empty means match all taint effects. When specified, allowed values are NoSchedule, PreferNoSchedule and NoExecute.
+        :param str key: Key is the taint key that the toleration applies to. Empty means match all taint keys. If the key is empty, operator must be Exists; this combination means to match all values and all keys.
+        :param str operator: Operator represents a key's relationship to the value. Valid operators are Exists and Equal. Defaults to Equal. Exists is equivalent to wildcard for value, so that a pod can tolerate all taints of a particular category.
+        :param int toleration_seconds: TolerationSeconds represents the period of time the toleration (which must be of effect NoExecute, otherwise this field is ignored) tolerates the taint. By default, it is not set, which means tolerate the taint forever (do not evict). Zero and negative values will be treated as 0 (evict immediately) by the system.
+        :param str value: Value is the taint value the toleration matches to. If the operator is Exists, the value should be empty, otherwise just a regular string.
+        """
+        if effect is not None:
+            pulumi.set(__self__, "effect", effect)
+        if key is not None:
+            pulumi.set(__self__, "key", key)
+        if operator is not None:
+            pulumi.set(__self__, "operator", operator)
+        if toleration_seconds is not None:
+            pulumi.set(__self__, "toleration_seconds", toleration_seconds)
+        if value is not None:
+            pulumi.set(__self__, "value", value)
+
+    @property
+    @pulumi.getter
+    def effect(self) -> Optional[str]:
+        """
+        Effect indicates the taint effect to match. Empty means match all taint effects. When specified, allowed values are NoSchedule, PreferNoSchedule and NoExecute.
+        """
+        return pulumi.get(self, "effect")
+
+    @property
+    @pulumi.getter
+    def key(self) -> Optional[str]:
+        """
+        Key is the taint key that the toleration applies to. Empty means match all taint keys. If the key is empty, operator must be Exists; this combination means to match all values and all keys.
+        """
+        return pulumi.get(self, "key")
+
+    @property
+    @pulumi.getter
+    def operator(self) -> Optional[str]:
+        """
+        Operator represents a key's relationship to the value. Valid operators are Exists and Equal. Defaults to Equal. Exists is equivalent to wildcard for value, so that a pod can tolerate all taints of a particular category.
+        """
+        return pulumi.get(self, "operator")
+
+    @property
+    @pulumi.getter(name="tolerationSeconds")
+    def toleration_seconds(self) -> Optional[int]:
+        """
+        TolerationSeconds represents the period of time the toleration (which must be of effect NoExecute, otherwise this field is ignored) tolerates the taint. By default, it is not set, which means tolerate the taint forever (do not evict). Zero and negative values will be treated as 0 (evict immediately) by the system.
+        """
+        return pulumi.get(self, "toleration_seconds")
+
+    @property
+    @pulumi.getter
+    def value(self) -> Optional[str]:
+        """
+        Value is the taint value the toleration matches to. If the operator is Exists, the value should be empty, otherwise just a regular string.
+        """
+        return pulumi.get(self, "value")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
 class CSIIsilonSpecDriverSideCars(dict):
     """
     ContainerTemplate - Structure representing a container
@@ -1441,7 +1862,9 @@ class CSIIsilonSpecDriverSideCars(dict):
                  envs: Optional[Sequence['outputs.CSIIsilonSpecDriverSideCarsEnvs']] = None,
                  image: Optional[str] = None,
                  image_pull_policy: Optional[str] = None,
-                 name: Optional[str] = None):
+                 name: Optional[str] = None,
+                 node_selector: Optional[Mapping[str, str]] = None,
+                 tolerations: Optional[Sequence['outputs.CSIIsilonSpecDriverSideCarsTolerations']] = None):
         """
         ContainerTemplate - Structure representing a container
         :param Sequence[str] args: Args is the set of arguments for the container
@@ -1449,6 +1872,8 @@ class CSIIsilonSpecDriverSideCars(dict):
         :param str image: Image is the image tag for the Container
         :param str image_pull_policy: ImagePullPolicy is the image pull policy for the image
         :param str name: Name is the name of Container
+        :param Mapping[str, str] node_selector: NodeSelector is a selector which must be true for the pod to fit on a node. Selector which must match a node's labels for the pod to be scheduled on that node.
+        :param Sequence['CSIIsilonSpecDriverSideCarsTolerationsArgs'] tolerations: Tolerations is the list of tolerations for the driver pods
         """
         if args is not None:
             pulumi.set(__self__, "args", args)
@@ -1460,6 +1885,10 @@ class CSIIsilonSpecDriverSideCars(dict):
             pulumi.set(__self__, "image_pull_policy", image_pull_policy)
         if name is not None:
             pulumi.set(__self__, "name", name)
+        if node_selector is not None:
+            pulumi.set(__self__, "node_selector", node_selector)
+        if tolerations is not None:
+            pulumi.set(__self__, "tolerations", tolerations)
 
     @property
     @pulumi.getter
@@ -1500,6 +1929,22 @@ class CSIIsilonSpecDriverSideCars(dict):
         Name is the name of Container
         """
         return pulumi.get(self, "name")
+
+    @property
+    @pulumi.getter(name="nodeSelector")
+    def node_selector(self) -> Optional[Mapping[str, str]]:
+        """
+        NodeSelector is a selector which must be true for the pod to fit on a node. Selector which must match a node's labels for the pod to be scheduled on that node.
+        """
+        return pulumi.get(self, "node_selector")
+
+    @property
+    @pulumi.getter
+    def tolerations(self) -> Optional[Sequence['outputs.CSIIsilonSpecDriverSideCarsTolerations']]:
+        """
+        Tolerations is the list of tolerations for the driver pods
+        """
+        return pulumi.get(self, "tolerations")
 
     def _translate_property(self, prop):
         return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
@@ -1567,7 +2012,7 @@ class CSIIsilonSpecDriverSideCarsEnvsValueFrom(dict):
         """
         Source for the environment variable's value. Cannot be used if value is not empty.
         :param 'CSIIsilonSpecDriverSideCarsEnvsValueFromConfigMapKeyRefArgs' config_map_key_ref: Selects a key of a ConfigMap.
-        :param 'CSIIsilonSpecDriverSideCarsEnvsValueFromFieldRefArgs' field_ref: Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+        :param 'CSIIsilonSpecDriverSideCarsEnvsValueFromFieldRefArgs' field_ref: Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
         :param 'CSIIsilonSpecDriverSideCarsEnvsValueFromResourceFieldRefArgs' resource_field_ref: Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
         :param 'CSIIsilonSpecDriverSideCarsEnvsValueFromSecretKeyRefArgs' secret_key_ref: Selects a key of a secret in the pod's namespace
         """
@@ -1592,7 +2037,7 @@ class CSIIsilonSpecDriverSideCarsEnvsValueFrom(dict):
     @pulumi.getter(name="fieldRef")
     def field_ref(self) -> Optional['outputs.CSIIsilonSpecDriverSideCarsEnvsValueFromFieldRef']:
         """
-        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
         """
         return pulumi.get(self, "field_ref")
 
@@ -1668,13 +2113,13 @@ class CSIIsilonSpecDriverSideCarsEnvsValueFromConfigMapKeyRef(dict):
 @pulumi.output_type
 class CSIIsilonSpecDriverSideCarsEnvsValueFromFieldRef(dict):
     """
-    Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+    Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
     """
     def __init__(__self__, *,
                  field_path: str,
                  api_version: Optional[str] = None):
         """
-        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
         :param str field_path: Path of the field to select in the specified API version.
         :param str api_version: Version of the schema the FieldPath is written in terms of, defaults to "v1".
         """
@@ -1710,12 +2155,12 @@ class CSIIsilonSpecDriverSideCarsEnvsValueFromResourceFieldRef(dict):
     def __init__(__self__, *,
                  resource: str,
                  container_name: Optional[str] = None,
-                 divisor: Optional[str] = None):
+                 divisor: Optional['outputs.CSIIsilonSpecDriverSideCarsEnvsValueFromResourceFieldRefDivisor'] = None):
         """
         Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
         :param str resource: Required: resource to select
         :param str container_name: Container name: required for volumes, optional for env vars
-        :param str divisor: Specifies the output format of the exposed resources, defaults to "1"
+        :param 'CSIIsilonSpecDriverSideCarsEnvsValueFromResourceFieldRefDivisorArgs' divisor: Specifies the output format of the exposed resources, defaults to "1"
         """
         pulumi.set(__self__, "resource", resource)
         if container_name is not None:
@@ -1741,11 +2186,20 @@ class CSIIsilonSpecDriverSideCarsEnvsValueFromResourceFieldRef(dict):
 
     @property
     @pulumi.getter
-    def divisor(self) -> Optional[str]:
+    def divisor(self) -> Optional['outputs.CSIIsilonSpecDriverSideCarsEnvsValueFromResourceFieldRefDivisor']:
         """
         Specifies the output format of the exposed resources, defaults to "1"
         """
         return pulumi.get(self, "divisor")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class CSIIsilonSpecDriverSideCarsEnvsValueFromResourceFieldRefDivisor(dict):
+    def __init__(__self__):
+        pass
 
     def _translate_property(self, prop):
         return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
@@ -1801,6 +2255,80 @@ class CSIIsilonSpecDriverSideCarsEnvsValueFromSecretKeyRef(dict):
 
 
 @pulumi.output_type
+class CSIIsilonSpecDriverSideCarsTolerations(dict):
+    """
+    The pod this Toleration is attached to tolerates any taint that matches the triple <key,value,effect> using the matching operator <operator>.
+    """
+    def __init__(__self__, *,
+                 effect: Optional[str] = None,
+                 key: Optional[str] = None,
+                 operator: Optional[str] = None,
+                 toleration_seconds: Optional[int] = None,
+                 value: Optional[str] = None):
+        """
+        The pod this Toleration is attached to tolerates any taint that matches the triple <key,value,effect> using the matching operator <operator>.
+        :param str effect: Effect indicates the taint effect to match. Empty means match all taint effects. When specified, allowed values are NoSchedule, PreferNoSchedule and NoExecute.
+        :param str key: Key is the taint key that the toleration applies to. Empty means match all taint keys. If the key is empty, operator must be Exists; this combination means to match all values and all keys.
+        :param str operator: Operator represents a key's relationship to the value. Valid operators are Exists and Equal. Defaults to Equal. Exists is equivalent to wildcard for value, so that a pod can tolerate all taints of a particular category.
+        :param int toleration_seconds: TolerationSeconds represents the period of time the toleration (which must be of effect NoExecute, otherwise this field is ignored) tolerates the taint. By default, it is not set, which means tolerate the taint forever (do not evict). Zero and negative values will be treated as 0 (evict immediately) by the system.
+        :param str value: Value is the taint value the toleration matches to. If the operator is Exists, the value should be empty, otherwise just a regular string.
+        """
+        if effect is not None:
+            pulumi.set(__self__, "effect", effect)
+        if key is not None:
+            pulumi.set(__self__, "key", key)
+        if operator is not None:
+            pulumi.set(__self__, "operator", operator)
+        if toleration_seconds is not None:
+            pulumi.set(__self__, "toleration_seconds", toleration_seconds)
+        if value is not None:
+            pulumi.set(__self__, "value", value)
+
+    @property
+    @pulumi.getter
+    def effect(self) -> Optional[str]:
+        """
+        Effect indicates the taint effect to match. Empty means match all taint effects. When specified, allowed values are NoSchedule, PreferNoSchedule and NoExecute.
+        """
+        return pulumi.get(self, "effect")
+
+    @property
+    @pulumi.getter
+    def key(self) -> Optional[str]:
+        """
+        Key is the taint key that the toleration applies to. Empty means match all taint keys. If the key is empty, operator must be Exists; this combination means to match all values and all keys.
+        """
+        return pulumi.get(self, "key")
+
+    @property
+    @pulumi.getter
+    def operator(self) -> Optional[str]:
+        """
+        Operator represents a key's relationship to the value. Valid operators are Exists and Equal. Defaults to Equal. Exists is equivalent to wildcard for value, so that a pod can tolerate all taints of a particular category.
+        """
+        return pulumi.get(self, "operator")
+
+    @property
+    @pulumi.getter(name="tolerationSeconds")
+    def toleration_seconds(self) -> Optional[int]:
+        """
+        TolerationSeconds represents the period of time the toleration (which must be of effect NoExecute, otherwise this field is ignored) tolerates the taint. By default, it is not set, which means tolerate the taint forever (do not evict). Zero and negative values will be treated as 0 (evict immediately) by the system.
+        """
+        return pulumi.get(self, "toleration_seconds")
+
+    @property
+    @pulumi.getter
+    def value(self) -> Optional[str]:
+        """
+        Value is the taint value the toleration matches to. If the operator is Exists, the value should be empty, otherwise just a regular string.
+        """
+        return pulumi.get(self, "value")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
 class CSIIsilonSpecDriverSnapshotClass(dict):
     """
     SnapshotClass represents a VolumeSnapshotClass
@@ -1845,6 +2373,7 @@ class CSIIsilonSpecDriverStorageClass(dict):
     def __init__(__self__, *,
                  name: str,
                  allow_volume_expansion: Optional[bool] = None,
+                 allowed_topologies: Optional[Sequence['outputs.CSIIsilonSpecDriverStorageClassAllowedTopologies']] = None,
                  default: Optional[bool] = None,
                  parameters: Optional[Mapping[str, str]] = None,
                  reclaim_policy: Optional[str] = None):
@@ -1852,6 +2381,7 @@ class CSIIsilonSpecDriverStorageClass(dict):
         StorageClass represents a kubernetes storage class
         :param str name: Name is the name of the StorageClass
         :param bool allow_volume_expansion: AllowVolumeExpansion is a boolean flag which indicates if volumes can be expanded
+        :param Sequence['CSIIsilonSpecDriverStorageClassAllowedTopologiesArgs'] allowed_topologies: Restrict the node topologies where volumes can be dynamically provisioned.
         :param bool default: DefaultSc is a boolean flag to indicate if the storage class is going to be marked as default
         :param Mapping[str, str] parameters: Parameters is a map of driver specific storage class
         :param str reclaim_policy: ReclaimPolicy is the reclaim policy for the storage class
@@ -1859,6 +2389,8 @@ class CSIIsilonSpecDriverStorageClass(dict):
         pulumi.set(__self__, "name", name)
         if allow_volume_expansion is not None:
             pulumi.set(__self__, "allow_volume_expansion", allow_volume_expansion)
+        if allowed_topologies is not None:
+            pulumi.set(__self__, "allowed_topologies", allowed_topologies)
         if default is not None:
             pulumi.set(__self__, "default", default)
         if parameters is not None:
@@ -1883,6 +2415,14 @@ class CSIIsilonSpecDriverStorageClass(dict):
         return pulumi.get(self, "allow_volume_expansion")
 
     @property
+    @pulumi.getter(name="allowedTopologies")
+    def allowed_topologies(self) -> Optional[Sequence['outputs.CSIIsilonSpecDriverStorageClassAllowedTopologies']]:
+        """
+        Restrict the node topologies where volumes can be dynamically provisioned.
+        """
+        return pulumi.get(self, "allowed_topologies")
+
+    @property
     @pulumi.getter
     def default(self) -> Optional[bool]:
         """
@@ -1905,6 +2445,68 @@ class CSIIsilonSpecDriverStorageClass(dict):
         ReclaimPolicy is the reclaim policy for the storage class
         """
         return pulumi.get(self, "reclaim_policy")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class CSIIsilonSpecDriverStorageClassAllowedTopologies(dict):
+    """
+    A topology selector term represents the result of label queries. A null or empty topology selector term matches no objects. The requirements of them are ANDed. It provides a subset of functionality as NodeSelectorTerm. This is an alpha feature and may change in the future.
+    """
+    def __init__(__self__, *,
+                 match_label_expressions: Optional[Sequence['outputs.CSIIsilonSpecDriverStorageClassAllowedTopologiesMatchLabelExpressions']] = None):
+        """
+        A topology selector term represents the result of label queries. A null or empty topology selector term matches no objects. The requirements of them are ANDed. It provides a subset of functionality as NodeSelectorTerm. This is an alpha feature and may change in the future.
+        :param Sequence['CSIIsilonSpecDriverStorageClassAllowedTopologiesMatchLabelExpressionsArgs'] match_label_expressions: A list of topology selector requirements by labels.
+        """
+        if match_label_expressions is not None:
+            pulumi.set(__self__, "match_label_expressions", match_label_expressions)
+
+    @property
+    @pulumi.getter(name="matchLabelExpressions")
+    def match_label_expressions(self) -> Optional[Sequence['outputs.CSIIsilonSpecDriverStorageClassAllowedTopologiesMatchLabelExpressions']]:
+        """
+        A list of topology selector requirements by labels.
+        """
+        return pulumi.get(self, "match_label_expressions")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class CSIIsilonSpecDriverStorageClassAllowedTopologiesMatchLabelExpressions(dict):
+    """
+    A topology selector requirement is a selector that matches given label. This is an alpha feature and may change in the future.
+    """
+    def __init__(__self__, *,
+                 key: str,
+                 values: Sequence[str]):
+        """
+        A topology selector requirement is a selector that matches given label. This is an alpha feature and may change in the future.
+        :param str key: The label key that the selector applies to.
+        :param Sequence[str] values: An array of string values. One value must match the label to be selected. Each entry in Values is ORed.
+        """
+        pulumi.set(__self__, "key", key)
+        pulumi.set(__self__, "values", values)
+
+    @property
+    @pulumi.getter
+    def key(self) -> str:
+        """
+        The label key that the selector applies to.
+        """
+        return pulumi.get(self, "key")
+
+    @property
+    @pulumi.getter
+    def values(self) -> Sequence[str]:
+        """
+        An array of string values. One value must match the label to be selected. Each entry in Values is ORed.
+        """
+        return pulumi.get(self, "values")
 
     def _translate_property(self, prop):
         return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
@@ -2127,6 +2729,690 @@ class CSIIsilonStatusNodeStatus(dict):
 
 
 @pulumi.output_type
+class CSIPowerMaxRevProxySpec(dict):
+    """
+    CSIPowerMaxRevProxySpec defines the desired state of CSIPowerMaxRevProxy
+    """
+    def __init__(__self__, *,
+                 config: 'outputs.CSIPowerMaxRevProxySpecConfig',
+                 image: str,
+                 tls_secret: str,
+                 image_pull_policy: Optional[str] = None):
+        """
+        CSIPowerMaxRevProxySpec defines the desired state of CSIPowerMaxRevProxy
+        :param 'CSIPowerMaxRevProxySpecConfigArgs' config: RevProxyConfig represents the reverse proxy configuration
+        :param str image: INSERT ADDITIONAL SPEC FIELDS - desired state of cluster Important: Run "operator-sdk generate k8s" to regenerate code after modifying this file Add custom validation using kubebuilder tags: https://book-v1.book.kubebuilder.io/beyond_basics/generating_crd.html
+        :param str image_pull_policy: PullPolicy describes a policy for if/when to pull a container image
+        """
+        pulumi.set(__self__, "config", config)
+        pulumi.set(__self__, "image", image)
+        pulumi.set(__self__, "tls_secret", tls_secret)
+        if image_pull_policy is not None:
+            pulumi.set(__self__, "image_pull_policy", image_pull_policy)
+
+    @property
+    @pulumi.getter
+    def config(self) -> 'outputs.CSIPowerMaxRevProxySpecConfig':
+        """
+        RevProxyConfig represents the reverse proxy configuration
+        """
+        return pulumi.get(self, "config")
+
+    @property
+    @pulumi.getter
+    def image(self) -> str:
+        """
+        INSERT ADDITIONAL SPEC FIELDS - desired state of cluster Important: Run "operator-sdk generate k8s" to regenerate code after modifying this file Add custom validation using kubebuilder tags: https://book-v1.book.kubebuilder.io/beyond_basics/generating_crd.html
+        """
+        return pulumi.get(self, "image")
+
+    @property
+    @pulumi.getter(name="tlsSecret")
+    def tls_secret(self) -> str:
+        return pulumi.get(self, "tls_secret")
+
+    @property
+    @pulumi.getter(name="imagePullPolicy")
+    def image_pull_policy(self) -> Optional[str]:
+        """
+        PullPolicy describes a policy for if/when to pull a container image
+        """
+        return pulumi.get(self, "image_pull_policy")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class CSIPowerMaxRevProxySpecConfig(dict):
+    """
+    RevProxyConfig represents the reverse proxy configuration
+    """
+    def __init__(__self__, *,
+                 link_config: Optional['outputs.CSIPowerMaxRevProxySpecConfigLinkConfig'] = None,
+                 mode: Optional[str] = None,
+                 port: Optional[int] = None,
+                 stand_alone_config: Optional['outputs.CSIPowerMaxRevProxySpecConfigStandAloneConfig'] = None):
+        """
+        RevProxyConfig represents the reverse proxy configuration
+        :param 'CSIPowerMaxRevProxySpecConfigLinkConfigArgs' link_config: LinkConfig is one of the configuration modes for reverse proxy
+        :param 'CSIPowerMaxRevProxySpecConfigStandAloneConfigArgs' stand_alone_config: StandAloneConfig is one of the configuration modes for reverse proxy
+        """
+        if link_config is not None:
+            pulumi.set(__self__, "link_config", link_config)
+        if mode is not None:
+            pulumi.set(__self__, "mode", mode)
+        if port is not None:
+            pulumi.set(__self__, "port", port)
+        if stand_alone_config is not None:
+            pulumi.set(__self__, "stand_alone_config", stand_alone_config)
+
+    @property
+    @pulumi.getter(name="linkConfig")
+    def link_config(self) -> Optional['outputs.CSIPowerMaxRevProxySpecConfigLinkConfig']:
+        """
+        LinkConfig is one of the configuration modes for reverse proxy
+        """
+        return pulumi.get(self, "link_config")
+
+    @property
+    @pulumi.getter
+    def mode(self) -> Optional[str]:
+        return pulumi.get(self, "mode")
+
+    @property
+    @pulumi.getter
+    def port(self) -> Optional[int]:
+        return pulumi.get(self, "port")
+
+    @property
+    @pulumi.getter(name="standAloneConfig")
+    def stand_alone_config(self) -> Optional['outputs.CSIPowerMaxRevProxySpecConfigStandAloneConfig']:
+        """
+        StandAloneConfig is one of the configuration modes for reverse proxy
+        """
+        return pulumi.get(self, "stand_alone_config")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class CSIPowerMaxRevProxySpecConfigLinkConfig(dict):
+    """
+    LinkConfig is one of the configuration modes for reverse proxy
+    """
+    def __init__(__self__, *,
+                 primary: 'outputs.CSIPowerMaxRevProxySpecConfigLinkConfigPrimary',
+                 backup: Optional['outputs.CSIPowerMaxRevProxySpecConfigLinkConfigBackup'] = None):
+        """
+        LinkConfig is one of the configuration modes for reverse proxy
+        :param 'CSIPowerMaxRevProxySpecConfigLinkConfigPrimaryArgs' primary: ManagementServerConfig - represents a management server configuration for the management server
+        :param 'CSIPowerMaxRevProxySpecConfigLinkConfigBackupArgs' backup: ManagementServerConfig - represents a management server configuration for the management server
+        """
+        pulumi.set(__self__, "primary", primary)
+        if backup is not None:
+            pulumi.set(__self__, "backup", backup)
+
+    @property
+    @pulumi.getter
+    def primary(self) -> 'outputs.CSIPowerMaxRevProxySpecConfigLinkConfigPrimary':
+        """
+        ManagementServerConfig - represents a management server configuration for the management server
+        """
+        return pulumi.get(self, "primary")
+
+    @property
+    @pulumi.getter
+    def backup(self) -> Optional['outputs.CSIPowerMaxRevProxySpecConfigLinkConfigBackup']:
+        """
+        ManagementServerConfig - represents a management server configuration for the management server
+        """
+        return pulumi.get(self, "backup")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class CSIPowerMaxRevProxySpecConfigLinkConfigBackup(dict):
+    """
+    ManagementServerConfig - represents a management server configuration for the management server
+    """
+    def __init__(__self__, *,
+                 url: str,
+                 array_credential_secret: Optional[str] = None,
+                 cert_secret: Optional[str] = None,
+                 limits: Optional['outputs.CSIPowerMaxRevProxySpecConfigLinkConfigBackupLimits'] = None,
+                 skip_certificate_validation: Optional[bool] = None):
+        """
+        ManagementServerConfig - represents a management server configuration for the management server
+        :param 'CSIPowerMaxRevProxySpecConfigLinkConfigBackupLimitsArgs' limits: ProxyLimits is used for storing the various types of limits applied for a particular proxy instance
+        """
+        pulumi.set(__self__, "url", url)
+        if array_credential_secret is not None:
+            pulumi.set(__self__, "array_credential_secret", array_credential_secret)
+        if cert_secret is not None:
+            pulumi.set(__self__, "cert_secret", cert_secret)
+        if limits is not None:
+            pulumi.set(__self__, "limits", limits)
+        if skip_certificate_validation is not None:
+            pulumi.set(__self__, "skip_certificate_validation", skip_certificate_validation)
+
+    @property
+    @pulumi.getter
+    def url(self) -> str:
+        return pulumi.get(self, "url")
+
+    @property
+    @pulumi.getter(name="arrayCredentialSecret")
+    def array_credential_secret(self) -> Optional[str]:
+        return pulumi.get(self, "array_credential_secret")
+
+    @property
+    @pulumi.getter(name="certSecret")
+    def cert_secret(self) -> Optional[str]:
+        return pulumi.get(self, "cert_secret")
+
+    @property
+    @pulumi.getter
+    def limits(self) -> Optional['outputs.CSIPowerMaxRevProxySpecConfigLinkConfigBackupLimits']:
+        """
+        ProxyLimits is used for storing the various types of limits applied for a particular proxy instance
+        """
+        return pulumi.get(self, "limits")
+
+    @property
+    @pulumi.getter(name="skipCertificateValidation")
+    def skip_certificate_validation(self) -> Optional[bool]:
+        return pulumi.get(self, "skip_certificate_validation")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class CSIPowerMaxRevProxySpecConfigLinkConfigBackupLimits(dict):
+    """
+    ProxyLimits is used for storing the various types of limits applied for a particular proxy instance
+    """
+    def __init__(__self__, *,
+                 max_active_read: Optional[int] = None,
+                 max_active_write: Optional[int] = None,
+                 max_out_standing_read: Optional[int] = None,
+                 max_out_standing_write: Optional[int] = None):
+        """
+        ProxyLimits is used for storing the various types of limits applied for a particular proxy instance
+        """
+        if max_active_read is not None:
+            pulumi.set(__self__, "max_active_read", max_active_read)
+        if max_active_write is not None:
+            pulumi.set(__self__, "max_active_write", max_active_write)
+        if max_out_standing_read is not None:
+            pulumi.set(__self__, "max_out_standing_read", max_out_standing_read)
+        if max_out_standing_write is not None:
+            pulumi.set(__self__, "max_out_standing_write", max_out_standing_write)
+
+    @property
+    @pulumi.getter(name="maxActiveRead")
+    def max_active_read(self) -> Optional[int]:
+        return pulumi.get(self, "max_active_read")
+
+    @property
+    @pulumi.getter(name="maxActiveWrite")
+    def max_active_write(self) -> Optional[int]:
+        return pulumi.get(self, "max_active_write")
+
+    @property
+    @pulumi.getter(name="maxOutStandingRead")
+    def max_out_standing_read(self) -> Optional[int]:
+        return pulumi.get(self, "max_out_standing_read")
+
+    @property
+    @pulumi.getter(name="maxOutStandingWrite")
+    def max_out_standing_write(self) -> Optional[int]:
+        return pulumi.get(self, "max_out_standing_write")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class CSIPowerMaxRevProxySpecConfigLinkConfigPrimary(dict):
+    """
+    ManagementServerConfig - represents a management server configuration for the management server
+    """
+    def __init__(__self__, *,
+                 url: str,
+                 array_credential_secret: Optional[str] = None,
+                 cert_secret: Optional[str] = None,
+                 limits: Optional['outputs.CSIPowerMaxRevProxySpecConfigLinkConfigPrimaryLimits'] = None,
+                 skip_certificate_validation: Optional[bool] = None):
+        """
+        ManagementServerConfig - represents a management server configuration for the management server
+        :param 'CSIPowerMaxRevProxySpecConfigLinkConfigPrimaryLimitsArgs' limits: ProxyLimits is used for storing the various types of limits applied for a particular proxy instance
+        """
+        pulumi.set(__self__, "url", url)
+        if array_credential_secret is not None:
+            pulumi.set(__self__, "array_credential_secret", array_credential_secret)
+        if cert_secret is not None:
+            pulumi.set(__self__, "cert_secret", cert_secret)
+        if limits is not None:
+            pulumi.set(__self__, "limits", limits)
+        if skip_certificate_validation is not None:
+            pulumi.set(__self__, "skip_certificate_validation", skip_certificate_validation)
+
+    @property
+    @pulumi.getter
+    def url(self) -> str:
+        return pulumi.get(self, "url")
+
+    @property
+    @pulumi.getter(name="arrayCredentialSecret")
+    def array_credential_secret(self) -> Optional[str]:
+        return pulumi.get(self, "array_credential_secret")
+
+    @property
+    @pulumi.getter(name="certSecret")
+    def cert_secret(self) -> Optional[str]:
+        return pulumi.get(self, "cert_secret")
+
+    @property
+    @pulumi.getter
+    def limits(self) -> Optional['outputs.CSIPowerMaxRevProxySpecConfigLinkConfigPrimaryLimits']:
+        """
+        ProxyLimits is used for storing the various types of limits applied for a particular proxy instance
+        """
+        return pulumi.get(self, "limits")
+
+    @property
+    @pulumi.getter(name="skipCertificateValidation")
+    def skip_certificate_validation(self) -> Optional[bool]:
+        return pulumi.get(self, "skip_certificate_validation")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class CSIPowerMaxRevProxySpecConfigLinkConfigPrimaryLimits(dict):
+    """
+    ProxyLimits is used for storing the various types of limits applied for a particular proxy instance
+    """
+    def __init__(__self__, *,
+                 max_active_read: Optional[int] = None,
+                 max_active_write: Optional[int] = None,
+                 max_out_standing_read: Optional[int] = None,
+                 max_out_standing_write: Optional[int] = None):
+        """
+        ProxyLimits is used for storing the various types of limits applied for a particular proxy instance
+        """
+        if max_active_read is not None:
+            pulumi.set(__self__, "max_active_read", max_active_read)
+        if max_active_write is not None:
+            pulumi.set(__self__, "max_active_write", max_active_write)
+        if max_out_standing_read is not None:
+            pulumi.set(__self__, "max_out_standing_read", max_out_standing_read)
+        if max_out_standing_write is not None:
+            pulumi.set(__self__, "max_out_standing_write", max_out_standing_write)
+
+    @property
+    @pulumi.getter(name="maxActiveRead")
+    def max_active_read(self) -> Optional[int]:
+        return pulumi.get(self, "max_active_read")
+
+    @property
+    @pulumi.getter(name="maxActiveWrite")
+    def max_active_write(self) -> Optional[int]:
+        return pulumi.get(self, "max_active_write")
+
+    @property
+    @pulumi.getter(name="maxOutStandingRead")
+    def max_out_standing_read(self) -> Optional[int]:
+        return pulumi.get(self, "max_out_standing_read")
+
+    @property
+    @pulumi.getter(name="maxOutStandingWrite")
+    def max_out_standing_write(self) -> Optional[int]:
+        return pulumi.get(self, "max_out_standing_write")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class CSIPowerMaxRevProxySpecConfigStandAloneConfig(dict):
+    """
+    StandAloneConfig is one of the configuration modes for reverse proxy
+    """
+    def __init__(__self__, *,
+                 management_servers: Sequence['outputs.CSIPowerMaxRevProxySpecConfigStandAloneConfigManagementServers'],
+                 storage_arrays: Sequence['outputs.CSIPowerMaxRevProxySpecConfigStandAloneConfigStorageArrays']):
+        """
+        StandAloneConfig is one of the configuration modes for reverse proxy
+        """
+        pulumi.set(__self__, "management_servers", management_servers)
+        pulumi.set(__self__, "storage_arrays", storage_arrays)
+
+    @property
+    @pulumi.getter(name="managementServers")
+    def management_servers(self) -> Sequence['outputs.CSIPowerMaxRevProxySpecConfigStandAloneConfigManagementServers']:
+        return pulumi.get(self, "management_servers")
+
+    @property
+    @pulumi.getter(name="storageArrays")
+    def storage_arrays(self) -> Sequence['outputs.CSIPowerMaxRevProxySpecConfigStandAloneConfigStorageArrays']:
+        return pulumi.get(self, "storage_arrays")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class CSIPowerMaxRevProxySpecConfigStandAloneConfigManagementServers(dict):
+    """
+    ManagementServerConfig - represents a management server configuration for the management server
+    """
+    def __init__(__self__, *,
+                 url: str,
+                 array_credential_secret: Optional[str] = None,
+                 cert_secret: Optional[str] = None,
+                 limits: Optional['outputs.CSIPowerMaxRevProxySpecConfigStandAloneConfigManagementServersLimits'] = None,
+                 skip_certificate_validation: Optional[bool] = None):
+        """
+        ManagementServerConfig - represents a management server configuration for the management server
+        :param 'CSIPowerMaxRevProxySpecConfigStandAloneConfigManagementServersLimitsArgs' limits: ProxyLimits is used for storing the various types of limits applied for a particular proxy instance
+        """
+        pulumi.set(__self__, "url", url)
+        if array_credential_secret is not None:
+            pulumi.set(__self__, "array_credential_secret", array_credential_secret)
+        if cert_secret is not None:
+            pulumi.set(__self__, "cert_secret", cert_secret)
+        if limits is not None:
+            pulumi.set(__self__, "limits", limits)
+        if skip_certificate_validation is not None:
+            pulumi.set(__self__, "skip_certificate_validation", skip_certificate_validation)
+
+    @property
+    @pulumi.getter
+    def url(self) -> str:
+        return pulumi.get(self, "url")
+
+    @property
+    @pulumi.getter(name="arrayCredentialSecret")
+    def array_credential_secret(self) -> Optional[str]:
+        return pulumi.get(self, "array_credential_secret")
+
+    @property
+    @pulumi.getter(name="certSecret")
+    def cert_secret(self) -> Optional[str]:
+        return pulumi.get(self, "cert_secret")
+
+    @property
+    @pulumi.getter
+    def limits(self) -> Optional['outputs.CSIPowerMaxRevProxySpecConfigStandAloneConfigManagementServersLimits']:
+        """
+        ProxyLimits is used for storing the various types of limits applied for a particular proxy instance
+        """
+        return pulumi.get(self, "limits")
+
+    @property
+    @pulumi.getter(name="skipCertificateValidation")
+    def skip_certificate_validation(self) -> Optional[bool]:
+        return pulumi.get(self, "skip_certificate_validation")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class CSIPowerMaxRevProxySpecConfigStandAloneConfigManagementServersLimits(dict):
+    """
+    ProxyLimits is used for storing the various types of limits applied for a particular proxy instance
+    """
+    def __init__(__self__, *,
+                 max_active_read: Optional[int] = None,
+                 max_active_write: Optional[int] = None,
+                 max_out_standing_read: Optional[int] = None,
+                 max_out_standing_write: Optional[int] = None):
+        """
+        ProxyLimits is used for storing the various types of limits applied for a particular proxy instance
+        """
+        if max_active_read is not None:
+            pulumi.set(__self__, "max_active_read", max_active_read)
+        if max_active_write is not None:
+            pulumi.set(__self__, "max_active_write", max_active_write)
+        if max_out_standing_read is not None:
+            pulumi.set(__self__, "max_out_standing_read", max_out_standing_read)
+        if max_out_standing_write is not None:
+            pulumi.set(__self__, "max_out_standing_write", max_out_standing_write)
+
+    @property
+    @pulumi.getter(name="maxActiveRead")
+    def max_active_read(self) -> Optional[int]:
+        return pulumi.get(self, "max_active_read")
+
+    @property
+    @pulumi.getter(name="maxActiveWrite")
+    def max_active_write(self) -> Optional[int]:
+        return pulumi.get(self, "max_active_write")
+
+    @property
+    @pulumi.getter(name="maxOutStandingRead")
+    def max_out_standing_read(self) -> Optional[int]:
+        return pulumi.get(self, "max_out_standing_read")
+
+    @property
+    @pulumi.getter(name="maxOutStandingWrite")
+    def max_out_standing_write(self) -> Optional[int]:
+        return pulumi.get(self, "max_out_standing_write")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class CSIPowerMaxRevProxySpecConfigStandAloneConfigStorageArrays(dict):
+    """
+    StorageArrayConfig represents a storage array managed by reverse proxy
+    """
+    def __init__(__self__, *,
+                 primary_url: str,
+                 proxy_credential_secrets: Sequence[str],
+                 storage_array_id: str,
+                 backup_url: Optional[str] = None):
+        """
+        StorageArrayConfig represents a storage array managed by reverse proxy
+        """
+        pulumi.set(__self__, "primary_url", primary_url)
+        pulumi.set(__self__, "proxy_credential_secrets", proxy_credential_secrets)
+        pulumi.set(__self__, "storage_array_id", storage_array_id)
+        if backup_url is not None:
+            pulumi.set(__self__, "backup_url", backup_url)
+
+    @property
+    @pulumi.getter(name="primaryURL")
+    def primary_url(self) -> str:
+        return pulumi.get(self, "primary_url")
+
+    @property
+    @pulumi.getter(name="proxyCredentialSecrets")
+    def proxy_credential_secrets(self) -> Sequence[str]:
+        return pulumi.get(self, "proxy_credential_secrets")
+
+    @property
+    @pulumi.getter(name="storageArrayId")
+    def storage_array_id(self) -> str:
+        return pulumi.get(self, "storage_array_id")
+
+    @property
+    @pulumi.getter(name="backupURL")
+    def backup_url(self) -> Optional[str]:
+        return pulumi.get(self, "backup_url")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class CSIPowerMaxRevProxyStatus(dict):
+    """
+    CSIPowerMaxRevProxyStatus defines the observed state of CSIPowerMaxRevProxy
+    """
+    def __init__(__self__, *,
+                 last_update: Optional['outputs.CSIPowerMaxRevProxyStatusLastUpdate'] = None,
+                 proxy_hash: Optional[int] = None,
+                 proxy_status: Optional['outputs.CSIPowerMaxRevProxyStatusProxyStatus'] = None,
+                 state: Optional[str] = None):
+        """
+        CSIPowerMaxRevProxyStatus defines the observed state of CSIPowerMaxRevProxy
+        :param 'CSIPowerMaxRevProxyStatusLastUpdateArgs' last_update: LastUpdate is the last updated state of the driver
+        :param int proxy_hash: DriverHash is a hash of the driver specification
+        :param 'CSIPowerMaxRevProxyStatusProxyStatusArgs' proxy_status: INSERT ADDITIONAL STATUS FIELD - define observed state of cluster Important: Run "operator-sdk generate k8s" to regenerate code after modifying this file Add custom validation using kubebuilder tags: https://book-v1.book.kubebuilder.io/beyond_basics/generating_crd.html ProxyStatus is the status of proxy pod
+        :param str state: State is the state of the driver installation
+        """
+        if last_update is not None:
+            pulumi.set(__self__, "last_update", last_update)
+        if proxy_hash is not None:
+            pulumi.set(__self__, "proxy_hash", proxy_hash)
+        if proxy_status is not None:
+            pulumi.set(__self__, "proxy_status", proxy_status)
+        if state is not None:
+            pulumi.set(__self__, "state", state)
+
+    @property
+    @pulumi.getter(name="lastUpdate")
+    def last_update(self) -> Optional['outputs.CSIPowerMaxRevProxyStatusLastUpdate']:
+        """
+        LastUpdate is the last updated state of the driver
+        """
+        return pulumi.get(self, "last_update")
+
+    @property
+    @pulumi.getter(name="proxyHash")
+    def proxy_hash(self) -> Optional[int]:
+        """
+        DriverHash is a hash of the driver specification
+        """
+        return pulumi.get(self, "proxy_hash")
+
+    @property
+    @pulumi.getter(name="proxyStatus")
+    def proxy_status(self) -> Optional['outputs.CSIPowerMaxRevProxyStatusProxyStatus']:
+        """
+        INSERT ADDITIONAL STATUS FIELD - define observed state of cluster Important: Run "operator-sdk generate k8s" to regenerate code after modifying this file Add custom validation using kubebuilder tags: https://book-v1.book.kubebuilder.io/beyond_basics/generating_crd.html ProxyStatus is the status of proxy pod
+        """
+        return pulumi.get(self, "proxy_status")
+
+    @property
+    @pulumi.getter
+    def state(self) -> Optional[str]:
+        """
+        State is the state of the driver installation
+        """
+        return pulumi.get(self, "state")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class CSIPowerMaxRevProxyStatusLastUpdate(dict):
+    """
+    LastUpdate is the last updated state of the driver
+    """
+    def __init__(__self__, *,
+                 condition: Optional[str] = None,
+                 error_message: Optional[str] = None,
+                 time: Optional[str] = None):
+        """
+        LastUpdate is the last updated state of the driver
+        :param str condition: Condition is the last known condition of the Custom Resource
+        :param str error_message: ErrorMessage is the last error message associated with the condition
+        :param str time: Time is the time stamp for the last condition update
+        """
+        if condition is not None:
+            pulumi.set(__self__, "condition", condition)
+        if error_message is not None:
+            pulumi.set(__self__, "error_message", error_message)
+        if time is not None:
+            pulumi.set(__self__, "time", time)
+
+    @property
+    @pulumi.getter
+    def condition(self) -> Optional[str]:
+        """
+        Condition is the last known condition of the Custom Resource
+        """
+        return pulumi.get(self, "condition")
+
+    @property
+    @pulumi.getter(name="errorMessage")
+    def error_message(self) -> Optional[str]:
+        """
+        ErrorMessage is the last error message associated with the condition
+        """
+        return pulumi.get(self, "error_message")
+
+    @property
+    @pulumi.getter
+    def time(self) -> Optional[str]:
+        """
+        Time is the time stamp for the last condition update
+        """
+        return pulumi.get(self, "time")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class CSIPowerMaxRevProxyStatusProxyStatus(dict):
+    """
+    INSERT ADDITIONAL STATUS FIELD - define observed state of cluster Important: Run "operator-sdk generate k8s" to regenerate code after modifying this file Add custom validation using kubebuilder tags: https://book-v1.book.kubebuilder.io/beyond_basics/generating_crd.html ProxyStatus is the status of proxy pod
+    """
+    def __init__(__self__, *,
+                 available: Optional[Sequence[str]] = None,
+                 ready: Optional[Sequence[str]] = None,
+                 starting: Optional[Sequence[str]] = None,
+                 stopped: Optional[Sequence[str]] = None):
+        """
+        INSERT ADDITIONAL STATUS FIELD - define observed state of cluster Important: Run "operator-sdk generate k8s" to regenerate code after modifying this file Add custom validation using kubebuilder tags: https://book-v1.book.kubebuilder.io/beyond_basics/generating_crd.html ProxyStatus is the status of proxy pod
+        """
+        if available is not None:
+            pulumi.set(__self__, "available", available)
+        if ready is not None:
+            pulumi.set(__self__, "ready", ready)
+        if starting is not None:
+            pulumi.set(__self__, "starting", starting)
+        if stopped is not None:
+            pulumi.set(__self__, "stopped", stopped)
+
+    @property
+    @pulumi.getter
+    def available(self) -> Optional[Sequence[str]]:
+        return pulumi.get(self, "available")
+
+    @property
+    @pulumi.getter
+    def ready(self) -> Optional[Sequence[str]]:
+        return pulumi.get(self, "ready")
+
+    @property
+    @pulumi.getter
+    def starting(self) -> Optional[Sequence[str]]:
+        return pulumi.get(self, "starting")
+
+    @property
+    @pulumi.getter
+    def stopped(self) -> Optional[Sequence[str]]:
+        return pulumi.get(self, "stopped")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
 class CSIPowerMaxSpec(dict):
     """
     CSIPowerMaxSpec defines the desired state of CSIPowerMax
@@ -2304,7 +3590,9 @@ class CSIPowerMaxSpecDriverCommon(dict):
                  envs: Optional[Sequence['outputs.CSIPowerMaxSpecDriverCommonEnvs']] = None,
                  image: Optional[str] = None,
                  image_pull_policy: Optional[str] = None,
-                 name: Optional[str] = None):
+                 name: Optional[str] = None,
+                 node_selector: Optional[Mapping[str, str]] = None,
+                 tolerations: Optional[Sequence['outputs.CSIPowerMaxSpecDriverCommonTolerations']] = None):
         """
         Common is the common specification for both controller and node plugins
         :param Sequence[str] args: Args is the set of arguments for the container
@@ -2312,6 +3600,8 @@ class CSIPowerMaxSpecDriverCommon(dict):
         :param str image: Image is the image tag for the Container
         :param str image_pull_policy: ImagePullPolicy is the image pull policy for the image
         :param str name: Name is the name of Container
+        :param Mapping[str, str] node_selector: NodeSelector is a selector which must be true for the pod to fit on a node. Selector which must match a node's labels for the pod to be scheduled on that node.
+        :param Sequence['CSIPowerMaxSpecDriverCommonTolerationsArgs'] tolerations: Tolerations is the list of tolerations for the driver pods
         """
         if args is not None:
             pulumi.set(__self__, "args", args)
@@ -2323,6 +3613,10 @@ class CSIPowerMaxSpecDriverCommon(dict):
             pulumi.set(__self__, "image_pull_policy", image_pull_policy)
         if name is not None:
             pulumi.set(__self__, "name", name)
+        if node_selector is not None:
+            pulumi.set(__self__, "node_selector", node_selector)
+        if tolerations is not None:
+            pulumi.set(__self__, "tolerations", tolerations)
 
     @property
     @pulumi.getter
@@ -2363,6 +3657,22 @@ class CSIPowerMaxSpecDriverCommon(dict):
         Name is the name of Container
         """
         return pulumi.get(self, "name")
+
+    @property
+    @pulumi.getter(name="nodeSelector")
+    def node_selector(self) -> Optional[Mapping[str, str]]:
+        """
+        NodeSelector is a selector which must be true for the pod to fit on a node. Selector which must match a node's labels for the pod to be scheduled on that node.
+        """
+        return pulumi.get(self, "node_selector")
+
+    @property
+    @pulumi.getter
+    def tolerations(self) -> Optional[Sequence['outputs.CSIPowerMaxSpecDriverCommonTolerations']]:
+        """
+        Tolerations is the list of tolerations for the driver pods
+        """
+        return pulumi.get(self, "tolerations")
 
     def _translate_property(self, prop):
         return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
@@ -2430,7 +3740,7 @@ class CSIPowerMaxSpecDriverCommonEnvsValueFrom(dict):
         """
         Source for the environment variable's value. Cannot be used if value is not empty.
         :param 'CSIPowerMaxSpecDriverCommonEnvsValueFromConfigMapKeyRefArgs' config_map_key_ref: Selects a key of a ConfigMap.
-        :param 'CSIPowerMaxSpecDriverCommonEnvsValueFromFieldRefArgs' field_ref: Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+        :param 'CSIPowerMaxSpecDriverCommonEnvsValueFromFieldRefArgs' field_ref: Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
         :param 'CSIPowerMaxSpecDriverCommonEnvsValueFromResourceFieldRefArgs' resource_field_ref: Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
         :param 'CSIPowerMaxSpecDriverCommonEnvsValueFromSecretKeyRefArgs' secret_key_ref: Selects a key of a secret in the pod's namespace
         """
@@ -2455,7 +3765,7 @@ class CSIPowerMaxSpecDriverCommonEnvsValueFrom(dict):
     @pulumi.getter(name="fieldRef")
     def field_ref(self) -> Optional['outputs.CSIPowerMaxSpecDriverCommonEnvsValueFromFieldRef']:
         """
-        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
         """
         return pulumi.get(self, "field_ref")
 
@@ -2531,13 +3841,13 @@ class CSIPowerMaxSpecDriverCommonEnvsValueFromConfigMapKeyRef(dict):
 @pulumi.output_type
 class CSIPowerMaxSpecDriverCommonEnvsValueFromFieldRef(dict):
     """
-    Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+    Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
     """
     def __init__(__self__, *,
                  field_path: str,
                  api_version: Optional[str] = None):
         """
-        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
         :param str field_path: Path of the field to select in the specified API version.
         :param str api_version: Version of the schema the FieldPath is written in terms of, defaults to "v1".
         """
@@ -2573,12 +3883,12 @@ class CSIPowerMaxSpecDriverCommonEnvsValueFromResourceFieldRef(dict):
     def __init__(__self__, *,
                  resource: str,
                  container_name: Optional[str] = None,
-                 divisor: Optional[str] = None):
+                 divisor: Optional['outputs.CSIPowerMaxSpecDriverCommonEnvsValueFromResourceFieldRefDivisor'] = None):
         """
         Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
         :param str resource: Required: resource to select
         :param str container_name: Container name: required for volumes, optional for env vars
-        :param str divisor: Specifies the output format of the exposed resources, defaults to "1"
+        :param 'CSIPowerMaxSpecDriverCommonEnvsValueFromResourceFieldRefDivisorArgs' divisor: Specifies the output format of the exposed resources, defaults to "1"
         """
         pulumi.set(__self__, "resource", resource)
         if container_name is not None:
@@ -2604,11 +3914,20 @@ class CSIPowerMaxSpecDriverCommonEnvsValueFromResourceFieldRef(dict):
 
     @property
     @pulumi.getter
-    def divisor(self) -> Optional[str]:
+    def divisor(self) -> Optional['outputs.CSIPowerMaxSpecDriverCommonEnvsValueFromResourceFieldRefDivisor']:
         """
         Specifies the output format of the exposed resources, defaults to "1"
         """
         return pulumi.get(self, "divisor")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class CSIPowerMaxSpecDriverCommonEnvsValueFromResourceFieldRefDivisor(dict):
+    def __init__(__self__):
+        pass
 
     def _translate_property(self, prop):
         return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
@@ -2664,6 +3983,80 @@ class CSIPowerMaxSpecDriverCommonEnvsValueFromSecretKeyRef(dict):
 
 
 @pulumi.output_type
+class CSIPowerMaxSpecDriverCommonTolerations(dict):
+    """
+    The pod this Toleration is attached to tolerates any taint that matches the triple <key,value,effect> using the matching operator <operator>.
+    """
+    def __init__(__self__, *,
+                 effect: Optional[str] = None,
+                 key: Optional[str] = None,
+                 operator: Optional[str] = None,
+                 toleration_seconds: Optional[int] = None,
+                 value: Optional[str] = None):
+        """
+        The pod this Toleration is attached to tolerates any taint that matches the triple <key,value,effect> using the matching operator <operator>.
+        :param str effect: Effect indicates the taint effect to match. Empty means match all taint effects. When specified, allowed values are NoSchedule, PreferNoSchedule and NoExecute.
+        :param str key: Key is the taint key that the toleration applies to. Empty means match all taint keys. If the key is empty, operator must be Exists; this combination means to match all values and all keys.
+        :param str operator: Operator represents a key's relationship to the value. Valid operators are Exists and Equal. Defaults to Equal. Exists is equivalent to wildcard for value, so that a pod can tolerate all taints of a particular category.
+        :param int toleration_seconds: TolerationSeconds represents the period of time the toleration (which must be of effect NoExecute, otherwise this field is ignored) tolerates the taint. By default, it is not set, which means tolerate the taint forever (do not evict). Zero and negative values will be treated as 0 (evict immediately) by the system.
+        :param str value: Value is the taint value the toleration matches to. If the operator is Exists, the value should be empty, otherwise just a regular string.
+        """
+        if effect is not None:
+            pulumi.set(__self__, "effect", effect)
+        if key is not None:
+            pulumi.set(__self__, "key", key)
+        if operator is not None:
+            pulumi.set(__self__, "operator", operator)
+        if toleration_seconds is not None:
+            pulumi.set(__self__, "toleration_seconds", toleration_seconds)
+        if value is not None:
+            pulumi.set(__self__, "value", value)
+
+    @property
+    @pulumi.getter
+    def effect(self) -> Optional[str]:
+        """
+        Effect indicates the taint effect to match. Empty means match all taint effects. When specified, allowed values are NoSchedule, PreferNoSchedule and NoExecute.
+        """
+        return pulumi.get(self, "effect")
+
+    @property
+    @pulumi.getter
+    def key(self) -> Optional[str]:
+        """
+        Key is the taint key that the toleration applies to. Empty means match all taint keys. If the key is empty, operator must be Exists; this combination means to match all values and all keys.
+        """
+        return pulumi.get(self, "key")
+
+    @property
+    @pulumi.getter
+    def operator(self) -> Optional[str]:
+        """
+        Operator represents a key's relationship to the value. Valid operators are Exists and Equal. Defaults to Equal. Exists is equivalent to wildcard for value, so that a pod can tolerate all taints of a particular category.
+        """
+        return pulumi.get(self, "operator")
+
+    @property
+    @pulumi.getter(name="tolerationSeconds")
+    def toleration_seconds(self) -> Optional[int]:
+        """
+        TolerationSeconds represents the period of time the toleration (which must be of effect NoExecute, otherwise this field is ignored) tolerates the taint. By default, it is not set, which means tolerate the taint forever (do not evict). Zero and negative values will be treated as 0 (evict immediately) by the system.
+        """
+        return pulumi.get(self, "toleration_seconds")
+
+    @property
+    @pulumi.getter
+    def value(self) -> Optional[str]:
+        """
+        Value is the taint value the toleration matches to. If the operator is Exists, the value should be empty, otherwise just a regular string.
+        """
+        return pulumi.get(self, "value")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
 class CSIPowerMaxSpecDriverController(dict):
     """
     Controller is the specification for Controller plugin only
@@ -2673,7 +4066,9 @@ class CSIPowerMaxSpecDriverController(dict):
                  envs: Optional[Sequence['outputs.CSIPowerMaxSpecDriverControllerEnvs']] = None,
                  image: Optional[str] = None,
                  image_pull_policy: Optional[str] = None,
-                 name: Optional[str] = None):
+                 name: Optional[str] = None,
+                 node_selector: Optional[Mapping[str, str]] = None,
+                 tolerations: Optional[Sequence['outputs.CSIPowerMaxSpecDriverControllerTolerations']] = None):
         """
         Controller is the specification for Controller plugin only
         :param Sequence[str] args: Args is the set of arguments for the container
@@ -2681,6 +4076,8 @@ class CSIPowerMaxSpecDriverController(dict):
         :param str image: Image is the image tag for the Container
         :param str image_pull_policy: ImagePullPolicy is the image pull policy for the image
         :param str name: Name is the name of Container
+        :param Mapping[str, str] node_selector: NodeSelector is a selector which must be true for the pod to fit on a node. Selector which must match a node's labels for the pod to be scheduled on that node.
+        :param Sequence['CSIPowerMaxSpecDriverControllerTolerationsArgs'] tolerations: Tolerations is the list of tolerations for the driver pods
         """
         if args is not None:
             pulumi.set(__self__, "args", args)
@@ -2692,6 +4089,10 @@ class CSIPowerMaxSpecDriverController(dict):
             pulumi.set(__self__, "image_pull_policy", image_pull_policy)
         if name is not None:
             pulumi.set(__self__, "name", name)
+        if node_selector is not None:
+            pulumi.set(__self__, "node_selector", node_selector)
+        if tolerations is not None:
+            pulumi.set(__self__, "tolerations", tolerations)
 
     @property
     @pulumi.getter
@@ -2732,6 +4133,22 @@ class CSIPowerMaxSpecDriverController(dict):
         Name is the name of Container
         """
         return pulumi.get(self, "name")
+
+    @property
+    @pulumi.getter(name="nodeSelector")
+    def node_selector(self) -> Optional[Mapping[str, str]]:
+        """
+        NodeSelector is a selector which must be true for the pod to fit on a node. Selector which must match a node's labels for the pod to be scheduled on that node.
+        """
+        return pulumi.get(self, "node_selector")
+
+    @property
+    @pulumi.getter
+    def tolerations(self) -> Optional[Sequence['outputs.CSIPowerMaxSpecDriverControllerTolerations']]:
+        """
+        Tolerations is the list of tolerations for the driver pods
+        """
+        return pulumi.get(self, "tolerations")
 
     def _translate_property(self, prop):
         return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
@@ -2799,7 +4216,7 @@ class CSIPowerMaxSpecDriverControllerEnvsValueFrom(dict):
         """
         Source for the environment variable's value. Cannot be used if value is not empty.
         :param 'CSIPowerMaxSpecDriverControllerEnvsValueFromConfigMapKeyRefArgs' config_map_key_ref: Selects a key of a ConfigMap.
-        :param 'CSIPowerMaxSpecDriverControllerEnvsValueFromFieldRefArgs' field_ref: Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+        :param 'CSIPowerMaxSpecDriverControllerEnvsValueFromFieldRefArgs' field_ref: Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
         :param 'CSIPowerMaxSpecDriverControllerEnvsValueFromResourceFieldRefArgs' resource_field_ref: Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
         :param 'CSIPowerMaxSpecDriverControllerEnvsValueFromSecretKeyRefArgs' secret_key_ref: Selects a key of a secret in the pod's namespace
         """
@@ -2824,7 +4241,7 @@ class CSIPowerMaxSpecDriverControllerEnvsValueFrom(dict):
     @pulumi.getter(name="fieldRef")
     def field_ref(self) -> Optional['outputs.CSIPowerMaxSpecDriverControllerEnvsValueFromFieldRef']:
         """
-        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
         """
         return pulumi.get(self, "field_ref")
 
@@ -2900,13 +4317,13 @@ class CSIPowerMaxSpecDriverControllerEnvsValueFromConfigMapKeyRef(dict):
 @pulumi.output_type
 class CSIPowerMaxSpecDriverControllerEnvsValueFromFieldRef(dict):
     """
-    Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+    Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
     """
     def __init__(__self__, *,
                  field_path: str,
                  api_version: Optional[str] = None):
         """
-        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
         :param str field_path: Path of the field to select in the specified API version.
         :param str api_version: Version of the schema the FieldPath is written in terms of, defaults to "v1".
         """
@@ -2942,12 +4359,12 @@ class CSIPowerMaxSpecDriverControllerEnvsValueFromResourceFieldRef(dict):
     def __init__(__self__, *,
                  resource: str,
                  container_name: Optional[str] = None,
-                 divisor: Optional[str] = None):
+                 divisor: Optional['outputs.CSIPowerMaxSpecDriverControllerEnvsValueFromResourceFieldRefDivisor'] = None):
         """
         Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
         :param str resource: Required: resource to select
         :param str container_name: Container name: required for volumes, optional for env vars
-        :param str divisor: Specifies the output format of the exposed resources, defaults to "1"
+        :param 'CSIPowerMaxSpecDriverControllerEnvsValueFromResourceFieldRefDivisorArgs' divisor: Specifies the output format of the exposed resources, defaults to "1"
         """
         pulumi.set(__self__, "resource", resource)
         if container_name is not None:
@@ -2973,11 +4390,20 @@ class CSIPowerMaxSpecDriverControllerEnvsValueFromResourceFieldRef(dict):
 
     @property
     @pulumi.getter
-    def divisor(self) -> Optional[str]:
+    def divisor(self) -> Optional['outputs.CSIPowerMaxSpecDriverControllerEnvsValueFromResourceFieldRefDivisor']:
         """
         Specifies the output format of the exposed resources, defaults to "1"
         """
         return pulumi.get(self, "divisor")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class CSIPowerMaxSpecDriverControllerEnvsValueFromResourceFieldRefDivisor(dict):
+    def __init__(__self__):
+        pass
 
     def _translate_property(self, prop):
         return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
@@ -3033,6 +4459,80 @@ class CSIPowerMaxSpecDriverControllerEnvsValueFromSecretKeyRef(dict):
 
 
 @pulumi.output_type
+class CSIPowerMaxSpecDriverControllerTolerations(dict):
+    """
+    The pod this Toleration is attached to tolerates any taint that matches the triple <key,value,effect> using the matching operator <operator>.
+    """
+    def __init__(__self__, *,
+                 effect: Optional[str] = None,
+                 key: Optional[str] = None,
+                 operator: Optional[str] = None,
+                 toleration_seconds: Optional[int] = None,
+                 value: Optional[str] = None):
+        """
+        The pod this Toleration is attached to tolerates any taint that matches the triple <key,value,effect> using the matching operator <operator>.
+        :param str effect: Effect indicates the taint effect to match. Empty means match all taint effects. When specified, allowed values are NoSchedule, PreferNoSchedule and NoExecute.
+        :param str key: Key is the taint key that the toleration applies to. Empty means match all taint keys. If the key is empty, operator must be Exists; this combination means to match all values and all keys.
+        :param str operator: Operator represents a key's relationship to the value. Valid operators are Exists and Equal. Defaults to Equal. Exists is equivalent to wildcard for value, so that a pod can tolerate all taints of a particular category.
+        :param int toleration_seconds: TolerationSeconds represents the period of time the toleration (which must be of effect NoExecute, otherwise this field is ignored) tolerates the taint. By default, it is not set, which means tolerate the taint forever (do not evict). Zero and negative values will be treated as 0 (evict immediately) by the system.
+        :param str value: Value is the taint value the toleration matches to. If the operator is Exists, the value should be empty, otherwise just a regular string.
+        """
+        if effect is not None:
+            pulumi.set(__self__, "effect", effect)
+        if key is not None:
+            pulumi.set(__self__, "key", key)
+        if operator is not None:
+            pulumi.set(__self__, "operator", operator)
+        if toleration_seconds is not None:
+            pulumi.set(__self__, "toleration_seconds", toleration_seconds)
+        if value is not None:
+            pulumi.set(__self__, "value", value)
+
+    @property
+    @pulumi.getter
+    def effect(self) -> Optional[str]:
+        """
+        Effect indicates the taint effect to match. Empty means match all taint effects. When specified, allowed values are NoSchedule, PreferNoSchedule and NoExecute.
+        """
+        return pulumi.get(self, "effect")
+
+    @property
+    @pulumi.getter
+    def key(self) -> Optional[str]:
+        """
+        Key is the taint key that the toleration applies to. Empty means match all taint keys. If the key is empty, operator must be Exists; this combination means to match all values and all keys.
+        """
+        return pulumi.get(self, "key")
+
+    @property
+    @pulumi.getter
+    def operator(self) -> Optional[str]:
+        """
+        Operator represents a key's relationship to the value. Valid operators are Exists and Equal. Defaults to Equal. Exists is equivalent to wildcard for value, so that a pod can tolerate all taints of a particular category.
+        """
+        return pulumi.get(self, "operator")
+
+    @property
+    @pulumi.getter(name="tolerationSeconds")
+    def toleration_seconds(self) -> Optional[int]:
+        """
+        TolerationSeconds represents the period of time the toleration (which must be of effect NoExecute, otherwise this field is ignored) tolerates the taint. By default, it is not set, which means tolerate the taint forever (do not evict). Zero and negative values will be treated as 0 (evict immediately) by the system.
+        """
+        return pulumi.get(self, "toleration_seconds")
+
+    @property
+    @pulumi.getter
+    def value(self) -> Optional[str]:
+        """
+        Value is the taint value the toleration matches to. If the operator is Exists, the value should be empty, otherwise just a regular string.
+        """
+        return pulumi.get(self, "value")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
 class CSIPowerMaxSpecDriverNode(dict):
     """
     Node is the specification for Node plugin only
@@ -3042,7 +4542,9 @@ class CSIPowerMaxSpecDriverNode(dict):
                  envs: Optional[Sequence['outputs.CSIPowerMaxSpecDriverNodeEnvs']] = None,
                  image: Optional[str] = None,
                  image_pull_policy: Optional[str] = None,
-                 name: Optional[str] = None):
+                 name: Optional[str] = None,
+                 node_selector: Optional[Mapping[str, str]] = None,
+                 tolerations: Optional[Sequence['outputs.CSIPowerMaxSpecDriverNodeTolerations']] = None):
         """
         Node is the specification for Node plugin only
         :param Sequence[str] args: Args is the set of arguments for the container
@@ -3050,6 +4552,8 @@ class CSIPowerMaxSpecDriverNode(dict):
         :param str image: Image is the image tag for the Container
         :param str image_pull_policy: ImagePullPolicy is the image pull policy for the image
         :param str name: Name is the name of Container
+        :param Mapping[str, str] node_selector: NodeSelector is a selector which must be true for the pod to fit on a node. Selector which must match a node's labels for the pod to be scheduled on that node.
+        :param Sequence['CSIPowerMaxSpecDriverNodeTolerationsArgs'] tolerations: Tolerations is the list of tolerations for the driver pods
         """
         if args is not None:
             pulumi.set(__self__, "args", args)
@@ -3061,6 +4565,10 @@ class CSIPowerMaxSpecDriverNode(dict):
             pulumi.set(__self__, "image_pull_policy", image_pull_policy)
         if name is not None:
             pulumi.set(__self__, "name", name)
+        if node_selector is not None:
+            pulumi.set(__self__, "node_selector", node_selector)
+        if tolerations is not None:
+            pulumi.set(__self__, "tolerations", tolerations)
 
     @property
     @pulumi.getter
@@ -3101,6 +4609,22 @@ class CSIPowerMaxSpecDriverNode(dict):
         Name is the name of Container
         """
         return pulumi.get(self, "name")
+
+    @property
+    @pulumi.getter(name="nodeSelector")
+    def node_selector(self) -> Optional[Mapping[str, str]]:
+        """
+        NodeSelector is a selector which must be true for the pod to fit on a node. Selector which must match a node's labels for the pod to be scheduled on that node.
+        """
+        return pulumi.get(self, "node_selector")
+
+    @property
+    @pulumi.getter
+    def tolerations(self) -> Optional[Sequence['outputs.CSIPowerMaxSpecDriverNodeTolerations']]:
+        """
+        Tolerations is the list of tolerations for the driver pods
+        """
+        return pulumi.get(self, "tolerations")
 
     def _translate_property(self, prop):
         return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
@@ -3168,7 +4692,7 @@ class CSIPowerMaxSpecDriverNodeEnvsValueFrom(dict):
         """
         Source for the environment variable's value. Cannot be used if value is not empty.
         :param 'CSIPowerMaxSpecDriverNodeEnvsValueFromConfigMapKeyRefArgs' config_map_key_ref: Selects a key of a ConfigMap.
-        :param 'CSIPowerMaxSpecDriverNodeEnvsValueFromFieldRefArgs' field_ref: Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+        :param 'CSIPowerMaxSpecDriverNodeEnvsValueFromFieldRefArgs' field_ref: Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
         :param 'CSIPowerMaxSpecDriverNodeEnvsValueFromResourceFieldRefArgs' resource_field_ref: Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
         :param 'CSIPowerMaxSpecDriverNodeEnvsValueFromSecretKeyRefArgs' secret_key_ref: Selects a key of a secret in the pod's namespace
         """
@@ -3193,7 +4717,7 @@ class CSIPowerMaxSpecDriverNodeEnvsValueFrom(dict):
     @pulumi.getter(name="fieldRef")
     def field_ref(self) -> Optional['outputs.CSIPowerMaxSpecDriverNodeEnvsValueFromFieldRef']:
         """
-        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
         """
         return pulumi.get(self, "field_ref")
 
@@ -3269,13 +4793,13 @@ class CSIPowerMaxSpecDriverNodeEnvsValueFromConfigMapKeyRef(dict):
 @pulumi.output_type
 class CSIPowerMaxSpecDriverNodeEnvsValueFromFieldRef(dict):
     """
-    Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+    Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
     """
     def __init__(__self__, *,
                  field_path: str,
                  api_version: Optional[str] = None):
         """
-        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
         :param str field_path: Path of the field to select in the specified API version.
         :param str api_version: Version of the schema the FieldPath is written in terms of, defaults to "v1".
         """
@@ -3311,12 +4835,12 @@ class CSIPowerMaxSpecDriverNodeEnvsValueFromResourceFieldRef(dict):
     def __init__(__self__, *,
                  resource: str,
                  container_name: Optional[str] = None,
-                 divisor: Optional[str] = None):
+                 divisor: Optional['outputs.CSIPowerMaxSpecDriverNodeEnvsValueFromResourceFieldRefDivisor'] = None):
         """
         Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
         :param str resource: Required: resource to select
         :param str container_name: Container name: required for volumes, optional for env vars
-        :param str divisor: Specifies the output format of the exposed resources, defaults to "1"
+        :param 'CSIPowerMaxSpecDriverNodeEnvsValueFromResourceFieldRefDivisorArgs' divisor: Specifies the output format of the exposed resources, defaults to "1"
         """
         pulumi.set(__self__, "resource", resource)
         if container_name is not None:
@@ -3342,11 +4866,20 @@ class CSIPowerMaxSpecDriverNodeEnvsValueFromResourceFieldRef(dict):
 
     @property
     @pulumi.getter
-    def divisor(self) -> Optional[str]:
+    def divisor(self) -> Optional['outputs.CSIPowerMaxSpecDriverNodeEnvsValueFromResourceFieldRefDivisor']:
         """
         Specifies the output format of the exposed resources, defaults to "1"
         """
         return pulumi.get(self, "divisor")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class CSIPowerMaxSpecDriverNodeEnvsValueFromResourceFieldRefDivisor(dict):
+    def __init__(__self__):
+        pass
 
     def _translate_property(self, prop):
         return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
@@ -3402,6 +4935,80 @@ class CSIPowerMaxSpecDriverNodeEnvsValueFromSecretKeyRef(dict):
 
 
 @pulumi.output_type
+class CSIPowerMaxSpecDriverNodeTolerations(dict):
+    """
+    The pod this Toleration is attached to tolerates any taint that matches the triple <key,value,effect> using the matching operator <operator>.
+    """
+    def __init__(__self__, *,
+                 effect: Optional[str] = None,
+                 key: Optional[str] = None,
+                 operator: Optional[str] = None,
+                 toleration_seconds: Optional[int] = None,
+                 value: Optional[str] = None):
+        """
+        The pod this Toleration is attached to tolerates any taint that matches the triple <key,value,effect> using the matching operator <operator>.
+        :param str effect: Effect indicates the taint effect to match. Empty means match all taint effects. When specified, allowed values are NoSchedule, PreferNoSchedule and NoExecute.
+        :param str key: Key is the taint key that the toleration applies to. Empty means match all taint keys. If the key is empty, operator must be Exists; this combination means to match all values and all keys.
+        :param str operator: Operator represents a key's relationship to the value. Valid operators are Exists and Equal. Defaults to Equal. Exists is equivalent to wildcard for value, so that a pod can tolerate all taints of a particular category.
+        :param int toleration_seconds: TolerationSeconds represents the period of time the toleration (which must be of effect NoExecute, otherwise this field is ignored) tolerates the taint. By default, it is not set, which means tolerate the taint forever (do not evict). Zero and negative values will be treated as 0 (evict immediately) by the system.
+        :param str value: Value is the taint value the toleration matches to. If the operator is Exists, the value should be empty, otherwise just a regular string.
+        """
+        if effect is not None:
+            pulumi.set(__self__, "effect", effect)
+        if key is not None:
+            pulumi.set(__self__, "key", key)
+        if operator is not None:
+            pulumi.set(__self__, "operator", operator)
+        if toleration_seconds is not None:
+            pulumi.set(__self__, "toleration_seconds", toleration_seconds)
+        if value is not None:
+            pulumi.set(__self__, "value", value)
+
+    @property
+    @pulumi.getter
+    def effect(self) -> Optional[str]:
+        """
+        Effect indicates the taint effect to match. Empty means match all taint effects. When specified, allowed values are NoSchedule, PreferNoSchedule and NoExecute.
+        """
+        return pulumi.get(self, "effect")
+
+    @property
+    @pulumi.getter
+    def key(self) -> Optional[str]:
+        """
+        Key is the taint key that the toleration applies to. Empty means match all taint keys. If the key is empty, operator must be Exists; this combination means to match all values and all keys.
+        """
+        return pulumi.get(self, "key")
+
+    @property
+    @pulumi.getter
+    def operator(self) -> Optional[str]:
+        """
+        Operator represents a key's relationship to the value. Valid operators are Exists and Equal. Defaults to Equal. Exists is equivalent to wildcard for value, so that a pod can tolerate all taints of a particular category.
+        """
+        return pulumi.get(self, "operator")
+
+    @property
+    @pulumi.getter(name="tolerationSeconds")
+    def toleration_seconds(self) -> Optional[int]:
+        """
+        TolerationSeconds represents the period of time the toleration (which must be of effect NoExecute, otherwise this field is ignored) tolerates the taint. By default, it is not set, which means tolerate the taint forever (do not evict). Zero and negative values will be treated as 0 (evict immediately) by the system.
+        """
+        return pulumi.get(self, "toleration_seconds")
+
+    @property
+    @pulumi.getter
+    def value(self) -> Optional[str]:
+        """
+        Value is the taint value the toleration matches to. If the operator is Exists, the value should be empty, otherwise just a regular string.
+        """
+        return pulumi.get(self, "value")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
 class CSIPowerMaxSpecDriverSideCars(dict):
     """
     ContainerTemplate - Structure representing a container
@@ -3411,7 +5018,9 @@ class CSIPowerMaxSpecDriverSideCars(dict):
                  envs: Optional[Sequence['outputs.CSIPowerMaxSpecDriverSideCarsEnvs']] = None,
                  image: Optional[str] = None,
                  image_pull_policy: Optional[str] = None,
-                 name: Optional[str] = None):
+                 name: Optional[str] = None,
+                 node_selector: Optional[Mapping[str, str]] = None,
+                 tolerations: Optional[Sequence['outputs.CSIPowerMaxSpecDriverSideCarsTolerations']] = None):
         """
         ContainerTemplate - Structure representing a container
         :param Sequence[str] args: Args is the set of arguments for the container
@@ -3419,6 +5028,8 @@ class CSIPowerMaxSpecDriverSideCars(dict):
         :param str image: Image is the image tag for the Container
         :param str image_pull_policy: ImagePullPolicy is the image pull policy for the image
         :param str name: Name is the name of Container
+        :param Mapping[str, str] node_selector: NodeSelector is a selector which must be true for the pod to fit on a node. Selector which must match a node's labels for the pod to be scheduled on that node.
+        :param Sequence['CSIPowerMaxSpecDriverSideCarsTolerationsArgs'] tolerations: Tolerations is the list of tolerations for the driver pods
         """
         if args is not None:
             pulumi.set(__self__, "args", args)
@@ -3430,6 +5041,10 @@ class CSIPowerMaxSpecDriverSideCars(dict):
             pulumi.set(__self__, "image_pull_policy", image_pull_policy)
         if name is not None:
             pulumi.set(__self__, "name", name)
+        if node_selector is not None:
+            pulumi.set(__self__, "node_selector", node_selector)
+        if tolerations is not None:
+            pulumi.set(__self__, "tolerations", tolerations)
 
     @property
     @pulumi.getter
@@ -3470,6 +5085,22 @@ class CSIPowerMaxSpecDriverSideCars(dict):
         Name is the name of Container
         """
         return pulumi.get(self, "name")
+
+    @property
+    @pulumi.getter(name="nodeSelector")
+    def node_selector(self) -> Optional[Mapping[str, str]]:
+        """
+        NodeSelector is a selector which must be true for the pod to fit on a node. Selector which must match a node's labels for the pod to be scheduled on that node.
+        """
+        return pulumi.get(self, "node_selector")
+
+    @property
+    @pulumi.getter
+    def tolerations(self) -> Optional[Sequence['outputs.CSIPowerMaxSpecDriverSideCarsTolerations']]:
+        """
+        Tolerations is the list of tolerations for the driver pods
+        """
+        return pulumi.get(self, "tolerations")
 
     def _translate_property(self, prop):
         return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
@@ -3537,7 +5168,7 @@ class CSIPowerMaxSpecDriverSideCarsEnvsValueFrom(dict):
         """
         Source for the environment variable's value. Cannot be used if value is not empty.
         :param 'CSIPowerMaxSpecDriverSideCarsEnvsValueFromConfigMapKeyRefArgs' config_map_key_ref: Selects a key of a ConfigMap.
-        :param 'CSIPowerMaxSpecDriverSideCarsEnvsValueFromFieldRefArgs' field_ref: Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+        :param 'CSIPowerMaxSpecDriverSideCarsEnvsValueFromFieldRefArgs' field_ref: Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
         :param 'CSIPowerMaxSpecDriverSideCarsEnvsValueFromResourceFieldRefArgs' resource_field_ref: Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
         :param 'CSIPowerMaxSpecDriverSideCarsEnvsValueFromSecretKeyRefArgs' secret_key_ref: Selects a key of a secret in the pod's namespace
         """
@@ -3562,7 +5193,7 @@ class CSIPowerMaxSpecDriverSideCarsEnvsValueFrom(dict):
     @pulumi.getter(name="fieldRef")
     def field_ref(self) -> Optional['outputs.CSIPowerMaxSpecDriverSideCarsEnvsValueFromFieldRef']:
         """
-        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
         """
         return pulumi.get(self, "field_ref")
 
@@ -3638,13 +5269,13 @@ class CSIPowerMaxSpecDriverSideCarsEnvsValueFromConfigMapKeyRef(dict):
 @pulumi.output_type
 class CSIPowerMaxSpecDriverSideCarsEnvsValueFromFieldRef(dict):
     """
-    Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+    Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
     """
     def __init__(__self__, *,
                  field_path: str,
                  api_version: Optional[str] = None):
         """
-        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
         :param str field_path: Path of the field to select in the specified API version.
         :param str api_version: Version of the schema the FieldPath is written in terms of, defaults to "v1".
         """
@@ -3680,12 +5311,12 @@ class CSIPowerMaxSpecDriverSideCarsEnvsValueFromResourceFieldRef(dict):
     def __init__(__self__, *,
                  resource: str,
                  container_name: Optional[str] = None,
-                 divisor: Optional[str] = None):
+                 divisor: Optional['outputs.CSIPowerMaxSpecDriverSideCarsEnvsValueFromResourceFieldRefDivisor'] = None):
         """
         Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
         :param str resource: Required: resource to select
         :param str container_name: Container name: required for volumes, optional for env vars
-        :param str divisor: Specifies the output format of the exposed resources, defaults to "1"
+        :param 'CSIPowerMaxSpecDriverSideCarsEnvsValueFromResourceFieldRefDivisorArgs' divisor: Specifies the output format of the exposed resources, defaults to "1"
         """
         pulumi.set(__self__, "resource", resource)
         if container_name is not None:
@@ -3711,11 +5342,20 @@ class CSIPowerMaxSpecDriverSideCarsEnvsValueFromResourceFieldRef(dict):
 
     @property
     @pulumi.getter
-    def divisor(self) -> Optional[str]:
+    def divisor(self) -> Optional['outputs.CSIPowerMaxSpecDriverSideCarsEnvsValueFromResourceFieldRefDivisor']:
         """
         Specifies the output format of the exposed resources, defaults to "1"
         """
         return pulumi.get(self, "divisor")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class CSIPowerMaxSpecDriverSideCarsEnvsValueFromResourceFieldRefDivisor(dict):
+    def __init__(__self__):
+        pass
 
     def _translate_property(self, prop):
         return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
@@ -3771,6 +5411,80 @@ class CSIPowerMaxSpecDriverSideCarsEnvsValueFromSecretKeyRef(dict):
 
 
 @pulumi.output_type
+class CSIPowerMaxSpecDriverSideCarsTolerations(dict):
+    """
+    The pod this Toleration is attached to tolerates any taint that matches the triple <key,value,effect> using the matching operator <operator>.
+    """
+    def __init__(__self__, *,
+                 effect: Optional[str] = None,
+                 key: Optional[str] = None,
+                 operator: Optional[str] = None,
+                 toleration_seconds: Optional[int] = None,
+                 value: Optional[str] = None):
+        """
+        The pod this Toleration is attached to tolerates any taint that matches the triple <key,value,effect> using the matching operator <operator>.
+        :param str effect: Effect indicates the taint effect to match. Empty means match all taint effects. When specified, allowed values are NoSchedule, PreferNoSchedule and NoExecute.
+        :param str key: Key is the taint key that the toleration applies to. Empty means match all taint keys. If the key is empty, operator must be Exists; this combination means to match all values and all keys.
+        :param str operator: Operator represents a key's relationship to the value. Valid operators are Exists and Equal. Defaults to Equal. Exists is equivalent to wildcard for value, so that a pod can tolerate all taints of a particular category.
+        :param int toleration_seconds: TolerationSeconds represents the period of time the toleration (which must be of effect NoExecute, otherwise this field is ignored) tolerates the taint. By default, it is not set, which means tolerate the taint forever (do not evict). Zero and negative values will be treated as 0 (evict immediately) by the system.
+        :param str value: Value is the taint value the toleration matches to. If the operator is Exists, the value should be empty, otherwise just a regular string.
+        """
+        if effect is not None:
+            pulumi.set(__self__, "effect", effect)
+        if key is not None:
+            pulumi.set(__self__, "key", key)
+        if operator is not None:
+            pulumi.set(__self__, "operator", operator)
+        if toleration_seconds is not None:
+            pulumi.set(__self__, "toleration_seconds", toleration_seconds)
+        if value is not None:
+            pulumi.set(__self__, "value", value)
+
+    @property
+    @pulumi.getter
+    def effect(self) -> Optional[str]:
+        """
+        Effect indicates the taint effect to match. Empty means match all taint effects. When specified, allowed values are NoSchedule, PreferNoSchedule and NoExecute.
+        """
+        return pulumi.get(self, "effect")
+
+    @property
+    @pulumi.getter
+    def key(self) -> Optional[str]:
+        """
+        Key is the taint key that the toleration applies to. Empty means match all taint keys. If the key is empty, operator must be Exists; this combination means to match all values and all keys.
+        """
+        return pulumi.get(self, "key")
+
+    @property
+    @pulumi.getter
+    def operator(self) -> Optional[str]:
+        """
+        Operator represents a key's relationship to the value. Valid operators are Exists and Equal. Defaults to Equal. Exists is equivalent to wildcard for value, so that a pod can tolerate all taints of a particular category.
+        """
+        return pulumi.get(self, "operator")
+
+    @property
+    @pulumi.getter(name="tolerationSeconds")
+    def toleration_seconds(self) -> Optional[int]:
+        """
+        TolerationSeconds represents the period of time the toleration (which must be of effect NoExecute, otherwise this field is ignored) tolerates the taint. By default, it is not set, which means tolerate the taint forever (do not evict). Zero and negative values will be treated as 0 (evict immediately) by the system.
+        """
+        return pulumi.get(self, "toleration_seconds")
+
+    @property
+    @pulumi.getter
+    def value(self) -> Optional[str]:
+        """
+        Value is the taint value the toleration matches to. If the operator is Exists, the value should be empty, otherwise just a regular string.
+        """
+        return pulumi.get(self, "value")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
 class CSIPowerMaxSpecDriverSnapshotClass(dict):
     """
     SnapshotClass represents a VolumeSnapshotClass
@@ -3815,6 +5529,7 @@ class CSIPowerMaxSpecDriverStorageClass(dict):
     def __init__(__self__, *,
                  name: str,
                  allow_volume_expansion: Optional[bool] = None,
+                 allowed_topologies: Optional[Sequence['outputs.CSIPowerMaxSpecDriverStorageClassAllowedTopologies']] = None,
                  default: Optional[bool] = None,
                  parameters: Optional[Mapping[str, str]] = None,
                  reclaim_policy: Optional[str] = None):
@@ -3822,6 +5537,7 @@ class CSIPowerMaxSpecDriverStorageClass(dict):
         StorageClass represents a kubernetes storage class
         :param str name: Name is the name of the StorageClass
         :param bool allow_volume_expansion: AllowVolumeExpansion is a boolean flag which indicates if volumes can be expanded
+        :param Sequence['CSIPowerMaxSpecDriverStorageClassAllowedTopologiesArgs'] allowed_topologies: Restrict the node topologies where volumes can be dynamically provisioned.
         :param bool default: DefaultSc is a boolean flag to indicate if the storage class is going to be marked as default
         :param Mapping[str, str] parameters: Parameters is a map of driver specific storage class
         :param str reclaim_policy: ReclaimPolicy is the reclaim policy for the storage class
@@ -3829,6 +5545,8 @@ class CSIPowerMaxSpecDriverStorageClass(dict):
         pulumi.set(__self__, "name", name)
         if allow_volume_expansion is not None:
             pulumi.set(__self__, "allow_volume_expansion", allow_volume_expansion)
+        if allowed_topologies is not None:
+            pulumi.set(__self__, "allowed_topologies", allowed_topologies)
         if default is not None:
             pulumi.set(__self__, "default", default)
         if parameters is not None:
@@ -3853,6 +5571,14 @@ class CSIPowerMaxSpecDriverStorageClass(dict):
         return pulumi.get(self, "allow_volume_expansion")
 
     @property
+    @pulumi.getter(name="allowedTopologies")
+    def allowed_topologies(self) -> Optional[Sequence['outputs.CSIPowerMaxSpecDriverStorageClassAllowedTopologies']]:
+        """
+        Restrict the node topologies where volumes can be dynamically provisioned.
+        """
+        return pulumi.get(self, "allowed_topologies")
+
+    @property
     @pulumi.getter
     def default(self) -> Optional[bool]:
         """
@@ -3875,6 +5601,68 @@ class CSIPowerMaxSpecDriverStorageClass(dict):
         ReclaimPolicy is the reclaim policy for the storage class
         """
         return pulumi.get(self, "reclaim_policy")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class CSIPowerMaxSpecDriverStorageClassAllowedTopologies(dict):
+    """
+    A topology selector term represents the result of label queries. A null or empty topology selector term matches no objects. The requirements of them are ANDed. It provides a subset of functionality as NodeSelectorTerm. This is an alpha feature and may change in the future.
+    """
+    def __init__(__self__, *,
+                 match_label_expressions: Optional[Sequence['outputs.CSIPowerMaxSpecDriverStorageClassAllowedTopologiesMatchLabelExpressions']] = None):
+        """
+        A topology selector term represents the result of label queries. A null or empty topology selector term matches no objects. The requirements of them are ANDed. It provides a subset of functionality as NodeSelectorTerm. This is an alpha feature and may change in the future.
+        :param Sequence['CSIPowerMaxSpecDriverStorageClassAllowedTopologiesMatchLabelExpressionsArgs'] match_label_expressions: A list of topology selector requirements by labels.
+        """
+        if match_label_expressions is not None:
+            pulumi.set(__self__, "match_label_expressions", match_label_expressions)
+
+    @property
+    @pulumi.getter(name="matchLabelExpressions")
+    def match_label_expressions(self) -> Optional[Sequence['outputs.CSIPowerMaxSpecDriverStorageClassAllowedTopologiesMatchLabelExpressions']]:
+        """
+        A list of topology selector requirements by labels.
+        """
+        return pulumi.get(self, "match_label_expressions")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class CSIPowerMaxSpecDriverStorageClassAllowedTopologiesMatchLabelExpressions(dict):
+    """
+    A topology selector requirement is a selector that matches given label. This is an alpha feature and may change in the future.
+    """
+    def __init__(__self__, *,
+                 key: str,
+                 values: Sequence[str]):
+        """
+        A topology selector requirement is a selector that matches given label. This is an alpha feature and may change in the future.
+        :param str key: The label key that the selector applies to.
+        :param Sequence[str] values: An array of string values. One value must match the label to be selected. Each entry in Values is ORed.
+        """
+        pulumi.set(__self__, "key", key)
+        pulumi.set(__self__, "values", values)
+
+    @property
+    @pulumi.getter
+    def key(self) -> str:
+        """
+        The label key that the selector applies to.
+        """
+        return pulumi.get(self, "key")
+
+    @property
+    @pulumi.getter
+    def values(self) -> Sequence[str]:
+        """
+        An array of string values. One value must match the label to be selected. Each entry in Values is ORed.
+        """
+        return pulumi.get(self, "values")
 
     def _translate_property(self, prop):
         return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
@@ -4097,6 +5885,2478 @@ class CSIPowerMaxStatusNodeStatus(dict):
 
 
 @pulumi.output_type
+class CSIPowerStoreSpec(dict):
+    """
+    CSIPowerStoreSpec defines the desired state of CSIPowerStore
+    """
+    def __init__(__self__, *,
+                 driver: 'outputs.CSIPowerStoreSpecDriver'):
+        """
+        CSIPowerStoreSpec defines the desired state of CSIPowerStore
+        :param 'CSIPowerStoreSpecDriverArgs' driver: INSERT ADDITIONAL SPEC FIELDS - desired state of cluster Important: Run "operator-sdk generate k8s" to regenerate code after modifying this file Add custom validation using kubebuilder tags: https://book-v1.book.kubebuilder.io/beyond_basics/generating_crd.html
+        """
+        pulumi.set(__self__, "driver", driver)
+
+    @property
+    @pulumi.getter
+    def driver(self) -> 'outputs.CSIPowerStoreSpecDriver':
+        """
+        INSERT ADDITIONAL SPEC FIELDS - desired state of cluster Important: Run "operator-sdk generate k8s" to regenerate code after modifying this file Add custom validation using kubebuilder tags: https://book-v1.book.kubebuilder.io/beyond_basics/generating_crd.html
+        """
+        return pulumi.get(self, "driver")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class CSIPowerStoreSpecDriver(dict):
+    """
+    INSERT ADDITIONAL SPEC FIELDS - desired state of cluster Important: Run "operator-sdk generate k8s" to regenerate code after modifying this file Add custom validation using kubebuilder tags: https://book-v1.book.kubebuilder.io/beyond_basics/generating_crd.html
+    """
+    def __init__(__self__, *,
+                 common: 'outputs.CSIPowerStoreSpecDriverCommon',
+                 config_version: str,
+                 replicas: int,
+                 auth_secret: Optional[str] = None,
+                 controller: Optional['outputs.CSIPowerStoreSpecDriverController'] = None,
+                 force_update: Optional[bool] = None,
+                 node: Optional['outputs.CSIPowerStoreSpecDriverNode'] = None,
+                 side_cars: Optional[Sequence['outputs.CSIPowerStoreSpecDriverSideCars']] = None,
+                 snapshot_class: Optional[Sequence['outputs.CSIPowerStoreSpecDriverSnapshotClass']] = None,
+                 storage_class: Optional[Sequence['outputs.CSIPowerStoreSpecDriverStorageClass']] = None,
+                 tls_cert_secret: Optional[str] = None):
+        """
+        INSERT ADDITIONAL SPEC FIELDS - desired state of cluster Important: Run "operator-sdk generate k8s" to regenerate code after modifying this file Add custom validation using kubebuilder tags: https://book-v1.book.kubebuilder.io/beyond_basics/generating_crd.html
+        :param 'CSIPowerStoreSpecDriverCommonArgs' common: Common is the common specification for both controller and node plugins
+        :param str config_version: ConfigVersion is the configuration version of the driver
+        :param int replicas: Replicas is the count of controllers for Controller plugin
+        :param str auth_secret: AuthSecret is the name of the credentials secret for the driver
+        :param 'CSIPowerStoreSpecDriverControllerArgs' controller: Controller is the specification for Controller plugin only
+        :param bool force_update: ForceUpdate is the boolean flag used to force an update of the driver instance
+        :param 'CSIPowerStoreSpecDriverNodeArgs' node: Node is the specification for Node plugin only
+        :param Sequence['CSIPowerStoreSpecDriverSideCarsArgs'] side_cars: SideCars is the specification for CSI sidecar containers
+        :param Sequence['CSIPowerStoreSpecDriverSnapshotClassArgs'] snapshot_class: SnapshotClass is the specification for Snapshot Classes
+        :param Sequence['CSIPowerStoreSpecDriverStorageClassArgs'] storage_class: StorageClass is the specification for Storage Classes
+        :param str tls_cert_secret: TLSCertSecret is the name of the TLS Cert secret
+        """
+        pulumi.set(__self__, "common", common)
+        pulumi.set(__self__, "config_version", config_version)
+        pulumi.set(__self__, "replicas", replicas)
+        if auth_secret is not None:
+            pulumi.set(__self__, "auth_secret", auth_secret)
+        if controller is not None:
+            pulumi.set(__self__, "controller", controller)
+        if force_update is not None:
+            pulumi.set(__self__, "force_update", force_update)
+        if node is not None:
+            pulumi.set(__self__, "node", node)
+        if side_cars is not None:
+            pulumi.set(__self__, "side_cars", side_cars)
+        if snapshot_class is not None:
+            pulumi.set(__self__, "snapshot_class", snapshot_class)
+        if storage_class is not None:
+            pulumi.set(__self__, "storage_class", storage_class)
+        if tls_cert_secret is not None:
+            pulumi.set(__self__, "tls_cert_secret", tls_cert_secret)
+
+    @property
+    @pulumi.getter
+    def common(self) -> 'outputs.CSIPowerStoreSpecDriverCommon':
+        """
+        Common is the common specification for both controller and node plugins
+        """
+        return pulumi.get(self, "common")
+
+    @property
+    @pulumi.getter(name="configVersion")
+    def config_version(self) -> str:
+        """
+        ConfigVersion is the configuration version of the driver
+        """
+        return pulumi.get(self, "config_version")
+
+    @property
+    @pulumi.getter
+    def replicas(self) -> int:
+        """
+        Replicas is the count of controllers for Controller plugin
+        """
+        return pulumi.get(self, "replicas")
+
+    @property
+    @pulumi.getter(name="authSecret")
+    def auth_secret(self) -> Optional[str]:
+        """
+        AuthSecret is the name of the credentials secret for the driver
+        """
+        return pulumi.get(self, "auth_secret")
+
+    @property
+    @pulumi.getter
+    def controller(self) -> Optional['outputs.CSIPowerStoreSpecDriverController']:
+        """
+        Controller is the specification for Controller plugin only
+        """
+        return pulumi.get(self, "controller")
+
+    @property
+    @pulumi.getter(name="forceUpdate")
+    def force_update(self) -> Optional[bool]:
+        """
+        ForceUpdate is the boolean flag used to force an update of the driver instance
+        """
+        return pulumi.get(self, "force_update")
+
+    @property
+    @pulumi.getter
+    def node(self) -> Optional['outputs.CSIPowerStoreSpecDriverNode']:
+        """
+        Node is the specification for Node plugin only
+        """
+        return pulumi.get(self, "node")
+
+    @property
+    @pulumi.getter(name="sideCars")
+    def side_cars(self) -> Optional[Sequence['outputs.CSIPowerStoreSpecDriverSideCars']]:
+        """
+        SideCars is the specification for CSI sidecar containers
+        """
+        return pulumi.get(self, "side_cars")
+
+    @property
+    @pulumi.getter(name="snapshotClass")
+    def snapshot_class(self) -> Optional[Sequence['outputs.CSIPowerStoreSpecDriverSnapshotClass']]:
+        """
+        SnapshotClass is the specification for Snapshot Classes
+        """
+        return pulumi.get(self, "snapshot_class")
+
+    @property
+    @pulumi.getter(name="storageClass")
+    def storage_class(self) -> Optional[Sequence['outputs.CSIPowerStoreSpecDriverStorageClass']]:
+        """
+        StorageClass is the specification for Storage Classes
+        """
+        return pulumi.get(self, "storage_class")
+
+    @property
+    @pulumi.getter(name="tlsCertSecret")
+    def tls_cert_secret(self) -> Optional[str]:
+        """
+        TLSCertSecret is the name of the TLS Cert secret
+        """
+        return pulumi.get(self, "tls_cert_secret")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class CSIPowerStoreSpecDriverCommon(dict):
+    """
+    Common is the common specification for both controller and node plugins
+    """
+    def __init__(__self__, *,
+                 args: Optional[Sequence[str]] = None,
+                 envs: Optional[Sequence['outputs.CSIPowerStoreSpecDriverCommonEnvs']] = None,
+                 image: Optional[str] = None,
+                 image_pull_policy: Optional[str] = None,
+                 name: Optional[str] = None,
+                 node_selector: Optional[Mapping[str, str]] = None,
+                 tolerations: Optional[Sequence['outputs.CSIPowerStoreSpecDriverCommonTolerations']] = None):
+        """
+        Common is the common specification for both controller and node plugins
+        :param Sequence[str] args: Args is the set of arguments for the container
+        :param Sequence['CSIPowerStoreSpecDriverCommonEnvsArgs'] envs: Envs is the set of environment variables for the container
+        :param str image: Image is the image tag for the Container
+        :param str image_pull_policy: ImagePullPolicy is the image pull policy for the image
+        :param str name: Name is the name of Container
+        :param Mapping[str, str] node_selector: NodeSelector is a selector which must be true for the pod to fit on a node. Selector which must match a node's labels for the pod to be scheduled on that node.
+        :param Sequence['CSIPowerStoreSpecDriverCommonTolerationsArgs'] tolerations: Tolerations is the list of tolerations for the driver pods
+        """
+        if args is not None:
+            pulumi.set(__self__, "args", args)
+        if envs is not None:
+            pulumi.set(__self__, "envs", envs)
+        if image is not None:
+            pulumi.set(__self__, "image", image)
+        if image_pull_policy is not None:
+            pulumi.set(__self__, "image_pull_policy", image_pull_policy)
+        if name is not None:
+            pulumi.set(__self__, "name", name)
+        if node_selector is not None:
+            pulumi.set(__self__, "node_selector", node_selector)
+        if tolerations is not None:
+            pulumi.set(__self__, "tolerations", tolerations)
+
+    @property
+    @pulumi.getter
+    def args(self) -> Optional[Sequence[str]]:
+        """
+        Args is the set of arguments for the container
+        """
+        return pulumi.get(self, "args")
+
+    @property
+    @pulumi.getter
+    def envs(self) -> Optional[Sequence['outputs.CSIPowerStoreSpecDriverCommonEnvs']]:
+        """
+        Envs is the set of environment variables for the container
+        """
+        return pulumi.get(self, "envs")
+
+    @property
+    @pulumi.getter
+    def image(self) -> Optional[str]:
+        """
+        Image is the image tag for the Container
+        """
+        return pulumi.get(self, "image")
+
+    @property
+    @pulumi.getter(name="imagePullPolicy")
+    def image_pull_policy(self) -> Optional[str]:
+        """
+        ImagePullPolicy is the image pull policy for the image
+        """
+        return pulumi.get(self, "image_pull_policy")
+
+    @property
+    @pulumi.getter
+    def name(self) -> Optional[str]:
+        """
+        Name is the name of Container
+        """
+        return pulumi.get(self, "name")
+
+    @property
+    @pulumi.getter(name="nodeSelector")
+    def node_selector(self) -> Optional[Mapping[str, str]]:
+        """
+        NodeSelector is a selector which must be true for the pod to fit on a node. Selector which must match a node's labels for the pod to be scheduled on that node.
+        """
+        return pulumi.get(self, "node_selector")
+
+    @property
+    @pulumi.getter
+    def tolerations(self) -> Optional[Sequence['outputs.CSIPowerStoreSpecDriverCommonTolerations']]:
+        """
+        Tolerations is the list of tolerations for the driver pods
+        """
+        return pulumi.get(self, "tolerations")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class CSIPowerStoreSpecDriverCommonEnvs(dict):
+    """
+    EnvVar represents an environment variable present in a Container.
+    """
+    def __init__(__self__, *,
+                 name: str,
+                 value: Optional[str] = None,
+                 value_from: Optional['outputs.CSIPowerStoreSpecDriverCommonEnvsValueFrom'] = None):
+        """
+        EnvVar represents an environment variable present in a Container.
+        :param str name: Name of the environment variable. Must be a C_IDENTIFIER.
+        :param str value: Variable references $(VAR_NAME) are expanded using the previous defined environment variables in the container and any service environment variables. If a variable cannot be resolved, the reference in the input string will be unchanged. The $(VAR_NAME) syntax can be escaped with a double $$, ie: $$(VAR_NAME). Escaped references will never be expanded, regardless of whether the variable exists or not. Defaults to "".
+        :param 'CSIPowerStoreSpecDriverCommonEnvsValueFromArgs' value_from: Source for the environment variable's value. Cannot be used if value is not empty.
+        """
+        pulumi.set(__self__, "name", name)
+        if value is not None:
+            pulumi.set(__self__, "value", value)
+        if value_from is not None:
+            pulumi.set(__self__, "value_from", value_from)
+
+    @property
+    @pulumi.getter
+    def name(self) -> str:
+        """
+        Name of the environment variable. Must be a C_IDENTIFIER.
+        """
+        return pulumi.get(self, "name")
+
+    @property
+    @pulumi.getter
+    def value(self) -> Optional[str]:
+        """
+        Variable references $(VAR_NAME) are expanded using the previous defined environment variables in the container and any service environment variables. If a variable cannot be resolved, the reference in the input string will be unchanged. The $(VAR_NAME) syntax can be escaped with a double $$, ie: $$(VAR_NAME). Escaped references will never be expanded, regardless of whether the variable exists or not. Defaults to "".
+        """
+        return pulumi.get(self, "value")
+
+    @property
+    @pulumi.getter(name="valueFrom")
+    def value_from(self) -> Optional['outputs.CSIPowerStoreSpecDriverCommonEnvsValueFrom']:
+        """
+        Source for the environment variable's value. Cannot be used if value is not empty.
+        """
+        return pulumi.get(self, "value_from")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class CSIPowerStoreSpecDriverCommonEnvsValueFrom(dict):
+    """
+    Source for the environment variable's value. Cannot be used if value is not empty.
+    """
+    def __init__(__self__, *,
+                 config_map_key_ref: Optional['outputs.CSIPowerStoreSpecDriverCommonEnvsValueFromConfigMapKeyRef'] = None,
+                 field_ref: Optional['outputs.CSIPowerStoreSpecDriverCommonEnvsValueFromFieldRef'] = None,
+                 resource_field_ref: Optional['outputs.CSIPowerStoreSpecDriverCommonEnvsValueFromResourceFieldRef'] = None,
+                 secret_key_ref: Optional['outputs.CSIPowerStoreSpecDriverCommonEnvsValueFromSecretKeyRef'] = None):
+        """
+        Source for the environment variable's value. Cannot be used if value is not empty.
+        :param 'CSIPowerStoreSpecDriverCommonEnvsValueFromConfigMapKeyRefArgs' config_map_key_ref: Selects a key of a ConfigMap.
+        :param 'CSIPowerStoreSpecDriverCommonEnvsValueFromFieldRefArgs' field_ref: Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
+        :param 'CSIPowerStoreSpecDriverCommonEnvsValueFromResourceFieldRefArgs' resource_field_ref: Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
+        :param 'CSIPowerStoreSpecDriverCommonEnvsValueFromSecretKeyRefArgs' secret_key_ref: Selects a key of a secret in the pod's namespace
+        """
+        if config_map_key_ref is not None:
+            pulumi.set(__self__, "config_map_key_ref", config_map_key_ref)
+        if field_ref is not None:
+            pulumi.set(__self__, "field_ref", field_ref)
+        if resource_field_ref is not None:
+            pulumi.set(__self__, "resource_field_ref", resource_field_ref)
+        if secret_key_ref is not None:
+            pulumi.set(__self__, "secret_key_ref", secret_key_ref)
+
+    @property
+    @pulumi.getter(name="configMapKeyRef")
+    def config_map_key_ref(self) -> Optional['outputs.CSIPowerStoreSpecDriverCommonEnvsValueFromConfigMapKeyRef']:
+        """
+        Selects a key of a ConfigMap.
+        """
+        return pulumi.get(self, "config_map_key_ref")
+
+    @property
+    @pulumi.getter(name="fieldRef")
+    def field_ref(self) -> Optional['outputs.CSIPowerStoreSpecDriverCommonEnvsValueFromFieldRef']:
+        """
+        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
+        """
+        return pulumi.get(self, "field_ref")
+
+    @property
+    @pulumi.getter(name="resourceFieldRef")
+    def resource_field_ref(self) -> Optional['outputs.CSIPowerStoreSpecDriverCommonEnvsValueFromResourceFieldRef']:
+        """
+        Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
+        """
+        return pulumi.get(self, "resource_field_ref")
+
+    @property
+    @pulumi.getter(name="secretKeyRef")
+    def secret_key_ref(self) -> Optional['outputs.CSIPowerStoreSpecDriverCommonEnvsValueFromSecretKeyRef']:
+        """
+        Selects a key of a secret in the pod's namespace
+        """
+        return pulumi.get(self, "secret_key_ref")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class CSIPowerStoreSpecDriverCommonEnvsValueFromConfigMapKeyRef(dict):
+    """
+    Selects a key of a ConfigMap.
+    """
+    def __init__(__self__, *,
+                 key: str,
+                 name: Optional[str] = None,
+                 optional: Optional[bool] = None):
+        """
+        Selects a key of a ConfigMap.
+        :param str key: The key to select.
+        :param str name: Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+        :param bool optional: Specify whether the ConfigMap or its key must be defined
+        """
+        pulumi.set(__self__, "key", key)
+        if name is not None:
+            pulumi.set(__self__, "name", name)
+        if optional is not None:
+            pulumi.set(__self__, "optional", optional)
+
+    @property
+    @pulumi.getter
+    def key(self) -> str:
+        """
+        The key to select.
+        """
+        return pulumi.get(self, "key")
+
+    @property
+    @pulumi.getter
+    def name(self) -> Optional[str]:
+        """
+        Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+        """
+        return pulumi.get(self, "name")
+
+    @property
+    @pulumi.getter
+    def optional(self) -> Optional[bool]:
+        """
+        Specify whether the ConfigMap or its key must be defined
+        """
+        return pulumi.get(self, "optional")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class CSIPowerStoreSpecDriverCommonEnvsValueFromFieldRef(dict):
+    """
+    Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
+    """
+    def __init__(__self__, *,
+                 field_path: str,
+                 api_version: Optional[str] = None):
+        """
+        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
+        :param str field_path: Path of the field to select in the specified API version.
+        :param str api_version: Version of the schema the FieldPath is written in terms of, defaults to "v1".
+        """
+        pulumi.set(__self__, "field_path", field_path)
+        if api_version is not None:
+            pulumi.set(__self__, "api_version", api_version)
+
+    @property
+    @pulumi.getter(name="fieldPath")
+    def field_path(self) -> str:
+        """
+        Path of the field to select in the specified API version.
+        """
+        return pulumi.get(self, "field_path")
+
+    @property
+    @pulumi.getter(name="apiVersion")
+    def api_version(self) -> Optional[str]:
+        """
+        Version of the schema the FieldPath is written in terms of, defaults to "v1".
+        """
+        return pulumi.get(self, "api_version")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class CSIPowerStoreSpecDriverCommonEnvsValueFromResourceFieldRef(dict):
+    """
+    Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
+    """
+    def __init__(__self__, *,
+                 resource: str,
+                 container_name: Optional[str] = None,
+                 divisor: Optional['outputs.CSIPowerStoreSpecDriverCommonEnvsValueFromResourceFieldRefDivisor'] = None):
+        """
+        Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
+        :param str resource: Required: resource to select
+        :param str container_name: Container name: required for volumes, optional for env vars
+        :param 'CSIPowerStoreSpecDriverCommonEnvsValueFromResourceFieldRefDivisorArgs' divisor: Specifies the output format of the exposed resources, defaults to "1"
+        """
+        pulumi.set(__self__, "resource", resource)
+        if container_name is not None:
+            pulumi.set(__self__, "container_name", container_name)
+        if divisor is not None:
+            pulumi.set(__self__, "divisor", divisor)
+
+    @property
+    @pulumi.getter
+    def resource(self) -> str:
+        """
+        Required: resource to select
+        """
+        return pulumi.get(self, "resource")
+
+    @property
+    @pulumi.getter(name="containerName")
+    def container_name(self) -> Optional[str]:
+        """
+        Container name: required for volumes, optional for env vars
+        """
+        return pulumi.get(self, "container_name")
+
+    @property
+    @pulumi.getter
+    def divisor(self) -> Optional['outputs.CSIPowerStoreSpecDriverCommonEnvsValueFromResourceFieldRefDivisor']:
+        """
+        Specifies the output format of the exposed resources, defaults to "1"
+        """
+        return pulumi.get(self, "divisor")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class CSIPowerStoreSpecDriverCommonEnvsValueFromResourceFieldRefDivisor(dict):
+    def __init__(__self__):
+        pass
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class CSIPowerStoreSpecDriverCommonEnvsValueFromSecretKeyRef(dict):
+    """
+    Selects a key of a secret in the pod's namespace
+    """
+    def __init__(__self__, *,
+                 key: str,
+                 name: Optional[str] = None,
+                 optional: Optional[bool] = None):
+        """
+        Selects a key of a secret in the pod's namespace
+        :param str key: The key of the secret to select from.  Must be a valid secret key.
+        :param str name: Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+        :param bool optional: Specify whether the Secret or its key must be defined
+        """
+        pulumi.set(__self__, "key", key)
+        if name is not None:
+            pulumi.set(__self__, "name", name)
+        if optional is not None:
+            pulumi.set(__self__, "optional", optional)
+
+    @property
+    @pulumi.getter
+    def key(self) -> str:
+        """
+        The key of the secret to select from.  Must be a valid secret key.
+        """
+        return pulumi.get(self, "key")
+
+    @property
+    @pulumi.getter
+    def name(self) -> Optional[str]:
+        """
+        Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+        """
+        return pulumi.get(self, "name")
+
+    @property
+    @pulumi.getter
+    def optional(self) -> Optional[bool]:
+        """
+        Specify whether the Secret or its key must be defined
+        """
+        return pulumi.get(self, "optional")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class CSIPowerStoreSpecDriverCommonTolerations(dict):
+    """
+    The pod this Toleration is attached to tolerates any taint that matches the triple <key,value,effect> using the matching operator <operator>.
+    """
+    def __init__(__self__, *,
+                 effect: Optional[str] = None,
+                 key: Optional[str] = None,
+                 operator: Optional[str] = None,
+                 toleration_seconds: Optional[int] = None,
+                 value: Optional[str] = None):
+        """
+        The pod this Toleration is attached to tolerates any taint that matches the triple <key,value,effect> using the matching operator <operator>.
+        :param str effect: Effect indicates the taint effect to match. Empty means match all taint effects. When specified, allowed values are NoSchedule, PreferNoSchedule and NoExecute.
+        :param str key: Key is the taint key that the toleration applies to. Empty means match all taint keys. If the key is empty, operator must be Exists; this combination means to match all values and all keys.
+        :param str operator: Operator represents a key's relationship to the value. Valid operators are Exists and Equal. Defaults to Equal. Exists is equivalent to wildcard for value, so that a pod can tolerate all taints of a particular category.
+        :param int toleration_seconds: TolerationSeconds represents the period of time the toleration (which must be of effect NoExecute, otherwise this field is ignored) tolerates the taint. By default, it is not set, which means tolerate the taint forever (do not evict). Zero and negative values will be treated as 0 (evict immediately) by the system.
+        :param str value: Value is the taint value the toleration matches to. If the operator is Exists, the value should be empty, otherwise just a regular string.
+        """
+        if effect is not None:
+            pulumi.set(__self__, "effect", effect)
+        if key is not None:
+            pulumi.set(__self__, "key", key)
+        if operator is not None:
+            pulumi.set(__self__, "operator", operator)
+        if toleration_seconds is not None:
+            pulumi.set(__self__, "toleration_seconds", toleration_seconds)
+        if value is not None:
+            pulumi.set(__self__, "value", value)
+
+    @property
+    @pulumi.getter
+    def effect(self) -> Optional[str]:
+        """
+        Effect indicates the taint effect to match. Empty means match all taint effects. When specified, allowed values are NoSchedule, PreferNoSchedule and NoExecute.
+        """
+        return pulumi.get(self, "effect")
+
+    @property
+    @pulumi.getter
+    def key(self) -> Optional[str]:
+        """
+        Key is the taint key that the toleration applies to. Empty means match all taint keys. If the key is empty, operator must be Exists; this combination means to match all values and all keys.
+        """
+        return pulumi.get(self, "key")
+
+    @property
+    @pulumi.getter
+    def operator(self) -> Optional[str]:
+        """
+        Operator represents a key's relationship to the value. Valid operators are Exists and Equal. Defaults to Equal. Exists is equivalent to wildcard for value, so that a pod can tolerate all taints of a particular category.
+        """
+        return pulumi.get(self, "operator")
+
+    @property
+    @pulumi.getter(name="tolerationSeconds")
+    def toleration_seconds(self) -> Optional[int]:
+        """
+        TolerationSeconds represents the period of time the toleration (which must be of effect NoExecute, otherwise this field is ignored) tolerates the taint. By default, it is not set, which means tolerate the taint forever (do not evict). Zero and negative values will be treated as 0 (evict immediately) by the system.
+        """
+        return pulumi.get(self, "toleration_seconds")
+
+    @property
+    @pulumi.getter
+    def value(self) -> Optional[str]:
+        """
+        Value is the taint value the toleration matches to. If the operator is Exists, the value should be empty, otherwise just a regular string.
+        """
+        return pulumi.get(self, "value")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class CSIPowerStoreSpecDriverController(dict):
+    """
+    Controller is the specification for Controller plugin only
+    """
+    def __init__(__self__, *,
+                 args: Optional[Sequence[str]] = None,
+                 envs: Optional[Sequence['outputs.CSIPowerStoreSpecDriverControllerEnvs']] = None,
+                 image: Optional[str] = None,
+                 image_pull_policy: Optional[str] = None,
+                 name: Optional[str] = None,
+                 node_selector: Optional[Mapping[str, str]] = None,
+                 tolerations: Optional[Sequence['outputs.CSIPowerStoreSpecDriverControllerTolerations']] = None):
+        """
+        Controller is the specification for Controller plugin only
+        :param Sequence[str] args: Args is the set of arguments for the container
+        :param Sequence['CSIPowerStoreSpecDriverControllerEnvsArgs'] envs: Envs is the set of environment variables for the container
+        :param str image: Image is the image tag for the Container
+        :param str image_pull_policy: ImagePullPolicy is the image pull policy for the image
+        :param str name: Name is the name of Container
+        :param Mapping[str, str] node_selector: NodeSelector is a selector which must be true for the pod to fit on a node. Selector which must match a node's labels for the pod to be scheduled on that node.
+        :param Sequence['CSIPowerStoreSpecDriverControllerTolerationsArgs'] tolerations: Tolerations is the list of tolerations for the driver pods
+        """
+        if args is not None:
+            pulumi.set(__self__, "args", args)
+        if envs is not None:
+            pulumi.set(__self__, "envs", envs)
+        if image is not None:
+            pulumi.set(__self__, "image", image)
+        if image_pull_policy is not None:
+            pulumi.set(__self__, "image_pull_policy", image_pull_policy)
+        if name is not None:
+            pulumi.set(__self__, "name", name)
+        if node_selector is not None:
+            pulumi.set(__self__, "node_selector", node_selector)
+        if tolerations is not None:
+            pulumi.set(__self__, "tolerations", tolerations)
+
+    @property
+    @pulumi.getter
+    def args(self) -> Optional[Sequence[str]]:
+        """
+        Args is the set of arguments for the container
+        """
+        return pulumi.get(self, "args")
+
+    @property
+    @pulumi.getter
+    def envs(self) -> Optional[Sequence['outputs.CSIPowerStoreSpecDriverControllerEnvs']]:
+        """
+        Envs is the set of environment variables for the container
+        """
+        return pulumi.get(self, "envs")
+
+    @property
+    @pulumi.getter
+    def image(self) -> Optional[str]:
+        """
+        Image is the image tag for the Container
+        """
+        return pulumi.get(self, "image")
+
+    @property
+    @pulumi.getter(name="imagePullPolicy")
+    def image_pull_policy(self) -> Optional[str]:
+        """
+        ImagePullPolicy is the image pull policy for the image
+        """
+        return pulumi.get(self, "image_pull_policy")
+
+    @property
+    @pulumi.getter
+    def name(self) -> Optional[str]:
+        """
+        Name is the name of Container
+        """
+        return pulumi.get(self, "name")
+
+    @property
+    @pulumi.getter(name="nodeSelector")
+    def node_selector(self) -> Optional[Mapping[str, str]]:
+        """
+        NodeSelector is a selector which must be true for the pod to fit on a node. Selector which must match a node's labels for the pod to be scheduled on that node.
+        """
+        return pulumi.get(self, "node_selector")
+
+    @property
+    @pulumi.getter
+    def tolerations(self) -> Optional[Sequence['outputs.CSIPowerStoreSpecDriverControllerTolerations']]:
+        """
+        Tolerations is the list of tolerations for the driver pods
+        """
+        return pulumi.get(self, "tolerations")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class CSIPowerStoreSpecDriverControllerEnvs(dict):
+    """
+    EnvVar represents an environment variable present in a Container.
+    """
+    def __init__(__self__, *,
+                 name: str,
+                 value: Optional[str] = None,
+                 value_from: Optional['outputs.CSIPowerStoreSpecDriverControllerEnvsValueFrom'] = None):
+        """
+        EnvVar represents an environment variable present in a Container.
+        :param str name: Name of the environment variable. Must be a C_IDENTIFIER.
+        :param str value: Variable references $(VAR_NAME) are expanded using the previous defined environment variables in the container and any service environment variables. If a variable cannot be resolved, the reference in the input string will be unchanged. The $(VAR_NAME) syntax can be escaped with a double $$, ie: $$(VAR_NAME). Escaped references will never be expanded, regardless of whether the variable exists or not. Defaults to "".
+        :param 'CSIPowerStoreSpecDriverControllerEnvsValueFromArgs' value_from: Source for the environment variable's value. Cannot be used if value is not empty.
+        """
+        pulumi.set(__self__, "name", name)
+        if value is not None:
+            pulumi.set(__self__, "value", value)
+        if value_from is not None:
+            pulumi.set(__self__, "value_from", value_from)
+
+    @property
+    @pulumi.getter
+    def name(self) -> str:
+        """
+        Name of the environment variable. Must be a C_IDENTIFIER.
+        """
+        return pulumi.get(self, "name")
+
+    @property
+    @pulumi.getter
+    def value(self) -> Optional[str]:
+        """
+        Variable references $(VAR_NAME) are expanded using the previous defined environment variables in the container and any service environment variables. If a variable cannot be resolved, the reference in the input string will be unchanged. The $(VAR_NAME) syntax can be escaped with a double $$, ie: $$(VAR_NAME). Escaped references will never be expanded, regardless of whether the variable exists or not. Defaults to "".
+        """
+        return pulumi.get(self, "value")
+
+    @property
+    @pulumi.getter(name="valueFrom")
+    def value_from(self) -> Optional['outputs.CSIPowerStoreSpecDriverControllerEnvsValueFrom']:
+        """
+        Source for the environment variable's value. Cannot be used if value is not empty.
+        """
+        return pulumi.get(self, "value_from")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class CSIPowerStoreSpecDriverControllerEnvsValueFrom(dict):
+    """
+    Source for the environment variable's value. Cannot be used if value is not empty.
+    """
+    def __init__(__self__, *,
+                 config_map_key_ref: Optional['outputs.CSIPowerStoreSpecDriverControllerEnvsValueFromConfigMapKeyRef'] = None,
+                 field_ref: Optional['outputs.CSIPowerStoreSpecDriverControllerEnvsValueFromFieldRef'] = None,
+                 resource_field_ref: Optional['outputs.CSIPowerStoreSpecDriverControllerEnvsValueFromResourceFieldRef'] = None,
+                 secret_key_ref: Optional['outputs.CSIPowerStoreSpecDriverControllerEnvsValueFromSecretKeyRef'] = None):
+        """
+        Source for the environment variable's value. Cannot be used if value is not empty.
+        :param 'CSIPowerStoreSpecDriverControllerEnvsValueFromConfigMapKeyRefArgs' config_map_key_ref: Selects a key of a ConfigMap.
+        :param 'CSIPowerStoreSpecDriverControllerEnvsValueFromFieldRefArgs' field_ref: Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
+        :param 'CSIPowerStoreSpecDriverControllerEnvsValueFromResourceFieldRefArgs' resource_field_ref: Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
+        :param 'CSIPowerStoreSpecDriverControllerEnvsValueFromSecretKeyRefArgs' secret_key_ref: Selects a key of a secret in the pod's namespace
+        """
+        if config_map_key_ref is not None:
+            pulumi.set(__self__, "config_map_key_ref", config_map_key_ref)
+        if field_ref is not None:
+            pulumi.set(__self__, "field_ref", field_ref)
+        if resource_field_ref is not None:
+            pulumi.set(__self__, "resource_field_ref", resource_field_ref)
+        if secret_key_ref is not None:
+            pulumi.set(__self__, "secret_key_ref", secret_key_ref)
+
+    @property
+    @pulumi.getter(name="configMapKeyRef")
+    def config_map_key_ref(self) -> Optional['outputs.CSIPowerStoreSpecDriverControllerEnvsValueFromConfigMapKeyRef']:
+        """
+        Selects a key of a ConfigMap.
+        """
+        return pulumi.get(self, "config_map_key_ref")
+
+    @property
+    @pulumi.getter(name="fieldRef")
+    def field_ref(self) -> Optional['outputs.CSIPowerStoreSpecDriverControllerEnvsValueFromFieldRef']:
+        """
+        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
+        """
+        return pulumi.get(self, "field_ref")
+
+    @property
+    @pulumi.getter(name="resourceFieldRef")
+    def resource_field_ref(self) -> Optional['outputs.CSIPowerStoreSpecDriverControllerEnvsValueFromResourceFieldRef']:
+        """
+        Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
+        """
+        return pulumi.get(self, "resource_field_ref")
+
+    @property
+    @pulumi.getter(name="secretKeyRef")
+    def secret_key_ref(self) -> Optional['outputs.CSIPowerStoreSpecDriverControllerEnvsValueFromSecretKeyRef']:
+        """
+        Selects a key of a secret in the pod's namespace
+        """
+        return pulumi.get(self, "secret_key_ref")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class CSIPowerStoreSpecDriverControllerEnvsValueFromConfigMapKeyRef(dict):
+    """
+    Selects a key of a ConfigMap.
+    """
+    def __init__(__self__, *,
+                 key: str,
+                 name: Optional[str] = None,
+                 optional: Optional[bool] = None):
+        """
+        Selects a key of a ConfigMap.
+        :param str key: The key to select.
+        :param str name: Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+        :param bool optional: Specify whether the ConfigMap or its key must be defined
+        """
+        pulumi.set(__self__, "key", key)
+        if name is not None:
+            pulumi.set(__self__, "name", name)
+        if optional is not None:
+            pulumi.set(__self__, "optional", optional)
+
+    @property
+    @pulumi.getter
+    def key(self) -> str:
+        """
+        The key to select.
+        """
+        return pulumi.get(self, "key")
+
+    @property
+    @pulumi.getter
+    def name(self) -> Optional[str]:
+        """
+        Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+        """
+        return pulumi.get(self, "name")
+
+    @property
+    @pulumi.getter
+    def optional(self) -> Optional[bool]:
+        """
+        Specify whether the ConfigMap or its key must be defined
+        """
+        return pulumi.get(self, "optional")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class CSIPowerStoreSpecDriverControllerEnvsValueFromFieldRef(dict):
+    """
+    Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
+    """
+    def __init__(__self__, *,
+                 field_path: str,
+                 api_version: Optional[str] = None):
+        """
+        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
+        :param str field_path: Path of the field to select in the specified API version.
+        :param str api_version: Version of the schema the FieldPath is written in terms of, defaults to "v1".
+        """
+        pulumi.set(__self__, "field_path", field_path)
+        if api_version is not None:
+            pulumi.set(__self__, "api_version", api_version)
+
+    @property
+    @pulumi.getter(name="fieldPath")
+    def field_path(self) -> str:
+        """
+        Path of the field to select in the specified API version.
+        """
+        return pulumi.get(self, "field_path")
+
+    @property
+    @pulumi.getter(name="apiVersion")
+    def api_version(self) -> Optional[str]:
+        """
+        Version of the schema the FieldPath is written in terms of, defaults to "v1".
+        """
+        return pulumi.get(self, "api_version")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class CSIPowerStoreSpecDriverControllerEnvsValueFromResourceFieldRef(dict):
+    """
+    Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
+    """
+    def __init__(__self__, *,
+                 resource: str,
+                 container_name: Optional[str] = None,
+                 divisor: Optional['outputs.CSIPowerStoreSpecDriverControllerEnvsValueFromResourceFieldRefDivisor'] = None):
+        """
+        Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
+        :param str resource: Required: resource to select
+        :param str container_name: Container name: required for volumes, optional for env vars
+        :param 'CSIPowerStoreSpecDriverControllerEnvsValueFromResourceFieldRefDivisorArgs' divisor: Specifies the output format of the exposed resources, defaults to "1"
+        """
+        pulumi.set(__self__, "resource", resource)
+        if container_name is not None:
+            pulumi.set(__self__, "container_name", container_name)
+        if divisor is not None:
+            pulumi.set(__self__, "divisor", divisor)
+
+    @property
+    @pulumi.getter
+    def resource(self) -> str:
+        """
+        Required: resource to select
+        """
+        return pulumi.get(self, "resource")
+
+    @property
+    @pulumi.getter(name="containerName")
+    def container_name(self) -> Optional[str]:
+        """
+        Container name: required for volumes, optional for env vars
+        """
+        return pulumi.get(self, "container_name")
+
+    @property
+    @pulumi.getter
+    def divisor(self) -> Optional['outputs.CSIPowerStoreSpecDriverControllerEnvsValueFromResourceFieldRefDivisor']:
+        """
+        Specifies the output format of the exposed resources, defaults to "1"
+        """
+        return pulumi.get(self, "divisor")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class CSIPowerStoreSpecDriverControllerEnvsValueFromResourceFieldRefDivisor(dict):
+    def __init__(__self__):
+        pass
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class CSIPowerStoreSpecDriverControllerEnvsValueFromSecretKeyRef(dict):
+    """
+    Selects a key of a secret in the pod's namespace
+    """
+    def __init__(__self__, *,
+                 key: str,
+                 name: Optional[str] = None,
+                 optional: Optional[bool] = None):
+        """
+        Selects a key of a secret in the pod's namespace
+        :param str key: The key of the secret to select from.  Must be a valid secret key.
+        :param str name: Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+        :param bool optional: Specify whether the Secret or its key must be defined
+        """
+        pulumi.set(__self__, "key", key)
+        if name is not None:
+            pulumi.set(__self__, "name", name)
+        if optional is not None:
+            pulumi.set(__self__, "optional", optional)
+
+    @property
+    @pulumi.getter
+    def key(self) -> str:
+        """
+        The key of the secret to select from.  Must be a valid secret key.
+        """
+        return pulumi.get(self, "key")
+
+    @property
+    @pulumi.getter
+    def name(self) -> Optional[str]:
+        """
+        Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+        """
+        return pulumi.get(self, "name")
+
+    @property
+    @pulumi.getter
+    def optional(self) -> Optional[bool]:
+        """
+        Specify whether the Secret or its key must be defined
+        """
+        return pulumi.get(self, "optional")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class CSIPowerStoreSpecDriverControllerTolerations(dict):
+    """
+    The pod this Toleration is attached to tolerates any taint that matches the triple <key,value,effect> using the matching operator <operator>.
+    """
+    def __init__(__self__, *,
+                 effect: Optional[str] = None,
+                 key: Optional[str] = None,
+                 operator: Optional[str] = None,
+                 toleration_seconds: Optional[int] = None,
+                 value: Optional[str] = None):
+        """
+        The pod this Toleration is attached to tolerates any taint that matches the triple <key,value,effect> using the matching operator <operator>.
+        :param str effect: Effect indicates the taint effect to match. Empty means match all taint effects. When specified, allowed values are NoSchedule, PreferNoSchedule and NoExecute.
+        :param str key: Key is the taint key that the toleration applies to. Empty means match all taint keys. If the key is empty, operator must be Exists; this combination means to match all values and all keys.
+        :param str operator: Operator represents a key's relationship to the value. Valid operators are Exists and Equal. Defaults to Equal. Exists is equivalent to wildcard for value, so that a pod can tolerate all taints of a particular category.
+        :param int toleration_seconds: TolerationSeconds represents the period of time the toleration (which must be of effect NoExecute, otherwise this field is ignored) tolerates the taint. By default, it is not set, which means tolerate the taint forever (do not evict). Zero and negative values will be treated as 0 (evict immediately) by the system.
+        :param str value: Value is the taint value the toleration matches to. If the operator is Exists, the value should be empty, otherwise just a regular string.
+        """
+        if effect is not None:
+            pulumi.set(__self__, "effect", effect)
+        if key is not None:
+            pulumi.set(__self__, "key", key)
+        if operator is not None:
+            pulumi.set(__self__, "operator", operator)
+        if toleration_seconds is not None:
+            pulumi.set(__self__, "toleration_seconds", toleration_seconds)
+        if value is not None:
+            pulumi.set(__self__, "value", value)
+
+    @property
+    @pulumi.getter
+    def effect(self) -> Optional[str]:
+        """
+        Effect indicates the taint effect to match. Empty means match all taint effects. When specified, allowed values are NoSchedule, PreferNoSchedule and NoExecute.
+        """
+        return pulumi.get(self, "effect")
+
+    @property
+    @pulumi.getter
+    def key(self) -> Optional[str]:
+        """
+        Key is the taint key that the toleration applies to. Empty means match all taint keys. If the key is empty, operator must be Exists; this combination means to match all values and all keys.
+        """
+        return pulumi.get(self, "key")
+
+    @property
+    @pulumi.getter
+    def operator(self) -> Optional[str]:
+        """
+        Operator represents a key's relationship to the value. Valid operators are Exists and Equal. Defaults to Equal. Exists is equivalent to wildcard for value, so that a pod can tolerate all taints of a particular category.
+        """
+        return pulumi.get(self, "operator")
+
+    @property
+    @pulumi.getter(name="tolerationSeconds")
+    def toleration_seconds(self) -> Optional[int]:
+        """
+        TolerationSeconds represents the period of time the toleration (which must be of effect NoExecute, otherwise this field is ignored) tolerates the taint. By default, it is not set, which means tolerate the taint forever (do not evict). Zero and negative values will be treated as 0 (evict immediately) by the system.
+        """
+        return pulumi.get(self, "toleration_seconds")
+
+    @property
+    @pulumi.getter
+    def value(self) -> Optional[str]:
+        """
+        Value is the taint value the toleration matches to. If the operator is Exists, the value should be empty, otherwise just a regular string.
+        """
+        return pulumi.get(self, "value")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class CSIPowerStoreSpecDriverNode(dict):
+    """
+    Node is the specification for Node plugin only
+    """
+    def __init__(__self__, *,
+                 args: Optional[Sequence[str]] = None,
+                 envs: Optional[Sequence['outputs.CSIPowerStoreSpecDriverNodeEnvs']] = None,
+                 image: Optional[str] = None,
+                 image_pull_policy: Optional[str] = None,
+                 name: Optional[str] = None,
+                 node_selector: Optional[Mapping[str, str]] = None,
+                 tolerations: Optional[Sequence['outputs.CSIPowerStoreSpecDriverNodeTolerations']] = None):
+        """
+        Node is the specification for Node plugin only
+        :param Sequence[str] args: Args is the set of arguments for the container
+        :param Sequence['CSIPowerStoreSpecDriverNodeEnvsArgs'] envs: Envs is the set of environment variables for the container
+        :param str image: Image is the image tag for the Container
+        :param str image_pull_policy: ImagePullPolicy is the image pull policy for the image
+        :param str name: Name is the name of Container
+        :param Mapping[str, str] node_selector: NodeSelector is a selector which must be true for the pod to fit on a node. Selector which must match a node's labels for the pod to be scheduled on that node.
+        :param Sequence['CSIPowerStoreSpecDriverNodeTolerationsArgs'] tolerations: Tolerations is the list of tolerations for the driver pods
+        """
+        if args is not None:
+            pulumi.set(__self__, "args", args)
+        if envs is not None:
+            pulumi.set(__self__, "envs", envs)
+        if image is not None:
+            pulumi.set(__self__, "image", image)
+        if image_pull_policy is not None:
+            pulumi.set(__self__, "image_pull_policy", image_pull_policy)
+        if name is not None:
+            pulumi.set(__self__, "name", name)
+        if node_selector is not None:
+            pulumi.set(__self__, "node_selector", node_selector)
+        if tolerations is not None:
+            pulumi.set(__self__, "tolerations", tolerations)
+
+    @property
+    @pulumi.getter
+    def args(self) -> Optional[Sequence[str]]:
+        """
+        Args is the set of arguments for the container
+        """
+        return pulumi.get(self, "args")
+
+    @property
+    @pulumi.getter
+    def envs(self) -> Optional[Sequence['outputs.CSIPowerStoreSpecDriverNodeEnvs']]:
+        """
+        Envs is the set of environment variables for the container
+        """
+        return pulumi.get(self, "envs")
+
+    @property
+    @pulumi.getter
+    def image(self) -> Optional[str]:
+        """
+        Image is the image tag for the Container
+        """
+        return pulumi.get(self, "image")
+
+    @property
+    @pulumi.getter(name="imagePullPolicy")
+    def image_pull_policy(self) -> Optional[str]:
+        """
+        ImagePullPolicy is the image pull policy for the image
+        """
+        return pulumi.get(self, "image_pull_policy")
+
+    @property
+    @pulumi.getter
+    def name(self) -> Optional[str]:
+        """
+        Name is the name of Container
+        """
+        return pulumi.get(self, "name")
+
+    @property
+    @pulumi.getter(name="nodeSelector")
+    def node_selector(self) -> Optional[Mapping[str, str]]:
+        """
+        NodeSelector is a selector which must be true for the pod to fit on a node. Selector which must match a node's labels for the pod to be scheduled on that node.
+        """
+        return pulumi.get(self, "node_selector")
+
+    @property
+    @pulumi.getter
+    def tolerations(self) -> Optional[Sequence['outputs.CSIPowerStoreSpecDriverNodeTolerations']]:
+        """
+        Tolerations is the list of tolerations for the driver pods
+        """
+        return pulumi.get(self, "tolerations")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class CSIPowerStoreSpecDriverNodeEnvs(dict):
+    """
+    EnvVar represents an environment variable present in a Container.
+    """
+    def __init__(__self__, *,
+                 name: str,
+                 value: Optional[str] = None,
+                 value_from: Optional['outputs.CSIPowerStoreSpecDriverNodeEnvsValueFrom'] = None):
+        """
+        EnvVar represents an environment variable present in a Container.
+        :param str name: Name of the environment variable. Must be a C_IDENTIFIER.
+        :param str value: Variable references $(VAR_NAME) are expanded using the previous defined environment variables in the container and any service environment variables. If a variable cannot be resolved, the reference in the input string will be unchanged. The $(VAR_NAME) syntax can be escaped with a double $$, ie: $$(VAR_NAME). Escaped references will never be expanded, regardless of whether the variable exists or not. Defaults to "".
+        :param 'CSIPowerStoreSpecDriverNodeEnvsValueFromArgs' value_from: Source for the environment variable's value. Cannot be used if value is not empty.
+        """
+        pulumi.set(__self__, "name", name)
+        if value is not None:
+            pulumi.set(__self__, "value", value)
+        if value_from is not None:
+            pulumi.set(__self__, "value_from", value_from)
+
+    @property
+    @pulumi.getter
+    def name(self) -> str:
+        """
+        Name of the environment variable. Must be a C_IDENTIFIER.
+        """
+        return pulumi.get(self, "name")
+
+    @property
+    @pulumi.getter
+    def value(self) -> Optional[str]:
+        """
+        Variable references $(VAR_NAME) are expanded using the previous defined environment variables in the container and any service environment variables. If a variable cannot be resolved, the reference in the input string will be unchanged. The $(VAR_NAME) syntax can be escaped with a double $$, ie: $$(VAR_NAME). Escaped references will never be expanded, regardless of whether the variable exists or not. Defaults to "".
+        """
+        return pulumi.get(self, "value")
+
+    @property
+    @pulumi.getter(name="valueFrom")
+    def value_from(self) -> Optional['outputs.CSIPowerStoreSpecDriverNodeEnvsValueFrom']:
+        """
+        Source for the environment variable's value. Cannot be used if value is not empty.
+        """
+        return pulumi.get(self, "value_from")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class CSIPowerStoreSpecDriverNodeEnvsValueFrom(dict):
+    """
+    Source for the environment variable's value. Cannot be used if value is not empty.
+    """
+    def __init__(__self__, *,
+                 config_map_key_ref: Optional['outputs.CSIPowerStoreSpecDriverNodeEnvsValueFromConfigMapKeyRef'] = None,
+                 field_ref: Optional['outputs.CSIPowerStoreSpecDriverNodeEnvsValueFromFieldRef'] = None,
+                 resource_field_ref: Optional['outputs.CSIPowerStoreSpecDriverNodeEnvsValueFromResourceFieldRef'] = None,
+                 secret_key_ref: Optional['outputs.CSIPowerStoreSpecDriverNodeEnvsValueFromSecretKeyRef'] = None):
+        """
+        Source for the environment variable's value. Cannot be used if value is not empty.
+        :param 'CSIPowerStoreSpecDriverNodeEnvsValueFromConfigMapKeyRefArgs' config_map_key_ref: Selects a key of a ConfigMap.
+        :param 'CSIPowerStoreSpecDriverNodeEnvsValueFromFieldRefArgs' field_ref: Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
+        :param 'CSIPowerStoreSpecDriverNodeEnvsValueFromResourceFieldRefArgs' resource_field_ref: Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
+        :param 'CSIPowerStoreSpecDriverNodeEnvsValueFromSecretKeyRefArgs' secret_key_ref: Selects a key of a secret in the pod's namespace
+        """
+        if config_map_key_ref is not None:
+            pulumi.set(__self__, "config_map_key_ref", config_map_key_ref)
+        if field_ref is not None:
+            pulumi.set(__self__, "field_ref", field_ref)
+        if resource_field_ref is not None:
+            pulumi.set(__self__, "resource_field_ref", resource_field_ref)
+        if secret_key_ref is not None:
+            pulumi.set(__self__, "secret_key_ref", secret_key_ref)
+
+    @property
+    @pulumi.getter(name="configMapKeyRef")
+    def config_map_key_ref(self) -> Optional['outputs.CSIPowerStoreSpecDriverNodeEnvsValueFromConfigMapKeyRef']:
+        """
+        Selects a key of a ConfigMap.
+        """
+        return pulumi.get(self, "config_map_key_ref")
+
+    @property
+    @pulumi.getter(name="fieldRef")
+    def field_ref(self) -> Optional['outputs.CSIPowerStoreSpecDriverNodeEnvsValueFromFieldRef']:
+        """
+        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
+        """
+        return pulumi.get(self, "field_ref")
+
+    @property
+    @pulumi.getter(name="resourceFieldRef")
+    def resource_field_ref(self) -> Optional['outputs.CSIPowerStoreSpecDriverNodeEnvsValueFromResourceFieldRef']:
+        """
+        Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
+        """
+        return pulumi.get(self, "resource_field_ref")
+
+    @property
+    @pulumi.getter(name="secretKeyRef")
+    def secret_key_ref(self) -> Optional['outputs.CSIPowerStoreSpecDriverNodeEnvsValueFromSecretKeyRef']:
+        """
+        Selects a key of a secret in the pod's namespace
+        """
+        return pulumi.get(self, "secret_key_ref")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class CSIPowerStoreSpecDriverNodeEnvsValueFromConfigMapKeyRef(dict):
+    """
+    Selects a key of a ConfigMap.
+    """
+    def __init__(__self__, *,
+                 key: str,
+                 name: Optional[str] = None,
+                 optional: Optional[bool] = None):
+        """
+        Selects a key of a ConfigMap.
+        :param str key: The key to select.
+        :param str name: Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+        :param bool optional: Specify whether the ConfigMap or its key must be defined
+        """
+        pulumi.set(__self__, "key", key)
+        if name is not None:
+            pulumi.set(__self__, "name", name)
+        if optional is not None:
+            pulumi.set(__self__, "optional", optional)
+
+    @property
+    @pulumi.getter
+    def key(self) -> str:
+        """
+        The key to select.
+        """
+        return pulumi.get(self, "key")
+
+    @property
+    @pulumi.getter
+    def name(self) -> Optional[str]:
+        """
+        Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+        """
+        return pulumi.get(self, "name")
+
+    @property
+    @pulumi.getter
+    def optional(self) -> Optional[bool]:
+        """
+        Specify whether the ConfigMap or its key must be defined
+        """
+        return pulumi.get(self, "optional")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class CSIPowerStoreSpecDriverNodeEnvsValueFromFieldRef(dict):
+    """
+    Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
+    """
+    def __init__(__self__, *,
+                 field_path: str,
+                 api_version: Optional[str] = None):
+        """
+        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
+        :param str field_path: Path of the field to select in the specified API version.
+        :param str api_version: Version of the schema the FieldPath is written in terms of, defaults to "v1".
+        """
+        pulumi.set(__self__, "field_path", field_path)
+        if api_version is not None:
+            pulumi.set(__self__, "api_version", api_version)
+
+    @property
+    @pulumi.getter(name="fieldPath")
+    def field_path(self) -> str:
+        """
+        Path of the field to select in the specified API version.
+        """
+        return pulumi.get(self, "field_path")
+
+    @property
+    @pulumi.getter(name="apiVersion")
+    def api_version(self) -> Optional[str]:
+        """
+        Version of the schema the FieldPath is written in terms of, defaults to "v1".
+        """
+        return pulumi.get(self, "api_version")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class CSIPowerStoreSpecDriverNodeEnvsValueFromResourceFieldRef(dict):
+    """
+    Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
+    """
+    def __init__(__self__, *,
+                 resource: str,
+                 container_name: Optional[str] = None,
+                 divisor: Optional['outputs.CSIPowerStoreSpecDriverNodeEnvsValueFromResourceFieldRefDivisor'] = None):
+        """
+        Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
+        :param str resource: Required: resource to select
+        :param str container_name: Container name: required for volumes, optional for env vars
+        :param 'CSIPowerStoreSpecDriverNodeEnvsValueFromResourceFieldRefDivisorArgs' divisor: Specifies the output format of the exposed resources, defaults to "1"
+        """
+        pulumi.set(__self__, "resource", resource)
+        if container_name is not None:
+            pulumi.set(__self__, "container_name", container_name)
+        if divisor is not None:
+            pulumi.set(__self__, "divisor", divisor)
+
+    @property
+    @pulumi.getter
+    def resource(self) -> str:
+        """
+        Required: resource to select
+        """
+        return pulumi.get(self, "resource")
+
+    @property
+    @pulumi.getter(name="containerName")
+    def container_name(self) -> Optional[str]:
+        """
+        Container name: required for volumes, optional for env vars
+        """
+        return pulumi.get(self, "container_name")
+
+    @property
+    @pulumi.getter
+    def divisor(self) -> Optional['outputs.CSIPowerStoreSpecDriverNodeEnvsValueFromResourceFieldRefDivisor']:
+        """
+        Specifies the output format of the exposed resources, defaults to "1"
+        """
+        return pulumi.get(self, "divisor")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class CSIPowerStoreSpecDriverNodeEnvsValueFromResourceFieldRefDivisor(dict):
+    def __init__(__self__):
+        pass
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class CSIPowerStoreSpecDriverNodeEnvsValueFromSecretKeyRef(dict):
+    """
+    Selects a key of a secret in the pod's namespace
+    """
+    def __init__(__self__, *,
+                 key: str,
+                 name: Optional[str] = None,
+                 optional: Optional[bool] = None):
+        """
+        Selects a key of a secret in the pod's namespace
+        :param str key: The key of the secret to select from.  Must be a valid secret key.
+        :param str name: Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+        :param bool optional: Specify whether the Secret or its key must be defined
+        """
+        pulumi.set(__self__, "key", key)
+        if name is not None:
+            pulumi.set(__self__, "name", name)
+        if optional is not None:
+            pulumi.set(__self__, "optional", optional)
+
+    @property
+    @pulumi.getter
+    def key(self) -> str:
+        """
+        The key of the secret to select from.  Must be a valid secret key.
+        """
+        return pulumi.get(self, "key")
+
+    @property
+    @pulumi.getter
+    def name(self) -> Optional[str]:
+        """
+        Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+        """
+        return pulumi.get(self, "name")
+
+    @property
+    @pulumi.getter
+    def optional(self) -> Optional[bool]:
+        """
+        Specify whether the Secret or its key must be defined
+        """
+        return pulumi.get(self, "optional")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class CSIPowerStoreSpecDriverNodeTolerations(dict):
+    """
+    The pod this Toleration is attached to tolerates any taint that matches the triple <key,value,effect> using the matching operator <operator>.
+    """
+    def __init__(__self__, *,
+                 effect: Optional[str] = None,
+                 key: Optional[str] = None,
+                 operator: Optional[str] = None,
+                 toleration_seconds: Optional[int] = None,
+                 value: Optional[str] = None):
+        """
+        The pod this Toleration is attached to tolerates any taint that matches the triple <key,value,effect> using the matching operator <operator>.
+        :param str effect: Effect indicates the taint effect to match. Empty means match all taint effects. When specified, allowed values are NoSchedule, PreferNoSchedule and NoExecute.
+        :param str key: Key is the taint key that the toleration applies to. Empty means match all taint keys. If the key is empty, operator must be Exists; this combination means to match all values and all keys.
+        :param str operator: Operator represents a key's relationship to the value. Valid operators are Exists and Equal. Defaults to Equal. Exists is equivalent to wildcard for value, so that a pod can tolerate all taints of a particular category.
+        :param int toleration_seconds: TolerationSeconds represents the period of time the toleration (which must be of effect NoExecute, otherwise this field is ignored) tolerates the taint. By default, it is not set, which means tolerate the taint forever (do not evict). Zero and negative values will be treated as 0 (evict immediately) by the system.
+        :param str value: Value is the taint value the toleration matches to. If the operator is Exists, the value should be empty, otherwise just a regular string.
+        """
+        if effect is not None:
+            pulumi.set(__self__, "effect", effect)
+        if key is not None:
+            pulumi.set(__self__, "key", key)
+        if operator is not None:
+            pulumi.set(__self__, "operator", operator)
+        if toleration_seconds is not None:
+            pulumi.set(__self__, "toleration_seconds", toleration_seconds)
+        if value is not None:
+            pulumi.set(__self__, "value", value)
+
+    @property
+    @pulumi.getter
+    def effect(self) -> Optional[str]:
+        """
+        Effect indicates the taint effect to match. Empty means match all taint effects. When specified, allowed values are NoSchedule, PreferNoSchedule and NoExecute.
+        """
+        return pulumi.get(self, "effect")
+
+    @property
+    @pulumi.getter
+    def key(self) -> Optional[str]:
+        """
+        Key is the taint key that the toleration applies to. Empty means match all taint keys. If the key is empty, operator must be Exists; this combination means to match all values and all keys.
+        """
+        return pulumi.get(self, "key")
+
+    @property
+    @pulumi.getter
+    def operator(self) -> Optional[str]:
+        """
+        Operator represents a key's relationship to the value. Valid operators are Exists and Equal. Defaults to Equal. Exists is equivalent to wildcard for value, so that a pod can tolerate all taints of a particular category.
+        """
+        return pulumi.get(self, "operator")
+
+    @property
+    @pulumi.getter(name="tolerationSeconds")
+    def toleration_seconds(self) -> Optional[int]:
+        """
+        TolerationSeconds represents the period of time the toleration (which must be of effect NoExecute, otherwise this field is ignored) tolerates the taint. By default, it is not set, which means tolerate the taint forever (do not evict). Zero and negative values will be treated as 0 (evict immediately) by the system.
+        """
+        return pulumi.get(self, "toleration_seconds")
+
+    @property
+    @pulumi.getter
+    def value(self) -> Optional[str]:
+        """
+        Value is the taint value the toleration matches to. If the operator is Exists, the value should be empty, otherwise just a regular string.
+        """
+        return pulumi.get(self, "value")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class CSIPowerStoreSpecDriverSideCars(dict):
+    """
+    ContainerTemplate - Structure representing a container
+    """
+    def __init__(__self__, *,
+                 args: Optional[Sequence[str]] = None,
+                 envs: Optional[Sequence['outputs.CSIPowerStoreSpecDriverSideCarsEnvs']] = None,
+                 image: Optional[str] = None,
+                 image_pull_policy: Optional[str] = None,
+                 name: Optional[str] = None,
+                 node_selector: Optional[Mapping[str, str]] = None,
+                 tolerations: Optional[Sequence['outputs.CSIPowerStoreSpecDriverSideCarsTolerations']] = None):
+        """
+        ContainerTemplate - Structure representing a container
+        :param Sequence[str] args: Args is the set of arguments for the container
+        :param Sequence['CSIPowerStoreSpecDriverSideCarsEnvsArgs'] envs: Envs is the set of environment variables for the container
+        :param str image: Image is the image tag for the Container
+        :param str image_pull_policy: ImagePullPolicy is the image pull policy for the image
+        :param str name: Name is the name of Container
+        :param Mapping[str, str] node_selector: NodeSelector is a selector which must be true for the pod to fit on a node. Selector which must match a node's labels for the pod to be scheduled on that node.
+        :param Sequence['CSIPowerStoreSpecDriverSideCarsTolerationsArgs'] tolerations: Tolerations is the list of tolerations for the driver pods
+        """
+        if args is not None:
+            pulumi.set(__self__, "args", args)
+        if envs is not None:
+            pulumi.set(__self__, "envs", envs)
+        if image is not None:
+            pulumi.set(__self__, "image", image)
+        if image_pull_policy is not None:
+            pulumi.set(__self__, "image_pull_policy", image_pull_policy)
+        if name is not None:
+            pulumi.set(__self__, "name", name)
+        if node_selector is not None:
+            pulumi.set(__self__, "node_selector", node_selector)
+        if tolerations is not None:
+            pulumi.set(__self__, "tolerations", tolerations)
+
+    @property
+    @pulumi.getter
+    def args(self) -> Optional[Sequence[str]]:
+        """
+        Args is the set of arguments for the container
+        """
+        return pulumi.get(self, "args")
+
+    @property
+    @pulumi.getter
+    def envs(self) -> Optional[Sequence['outputs.CSIPowerStoreSpecDriverSideCarsEnvs']]:
+        """
+        Envs is the set of environment variables for the container
+        """
+        return pulumi.get(self, "envs")
+
+    @property
+    @pulumi.getter
+    def image(self) -> Optional[str]:
+        """
+        Image is the image tag for the Container
+        """
+        return pulumi.get(self, "image")
+
+    @property
+    @pulumi.getter(name="imagePullPolicy")
+    def image_pull_policy(self) -> Optional[str]:
+        """
+        ImagePullPolicy is the image pull policy for the image
+        """
+        return pulumi.get(self, "image_pull_policy")
+
+    @property
+    @pulumi.getter
+    def name(self) -> Optional[str]:
+        """
+        Name is the name of Container
+        """
+        return pulumi.get(self, "name")
+
+    @property
+    @pulumi.getter(name="nodeSelector")
+    def node_selector(self) -> Optional[Mapping[str, str]]:
+        """
+        NodeSelector is a selector which must be true for the pod to fit on a node. Selector which must match a node's labels for the pod to be scheduled on that node.
+        """
+        return pulumi.get(self, "node_selector")
+
+    @property
+    @pulumi.getter
+    def tolerations(self) -> Optional[Sequence['outputs.CSIPowerStoreSpecDriverSideCarsTolerations']]:
+        """
+        Tolerations is the list of tolerations for the driver pods
+        """
+        return pulumi.get(self, "tolerations")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class CSIPowerStoreSpecDriverSideCarsEnvs(dict):
+    """
+    EnvVar represents an environment variable present in a Container.
+    """
+    def __init__(__self__, *,
+                 name: str,
+                 value: Optional[str] = None,
+                 value_from: Optional['outputs.CSIPowerStoreSpecDriverSideCarsEnvsValueFrom'] = None):
+        """
+        EnvVar represents an environment variable present in a Container.
+        :param str name: Name of the environment variable. Must be a C_IDENTIFIER.
+        :param str value: Variable references $(VAR_NAME) are expanded using the previous defined environment variables in the container and any service environment variables. If a variable cannot be resolved, the reference in the input string will be unchanged. The $(VAR_NAME) syntax can be escaped with a double $$, ie: $$(VAR_NAME). Escaped references will never be expanded, regardless of whether the variable exists or not. Defaults to "".
+        :param 'CSIPowerStoreSpecDriverSideCarsEnvsValueFromArgs' value_from: Source for the environment variable's value. Cannot be used if value is not empty.
+        """
+        pulumi.set(__self__, "name", name)
+        if value is not None:
+            pulumi.set(__self__, "value", value)
+        if value_from is not None:
+            pulumi.set(__self__, "value_from", value_from)
+
+    @property
+    @pulumi.getter
+    def name(self) -> str:
+        """
+        Name of the environment variable. Must be a C_IDENTIFIER.
+        """
+        return pulumi.get(self, "name")
+
+    @property
+    @pulumi.getter
+    def value(self) -> Optional[str]:
+        """
+        Variable references $(VAR_NAME) are expanded using the previous defined environment variables in the container and any service environment variables. If a variable cannot be resolved, the reference in the input string will be unchanged. The $(VAR_NAME) syntax can be escaped with a double $$, ie: $$(VAR_NAME). Escaped references will never be expanded, regardless of whether the variable exists or not. Defaults to "".
+        """
+        return pulumi.get(self, "value")
+
+    @property
+    @pulumi.getter(name="valueFrom")
+    def value_from(self) -> Optional['outputs.CSIPowerStoreSpecDriverSideCarsEnvsValueFrom']:
+        """
+        Source for the environment variable's value. Cannot be used if value is not empty.
+        """
+        return pulumi.get(self, "value_from")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class CSIPowerStoreSpecDriverSideCarsEnvsValueFrom(dict):
+    """
+    Source for the environment variable's value. Cannot be used if value is not empty.
+    """
+    def __init__(__self__, *,
+                 config_map_key_ref: Optional['outputs.CSIPowerStoreSpecDriverSideCarsEnvsValueFromConfigMapKeyRef'] = None,
+                 field_ref: Optional['outputs.CSIPowerStoreSpecDriverSideCarsEnvsValueFromFieldRef'] = None,
+                 resource_field_ref: Optional['outputs.CSIPowerStoreSpecDriverSideCarsEnvsValueFromResourceFieldRef'] = None,
+                 secret_key_ref: Optional['outputs.CSIPowerStoreSpecDriverSideCarsEnvsValueFromSecretKeyRef'] = None):
+        """
+        Source for the environment variable's value. Cannot be used if value is not empty.
+        :param 'CSIPowerStoreSpecDriverSideCarsEnvsValueFromConfigMapKeyRefArgs' config_map_key_ref: Selects a key of a ConfigMap.
+        :param 'CSIPowerStoreSpecDriverSideCarsEnvsValueFromFieldRefArgs' field_ref: Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
+        :param 'CSIPowerStoreSpecDriverSideCarsEnvsValueFromResourceFieldRefArgs' resource_field_ref: Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
+        :param 'CSIPowerStoreSpecDriverSideCarsEnvsValueFromSecretKeyRefArgs' secret_key_ref: Selects a key of a secret in the pod's namespace
+        """
+        if config_map_key_ref is not None:
+            pulumi.set(__self__, "config_map_key_ref", config_map_key_ref)
+        if field_ref is not None:
+            pulumi.set(__self__, "field_ref", field_ref)
+        if resource_field_ref is not None:
+            pulumi.set(__self__, "resource_field_ref", resource_field_ref)
+        if secret_key_ref is not None:
+            pulumi.set(__self__, "secret_key_ref", secret_key_ref)
+
+    @property
+    @pulumi.getter(name="configMapKeyRef")
+    def config_map_key_ref(self) -> Optional['outputs.CSIPowerStoreSpecDriverSideCarsEnvsValueFromConfigMapKeyRef']:
+        """
+        Selects a key of a ConfigMap.
+        """
+        return pulumi.get(self, "config_map_key_ref")
+
+    @property
+    @pulumi.getter(name="fieldRef")
+    def field_ref(self) -> Optional['outputs.CSIPowerStoreSpecDriverSideCarsEnvsValueFromFieldRef']:
+        """
+        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
+        """
+        return pulumi.get(self, "field_ref")
+
+    @property
+    @pulumi.getter(name="resourceFieldRef")
+    def resource_field_ref(self) -> Optional['outputs.CSIPowerStoreSpecDriverSideCarsEnvsValueFromResourceFieldRef']:
+        """
+        Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
+        """
+        return pulumi.get(self, "resource_field_ref")
+
+    @property
+    @pulumi.getter(name="secretKeyRef")
+    def secret_key_ref(self) -> Optional['outputs.CSIPowerStoreSpecDriverSideCarsEnvsValueFromSecretKeyRef']:
+        """
+        Selects a key of a secret in the pod's namespace
+        """
+        return pulumi.get(self, "secret_key_ref")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class CSIPowerStoreSpecDriverSideCarsEnvsValueFromConfigMapKeyRef(dict):
+    """
+    Selects a key of a ConfigMap.
+    """
+    def __init__(__self__, *,
+                 key: str,
+                 name: Optional[str] = None,
+                 optional: Optional[bool] = None):
+        """
+        Selects a key of a ConfigMap.
+        :param str key: The key to select.
+        :param str name: Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+        :param bool optional: Specify whether the ConfigMap or its key must be defined
+        """
+        pulumi.set(__self__, "key", key)
+        if name is not None:
+            pulumi.set(__self__, "name", name)
+        if optional is not None:
+            pulumi.set(__self__, "optional", optional)
+
+    @property
+    @pulumi.getter
+    def key(self) -> str:
+        """
+        The key to select.
+        """
+        return pulumi.get(self, "key")
+
+    @property
+    @pulumi.getter
+    def name(self) -> Optional[str]:
+        """
+        Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+        """
+        return pulumi.get(self, "name")
+
+    @property
+    @pulumi.getter
+    def optional(self) -> Optional[bool]:
+        """
+        Specify whether the ConfigMap or its key must be defined
+        """
+        return pulumi.get(self, "optional")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class CSIPowerStoreSpecDriverSideCarsEnvsValueFromFieldRef(dict):
+    """
+    Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
+    """
+    def __init__(__self__, *,
+                 field_path: str,
+                 api_version: Optional[str] = None):
+        """
+        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
+        :param str field_path: Path of the field to select in the specified API version.
+        :param str api_version: Version of the schema the FieldPath is written in terms of, defaults to "v1".
+        """
+        pulumi.set(__self__, "field_path", field_path)
+        if api_version is not None:
+            pulumi.set(__self__, "api_version", api_version)
+
+    @property
+    @pulumi.getter(name="fieldPath")
+    def field_path(self) -> str:
+        """
+        Path of the field to select in the specified API version.
+        """
+        return pulumi.get(self, "field_path")
+
+    @property
+    @pulumi.getter(name="apiVersion")
+    def api_version(self) -> Optional[str]:
+        """
+        Version of the schema the FieldPath is written in terms of, defaults to "v1".
+        """
+        return pulumi.get(self, "api_version")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class CSIPowerStoreSpecDriverSideCarsEnvsValueFromResourceFieldRef(dict):
+    """
+    Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
+    """
+    def __init__(__self__, *,
+                 resource: str,
+                 container_name: Optional[str] = None,
+                 divisor: Optional['outputs.CSIPowerStoreSpecDriverSideCarsEnvsValueFromResourceFieldRefDivisor'] = None):
+        """
+        Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
+        :param str resource: Required: resource to select
+        :param str container_name: Container name: required for volumes, optional for env vars
+        :param 'CSIPowerStoreSpecDriverSideCarsEnvsValueFromResourceFieldRefDivisorArgs' divisor: Specifies the output format of the exposed resources, defaults to "1"
+        """
+        pulumi.set(__self__, "resource", resource)
+        if container_name is not None:
+            pulumi.set(__self__, "container_name", container_name)
+        if divisor is not None:
+            pulumi.set(__self__, "divisor", divisor)
+
+    @property
+    @pulumi.getter
+    def resource(self) -> str:
+        """
+        Required: resource to select
+        """
+        return pulumi.get(self, "resource")
+
+    @property
+    @pulumi.getter(name="containerName")
+    def container_name(self) -> Optional[str]:
+        """
+        Container name: required for volumes, optional for env vars
+        """
+        return pulumi.get(self, "container_name")
+
+    @property
+    @pulumi.getter
+    def divisor(self) -> Optional['outputs.CSIPowerStoreSpecDriverSideCarsEnvsValueFromResourceFieldRefDivisor']:
+        """
+        Specifies the output format of the exposed resources, defaults to "1"
+        """
+        return pulumi.get(self, "divisor")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class CSIPowerStoreSpecDriverSideCarsEnvsValueFromResourceFieldRefDivisor(dict):
+    def __init__(__self__):
+        pass
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class CSIPowerStoreSpecDriverSideCarsEnvsValueFromSecretKeyRef(dict):
+    """
+    Selects a key of a secret in the pod's namespace
+    """
+    def __init__(__self__, *,
+                 key: str,
+                 name: Optional[str] = None,
+                 optional: Optional[bool] = None):
+        """
+        Selects a key of a secret in the pod's namespace
+        :param str key: The key of the secret to select from.  Must be a valid secret key.
+        :param str name: Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+        :param bool optional: Specify whether the Secret or its key must be defined
+        """
+        pulumi.set(__self__, "key", key)
+        if name is not None:
+            pulumi.set(__self__, "name", name)
+        if optional is not None:
+            pulumi.set(__self__, "optional", optional)
+
+    @property
+    @pulumi.getter
+    def key(self) -> str:
+        """
+        The key of the secret to select from.  Must be a valid secret key.
+        """
+        return pulumi.get(self, "key")
+
+    @property
+    @pulumi.getter
+    def name(self) -> Optional[str]:
+        """
+        Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+        """
+        return pulumi.get(self, "name")
+
+    @property
+    @pulumi.getter
+    def optional(self) -> Optional[bool]:
+        """
+        Specify whether the Secret or its key must be defined
+        """
+        return pulumi.get(self, "optional")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class CSIPowerStoreSpecDriverSideCarsTolerations(dict):
+    """
+    The pod this Toleration is attached to tolerates any taint that matches the triple <key,value,effect> using the matching operator <operator>.
+    """
+    def __init__(__self__, *,
+                 effect: Optional[str] = None,
+                 key: Optional[str] = None,
+                 operator: Optional[str] = None,
+                 toleration_seconds: Optional[int] = None,
+                 value: Optional[str] = None):
+        """
+        The pod this Toleration is attached to tolerates any taint that matches the triple <key,value,effect> using the matching operator <operator>.
+        :param str effect: Effect indicates the taint effect to match. Empty means match all taint effects. When specified, allowed values are NoSchedule, PreferNoSchedule and NoExecute.
+        :param str key: Key is the taint key that the toleration applies to. Empty means match all taint keys. If the key is empty, operator must be Exists; this combination means to match all values and all keys.
+        :param str operator: Operator represents a key's relationship to the value. Valid operators are Exists and Equal. Defaults to Equal. Exists is equivalent to wildcard for value, so that a pod can tolerate all taints of a particular category.
+        :param int toleration_seconds: TolerationSeconds represents the period of time the toleration (which must be of effect NoExecute, otherwise this field is ignored) tolerates the taint. By default, it is not set, which means tolerate the taint forever (do not evict). Zero and negative values will be treated as 0 (evict immediately) by the system.
+        :param str value: Value is the taint value the toleration matches to. If the operator is Exists, the value should be empty, otherwise just a regular string.
+        """
+        if effect is not None:
+            pulumi.set(__self__, "effect", effect)
+        if key is not None:
+            pulumi.set(__self__, "key", key)
+        if operator is not None:
+            pulumi.set(__self__, "operator", operator)
+        if toleration_seconds is not None:
+            pulumi.set(__self__, "toleration_seconds", toleration_seconds)
+        if value is not None:
+            pulumi.set(__self__, "value", value)
+
+    @property
+    @pulumi.getter
+    def effect(self) -> Optional[str]:
+        """
+        Effect indicates the taint effect to match. Empty means match all taint effects. When specified, allowed values are NoSchedule, PreferNoSchedule and NoExecute.
+        """
+        return pulumi.get(self, "effect")
+
+    @property
+    @pulumi.getter
+    def key(self) -> Optional[str]:
+        """
+        Key is the taint key that the toleration applies to. Empty means match all taint keys. If the key is empty, operator must be Exists; this combination means to match all values and all keys.
+        """
+        return pulumi.get(self, "key")
+
+    @property
+    @pulumi.getter
+    def operator(self) -> Optional[str]:
+        """
+        Operator represents a key's relationship to the value. Valid operators are Exists and Equal. Defaults to Equal. Exists is equivalent to wildcard for value, so that a pod can tolerate all taints of a particular category.
+        """
+        return pulumi.get(self, "operator")
+
+    @property
+    @pulumi.getter(name="tolerationSeconds")
+    def toleration_seconds(self) -> Optional[int]:
+        """
+        TolerationSeconds represents the period of time the toleration (which must be of effect NoExecute, otherwise this field is ignored) tolerates the taint. By default, it is not set, which means tolerate the taint forever (do not evict). Zero and negative values will be treated as 0 (evict immediately) by the system.
+        """
+        return pulumi.get(self, "toleration_seconds")
+
+    @property
+    @pulumi.getter
+    def value(self) -> Optional[str]:
+        """
+        Value is the taint value the toleration matches to. If the operator is Exists, the value should be empty, otherwise just a regular string.
+        """
+        return pulumi.get(self, "value")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class CSIPowerStoreSpecDriverSnapshotClass(dict):
+    """
+    SnapshotClass represents a VolumeSnapshotClass
+    """
+    def __init__(__self__, *,
+                 name: str,
+                 parameters: Optional[Mapping[str, str]] = None):
+        """
+        SnapshotClass represents a VolumeSnapshotClass
+        :param str name: Name is the name of the Snapshot Class
+        :param Mapping[str, str] parameters: Parameters is a map of driver specific parameters for snapshot class
+        """
+        pulumi.set(__self__, "name", name)
+        if parameters is not None:
+            pulumi.set(__self__, "parameters", parameters)
+
+    @property
+    @pulumi.getter
+    def name(self) -> str:
+        """
+        Name is the name of the Snapshot Class
+        """
+        return pulumi.get(self, "name")
+
+    @property
+    @pulumi.getter
+    def parameters(self) -> Optional[Mapping[str, str]]:
+        """
+        Parameters is a map of driver specific parameters for snapshot class
+        """
+        return pulumi.get(self, "parameters")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class CSIPowerStoreSpecDriverStorageClass(dict):
+    """
+    StorageClass represents a kubernetes storage class
+    """
+    def __init__(__self__, *,
+                 name: str,
+                 allow_volume_expansion: Optional[bool] = None,
+                 allowed_topologies: Optional[Sequence['outputs.CSIPowerStoreSpecDriverStorageClassAllowedTopologies']] = None,
+                 default: Optional[bool] = None,
+                 parameters: Optional[Mapping[str, str]] = None,
+                 reclaim_policy: Optional[str] = None):
+        """
+        StorageClass represents a kubernetes storage class
+        :param str name: Name is the name of the StorageClass
+        :param bool allow_volume_expansion: AllowVolumeExpansion is a boolean flag which indicates if volumes can be expanded
+        :param Sequence['CSIPowerStoreSpecDriverStorageClassAllowedTopologiesArgs'] allowed_topologies: Restrict the node topologies where volumes can be dynamically provisioned.
+        :param bool default: DefaultSc is a boolean flag to indicate if the storage class is going to be marked as default
+        :param Mapping[str, str] parameters: Parameters is a map of driver specific storage class
+        :param str reclaim_policy: ReclaimPolicy is the reclaim policy for the storage class
+        """
+        pulumi.set(__self__, "name", name)
+        if allow_volume_expansion is not None:
+            pulumi.set(__self__, "allow_volume_expansion", allow_volume_expansion)
+        if allowed_topologies is not None:
+            pulumi.set(__self__, "allowed_topologies", allowed_topologies)
+        if default is not None:
+            pulumi.set(__self__, "default", default)
+        if parameters is not None:
+            pulumi.set(__self__, "parameters", parameters)
+        if reclaim_policy is not None:
+            pulumi.set(__self__, "reclaim_policy", reclaim_policy)
+
+    @property
+    @pulumi.getter
+    def name(self) -> str:
+        """
+        Name is the name of the StorageClass
+        """
+        return pulumi.get(self, "name")
+
+    @property
+    @pulumi.getter(name="allowVolumeExpansion")
+    def allow_volume_expansion(self) -> Optional[bool]:
+        """
+        AllowVolumeExpansion is a boolean flag which indicates if volumes can be expanded
+        """
+        return pulumi.get(self, "allow_volume_expansion")
+
+    @property
+    @pulumi.getter(name="allowedTopologies")
+    def allowed_topologies(self) -> Optional[Sequence['outputs.CSIPowerStoreSpecDriverStorageClassAllowedTopologies']]:
+        """
+        Restrict the node topologies where volumes can be dynamically provisioned.
+        """
+        return pulumi.get(self, "allowed_topologies")
+
+    @property
+    @pulumi.getter
+    def default(self) -> Optional[bool]:
+        """
+        DefaultSc is a boolean flag to indicate if the storage class is going to be marked as default
+        """
+        return pulumi.get(self, "default")
+
+    @property
+    @pulumi.getter
+    def parameters(self) -> Optional[Mapping[str, str]]:
+        """
+        Parameters is a map of driver specific storage class
+        """
+        return pulumi.get(self, "parameters")
+
+    @property
+    @pulumi.getter(name="reclaimPolicy")
+    def reclaim_policy(self) -> Optional[str]:
+        """
+        ReclaimPolicy is the reclaim policy for the storage class
+        """
+        return pulumi.get(self, "reclaim_policy")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class CSIPowerStoreSpecDriverStorageClassAllowedTopologies(dict):
+    """
+    A topology selector term represents the result of label queries. A null or empty topology selector term matches no objects. The requirements of them are ANDed. It provides a subset of functionality as NodeSelectorTerm. This is an alpha feature and may change in the future.
+    """
+    def __init__(__self__, *,
+                 match_label_expressions: Optional[Sequence['outputs.CSIPowerStoreSpecDriverStorageClassAllowedTopologiesMatchLabelExpressions']] = None):
+        """
+        A topology selector term represents the result of label queries. A null or empty topology selector term matches no objects. The requirements of them are ANDed. It provides a subset of functionality as NodeSelectorTerm. This is an alpha feature and may change in the future.
+        :param Sequence['CSIPowerStoreSpecDriverStorageClassAllowedTopologiesMatchLabelExpressionsArgs'] match_label_expressions: A list of topology selector requirements by labels.
+        """
+        if match_label_expressions is not None:
+            pulumi.set(__self__, "match_label_expressions", match_label_expressions)
+
+    @property
+    @pulumi.getter(name="matchLabelExpressions")
+    def match_label_expressions(self) -> Optional[Sequence['outputs.CSIPowerStoreSpecDriverStorageClassAllowedTopologiesMatchLabelExpressions']]:
+        """
+        A list of topology selector requirements by labels.
+        """
+        return pulumi.get(self, "match_label_expressions")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class CSIPowerStoreSpecDriverStorageClassAllowedTopologiesMatchLabelExpressions(dict):
+    """
+    A topology selector requirement is a selector that matches given label. This is an alpha feature and may change in the future.
+    """
+    def __init__(__self__, *,
+                 key: str,
+                 values: Sequence[str]):
+        """
+        A topology selector requirement is a selector that matches given label. This is an alpha feature and may change in the future.
+        :param str key: The label key that the selector applies to.
+        :param Sequence[str] values: An array of string values. One value must match the label to be selected. Each entry in Values is ORed.
+        """
+        pulumi.set(__self__, "key", key)
+        pulumi.set(__self__, "values", values)
+
+    @property
+    @pulumi.getter
+    def key(self) -> str:
+        """
+        The label key that the selector applies to.
+        """
+        return pulumi.get(self, "key")
+
+    @property
+    @pulumi.getter
+    def values(self) -> Sequence[str]:
+        """
+        An array of string values. One value must match the label to be selected. Each entry in Values is ORed.
+        """
+        return pulumi.get(self, "values")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class CSIPowerStoreStatus(dict):
+    """
+    DriverStatus defines the observed state of CSIDriver
+    """
+    def __init__(__self__, *,
+                 controller_status: Optional['outputs.CSIPowerStoreStatusControllerStatus'] = None,
+                 driver_hash: Optional[int] = None,
+                 last_update: Optional['outputs.CSIPowerStoreStatusLastUpdate'] = None,
+                 node_status: Optional['outputs.CSIPowerStoreStatusNodeStatus'] = None,
+                 state: Optional[str] = None):
+        """
+        DriverStatus defines the observed state of CSIDriver
+        :param 'CSIPowerStoreStatusControllerStatusArgs' controller_status: ControllerStatus is the status of Controller pods
+        :param int driver_hash: DriverHash is a hash of the driver specification
+        :param 'CSIPowerStoreStatusLastUpdateArgs' last_update: LastUpdate is the last updated state of the driver
+        :param 'CSIPowerStoreStatusNodeStatusArgs' node_status: NodeStatus is the status of Controller pods
+        :param str state: State is the state of the driver installation
+        """
+        if controller_status is not None:
+            pulumi.set(__self__, "controller_status", controller_status)
+        if driver_hash is not None:
+            pulumi.set(__self__, "driver_hash", driver_hash)
+        if last_update is not None:
+            pulumi.set(__self__, "last_update", last_update)
+        if node_status is not None:
+            pulumi.set(__self__, "node_status", node_status)
+        if state is not None:
+            pulumi.set(__self__, "state", state)
+
+    @property
+    @pulumi.getter(name="controllerStatus")
+    def controller_status(self) -> Optional['outputs.CSIPowerStoreStatusControllerStatus']:
+        """
+        ControllerStatus is the status of Controller pods
+        """
+        return pulumi.get(self, "controller_status")
+
+    @property
+    @pulumi.getter(name="driverHash")
+    def driver_hash(self) -> Optional[int]:
+        """
+        DriverHash is a hash of the driver specification
+        """
+        return pulumi.get(self, "driver_hash")
+
+    @property
+    @pulumi.getter(name="lastUpdate")
+    def last_update(self) -> Optional['outputs.CSIPowerStoreStatusLastUpdate']:
+        """
+        LastUpdate is the last updated state of the driver
+        """
+        return pulumi.get(self, "last_update")
+
+    @property
+    @pulumi.getter(name="nodeStatus")
+    def node_status(self) -> Optional['outputs.CSIPowerStoreStatusNodeStatus']:
+        """
+        NodeStatus is the status of Controller pods
+        """
+        return pulumi.get(self, "node_status")
+
+    @property
+    @pulumi.getter
+    def state(self) -> Optional[str]:
+        """
+        State is the state of the driver installation
+        """
+        return pulumi.get(self, "state")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class CSIPowerStoreStatusControllerStatus(dict):
+    """
+    ControllerStatus is the status of Controller pods
+    """
+    def __init__(__self__, *,
+                 available: Optional[Sequence[str]] = None,
+                 ready: Optional[Sequence[str]] = None,
+                 starting: Optional[Sequence[str]] = None,
+                 stopped: Optional[Sequence[str]] = None):
+        """
+        ControllerStatus is the status of Controller pods
+        """
+        if available is not None:
+            pulumi.set(__self__, "available", available)
+        if ready is not None:
+            pulumi.set(__self__, "ready", ready)
+        if starting is not None:
+            pulumi.set(__self__, "starting", starting)
+        if stopped is not None:
+            pulumi.set(__self__, "stopped", stopped)
+
+    @property
+    @pulumi.getter
+    def available(self) -> Optional[Sequence[str]]:
+        return pulumi.get(self, "available")
+
+    @property
+    @pulumi.getter
+    def ready(self) -> Optional[Sequence[str]]:
+        return pulumi.get(self, "ready")
+
+    @property
+    @pulumi.getter
+    def starting(self) -> Optional[Sequence[str]]:
+        return pulumi.get(self, "starting")
+
+    @property
+    @pulumi.getter
+    def stopped(self) -> Optional[Sequence[str]]:
+        return pulumi.get(self, "stopped")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class CSIPowerStoreStatusLastUpdate(dict):
+    """
+    LastUpdate is the last updated state of the driver
+    """
+    def __init__(__self__, *,
+                 condition: Optional[str] = None,
+                 error_message: Optional[str] = None,
+                 time: Optional[str] = None):
+        """
+        LastUpdate is the last updated state of the driver
+        :param str condition: Condition is the last known condition of the Custom Resource
+        :param str error_message: ErrorMessage is the last error message associated with the condition
+        :param str time: Time is the time stamp for the last condition update
+        """
+        if condition is not None:
+            pulumi.set(__self__, "condition", condition)
+        if error_message is not None:
+            pulumi.set(__self__, "error_message", error_message)
+        if time is not None:
+            pulumi.set(__self__, "time", time)
+
+    @property
+    @pulumi.getter
+    def condition(self) -> Optional[str]:
+        """
+        Condition is the last known condition of the Custom Resource
+        """
+        return pulumi.get(self, "condition")
+
+    @property
+    @pulumi.getter(name="errorMessage")
+    def error_message(self) -> Optional[str]:
+        """
+        ErrorMessage is the last error message associated with the condition
+        """
+        return pulumi.get(self, "error_message")
+
+    @property
+    @pulumi.getter
+    def time(self) -> Optional[str]:
+        """
+        Time is the time stamp for the last condition update
+        """
+        return pulumi.get(self, "time")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class CSIPowerStoreStatusNodeStatus(dict):
+    """
+    NodeStatus is the status of Controller pods
+    """
+    def __init__(__self__, *,
+                 available: Optional[Sequence[str]] = None,
+                 ready: Optional[Sequence[str]] = None,
+                 starting: Optional[Sequence[str]] = None,
+                 stopped: Optional[Sequence[str]] = None):
+        """
+        NodeStatus is the status of Controller pods
+        """
+        if available is not None:
+            pulumi.set(__self__, "available", available)
+        if ready is not None:
+            pulumi.set(__self__, "ready", ready)
+        if starting is not None:
+            pulumi.set(__self__, "starting", starting)
+        if stopped is not None:
+            pulumi.set(__self__, "stopped", stopped)
+
+    @property
+    @pulumi.getter
+    def available(self) -> Optional[Sequence[str]]:
+        return pulumi.get(self, "available")
+
+    @property
+    @pulumi.getter
+    def ready(self) -> Optional[Sequence[str]]:
+        return pulumi.get(self, "ready")
+
+    @property
+    @pulumi.getter
+    def starting(self) -> Optional[Sequence[str]]:
+        return pulumi.get(self, "starting")
+
+    @property
+    @pulumi.getter
+    def stopped(self) -> Optional[Sequence[str]]:
+        return pulumi.get(self, "stopped")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
 class CSIUnitySpec(dict):
     """
     CSIUnitySpec defines the desired state of CSIUnity
@@ -4274,7 +8534,9 @@ class CSIUnitySpecDriverCommon(dict):
                  envs: Optional[Sequence['outputs.CSIUnitySpecDriverCommonEnvs']] = None,
                  image: Optional[str] = None,
                  image_pull_policy: Optional[str] = None,
-                 name: Optional[str] = None):
+                 name: Optional[str] = None,
+                 node_selector: Optional[Mapping[str, str]] = None,
+                 tolerations: Optional[Sequence['outputs.CSIUnitySpecDriverCommonTolerations']] = None):
         """
         Common is the common specification for both controller and node plugins
         :param Sequence[str] args: Args is the set of arguments for the container
@@ -4282,6 +8544,8 @@ class CSIUnitySpecDriverCommon(dict):
         :param str image: Image is the image tag for the Container
         :param str image_pull_policy: ImagePullPolicy is the image pull policy for the image
         :param str name: Name is the name of Container
+        :param Mapping[str, str] node_selector: NodeSelector is a selector which must be true for the pod to fit on a node. Selector which must match a node's labels for the pod to be scheduled on that node.
+        :param Sequence['CSIUnitySpecDriverCommonTolerationsArgs'] tolerations: Tolerations is the list of tolerations for the driver pods
         """
         if args is not None:
             pulumi.set(__self__, "args", args)
@@ -4293,6 +8557,10 @@ class CSIUnitySpecDriverCommon(dict):
             pulumi.set(__self__, "image_pull_policy", image_pull_policy)
         if name is not None:
             pulumi.set(__self__, "name", name)
+        if node_selector is not None:
+            pulumi.set(__self__, "node_selector", node_selector)
+        if tolerations is not None:
+            pulumi.set(__self__, "tolerations", tolerations)
 
     @property
     @pulumi.getter
@@ -4333,6 +8601,22 @@ class CSIUnitySpecDriverCommon(dict):
         Name is the name of Container
         """
         return pulumi.get(self, "name")
+
+    @property
+    @pulumi.getter(name="nodeSelector")
+    def node_selector(self) -> Optional[Mapping[str, str]]:
+        """
+        NodeSelector is a selector which must be true for the pod to fit on a node. Selector which must match a node's labels for the pod to be scheduled on that node.
+        """
+        return pulumi.get(self, "node_selector")
+
+    @property
+    @pulumi.getter
+    def tolerations(self) -> Optional[Sequence['outputs.CSIUnitySpecDriverCommonTolerations']]:
+        """
+        Tolerations is the list of tolerations for the driver pods
+        """
+        return pulumi.get(self, "tolerations")
 
     def _translate_property(self, prop):
         return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
@@ -4400,7 +8684,7 @@ class CSIUnitySpecDriverCommonEnvsValueFrom(dict):
         """
         Source for the environment variable's value. Cannot be used if value is not empty.
         :param 'CSIUnitySpecDriverCommonEnvsValueFromConfigMapKeyRefArgs' config_map_key_ref: Selects a key of a ConfigMap.
-        :param 'CSIUnitySpecDriverCommonEnvsValueFromFieldRefArgs' field_ref: Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+        :param 'CSIUnitySpecDriverCommonEnvsValueFromFieldRefArgs' field_ref: Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
         :param 'CSIUnitySpecDriverCommonEnvsValueFromResourceFieldRefArgs' resource_field_ref: Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
         :param 'CSIUnitySpecDriverCommonEnvsValueFromSecretKeyRefArgs' secret_key_ref: Selects a key of a secret in the pod's namespace
         """
@@ -4425,7 +8709,7 @@ class CSIUnitySpecDriverCommonEnvsValueFrom(dict):
     @pulumi.getter(name="fieldRef")
     def field_ref(self) -> Optional['outputs.CSIUnitySpecDriverCommonEnvsValueFromFieldRef']:
         """
-        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
         """
         return pulumi.get(self, "field_ref")
 
@@ -4501,13 +8785,13 @@ class CSIUnitySpecDriverCommonEnvsValueFromConfigMapKeyRef(dict):
 @pulumi.output_type
 class CSIUnitySpecDriverCommonEnvsValueFromFieldRef(dict):
     """
-    Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+    Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
     """
     def __init__(__self__, *,
                  field_path: str,
                  api_version: Optional[str] = None):
         """
-        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
         :param str field_path: Path of the field to select in the specified API version.
         :param str api_version: Version of the schema the FieldPath is written in terms of, defaults to "v1".
         """
@@ -4543,12 +8827,12 @@ class CSIUnitySpecDriverCommonEnvsValueFromResourceFieldRef(dict):
     def __init__(__self__, *,
                  resource: str,
                  container_name: Optional[str] = None,
-                 divisor: Optional[str] = None):
+                 divisor: Optional['outputs.CSIUnitySpecDriverCommonEnvsValueFromResourceFieldRefDivisor'] = None):
         """
         Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
         :param str resource: Required: resource to select
         :param str container_name: Container name: required for volumes, optional for env vars
-        :param str divisor: Specifies the output format of the exposed resources, defaults to "1"
+        :param 'CSIUnitySpecDriverCommonEnvsValueFromResourceFieldRefDivisorArgs' divisor: Specifies the output format of the exposed resources, defaults to "1"
         """
         pulumi.set(__self__, "resource", resource)
         if container_name is not None:
@@ -4574,11 +8858,20 @@ class CSIUnitySpecDriverCommonEnvsValueFromResourceFieldRef(dict):
 
     @property
     @pulumi.getter
-    def divisor(self) -> Optional[str]:
+    def divisor(self) -> Optional['outputs.CSIUnitySpecDriverCommonEnvsValueFromResourceFieldRefDivisor']:
         """
         Specifies the output format of the exposed resources, defaults to "1"
         """
         return pulumi.get(self, "divisor")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class CSIUnitySpecDriverCommonEnvsValueFromResourceFieldRefDivisor(dict):
+    def __init__(__self__):
+        pass
 
     def _translate_property(self, prop):
         return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
@@ -4634,6 +8927,80 @@ class CSIUnitySpecDriverCommonEnvsValueFromSecretKeyRef(dict):
 
 
 @pulumi.output_type
+class CSIUnitySpecDriverCommonTolerations(dict):
+    """
+    The pod this Toleration is attached to tolerates any taint that matches the triple <key,value,effect> using the matching operator <operator>.
+    """
+    def __init__(__self__, *,
+                 effect: Optional[str] = None,
+                 key: Optional[str] = None,
+                 operator: Optional[str] = None,
+                 toleration_seconds: Optional[int] = None,
+                 value: Optional[str] = None):
+        """
+        The pod this Toleration is attached to tolerates any taint that matches the triple <key,value,effect> using the matching operator <operator>.
+        :param str effect: Effect indicates the taint effect to match. Empty means match all taint effects. When specified, allowed values are NoSchedule, PreferNoSchedule and NoExecute.
+        :param str key: Key is the taint key that the toleration applies to. Empty means match all taint keys. If the key is empty, operator must be Exists; this combination means to match all values and all keys.
+        :param str operator: Operator represents a key's relationship to the value. Valid operators are Exists and Equal. Defaults to Equal. Exists is equivalent to wildcard for value, so that a pod can tolerate all taints of a particular category.
+        :param int toleration_seconds: TolerationSeconds represents the period of time the toleration (which must be of effect NoExecute, otherwise this field is ignored) tolerates the taint. By default, it is not set, which means tolerate the taint forever (do not evict). Zero and negative values will be treated as 0 (evict immediately) by the system.
+        :param str value: Value is the taint value the toleration matches to. If the operator is Exists, the value should be empty, otherwise just a regular string.
+        """
+        if effect is not None:
+            pulumi.set(__self__, "effect", effect)
+        if key is not None:
+            pulumi.set(__self__, "key", key)
+        if operator is not None:
+            pulumi.set(__self__, "operator", operator)
+        if toleration_seconds is not None:
+            pulumi.set(__self__, "toleration_seconds", toleration_seconds)
+        if value is not None:
+            pulumi.set(__self__, "value", value)
+
+    @property
+    @pulumi.getter
+    def effect(self) -> Optional[str]:
+        """
+        Effect indicates the taint effect to match. Empty means match all taint effects. When specified, allowed values are NoSchedule, PreferNoSchedule and NoExecute.
+        """
+        return pulumi.get(self, "effect")
+
+    @property
+    @pulumi.getter
+    def key(self) -> Optional[str]:
+        """
+        Key is the taint key that the toleration applies to. Empty means match all taint keys. If the key is empty, operator must be Exists; this combination means to match all values and all keys.
+        """
+        return pulumi.get(self, "key")
+
+    @property
+    @pulumi.getter
+    def operator(self) -> Optional[str]:
+        """
+        Operator represents a key's relationship to the value. Valid operators are Exists and Equal. Defaults to Equal. Exists is equivalent to wildcard for value, so that a pod can tolerate all taints of a particular category.
+        """
+        return pulumi.get(self, "operator")
+
+    @property
+    @pulumi.getter(name="tolerationSeconds")
+    def toleration_seconds(self) -> Optional[int]:
+        """
+        TolerationSeconds represents the period of time the toleration (which must be of effect NoExecute, otherwise this field is ignored) tolerates the taint. By default, it is not set, which means tolerate the taint forever (do not evict). Zero and negative values will be treated as 0 (evict immediately) by the system.
+        """
+        return pulumi.get(self, "toleration_seconds")
+
+    @property
+    @pulumi.getter
+    def value(self) -> Optional[str]:
+        """
+        Value is the taint value the toleration matches to. If the operator is Exists, the value should be empty, otherwise just a regular string.
+        """
+        return pulumi.get(self, "value")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
 class CSIUnitySpecDriverController(dict):
     """
     Controller is the specification for Controller plugin only
@@ -4643,7 +9010,9 @@ class CSIUnitySpecDriverController(dict):
                  envs: Optional[Sequence['outputs.CSIUnitySpecDriverControllerEnvs']] = None,
                  image: Optional[str] = None,
                  image_pull_policy: Optional[str] = None,
-                 name: Optional[str] = None):
+                 name: Optional[str] = None,
+                 node_selector: Optional[Mapping[str, str]] = None,
+                 tolerations: Optional[Sequence['outputs.CSIUnitySpecDriverControllerTolerations']] = None):
         """
         Controller is the specification for Controller plugin only
         :param Sequence[str] args: Args is the set of arguments for the container
@@ -4651,6 +9020,8 @@ class CSIUnitySpecDriverController(dict):
         :param str image: Image is the image tag for the Container
         :param str image_pull_policy: ImagePullPolicy is the image pull policy for the image
         :param str name: Name is the name of Container
+        :param Mapping[str, str] node_selector: NodeSelector is a selector which must be true for the pod to fit on a node. Selector which must match a node's labels for the pod to be scheduled on that node.
+        :param Sequence['CSIUnitySpecDriverControllerTolerationsArgs'] tolerations: Tolerations is the list of tolerations for the driver pods
         """
         if args is not None:
             pulumi.set(__self__, "args", args)
@@ -4662,6 +9033,10 @@ class CSIUnitySpecDriverController(dict):
             pulumi.set(__self__, "image_pull_policy", image_pull_policy)
         if name is not None:
             pulumi.set(__self__, "name", name)
+        if node_selector is not None:
+            pulumi.set(__self__, "node_selector", node_selector)
+        if tolerations is not None:
+            pulumi.set(__self__, "tolerations", tolerations)
 
     @property
     @pulumi.getter
@@ -4702,6 +9077,22 @@ class CSIUnitySpecDriverController(dict):
         Name is the name of Container
         """
         return pulumi.get(self, "name")
+
+    @property
+    @pulumi.getter(name="nodeSelector")
+    def node_selector(self) -> Optional[Mapping[str, str]]:
+        """
+        NodeSelector is a selector which must be true for the pod to fit on a node. Selector which must match a node's labels for the pod to be scheduled on that node.
+        """
+        return pulumi.get(self, "node_selector")
+
+    @property
+    @pulumi.getter
+    def tolerations(self) -> Optional[Sequence['outputs.CSIUnitySpecDriverControllerTolerations']]:
+        """
+        Tolerations is the list of tolerations for the driver pods
+        """
+        return pulumi.get(self, "tolerations")
 
     def _translate_property(self, prop):
         return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
@@ -4769,7 +9160,7 @@ class CSIUnitySpecDriverControllerEnvsValueFrom(dict):
         """
         Source for the environment variable's value. Cannot be used if value is not empty.
         :param 'CSIUnitySpecDriverControllerEnvsValueFromConfigMapKeyRefArgs' config_map_key_ref: Selects a key of a ConfigMap.
-        :param 'CSIUnitySpecDriverControllerEnvsValueFromFieldRefArgs' field_ref: Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+        :param 'CSIUnitySpecDriverControllerEnvsValueFromFieldRefArgs' field_ref: Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
         :param 'CSIUnitySpecDriverControllerEnvsValueFromResourceFieldRefArgs' resource_field_ref: Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
         :param 'CSIUnitySpecDriverControllerEnvsValueFromSecretKeyRefArgs' secret_key_ref: Selects a key of a secret in the pod's namespace
         """
@@ -4794,7 +9185,7 @@ class CSIUnitySpecDriverControllerEnvsValueFrom(dict):
     @pulumi.getter(name="fieldRef")
     def field_ref(self) -> Optional['outputs.CSIUnitySpecDriverControllerEnvsValueFromFieldRef']:
         """
-        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
         """
         return pulumi.get(self, "field_ref")
 
@@ -4870,13 +9261,13 @@ class CSIUnitySpecDriverControllerEnvsValueFromConfigMapKeyRef(dict):
 @pulumi.output_type
 class CSIUnitySpecDriverControllerEnvsValueFromFieldRef(dict):
     """
-    Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+    Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
     """
     def __init__(__self__, *,
                  field_path: str,
                  api_version: Optional[str] = None):
         """
-        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
         :param str field_path: Path of the field to select in the specified API version.
         :param str api_version: Version of the schema the FieldPath is written in terms of, defaults to "v1".
         """
@@ -4912,12 +9303,12 @@ class CSIUnitySpecDriverControllerEnvsValueFromResourceFieldRef(dict):
     def __init__(__self__, *,
                  resource: str,
                  container_name: Optional[str] = None,
-                 divisor: Optional[str] = None):
+                 divisor: Optional['outputs.CSIUnitySpecDriverControllerEnvsValueFromResourceFieldRefDivisor'] = None):
         """
         Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
         :param str resource: Required: resource to select
         :param str container_name: Container name: required for volumes, optional for env vars
-        :param str divisor: Specifies the output format of the exposed resources, defaults to "1"
+        :param 'CSIUnitySpecDriverControllerEnvsValueFromResourceFieldRefDivisorArgs' divisor: Specifies the output format of the exposed resources, defaults to "1"
         """
         pulumi.set(__self__, "resource", resource)
         if container_name is not None:
@@ -4943,11 +9334,20 @@ class CSIUnitySpecDriverControllerEnvsValueFromResourceFieldRef(dict):
 
     @property
     @pulumi.getter
-    def divisor(self) -> Optional[str]:
+    def divisor(self) -> Optional['outputs.CSIUnitySpecDriverControllerEnvsValueFromResourceFieldRefDivisor']:
         """
         Specifies the output format of the exposed resources, defaults to "1"
         """
         return pulumi.get(self, "divisor")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class CSIUnitySpecDriverControllerEnvsValueFromResourceFieldRefDivisor(dict):
+    def __init__(__self__):
+        pass
 
     def _translate_property(self, prop):
         return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
@@ -5003,6 +9403,80 @@ class CSIUnitySpecDriverControllerEnvsValueFromSecretKeyRef(dict):
 
 
 @pulumi.output_type
+class CSIUnitySpecDriverControllerTolerations(dict):
+    """
+    The pod this Toleration is attached to tolerates any taint that matches the triple <key,value,effect> using the matching operator <operator>.
+    """
+    def __init__(__self__, *,
+                 effect: Optional[str] = None,
+                 key: Optional[str] = None,
+                 operator: Optional[str] = None,
+                 toleration_seconds: Optional[int] = None,
+                 value: Optional[str] = None):
+        """
+        The pod this Toleration is attached to tolerates any taint that matches the triple <key,value,effect> using the matching operator <operator>.
+        :param str effect: Effect indicates the taint effect to match. Empty means match all taint effects. When specified, allowed values are NoSchedule, PreferNoSchedule and NoExecute.
+        :param str key: Key is the taint key that the toleration applies to. Empty means match all taint keys. If the key is empty, operator must be Exists; this combination means to match all values and all keys.
+        :param str operator: Operator represents a key's relationship to the value. Valid operators are Exists and Equal. Defaults to Equal. Exists is equivalent to wildcard for value, so that a pod can tolerate all taints of a particular category.
+        :param int toleration_seconds: TolerationSeconds represents the period of time the toleration (which must be of effect NoExecute, otherwise this field is ignored) tolerates the taint. By default, it is not set, which means tolerate the taint forever (do not evict). Zero and negative values will be treated as 0 (evict immediately) by the system.
+        :param str value: Value is the taint value the toleration matches to. If the operator is Exists, the value should be empty, otherwise just a regular string.
+        """
+        if effect is not None:
+            pulumi.set(__self__, "effect", effect)
+        if key is not None:
+            pulumi.set(__self__, "key", key)
+        if operator is not None:
+            pulumi.set(__self__, "operator", operator)
+        if toleration_seconds is not None:
+            pulumi.set(__self__, "toleration_seconds", toleration_seconds)
+        if value is not None:
+            pulumi.set(__self__, "value", value)
+
+    @property
+    @pulumi.getter
+    def effect(self) -> Optional[str]:
+        """
+        Effect indicates the taint effect to match. Empty means match all taint effects. When specified, allowed values are NoSchedule, PreferNoSchedule and NoExecute.
+        """
+        return pulumi.get(self, "effect")
+
+    @property
+    @pulumi.getter
+    def key(self) -> Optional[str]:
+        """
+        Key is the taint key that the toleration applies to. Empty means match all taint keys. If the key is empty, operator must be Exists; this combination means to match all values and all keys.
+        """
+        return pulumi.get(self, "key")
+
+    @property
+    @pulumi.getter
+    def operator(self) -> Optional[str]:
+        """
+        Operator represents a key's relationship to the value. Valid operators are Exists and Equal. Defaults to Equal. Exists is equivalent to wildcard for value, so that a pod can tolerate all taints of a particular category.
+        """
+        return pulumi.get(self, "operator")
+
+    @property
+    @pulumi.getter(name="tolerationSeconds")
+    def toleration_seconds(self) -> Optional[int]:
+        """
+        TolerationSeconds represents the period of time the toleration (which must be of effect NoExecute, otherwise this field is ignored) tolerates the taint. By default, it is not set, which means tolerate the taint forever (do not evict). Zero and negative values will be treated as 0 (evict immediately) by the system.
+        """
+        return pulumi.get(self, "toleration_seconds")
+
+    @property
+    @pulumi.getter
+    def value(self) -> Optional[str]:
+        """
+        Value is the taint value the toleration matches to. If the operator is Exists, the value should be empty, otherwise just a regular string.
+        """
+        return pulumi.get(self, "value")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
 class CSIUnitySpecDriverNode(dict):
     """
     Node is the specification for Node plugin only
@@ -5012,7 +9486,9 @@ class CSIUnitySpecDriverNode(dict):
                  envs: Optional[Sequence['outputs.CSIUnitySpecDriverNodeEnvs']] = None,
                  image: Optional[str] = None,
                  image_pull_policy: Optional[str] = None,
-                 name: Optional[str] = None):
+                 name: Optional[str] = None,
+                 node_selector: Optional[Mapping[str, str]] = None,
+                 tolerations: Optional[Sequence['outputs.CSIUnitySpecDriverNodeTolerations']] = None):
         """
         Node is the specification for Node plugin only
         :param Sequence[str] args: Args is the set of arguments for the container
@@ -5020,6 +9496,8 @@ class CSIUnitySpecDriverNode(dict):
         :param str image: Image is the image tag for the Container
         :param str image_pull_policy: ImagePullPolicy is the image pull policy for the image
         :param str name: Name is the name of Container
+        :param Mapping[str, str] node_selector: NodeSelector is a selector which must be true for the pod to fit on a node. Selector which must match a node's labels for the pod to be scheduled on that node.
+        :param Sequence['CSIUnitySpecDriverNodeTolerationsArgs'] tolerations: Tolerations is the list of tolerations for the driver pods
         """
         if args is not None:
             pulumi.set(__self__, "args", args)
@@ -5031,6 +9509,10 @@ class CSIUnitySpecDriverNode(dict):
             pulumi.set(__self__, "image_pull_policy", image_pull_policy)
         if name is not None:
             pulumi.set(__self__, "name", name)
+        if node_selector is not None:
+            pulumi.set(__self__, "node_selector", node_selector)
+        if tolerations is not None:
+            pulumi.set(__self__, "tolerations", tolerations)
 
     @property
     @pulumi.getter
@@ -5071,6 +9553,22 @@ class CSIUnitySpecDriverNode(dict):
         Name is the name of Container
         """
         return pulumi.get(self, "name")
+
+    @property
+    @pulumi.getter(name="nodeSelector")
+    def node_selector(self) -> Optional[Mapping[str, str]]:
+        """
+        NodeSelector is a selector which must be true for the pod to fit on a node. Selector which must match a node's labels for the pod to be scheduled on that node.
+        """
+        return pulumi.get(self, "node_selector")
+
+    @property
+    @pulumi.getter
+    def tolerations(self) -> Optional[Sequence['outputs.CSIUnitySpecDriverNodeTolerations']]:
+        """
+        Tolerations is the list of tolerations for the driver pods
+        """
+        return pulumi.get(self, "tolerations")
 
     def _translate_property(self, prop):
         return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
@@ -5138,7 +9636,7 @@ class CSIUnitySpecDriverNodeEnvsValueFrom(dict):
         """
         Source for the environment variable's value. Cannot be used if value is not empty.
         :param 'CSIUnitySpecDriverNodeEnvsValueFromConfigMapKeyRefArgs' config_map_key_ref: Selects a key of a ConfigMap.
-        :param 'CSIUnitySpecDriverNodeEnvsValueFromFieldRefArgs' field_ref: Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+        :param 'CSIUnitySpecDriverNodeEnvsValueFromFieldRefArgs' field_ref: Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
         :param 'CSIUnitySpecDriverNodeEnvsValueFromResourceFieldRefArgs' resource_field_ref: Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
         :param 'CSIUnitySpecDriverNodeEnvsValueFromSecretKeyRefArgs' secret_key_ref: Selects a key of a secret in the pod's namespace
         """
@@ -5163,7 +9661,7 @@ class CSIUnitySpecDriverNodeEnvsValueFrom(dict):
     @pulumi.getter(name="fieldRef")
     def field_ref(self) -> Optional['outputs.CSIUnitySpecDriverNodeEnvsValueFromFieldRef']:
         """
-        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
         """
         return pulumi.get(self, "field_ref")
 
@@ -5239,13 +9737,13 @@ class CSIUnitySpecDriverNodeEnvsValueFromConfigMapKeyRef(dict):
 @pulumi.output_type
 class CSIUnitySpecDriverNodeEnvsValueFromFieldRef(dict):
     """
-    Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+    Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
     """
     def __init__(__self__, *,
                  field_path: str,
                  api_version: Optional[str] = None):
         """
-        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
         :param str field_path: Path of the field to select in the specified API version.
         :param str api_version: Version of the schema the FieldPath is written in terms of, defaults to "v1".
         """
@@ -5281,12 +9779,12 @@ class CSIUnitySpecDriverNodeEnvsValueFromResourceFieldRef(dict):
     def __init__(__self__, *,
                  resource: str,
                  container_name: Optional[str] = None,
-                 divisor: Optional[str] = None):
+                 divisor: Optional['outputs.CSIUnitySpecDriverNodeEnvsValueFromResourceFieldRefDivisor'] = None):
         """
         Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
         :param str resource: Required: resource to select
         :param str container_name: Container name: required for volumes, optional for env vars
-        :param str divisor: Specifies the output format of the exposed resources, defaults to "1"
+        :param 'CSIUnitySpecDriverNodeEnvsValueFromResourceFieldRefDivisorArgs' divisor: Specifies the output format of the exposed resources, defaults to "1"
         """
         pulumi.set(__self__, "resource", resource)
         if container_name is not None:
@@ -5312,11 +9810,20 @@ class CSIUnitySpecDriverNodeEnvsValueFromResourceFieldRef(dict):
 
     @property
     @pulumi.getter
-    def divisor(self) -> Optional[str]:
+    def divisor(self) -> Optional['outputs.CSIUnitySpecDriverNodeEnvsValueFromResourceFieldRefDivisor']:
         """
         Specifies the output format of the exposed resources, defaults to "1"
         """
         return pulumi.get(self, "divisor")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class CSIUnitySpecDriverNodeEnvsValueFromResourceFieldRefDivisor(dict):
+    def __init__(__self__):
+        pass
 
     def _translate_property(self, prop):
         return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
@@ -5372,6 +9879,80 @@ class CSIUnitySpecDriverNodeEnvsValueFromSecretKeyRef(dict):
 
 
 @pulumi.output_type
+class CSIUnitySpecDriverNodeTolerations(dict):
+    """
+    The pod this Toleration is attached to tolerates any taint that matches the triple <key,value,effect> using the matching operator <operator>.
+    """
+    def __init__(__self__, *,
+                 effect: Optional[str] = None,
+                 key: Optional[str] = None,
+                 operator: Optional[str] = None,
+                 toleration_seconds: Optional[int] = None,
+                 value: Optional[str] = None):
+        """
+        The pod this Toleration is attached to tolerates any taint that matches the triple <key,value,effect> using the matching operator <operator>.
+        :param str effect: Effect indicates the taint effect to match. Empty means match all taint effects. When specified, allowed values are NoSchedule, PreferNoSchedule and NoExecute.
+        :param str key: Key is the taint key that the toleration applies to. Empty means match all taint keys. If the key is empty, operator must be Exists; this combination means to match all values and all keys.
+        :param str operator: Operator represents a key's relationship to the value. Valid operators are Exists and Equal. Defaults to Equal. Exists is equivalent to wildcard for value, so that a pod can tolerate all taints of a particular category.
+        :param int toleration_seconds: TolerationSeconds represents the period of time the toleration (which must be of effect NoExecute, otherwise this field is ignored) tolerates the taint. By default, it is not set, which means tolerate the taint forever (do not evict). Zero and negative values will be treated as 0 (evict immediately) by the system.
+        :param str value: Value is the taint value the toleration matches to. If the operator is Exists, the value should be empty, otherwise just a regular string.
+        """
+        if effect is not None:
+            pulumi.set(__self__, "effect", effect)
+        if key is not None:
+            pulumi.set(__self__, "key", key)
+        if operator is not None:
+            pulumi.set(__self__, "operator", operator)
+        if toleration_seconds is not None:
+            pulumi.set(__self__, "toleration_seconds", toleration_seconds)
+        if value is not None:
+            pulumi.set(__self__, "value", value)
+
+    @property
+    @pulumi.getter
+    def effect(self) -> Optional[str]:
+        """
+        Effect indicates the taint effect to match. Empty means match all taint effects. When specified, allowed values are NoSchedule, PreferNoSchedule and NoExecute.
+        """
+        return pulumi.get(self, "effect")
+
+    @property
+    @pulumi.getter
+    def key(self) -> Optional[str]:
+        """
+        Key is the taint key that the toleration applies to. Empty means match all taint keys. If the key is empty, operator must be Exists; this combination means to match all values and all keys.
+        """
+        return pulumi.get(self, "key")
+
+    @property
+    @pulumi.getter
+    def operator(self) -> Optional[str]:
+        """
+        Operator represents a key's relationship to the value. Valid operators are Exists and Equal. Defaults to Equal. Exists is equivalent to wildcard for value, so that a pod can tolerate all taints of a particular category.
+        """
+        return pulumi.get(self, "operator")
+
+    @property
+    @pulumi.getter(name="tolerationSeconds")
+    def toleration_seconds(self) -> Optional[int]:
+        """
+        TolerationSeconds represents the period of time the toleration (which must be of effect NoExecute, otherwise this field is ignored) tolerates the taint. By default, it is not set, which means tolerate the taint forever (do not evict). Zero and negative values will be treated as 0 (evict immediately) by the system.
+        """
+        return pulumi.get(self, "toleration_seconds")
+
+    @property
+    @pulumi.getter
+    def value(self) -> Optional[str]:
+        """
+        Value is the taint value the toleration matches to. If the operator is Exists, the value should be empty, otherwise just a regular string.
+        """
+        return pulumi.get(self, "value")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
 class CSIUnitySpecDriverSideCars(dict):
     """
     ContainerTemplate - Structure representing a container
@@ -5381,7 +9962,9 @@ class CSIUnitySpecDriverSideCars(dict):
                  envs: Optional[Sequence['outputs.CSIUnitySpecDriverSideCarsEnvs']] = None,
                  image: Optional[str] = None,
                  image_pull_policy: Optional[str] = None,
-                 name: Optional[str] = None):
+                 name: Optional[str] = None,
+                 node_selector: Optional[Mapping[str, str]] = None,
+                 tolerations: Optional[Sequence['outputs.CSIUnitySpecDriverSideCarsTolerations']] = None):
         """
         ContainerTemplate - Structure representing a container
         :param Sequence[str] args: Args is the set of arguments for the container
@@ -5389,6 +9972,8 @@ class CSIUnitySpecDriverSideCars(dict):
         :param str image: Image is the image tag for the Container
         :param str image_pull_policy: ImagePullPolicy is the image pull policy for the image
         :param str name: Name is the name of Container
+        :param Mapping[str, str] node_selector: NodeSelector is a selector which must be true for the pod to fit on a node. Selector which must match a node's labels for the pod to be scheduled on that node.
+        :param Sequence['CSIUnitySpecDriverSideCarsTolerationsArgs'] tolerations: Tolerations is the list of tolerations for the driver pods
         """
         if args is not None:
             pulumi.set(__self__, "args", args)
@@ -5400,6 +9985,10 @@ class CSIUnitySpecDriverSideCars(dict):
             pulumi.set(__self__, "image_pull_policy", image_pull_policy)
         if name is not None:
             pulumi.set(__self__, "name", name)
+        if node_selector is not None:
+            pulumi.set(__self__, "node_selector", node_selector)
+        if tolerations is not None:
+            pulumi.set(__self__, "tolerations", tolerations)
 
     @property
     @pulumi.getter
@@ -5440,6 +10029,22 @@ class CSIUnitySpecDriverSideCars(dict):
         Name is the name of Container
         """
         return pulumi.get(self, "name")
+
+    @property
+    @pulumi.getter(name="nodeSelector")
+    def node_selector(self) -> Optional[Mapping[str, str]]:
+        """
+        NodeSelector is a selector which must be true for the pod to fit on a node. Selector which must match a node's labels for the pod to be scheduled on that node.
+        """
+        return pulumi.get(self, "node_selector")
+
+    @property
+    @pulumi.getter
+    def tolerations(self) -> Optional[Sequence['outputs.CSIUnitySpecDriverSideCarsTolerations']]:
+        """
+        Tolerations is the list of tolerations for the driver pods
+        """
+        return pulumi.get(self, "tolerations")
 
     def _translate_property(self, prop):
         return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
@@ -5507,7 +10112,7 @@ class CSIUnitySpecDriverSideCarsEnvsValueFrom(dict):
         """
         Source for the environment variable's value. Cannot be used if value is not empty.
         :param 'CSIUnitySpecDriverSideCarsEnvsValueFromConfigMapKeyRefArgs' config_map_key_ref: Selects a key of a ConfigMap.
-        :param 'CSIUnitySpecDriverSideCarsEnvsValueFromFieldRefArgs' field_ref: Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+        :param 'CSIUnitySpecDriverSideCarsEnvsValueFromFieldRefArgs' field_ref: Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
         :param 'CSIUnitySpecDriverSideCarsEnvsValueFromResourceFieldRefArgs' resource_field_ref: Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
         :param 'CSIUnitySpecDriverSideCarsEnvsValueFromSecretKeyRefArgs' secret_key_ref: Selects a key of a secret in the pod's namespace
         """
@@ -5532,7 +10137,7 @@ class CSIUnitySpecDriverSideCarsEnvsValueFrom(dict):
     @pulumi.getter(name="fieldRef")
     def field_ref(self) -> Optional['outputs.CSIUnitySpecDriverSideCarsEnvsValueFromFieldRef']:
         """
-        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
         """
         return pulumi.get(self, "field_ref")
 
@@ -5608,13 +10213,13 @@ class CSIUnitySpecDriverSideCarsEnvsValueFromConfigMapKeyRef(dict):
 @pulumi.output_type
 class CSIUnitySpecDriverSideCarsEnvsValueFromFieldRef(dict):
     """
-    Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+    Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
     """
     def __init__(__self__, *,
                  field_path: str,
                  api_version: Optional[str] = None):
         """
-        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
         :param str field_path: Path of the field to select in the specified API version.
         :param str api_version: Version of the schema the FieldPath is written in terms of, defaults to "v1".
         """
@@ -5650,12 +10255,12 @@ class CSIUnitySpecDriverSideCarsEnvsValueFromResourceFieldRef(dict):
     def __init__(__self__, *,
                  resource: str,
                  container_name: Optional[str] = None,
-                 divisor: Optional[str] = None):
+                 divisor: Optional['outputs.CSIUnitySpecDriverSideCarsEnvsValueFromResourceFieldRefDivisor'] = None):
         """
         Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
         :param str resource: Required: resource to select
         :param str container_name: Container name: required for volumes, optional for env vars
-        :param str divisor: Specifies the output format of the exposed resources, defaults to "1"
+        :param 'CSIUnitySpecDriverSideCarsEnvsValueFromResourceFieldRefDivisorArgs' divisor: Specifies the output format of the exposed resources, defaults to "1"
         """
         pulumi.set(__self__, "resource", resource)
         if container_name is not None:
@@ -5681,11 +10286,20 @@ class CSIUnitySpecDriverSideCarsEnvsValueFromResourceFieldRef(dict):
 
     @property
     @pulumi.getter
-    def divisor(self) -> Optional[str]:
+    def divisor(self) -> Optional['outputs.CSIUnitySpecDriverSideCarsEnvsValueFromResourceFieldRefDivisor']:
         """
         Specifies the output format of the exposed resources, defaults to "1"
         """
         return pulumi.get(self, "divisor")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class CSIUnitySpecDriverSideCarsEnvsValueFromResourceFieldRefDivisor(dict):
+    def __init__(__self__):
+        pass
 
     def _translate_property(self, prop):
         return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
@@ -5741,6 +10355,80 @@ class CSIUnitySpecDriverSideCarsEnvsValueFromSecretKeyRef(dict):
 
 
 @pulumi.output_type
+class CSIUnitySpecDriverSideCarsTolerations(dict):
+    """
+    The pod this Toleration is attached to tolerates any taint that matches the triple <key,value,effect> using the matching operator <operator>.
+    """
+    def __init__(__self__, *,
+                 effect: Optional[str] = None,
+                 key: Optional[str] = None,
+                 operator: Optional[str] = None,
+                 toleration_seconds: Optional[int] = None,
+                 value: Optional[str] = None):
+        """
+        The pod this Toleration is attached to tolerates any taint that matches the triple <key,value,effect> using the matching operator <operator>.
+        :param str effect: Effect indicates the taint effect to match. Empty means match all taint effects. When specified, allowed values are NoSchedule, PreferNoSchedule and NoExecute.
+        :param str key: Key is the taint key that the toleration applies to. Empty means match all taint keys. If the key is empty, operator must be Exists; this combination means to match all values and all keys.
+        :param str operator: Operator represents a key's relationship to the value. Valid operators are Exists and Equal. Defaults to Equal. Exists is equivalent to wildcard for value, so that a pod can tolerate all taints of a particular category.
+        :param int toleration_seconds: TolerationSeconds represents the period of time the toleration (which must be of effect NoExecute, otherwise this field is ignored) tolerates the taint. By default, it is not set, which means tolerate the taint forever (do not evict). Zero and negative values will be treated as 0 (evict immediately) by the system.
+        :param str value: Value is the taint value the toleration matches to. If the operator is Exists, the value should be empty, otherwise just a regular string.
+        """
+        if effect is not None:
+            pulumi.set(__self__, "effect", effect)
+        if key is not None:
+            pulumi.set(__self__, "key", key)
+        if operator is not None:
+            pulumi.set(__self__, "operator", operator)
+        if toleration_seconds is not None:
+            pulumi.set(__self__, "toleration_seconds", toleration_seconds)
+        if value is not None:
+            pulumi.set(__self__, "value", value)
+
+    @property
+    @pulumi.getter
+    def effect(self) -> Optional[str]:
+        """
+        Effect indicates the taint effect to match. Empty means match all taint effects. When specified, allowed values are NoSchedule, PreferNoSchedule and NoExecute.
+        """
+        return pulumi.get(self, "effect")
+
+    @property
+    @pulumi.getter
+    def key(self) -> Optional[str]:
+        """
+        Key is the taint key that the toleration applies to. Empty means match all taint keys. If the key is empty, operator must be Exists; this combination means to match all values and all keys.
+        """
+        return pulumi.get(self, "key")
+
+    @property
+    @pulumi.getter
+    def operator(self) -> Optional[str]:
+        """
+        Operator represents a key's relationship to the value. Valid operators are Exists and Equal. Defaults to Equal. Exists is equivalent to wildcard for value, so that a pod can tolerate all taints of a particular category.
+        """
+        return pulumi.get(self, "operator")
+
+    @property
+    @pulumi.getter(name="tolerationSeconds")
+    def toleration_seconds(self) -> Optional[int]:
+        """
+        TolerationSeconds represents the period of time the toleration (which must be of effect NoExecute, otherwise this field is ignored) tolerates the taint. By default, it is not set, which means tolerate the taint forever (do not evict). Zero and negative values will be treated as 0 (evict immediately) by the system.
+        """
+        return pulumi.get(self, "toleration_seconds")
+
+    @property
+    @pulumi.getter
+    def value(self) -> Optional[str]:
+        """
+        Value is the taint value the toleration matches to. If the operator is Exists, the value should be empty, otherwise just a regular string.
+        """
+        return pulumi.get(self, "value")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
 class CSIUnitySpecDriverSnapshotClass(dict):
     """
     SnapshotClass represents a VolumeSnapshotClass
@@ -5785,6 +10473,7 @@ class CSIUnitySpecDriverStorageClass(dict):
     def __init__(__self__, *,
                  name: str,
                  allow_volume_expansion: Optional[bool] = None,
+                 allowed_topologies: Optional[Sequence['outputs.CSIUnitySpecDriverStorageClassAllowedTopologies']] = None,
                  default: Optional[bool] = None,
                  parameters: Optional[Mapping[str, str]] = None,
                  reclaim_policy: Optional[str] = None):
@@ -5792,6 +10481,7 @@ class CSIUnitySpecDriverStorageClass(dict):
         StorageClass represents a kubernetes storage class
         :param str name: Name is the name of the StorageClass
         :param bool allow_volume_expansion: AllowVolumeExpansion is a boolean flag which indicates if volumes can be expanded
+        :param Sequence['CSIUnitySpecDriverStorageClassAllowedTopologiesArgs'] allowed_topologies: Restrict the node topologies where volumes can be dynamically provisioned.
         :param bool default: DefaultSc is a boolean flag to indicate if the storage class is going to be marked as default
         :param Mapping[str, str] parameters: Parameters is a map of driver specific storage class
         :param str reclaim_policy: ReclaimPolicy is the reclaim policy for the storage class
@@ -5799,6 +10489,8 @@ class CSIUnitySpecDriverStorageClass(dict):
         pulumi.set(__self__, "name", name)
         if allow_volume_expansion is not None:
             pulumi.set(__self__, "allow_volume_expansion", allow_volume_expansion)
+        if allowed_topologies is not None:
+            pulumi.set(__self__, "allowed_topologies", allowed_topologies)
         if default is not None:
             pulumi.set(__self__, "default", default)
         if parameters is not None:
@@ -5823,6 +10515,14 @@ class CSIUnitySpecDriverStorageClass(dict):
         return pulumi.get(self, "allow_volume_expansion")
 
     @property
+    @pulumi.getter(name="allowedTopologies")
+    def allowed_topologies(self) -> Optional[Sequence['outputs.CSIUnitySpecDriverStorageClassAllowedTopologies']]:
+        """
+        Restrict the node topologies where volumes can be dynamically provisioned.
+        """
+        return pulumi.get(self, "allowed_topologies")
+
+    @property
     @pulumi.getter
     def default(self) -> Optional[bool]:
         """
@@ -5845,6 +10545,68 @@ class CSIUnitySpecDriverStorageClass(dict):
         ReclaimPolicy is the reclaim policy for the storage class
         """
         return pulumi.get(self, "reclaim_policy")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class CSIUnitySpecDriverStorageClassAllowedTopologies(dict):
+    """
+    A topology selector term represents the result of label queries. A null or empty topology selector term matches no objects. The requirements of them are ANDed. It provides a subset of functionality as NodeSelectorTerm. This is an alpha feature and may change in the future.
+    """
+    def __init__(__self__, *,
+                 match_label_expressions: Optional[Sequence['outputs.CSIUnitySpecDriverStorageClassAllowedTopologiesMatchLabelExpressions']] = None):
+        """
+        A topology selector term represents the result of label queries. A null or empty topology selector term matches no objects. The requirements of them are ANDed. It provides a subset of functionality as NodeSelectorTerm. This is an alpha feature and may change in the future.
+        :param Sequence['CSIUnitySpecDriverStorageClassAllowedTopologiesMatchLabelExpressionsArgs'] match_label_expressions: A list of topology selector requirements by labels.
+        """
+        if match_label_expressions is not None:
+            pulumi.set(__self__, "match_label_expressions", match_label_expressions)
+
+    @property
+    @pulumi.getter(name="matchLabelExpressions")
+    def match_label_expressions(self) -> Optional[Sequence['outputs.CSIUnitySpecDriverStorageClassAllowedTopologiesMatchLabelExpressions']]:
+        """
+        A list of topology selector requirements by labels.
+        """
+        return pulumi.get(self, "match_label_expressions")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class CSIUnitySpecDriverStorageClassAllowedTopologiesMatchLabelExpressions(dict):
+    """
+    A topology selector requirement is a selector that matches given label. This is an alpha feature and may change in the future.
+    """
+    def __init__(__self__, *,
+                 key: str,
+                 values: Sequence[str]):
+        """
+        A topology selector requirement is a selector that matches given label. This is an alpha feature and may change in the future.
+        :param str key: The label key that the selector applies to.
+        :param Sequence[str] values: An array of string values. One value must match the label to be selected. Each entry in Values is ORed.
+        """
+        pulumi.set(__self__, "key", key)
+        pulumi.set(__self__, "values", values)
+
+    @property
+    @pulumi.getter
+    def key(self) -> str:
+        """
+        The label key that the selector applies to.
+        """
+        return pulumi.get(self, "key")
+
+    @property
+    @pulumi.getter
+    def values(self) -> Sequence[str]:
+        """
+        An array of string values. One value must match the label to be selected. Each entry in Values is ORed.
+        """
+        return pulumi.get(self, "values")
 
     def _translate_property(self, prop):
         return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
@@ -6244,7 +11006,9 @@ class CSIVXFlexOSSpecDriverCommon(dict):
                  envs: Optional[Sequence['outputs.CSIVXFlexOSSpecDriverCommonEnvs']] = None,
                  image: Optional[str] = None,
                  image_pull_policy: Optional[str] = None,
-                 name: Optional[str] = None):
+                 name: Optional[str] = None,
+                 node_selector: Optional[Mapping[str, str]] = None,
+                 tolerations: Optional[Sequence['outputs.CSIVXFlexOSSpecDriverCommonTolerations']] = None):
         """
         Common is the common specification for both controller and node plugins
         :param Sequence[str] args: Args is the set of arguments for the container
@@ -6252,6 +11016,8 @@ class CSIVXFlexOSSpecDriverCommon(dict):
         :param str image: Image is the image tag for the Container
         :param str image_pull_policy: ImagePullPolicy is the image pull policy for the image
         :param str name: Name is the name of Container
+        :param Mapping[str, str] node_selector: NodeSelector is a selector which must be true for the pod to fit on a node. Selector which must match a node's labels for the pod to be scheduled on that node.
+        :param Sequence['CSIVXFlexOSSpecDriverCommonTolerationsArgs'] tolerations: Tolerations is the list of tolerations for the driver pods
         """
         if args is not None:
             pulumi.set(__self__, "args", args)
@@ -6263,6 +11029,10 @@ class CSIVXFlexOSSpecDriverCommon(dict):
             pulumi.set(__self__, "image_pull_policy", image_pull_policy)
         if name is not None:
             pulumi.set(__self__, "name", name)
+        if node_selector is not None:
+            pulumi.set(__self__, "node_selector", node_selector)
+        if tolerations is not None:
+            pulumi.set(__self__, "tolerations", tolerations)
 
     @property
     @pulumi.getter
@@ -6303,6 +11073,22 @@ class CSIVXFlexOSSpecDriverCommon(dict):
         Name is the name of Container
         """
         return pulumi.get(self, "name")
+
+    @property
+    @pulumi.getter(name="nodeSelector")
+    def node_selector(self) -> Optional[Mapping[str, str]]:
+        """
+        NodeSelector is a selector which must be true for the pod to fit on a node. Selector which must match a node's labels for the pod to be scheduled on that node.
+        """
+        return pulumi.get(self, "node_selector")
+
+    @property
+    @pulumi.getter
+    def tolerations(self) -> Optional[Sequence['outputs.CSIVXFlexOSSpecDriverCommonTolerations']]:
+        """
+        Tolerations is the list of tolerations for the driver pods
+        """
+        return pulumi.get(self, "tolerations")
 
     def _translate_property(self, prop):
         return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
@@ -6370,7 +11156,7 @@ class CSIVXFlexOSSpecDriverCommonEnvsValueFrom(dict):
         """
         Source for the environment variable's value. Cannot be used if value is not empty.
         :param 'CSIVXFlexOSSpecDriverCommonEnvsValueFromConfigMapKeyRefArgs' config_map_key_ref: Selects a key of a ConfigMap.
-        :param 'CSIVXFlexOSSpecDriverCommonEnvsValueFromFieldRefArgs' field_ref: Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+        :param 'CSIVXFlexOSSpecDriverCommonEnvsValueFromFieldRefArgs' field_ref: Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
         :param 'CSIVXFlexOSSpecDriverCommonEnvsValueFromResourceFieldRefArgs' resource_field_ref: Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
         :param 'CSIVXFlexOSSpecDriverCommonEnvsValueFromSecretKeyRefArgs' secret_key_ref: Selects a key of a secret in the pod's namespace
         """
@@ -6395,7 +11181,7 @@ class CSIVXFlexOSSpecDriverCommonEnvsValueFrom(dict):
     @pulumi.getter(name="fieldRef")
     def field_ref(self) -> Optional['outputs.CSIVXFlexOSSpecDriverCommonEnvsValueFromFieldRef']:
         """
-        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
         """
         return pulumi.get(self, "field_ref")
 
@@ -6471,13 +11257,13 @@ class CSIVXFlexOSSpecDriverCommonEnvsValueFromConfigMapKeyRef(dict):
 @pulumi.output_type
 class CSIVXFlexOSSpecDriverCommonEnvsValueFromFieldRef(dict):
     """
-    Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+    Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
     """
     def __init__(__self__, *,
                  field_path: str,
                  api_version: Optional[str] = None):
         """
-        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
         :param str field_path: Path of the field to select in the specified API version.
         :param str api_version: Version of the schema the FieldPath is written in terms of, defaults to "v1".
         """
@@ -6513,12 +11299,12 @@ class CSIVXFlexOSSpecDriverCommonEnvsValueFromResourceFieldRef(dict):
     def __init__(__self__, *,
                  resource: str,
                  container_name: Optional[str] = None,
-                 divisor: Optional[str] = None):
+                 divisor: Optional['outputs.CSIVXFlexOSSpecDriverCommonEnvsValueFromResourceFieldRefDivisor'] = None):
         """
         Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
         :param str resource: Required: resource to select
         :param str container_name: Container name: required for volumes, optional for env vars
-        :param str divisor: Specifies the output format of the exposed resources, defaults to "1"
+        :param 'CSIVXFlexOSSpecDriverCommonEnvsValueFromResourceFieldRefDivisorArgs' divisor: Specifies the output format of the exposed resources, defaults to "1"
         """
         pulumi.set(__self__, "resource", resource)
         if container_name is not None:
@@ -6544,11 +11330,20 @@ class CSIVXFlexOSSpecDriverCommonEnvsValueFromResourceFieldRef(dict):
 
     @property
     @pulumi.getter
-    def divisor(self) -> Optional[str]:
+    def divisor(self) -> Optional['outputs.CSIVXFlexOSSpecDriverCommonEnvsValueFromResourceFieldRefDivisor']:
         """
         Specifies the output format of the exposed resources, defaults to "1"
         """
         return pulumi.get(self, "divisor")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class CSIVXFlexOSSpecDriverCommonEnvsValueFromResourceFieldRefDivisor(dict):
+    def __init__(__self__):
+        pass
 
     def _translate_property(self, prop):
         return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
@@ -6604,6 +11399,80 @@ class CSIVXFlexOSSpecDriverCommonEnvsValueFromSecretKeyRef(dict):
 
 
 @pulumi.output_type
+class CSIVXFlexOSSpecDriverCommonTolerations(dict):
+    """
+    The pod this Toleration is attached to tolerates any taint that matches the triple <key,value,effect> using the matching operator <operator>.
+    """
+    def __init__(__self__, *,
+                 effect: Optional[str] = None,
+                 key: Optional[str] = None,
+                 operator: Optional[str] = None,
+                 toleration_seconds: Optional[int] = None,
+                 value: Optional[str] = None):
+        """
+        The pod this Toleration is attached to tolerates any taint that matches the triple <key,value,effect> using the matching operator <operator>.
+        :param str effect: Effect indicates the taint effect to match. Empty means match all taint effects. When specified, allowed values are NoSchedule, PreferNoSchedule and NoExecute.
+        :param str key: Key is the taint key that the toleration applies to. Empty means match all taint keys. If the key is empty, operator must be Exists; this combination means to match all values and all keys.
+        :param str operator: Operator represents a key's relationship to the value. Valid operators are Exists and Equal. Defaults to Equal. Exists is equivalent to wildcard for value, so that a pod can tolerate all taints of a particular category.
+        :param int toleration_seconds: TolerationSeconds represents the period of time the toleration (which must be of effect NoExecute, otherwise this field is ignored) tolerates the taint. By default, it is not set, which means tolerate the taint forever (do not evict). Zero and negative values will be treated as 0 (evict immediately) by the system.
+        :param str value: Value is the taint value the toleration matches to. If the operator is Exists, the value should be empty, otherwise just a regular string.
+        """
+        if effect is not None:
+            pulumi.set(__self__, "effect", effect)
+        if key is not None:
+            pulumi.set(__self__, "key", key)
+        if operator is not None:
+            pulumi.set(__self__, "operator", operator)
+        if toleration_seconds is not None:
+            pulumi.set(__self__, "toleration_seconds", toleration_seconds)
+        if value is not None:
+            pulumi.set(__self__, "value", value)
+
+    @property
+    @pulumi.getter
+    def effect(self) -> Optional[str]:
+        """
+        Effect indicates the taint effect to match. Empty means match all taint effects. When specified, allowed values are NoSchedule, PreferNoSchedule and NoExecute.
+        """
+        return pulumi.get(self, "effect")
+
+    @property
+    @pulumi.getter
+    def key(self) -> Optional[str]:
+        """
+        Key is the taint key that the toleration applies to. Empty means match all taint keys. If the key is empty, operator must be Exists; this combination means to match all values and all keys.
+        """
+        return pulumi.get(self, "key")
+
+    @property
+    @pulumi.getter
+    def operator(self) -> Optional[str]:
+        """
+        Operator represents a key's relationship to the value. Valid operators are Exists and Equal. Defaults to Equal. Exists is equivalent to wildcard for value, so that a pod can tolerate all taints of a particular category.
+        """
+        return pulumi.get(self, "operator")
+
+    @property
+    @pulumi.getter(name="tolerationSeconds")
+    def toleration_seconds(self) -> Optional[int]:
+        """
+        TolerationSeconds represents the period of time the toleration (which must be of effect NoExecute, otherwise this field is ignored) tolerates the taint. By default, it is not set, which means tolerate the taint forever (do not evict). Zero and negative values will be treated as 0 (evict immediately) by the system.
+        """
+        return pulumi.get(self, "toleration_seconds")
+
+    @property
+    @pulumi.getter
+    def value(self) -> Optional[str]:
+        """
+        Value is the taint value the toleration matches to. If the operator is Exists, the value should be empty, otherwise just a regular string.
+        """
+        return pulumi.get(self, "value")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
 class CSIVXFlexOSSpecDriverController(dict):
     """
     Controller is the specification for Controller plugin only
@@ -6613,7 +11482,9 @@ class CSIVXFlexOSSpecDriverController(dict):
                  envs: Optional[Sequence['outputs.CSIVXFlexOSSpecDriverControllerEnvs']] = None,
                  image: Optional[str] = None,
                  image_pull_policy: Optional[str] = None,
-                 name: Optional[str] = None):
+                 name: Optional[str] = None,
+                 node_selector: Optional[Mapping[str, str]] = None,
+                 tolerations: Optional[Sequence['outputs.CSIVXFlexOSSpecDriverControllerTolerations']] = None):
         """
         Controller is the specification for Controller plugin only
         :param Sequence[str] args: Args is the set of arguments for the container
@@ -6621,6 +11492,8 @@ class CSIVXFlexOSSpecDriverController(dict):
         :param str image: Image is the image tag for the Container
         :param str image_pull_policy: ImagePullPolicy is the image pull policy for the image
         :param str name: Name is the name of Container
+        :param Mapping[str, str] node_selector: NodeSelector is a selector which must be true for the pod to fit on a node. Selector which must match a node's labels for the pod to be scheduled on that node.
+        :param Sequence['CSIVXFlexOSSpecDriverControllerTolerationsArgs'] tolerations: Tolerations is the list of tolerations for the driver pods
         """
         if args is not None:
             pulumi.set(__self__, "args", args)
@@ -6632,6 +11505,10 @@ class CSIVXFlexOSSpecDriverController(dict):
             pulumi.set(__self__, "image_pull_policy", image_pull_policy)
         if name is not None:
             pulumi.set(__self__, "name", name)
+        if node_selector is not None:
+            pulumi.set(__self__, "node_selector", node_selector)
+        if tolerations is not None:
+            pulumi.set(__self__, "tolerations", tolerations)
 
     @property
     @pulumi.getter
@@ -6672,6 +11549,22 @@ class CSIVXFlexOSSpecDriverController(dict):
         Name is the name of Container
         """
         return pulumi.get(self, "name")
+
+    @property
+    @pulumi.getter(name="nodeSelector")
+    def node_selector(self) -> Optional[Mapping[str, str]]:
+        """
+        NodeSelector is a selector which must be true for the pod to fit on a node. Selector which must match a node's labels for the pod to be scheduled on that node.
+        """
+        return pulumi.get(self, "node_selector")
+
+    @property
+    @pulumi.getter
+    def tolerations(self) -> Optional[Sequence['outputs.CSIVXFlexOSSpecDriverControllerTolerations']]:
+        """
+        Tolerations is the list of tolerations for the driver pods
+        """
+        return pulumi.get(self, "tolerations")
 
     def _translate_property(self, prop):
         return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
@@ -6739,7 +11632,7 @@ class CSIVXFlexOSSpecDriverControllerEnvsValueFrom(dict):
         """
         Source for the environment variable's value. Cannot be used if value is not empty.
         :param 'CSIVXFlexOSSpecDriverControllerEnvsValueFromConfigMapKeyRefArgs' config_map_key_ref: Selects a key of a ConfigMap.
-        :param 'CSIVXFlexOSSpecDriverControllerEnvsValueFromFieldRefArgs' field_ref: Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+        :param 'CSIVXFlexOSSpecDriverControllerEnvsValueFromFieldRefArgs' field_ref: Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
         :param 'CSIVXFlexOSSpecDriverControllerEnvsValueFromResourceFieldRefArgs' resource_field_ref: Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
         :param 'CSIVXFlexOSSpecDriverControllerEnvsValueFromSecretKeyRefArgs' secret_key_ref: Selects a key of a secret in the pod's namespace
         """
@@ -6764,7 +11657,7 @@ class CSIVXFlexOSSpecDriverControllerEnvsValueFrom(dict):
     @pulumi.getter(name="fieldRef")
     def field_ref(self) -> Optional['outputs.CSIVXFlexOSSpecDriverControllerEnvsValueFromFieldRef']:
         """
-        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
         """
         return pulumi.get(self, "field_ref")
 
@@ -6840,13 +11733,13 @@ class CSIVXFlexOSSpecDriverControllerEnvsValueFromConfigMapKeyRef(dict):
 @pulumi.output_type
 class CSIVXFlexOSSpecDriverControllerEnvsValueFromFieldRef(dict):
     """
-    Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+    Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
     """
     def __init__(__self__, *,
                  field_path: str,
                  api_version: Optional[str] = None):
         """
-        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
         :param str field_path: Path of the field to select in the specified API version.
         :param str api_version: Version of the schema the FieldPath is written in terms of, defaults to "v1".
         """
@@ -6882,12 +11775,12 @@ class CSIVXFlexOSSpecDriverControllerEnvsValueFromResourceFieldRef(dict):
     def __init__(__self__, *,
                  resource: str,
                  container_name: Optional[str] = None,
-                 divisor: Optional[str] = None):
+                 divisor: Optional['outputs.CSIVXFlexOSSpecDriverControllerEnvsValueFromResourceFieldRefDivisor'] = None):
         """
         Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
         :param str resource: Required: resource to select
         :param str container_name: Container name: required for volumes, optional for env vars
-        :param str divisor: Specifies the output format of the exposed resources, defaults to "1"
+        :param 'CSIVXFlexOSSpecDriverControllerEnvsValueFromResourceFieldRefDivisorArgs' divisor: Specifies the output format of the exposed resources, defaults to "1"
         """
         pulumi.set(__self__, "resource", resource)
         if container_name is not None:
@@ -6913,11 +11806,20 @@ class CSIVXFlexOSSpecDriverControllerEnvsValueFromResourceFieldRef(dict):
 
     @property
     @pulumi.getter
-    def divisor(self) -> Optional[str]:
+    def divisor(self) -> Optional['outputs.CSIVXFlexOSSpecDriverControllerEnvsValueFromResourceFieldRefDivisor']:
         """
         Specifies the output format of the exposed resources, defaults to "1"
         """
         return pulumi.get(self, "divisor")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class CSIVXFlexOSSpecDriverControllerEnvsValueFromResourceFieldRefDivisor(dict):
+    def __init__(__self__):
+        pass
 
     def _translate_property(self, prop):
         return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
@@ -6973,6 +11875,80 @@ class CSIVXFlexOSSpecDriverControllerEnvsValueFromSecretKeyRef(dict):
 
 
 @pulumi.output_type
+class CSIVXFlexOSSpecDriverControllerTolerations(dict):
+    """
+    The pod this Toleration is attached to tolerates any taint that matches the triple <key,value,effect> using the matching operator <operator>.
+    """
+    def __init__(__self__, *,
+                 effect: Optional[str] = None,
+                 key: Optional[str] = None,
+                 operator: Optional[str] = None,
+                 toleration_seconds: Optional[int] = None,
+                 value: Optional[str] = None):
+        """
+        The pod this Toleration is attached to tolerates any taint that matches the triple <key,value,effect> using the matching operator <operator>.
+        :param str effect: Effect indicates the taint effect to match. Empty means match all taint effects. When specified, allowed values are NoSchedule, PreferNoSchedule and NoExecute.
+        :param str key: Key is the taint key that the toleration applies to. Empty means match all taint keys. If the key is empty, operator must be Exists; this combination means to match all values and all keys.
+        :param str operator: Operator represents a key's relationship to the value. Valid operators are Exists and Equal. Defaults to Equal. Exists is equivalent to wildcard for value, so that a pod can tolerate all taints of a particular category.
+        :param int toleration_seconds: TolerationSeconds represents the period of time the toleration (which must be of effect NoExecute, otherwise this field is ignored) tolerates the taint. By default, it is not set, which means tolerate the taint forever (do not evict). Zero and negative values will be treated as 0 (evict immediately) by the system.
+        :param str value: Value is the taint value the toleration matches to. If the operator is Exists, the value should be empty, otherwise just a regular string.
+        """
+        if effect is not None:
+            pulumi.set(__self__, "effect", effect)
+        if key is not None:
+            pulumi.set(__self__, "key", key)
+        if operator is not None:
+            pulumi.set(__self__, "operator", operator)
+        if toleration_seconds is not None:
+            pulumi.set(__self__, "toleration_seconds", toleration_seconds)
+        if value is not None:
+            pulumi.set(__self__, "value", value)
+
+    @property
+    @pulumi.getter
+    def effect(self) -> Optional[str]:
+        """
+        Effect indicates the taint effect to match. Empty means match all taint effects. When specified, allowed values are NoSchedule, PreferNoSchedule and NoExecute.
+        """
+        return pulumi.get(self, "effect")
+
+    @property
+    @pulumi.getter
+    def key(self) -> Optional[str]:
+        """
+        Key is the taint key that the toleration applies to. Empty means match all taint keys. If the key is empty, operator must be Exists; this combination means to match all values and all keys.
+        """
+        return pulumi.get(self, "key")
+
+    @property
+    @pulumi.getter
+    def operator(self) -> Optional[str]:
+        """
+        Operator represents a key's relationship to the value. Valid operators are Exists and Equal. Defaults to Equal. Exists is equivalent to wildcard for value, so that a pod can tolerate all taints of a particular category.
+        """
+        return pulumi.get(self, "operator")
+
+    @property
+    @pulumi.getter(name="tolerationSeconds")
+    def toleration_seconds(self) -> Optional[int]:
+        """
+        TolerationSeconds represents the period of time the toleration (which must be of effect NoExecute, otherwise this field is ignored) tolerates the taint. By default, it is not set, which means tolerate the taint forever (do not evict). Zero and negative values will be treated as 0 (evict immediately) by the system.
+        """
+        return pulumi.get(self, "toleration_seconds")
+
+    @property
+    @pulumi.getter
+    def value(self) -> Optional[str]:
+        """
+        Value is the taint value the toleration matches to. If the operator is Exists, the value should be empty, otherwise just a regular string.
+        """
+        return pulumi.get(self, "value")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
 class CSIVXFlexOSSpecDriverNode(dict):
     """
     Node is the specification for Node plugin only
@@ -6982,7 +11958,9 @@ class CSIVXFlexOSSpecDriverNode(dict):
                  envs: Optional[Sequence['outputs.CSIVXFlexOSSpecDriverNodeEnvs']] = None,
                  image: Optional[str] = None,
                  image_pull_policy: Optional[str] = None,
-                 name: Optional[str] = None):
+                 name: Optional[str] = None,
+                 node_selector: Optional[Mapping[str, str]] = None,
+                 tolerations: Optional[Sequence['outputs.CSIVXFlexOSSpecDriverNodeTolerations']] = None):
         """
         Node is the specification for Node plugin only
         :param Sequence[str] args: Args is the set of arguments for the container
@@ -6990,6 +11968,8 @@ class CSIVXFlexOSSpecDriverNode(dict):
         :param str image: Image is the image tag for the Container
         :param str image_pull_policy: ImagePullPolicy is the image pull policy for the image
         :param str name: Name is the name of Container
+        :param Mapping[str, str] node_selector: NodeSelector is a selector which must be true for the pod to fit on a node. Selector which must match a node's labels for the pod to be scheduled on that node.
+        :param Sequence['CSIVXFlexOSSpecDriverNodeTolerationsArgs'] tolerations: Tolerations is the list of tolerations for the driver pods
         """
         if args is not None:
             pulumi.set(__self__, "args", args)
@@ -7001,6 +11981,10 @@ class CSIVXFlexOSSpecDriverNode(dict):
             pulumi.set(__self__, "image_pull_policy", image_pull_policy)
         if name is not None:
             pulumi.set(__self__, "name", name)
+        if node_selector is not None:
+            pulumi.set(__self__, "node_selector", node_selector)
+        if tolerations is not None:
+            pulumi.set(__self__, "tolerations", tolerations)
 
     @property
     @pulumi.getter
@@ -7041,6 +12025,22 @@ class CSIVXFlexOSSpecDriverNode(dict):
         Name is the name of Container
         """
         return pulumi.get(self, "name")
+
+    @property
+    @pulumi.getter(name="nodeSelector")
+    def node_selector(self) -> Optional[Mapping[str, str]]:
+        """
+        NodeSelector is a selector which must be true for the pod to fit on a node. Selector which must match a node's labels for the pod to be scheduled on that node.
+        """
+        return pulumi.get(self, "node_selector")
+
+    @property
+    @pulumi.getter
+    def tolerations(self) -> Optional[Sequence['outputs.CSIVXFlexOSSpecDriverNodeTolerations']]:
+        """
+        Tolerations is the list of tolerations for the driver pods
+        """
+        return pulumi.get(self, "tolerations")
 
     def _translate_property(self, prop):
         return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
@@ -7108,7 +12108,7 @@ class CSIVXFlexOSSpecDriverNodeEnvsValueFrom(dict):
         """
         Source for the environment variable's value. Cannot be used if value is not empty.
         :param 'CSIVXFlexOSSpecDriverNodeEnvsValueFromConfigMapKeyRefArgs' config_map_key_ref: Selects a key of a ConfigMap.
-        :param 'CSIVXFlexOSSpecDriverNodeEnvsValueFromFieldRefArgs' field_ref: Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+        :param 'CSIVXFlexOSSpecDriverNodeEnvsValueFromFieldRefArgs' field_ref: Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
         :param 'CSIVXFlexOSSpecDriverNodeEnvsValueFromResourceFieldRefArgs' resource_field_ref: Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
         :param 'CSIVXFlexOSSpecDriverNodeEnvsValueFromSecretKeyRefArgs' secret_key_ref: Selects a key of a secret in the pod's namespace
         """
@@ -7133,7 +12133,7 @@ class CSIVXFlexOSSpecDriverNodeEnvsValueFrom(dict):
     @pulumi.getter(name="fieldRef")
     def field_ref(self) -> Optional['outputs.CSIVXFlexOSSpecDriverNodeEnvsValueFromFieldRef']:
         """
-        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
         """
         return pulumi.get(self, "field_ref")
 
@@ -7209,13 +12209,13 @@ class CSIVXFlexOSSpecDriverNodeEnvsValueFromConfigMapKeyRef(dict):
 @pulumi.output_type
 class CSIVXFlexOSSpecDriverNodeEnvsValueFromFieldRef(dict):
     """
-    Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+    Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
     """
     def __init__(__self__, *,
                  field_path: str,
                  api_version: Optional[str] = None):
         """
-        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
         :param str field_path: Path of the field to select in the specified API version.
         :param str api_version: Version of the schema the FieldPath is written in terms of, defaults to "v1".
         """
@@ -7251,12 +12251,12 @@ class CSIVXFlexOSSpecDriverNodeEnvsValueFromResourceFieldRef(dict):
     def __init__(__self__, *,
                  resource: str,
                  container_name: Optional[str] = None,
-                 divisor: Optional[str] = None):
+                 divisor: Optional['outputs.CSIVXFlexOSSpecDriverNodeEnvsValueFromResourceFieldRefDivisor'] = None):
         """
         Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
         :param str resource: Required: resource to select
         :param str container_name: Container name: required for volumes, optional for env vars
-        :param str divisor: Specifies the output format of the exposed resources, defaults to "1"
+        :param 'CSIVXFlexOSSpecDriverNodeEnvsValueFromResourceFieldRefDivisorArgs' divisor: Specifies the output format of the exposed resources, defaults to "1"
         """
         pulumi.set(__self__, "resource", resource)
         if container_name is not None:
@@ -7282,11 +12282,20 @@ class CSIVXFlexOSSpecDriverNodeEnvsValueFromResourceFieldRef(dict):
 
     @property
     @pulumi.getter
-    def divisor(self) -> Optional[str]:
+    def divisor(self) -> Optional['outputs.CSIVXFlexOSSpecDriverNodeEnvsValueFromResourceFieldRefDivisor']:
         """
         Specifies the output format of the exposed resources, defaults to "1"
         """
         return pulumi.get(self, "divisor")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class CSIVXFlexOSSpecDriverNodeEnvsValueFromResourceFieldRefDivisor(dict):
+    def __init__(__self__):
+        pass
 
     def _translate_property(self, prop):
         return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
@@ -7342,6 +12351,80 @@ class CSIVXFlexOSSpecDriverNodeEnvsValueFromSecretKeyRef(dict):
 
 
 @pulumi.output_type
+class CSIVXFlexOSSpecDriverNodeTolerations(dict):
+    """
+    The pod this Toleration is attached to tolerates any taint that matches the triple <key,value,effect> using the matching operator <operator>.
+    """
+    def __init__(__self__, *,
+                 effect: Optional[str] = None,
+                 key: Optional[str] = None,
+                 operator: Optional[str] = None,
+                 toleration_seconds: Optional[int] = None,
+                 value: Optional[str] = None):
+        """
+        The pod this Toleration is attached to tolerates any taint that matches the triple <key,value,effect> using the matching operator <operator>.
+        :param str effect: Effect indicates the taint effect to match. Empty means match all taint effects. When specified, allowed values are NoSchedule, PreferNoSchedule and NoExecute.
+        :param str key: Key is the taint key that the toleration applies to. Empty means match all taint keys. If the key is empty, operator must be Exists; this combination means to match all values and all keys.
+        :param str operator: Operator represents a key's relationship to the value. Valid operators are Exists and Equal. Defaults to Equal. Exists is equivalent to wildcard for value, so that a pod can tolerate all taints of a particular category.
+        :param int toleration_seconds: TolerationSeconds represents the period of time the toleration (which must be of effect NoExecute, otherwise this field is ignored) tolerates the taint. By default, it is not set, which means tolerate the taint forever (do not evict). Zero and negative values will be treated as 0 (evict immediately) by the system.
+        :param str value: Value is the taint value the toleration matches to. If the operator is Exists, the value should be empty, otherwise just a regular string.
+        """
+        if effect is not None:
+            pulumi.set(__self__, "effect", effect)
+        if key is not None:
+            pulumi.set(__self__, "key", key)
+        if operator is not None:
+            pulumi.set(__self__, "operator", operator)
+        if toleration_seconds is not None:
+            pulumi.set(__self__, "toleration_seconds", toleration_seconds)
+        if value is not None:
+            pulumi.set(__self__, "value", value)
+
+    @property
+    @pulumi.getter
+    def effect(self) -> Optional[str]:
+        """
+        Effect indicates the taint effect to match. Empty means match all taint effects. When specified, allowed values are NoSchedule, PreferNoSchedule and NoExecute.
+        """
+        return pulumi.get(self, "effect")
+
+    @property
+    @pulumi.getter
+    def key(self) -> Optional[str]:
+        """
+        Key is the taint key that the toleration applies to. Empty means match all taint keys. If the key is empty, operator must be Exists; this combination means to match all values and all keys.
+        """
+        return pulumi.get(self, "key")
+
+    @property
+    @pulumi.getter
+    def operator(self) -> Optional[str]:
+        """
+        Operator represents a key's relationship to the value. Valid operators are Exists and Equal. Defaults to Equal. Exists is equivalent to wildcard for value, so that a pod can tolerate all taints of a particular category.
+        """
+        return pulumi.get(self, "operator")
+
+    @property
+    @pulumi.getter(name="tolerationSeconds")
+    def toleration_seconds(self) -> Optional[int]:
+        """
+        TolerationSeconds represents the period of time the toleration (which must be of effect NoExecute, otherwise this field is ignored) tolerates the taint. By default, it is not set, which means tolerate the taint forever (do not evict). Zero and negative values will be treated as 0 (evict immediately) by the system.
+        """
+        return pulumi.get(self, "toleration_seconds")
+
+    @property
+    @pulumi.getter
+    def value(self) -> Optional[str]:
+        """
+        Value is the taint value the toleration matches to. If the operator is Exists, the value should be empty, otherwise just a regular string.
+        """
+        return pulumi.get(self, "value")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
 class CSIVXFlexOSSpecDriverSideCars(dict):
     """
     ContainerTemplate - Structure representing a container
@@ -7351,7 +12434,9 @@ class CSIVXFlexOSSpecDriverSideCars(dict):
                  envs: Optional[Sequence['outputs.CSIVXFlexOSSpecDriverSideCarsEnvs']] = None,
                  image: Optional[str] = None,
                  image_pull_policy: Optional[str] = None,
-                 name: Optional[str] = None):
+                 name: Optional[str] = None,
+                 node_selector: Optional[Mapping[str, str]] = None,
+                 tolerations: Optional[Sequence['outputs.CSIVXFlexOSSpecDriverSideCarsTolerations']] = None):
         """
         ContainerTemplate - Structure representing a container
         :param Sequence[str] args: Args is the set of arguments for the container
@@ -7359,6 +12444,8 @@ class CSIVXFlexOSSpecDriverSideCars(dict):
         :param str image: Image is the image tag for the Container
         :param str image_pull_policy: ImagePullPolicy is the image pull policy for the image
         :param str name: Name is the name of Container
+        :param Mapping[str, str] node_selector: NodeSelector is a selector which must be true for the pod to fit on a node. Selector which must match a node's labels for the pod to be scheduled on that node.
+        :param Sequence['CSIVXFlexOSSpecDriverSideCarsTolerationsArgs'] tolerations: Tolerations is the list of tolerations for the driver pods
         """
         if args is not None:
             pulumi.set(__self__, "args", args)
@@ -7370,6 +12457,10 @@ class CSIVXFlexOSSpecDriverSideCars(dict):
             pulumi.set(__self__, "image_pull_policy", image_pull_policy)
         if name is not None:
             pulumi.set(__self__, "name", name)
+        if node_selector is not None:
+            pulumi.set(__self__, "node_selector", node_selector)
+        if tolerations is not None:
+            pulumi.set(__self__, "tolerations", tolerations)
 
     @property
     @pulumi.getter
@@ -7410,6 +12501,22 @@ class CSIVXFlexOSSpecDriverSideCars(dict):
         Name is the name of Container
         """
         return pulumi.get(self, "name")
+
+    @property
+    @pulumi.getter(name="nodeSelector")
+    def node_selector(self) -> Optional[Mapping[str, str]]:
+        """
+        NodeSelector is a selector which must be true for the pod to fit on a node. Selector which must match a node's labels for the pod to be scheduled on that node.
+        """
+        return pulumi.get(self, "node_selector")
+
+    @property
+    @pulumi.getter
+    def tolerations(self) -> Optional[Sequence['outputs.CSIVXFlexOSSpecDriverSideCarsTolerations']]:
+        """
+        Tolerations is the list of tolerations for the driver pods
+        """
+        return pulumi.get(self, "tolerations")
 
     def _translate_property(self, prop):
         return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
@@ -7477,7 +12584,7 @@ class CSIVXFlexOSSpecDriverSideCarsEnvsValueFrom(dict):
         """
         Source for the environment variable's value. Cannot be used if value is not empty.
         :param 'CSIVXFlexOSSpecDriverSideCarsEnvsValueFromConfigMapKeyRefArgs' config_map_key_ref: Selects a key of a ConfigMap.
-        :param 'CSIVXFlexOSSpecDriverSideCarsEnvsValueFromFieldRefArgs' field_ref: Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+        :param 'CSIVXFlexOSSpecDriverSideCarsEnvsValueFromFieldRefArgs' field_ref: Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
         :param 'CSIVXFlexOSSpecDriverSideCarsEnvsValueFromResourceFieldRefArgs' resource_field_ref: Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
         :param 'CSIVXFlexOSSpecDriverSideCarsEnvsValueFromSecretKeyRefArgs' secret_key_ref: Selects a key of a secret in the pod's namespace
         """
@@ -7502,7 +12609,7 @@ class CSIVXFlexOSSpecDriverSideCarsEnvsValueFrom(dict):
     @pulumi.getter(name="fieldRef")
     def field_ref(self) -> Optional['outputs.CSIVXFlexOSSpecDriverSideCarsEnvsValueFromFieldRef']:
         """
-        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
         """
         return pulumi.get(self, "field_ref")
 
@@ -7578,13 +12685,13 @@ class CSIVXFlexOSSpecDriverSideCarsEnvsValueFromConfigMapKeyRef(dict):
 @pulumi.output_type
 class CSIVXFlexOSSpecDriverSideCarsEnvsValueFromFieldRef(dict):
     """
-    Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+    Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
     """
     def __init__(__self__, *,
                  field_path: str,
                  api_version: Optional[str] = None):
         """
-        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
         :param str field_path: Path of the field to select in the specified API version.
         :param str api_version: Version of the schema the FieldPath is written in terms of, defaults to "v1".
         """
@@ -7620,12 +12727,12 @@ class CSIVXFlexOSSpecDriverSideCarsEnvsValueFromResourceFieldRef(dict):
     def __init__(__self__, *,
                  resource: str,
                  container_name: Optional[str] = None,
-                 divisor: Optional[str] = None):
+                 divisor: Optional['outputs.CSIVXFlexOSSpecDriverSideCarsEnvsValueFromResourceFieldRefDivisor'] = None):
         """
         Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
         :param str resource: Required: resource to select
         :param str container_name: Container name: required for volumes, optional for env vars
-        :param str divisor: Specifies the output format of the exposed resources, defaults to "1"
+        :param 'CSIVXFlexOSSpecDriverSideCarsEnvsValueFromResourceFieldRefDivisorArgs' divisor: Specifies the output format of the exposed resources, defaults to "1"
         """
         pulumi.set(__self__, "resource", resource)
         if container_name is not None:
@@ -7651,11 +12758,20 @@ class CSIVXFlexOSSpecDriverSideCarsEnvsValueFromResourceFieldRef(dict):
 
     @property
     @pulumi.getter
-    def divisor(self) -> Optional[str]:
+    def divisor(self) -> Optional['outputs.CSIVXFlexOSSpecDriverSideCarsEnvsValueFromResourceFieldRefDivisor']:
         """
         Specifies the output format of the exposed resources, defaults to "1"
         """
         return pulumi.get(self, "divisor")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class CSIVXFlexOSSpecDriverSideCarsEnvsValueFromResourceFieldRefDivisor(dict):
+    def __init__(__self__):
+        pass
 
     def _translate_property(self, prop):
         return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
@@ -7711,6 +12827,80 @@ class CSIVXFlexOSSpecDriverSideCarsEnvsValueFromSecretKeyRef(dict):
 
 
 @pulumi.output_type
+class CSIVXFlexOSSpecDriverSideCarsTolerations(dict):
+    """
+    The pod this Toleration is attached to tolerates any taint that matches the triple <key,value,effect> using the matching operator <operator>.
+    """
+    def __init__(__self__, *,
+                 effect: Optional[str] = None,
+                 key: Optional[str] = None,
+                 operator: Optional[str] = None,
+                 toleration_seconds: Optional[int] = None,
+                 value: Optional[str] = None):
+        """
+        The pod this Toleration is attached to tolerates any taint that matches the triple <key,value,effect> using the matching operator <operator>.
+        :param str effect: Effect indicates the taint effect to match. Empty means match all taint effects. When specified, allowed values are NoSchedule, PreferNoSchedule and NoExecute.
+        :param str key: Key is the taint key that the toleration applies to. Empty means match all taint keys. If the key is empty, operator must be Exists; this combination means to match all values and all keys.
+        :param str operator: Operator represents a key's relationship to the value. Valid operators are Exists and Equal. Defaults to Equal. Exists is equivalent to wildcard for value, so that a pod can tolerate all taints of a particular category.
+        :param int toleration_seconds: TolerationSeconds represents the period of time the toleration (which must be of effect NoExecute, otherwise this field is ignored) tolerates the taint. By default, it is not set, which means tolerate the taint forever (do not evict). Zero and negative values will be treated as 0 (evict immediately) by the system.
+        :param str value: Value is the taint value the toleration matches to. If the operator is Exists, the value should be empty, otherwise just a regular string.
+        """
+        if effect is not None:
+            pulumi.set(__self__, "effect", effect)
+        if key is not None:
+            pulumi.set(__self__, "key", key)
+        if operator is not None:
+            pulumi.set(__self__, "operator", operator)
+        if toleration_seconds is not None:
+            pulumi.set(__self__, "toleration_seconds", toleration_seconds)
+        if value is not None:
+            pulumi.set(__self__, "value", value)
+
+    @property
+    @pulumi.getter
+    def effect(self) -> Optional[str]:
+        """
+        Effect indicates the taint effect to match. Empty means match all taint effects. When specified, allowed values are NoSchedule, PreferNoSchedule and NoExecute.
+        """
+        return pulumi.get(self, "effect")
+
+    @property
+    @pulumi.getter
+    def key(self) -> Optional[str]:
+        """
+        Key is the taint key that the toleration applies to. Empty means match all taint keys. If the key is empty, operator must be Exists; this combination means to match all values and all keys.
+        """
+        return pulumi.get(self, "key")
+
+    @property
+    @pulumi.getter
+    def operator(self) -> Optional[str]:
+        """
+        Operator represents a key's relationship to the value. Valid operators are Exists and Equal. Defaults to Equal. Exists is equivalent to wildcard for value, so that a pod can tolerate all taints of a particular category.
+        """
+        return pulumi.get(self, "operator")
+
+    @property
+    @pulumi.getter(name="tolerationSeconds")
+    def toleration_seconds(self) -> Optional[int]:
+        """
+        TolerationSeconds represents the period of time the toleration (which must be of effect NoExecute, otherwise this field is ignored) tolerates the taint. By default, it is not set, which means tolerate the taint forever (do not evict). Zero and negative values will be treated as 0 (evict immediately) by the system.
+        """
+        return pulumi.get(self, "toleration_seconds")
+
+    @property
+    @pulumi.getter
+    def value(self) -> Optional[str]:
+        """
+        Value is the taint value the toleration matches to. If the operator is Exists, the value should be empty, otherwise just a regular string.
+        """
+        return pulumi.get(self, "value")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
 class CSIVXFlexOSSpecDriverSnapshotClass(dict):
     """
     SnapshotClass represents a VolumeSnapshotClass
@@ -7755,6 +12945,7 @@ class CSIVXFlexOSSpecDriverStorageClass(dict):
     def __init__(__self__, *,
                  name: str,
                  allow_volume_expansion: Optional[bool] = None,
+                 allowed_topologies: Optional[Sequence['outputs.CSIVXFlexOSSpecDriverStorageClassAllowedTopologies']] = None,
                  default: Optional[bool] = None,
                  parameters: Optional[Mapping[str, str]] = None,
                  reclaim_policy: Optional[str] = None):
@@ -7762,6 +12953,7 @@ class CSIVXFlexOSSpecDriverStorageClass(dict):
         StorageClass represents a kubernetes storage class
         :param str name: Name is the name of the StorageClass
         :param bool allow_volume_expansion: AllowVolumeExpansion is a boolean flag which indicates if volumes can be expanded
+        :param Sequence['CSIVXFlexOSSpecDriverStorageClassAllowedTopologiesArgs'] allowed_topologies: Restrict the node topologies where volumes can be dynamically provisioned.
         :param bool default: DefaultSc is a boolean flag to indicate if the storage class is going to be marked as default
         :param Mapping[str, str] parameters: Parameters is a map of driver specific storage class
         :param str reclaim_policy: ReclaimPolicy is the reclaim policy for the storage class
@@ -7769,6 +12961,8 @@ class CSIVXFlexOSSpecDriverStorageClass(dict):
         pulumi.set(__self__, "name", name)
         if allow_volume_expansion is not None:
             pulumi.set(__self__, "allow_volume_expansion", allow_volume_expansion)
+        if allowed_topologies is not None:
+            pulumi.set(__self__, "allowed_topologies", allowed_topologies)
         if default is not None:
             pulumi.set(__self__, "default", default)
         if parameters is not None:
@@ -7793,6 +12987,14 @@ class CSIVXFlexOSSpecDriverStorageClass(dict):
         return pulumi.get(self, "allow_volume_expansion")
 
     @property
+    @pulumi.getter(name="allowedTopologies")
+    def allowed_topologies(self) -> Optional[Sequence['outputs.CSIVXFlexOSSpecDriverStorageClassAllowedTopologies']]:
+        """
+        Restrict the node topologies where volumes can be dynamically provisioned.
+        """
+        return pulumi.get(self, "allowed_topologies")
+
+    @property
     @pulumi.getter
     def default(self) -> Optional[bool]:
         """
@@ -7815,6 +13017,68 @@ class CSIVXFlexOSSpecDriverStorageClass(dict):
         ReclaimPolicy is the reclaim policy for the storage class
         """
         return pulumi.get(self, "reclaim_policy")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class CSIVXFlexOSSpecDriverStorageClassAllowedTopologies(dict):
+    """
+    A topology selector term represents the result of label queries. A null or empty topology selector term matches no objects. The requirements of them are ANDed. It provides a subset of functionality as NodeSelectorTerm. This is an alpha feature and may change in the future.
+    """
+    def __init__(__self__, *,
+                 match_label_expressions: Optional[Sequence['outputs.CSIVXFlexOSSpecDriverStorageClassAllowedTopologiesMatchLabelExpressions']] = None):
+        """
+        A topology selector term represents the result of label queries. A null or empty topology selector term matches no objects. The requirements of them are ANDed. It provides a subset of functionality as NodeSelectorTerm. This is an alpha feature and may change in the future.
+        :param Sequence['CSIVXFlexOSSpecDriverStorageClassAllowedTopologiesMatchLabelExpressionsArgs'] match_label_expressions: A list of topology selector requirements by labels.
+        """
+        if match_label_expressions is not None:
+            pulumi.set(__self__, "match_label_expressions", match_label_expressions)
+
+    @property
+    @pulumi.getter(name="matchLabelExpressions")
+    def match_label_expressions(self) -> Optional[Sequence['outputs.CSIVXFlexOSSpecDriverStorageClassAllowedTopologiesMatchLabelExpressions']]:
+        """
+        A list of topology selector requirements by labels.
+        """
+        return pulumi.get(self, "match_label_expressions")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class CSIVXFlexOSSpecDriverStorageClassAllowedTopologiesMatchLabelExpressions(dict):
+    """
+    A topology selector requirement is a selector that matches given label. This is an alpha feature and may change in the future.
+    """
+    def __init__(__self__, *,
+                 key: str,
+                 values: Sequence[str]):
+        """
+        A topology selector requirement is a selector that matches given label. This is an alpha feature and may change in the future.
+        :param str key: The label key that the selector applies to.
+        :param Sequence[str] values: An array of string values. One value must match the label to be selected. Each entry in Values is ORed.
+        """
+        pulumi.set(__self__, "key", key)
+        pulumi.set(__self__, "values", values)
+
+    @property
+    @pulumi.getter
+    def key(self) -> str:
+        """
+        The label key that the selector applies to.
+        """
+        return pulumi.get(self, "key")
+
+    @property
+    @pulumi.getter
+    def values(self) -> Sequence[str]:
+        """
+        An array of string values. One value must match the label to be selected. Each entry in Values is ORed.
+        """
+        return pulumi.get(self, "values")
 
     def _translate_property(self, prop):
         return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop

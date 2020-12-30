@@ -10,17 +10,20 @@ using Pulumi.Serialization;
 namespace Pulumi.Kubernetes.Types.Inputs.Ibmcloud.V1Alpha1
 {
 
+    /// <summary>
+    /// Param represents a key-value pair
+    /// </summary>
     public class ServiceSpecParametersArgs : Pulumi.ResourceArgs
     {
         [Input("attributes")]
-        private InputMap<object>? _attributes;
+        private InputMap<ImmutableDictionary<string, object>>? _attributes;
 
         /// <summary>
         /// A parameter may have attributes (e.g. message hub topic might have partitions)
         /// </summary>
-        public InputMap<object> Attributes
+        public InputMap<ImmutableDictionary<string, object>> Attributes
         {
-            get => _attributes ?? (_attributes = new InputMap<object>());
+            get => _attributes ?? (_attributes = new InputMap<ImmutableDictionary<string, object>>());
             set => _attributes = value;
         }
 

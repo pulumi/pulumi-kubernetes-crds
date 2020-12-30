@@ -10,7 +10,7 @@ import (
 	"github.com/pulumi/pulumi/sdk/v2/go/pulumi"
 )
 
-// DatadogMetric is the Schema for the datadogmetrics API
+// DatadogMetric allows autoscaling on arbitrary Datadog query
 type DatadogMetric struct {
 	pulumi.CustomResourceState
 

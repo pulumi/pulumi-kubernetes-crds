@@ -44,7 +44,11 @@ export namespace hive {
              */
             clusterPoolName: pulumi.Input<string>;
             /**
-             * Namespace is the namespace containing the ClusterDeployment of the claimed cluster. This field will be set by the ClusterPool when the claim is assigned a cluster.
+             * Lifetime is the maximum lifetime of the claim after it is assigned a cluster. If the claim still exists when the lifetime has elapsed, the claim will be deleted by Hive.
+             */
+            lifetime?: pulumi.Input<string>;
+            /**
+             * Namespace is the namespace containing the ClusterDeployment (name will match the namespace) of the claimed cluster. This field will be set as soon as a suitable cluster can be found, however that cluster may still be resuming and not yet ready for use. Wait for the ClusterRunning condition to be true to avoid this issue.
              */
             namespace?: pulumi.Input<string>;
             /**
@@ -144,9 +148,17 @@ export namespace hive {
              */
             controlPlaneConfig?: pulumi.Input<inputs.hive.v1.ClusterDeploymentSpecControlPlaneConfig>;
             /**
+             * HibernateAfter will transition a cluster to hibernating power state after it has been running for the given duration. The time that a cluster has been running is the time since the cluster was installed or the time since the cluster last came out of hibernation.
+             */
+            hibernateAfter?: pulumi.Input<string>;
+            /**
              * Ingress allows defining desired clusteringress/shards to be configured on the cluster.
              */
             ingress?: pulumi.Input<pulumi.Input<inputs.hive.v1.ClusterDeploymentSpecIngress>[]>;
+            /**
+             * InstallAttemptsLimit is the maximum number of times Hive will attempt to install the cluster.
+             */
+            installAttemptsLimit?: pulumi.Input<number>;
             /**
              * Installed is true if the cluster has been installed
              */
@@ -536,7 +548,12 @@ export namespace hive {
          */
         export interface ClusterDeploymentSpecPlatformOpenstack {
             /**
-             * Cloud will be used to indicate the OS_CLOUD value to use the right section from the cloud.yaml in the CredentialsSecretRef.
+             * CertificatesSecretRef refers to a secret that contains CA certificates necessary for communicating with the OpenStack. There is additional configuration required for the OpenShift cluster to trust the certificates provided in this secret. The "clouds.yaml" file included in the credentialsSecretRef Secret must also include a reference to the certificate bundle file for the OpenShift cluster being created to trust the OpenStack endpoints. The "clouds.yaml" file must set the "cacert" field to either "/etc/openstack-ca/<key name containing the trust bundle in credentialsSecretRef Secret>" or "/etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem". 
+             *  For example, """clouds.yaml clouds:   shiftstack:     auth: ...     cacert: "/etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem" """
+             */
+            certificatesSecretRef?: pulumi.Input<inputs.hive.v1.ClusterDeploymentSpecPlatformOpenstackCertificatesSecretRef>;
+            /**
+             * Cloud will be used to indicate the OS_CLOUD value to use the right section from the clouds.yaml in the CredentialsSecretRef.
              */
             cloud: pulumi.Input<string>;
             /**
@@ -547,6 +564,17 @@ export namespace hive {
              * TrunkSupport indicates whether or not to use trunk ports in your OpenShift cluster.
              */
             trunkSupport?: pulumi.Input<boolean>;
+        }
+
+        /**
+         * CertificatesSecretRef refers to a secret that contains CA certificates necessary for communicating with the OpenStack. There is additional configuration required for the OpenShift cluster to trust the certificates provided in this secret. The "clouds.yaml" file included in the credentialsSecretRef Secret must also include a reference to the certificate bundle file for the OpenShift cluster being created to trust the OpenStack endpoints. The "clouds.yaml" file must set the "cacert" field to either "/etc/openstack-ca/<key name containing the trust bundle in credentialsSecretRef Secret>" or "/etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem". 
+         *  For example, """clouds.yaml clouds:   shiftstack:     auth: ...     cacert: "/etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem" """
+         */
+        export interface ClusterDeploymentSpecPlatformOpenstackCertificatesSecretRef {
+            /**
+             * Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+             */
+            name?: pulumi.Input<string>;
         }
 
         /**
@@ -744,7 +772,7 @@ export namespace hive {
              */
             configMapKeyRef?: pulumi.Input<inputs.hive.v1.ClusterDeploymentSpecProvisioningInstallerEnvValueFromConfigMapKeyRef>;
             /**
-             * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
+             * Selects a field of the pod: supports metadata.name, metadata.namespace, `metadata.labels['<KEY>']`, `metadata.annotations['<KEY>']`, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
              */
             fieldRef?: pulumi.Input<inputs.hive.v1.ClusterDeploymentSpecProvisioningInstallerEnvValueFromFieldRef>;
             /**
@@ -776,7 +804,7 @@ export namespace hive {
         }
 
         /**
-         * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
+         * Selects a field of the pod: supports metadata.name, metadata.namespace, `metadata.labels['<KEY>']`, `metadata.annotations['<KEY>']`, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
          */
         export interface ClusterDeploymentSpecProvisioningInstallerEnvValueFromFieldRef {
             /**
@@ -872,10 +900,6 @@ export namespace hive {
              */
             cliImage?: pulumi.Input<string>;
             /**
-             * ClusterVersionStatus will hold a copy of the remote cluster's ClusterVersion.Status
-             */
-            clusterVersionStatus?: pulumi.Input<inputs.hive.v1.ClusterDeploymentStatusClusterVersionStatus>;
-            /**
              * Conditions includes more detailed status for the cluster deployment
              */
             conditions?: pulumi.Input<pulumi.Input<inputs.hive.v1.ClusterDeploymentStatusConditions>[]>;
@@ -913,130 +937,6 @@ export namespace hive {
              * Name of the certificate bundle
              */
             name: pulumi.Input<string>;
-        }
-
-        /**
-         * ClusterVersionStatus will hold a copy of the remote cluster's ClusterVersion.Status
-         */
-        export interface ClusterDeploymentStatusClusterVersionStatus {
-            /**
-             * availableUpdates contains the list of updates that are appropriate for this cluster. This list may be empty if no updates are recommended, if the update service is unavailable, or if an invalid channel has been specified.
-             */
-            availableUpdates: pulumi.Input<pulumi.Input<inputs.hive.v1.ClusterDeploymentStatusClusterVersionStatusAvailableUpdates>[]>;
-            /**
-             * conditions provides information about the cluster version. The condition "Available" is set to true if the desiredUpdate has been reached. The condition "Progressing" is set to true if an update is being applied. The condition "Degraded" is set to true if an update is currently blocked by a temporary or permanent error. Conditions are only valid for the current desiredUpdate when metadata.generation is equal to status.generation.
-             */
-            conditions?: pulumi.Input<pulumi.Input<inputs.hive.v1.ClusterDeploymentStatusClusterVersionStatusConditions>[]>;
-            /**
-             * desired is the version that the cluster is reconciling towards. If the cluster is not yet fully initialized desired will be set with the information available, which may be an image or a tag.
-             */
-            desired: pulumi.Input<inputs.hive.v1.ClusterDeploymentStatusClusterVersionStatusDesired>;
-            /**
-             * history contains a list of the most recent versions applied to the cluster. This value may be empty during cluster startup, and then will be updated when a new update is being applied. The newest update is first in the list and it is ordered by recency. Updates in the history have state Completed if the rollout completed - if an update was failing or halfway applied the state will be Partial. Only a limited amount of update history is preserved.
-             */
-            history?: pulumi.Input<pulumi.Input<inputs.hive.v1.ClusterDeploymentStatusClusterVersionStatusHistory>[]>;
-            /**
-             * observedGeneration reports which version of the spec is being synced. If this value is not equal to metadata.generation, then the desired and conditions fields may represent a previous version.
-             */
-            observedGeneration: pulumi.Input<number>;
-            /**
-             * versionHash is a fingerprint of the content that the cluster will be updated with. It is used by the operator to avoid unnecessary work and is for internal use only.
-             */
-            versionHash: pulumi.Input<string>;
-        }
-
-        /**
-         * Update represents a release of the ClusterVersionOperator, referenced by the Image member.
-         */
-        export interface ClusterDeploymentStatusClusterVersionStatusAvailableUpdates {
-            /**
-             * force allows an administrator to update to an image that has failed verification, does not appear in the availableUpdates list, or otherwise would be blocked by normal protections on update. This option should only be used when the authenticity of the provided image has been verified out of band because the provided image will run with full administrative access to the cluster. Do not use this flag with images that comes from unknown or potentially malicious sources. 
-             *  This flag does not override other forms of consistency checking that are required before a new update is deployed.
-             */
-            force?: pulumi.Input<boolean>;
-            /**
-             * image is a container image location that contains the update. When this field is part of spec, image is optional if version is specified and the availableUpdates field contains a matching version.
-             */
-            image?: pulumi.Input<string>;
-            /**
-             * version is a semantic versioning identifying the update version. When this field is part of spec, version is optional if image is specified.
-             */
-            version?: pulumi.Input<string>;
-        }
-
-        /**
-         * ClusterOperatorStatusCondition represents the state of the operator's managed and monitored components.
-         */
-        export interface ClusterDeploymentStatusClusterVersionStatusConditions {
-            /**
-             * lastTransitionTime is the time of the last update to the current status property.
-             */
-            lastTransitionTime: pulumi.Input<string>;
-            /**
-             * message provides additional information about the current condition. This is only to be consumed by humans.
-             */
-            message?: pulumi.Input<string>;
-            /**
-             * reason is the CamelCase reason for the condition's current status.
-             */
-            reason?: pulumi.Input<string>;
-            /**
-             * status of the condition, one of True, False, Unknown.
-             */
-            status: pulumi.Input<string>;
-            /**
-             * type specifies the aspect reported by this condition.
-             */
-            type: pulumi.Input<string>;
-        }
-
-        /**
-         * desired is the version that the cluster is reconciling towards. If the cluster is not yet fully initialized desired will be set with the information available, which may be an image or a tag.
-         */
-        export interface ClusterDeploymentStatusClusterVersionStatusDesired {
-            /**
-             * force allows an administrator to update to an image that has failed verification, does not appear in the availableUpdates list, or otherwise would be blocked by normal protections on update. This option should only be used when the authenticity of the provided image has been verified out of band because the provided image will run with full administrative access to the cluster. Do not use this flag with images that comes from unknown or potentially malicious sources. 
-             *  This flag does not override other forms of consistency checking that are required before a new update is deployed.
-             */
-            force?: pulumi.Input<boolean>;
-            /**
-             * image is a container image location that contains the update. When this field is part of spec, image is optional if version is specified and the availableUpdates field contains a matching version.
-             */
-            image?: pulumi.Input<string>;
-            /**
-             * version is a semantic versioning identifying the update version. When this field is part of spec, version is optional if image is specified.
-             */
-            version?: pulumi.Input<string>;
-        }
-
-        /**
-         * UpdateHistory is a single attempted update to the cluster.
-         */
-        export interface ClusterDeploymentStatusClusterVersionStatusHistory {
-            /**
-             * completionTime, if set, is when the update was fully applied. The update that is currently being applied will have a null completion time. Completion time will always be set for entries that are not the current update (usually to the started time of the next update).
-             */
-            completionTime: pulumi.Input<string>;
-            /**
-             * image is a container image location that contains the update. This value is always populated.
-             */
-            image: pulumi.Input<string>;
-            /**
-             * startedTime is the time at which the update was started.
-             */
-            startedTime: pulumi.Input<string>;
-            /**
-             * state reflects whether the update was fully applied. The Partial state indicates the update is not fully applied, while the Completed state indicates the update was successfully rolled out at least once (all parts of the update successfully applied).
-             */
-            state: pulumi.Input<string>;
-            /**
-             * verified indicates whether the provided update was properly verified before it was installed. If this is false the cluster may not be trusted.
-             */
-            verified: pulumi.Input<boolean>;
-            /**
-             * version is a semantic versioning identifying the update version. If the requested image does not define a version, or if a failure occurs retrieving the image, this value may be empty.
-             */
-            version?: pulumi.Input<string>;
         }
 
         /**
@@ -1200,6 +1100,10 @@ export namespace hive {
          */
         export interface ClusterDeprovisionSpecPlatformOpenstack {
             /**
+             * CertificatesSecretRef refers to a secret that contains CA certificates necessary for communicating with the OpenStack.
+             */
+            certificatesSecretRef?: pulumi.Input<inputs.hive.v1.ClusterDeprovisionSpecPlatformOpenstackCertificatesSecretRef>;
+            /**
              * Cloud is the secion in the clouds.yaml secret below to use for auth/connectivity.
              */
             cloud: pulumi.Input<string>;
@@ -1207,6 +1111,16 @@ export namespace hive {
              * CredentialsSecretRef is the OpenStack account credentials to use for deprovisioning the cluster
              */
             credentialsSecretRef?: pulumi.Input<inputs.hive.v1.ClusterDeprovisionSpecPlatformOpenstackCredentialsSecretRef>;
+        }
+
+        /**
+         * CertificatesSecretRef refers to a secret that contains CA certificates necessary for communicating with the OpenStack.
+         */
+        export interface ClusterDeprovisionSpecPlatformOpenstackCertificatesSecretRef {
+            /**
+             * Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+             */
+            name?: pulumi.Input<string>;
         }
 
         /**
@@ -1303,6 +1217,40 @@ export namespace hive {
              * Completed is true when the uninstall has completed successfully
              */
             completed?: pulumi.Input<boolean>;
+            /**
+             * Conditions includes more detailed status for the cluster deprovision
+             */
+            conditions?: pulumi.Input<pulumi.Input<inputs.hive.v1.ClusterDeprovisionStatusConditions>[]>;
+        }
+
+        /**
+         * ClusterDeprovisionCondition contains details for the current condition of a ClusterDeprovision
+         */
+        export interface ClusterDeprovisionStatusConditions {
+            /**
+             * LastProbeTime is the last time we probed the condition.
+             */
+            lastProbeTime?: pulumi.Input<string>;
+            /**
+             * LastTransitionTime is the last time the condition transitioned from one status to another.
+             */
+            lastTransitionTime?: pulumi.Input<string>;
+            /**
+             * Message is a human-readable message indicating details about last transition.
+             */
+            message?: pulumi.Input<string>;
+            /**
+             * Reason is a unique, one-word, CamelCase reason for the condition's last transition.
+             */
+            reason?: pulumi.Input<string>;
+            /**
+             * Status is the status of the condition.
+             */
+            status: pulumi.Input<string>;
+            /**
+             * Type is the type of the condition.
+             */
+            type: pulumi.Input<string>;
         }
 
         /**
@@ -1324,9 +1272,29 @@ export namespace hive {
              */
             baseDomain: pulumi.Input<string>;
             /**
+             * HibernateAfter will be applied to new ClusterDeployments created for the pool. HibernateAfter will transition clusters in the clusterpool to hibernating power state after it has been running for the given duration. The time that a cluster has been running is the time since the cluster was installed or the time since the cluster last came out of hibernation.
+             */
+            hibernateAfter?: pulumi.Input<string>;
+            /**
              * ImageSetRef is a reference to a ClusterImageSet. The release image specified in the ClusterImageSet will be used by clusters created for this cluster pool.
              */
             imageSetRef: pulumi.Input<inputs.hive.v1.ClusterPoolSpecImageSetRef>;
+            /**
+             * InstallConfigSecretTemplateRef is a secret with the key install-config.yaml consisting of the content of the install-config.yaml to be used as a template for all clusters in this pool. Cluster specific settings (name, basedomain) will be injected dynamically when the ClusterDeployment install-config Secret is generated.
+             */
+            installConfigSecretTemplateRef?: pulumi.Input<inputs.hive.v1.ClusterPoolSpecInstallConfigSecretTemplateRef>;
+            /**
+             * Labels to be applied to new ClusterDeployments created for the pool. ClusterDeployments that have already been claimed will not be affected when this value is modified.
+             */
+            labels?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+            /**
+             * MaxConcurrent is the maximum number of clusters that will be provisioned or deprovisioned at an time. By default there is no limit.
+             */
+            maxConcurrent?: pulumi.Input<number>;
+            /**
+             * MaxSize is the maximum number of clusters that will be provisioned including clusters that have been claimed and ones waiting to be used. By default there is no limit.
+             */
+            maxSize?: pulumi.Input<number>;
             /**
              * Platform encompasses the desired platform for the cluster.
              */
@@ -1339,6 +1307,10 @@ export namespace hive {
              * Size is the default number of clusters that we should keep provisioned and waiting for use.
              */
             size: pulumi.Input<number>;
+            /**
+             * SkipMachinePools allows creating clusterpools where the machinepools are not managed by hive after cluster creation
+             */
+            skipMachinePools?: pulumi.Input<boolean>;
         }
 
         /**
@@ -1349,6 +1321,16 @@ export namespace hive {
              * Name is the name of the ClusterImageSet that this refers to
              */
             name: pulumi.Input<string>;
+        }
+
+        /**
+         * InstallConfigSecretTemplateRef is a secret with the key install-config.yaml consisting of the content of the install-config.yaml to be used as a template for all clusters in this pool. Cluster specific settings (name, basedomain) will be injected dynamically when the ClusterDeployment install-config Secret is generated.
+         */
+        export interface ClusterPoolSpecInstallConfigSecretTemplateRef {
+            /**
+             * Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+             */
+            name?: pulumi.Input<string>;
         }
 
         /**
@@ -1490,7 +1472,12 @@ export namespace hive {
          */
         export interface ClusterPoolSpecPlatformOpenstack {
             /**
-             * Cloud will be used to indicate the OS_CLOUD value to use the right section from the cloud.yaml in the CredentialsSecretRef.
+             * CertificatesSecretRef refers to a secret that contains CA certificates necessary for communicating with the OpenStack. There is additional configuration required for the OpenShift cluster to trust the certificates provided in this secret. The "clouds.yaml" file included in the credentialsSecretRef Secret must also include a reference to the certificate bundle file for the OpenShift cluster being created to trust the OpenStack endpoints. The "clouds.yaml" file must set the "cacert" field to either "/etc/openstack-ca/<key name containing the trust bundle in credentialsSecretRef Secret>" or "/etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem". 
+             *  For example, """clouds.yaml clouds:   shiftstack:     auth: ...     cacert: "/etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem" """
+             */
+            certificatesSecretRef?: pulumi.Input<inputs.hive.v1.ClusterPoolSpecPlatformOpenstackCertificatesSecretRef>;
+            /**
+             * Cloud will be used to indicate the OS_CLOUD value to use the right section from the clouds.yaml in the CredentialsSecretRef.
              */
             cloud: pulumi.Input<string>;
             /**
@@ -1501,6 +1488,17 @@ export namespace hive {
              * TrunkSupport indicates whether or not to use trunk ports in your OpenShift cluster.
              */
             trunkSupport?: pulumi.Input<boolean>;
+        }
+
+        /**
+         * CertificatesSecretRef refers to a secret that contains CA certificates necessary for communicating with the OpenStack. There is additional configuration required for the OpenShift cluster to trust the certificates provided in this secret. The "clouds.yaml" file included in the credentialsSecretRef Secret must also include a reference to the certificate bundle file for the OpenShift cluster being created to trust the OpenStack endpoints. The "clouds.yaml" file must set the "cacert" field to either "/etc/openstack-ca/<key name containing the trust bundle in credentialsSecretRef Secret>" or "/etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem". 
+         *  For example, """clouds.yaml clouds:   shiftstack:     auth: ...     cacert: "/etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem" """
+         */
+        export interface ClusterPoolSpecPlatformOpenstackCertificatesSecretRef {
+            /**
+             * Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+             */
+            name?: pulumi.Input<string>;
         }
 
         /**
@@ -1836,7 +1834,7 @@ export namespace hive {
              */
             overhead?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
             /**
-             * PreemptionPolicy is the Policy for preempting pods with lower priority. One of Never, PreemptLowerPriority. Defaults to PreemptLowerPriority if unset. This field is alpha-level and is only honored by servers that enable the NonPreemptingPriority feature.
+             * PreemptionPolicy is the Policy for preempting pods with lower priority. One of Never, PreemptLowerPriority. Defaults to PreemptLowerPriority if unset. This field is beta-level, gated by the NonPreemptingPriority feature-gate.
              */
             preemptionPolicy?: pulumi.Input<string>;
             /**
@@ -1876,6 +1874,10 @@ export namespace hive {
              */
             serviceAccountName?: pulumi.Input<string>;
             /**
+             * If true the pod's hostname will be configured as the pod's FQDN, rather than the leaf name (the default). In Linux containers, this means setting the FQDN in the hostname field of the kernel (the nodename field of struct utsname). In Windows containers, this means setting the registry value of hostname for the registry key HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services\\Tcpip\\Parameters to FQDN. If a pod does not have FQDN, this has no effect. Default to false.
+             */
+            setHostnameAsFQDN?: pulumi.Input<boolean>;
+            /**
              * Share a single process namespace between all of the containers in a pod. When this is set containers will be able to view and signal processes from other containers in the same pod, and the first process in each container will not be assigned PID 1. HostPID and ShareProcessNamespace cannot both be set. Optional: Default to false.
              */
             shareProcessNamespace?: pulumi.Input<boolean>;
@@ -1892,7 +1894,7 @@ export namespace hive {
              */
             tolerations?: pulumi.Input<pulumi.Input<inputs.hive.v1.ClusterProvisionSpecPodSpecTolerations>[]>;
             /**
-             * TopologySpreadConstraints describes how a group of pods ought to spread across topology domains. Scheduler will schedule pods in a way which abides by the constraints. This field is only honored by clusters that enable the EvenPodsSpread feature. All topologySpreadConstraints are ANDed.
+             * TopologySpreadConstraints describes how a group of pods ought to spread across topology domains. Scheduler will schedule pods in a way which abides by the constraints. All topologySpreadConstraints are ANDed.
              */
             topologySpreadConstraints?: pulumi.Input<pulumi.Input<inputs.hive.v1.ClusterProvisionSpecPodSpecTopologySpreadConstraints>[]>;
             /**
@@ -2480,7 +2482,7 @@ export namespace hive {
              */
             configMapKeyRef?: pulumi.Input<inputs.hive.v1.ClusterProvisionSpecPodSpecContainersEnvValueFromConfigMapKeyRef>;
             /**
-             * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
+             * Selects a field of the pod: supports metadata.name, metadata.namespace, `metadata.labels['<KEY>']`, `metadata.annotations['<KEY>']`, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
              */
             fieldRef?: pulumi.Input<inputs.hive.v1.ClusterProvisionSpecPodSpecContainersEnvValueFromFieldRef>;
             /**
@@ -2512,7 +2514,7 @@ export namespace hive {
         }
 
         /**
-         * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
+         * Selects a field of the pod: supports metadata.name, metadata.namespace, `metadata.labels['<KEY>']`, `metadata.annotations['<KEY>']`, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
          */
         export interface ClusterProvisionSpecPodSpecContainersEnvValueFromFieldRef {
             /**
@@ -3048,6 +3050,10 @@ export namespace hive {
              */
             seLinuxOptions?: pulumi.Input<inputs.hive.v1.ClusterProvisionSpecPodSpecContainersSecurityContextSeLinuxOptions>;
             /**
+             * The seccomp options to use by this container. If seccomp options are provided at both the pod & container level, the container options override the pod options.
+             */
+            seccompProfile?: pulumi.Input<inputs.hive.v1.ClusterProvisionSpecPodSpecContainersSecurityContextSeccompProfile>;
+            /**
              * The Windows specific settings applied to all containers. If unspecified, the options from the PodSecurityContext will be used. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
              */
             windowsOptions?: pulumi.Input<inputs.hive.v1.ClusterProvisionSpecPodSpecContainersSecurityContextWindowsOptions>;
@@ -3087,6 +3093,21 @@ export namespace hive {
              * User is a SELinux user label that applies to the container.
              */
             user?: pulumi.Input<string>;
+        }
+
+        /**
+         * The seccomp options to use by this container. If seccomp options are provided at both the pod & container level, the container options override the pod options.
+         */
+        export interface ClusterProvisionSpecPodSpecContainersSecurityContextSeccompProfile {
+            /**
+             * localhostProfile indicates a profile defined in a file on the node should be used. The profile must be preconfigured on the node to work. Must be a descending path, relative to the kubelet's configured seccomp profile location. Must only be set if type is "Localhost".
+             */
+            localhostProfile?: pulumi.Input<string>;
+            /**
+             * type indicates which kind of seccomp profile will be applied. Valid options are: 
+             *  Localhost - a profile defined in a file on the node should be used. RuntimeDefault - the container runtime default profile should be used. Unconfined - no profile should be applied.
+             */
+            type: pulumi.Input<string>;
         }
 
         /**
@@ -3459,7 +3480,7 @@ export namespace hive {
              */
             configMapKeyRef?: pulumi.Input<inputs.hive.v1.ClusterProvisionSpecPodSpecEphemeralContainersEnvValueFromConfigMapKeyRef>;
             /**
-             * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
+             * Selects a field of the pod: supports metadata.name, metadata.namespace, `metadata.labels['<KEY>']`, `metadata.annotations['<KEY>']`, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
              */
             fieldRef?: pulumi.Input<inputs.hive.v1.ClusterProvisionSpecPodSpecEphemeralContainersEnvValueFromFieldRef>;
             /**
@@ -3491,7 +3512,7 @@ export namespace hive {
         }
 
         /**
-         * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
+         * Selects a field of the pod: supports metadata.name, metadata.namespace, `metadata.labels['<KEY>']`, `metadata.annotations['<KEY>']`, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
          */
         export interface ClusterProvisionSpecPodSpecEphemeralContainersEnvValueFromFieldRef {
             /**
@@ -4027,6 +4048,10 @@ export namespace hive {
              */
             seLinuxOptions?: pulumi.Input<inputs.hive.v1.ClusterProvisionSpecPodSpecEphemeralContainersSecurityContextSeLinuxOptions>;
             /**
+             * The seccomp options to use by this container. If seccomp options are provided at both the pod & container level, the container options override the pod options.
+             */
+            seccompProfile?: pulumi.Input<inputs.hive.v1.ClusterProvisionSpecPodSpecEphemeralContainersSecurityContextSeccompProfile>;
+            /**
              * The Windows specific settings applied to all containers. If unspecified, the options from the PodSecurityContext will be used. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
              */
             windowsOptions?: pulumi.Input<inputs.hive.v1.ClusterProvisionSpecPodSpecEphemeralContainersSecurityContextWindowsOptions>;
@@ -4066,6 +4091,21 @@ export namespace hive {
              * User is a SELinux user label that applies to the container.
              */
             user?: pulumi.Input<string>;
+        }
+
+        /**
+         * The seccomp options to use by this container. If seccomp options are provided at both the pod & container level, the container options override the pod options.
+         */
+        export interface ClusterProvisionSpecPodSpecEphemeralContainersSecurityContextSeccompProfile {
+            /**
+             * localhostProfile indicates a profile defined in a file on the node should be used. The profile must be preconfigured on the node to work. Must be a descending path, relative to the kubelet's configured seccomp profile location. Must only be set if type is "Localhost".
+             */
+            localhostProfile?: pulumi.Input<string>;
+            /**
+             * type indicates which kind of seccomp profile will be applied. Valid options are: 
+             *  Localhost - a profile defined in a file on the node should be used. RuntimeDefault - the container runtime default profile should be used. Unconfined - no profile should be applied.
+             */
+            type: pulumi.Input<string>;
         }
 
         /**
@@ -4429,7 +4469,7 @@ export namespace hive {
              */
             configMapKeyRef?: pulumi.Input<inputs.hive.v1.ClusterProvisionSpecPodSpecInitContainersEnvValueFromConfigMapKeyRef>;
             /**
-             * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
+             * Selects a field of the pod: supports metadata.name, metadata.namespace, `metadata.labels['<KEY>']`, `metadata.annotations['<KEY>']`, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
              */
             fieldRef?: pulumi.Input<inputs.hive.v1.ClusterProvisionSpecPodSpecInitContainersEnvValueFromFieldRef>;
             /**
@@ -4461,7 +4501,7 @@ export namespace hive {
         }
 
         /**
-         * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
+         * Selects a field of the pod: supports metadata.name, metadata.namespace, `metadata.labels['<KEY>']`, `metadata.annotations['<KEY>']`, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
          */
         export interface ClusterProvisionSpecPodSpecInitContainersEnvValueFromFieldRef {
             /**
@@ -4997,6 +5037,10 @@ export namespace hive {
              */
             seLinuxOptions?: pulumi.Input<inputs.hive.v1.ClusterProvisionSpecPodSpecInitContainersSecurityContextSeLinuxOptions>;
             /**
+             * The seccomp options to use by this container. If seccomp options are provided at both the pod & container level, the container options override the pod options.
+             */
+            seccompProfile?: pulumi.Input<inputs.hive.v1.ClusterProvisionSpecPodSpecInitContainersSecurityContextSeccompProfile>;
+            /**
              * The Windows specific settings applied to all containers. If unspecified, the options from the PodSecurityContext will be used. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
              */
             windowsOptions?: pulumi.Input<inputs.hive.v1.ClusterProvisionSpecPodSpecInitContainersSecurityContextWindowsOptions>;
@@ -5036,6 +5080,21 @@ export namespace hive {
              * User is a SELinux user label that applies to the container.
              */
             user?: pulumi.Input<string>;
+        }
+
+        /**
+         * The seccomp options to use by this container. If seccomp options are provided at both the pod & container level, the container options override the pod options.
+         */
+        export interface ClusterProvisionSpecPodSpecInitContainersSecurityContextSeccompProfile {
+            /**
+             * localhostProfile indicates a profile defined in a file on the node should be used. The profile must be preconfigured on the node to work. Must be a descending path, relative to the kubelet's configured seccomp profile location. Must only be set if type is "Localhost".
+             */
+            localhostProfile?: pulumi.Input<string>;
+            /**
+             * type indicates which kind of seccomp profile will be applied. Valid options are: 
+             *  Localhost - a profile defined in a file on the node should be used. RuntimeDefault - the container runtime default profile should be used. Unconfined - no profile should be applied.
+             */
+            type: pulumi.Input<string>;
         }
 
         /**
@@ -5249,6 +5308,10 @@ export namespace hive {
              */
             seLinuxOptions?: pulumi.Input<inputs.hive.v1.ClusterProvisionSpecPodSpecSecurityContextSeLinuxOptions>;
             /**
+             * The seccomp options to use by the containers in this pod.
+             */
+            seccompProfile?: pulumi.Input<inputs.hive.v1.ClusterProvisionSpecPodSpecSecurityContextSeccompProfile>;
+            /**
              * A list of groups applied to the first process run in each container, in addition to the container's primary GID.  If unspecified, no groups will be added to any container.
              */
             supplementalGroups?: pulumi.Input<pulumi.Input<number>[]>;
@@ -5282,6 +5345,21 @@ export namespace hive {
              * User is a SELinux user label that applies to the container.
              */
             user?: pulumi.Input<string>;
+        }
+
+        /**
+         * The seccomp options to use by the containers in this pod.
+         */
+        export interface ClusterProvisionSpecPodSpecSecurityContextSeccompProfile {
+            /**
+             * localhostProfile indicates a profile defined in a file on the node should be used. The profile must be preconfigured on the node to work. Must be a descending path, relative to the kubelet's configured seccomp profile location. Must only be set if type is "Localhost".
+             */
+            localhostProfile?: pulumi.Input<string>;
+            /**
+             * type indicates which kind of seccomp profile will be applied. Valid options are: 
+             *  Localhost - a profile defined in a file on the node should be used. RuntimeDefault - the container runtime default profile should be used. Unconfined - no profile should be applied.
+             */
+            type: pulumi.Input<string>;
         }
 
         /**
@@ -5351,7 +5429,7 @@ export namespace hive {
              */
             labelSelector?: pulumi.Input<inputs.hive.v1.ClusterProvisionSpecPodSpecTopologySpreadConstraintsLabelSelector>;
             /**
-             * MaxSkew describes the degree to which pods may be unevenly distributed. It's the maximum permitted difference between the number of matching pods in any two topology domains of a given topology type. For example, in a 3-zone cluster, MaxSkew is set to 1, and pods with the same labelSelector spread as 1/1/0: | zone1 | zone2 | zone3 | |   P   |   P   |       | - if MaxSkew is 1, incoming pod can only be scheduled to zone3 to become 1/1/1; scheduling it onto zone1(zone2) would make the ActualSkew(2-0) on zone1(zone2) violate MaxSkew(1). - if MaxSkew is 2, incoming pod can be scheduled onto any zone. It's a required field. Default value is 1 and 0 is not allowed.
+             * MaxSkew describes the degree to which pods may be unevenly distributed. When `whenUnsatisfiable=DoNotSchedule`, it is the maximum permitted difference between the number of matching pods in the target topology and the global minimum. For example, in a 3-zone cluster, MaxSkew is set to 1, and pods with the same labelSelector spread as 1/1/0: | zone1 | zone2 | zone3 | |   P   |   P   |       | - if MaxSkew is 1, incoming pod can only be scheduled to zone3 to become 1/1/1; scheduling it onto zone1(zone2) would make the ActualSkew(2-0) on zone1(zone2) violate MaxSkew(1). - if MaxSkew is 2, incoming pod can be scheduled onto any zone. When `whenUnsatisfiable=ScheduleAnyway`, it is used to give higher precedence to topologies that satisfy it. It's a required field. Default value is 1 and 0 is not allowed.
              */
             maxSkew: pulumi.Input<number>;
             /**
@@ -5359,7 +5437,7 @@ export namespace hive {
              */
             topologyKey: pulumi.Input<string>;
             /**
-             * WhenUnsatisfiable indicates how to deal with a pod if it doesn't satisfy the spread constraint. - DoNotSchedule (default) tells the scheduler not to schedule it - ScheduleAnyway tells the scheduler to still schedule it It's considered as "Unsatisfiable" if and only if placing incoming pod on any topology violates "MaxSkew". For example, in a 3-zone cluster, MaxSkew is set to 1, and pods with the same labelSelector spread as 3/1/1: | zone1 | zone2 | zone3 | | P P P |   P   |   P   | If WhenUnsatisfiable is set to DoNotSchedule, incoming pod can only be scheduled to zone2(zone3) to become 3/2/1(3/1/2) as ActualSkew(2-1) on zone2(zone3) satisfies MaxSkew(1). In other words, the cluster can still be imbalanced, but scheduler won't make it *more* imbalanced. It's a required field.
+             * WhenUnsatisfiable indicates how to deal with a pod if it doesn't satisfy the spread constraint. - DoNotSchedule (default) tells the scheduler not to schedule it. - ScheduleAnyway tells the scheduler to schedule the pod in any location,   but giving higher precedence to topologies that would help reduce the   skew. A constraint is considered "Unsatisfiable" for an incoming pod if and only if every possible node assigment for that pod would violate "MaxSkew" on some topology. For example, in a 3-zone cluster, MaxSkew is set to 1, and pods with the same labelSelector spread as 3/1/1: | zone1 | zone2 | zone3 | | P P P |   P   |   P   | If WhenUnsatisfiable is set to DoNotSchedule, incoming pod can only be scheduled to zone2(zone3) to become 3/2/1(3/1/2) as ActualSkew(2-1) on zone2(zone3) satisfies MaxSkew(1). In other words, the cluster can still be imbalanced, but scheduler won't make it *more* imbalanced. It's a required field.
              */
             whenUnsatisfiable: pulumi.Input<string>;
         }
@@ -5425,7 +5503,7 @@ export namespace hive {
              */
             configMap?: pulumi.Input<inputs.hive.v1.ClusterProvisionSpecPodSpecVolumesConfigMap>;
             /**
-             * CSI (Container Storage Interface) represents storage that is handled by an external CSI driver (Alpha feature).
+             * CSI (Container Storage Interface) represents ephemeral storage that is handled by certain external CSI drivers (Beta feature).
              */
             csi?: pulumi.Input<inputs.hive.v1.ClusterProvisionSpecPodSpecVolumesCsi>;
             /**
@@ -5436,6 +5514,14 @@ export namespace hive {
              * EmptyDir represents a temporary directory that shares a pod's lifetime. More info: https://kubernetes.io/docs/concepts/storage/volumes#emptydir
              */
             emptyDir?: pulumi.Input<inputs.hive.v1.ClusterProvisionSpecPodSpecVolumesEmptyDir>;
+            /**
+             * Ephemeral represents a volume that is handled by a cluster storage driver (Alpha feature). The volume's lifecycle is tied to the pod that defines it - it will be created before the pod starts, and deleted when the pod is removed. 
+             *  Use this if: a) the volume is only needed while the pod runs, b) features of normal volumes like restoring from snapshot or capacity    tracking are needed, c) the storage driver is specified through a storage class, and d) the storage driver supports dynamic volume provisioning through    a PersistentVolumeClaim (see EphemeralVolumeSource for more    information on the connection between this volume type    and PersistentVolumeClaim). 
+             *  Use PersistentVolumeClaim or one of the vendor-specific APIs for volumes that persist for longer than the lifecycle of an individual pod. 
+             *  Use CSI for light-weight local ephemeral volumes if the CSI driver is meant to be used that way - see the documentation of the driver for more information. 
+             *  A pod can use both types of ephemeral volumes and persistent volumes at the same time.
+             */
+            ephemeral?: pulumi.Input<inputs.hive.v1.ClusterProvisionSpecPodSpecVolumesEphemeral>;
             /**
              * FC represents a Fibre Channel resource that is attached to a kubelet's host machine and then exposed to the pod.
              */
@@ -5665,7 +5751,7 @@ export namespace hive {
          */
         export interface ClusterProvisionSpecPodSpecVolumesConfigMap {
             /**
-             * Optional: mode bits to use on created files by default. Must be a value between 0 and 0777. Defaults to 0644. Directories within the path are not affected by this setting. This might be in conflict with other options that affect the file mode, like fsGroup, and the result can be other mode bits set.
+             * Optional: mode bits used to set permissions on created files by default. Must be an octal value between 0000 and 0777 or a decimal value between 0 and 511. YAML accepts both octal and decimal values, JSON requires decimal values for mode bits. Defaults to 0644. Directories within the path are not affected by this setting. This might be in conflict with other options that affect the file mode, like fsGroup, and the result can be other mode bits set.
              */
             defaultMode?: pulumi.Input<number>;
             /**
@@ -5691,7 +5777,7 @@ export namespace hive {
              */
             key: pulumi.Input<string>;
             /**
-             * Optional: mode bits to use on this file, must be a value between 0 and 0777. If not specified, the volume defaultMode will be used. This might be in conflict with other options that affect the file mode, like fsGroup, and the result can be other mode bits set.
+             * Optional: mode bits used to set permissions on this file. Must be an octal value between 0000 and 0777 or a decimal value between 0 and 511. YAML accepts both octal and decimal values, JSON requires decimal values for mode bits. If not specified, the volume defaultMode will be used. This might be in conflict with other options that affect the file mode, like fsGroup, and the result can be other mode bits set.
              */
             mode?: pulumi.Input<number>;
             /**
@@ -5701,7 +5787,7 @@ export namespace hive {
         }
 
         /**
-         * CSI (Container Storage Interface) represents storage that is handled by an external CSI driver (Alpha feature).
+         * CSI (Container Storage Interface) represents ephemeral storage that is handled by certain external CSI drivers (Beta feature).
          */
         export interface ClusterProvisionSpecPodSpecVolumesCsi {
             /**
@@ -5741,7 +5827,7 @@ export namespace hive {
          */
         export interface ClusterProvisionSpecPodSpecVolumesDownwardAPI {
             /**
-             * Optional: mode bits to use on created files by default. Must be a value between 0 and 0777. Defaults to 0644. Directories within the path are not affected by this setting. This might be in conflict with other options that affect the file mode, like fsGroup, and the result can be other mode bits set.
+             * Optional: mode bits to use on created files by default. Must be a Optional: mode bits used to set permissions on created files by default. Must be an octal value between 0000 and 0777 or a decimal value between 0 and 511. YAML accepts both octal and decimal values, JSON requires decimal values for mode bits. Defaults to 0644. Directories within the path are not affected by this setting. This might be in conflict with other options that affect the file mode, like fsGroup, and the result can be other mode bits set.
              */
             defaultMode?: pulumi.Input<number>;
             /**
@@ -5759,7 +5845,7 @@ export namespace hive {
              */
             fieldRef?: pulumi.Input<inputs.hive.v1.ClusterProvisionSpecPodSpecVolumesDownwardAPIItemsFieldRef>;
             /**
-             * Optional: mode bits to use on this file, must be a value between 0 and 0777. If not specified, the volume defaultMode will be used. This might be in conflict with other options that affect the file mode, like fsGroup, and the result can be other mode bits set.
+             * Optional: mode bits used to set permissions on this file, must be an octal value between 0000 and 0777 or a decimal value between 0 and 511. YAML accepts both octal and decimal values, JSON requires decimal values for mode bits. If not specified, the volume defaultMode will be used. This might be in conflict with other options that affect the file mode, like fsGroup, and the result can be other mode bits set.
              */
             mode?: pulumi.Input<number>;
             /**
@@ -5816,6 +5902,142 @@ export namespace hive {
              * Total amount of local storage required for this EmptyDir volume. The size limit is also applicable for memory medium. The maximum usage on memory medium EmptyDir would be the minimum value between the SizeLimit specified here and the sum of memory limits of all containers in a pod. The default is nil which means that the limit is undefined. More info: http://kubernetes.io/docs/user-guide/volumes#emptydir
              */
             sizeLimit?: pulumi.Input<string>;
+        }
+
+        /**
+         * Ephemeral represents a volume that is handled by a cluster storage driver (Alpha feature). The volume's lifecycle is tied to the pod that defines it - it will be created before the pod starts, and deleted when the pod is removed. 
+         *  Use this if: a) the volume is only needed while the pod runs, b) features of normal volumes like restoring from snapshot or capacity    tracking are needed, c) the storage driver is specified through a storage class, and d) the storage driver supports dynamic volume provisioning through    a PersistentVolumeClaim (see EphemeralVolumeSource for more    information on the connection between this volume type    and PersistentVolumeClaim). 
+         *  Use PersistentVolumeClaim or one of the vendor-specific APIs for volumes that persist for longer than the lifecycle of an individual pod. 
+         *  Use CSI for light-weight local ephemeral volumes if the CSI driver is meant to be used that way - see the documentation of the driver for more information. 
+         *  A pod can use both types of ephemeral volumes and persistent volumes at the same time.
+         */
+        export interface ClusterProvisionSpecPodSpecVolumesEphemeral {
+            /**
+             * Specifies a read-only configuration for the volume. Defaults to false (read/write).
+             */
+            readOnly?: pulumi.Input<boolean>;
+            /**
+             * Will be used to create a stand-alone PVC to provision the volume. The pod in which this EphemeralVolumeSource is embedded will be the owner of the PVC, i.e. the PVC will be deleted together with the pod.  The name of the PVC will be `<pod name>-<volume name>` where `<volume name>` is the name from the `PodSpec.Volumes` array entry. Pod validation will reject the pod if the concatenated name is not valid for a PVC (for example, too long). 
+             *  An existing PVC with that name that is not owned by the pod will *not* be used for the pod to avoid using an unrelated volume by mistake. Starting the pod is then blocked until the unrelated PVC is removed. If such a pre-created PVC is meant to be used by the pod, the PVC has to updated with an owner reference to the pod once the pod exists. Normally this should not be necessary, but it may be useful when manually reconstructing a broken cluster. 
+             *  This field is read-only and no changes will be made by Kubernetes to the PVC after it has been created. 
+             *  Required, must not be nil.
+             */
+            volumeClaimTemplate?: pulumi.Input<inputs.hive.v1.ClusterProvisionSpecPodSpecVolumesEphemeralVolumeClaimTemplate>;
+        }
+
+        /**
+         * Will be used to create a stand-alone PVC to provision the volume. The pod in which this EphemeralVolumeSource is embedded will be the owner of the PVC, i.e. the PVC will be deleted together with the pod.  The name of the PVC will be `<pod name>-<volume name>` where `<volume name>` is the name from the `PodSpec.Volumes` array entry. Pod validation will reject the pod if the concatenated name is not valid for a PVC (for example, too long). 
+         *  An existing PVC with that name that is not owned by the pod will *not* be used for the pod to avoid using an unrelated volume by mistake. Starting the pod is then blocked until the unrelated PVC is removed. If such a pre-created PVC is meant to be used by the pod, the PVC has to updated with an owner reference to the pod once the pod exists. Normally this should not be necessary, but it may be useful when manually reconstructing a broken cluster. 
+         *  This field is read-only and no changes will be made by Kubernetes to the PVC after it has been created. 
+         *  Required, must not be nil.
+         */
+        export interface ClusterProvisionSpecPodSpecVolumesEphemeralVolumeClaimTemplate {
+            /**
+             * May contain labels and annotations that will be copied into the PVC when creating it. No other fields are allowed and will be rejected during validation.
+             */
+            metadata?: pulumi.Input<{[key: string]: any}>;
+            /**
+             * The specification for the PersistentVolumeClaim. The entire content is copied unchanged into the PVC that gets created from this template. The same fields as in a PersistentVolumeClaim are also valid here.
+             */
+            spec: pulumi.Input<inputs.hive.v1.ClusterProvisionSpecPodSpecVolumesEphemeralVolumeClaimTemplateSpec>;
+        }
+
+        /**
+         * The specification for the PersistentVolumeClaim. The entire content is copied unchanged into the PVC that gets created from this template. The same fields as in a PersistentVolumeClaim are also valid here.
+         */
+        export interface ClusterProvisionSpecPodSpecVolumesEphemeralVolumeClaimTemplateSpec {
+            /**
+             * AccessModes contains the desired access modes the volume should have. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#access-modes-1
+             */
+            accessModes?: pulumi.Input<pulumi.Input<string>[]>;
+            /**
+             * This field can be used to specify either: * An existing VolumeSnapshot object (snapshot.storage.k8s.io/VolumeSnapshot - Beta) * An existing PVC (PersistentVolumeClaim) * An existing custom resource/object that implements data population (Alpha) In order to use VolumeSnapshot object types, the appropriate feature gate must be enabled (VolumeSnapshotDataSource or AnyVolumeDataSource) If the provisioner or an external controller can support the specified data source, it will create a new volume based on the contents of the specified data source. If the specified data source is not supported, the volume will not be created and the failure will be reported as an event. In the future, we plan to support more data source types and the behavior of the provisioner may change.
+             */
+            dataSource?: pulumi.Input<inputs.hive.v1.ClusterProvisionSpecPodSpecVolumesEphemeralVolumeClaimTemplateSpecDataSource>;
+            /**
+             * Resources represents the minimum resources the volume should have. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#resources
+             */
+            resources?: pulumi.Input<inputs.hive.v1.ClusterProvisionSpecPodSpecVolumesEphemeralVolumeClaimTemplateSpecResources>;
+            /**
+             * A label query over volumes to consider for binding.
+             */
+            selector?: pulumi.Input<inputs.hive.v1.ClusterProvisionSpecPodSpecVolumesEphemeralVolumeClaimTemplateSpecSelector>;
+            /**
+             * Name of the StorageClass required by the claim. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#class-1
+             */
+            storageClassName?: pulumi.Input<string>;
+            /**
+             * volumeMode defines what type of volume is required by the claim. Value of Filesystem is implied when not included in claim spec.
+             */
+            volumeMode?: pulumi.Input<string>;
+            /**
+             * VolumeName is the binding reference to the PersistentVolume backing this claim.
+             */
+            volumeName?: pulumi.Input<string>;
+        }
+
+        /**
+         * This field can be used to specify either: * An existing VolumeSnapshot object (snapshot.storage.k8s.io/VolumeSnapshot - Beta) * An existing PVC (PersistentVolumeClaim) * An existing custom resource/object that implements data population (Alpha) In order to use VolumeSnapshot object types, the appropriate feature gate must be enabled (VolumeSnapshotDataSource or AnyVolumeDataSource) If the provisioner or an external controller can support the specified data source, it will create a new volume based on the contents of the specified data source. If the specified data source is not supported, the volume will not be created and the failure will be reported as an event. In the future, we plan to support more data source types and the behavior of the provisioner may change.
+         */
+        export interface ClusterProvisionSpecPodSpecVolumesEphemeralVolumeClaimTemplateSpecDataSource {
+            /**
+             * APIGroup is the group for the resource being referenced. If APIGroup is not specified, the specified Kind must be in the core API group. For any other third-party types, APIGroup is required.
+             */
+            apiGroup?: pulumi.Input<string>;
+            /**
+             * Kind is the type of resource being referenced
+             */
+            kind: pulumi.Input<string>;
+            /**
+             * Name is the name of resource being referenced
+             */
+            name: pulumi.Input<string>;
+        }
+
+        /**
+         * Resources represents the minimum resources the volume should have. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#resources
+         */
+        export interface ClusterProvisionSpecPodSpecVolumesEphemeralVolumeClaimTemplateSpecResources {
+            /**
+             * Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
+             */
+            limits?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+            /**
+             * Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
+             */
+            requests?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+        }
+
+        /**
+         * A label query over volumes to consider for binding.
+         */
+        export interface ClusterProvisionSpecPodSpecVolumesEphemeralVolumeClaimTemplateSpecSelector {
+            /**
+             * matchExpressions is a list of label selector requirements. The requirements are ANDed.
+             */
+            matchExpressions?: pulumi.Input<pulumi.Input<inputs.hive.v1.ClusterProvisionSpecPodSpecVolumesEphemeralVolumeClaimTemplateSpecSelectorMatchExpressions>[]>;
+            /**
+             * matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+             */
+            matchLabels?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+        }
+
+        /**
+         * A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface ClusterProvisionSpecPodSpecVolumesEphemeralVolumeClaimTemplateSpecSelectorMatchExpressions {
+            /**
+             * key is the label key that the selector applies to.
+             */
+            key: pulumi.Input<string>;
+            /**
+             * operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+             */
+            operator: pulumi.Input<string>;
+            /**
+             * values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+             */
+            values?: pulumi.Input<pulumi.Input<string>[]>;
         }
 
         /**
@@ -6095,7 +6317,7 @@ export namespace hive {
          */
         export interface ClusterProvisionSpecPodSpecVolumesProjected {
             /**
-             * Mode bits to use on created files by default. Must be a value between 0 and 0777. Directories within the path are not affected by this setting. This might be in conflict with other options that affect the file mode, like fsGroup, and the result can be other mode bits set.
+             * Mode bits used to set permissions on created files by default. Must be an octal value between 0000 and 0777 or a decimal value between 0 and 511. YAML accepts both octal and decimal values, JSON requires decimal values for mode bits. Directories within the path are not affected by this setting. This might be in conflict with other options that affect the file mode, like fsGroup, and the result can be other mode bits set.
              */
             defaultMode?: pulumi.Input<number>;
             /**
@@ -6153,7 +6375,7 @@ export namespace hive {
              */
             key: pulumi.Input<string>;
             /**
-             * Optional: mode bits to use on this file, must be a value between 0 and 0777. If not specified, the volume defaultMode will be used. This might be in conflict with other options that affect the file mode, like fsGroup, and the result can be other mode bits set.
+             * Optional: mode bits used to set permissions on this file. Must be an octal value between 0000 and 0777 or a decimal value between 0 and 511. YAML accepts both octal and decimal values, JSON requires decimal values for mode bits. If not specified, the volume defaultMode will be used. This might be in conflict with other options that affect the file mode, like fsGroup, and the result can be other mode bits set.
              */
             mode?: pulumi.Input<number>;
             /**
@@ -6181,7 +6403,7 @@ export namespace hive {
              */
             fieldRef?: pulumi.Input<inputs.hive.v1.ClusterProvisionSpecPodSpecVolumesProjectedSourcesDownwardAPIItemsFieldRef>;
             /**
-             * Optional: mode bits to use on this file, must be a value between 0 and 0777. If not specified, the volume defaultMode will be used. This might be in conflict with other options that affect the file mode, like fsGroup, and the result can be other mode bits set.
+             * Optional: mode bits used to set permissions on this file, must be an octal value between 0000 and 0777 or a decimal value between 0 and 511. YAML accepts both octal and decimal values, JSON requires decimal values for mode bits. If not specified, the volume defaultMode will be used. This might be in conflict with other options that affect the file mode, like fsGroup, and the result can be other mode bits set.
              */
             mode?: pulumi.Input<number>;
             /**
@@ -6253,7 +6475,7 @@ export namespace hive {
              */
             key: pulumi.Input<string>;
             /**
-             * Optional: mode bits to use on this file, must be a value between 0 and 0777. If not specified, the volume defaultMode will be used. This might be in conflict with other options that affect the file mode, like fsGroup, and the result can be other mode bits set.
+             * Optional: mode bits used to set permissions on this file. Must be an octal value between 0000 and 0777 or a decimal value between 0 and 511. YAML accepts both octal and decimal values, JSON requires decimal values for mode bits. If not specified, the volume defaultMode will be used. This might be in conflict with other options that affect the file mode, like fsGroup, and the result can be other mode bits set.
              */
             mode?: pulumi.Input<number>;
             /**
@@ -6419,7 +6641,7 @@ export namespace hive {
          */
         export interface ClusterProvisionSpecPodSpecVolumesSecret {
             /**
-             * Optional: mode bits to use on created files by default. Must be a value between 0 and 0777. Defaults to 0644. Directories within the path are not affected by this setting. This might be in conflict with other options that affect the file mode, like fsGroup, and the result can be other mode bits set.
+             * Optional: mode bits used to set permissions on created files by default. Must be an octal value between 0000 and 0777 or a decimal value between 0 and 511. YAML accepts both octal and decimal values, JSON requires decimal values for mode bits. Defaults to 0644. Directories within the path are not affected by this setting. This might be in conflict with other options that affect the file mode, like fsGroup, and the result can be other mode bits set.
              */
             defaultMode?: pulumi.Input<number>;
             /**
@@ -6445,7 +6667,7 @@ export namespace hive {
              */
             key: pulumi.Input<string>;
             /**
-             * Optional: mode bits to use on this file, must be a value between 0 and 0777. If not specified, the volume defaultMode will be used. This might be in conflict with other options that affect the file mode, like fsGroup, and the result can be other mode bits set.
+             * Optional: mode bits used to set permissions on this file. Must be an octal value between 0000 and 0777 or a decimal value between 0 and 511. YAML accepts both octal and decimal values, JSON requires decimal values for mode bits. If not specified, the volume defaultMode will be used. This might be in conflict with other options that affect the file mode, like fsGroup, and the result can be other mode bits set.
              */
             mode?: pulumi.Input<number>;
             /**
@@ -6889,6 +7111,10 @@ export namespace hive {
              */
             backup?: pulumi.Input<inputs.hive.v1.HiveConfigSpecBackup>;
             /**
+             * ControllersConfig is used to configure different hive controllers
+             */
+            controllersConfig?: pulumi.Input<inputs.hive.v1.HiveConfigSpecControllersConfig>;
+            /**
              * DeleteProtection can be set to "enabled" to turn on automatic delete protection for ClusterDeployments. When enabled, Hive will add the "hive.openshift.io/protected-delete" annotation to new ClusterDeployments. Once a ClusterDeployment has been installed, a user must remove the annotation from a ClusterDeployment prior to deleting it.
              */
             deleteProtection?: pulumi.Input<string>;
@@ -6908,10 +7134,6 @@ export namespace hive {
              * GlobalPullSecretRef is used to specify a pull secret that will be used globally by all of the cluster deployments. For each cluster deployment, the contents of GlobalPullSecret will be merged with the specific pull secret for a cluster deployment(if specified), with precedence given to the contents of the pull secret for the cluster deployment. The global pull secret is assumed to be in the TargetNamespace.
              */
             globalPullSecretRef?: pulumi.Input<inputs.hive.v1.HiveConfigSpecGlobalPullSecretRef>;
-            /**
-             * HiveAPIEnabled is a boolean controlling whether or not the Hive operator will start up the v1alpha1 aggregated API server.
-             */
-            hiveAPIEnabled?: pulumi.Input<boolean>;
             /**
              * LogLevel is the level of logging to use for the Hive controllers. Acceptable levels, from coarsest to finest, are panic, fatal, error, warn, info, debug, and trace. The default level is info.
              */
@@ -6966,6 +7188,98 @@ export namespace hive {
              * Enabled dictates if Velero backup integration is enabled. If not specified, the default is disabled.
              */
             enabled?: pulumi.Input<boolean>;
+            /**
+             * Namespace specifies in which namespace velero backup objects should be created. If not specified, the default is a namespace named "velero".
+             */
+            namespace?: pulumi.Input<string>;
+        }
+
+        /**
+         * ControllersConfig is used to configure different hive controllers
+         */
+        export interface HiveConfigSpecControllersConfig {
+            /**
+             * Controllers contains a list of configurations for different controllers
+             */
+            controllers?: pulumi.Input<pulumi.Input<inputs.hive.v1.HiveConfigSpecControllersConfigControllers>[]>;
+            /**
+             * Default specifies default configuration for all the controllers, can be used to override following coded defaults default for concurrent reconciles is 5 default for client qps is 5 default for client burst is 10 default for queue qps is 10 default for queue burst is 100
+             */
+            default?: pulumi.Input<inputs.hive.v1.HiveConfigSpecControllersConfigDefault>;
+        }
+
+        /**
+         * SpecificControllerConfig contains the configuration for a specific controller
+         */
+        export interface HiveConfigSpecControllersConfigControllers {
+            /**
+             * ControllerConfig contains the configuration for the controller specified by Name field
+             */
+            config: pulumi.Input<inputs.hive.v1.HiveConfigSpecControllersConfigControllersConfig>;
+            /**
+             * Name specifies the name of the controller
+             */
+            name: pulumi.Input<string>;
+        }
+
+        /**
+         * ControllerConfig contains the configuration for the controller specified by Name field
+         */
+        export interface HiveConfigSpecControllersConfigControllersConfig {
+            /**
+             * ClientBurst specifies client rate limiter burst for a controller
+             */
+            clientBurst?: pulumi.Input<number>;
+            /**
+             * ClientQPS specifies client rate limiter QPS for a controller
+             */
+            clientQPS?: pulumi.Input<number>;
+            /**
+             * ConcurrentReconciles specifies number of concurrent reconciles for a controller
+             */
+            concurrentReconciles?: pulumi.Input<number>;
+            /**
+             * QueueBurst specifies workqueue rate limiter burst for a controller
+             */
+            queueBurst?: pulumi.Input<number>;
+            /**
+             * QueueQPS specifies workqueue rate limiter QPS for a controller
+             */
+            queueQPS?: pulumi.Input<number>;
+            /**
+             * Replicas specifies the number of replicas the specific controller pod should use. This is ONLY for controllers that have been split out into their own pods. This is ignored for all others.
+             */
+            replicas?: pulumi.Input<number>;
+        }
+
+        /**
+         * Default specifies default configuration for all the controllers, can be used to override following coded defaults default for concurrent reconciles is 5 default for client qps is 5 default for client burst is 10 default for queue qps is 10 default for queue burst is 100
+         */
+        export interface HiveConfigSpecControllersConfigDefault {
+            /**
+             * ClientBurst specifies client rate limiter burst for a controller
+             */
+            clientBurst?: pulumi.Input<number>;
+            /**
+             * ClientQPS specifies client rate limiter QPS for a controller
+             */
+            clientQPS?: pulumi.Input<number>;
+            /**
+             * ConcurrentReconciles specifies number of concurrent reconciles for a controller
+             */
+            concurrentReconciles?: pulumi.Input<number>;
+            /**
+             * QueueBurst specifies workqueue rate limiter burst for a controller
+             */
+            queueBurst?: pulumi.Input<number>;
+            /**
+             * QueueQPS specifies workqueue rate limiter QPS for a controller
+             */
+            queueQPS?: pulumi.Input<number>;
+            /**
+             * Replicas specifies the number of replicas the specific controller pod should use. This is ONLY for controllers that have been split out into their own pods. This is ignored for all others.
+             */
+            replicas?: pulumi.Input<number>;
         }
 
         /**
@@ -6973,9 +7287,45 @@ export namespace hive {
          */
         export interface HiveConfigSpecFailedProvisionConfig {
             /**
-             * SkipGatherLogs disables functionality that attempts to gather full logs from the cluster if an installation fails for any reason. The logs will be stored in a persistent volume for up to 7 days.
+             * FailedProvisionAWSConfig contains AWS-specific info to upload log files.
+             */
+            aws?: pulumi.Input<inputs.hive.v1.HiveConfigSpecFailedProvisionConfigAws>;
+            /**
+             * DEPRECATED: This flag is no longer respected and will be removed in the future.
              */
             skipGatherLogs?: pulumi.Input<boolean>;
+        }
+
+        /**
+         * FailedProvisionAWSConfig contains AWS-specific info to upload log files.
+         */
+        export interface HiveConfigSpecFailedProvisionConfigAws {
+            /**
+             * Bucket is the S3 bucket to store the logs in.
+             */
+            bucket?: pulumi.Input<string>;
+            /**
+             * CredentialsSecretRef references a secret in the TargetNamespace that will be used to authenticate with AWS S3. It will need permission to upload logs to S3. Secret should have keys named aws_access_key_id and aws_secret_access_key that contain the AWS credentials. Example Secret:   data:     aws_access_key_id: minio     aws_secret_access_key: minio123
+             */
+            credentialsSecretRef: pulumi.Input<inputs.hive.v1.HiveConfigSpecFailedProvisionConfigAwsCredentialsSecretRef>;
+            /**
+             * Region is the AWS region to use for S3 operations. This defaults to us-east-1. For AWS China, use cn-northwest-1.
+             */
+            region?: pulumi.Input<string>;
+            /**
+             * ServiceEndpoint is the url to connect to an S3 compatible provider.
+             */
+            serviceEndpoint?: pulumi.Input<string>;
+        }
+
+        /**
+         * CredentialsSecretRef references a secret in the TargetNamespace that will be used to authenticate with AWS S3. It will need permission to upload logs to S3. Secret should have keys named aws_access_key_id and aws_secret_access_key that contain the AWS credentials. Example Secret:   data:     aws_access_key_id: minio     aws_secret_access_key: minio123
+         */
+        export interface HiveConfigSpecFailedProvisionConfigAwsCredentialsSecretRef {
+            /**
+             * Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+             */
+            name?: pulumi.Input<string>;
         }
 
         /**
@@ -8671,314 +9021,6 @@ export namespace hive {
         }
 
         /**
-         * SyncSetInstanceSpec defines the desired state of SyncSetInstance
-         */
-        export interface SyncSetInstanceSpec {
-            /**
-             * ClusterDeployment is a reference to to the clusterdeployment for this syncsetinstance.
-             */
-            clusterDeploymentRef: pulumi.Input<inputs.hive.v1.SyncSetInstanceSpecClusterDeploymentRef>;
-            /**
-             * ResourceApplyMode indicates if the resource apply mode is "Upsert" (default) or "Sync". ApplyMode "Upsert" indicates create and update. ApplyMode "Sync" indicates create, update and delete.
-             */
-            resourceApplyMode?: pulumi.Input<string>;
-            /**
-             * SelectorSyncSetRef is a reference to the selectorsyncset for this syncsetinstance.
-             */
-            selectorSyncSetRef?: pulumi.Input<inputs.hive.v1.SyncSetInstanceSpecSelectorSyncSetRef>;
-            /**
-             * SyncSetHash is a hash of the contents of the syncset or selectorsyncset spec. Its purpose is to cause a syncset instance update whenever there's a change in its source.
-             */
-            syncSetHash?: pulumi.Input<string>;
-            /**
-             * SyncSet is a reference to the syncset for this syncsetinstance.
-             */
-            syncSetRef?: pulumi.Input<inputs.hive.v1.SyncSetInstanceSpecSyncSetRef>;
-        }
-
-        /**
-         * ClusterDeployment is a reference to to the clusterdeployment for this syncsetinstance.
-         */
-        export interface SyncSetInstanceSpecClusterDeploymentRef {
-            /**
-             * Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
-             */
-            name?: pulumi.Input<string>;
-        }
-
-        /**
-         * SelectorSyncSetRef is a reference to the selectorsyncset for this syncsetinstance.
-         */
-        export interface SyncSetInstanceSpecSelectorSyncSetRef {
-            /**
-             * Name is the name of the SelectorSyncSet
-             */
-            name: pulumi.Input<string>;
-        }
-
-        /**
-         * SyncSet is a reference to the syncset for this syncsetinstance.
-         */
-        export interface SyncSetInstanceSpecSyncSetRef {
-            /**
-             * Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
-             */
-            name?: pulumi.Input<string>;
-        }
-
-        /**
-         * SyncSetInstanceStatus defines the observed state of SyncSetInstance
-         */
-        export interface SyncSetInstanceStatus {
-            /**
-             * Applied will be true if all resources, patches, or secrets have successfully been applied on last attempt.
-             */
-            applied?: pulumi.Input<boolean>;
-            /**
-             * Conditions is the list of SyncConditions used to indicate UnknownObject when a resource type cannot be determined from a SyncSet resource.
-             */
-            conditions?: pulumi.Input<pulumi.Input<inputs.hive.v1.SyncSetInstanceStatusConditions>[]>;
-            /**
-             * FirstSuccessTimestamp is the time the syncset was successfully applied for the first time.
-             */
-            firstSuccessTimestamp?: pulumi.Input<string>;
-            /**
-             * Patches is the list of SyncStatus for patches that have been applied.
-             */
-            patches?: pulumi.Input<pulumi.Input<inputs.hive.v1.SyncSetInstanceStatusPatches>[]>;
-            /**
-             * Resources is the list of SyncStatus for objects that have been synced.
-             */
-            resources?: pulumi.Input<pulumi.Input<inputs.hive.v1.SyncSetInstanceStatusResources>[]>;
-            /**
-             * Secrets is the list of SyncStatus for secrets that have been synced.
-             */
-            secretReferences?: pulumi.Input<pulumi.Input<inputs.hive.v1.SyncSetInstanceStatusSecretReferences>[]>;
-        }
-
-        /**
-         * SyncCondition is a condition in a SyncStatus
-         */
-        export interface SyncSetInstanceStatusConditions {
-            /**
-             * LastProbeTime is the last time we probed the condition.
-             */
-            lastProbeTime?: pulumi.Input<string>;
-            /**
-             * LastTransitionTime is the last time the condition transitioned from one status to another.
-             */
-            lastTransitionTime?: pulumi.Input<string>;
-            /**
-             * Message is a human-readable message indicating details about last transition.
-             */
-            message?: pulumi.Input<string>;
-            /**
-             * Reason is a unique, one-word, CamelCase reason for the condition's last transition.
-             */
-            reason?: pulumi.Input<string>;
-            /**
-             * Status is the status of the condition.
-             */
-            status: pulumi.Input<string>;
-            /**
-             * Type is the type of the condition.
-             */
-            type: pulumi.Input<string>;
-        }
-
-        /**
-         * SyncStatus describes objects that have been created or patches that have been applied using the unique md5 sum of the object or patch.
-         */
-        export interface SyncSetInstanceStatusPatches {
-            /**
-             * APIVersion is the Group and Version of the object that was synced or patched.
-             */
-            apiVersion: pulumi.Input<string>;
-            /**
-             * Conditions is the list of conditions indicating success or failure of object create, update and delete as well as patch application.
-             */
-            conditions: pulumi.Input<pulumi.Input<inputs.hive.v1.SyncSetInstanceStatusPatchesConditions>[]>;
-            /**
-             * Hash is the unique md5 hash of the resource or patch.
-             */
-            hash: pulumi.Input<string>;
-            /**
-             * Kind is the Kind of the object that was synced or patched.
-             */
-            kind: pulumi.Input<string>;
-            /**
-             * Name is the name of the object that was synced or patched.
-             */
-            name: pulumi.Input<string>;
-            /**
-             * Namespace is the Namespace of the object that was synced or patched.
-             */
-            namespace: pulumi.Input<string>;
-            /**
-             * Resource is the resource name for the object that was synced. This will be populated for resources, but not patches
-             */
-            resource?: pulumi.Input<string>;
-        }
-
-        /**
-         * SyncCondition is a condition in a SyncStatus
-         */
-        export interface SyncSetInstanceStatusPatchesConditions {
-            /**
-             * LastProbeTime is the last time we probed the condition.
-             */
-            lastProbeTime?: pulumi.Input<string>;
-            /**
-             * LastTransitionTime is the last time the condition transitioned from one status to another.
-             */
-            lastTransitionTime?: pulumi.Input<string>;
-            /**
-             * Message is a human-readable message indicating details about last transition.
-             */
-            message?: pulumi.Input<string>;
-            /**
-             * Reason is a unique, one-word, CamelCase reason for the condition's last transition.
-             */
-            reason?: pulumi.Input<string>;
-            /**
-             * Status is the status of the condition.
-             */
-            status: pulumi.Input<string>;
-            /**
-             * Type is the type of the condition.
-             */
-            type: pulumi.Input<string>;
-        }
-
-        /**
-         * SyncStatus describes objects that have been created or patches that have been applied using the unique md5 sum of the object or patch.
-         */
-        export interface SyncSetInstanceStatusResources {
-            /**
-             * APIVersion is the Group and Version of the object that was synced or patched.
-             */
-            apiVersion: pulumi.Input<string>;
-            /**
-             * Conditions is the list of conditions indicating success or failure of object create, update and delete as well as patch application.
-             */
-            conditions: pulumi.Input<pulumi.Input<inputs.hive.v1.SyncSetInstanceStatusResourcesConditions>[]>;
-            /**
-             * Hash is the unique md5 hash of the resource or patch.
-             */
-            hash: pulumi.Input<string>;
-            /**
-             * Kind is the Kind of the object that was synced or patched.
-             */
-            kind: pulumi.Input<string>;
-            /**
-             * Name is the name of the object that was synced or patched.
-             */
-            name: pulumi.Input<string>;
-            /**
-             * Namespace is the Namespace of the object that was synced or patched.
-             */
-            namespace: pulumi.Input<string>;
-            /**
-             * Resource is the resource name for the object that was synced. This will be populated for resources, but not patches
-             */
-            resource?: pulumi.Input<string>;
-        }
-
-        /**
-         * SyncCondition is a condition in a SyncStatus
-         */
-        export interface SyncSetInstanceStatusResourcesConditions {
-            /**
-             * LastProbeTime is the last time we probed the condition.
-             */
-            lastProbeTime?: pulumi.Input<string>;
-            /**
-             * LastTransitionTime is the last time the condition transitioned from one status to another.
-             */
-            lastTransitionTime?: pulumi.Input<string>;
-            /**
-             * Message is a human-readable message indicating details about last transition.
-             */
-            message?: pulumi.Input<string>;
-            /**
-             * Reason is a unique, one-word, CamelCase reason for the condition's last transition.
-             */
-            reason?: pulumi.Input<string>;
-            /**
-             * Status is the status of the condition.
-             */
-            status: pulumi.Input<string>;
-            /**
-             * Type is the type of the condition.
-             */
-            type: pulumi.Input<string>;
-        }
-
-        /**
-         * SyncStatus describes objects that have been created or patches that have been applied using the unique md5 sum of the object or patch.
-         */
-        export interface SyncSetInstanceStatusSecretReferences {
-            /**
-             * APIVersion is the Group and Version of the object that was synced or patched.
-             */
-            apiVersion: pulumi.Input<string>;
-            /**
-             * Conditions is the list of conditions indicating success or failure of object create, update and delete as well as patch application.
-             */
-            conditions: pulumi.Input<pulumi.Input<inputs.hive.v1.SyncSetInstanceStatusSecretReferencesConditions>[]>;
-            /**
-             * Hash is the unique md5 hash of the resource or patch.
-             */
-            hash: pulumi.Input<string>;
-            /**
-             * Kind is the Kind of the object that was synced or patched.
-             */
-            kind: pulumi.Input<string>;
-            /**
-             * Name is the name of the object that was synced or patched.
-             */
-            name: pulumi.Input<string>;
-            /**
-             * Namespace is the Namespace of the object that was synced or patched.
-             */
-            namespace: pulumi.Input<string>;
-            /**
-             * Resource is the resource name for the object that was synced. This will be populated for resources, but not patches
-             */
-            resource?: pulumi.Input<string>;
-        }
-
-        /**
-         * SyncCondition is a condition in a SyncStatus
-         */
-        export interface SyncSetInstanceStatusSecretReferencesConditions {
-            /**
-             * LastProbeTime is the last time we probed the condition.
-             */
-            lastProbeTime?: pulumi.Input<string>;
-            /**
-             * LastTransitionTime is the last time the condition transitioned from one status to another.
-             */
-            lastTransitionTime?: pulumi.Input<string>;
-            /**
-             * Message is a human-readable message indicating details about last transition.
-             */
-            message?: pulumi.Input<string>;
-            /**
-             * Reason is a unique, one-word, CamelCase reason for the condition's last transition.
-             */
-            reason?: pulumi.Input<string>;
-            /**
-             * Status is the status of the condition.
-             */
-            status: pulumi.Input<string>;
-            /**
-             * Type is the type of the condition.
-             */
-            type: pulumi.Input<string>;
-        }
-
-        /**
          * SyncSetSpec defines the SyncSetCommonSpec resources and patches to sync along with ClusterDeploymentRefs indicating which clusters the SyncSet applies to in the SyncSet's namespace.
          */
         export interface SyncSetSpec {
@@ -9090,5 +9132,183 @@ export namespace hive {
             namespace?: pulumi.Input<string>;
         }
 
+    }
+}
+
+export namespace hiveinternal {
+    export namespace v1alpha1 {
+        /**
+         * ClusterSyncLeaseSpec is the specification of a ClusterSyncLease.
+         */
+        export interface ClusterSyncLeaseSpec {
+            /**
+             * RenewTime is the time when SyncSets and SelectorSyncSets were last applied to the cluster.
+             */
+            renewTime: pulumi.Input<string>;
+        }
+
+        /**
+         * ClusterSyncStatus defines the observed state of ClusterSync
+         */
+        export interface ClusterSyncStatus {
+            /**
+             * Conditions is a list of conditions associated with syncing to the cluster.
+             */
+            conditions?: pulumi.Input<pulumi.Input<inputs.hiveinternal.v1alpha1.ClusterSyncStatusConditions>[]>;
+            /**
+             * FirstSuccessTime is the time we first successfully applied all (selector)syncsets to a cluster.
+             */
+            firstSuccessTime?: pulumi.Input<string>;
+            /**
+             * SelectorSyncSets is the sync status of all of the SelectorSyncSets for the cluster.
+             */
+            selectorSyncSets?: pulumi.Input<pulumi.Input<inputs.hiveinternal.v1alpha1.ClusterSyncStatusSelectorSyncSets>[]>;
+            /**
+             * SyncSets is the sync status of all of the SyncSets for the cluster.
+             */
+            syncSets?: pulumi.Input<pulumi.Input<inputs.hiveinternal.v1alpha1.ClusterSyncStatusSyncSets>[]>;
+        }
+
+        /**
+         * ClusterSyncCondition contains details for the current condition of a ClusterSync
+         */
+        export interface ClusterSyncStatusConditions {
+            /**
+             * LastProbeTime is the last time we probed the condition.
+             */
+            lastProbeTime?: pulumi.Input<string>;
+            /**
+             * LastTransitionTime is the last time the condition transitioned from one status to another.
+             */
+            lastTransitionTime?: pulumi.Input<string>;
+            /**
+             * Message is a human-readable message indicating details about the last transition.
+             */
+            message?: pulumi.Input<string>;
+            /**
+             * Reason is a unique, one-word, CamelCase reason for the condition's last transition.
+             */
+            reason?: pulumi.Input<string>;
+            /**
+             * Status is the status of the condition.
+             */
+            status: pulumi.Input<string>;
+            /**
+             * Type is the type of the condition.
+             */
+            type: pulumi.Input<string>;
+        }
+
+        /**
+         * SyncStatus is the status of applying a specific SyncSet or SelectorSyncSet to the cluster.
+         */
+        export interface ClusterSyncStatusSelectorSyncSets {
+            /**
+             * FailureMessage is a message describing why the SyncSet or SelectorSyncSet could not be applied. This is only set when Result is Failure.
+             */
+            failureMessage?: pulumi.Input<string>;
+            /**
+             * FirstSuccessTime is the time when the SyncSet or SelectorSyncSet was first successfully applied to the cluster.
+             */
+            firstSuccessTime?: pulumi.Input<string>;
+            /**
+             * LastTransitionTime is the time when this status last changed.
+             */
+            lastTransitionTime: pulumi.Input<string>;
+            /**
+             * Name is the name of the SyncSet or SelectorSyncSet.
+             */
+            name: pulumi.Input<string>;
+            /**
+             * ObservedGeneration is the generation of the SyncSet or SelectorSyncSet that was last observed.
+             */
+            observedGeneration: pulumi.Input<number>;
+            /**
+             * ResourcesToDelete is the list of resources in the cluster that should be deleted when the SyncSet or SelectorSyncSet is deleted or is no longer matched to the cluster.
+             */
+            resourcesToDelete?: pulumi.Input<pulumi.Input<inputs.hiveinternal.v1alpha1.ClusterSyncStatusSelectorSyncSetsResourcesToDelete>[]>;
+            /**
+             * Result is the result of the last attempt to apply the SyncSet or SelectorSyncSet to the cluster.
+             */
+            result: pulumi.Input<string>;
+        }
+
+        /**
+         * SyncResourceReference is a reference to a resource that is synced to a cluster via a SyncSet or SelectorSyncSet.
+         */
+        export interface ClusterSyncStatusSelectorSyncSetsResourcesToDelete {
+            /**
+             * APIVersion is the Group and Version of the resource.
+             */
+            apiVersion: pulumi.Input<string>;
+            /**
+             * Kind is the Kind of the resource.
+             */
+            kind?: pulumi.Input<string>;
+            /**
+             * Name is the name of the resource.
+             */
+            name: pulumi.Input<string>;
+            /**
+             * Namespace is the namespace of the resource.
+             */
+            namespace?: pulumi.Input<string>;
+        }
+
+        /**
+         * SyncStatus is the status of applying a specific SyncSet or SelectorSyncSet to the cluster.
+         */
+        export interface ClusterSyncStatusSyncSets {
+            /**
+             * FailureMessage is a message describing why the SyncSet or SelectorSyncSet could not be applied. This is only set when Result is Failure.
+             */
+            failureMessage?: pulumi.Input<string>;
+            /**
+             * FirstSuccessTime is the time when the SyncSet or SelectorSyncSet was first successfully applied to the cluster.
+             */
+            firstSuccessTime?: pulumi.Input<string>;
+            /**
+             * LastTransitionTime is the time when this status last changed.
+             */
+            lastTransitionTime: pulumi.Input<string>;
+            /**
+             * Name is the name of the SyncSet or SelectorSyncSet.
+             */
+            name: pulumi.Input<string>;
+            /**
+             * ObservedGeneration is the generation of the SyncSet or SelectorSyncSet that was last observed.
+             */
+            observedGeneration: pulumi.Input<number>;
+            /**
+             * ResourcesToDelete is the list of resources in the cluster that should be deleted when the SyncSet or SelectorSyncSet is deleted or is no longer matched to the cluster.
+             */
+            resourcesToDelete?: pulumi.Input<pulumi.Input<inputs.hiveinternal.v1alpha1.ClusterSyncStatusSyncSetsResourcesToDelete>[]>;
+            /**
+             * Result is the result of the last attempt to apply the SyncSet or SelectorSyncSet to the cluster.
+             */
+            result: pulumi.Input<string>;
+        }
+
+        /**
+         * SyncResourceReference is a reference to a resource that is synced to a cluster via a SyncSet or SelectorSyncSet.
+         */
+        export interface ClusterSyncStatusSyncSetsResourcesToDelete {
+            /**
+             * APIVersion is the Group and Version of the resource.
+             */
+            apiVersion: pulumi.Input<string>;
+            /**
+             * Kind is the Kind of the resource.
+             */
+            kind?: pulumi.Input<string>;
+            /**
+             * Name is the name of the resource.
+             */
+            name: pulumi.Input<string>;
+            /**
+             * Namespace is the namespace of the resource.
+             */
+            namespace?: pulumi.Input<string>;
+        }
     }
 }

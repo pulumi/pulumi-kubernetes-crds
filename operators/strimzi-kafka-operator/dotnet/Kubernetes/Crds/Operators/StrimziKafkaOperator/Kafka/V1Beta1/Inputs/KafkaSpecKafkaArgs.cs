@@ -37,7 +37,7 @@ namespace Pulumi.Kubernetes.Types.Inputs.Kafka.V1Beta1
         private InputMap<object>? _config;
 
         /// <summary>
-        /// Kafka broker config properties with the following prefixes cannot be set: listeners, advertised., broker., listener., host.name, port, inter.broker.listener.name, sasl., ssl., security., password., principal.builder.class, log.dir, zookeeper.connect, zookeeper.set.acl, authorizer., super.user, cruise.control.metrics.topic, cruise.control.metrics.reporter.bootstrap.servers (with the exception of: zookeeper.connection.timeout.ms, ssl.cipher.suites, ssl.protocol, ssl.enabled.protocols,cruise.control.metrics.topic.num.partitions, cruise.control.metrics.topic.replication.factor, cruise.control.metrics.topic.retention.ms,cruise.control.metrics.topic.auto.create.retries, cruise.control.metrics.topic.auto.create.timeout.ms).
+        /// Kafka broker config properties with the following prefixes cannot be set: listeners, advertised., broker., listener., host.name, port, inter.broker.listener.name, sasl., ssl., security., password., principal.builder.class, log.dir, zookeeper.connect, zookeeper.set.acl, zookeeper.ssl, zookeeper.clientCnxnSocket, authorizer., super.user, cruise.control.metrics.topic, cruise.control.metrics.reporter.bootstrap.servers (with the exception of: zookeeper.connection.timeout.ms, ssl.cipher.suites, ssl.protocol, ssl.enabled.protocols,cruise.control.metrics.topic.num.partitions, cruise.control.metrics.topic.replication.factor, cruise.control.metrics.topic.retention.ms,cruise.control.metrics.topic.auto.create.retries, cruise.control.metrics.topic.auto.create.timeout.ms).
         /// </summary>
         public InputMap<object> Config
         {
@@ -63,11 +63,8 @@ namespace Pulumi.Kubernetes.Types.Inputs.Kafka.V1Beta1
         [Input("jvmOptions")]
         public Input<Pulumi.Kubernetes.Types.Inputs.Kafka.V1Beta1.KafkaSpecKafkaJvmOptionsArgs>? JvmOptions { get; set; }
 
-        /// <summary>
-        /// Configures listeners of Kafka brokers.
-        /// </summary>
         [Input("listeners", required: true)]
-        public Input<Pulumi.Kubernetes.Types.Inputs.Kafka.V1Beta1.KafkaSpecKafkaListenersArgs> Listeners { get; set; } = null!;
+        public InputUnion<ImmutableArray<Pulumi.Kubernetes.Types.Inputs.Kafka.V1Beta1.KafkaSpecKafkaListenersOneOf0Args>, Pulumi.Kubernetes.Types.Inputs.Kafka.V1Beta1.KafkaSpecKafkaListenersOneOf1Args> Listeners { get; set; } = null!;
 
         /// <summary>
         /// Pod liveness checking.

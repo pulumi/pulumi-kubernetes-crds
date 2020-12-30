@@ -11,10 +11,20 @@ from ... import _utilities, _tables
 __all__ = [
     'CheClusterSpecArgs',
     'CheClusterSpecAuthArgs',
+    'CheClusterSpecAuthIdentityProviderIngressArgs',
+    'CheClusterSpecAuthIdentityProviderRouteArgs',
     'CheClusterSpecDatabaseArgs',
+    'CheClusterSpecImagePullerArgs',
+    'CheClusterSpecImagePullerSpecArgs',
     'CheClusterSpecK8sArgs',
     'CheClusterSpecMetricsArgs',
     'CheClusterSpecServerArgs',
+    'CheClusterSpecServerCheServerIngressArgs',
+    'CheClusterSpecServerCheServerRouteArgs',
+    'CheClusterSpecServerDevfileRegistryIngressArgs',
+    'CheClusterSpecServerDevfileRegistryRouteArgs',
+    'CheClusterSpecServerPluginRegistryIngressArgs',
+    'CheClusterSpecServerPluginRegistryRouteArgs',
     'CheClusterSpecStorageArgs',
     'CheClusterStatusArgs',
 ]
@@ -24,6 +34,7 @@ class CheClusterSpecArgs:
     def __init__(__self__, *,
                  auth: Optional[pulumi.Input['CheClusterSpecAuthArgs']] = None,
                  database: Optional[pulumi.Input['CheClusterSpecDatabaseArgs']] = None,
+                 image_puller: Optional[pulumi.Input['CheClusterSpecImagePullerArgs']] = None,
                  k8s: Optional[pulumi.Input['CheClusterSpecK8sArgs']] = None,
                  metrics: Optional[pulumi.Input['CheClusterSpecMetricsArgs']] = None,
                  server: Optional[pulumi.Input['CheClusterSpecServerArgs']] = None,
@@ -32,6 +43,7 @@ class CheClusterSpecArgs:
         Desired configuration of the Che installation. Based on these settings, the operator automatically creates and maintains several config maps that will contain the appropriate environment variables the various components of the Che installation. These generated config maps should NOT be updated manually.
         :param pulumi.Input['CheClusterSpecAuthArgs'] auth: Configuration settings related to the Authentication used by the Che installation.
         :param pulumi.Input['CheClusterSpecDatabaseArgs'] database: Configuration settings related to the database used by the Che installation.
+        :param pulumi.Input['CheClusterSpecImagePullerArgs'] image_puller: Kubernetes Image Puller configuration
         :param pulumi.Input['CheClusterSpecK8sArgs'] k8s: Configuration settings specific to Che installations made on upstream Kubernetes.
         :param pulumi.Input['CheClusterSpecMetricsArgs'] metrics: Configuration settings related to the metrics collection used by the Che installation.
         :param pulumi.Input['CheClusterSpecServerArgs'] server: General configuration settings related to the Che server and the plugin and devfile registries
@@ -41,6 +53,8 @@ class CheClusterSpecArgs:
             pulumi.set(__self__, "auth", auth)
         if database is not None:
             pulumi.set(__self__, "database", database)
+        if image_puller is not None:
+            pulumi.set(__self__, "image_puller", image_puller)
         if k8s is not None:
             pulumi.set(__self__, "k8s", k8s)
         if metrics is not None:
@@ -73,6 +87,18 @@ class CheClusterSpecArgs:
     @database.setter
     def database(self, value: Optional[pulumi.Input['CheClusterSpecDatabaseArgs']]):
         pulumi.set(self, "database", value)
+
+    @property
+    @pulumi.getter(name="imagePuller")
+    def image_puller(self) -> Optional[pulumi.Input['CheClusterSpecImagePullerArgs']]:
+        """
+        Kubernetes Image Puller configuration
+        """
+        return pulumi.get(self, "image_puller")
+
+    @image_puller.setter
+    def image_puller(self, value: Optional[pulumi.Input['CheClusterSpecImagePullerArgs']]):
+        pulumi.set(self, "image_puller", value)
 
     @property
     @pulumi.getter
@@ -131,10 +157,12 @@ class CheClusterSpecAuthArgs:
                  identity_provider_client_id: Optional[pulumi.Input[str]] = None,
                  identity_provider_image: Optional[pulumi.Input[str]] = None,
                  identity_provider_image_pull_policy: Optional[pulumi.Input[str]] = None,
+                 identity_provider_ingress: Optional[pulumi.Input['CheClusterSpecAuthIdentityProviderIngressArgs']] = None,
                  identity_provider_password: Optional[pulumi.Input[str]] = None,
                  identity_provider_postgres_password: Optional[pulumi.Input[str]] = None,
                  identity_provider_postgres_secret: Optional[pulumi.Input[str]] = None,
                  identity_provider_realm: Optional[pulumi.Input[str]] = None,
+                 identity_provider_route: Optional[pulumi.Input['CheClusterSpecAuthIdentityProviderRouteArgs']] = None,
                  identity_provider_secret: Optional[pulumi.Input[str]] = None,
                  identity_provider_url: Optional[pulumi.Input[str]] = None,
                  o_auth_client_name: Optional[pulumi.Input[str]] = None,
@@ -148,10 +176,12 @@ class CheClusterSpecAuthArgs:
         :param pulumi.Input[str] identity_provider_client_id: Name of a Identity provider (Keycloak / RH SSO) `client-id` that should be used for Che. This is useful to override it ONLY if you use an external Identity Provider (see the `externalIdentityProvider` field). If omitted or left blank, it will be set to the value of the `flavour` field suffixed with `-public`.
         :param pulumi.Input[str] identity_provider_image: Overrides the container image used in the Identity Provider (Keycloak / RH SSO) deployment. This includes the image tag. Omit it or leave it empty to use the defaut container image provided by the operator.
         :param pulumi.Input[str] identity_provider_image_pull_policy: Overrides the image pull policy used in the Identity Provider (Keycloak / RH SSO) deployment. Default value is `Always` for `nightly` or `latest` images, and `IfNotPresent` in other cases.
+        :param pulumi.Input['CheClusterSpecAuthIdentityProviderIngressArgs'] identity_provider_ingress: Ingress custom settings
         :param pulumi.Input[str] identity_provider_password: Overrides the password of Keycloak admin user. This is useful to override it ONLY if you use an external Identity Provider (see the `externalIdentityProvider` field). If omitted or left blank, it will be set to an auto-generated password.
         :param pulumi.Input[str] identity_provider_postgres_password: Password for The Identity Provider (Keycloak / RH SSO) to connect to the database. This is useful to override it ONLY if you use an external Identity Provider (see the `externalIdentityProvider` field). If omitted or left blank, it will be set to an auto-generated password.
         :param pulumi.Input[str] identity_provider_postgres_secret: The secret that contains `password` for The Identity Provider (Keycloak / RH SSO) to connect to the database. If the secret is defined then `identityProviderPostgresPassword` will be ignored. If the value is omitted or left blank then there are two scenarios: 1. `identityProviderPostgresPassword` is defined, then it will be used to connect to the database. 2. `identityProviderPostgresPassword` is not defined, then a new secret with the name `che-identity-postgres-secret` will be created with an auto-generated value for `password`.
         :param pulumi.Input[str] identity_provider_realm: Name of a Identity provider (Keycloak / RH SSO) realm that should be used for Che. This is useful to override it ONLY if you use an external Identity Provider (see the `externalIdentityProvider` field). If omitted or left blank, it will be set to the value of the `flavour` field.
+        :param pulumi.Input['CheClusterSpecAuthIdentityProviderRouteArgs'] identity_provider_route: Route custom settings
         :param pulumi.Input[str] identity_provider_secret: The secret that contains `user` and `password` for Identity Provider. If the secret is defined then `identityProviderAdminUserName` and `identityProviderPassword` are ignored. If the value is omitted or left blank then there are two scenarios: 1. `identityProviderAdminUserName` and `identityProviderPassword` are defined, then they will be used. 2. `identityProviderAdminUserName` or `identityProviderPassword` are not defined, then a new secret with the name `che-identity-secret` will be created with default value `admin` for `user` and with an auto-generated value for `password`.
         :param pulumi.Input[str] identity_provider_url: Public URL of the Identity Provider server (Keycloak / RH SSO server). You should set it ONLY if you use an external Identity Provider (see the `externalIdentityProvider` field). By default this will be automatically calculated and set by the operator.
         :param pulumi.Input[str] o_auth_client_name: Name of the OpenShift `OAuthClient` resource used to setup identity federation on the OpenShift side. Auto-generated if left blank. See also the `OpenShiftoAuth` field.
@@ -169,6 +199,8 @@ class CheClusterSpecAuthArgs:
             pulumi.set(__self__, "identity_provider_image", identity_provider_image)
         if identity_provider_image_pull_policy is not None:
             pulumi.set(__self__, "identity_provider_image_pull_policy", identity_provider_image_pull_policy)
+        if identity_provider_ingress is not None:
+            pulumi.set(__self__, "identity_provider_ingress", identity_provider_ingress)
         if identity_provider_password is not None:
             pulumi.set(__self__, "identity_provider_password", identity_provider_password)
         if identity_provider_postgres_password is not None:
@@ -177,6 +209,8 @@ class CheClusterSpecAuthArgs:
             pulumi.set(__self__, "identity_provider_postgres_secret", identity_provider_postgres_secret)
         if identity_provider_realm is not None:
             pulumi.set(__self__, "identity_provider_realm", identity_provider_realm)
+        if identity_provider_route is not None:
+            pulumi.set(__self__, "identity_provider_route", identity_provider_route)
         if identity_provider_secret is not None:
             pulumi.set(__self__, "identity_provider_secret", identity_provider_secret)
         if identity_provider_url is not None:
@@ -251,6 +285,18 @@ class CheClusterSpecAuthArgs:
         pulumi.set(self, "identity_provider_image_pull_policy", value)
 
     @property
+    @pulumi.getter(name="identityProviderIngress")
+    def identity_provider_ingress(self) -> Optional[pulumi.Input['CheClusterSpecAuthIdentityProviderIngressArgs']]:
+        """
+        Ingress custom settings
+        """
+        return pulumi.get(self, "identity_provider_ingress")
+
+    @identity_provider_ingress.setter
+    def identity_provider_ingress(self, value: Optional[pulumi.Input['CheClusterSpecAuthIdentityProviderIngressArgs']]):
+        pulumi.set(self, "identity_provider_ingress", value)
+
+    @property
     @pulumi.getter(name="identityProviderPassword")
     def identity_provider_password(self) -> Optional[pulumi.Input[str]]:
         """
@@ -297,6 +343,18 @@ class CheClusterSpecAuthArgs:
     @identity_provider_realm.setter
     def identity_provider_realm(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "identity_provider_realm", value)
+
+    @property
+    @pulumi.getter(name="identityProviderRoute")
+    def identity_provider_route(self) -> Optional[pulumi.Input['CheClusterSpecAuthIdentityProviderRouteArgs']]:
+        """
+        Route custom settings
+        """
+        return pulumi.get(self, "identity_provider_route")
+
+    @identity_provider_route.setter
+    def identity_provider_route(self, value: Optional[pulumi.Input['CheClusterSpecAuthIdentityProviderRouteArgs']]):
+        pulumi.set(self, "identity_provider_route", value)
 
     @property
     @pulumi.getter(name="identityProviderSecret")
@@ -369,6 +427,54 @@ class CheClusterSpecAuthArgs:
     @update_admin_password.setter
     def update_admin_password(self, value: Optional[pulumi.Input[bool]]):
         pulumi.set(self, "update_admin_password", value)
+
+
+@pulumi.input_type
+class CheClusterSpecAuthIdentityProviderIngressArgs:
+    def __init__(__self__, *,
+                 labels: Optional[pulumi.Input[str]] = None):
+        """
+        Ingress custom settings
+        :param pulumi.Input[str] labels: Comma separated list of labels that can be used to organize and categorize (scope and select) objects.
+        """
+        if labels is not None:
+            pulumi.set(__self__, "labels", labels)
+
+    @property
+    @pulumi.getter
+    def labels(self) -> Optional[pulumi.Input[str]]:
+        """
+        Comma separated list of labels that can be used to organize and categorize (scope and select) objects.
+        """
+        return pulumi.get(self, "labels")
+
+    @labels.setter
+    def labels(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "labels", value)
+
+
+@pulumi.input_type
+class CheClusterSpecAuthIdentityProviderRouteArgs:
+    def __init__(__self__, *,
+                 labels: Optional[pulumi.Input[str]] = None):
+        """
+        Route custom settings
+        :param pulumi.Input[str] labels: Comma separated list of labels that can be used to organize and categorize (scope and select) objects.
+        """
+        if labels is not None:
+            pulumi.set(__self__, "labels", labels)
+
+    @property
+    @pulumi.getter
+    def labels(self) -> Optional[pulumi.Input[str]]:
+        """
+        Comma separated list of labels that can be used to organize and categorize (scope and select) objects.
+        """
+        return pulumi.get(self, "labels")
+
+    @labels.setter
+    def labels(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "labels", value)
 
 
 @pulumi.input_type
@@ -524,6 +630,174 @@ class CheClusterSpecDatabaseArgs:
 
 
 @pulumi.input_type
+class CheClusterSpecImagePullerArgs:
+    def __init__(__self__, *,
+                 enable: Optional[pulumi.Input[bool]] = None,
+                 spec: Optional[pulumi.Input['CheClusterSpecImagePullerSpecArgs']] = None):
+        """
+        Kubernetes Image Puller configuration
+        :param pulumi.Input[bool] enable: Install and configure the Kubernetes Image Puller Operator. If true and no spec is provided, it will create a default KubernetesImagePuller object to be managed by the Operator. If false, the KubernetesImagePuller object will be deleted, and the operator will be uninstalled, regardless of whether or not a spec is provided.
+        :param pulumi.Input['CheClusterSpecImagePullerSpecArgs'] spec: A KubernetesImagePullerSpec to configure the image puller in the CheCluster
+        """
+        if enable is not None:
+            pulumi.set(__self__, "enable", enable)
+        if spec is not None:
+            pulumi.set(__self__, "spec", spec)
+
+    @property
+    @pulumi.getter
+    def enable(self) -> Optional[pulumi.Input[bool]]:
+        """
+        Install and configure the Kubernetes Image Puller Operator. If true and no spec is provided, it will create a default KubernetesImagePuller object to be managed by the Operator. If false, the KubernetesImagePuller object will be deleted, and the operator will be uninstalled, regardless of whether or not a spec is provided.
+        """
+        return pulumi.get(self, "enable")
+
+    @enable.setter
+    def enable(self, value: Optional[pulumi.Input[bool]]):
+        pulumi.set(self, "enable", value)
+
+    @property
+    @pulumi.getter
+    def spec(self) -> Optional[pulumi.Input['CheClusterSpecImagePullerSpecArgs']]:
+        """
+        A KubernetesImagePullerSpec to configure the image puller in the CheCluster
+        """
+        return pulumi.get(self, "spec")
+
+    @spec.setter
+    def spec(self, value: Optional[pulumi.Input['CheClusterSpecImagePullerSpecArgs']]):
+        pulumi.set(self, "spec", value)
+
+
+@pulumi.input_type
+class CheClusterSpecImagePullerSpecArgs:
+    def __init__(__self__, *,
+                 caching_cpu_limit: Optional[pulumi.Input[str]] = None,
+                 caching_cpu_request: Optional[pulumi.Input[str]] = None,
+                 caching_interval_hours: Optional[pulumi.Input[str]] = None,
+                 caching_memory_limit: Optional[pulumi.Input[str]] = None,
+                 caching_memory_request: Optional[pulumi.Input[str]] = None,
+                 config_map_name: Optional[pulumi.Input[str]] = None,
+                 daemonset_name: Optional[pulumi.Input[str]] = None,
+                 deployment_name: Optional[pulumi.Input[str]] = None,
+                 images: Optional[pulumi.Input[str]] = None,
+                 node_selector: Optional[pulumi.Input[str]] = None):
+        """
+        A KubernetesImagePullerSpec to configure the image puller in the CheCluster
+        """
+        if caching_cpu_limit is not None:
+            pulumi.set(__self__, "caching_cpu_limit", caching_cpu_limit)
+        if caching_cpu_request is not None:
+            pulumi.set(__self__, "caching_cpu_request", caching_cpu_request)
+        if caching_interval_hours is not None:
+            pulumi.set(__self__, "caching_interval_hours", caching_interval_hours)
+        if caching_memory_limit is not None:
+            pulumi.set(__self__, "caching_memory_limit", caching_memory_limit)
+        if caching_memory_request is not None:
+            pulumi.set(__self__, "caching_memory_request", caching_memory_request)
+        if config_map_name is not None:
+            pulumi.set(__self__, "config_map_name", config_map_name)
+        if daemonset_name is not None:
+            pulumi.set(__self__, "daemonset_name", daemonset_name)
+        if deployment_name is not None:
+            pulumi.set(__self__, "deployment_name", deployment_name)
+        if images is not None:
+            pulumi.set(__self__, "images", images)
+        if node_selector is not None:
+            pulumi.set(__self__, "node_selector", node_selector)
+
+    @property
+    @pulumi.getter(name="cachingCPULimit")
+    def caching_cpu_limit(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "caching_cpu_limit")
+
+    @caching_cpu_limit.setter
+    def caching_cpu_limit(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "caching_cpu_limit", value)
+
+    @property
+    @pulumi.getter(name="cachingCPURequest")
+    def caching_cpu_request(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "caching_cpu_request")
+
+    @caching_cpu_request.setter
+    def caching_cpu_request(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "caching_cpu_request", value)
+
+    @property
+    @pulumi.getter(name="cachingIntervalHours")
+    def caching_interval_hours(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "caching_interval_hours")
+
+    @caching_interval_hours.setter
+    def caching_interval_hours(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "caching_interval_hours", value)
+
+    @property
+    @pulumi.getter(name="cachingMemoryLimit")
+    def caching_memory_limit(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "caching_memory_limit")
+
+    @caching_memory_limit.setter
+    def caching_memory_limit(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "caching_memory_limit", value)
+
+    @property
+    @pulumi.getter(name="cachingMemoryRequest")
+    def caching_memory_request(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "caching_memory_request")
+
+    @caching_memory_request.setter
+    def caching_memory_request(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "caching_memory_request", value)
+
+    @property
+    @pulumi.getter(name="configMapName")
+    def config_map_name(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "config_map_name")
+
+    @config_map_name.setter
+    def config_map_name(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "config_map_name", value)
+
+    @property
+    @pulumi.getter(name="daemonsetName")
+    def daemonset_name(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "daemonset_name")
+
+    @daemonset_name.setter
+    def daemonset_name(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "daemonset_name", value)
+
+    @property
+    @pulumi.getter(name="deploymentName")
+    def deployment_name(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "deployment_name")
+
+    @deployment_name.setter
+    def deployment_name(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "deployment_name", value)
+
+    @property
+    @pulumi.getter
+    def images(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "images")
+
+    @images.setter
+    def images(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "images", value)
+
+    @property
+    @pulumi.getter(name="nodeSelector")
+    def node_selector(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "node_selector")
+
+    @node_selector.setter
+    def node_selector(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "node_selector", value)
+
+
+@pulumi.input_type
 class CheClusterSpecK8sArgs:
     def __init__(__self__, *,
                  ingress_class: Optional[pulumi.Input[str]] = None,
@@ -531,15 +805,17 @@ class CheClusterSpecK8sArgs:
                  ingress_strategy: Optional[pulumi.Input[str]] = None,
                  security_context_fs_group: Optional[pulumi.Input[str]] = None,
                  security_context_run_as_user: Optional[pulumi.Input[str]] = None,
+                 single_host_exposure_type: Optional[pulumi.Input[str]] = None,
                  tls_secret_name: Optional[pulumi.Input[str]] = None):
         """
         Configuration settings specific to Che installations made on upstream Kubernetes.
         :param pulumi.Input[str] ingress_class: Ingress class that will define the which controler will manage ingresses. Defaults to `nginx`. NB: This drives the `is kubernetes.io/ingress.class` annotation on Che-related ingresses.
         :param pulumi.Input[str] ingress_domain: Global ingress domain for a K8S cluster. This MUST be explicitly specified: there are no defaults.
-        :param pulumi.Input[str] ingress_strategy: Strategy for ingress creation. This can be `multi-host` (host is explicitly provided in ingress), `single-host` (host is provided, path-based rules) and `default-host.*`(no host is provided, path-based rules). Defaults to `"multi-host`
+        :param pulumi.Input[str] ingress_strategy: Strategy for ingress creation. This can be `multi-host` (host is explicitly provided in ingress), `single-host` (host is provided, path-based rules) and `default-host.*`(no host is provided, path-based rules). Defaults to `"multi-host` Deprecated in favor of "serverExposureStrategy" in the "server" section, which defines this regardless of the cluster type. If both are defined, `serverExposureStrategy` takes precedence.
         :param pulumi.Input[str] security_context_fs_group: FSGroup the Che pod and Workspace pods containers should run in. Defaults to `1724`.
         :param pulumi.Input[str] security_context_run_as_user: ID of the user the Che pod and Workspace pods containers should run as. Default to `1724`.
-        :param pulumi.Input[str] tls_secret_name: Name of a secret that will be used to setup ingress TLS termination if TLS is enabled. See also the `tlsSupport` field.
+        :param pulumi.Input[str] single_host_exposure_type: When the serverExposureStrategy is set to "single-host", the way the server, registries and workspaces are exposed is further configured by this property. The possible values are "native" (which means that the server and workspaces are exposed using ingresses on K8s) or "gateway" where the server and workspaces are exposed using a custom gateway based on Traefik. All the endpoints whether backed by the ingress or gateway "route" always point to the subpaths on the same domain. Defaults to "native".
+        :param pulumi.Input[str] tls_secret_name: Name of a secret that will be used to setup ingress TLS termination if TLS is enabled. If the field is empty string, then default cluster certificate will be used. See also the `tlsSupport` field.
         """
         if ingress_class is not None:
             pulumi.set(__self__, "ingress_class", ingress_class)
@@ -551,6 +827,8 @@ class CheClusterSpecK8sArgs:
             pulumi.set(__self__, "security_context_fs_group", security_context_fs_group)
         if security_context_run_as_user is not None:
             pulumi.set(__self__, "security_context_run_as_user", security_context_run_as_user)
+        if single_host_exposure_type is not None:
+            pulumi.set(__self__, "single_host_exposure_type", single_host_exposure_type)
         if tls_secret_name is not None:
             pulumi.set(__self__, "tls_secret_name", tls_secret_name)
 
@@ -582,7 +860,7 @@ class CheClusterSpecK8sArgs:
     @pulumi.getter(name="ingressStrategy")
     def ingress_strategy(self) -> Optional[pulumi.Input[str]]:
         """
-        Strategy for ingress creation. This can be `multi-host` (host is explicitly provided in ingress), `single-host` (host is provided, path-based rules) and `default-host.*`(no host is provided, path-based rules). Defaults to `"multi-host`
+        Strategy for ingress creation. This can be `multi-host` (host is explicitly provided in ingress), `single-host` (host is provided, path-based rules) and `default-host.*`(no host is provided, path-based rules). Defaults to `"multi-host` Deprecated in favor of "serverExposureStrategy" in the "server" section, which defines this regardless of the cluster type. If both are defined, `serverExposureStrategy` takes precedence.
         """
         return pulumi.get(self, "ingress_strategy")
 
@@ -615,10 +893,22 @@ class CheClusterSpecK8sArgs:
         pulumi.set(self, "security_context_run_as_user", value)
 
     @property
+    @pulumi.getter(name="singleHostExposureType")
+    def single_host_exposure_type(self) -> Optional[pulumi.Input[str]]:
+        """
+        When the serverExposureStrategy is set to "single-host", the way the server, registries and workspaces are exposed is further configured by this property. The possible values are "native" (which means that the server and workspaces are exposed using ingresses on K8s) or "gateway" where the server and workspaces are exposed using a custom gateway based on Traefik. All the endpoints whether backed by the ingress or gateway "route" always point to the subpaths on the same domain. Defaults to "native".
+        """
+        return pulumi.get(self, "single_host_exposure_type")
+
+    @single_host_exposure_type.setter
+    def single_host_exposure_type(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "single_host_exposure_type", value)
+
+    @property
     @pulumi.getter(name="tlsSecretName")
     def tls_secret_name(self) -> Optional[pulumi.Input[str]]:
         """
-        Name of a secret that will be used to setup ingress TLS termination if TLS is enabled. See also the `tlsSupport` field.
+        Name of a secret that will be used to setup ingress TLS termination if TLS is enabled. If the field is empty string, then default cluster certificate will be used. See also the `tlsSupport` field.
         """
         return pulumi.get(self, "tls_secret_name")
 
@@ -657,6 +947,7 @@ class CheClusterSpecServerArgs:
                  air_gap_container_registry_hostname: Optional[pulumi.Input[str]] = None,
                  air_gap_container_registry_organization: Optional[pulumi.Input[str]] = None,
                  allow_user_defined_workspace_namespaces: Optional[pulumi.Input[bool]] = None,
+                 che_cluster_roles: Optional[pulumi.Input[str]] = None,
                  che_debug: Optional[pulumi.Input[str]] = None,
                  che_flavor: Optional[pulumi.Input[str]] = None,
                  che_host: Optional[pulumi.Input[str]] = None,
@@ -665,21 +956,27 @@ class CheClusterSpecServerArgs:
                  che_image_pull_policy: Optional[pulumi.Input[str]] = None,
                  che_image_tag: Optional[pulumi.Input[str]] = None,
                  che_log_level: Optional[pulumi.Input[str]] = None,
+                 che_server_ingress: Optional[pulumi.Input['CheClusterSpecServerCheServerIngressArgs']] = None,
+                 che_server_route: Optional[pulumi.Input['CheClusterSpecServerCheServerRouteArgs']] = None,
                  che_workspace_cluster_role: Optional[pulumi.Input[str]] = None,
                  custom_che_properties: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  devfile_registry_image: Optional[pulumi.Input[str]] = None,
+                 devfile_registry_ingress: Optional[pulumi.Input['CheClusterSpecServerDevfileRegistryIngressArgs']] = None,
                  devfile_registry_memory_limit: Optional[pulumi.Input[str]] = None,
                  devfile_registry_memory_request: Optional[pulumi.Input[str]] = None,
                  devfile_registry_pull_policy: Optional[pulumi.Input[str]] = None,
+                 devfile_registry_route: Optional[pulumi.Input['CheClusterSpecServerDevfileRegistryRouteArgs']] = None,
                  devfile_registry_url: Optional[pulumi.Input[str]] = None,
                  external_devfile_registry: Optional[pulumi.Input[bool]] = None,
                  external_plugin_registry: Optional[pulumi.Input[bool]] = None,
                  git_self_signed_cert: Optional[pulumi.Input[bool]] = None,
                  non_proxy_hosts: Optional[pulumi.Input[str]] = None,
                  plugin_registry_image: Optional[pulumi.Input[str]] = None,
+                 plugin_registry_ingress: Optional[pulumi.Input['CheClusterSpecServerPluginRegistryIngressArgs']] = None,
                  plugin_registry_memory_limit: Optional[pulumi.Input[str]] = None,
                  plugin_registry_memory_request: Optional[pulumi.Input[str]] = None,
                  plugin_registry_pull_policy: Optional[pulumi.Input[str]] = None,
+                 plugin_registry_route: Optional[pulumi.Input['CheClusterSpecServerPluginRegistryRouteArgs']] = None,
                  plugin_registry_url: Optional[pulumi.Input[str]] = None,
                  proxy_password: Optional[pulumi.Input[str]] = None,
                  proxy_port: Optional[pulumi.Input[str]] = None,
@@ -687,16 +984,22 @@ class CheClusterSpecServerArgs:
                  proxy_url: Optional[pulumi.Input[str]] = None,
                  proxy_user: Optional[pulumi.Input[str]] = None,
                  self_signed_cert: Optional[pulumi.Input[bool]] = None,
+                 server_exposure_strategy: Optional[pulumi.Input[str]] = None,
                  server_memory_limit: Optional[pulumi.Input[str]] = None,
                  server_memory_request: Optional[pulumi.Input[str]] = None,
                  server_trust_store_config_map_name: Optional[pulumi.Input[str]] = None,
+                 single_host_gateway_config_map_labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
+                 single_host_gateway_config_sidecar_image: Optional[pulumi.Input[str]] = None,
+                 single_host_gateway_image: Optional[pulumi.Input[str]] = None,
                  tls_support: Optional[pulumi.Input[bool]] = None,
+                 use_internal_cluster_svc_names: Optional[pulumi.Input[bool]] = None,
                  workspace_namespace_default: Optional[pulumi.Input[str]] = None):
         """
         General configuration settings related to the Che server and the plugin and devfile registries
         :param pulumi.Input[str] air_gap_container_registry_hostname: Optional hostname (or url) to an alternate container registry to pull images from. This value overrides the container registry hostname defined in all the default container images involved in a Che deployment. This is particularly useful to install Che in an air-gapped environment.
         :param pulumi.Input[str] air_gap_container_registry_organization: Optional repository name of an alternate container registry to pull images from. This value overrides the container registry organization defined in all the default container images involved in a Che deployment. This is particularly useful to install Che in an air-gapped environment.
         :param pulumi.Input[bool] allow_user_defined_workspace_namespaces: Defines if a user is able to specify Kubernetes namespace (or OpenShift project) different from the default. It's NOT RECOMMENDED to configured true without OAuth configured. This property is also used by the OpenShift infra.
+        :param pulumi.Input[str] che_cluster_roles: Comma-separated list of ClusterRoles that will be assigned to che ServiceAccount. Be aware that che-operator has to already have all permissions in these ClusterRoles to be able to grant them.
         :param pulumi.Input[str] che_debug: Enables the debug mode for Che server. Defaults to `false`.
         :param pulumi.Input[str] che_flavor: Flavor of the installation. This is either `che` for upstream Che installations, or `codeready` for CodeReady Workspaces installation. In most cases the default value should not be overridden.
         :param pulumi.Input[str] che_host: Public hostname of the installed Che server. If value is omitted then it will be automatically set by the operator. (see the `cheHostTLSSecret` field).
@@ -705,21 +1008,27 @@ class CheClusterSpecServerArgs:
         :param pulumi.Input[str] che_image_pull_policy: Overrides the image pull policy used in Che deployment. Default value is `Always` for `nightly` or `latest` images, and `IfNotPresent` in other cases.
         :param pulumi.Input[str] che_image_tag: Overrides the tag of the container image used in Che deployment. Omit it or leave it empty to use the defaut image tag provided by the operator.
         :param pulumi.Input[str] che_log_level: Log level for the Che server: `INFO` or `DEBUG`. Defaults to `INFO`.
+        :param pulumi.Input['CheClusterSpecServerCheServerIngressArgs'] che_server_ingress: Che server ingress custom settings
+        :param pulumi.Input['CheClusterSpecServerCheServerRouteArgs'] che_server_route: Che server route custom settings
         :param pulumi.Input[str] che_workspace_cluster_role: Custom cluster role bound to the user for the Che workspaces. The default roles are used if this is omitted or left blank.
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] custom_che_properties: Map of additional environment variables that will be applied in the generated `che` config map to be used by the Che server, in addition to the values already generated from other fields of the `CheCluster` custom resource (CR). If `customCheProperties` contains a property that would be normally generated in `che` config map from other CR fields, then the value defined in the `customCheProperties` will be used instead.
         :param pulumi.Input[str] devfile_registry_image: Overrides the container image used in the Devfile registry deployment. This includes the image tag. Omit it or leave it empty to use the defaut container image provided by the operator.
+        :param pulumi.Input['CheClusterSpecServerDevfileRegistryIngressArgs'] devfile_registry_ingress: Devfile registry ingress custom settings
         :param pulumi.Input[str] devfile_registry_memory_limit: Overrides the memory limit used in the Devfile registry deployment. Defaults to 256Mi.
         :param pulumi.Input[str] devfile_registry_memory_request: Overrides the memory request used in the Devfile registry deployment. Defaults to 16Mi.
         :param pulumi.Input[str] devfile_registry_pull_policy: Overrides the image pull policy used in the Devfile registry deployment. Default value is `Always` for `nightly` or `latest` images, and `IfNotPresent` in other cases.
+        :param pulumi.Input['CheClusterSpecServerDevfileRegistryRouteArgs'] devfile_registry_route: Devfile registry route custom settings
         :param pulumi.Input[str] devfile_registry_url: Public URL of the Devfile registry, that serves sample, ready-to-use devfiles. You should set it ONLY if you use an external devfile registry (see the `externalDevfileRegistry` field). By default this will be automatically calculated by the operator.
         :param pulumi.Input[bool] external_devfile_registry: Instructs the operator on whether or not to deploy a dedicated Devfile registry server. By default a dedicated devfile registry server is started. But if `externalDevfileRegistry` is `true`, then no such dedicated server will be started by the operator and you will have to manually set the `devfileRegistryUrl` field
         :param pulumi.Input[bool] external_plugin_registry: Instructs the operator on whether or not to deploy a dedicated Plugin registry server. By default a dedicated plugin registry server is started. But if `externalPluginRegistry` is `true`, then no such dedicated server will be started by the operator and you will have to manually set the `pluginRegistryUrl` field.
         :param pulumi.Input[bool] git_self_signed_cert: If enabled, then the certificate from `che-git-self-signed-cert` config map will be propagated to the Che components and provide particular configuration for Git.
-        :param pulumi.Input[str] non_proxy_hosts: List of hosts that should not use the configured proxy. Use `|`` as delimiter, eg `localhost|my.host.com|123.42.12.32` Only use when configuring a proxy is required. Operator respects OpenShift cluster wide proxy configuration and no additional configuration is required, but defining `nonProxyHosts` in a custom resource leads to merging non proxy hosts lists from the cluster proxy configuration and ones defined in the custom resources. (see the doc https://docs.openshift.com/container-platform/4.4/networking/enable-cluster-wide-proxy.html) (see also the `proxyURL` fields).
-        :param pulumi.Input[str] plugin_registry_image: Overrides the container image used in the Plugin registry deployment. This includes the image tag. Omit it or leave it empty to use the defaut container image provided by the operator.
+        :param pulumi.Input[str] non_proxy_hosts: List of hosts that should not use the configured proxy. So specify wild card domain use the following form `.<DOMAIN>` and `|` as delimiter, eg: `localhost|.my.host.com|123.42.12.32` Only use when configuring a proxy is required. Operator respects OpenShift cluster wide proxy configuration and no additional configuration is required, but defining `nonProxyHosts` in a custom resource leads to merging non proxy hosts lists from the cluster proxy configuration and ones defined in the custom resources. (see the doc https://docs.openshift.com/container-platform/4.4/networking/enable-cluster-wide-proxy.html) (see also the `proxyURL` fields).
+        :param pulumi.Input[str] plugin_registry_image: Overrides the container image used in the Plugin registry deployment. This includes the image tag. Omit it or leave it empty to use the default container image provided by the operator.
+        :param pulumi.Input['CheClusterSpecServerPluginRegistryIngressArgs'] plugin_registry_ingress: Plugin registry ingress custom settings
         :param pulumi.Input[str] plugin_registry_memory_limit: Overrides the memory limit used in the Plugin registry deployment. Defaults to 256Mi.
         :param pulumi.Input[str] plugin_registry_memory_request: Overrides the memory request used in the Plugin registry deployment. Defaults to 16Mi.
         :param pulumi.Input[str] plugin_registry_pull_policy: Overrides the image pull policy used in the Plugin registry deployment. Default value is `Always` for `nightly` or `latest` images, and `IfNotPresent` in other cases.
+        :param pulumi.Input['CheClusterSpecServerPluginRegistryRouteArgs'] plugin_registry_route: Plugin registry route custom settings
         :param pulumi.Input[str] plugin_registry_url: Public URL of the Plugin registry, that serves sample ready-to-use devfiles. You should set it ONLY if you use an external devfile registry (see the `externalPluginRegistry` field). By default this will be automatically calculated by the operator.
         :param pulumi.Input[str] proxy_password: Password of the proxy server Only use when proxy configuration is required (see also the `proxyURL`, `proxyUser` and `proxySecret` fields).
         :param pulumi.Input[str] proxy_port: Port of the proxy server. Only use when configuring a proxy is required. (see also the `proxyURL` and `nonProxyHosts` fields).
@@ -727,10 +1036,15 @@ class CheClusterSpecServerArgs:
         :param pulumi.Input[str] proxy_url: URL (protocol+hostname) of the proxy server. This drives the appropriate changes in the `JAVA_OPTS` and `https(s)_proxy` variables in the Che server and workspaces containers. Only use when configuring a proxy is required. Operator respects OpenShift cluster wide proxy configuration and no additional configuration is required, but defining `proxyUrl` in a custom resource leads to overrides the cluster proxy configuration with fields `proxyUrl`, `proxyPort`, `proxyUser` and `proxyPassword` from the custom resource. (see the doc https://docs.openshift.com/container-platform/4.4/networking/enable-cluster-wide-proxy.html) (see also the `proxyPort` and `nonProxyHosts` fields).
         :param pulumi.Input[str] proxy_user: User name of the proxy server. Only use when configuring a proxy is required (see also the `proxyURL`, `proxyPassword` and `proxySecret` fields).
         :param pulumi.Input[bool] self_signed_cert: Deprecated. The value of this flag is ignored. Che operator will automatically detect if router certificate is self-signed. If so it will be propagated to Che server and some other components.
+        :param pulumi.Input[str] server_exposure_strategy: Sets the server and workspaces exposure type. Possible values are "multi-host", "single-host", "default-host". Defaults to "multi-host" which creates a separate ingress (or route on OpenShift) for every required endpoint. "single-host" makes Che exposed on a single hostname with workspaces exposed on subpaths. Please read the docs to learn about the limitations of this approach. Also consult the `singleHostExposureType` property to further configure how the operator and Che server make that happen on Kubernetes. "default-host" exposes che server on the host of the cluster. Please read the docs to learn about the limitations of this approach.
         :param pulumi.Input[str] server_memory_limit: Overrides the memory limit used in the Che server deployment. Defaults to 1Gi.
         :param pulumi.Input[str] server_memory_request: Overrides the memory request used in the Che server deployment. Defaults to 512Mi.
         :param pulumi.Input[str] server_trust_store_config_map_name: Name of the config-map with public certificates to add to Java trust store of the Che server. This is usually required when adding the OpenShift OAuth provider which has https endpoint signed with self-signed cert. So, Che server must be aware of its CA cert to be able to request it. This is disabled by default.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] single_host_gateway_config_map_labels: The labels that need to be present (and are put) on the configmaps representing the gateway configuration.
+        :param pulumi.Input[str] single_host_gateway_config_sidecar_image: The image used for the gateway sidecar that provides configuration to the gateway. Omit it or leave it empty to use the defaut container image provided by the operator.
+        :param pulumi.Input[str] single_host_gateway_image: The image used for the gateway in the single host mode. Omit it or leave it empty to use the defaut container image provided by the operator.
         :param pulumi.Input[bool] tls_support: Deprecated. Instructs the operator to deploy Che in TLS mode. This is enabled by default. Disabling TLS may cause malfunction of some Che components.
+        :param pulumi.Input[bool] use_internal_cluster_svc_names: Use internal cluster svc names to communicate between components to speed up the traffic and avoid proxy issues. The default value is `true`.
         :param pulumi.Input[str] workspace_namespace_default: Defines Kubernetes default namespace in which user's workspaces are created if user does not override it. It's possible to use <username>, <userid> and <workspaceid> placeholders (e.g.: che-workspace-<username>). In that case, new namespace will be created for each user (or workspace). Is used by OpenShift infra as well to specify Project
         """
         if air_gap_container_registry_hostname is not None:
@@ -739,6 +1053,8 @@ class CheClusterSpecServerArgs:
             pulumi.set(__self__, "air_gap_container_registry_organization", air_gap_container_registry_organization)
         if allow_user_defined_workspace_namespaces is not None:
             pulumi.set(__self__, "allow_user_defined_workspace_namespaces", allow_user_defined_workspace_namespaces)
+        if che_cluster_roles is not None:
+            pulumi.set(__self__, "che_cluster_roles", che_cluster_roles)
         if che_debug is not None:
             pulumi.set(__self__, "che_debug", che_debug)
         if che_flavor is not None:
@@ -755,18 +1071,26 @@ class CheClusterSpecServerArgs:
             pulumi.set(__self__, "che_image_tag", che_image_tag)
         if che_log_level is not None:
             pulumi.set(__self__, "che_log_level", che_log_level)
+        if che_server_ingress is not None:
+            pulumi.set(__self__, "che_server_ingress", che_server_ingress)
+        if che_server_route is not None:
+            pulumi.set(__self__, "che_server_route", che_server_route)
         if che_workspace_cluster_role is not None:
             pulumi.set(__self__, "che_workspace_cluster_role", che_workspace_cluster_role)
         if custom_che_properties is not None:
             pulumi.set(__self__, "custom_che_properties", custom_che_properties)
         if devfile_registry_image is not None:
             pulumi.set(__self__, "devfile_registry_image", devfile_registry_image)
+        if devfile_registry_ingress is not None:
+            pulumi.set(__self__, "devfile_registry_ingress", devfile_registry_ingress)
         if devfile_registry_memory_limit is not None:
             pulumi.set(__self__, "devfile_registry_memory_limit", devfile_registry_memory_limit)
         if devfile_registry_memory_request is not None:
             pulumi.set(__self__, "devfile_registry_memory_request", devfile_registry_memory_request)
         if devfile_registry_pull_policy is not None:
             pulumi.set(__self__, "devfile_registry_pull_policy", devfile_registry_pull_policy)
+        if devfile_registry_route is not None:
+            pulumi.set(__self__, "devfile_registry_route", devfile_registry_route)
         if devfile_registry_url is not None:
             pulumi.set(__self__, "devfile_registry_url", devfile_registry_url)
         if external_devfile_registry is not None:
@@ -779,12 +1103,16 @@ class CheClusterSpecServerArgs:
             pulumi.set(__self__, "non_proxy_hosts", non_proxy_hosts)
         if plugin_registry_image is not None:
             pulumi.set(__self__, "plugin_registry_image", plugin_registry_image)
+        if plugin_registry_ingress is not None:
+            pulumi.set(__self__, "plugin_registry_ingress", plugin_registry_ingress)
         if plugin_registry_memory_limit is not None:
             pulumi.set(__self__, "plugin_registry_memory_limit", plugin_registry_memory_limit)
         if plugin_registry_memory_request is not None:
             pulumi.set(__self__, "plugin_registry_memory_request", plugin_registry_memory_request)
         if plugin_registry_pull_policy is not None:
             pulumi.set(__self__, "plugin_registry_pull_policy", plugin_registry_pull_policy)
+        if plugin_registry_route is not None:
+            pulumi.set(__self__, "plugin_registry_route", plugin_registry_route)
         if plugin_registry_url is not None:
             pulumi.set(__self__, "plugin_registry_url", plugin_registry_url)
         if proxy_password is not None:
@@ -799,14 +1127,24 @@ class CheClusterSpecServerArgs:
             pulumi.set(__self__, "proxy_user", proxy_user)
         if self_signed_cert is not None:
             pulumi.set(__self__, "self_signed_cert", self_signed_cert)
+        if server_exposure_strategy is not None:
+            pulumi.set(__self__, "server_exposure_strategy", server_exposure_strategy)
         if server_memory_limit is not None:
             pulumi.set(__self__, "server_memory_limit", server_memory_limit)
         if server_memory_request is not None:
             pulumi.set(__self__, "server_memory_request", server_memory_request)
         if server_trust_store_config_map_name is not None:
             pulumi.set(__self__, "server_trust_store_config_map_name", server_trust_store_config_map_name)
+        if single_host_gateway_config_map_labels is not None:
+            pulumi.set(__self__, "single_host_gateway_config_map_labels", single_host_gateway_config_map_labels)
+        if single_host_gateway_config_sidecar_image is not None:
+            pulumi.set(__self__, "single_host_gateway_config_sidecar_image", single_host_gateway_config_sidecar_image)
+        if single_host_gateway_image is not None:
+            pulumi.set(__self__, "single_host_gateway_image", single_host_gateway_image)
         if tls_support is not None:
             pulumi.set(__self__, "tls_support", tls_support)
+        if use_internal_cluster_svc_names is not None:
+            pulumi.set(__self__, "use_internal_cluster_svc_names", use_internal_cluster_svc_names)
         if workspace_namespace_default is not None:
             pulumi.set(__self__, "workspace_namespace_default", workspace_namespace_default)
 
@@ -845,6 +1183,18 @@ class CheClusterSpecServerArgs:
     @allow_user_defined_workspace_namespaces.setter
     def allow_user_defined_workspace_namespaces(self, value: Optional[pulumi.Input[bool]]):
         pulumi.set(self, "allow_user_defined_workspace_namespaces", value)
+
+    @property
+    @pulumi.getter(name="cheClusterRoles")
+    def che_cluster_roles(self) -> Optional[pulumi.Input[str]]:
+        """
+        Comma-separated list of ClusterRoles that will be assigned to che ServiceAccount. Be aware that che-operator has to already have all permissions in these ClusterRoles to be able to grant them.
+        """
+        return pulumi.get(self, "che_cluster_roles")
+
+    @che_cluster_roles.setter
+    def che_cluster_roles(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "che_cluster_roles", value)
 
     @property
     @pulumi.getter(name="cheDebug")
@@ -943,6 +1293,30 @@ class CheClusterSpecServerArgs:
         pulumi.set(self, "che_log_level", value)
 
     @property
+    @pulumi.getter(name="cheServerIngress")
+    def che_server_ingress(self) -> Optional[pulumi.Input['CheClusterSpecServerCheServerIngressArgs']]:
+        """
+        Che server ingress custom settings
+        """
+        return pulumi.get(self, "che_server_ingress")
+
+    @che_server_ingress.setter
+    def che_server_ingress(self, value: Optional[pulumi.Input['CheClusterSpecServerCheServerIngressArgs']]):
+        pulumi.set(self, "che_server_ingress", value)
+
+    @property
+    @pulumi.getter(name="cheServerRoute")
+    def che_server_route(self) -> Optional[pulumi.Input['CheClusterSpecServerCheServerRouteArgs']]:
+        """
+        Che server route custom settings
+        """
+        return pulumi.get(self, "che_server_route")
+
+    @che_server_route.setter
+    def che_server_route(self, value: Optional[pulumi.Input['CheClusterSpecServerCheServerRouteArgs']]):
+        pulumi.set(self, "che_server_route", value)
+
+    @property
     @pulumi.getter(name="cheWorkspaceClusterRole")
     def che_workspace_cluster_role(self) -> Optional[pulumi.Input[str]]:
         """
@@ -979,6 +1353,18 @@ class CheClusterSpecServerArgs:
         pulumi.set(self, "devfile_registry_image", value)
 
     @property
+    @pulumi.getter(name="devfileRegistryIngress")
+    def devfile_registry_ingress(self) -> Optional[pulumi.Input['CheClusterSpecServerDevfileRegistryIngressArgs']]:
+        """
+        Devfile registry ingress custom settings
+        """
+        return pulumi.get(self, "devfile_registry_ingress")
+
+    @devfile_registry_ingress.setter
+    def devfile_registry_ingress(self, value: Optional[pulumi.Input['CheClusterSpecServerDevfileRegistryIngressArgs']]):
+        pulumi.set(self, "devfile_registry_ingress", value)
+
+    @property
     @pulumi.getter(name="devfileRegistryMemoryLimit")
     def devfile_registry_memory_limit(self) -> Optional[pulumi.Input[str]]:
         """
@@ -1013,6 +1399,18 @@ class CheClusterSpecServerArgs:
     @devfile_registry_pull_policy.setter
     def devfile_registry_pull_policy(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "devfile_registry_pull_policy", value)
+
+    @property
+    @pulumi.getter(name="devfileRegistryRoute")
+    def devfile_registry_route(self) -> Optional[pulumi.Input['CheClusterSpecServerDevfileRegistryRouteArgs']]:
+        """
+        Devfile registry route custom settings
+        """
+        return pulumi.get(self, "devfile_registry_route")
+
+    @devfile_registry_route.setter
+    def devfile_registry_route(self, value: Optional[pulumi.Input['CheClusterSpecServerDevfileRegistryRouteArgs']]):
+        pulumi.set(self, "devfile_registry_route", value)
 
     @property
     @pulumi.getter(name="devfileRegistryUrl")
@@ -1066,7 +1464,7 @@ class CheClusterSpecServerArgs:
     @pulumi.getter(name="nonProxyHosts")
     def non_proxy_hosts(self) -> Optional[pulumi.Input[str]]:
         """
-        List of hosts that should not use the configured proxy. Use `|`` as delimiter, eg `localhost|my.host.com|123.42.12.32` Only use when configuring a proxy is required. Operator respects OpenShift cluster wide proxy configuration and no additional configuration is required, but defining `nonProxyHosts` in a custom resource leads to merging non proxy hosts lists from the cluster proxy configuration and ones defined in the custom resources. (see the doc https://docs.openshift.com/container-platform/4.4/networking/enable-cluster-wide-proxy.html) (see also the `proxyURL` fields).
+        List of hosts that should not use the configured proxy. So specify wild card domain use the following form `.<DOMAIN>` and `|` as delimiter, eg: `localhost|.my.host.com|123.42.12.32` Only use when configuring a proxy is required. Operator respects OpenShift cluster wide proxy configuration and no additional configuration is required, but defining `nonProxyHosts` in a custom resource leads to merging non proxy hosts lists from the cluster proxy configuration and ones defined in the custom resources. (see the doc https://docs.openshift.com/container-platform/4.4/networking/enable-cluster-wide-proxy.html) (see also the `proxyURL` fields).
         """
         return pulumi.get(self, "non_proxy_hosts")
 
@@ -1078,13 +1476,25 @@ class CheClusterSpecServerArgs:
     @pulumi.getter(name="pluginRegistryImage")
     def plugin_registry_image(self) -> Optional[pulumi.Input[str]]:
         """
-        Overrides the container image used in the Plugin registry deployment. This includes the image tag. Omit it or leave it empty to use the defaut container image provided by the operator.
+        Overrides the container image used in the Plugin registry deployment. This includes the image tag. Omit it or leave it empty to use the default container image provided by the operator.
         """
         return pulumi.get(self, "plugin_registry_image")
 
     @plugin_registry_image.setter
     def plugin_registry_image(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "plugin_registry_image", value)
+
+    @property
+    @pulumi.getter(name="pluginRegistryIngress")
+    def plugin_registry_ingress(self) -> Optional[pulumi.Input['CheClusterSpecServerPluginRegistryIngressArgs']]:
+        """
+        Plugin registry ingress custom settings
+        """
+        return pulumi.get(self, "plugin_registry_ingress")
+
+    @plugin_registry_ingress.setter
+    def plugin_registry_ingress(self, value: Optional[pulumi.Input['CheClusterSpecServerPluginRegistryIngressArgs']]):
+        pulumi.set(self, "plugin_registry_ingress", value)
 
     @property
     @pulumi.getter(name="pluginRegistryMemoryLimit")
@@ -1121,6 +1531,18 @@ class CheClusterSpecServerArgs:
     @plugin_registry_pull_policy.setter
     def plugin_registry_pull_policy(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "plugin_registry_pull_policy", value)
+
+    @property
+    @pulumi.getter(name="pluginRegistryRoute")
+    def plugin_registry_route(self) -> Optional[pulumi.Input['CheClusterSpecServerPluginRegistryRouteArgs']]:
+        """
+        Plugin registry route custom settings
+        """
+        return pulumi.get(self, "plugin_registry_route")
+
+    @plugin_registry_route.setter
+    def plugin_registry_route(self, value: Optional[pulumi.Input['CheClusterSpecServerPluginRegistryRouteArgs']]):
+        pulumi.set(self, "plugin_registry_route", value)
 
     @property
     @pulumi.getter(name="pluginRegistryUrl")
@@ -1207,6 +1629,18 @@ class CheClusterSpecServerArgs:
         pulumi.set(self, "self_signed_cert", value)
 
     @property
+    @pulumi.getter(name="serverExposureStrategy")
+    def server_exposure_strategy(self) -> Optional[pulumi.Input[str]]:
+        """
+        Sets the server and workspaces exposure type. Possible values are "multi-host", "single-host", "default-host". Defaults to "multi-host" which creates a separate ingress (or route on OpenShift) for every required endpoint. "single-host" makes Che exposed on a single hostname with workspaces exposed on subpaths. Please read the docs to learn about the limitations of this approach. Also consult the `singleHostExposureType` property to further configure how the operator and Che server make that happen on Kubernetes. "default-host" exposes che server on the host of the cluster. Please read the docs to learn about the limitations of this approach.
+        """
+        return pulumi.get(self, "server_exposure_strategy")
+
+    @server_exposure_strategy.setter
+    def server_exposure_strategy(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "server_exposure_strategy", value)
+
+    @property
     @pulumi.getter(name="serverMemoryLimit")
     def server_memory_limit(self) -> Optional[pulumi.Input[str]]:
         """
@@ -1243,6 +1677,42 @@ class CheClusterSpecServerArgs:
         pulumi.set(self, "server_trust_store_config_map_name", value)
 
     @property
+    @pulumi.getter(name="singleHostGatewayConfigMapLabels")
+    def single_host_gateway_config_map_labels(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+        """
+        The labels that need to be present (and are put) on the configmaps representing the gateway configuration.
+        """
+        return pulumi.get(self, "single_host_gateway_config_map_labels")
+
+    @single_host_gateway_config_map_labels.setter
+    def single_host_gateway_config_map_labels(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
+        pulumi.set(self, "single_host_gateway_config_map_labels", value)
+
+    @property
+    @pulumi.getter(name="singleHostGatewayConfigSidecarImage")
+    def single_host_gateway_config_sidecar_image(self) -> Optional[pulumi.Input[str]]:
+        """
+        The image used for the gateway sidecar that provides configuration to the gateway. Omit it or leave it empty to use the defaut container image provided by the operator.
+        """
+        return pulumi.get(self, "single_host_gateway_config_sidecar_image")
+
+    @single_host_gateway_config_sidecar_image.setter
+    def single_host_gateway_config_sidecar_image(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "single_host_gateway_config_sidecar_image", value)
+
+    @property
+    @pulumi.getter(name="singleHostGatewayImage")
+    def single_host_gateway_image(self) -> Optional[pulumi.Input[str]]:
+        """
+        The image used for the gateway in the single host mode. Omit it or leave it empty to use the defaut container image provided by the operator.
+        """
+        return pulumi.get(self, "single_host_gateway_image")
+
+    @single_host_gateway_image.setter
+    def single_host_gateway_image(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "single_host_gateway_image", value)
+
+    @property
     @pulumi.getter(name="tlsSupport")
     def tls_support(self) -> Optional[pulumi.Input[bool]]:
         """
@@ -1255,6 +1725,18 @@ class CheClusterSpecServerArgs:
         pulumi.set(self, "tls_support", value)
 
     @property
+    @pulumi.getter(name="useInternalClusterSVCNames")
+    def use_internal_cluster_svc_names(self) -> Optional[pulumi.Input[bool]]:
+        """
+        Use internal cluster svc names to communicate between components to speed up the traffic and avoid proxy issues. The default value is `true`.
+        """
+        return pulumi.get(self, "use_internal_cluster_svc_names")
+
+    @use_internal_cluster_svc_names.setter
+    def use_internal_cluster_svc_names(self, value: Optional[pulumi.Input[bool]]):
+        pulumi.set(self, "use_internal_cluster_svc_names", value)
+
+    @property
     @pulumi.getter(name="workspaceNamespaceDefault")
     def workspace_namespace_default(self) -> Optional[pulumi.Input[str]]:
         """
@@ -1265,6 +1747,150 @@ class CheClusterSpecServerArgs:
     @workspace_namespace_default.setter
     def workspace_namespace_default(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "workspace_namespace_default", value)
+
+
+@pulumi.input_type
+class CheClusterSpecServerCheServerIngressArgs:
+    def __init__(__self__, *,
+                 labels: Optional[pulumi.Input[str]] = None):
+        """
+        Che server ingress custom settings
+        :param pulumi.Input[str] labels: Comma separated list of labels that can be used to organize and categorize (scope and select) objects.
+        """
+        if labels is not None:
+            pulumi.set(__self__, "labels", labels)
+
+    @property
+    @pulumi.getter
+    def labels(self) -> Optional[pulumi.Input[str]]:
+        """
+        Comma separated list of labels that can be used to organize and categorize (scope and select) objects.
+        """
+        return pulumi.get(self, "labels")
+
+    @labels.setter
+    def labels(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "labels", value)
+
+
+@pulumi.input_type
+class CheClusterSpecServerCheServerRouteArgs:
+    def __init__(__self__, *,
+                 labels: Optional[pulumi.Input[str]] = None):
+        """
+        Che server route custom settings
+        :param pulumi.Input[str] labels: Comma separated list of labels that can be used to organize and categorize (scope and select) objects.
+        """
+        if labels is not None:
+            pulumi.set(__self__, "labels", labels)
+
+    @property
+    @pulumi.getter
+    def labels(self) -> Optional[pulumi.Input[str]]:
+        """
+        Comma separated list of labels that can be used to organize and categorize (scope and select) objects.
+        """
+        return pulumi.get(self, "labels")
+
+    @labels.setter
+    def labels(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "labels", value)
+
+
+@pulumi.input_type
+class CheClusterSpecServerDevfileRegistryIngressArgs:
+    def __init__(__self__, *,
+                 labels: Optional[pulumi.Input[str]] = None):
+        """
+        Devfile registry ingress custom settings
+        :param pulumi.Input[str] labels: Comma separated list of labels that can be used to organize and categorize (scope and select) objects.
+        """
+        if labels is not None:
+            pulumi.set(__self__, "labels", labels)
+
+    @property
+    @pulumi.getter
+    def labels(self) -> Optional[pulumi.Input[str]]:
+        """
+        Comma separated list of labels that can be used to organize and categorize (scope and select) objects.
+        """
+        return pulumi.get(self, "labels")
+
+    @labels.setter
+    def labels(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "labels", value)
+
+
+@pulumi.input_type
+class CheClusterSpecServerDevfileRegistryRouteArgs:
+    def __init__(__self__, *,
+                 labels: Optional[pulumi.Input[str]] = None):
+        """
+        Devfile registry route custom settings
+        :param pulumi.Input[str] labels: Comma separated list of labels that can be used to organize and categorize (scope and select) objects.
+        """
+        if labels is not None:
+            pulumi.set(__self__, "labels", labels)
+
+    @property
+    @pulumi.getter
+    def labels(self) -> Optional[pulumi.Input[str]]:
+        """
+        Comma separated list of labels that can be used to organize and categorize (scope and select) objects.
+        """
+        return pulumi.get(self, "labels")
+
+    @labels.setter
+    def labels(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "labels", value)
+
+
+@pulumi.input_type
+class CheClusterSpecServerPluginRegistryIngressArgs:
+    def __init__(__self__, *,
+                 labels: Optional[pulumi.Input[str]] = None):
+        """
+        Plugin registry ingress custom settings
+        :param pulumi.Input[str] labels: Comma separated list of labels that can be used to organize and categorize (scope and select) objects.
+        """
+        if labels is not None:
+            pulumi.set(__self__, "labels", labels)
+
+    @property
+    @pulumi.getter
+    def labels(self) -> Optional[pulumi.Input[str]]:
+        """
+        Comma separated list of labels that can be used to organize and categorize (scope and select) objects.
+        """
+        return pulumi.get(self, "labels")
+
+    @labels.setter
+    def labels(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "labels", value)
+
+
+@pulumi.input_type
+class CheClusterSpecServerPluginRegistryRouteArgs:
+    def __init__(__self__, *,
+                 labels: Optional[pulumi.Input[str]] = None):
+        """
+        Plugin registry route custom settings
+        :param pulumi.Input[str] labels: Comma separated list of labels that can be used to organize and categorize (scope and select) objects.
+        """
+        if labels is not None:
+            pulumi.set(__self__, "labels", labels)
+
+    @property
+    @pulumi.getter
+    def labels(self) -> Optional[pulumi.Input[str]]:
+        """
+        Comma separated list of labels that can be used to organize and categorize (scope and select) objects.
+        """
+        return pulumi.get(self, "labels")
+
+    @labels.setter
+    def labels(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "labels", value)
 
 
 @pulumi.input_type

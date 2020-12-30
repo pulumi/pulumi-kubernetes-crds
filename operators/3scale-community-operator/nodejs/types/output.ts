@@ -9,16 +9,181 @@ import {ObjectMeta} from "../meta/v1";
 
 export namespace apps {
     export namespace v1alpha1 {
+        /**
+         * APIManagerBackupSpec defines the desired state of APIManagerBackup
+         */
+        export interface APIManagerBackupSpec {
+            /**
+             * Backup data destination configuration
+             */
+            backupDestination: outputs.apps.v1alpha1.APIManagerBackupSpecBackupDestination;
+        }
+
+        /**
+         * Backup data destination configuration
+         */
+        export interface APIManagerBackupSpecBackupDestination {
+            /**
+             * PersistentVolumeClaim as backup data destination configuration
+             */
+            persistentVolumeClaim?: outputs.apps.v1alpha1.APIManagerBackupSpecBackupDestinationPersistentVolumeClaim;
+        }
+
+        /**
+         * PersistentVolumeClaim as backup data destination configuration
+         */
+        export interface APIManagerBackupSpecBackupDestinationPersistentVolumeClaim {
+            /**
+             * Resources configuration for the backup data PersistentVolumeClaim. Ignored when VolumeName field is set
+             */
+            resources?: outputs.apps.v1alpha1.APIManagerBackupSpecBackupDestinationPersistentVolumeClaimResources;
+            /**
+             * Storage class to be used by the PersistentVolumeClaim. Ignored when VolumeName field is set
+             */
+            storageClass?: string;
+            /**
+             * Name of an existing PersistentVolume to be bound to the backup data PersistentVolumeClaim
+             */
+            volumeName?: string;
+        }
+
+        /**
+         * Resources configuration for the backup data PersistentVolumeClaim. Ignored when VolumeName field is set
+         */
+        export interface APIManagerBackupSpecBackupDestinationPersistentVolumeClaimResources {
+            /**
+             * Storage Resource requests to be used on the PersistentVolumeClaim. To learn more about resource requests see: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
+             */
+            requests: string;
+        }
+
+        /**
+         * APIManagerBackupStatus defines the observed state of APIManagerBackup
+         */
+        export interface APIManagerBackupStatus {
+            /**
+             * Name of the APIManager from which the backup has been performed
+             */
+            apiManagerSourceName?: string;
+            /**
+             * Name of the backup data PersistentVolumeClaim. Only set when PersistentVolumeClaim is used as the backup data destination
+             */
+            backupPersistentVolumeClaimName?: string;
+            /**
+             * Set to true when backup has been completed
+             */
+            completed?: boolean;
+            /**
+             * Backup completion time. It is represented in RFC3339 form and is in UTC.
+             */
+            completionTime?: string;
+            /**
+             * Set to true when main steps have been completed. At this point backup still cannot be considered  fully completed due to some remaining post-backup tasks are pending (cleanup, ...)
+             */
+            mainStepsCompleted?: boolean;
+            /**
+             * Backup start time. It is represented in RFC3339 form and is in UTC.
+             */
+            startTime?: string;
+        }
+
+        /**
+         * APIManagerRestoreSpec defines the desired state of APIManagerRestore
+         */
+        export interface APIManagerRestoreSpec {
+            /**
+             * INSERT ADDITIONAL SPEC FIELDS - desired state of cluster Important: Run "operator-sdk generate k8s" to regenerate code after modifying this file Add custom validation using kubebuilder tags: https://book-v1.book.kubebuilder.io/beyond_basics/generating_crd.html
+             */
+            restoreSource: outputs.apps.v1alpha1.APIManagerRestoreSpecRestoreSource;
+        }
+
+        /**
+         * INSERT ADDITIONAL SPEC FIELDS - desired state of cluster Important: Run "operator-sdk generate k8s" to regenerate code after modifying this file Add custom validation using kubebuilder tags: https://book-v1.book.kubebuilder.io/beyond_basics/generating_crd.html
+         */
+        export interface APIManagerRestoreSpecRestoreSource {
+            /**
+             * Restore data soure configuration
+             */
+            persistentVolumeClaim?: outputs.apps.v1alpha1.APIManagerRestoreSpecRestoreSourcePersistentVolumeClaim;
+        }
+
+        /**
+         * Restore data soure configuration
+         */
+        export interface APIManagerRestoreSpecRestoreSourcePersistentVolumeClaim {
+            /**
+             * PersistentVolumeClaim source of an existing PersistentVolumeClaim. See
+             */
+            claimSource: outputs.apps.v1alpha1.APIManagerRestoreSpecRestoreSourcePersistentVolumeClaimClaimSource;
+        }
+
+        /**
+         * PersistentVolumeClaim source of an existing PersistentVolumeClaim. See
+         */
+        export interface APIManagerRestoreSpecRestoreSourcePersistentVolumeClaimClaimSource {
+            /**
+             * ClaimName is the name of a PersistentVolumeClaim in the same namespace as the pod using this volume. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#persistentvolumeclaims
+             */
+            claimName: string;
+            /**
+             * Will force the ReadOnly setting in VolumeMounts. Default false.
+             */
+            readOnly?: boolean;
+        }
+
+        /**
+         * APIManagerRestoreStatus defines the observed state of APIManagerRestore
+         */
+        export interface APIManagerRestoreStatus {
+            /**
+             * Name of the APIManager to be restored
+             */
+            apiManagerToRestoreRef?: outputs.apps.v1alpha1.APIManagerRestoreStatusApiManagerToRestoreRef;
+            /**
+             * Set to true when backup has been completed
+             */
+            completed?: boolean;
+            /**
+             * Restore completion time. It is represented in RFC3339 form and is in UTC.
+             */
+            completionTime?: string;
+            /**
+             * Set to true when main steps have been completed. At this point restore still cannot be considered fully completed due to some remaining post-backup tasks are pending (cleanup, ...)
+             */
+            mainStepsCompleted?: boolean;
+            /**
+             * Restore start time. It is represented in RFC3339 form and is in UTC.
+             */
+            startTime?: string;
+        }
+
+        /**
+         * Name of the APIManager to be restored
+         */
+        export interface APIManagerRestoreStatusApiManagerToRestoreRef {
+            /**
+             * Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+             */
+            name?: string;
+        }
+
+        /**
+         * APIManagerSpec defines the desired state of APIManager
+         */
         export interface APIManagerSpec {
             apicast?: outputs.apps.v1alpha1.APIManagerSpecApicast;
             appLabel?: string;
             backend?: outputs.apps.v1alpha1.APIManagerSpecBackend;
             highAvailability?: outputs.apps.v1alpha1.APIManagerSpecHighAvailability;
             imageStreamTagImportInsecure?: boolean;
+            monitoring?: outputs.apps.v1alpha1.APIManagerSpecMonitoring;
             podDisruptionBudget?: outputs.apps.v1alpha1.APIManagerSpecPodDisruptionBudget;
             resourceRequirementsEnabled?: boolean;
             system?: outputs.apps.v1alpha1.APIManagerSpecSystem;
             tenantName?: string;
+            /**
+             * Wildcard domain as configured in the API Manager object
+             */
             wildcardDomain: string;
             zync?: outputs.apps.v1alpha1.APIManagerSpecZync;
         }
@@ -34,34 +199,2701 @@ export namespace apps {
         }
 
         export interface APIManagerSpecApicastProductionSpec {
+            /**
+             * Affinity is a group of affinity scheduling rules.
+             */
+            affinity?: outputs.apps.v1alpha1.APIManagerSpecApicastProductionSpecAffinity;
             replicas?: number;
+            tolerations?: outputs.apps.v1alpha1.APIManagerSpecApicastProductionSpecTolerations[];
+        }
+
+        /**
+         * Affinity is a group of affinity scheduling rules.
+         */
+        export interface APIManagerSpecApicastProductionSpecAffinity {
+            /**
+             * Describes node affinity scheduling rules for the pod.
+             */
+            nodeAffinity?: outputs.apps.v1alpha1.APIManagerSpecApicastProductionSpecAffinityNodeAffinity;
+            /**
+             * Describes pod affinity scheduling rules (e.g. co-locate this pod in the same node, zone, etc. as some other pod(s)).
+             */
+            podAffinity?: outputs.apps.v1alpha1.APIManagerSpecApicastProductionSpecAffinityPodAffinity;
+            /**
+             * Describes pod anti-affinity scheduling rules (e.g. avoid putting this pod in the same node, zone, etc. as some other pod(s)).
+             */
+            podAntiAffinity?: outputs.apps.v1alpha1.APIManagerSpecApicastProductionSpecAffinityPodAntiAffinity;
+        }
+
+        /**
+         * Describes node affinity scheduling rules for the pod.
+         */
+        export interface APIManagerSpecApicastProductionSpecAffinityNodeAffinity {
+            /**
+             * The scheduler will prefer to schedule pods to nodes that satisfy the affinity expressions specified by this field, but it may choose a node that violates one or more of the expressions. The node that is most preferred is the one with the greatest sum of weights, i.e. for each node that meets all of the scheduling requirements (resource request, requiredDuringScheduling affinity expressions, etc.), compute a sum by iterating through the elements of this field and adding "weight" to the sum if the node matches the corresponding matchExpressions; the node(s) with the highest sum are the most preferred.
+             */
+            preferredDuringSchedulingIgnoredDuringExecution?: outputs.apps.v1alpha1.APIManagerSpecApicastProductionSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecution[];
+            /**
+             * If the affinity requirements specified by this field are not met at scheduling time, the pod will not be scheduled onto the node. If the affinity requirements specified by this field cease to be met at some point during pod execution (e.g. due to an update), the system may or may not try to eventually evict the pod from its node.
+             */
+            requiredDuringSchedulingIgnoredDuringExecution?: outputs.apps.v1alpha1.APIManagerSpecApicastProductionSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecution;
+        }
+
+        /**
+         * An empty preferred scheduling term matches all objects with implicit weight 0 (i.e. it's a no-op). A null preferred scheduling term matches no objects (i.e. is also a no-op).
+         */
+        export interface APIManagerSpecApicastProductionSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecution {
+            /**
+             * A node selector term, associated with the corresponding weight.
+             */
+            preference: outputs.apps.v1alpha1.APIManagerSpecApicastProductionSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreference;
+            /**
+             * Weight associated with matching the corresponding nodeSelectorTerm, in the range 1-100.
+             */
+            weight: number;
+        }
+
+        /**
+         * A node selector term, associated with the corresponding weight.
+         */
+        export interface APIManagerSpecApicastProductionSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreference {
+            /**
+             * A list of node selector requirements by node's labels.
+             */
+            matchExpressions?: outputs.apps.v1alpha1.APIManagerSpecApicastProductionSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressions[];
+            /**
+             * A list of node selector requirements by node's fields.
+             */
+            matchFields?: outputs.apps.v1alpha1.APIManagerSpecApicastProductionSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFields[];
+        }
+
+        /**
+         * A node selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecApicastProductionSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressions {
+            /**
+             * The label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * Represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt.
+             */
+            operator: string;
+            /**
+             * An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. If the operator is Gt or Lt, the values array must have a single element, which will be interpreted as an integer. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * A node selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecApicastProductionSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFields {
+            /**
+             * The label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * Represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt.
+             */
+            operator: string;
+            /**
+             * An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. If the operator is Gt or Lt, the values array must have a single element, which will be interpreted as an integer. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * If the affinity requirements specified by this field are not met at scheduling time, the pod will not be scheduled onto the node. If the affinity requirements specified by this field cease to be met at some point during pod execution (e.g. due to an update), the system may or may not try to eventually evict the pod from its node.
+         */
+        export interface APIManagerSpecApicastProductionSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecution {
+            /**
+             * Required. A list of node selector terms. The terms are ORed.
+             */
+            nodeSelectorTerms: outputs.apps.v1alpha1.APIManagerSpecApicastProductionSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTerms[];
+        }
+
+        /**
+         * A null or empty node selector term matches no objects. The requirements of them are ANDed. The TopologySelectorTerm type implements a subset of the NodeSelectorTerm.
+         */
+        export interface APIManagerSpecApicastProductionSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTerms {
+            /**
+             * A list of node selector requirements by node's labels.
+             */
+            matchExpressions?: outputs.apps.v1alpha1.APIManagerSpecApicastProductionSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressions[];
+            /**
+             * A list of node selector requirements by node's fields.
+             */
+            matchFields?: outputs.apps.v1alpha1.APIManagerSpecApicastProductionSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFields[];
+        }
+
+        /**
+         * A node selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecApicastProductionSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressions {
+            /**
+             * The label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * Represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt.
+             */
+            operator: string;
+            /**
+             * An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. If the operator is Gt or Lt, the values array must have a single element, which will be interpreted as an integer. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * A node selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecApicastProductionSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFields {
+            /**
+             * The label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * Represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt.
+             */
+            operator: string;
+            /**
+             * An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. If the operator is Gt or Lt, the values array must have a single element, which will be interpreted as an integer. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * Describes pod affinity scheduling rules (e.g. co-locate this pod in the same node, zone, etc. as some other pod(s)).
+         */
+        export interface APIManagerSpecApicastProductionSpecAffinityPodAffinity {
+            /**
+             * The scheduler will prefer to schedule pods to nodes that satisfy the affinity expressions specified by this field, but it may choose a node that violates one or more of the expressions. The node that is most preferred is the one with the greatest sum of weights, i.e. for each node that meets all of the scheduling requirements (resource request, requiredDuringScheduling affinity expressions, etc.), compute a sum by iterating through the elements of this field and adding "weight" to the sum if the node has pods which matches the corresponding podAffinityTerm; the node(s) with the highest sum are the most preferred.
+             */
+            preferredDuringSchedulingIgnoredDuringExecution?: outputs.apps.v1alpha1.APIManagerSpecApicastProductionSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecution[];
+            /**
+             * If the affinity requirements specified by this field are not met at scheduling time, the pod will not be scheduled onto the node. If the affinity requirements specified by this field cease to be met at some point during pod execution (e.g. due to a pod label update), the system may or may not try to eventually evict the pod from its node. When there are multiple elements, the lists of nodes corresponding to each podAffinityTerm are intersected, i.e. all terms must be satisfied.
+             */
+            requiredDuringSchedulingIgnoredDuringExecution?: outputs.apps.v1alpha1.APIManagerSpecApicastProductionSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecution[];
+        }
+
+        /**
+         * The weights of all of the matched WeightedPodAffinityTerm fields are added per-node to find the most preferred node(s)
+         */
+        export interface APIManagerSpecApicastProductionSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecution {
+            /**
+             * Required. A pod affinity term, associated with the corresponding weight.
+             */
+            podAffinityTerm: outputs.apps.v1alpha1.APIManagerSpecApicastProductionSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTerm;
+            /**
+             * weight associated with matching the corresponding podAffinityTerm, in the range 1-100.
+             */
+            weight: number;
+        }
+
+        /**
+         * Required. A pod affinity term, associated with the corresponding weight.
+         */
+        export interface APIManagerSpecApicastProductionSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTerm {
+            /**
+             * A label query over a set of resources, in this case pods.
+             */
+            labelSelector?: outputs.apps.v1alpha1.APIManagerSpecApicastProductionSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelector;
+            /**
+             * namespaces specifies which namespaces the labelSelector applies to (matches against); null or empty list means "this pod's namespace"
+             */
+            namespaces?: string[];
+            /**
+             * This pod should be co-located (affinity) or not co-located (anti-affinity) with the pods matching the labelSelector in the specified namespaces, where co-located is defined as running on a node whose value of the label with key topologyKey matches that of any node on which any of the selected pods is running. Empty topologyKey is not allowed.
+             */
+            topologyKey: string;
+        }
+
+        /**
+         * A label query over a set of resources, in this case pods.
+         */
+        export interface APIManagerSpecApicastProductionSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelector {
+            /**
+             * matchExpressions is a list of label selector requirements. The requirements are ANDed.
+             */
+            matchExpressions?: outputs.apps.v1alpha1.APIManagerSpecApicastProductionSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressions[];
+            /**
+             * matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+             */
+            matchLabels?: {[key: string]: string};
+        }
+
+        /**
+         * A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecApicastProductionSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressions {
+            /**
+             * key is the label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+             */
+            operator: string;
+            /**
+             * values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * Defines a set of pods (namely those matching the labelSelector relative to the given namespace(s)) that this pod should be co-located (affinity) or not co-located (anti-affinity) with, where co-located is defined as running on a node whose value of the label with key <topologyKey> matches that of any node on which a pod of the set of pods is running
+         */
+        export interface APIManagerSpecApicastProductionSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecution {
+            /**
+             * A label query over a set of resources, in this case pods.
+             */
+            labelSelector?: outputs.apps.v1alpha1.APIManagerSpecApicastProductionSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector;
+            /**
+             * namespaces specifies which namespaces the labelSelector applies to (matches against); null or empty list means "this pod's namespace"
+             */
+            namespaces?: string[];
+            /**
+             * This pod should be co-located (affinity) or not co-located (anti-affinity) with the pods matching the labelSelector in the specified namespaces, where co-located is defined as running on a node whose value of the label with key topologyKey matches that of any node on which any of the selected pods is running. Empty topologyKey is not allowed.
+             */
+            topologyKey: string;
+        }
+
+        /**
+         * A label query over a set of resources, in this case pods.
+         */
+        export interface APIManagerSpecApicastProductionSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector {
+            /**
+             * matchExpressions is a list of label selector requirements. The requirements are ANDed.
+             */
+            matchExpressions?: outputs.apps.v1alpha1.APIManagerSpecApicastProductionSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions[];
+            /**
+             * matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+             */
+            matchLabels?: {[key: string]: string};
+        }
+
+        /**
+         * A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecApicastProductionSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions {
+            /**
+             * key is the label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+             */
+            operator: string;
+            /**
+             * values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * Describes pod anti-affinity scheduling rules (e.g. avoid putting this pod in the same node, zone, etc. as some other pod(s)).
+         */
+        export interface APIManagerSpecApicastProductionSpecAffinityPodAntiAffinity {
+            /**
+             * The scheduler will prefer to schedule pods to nodes that satisfy the anti-affinity expressions specified by this field, but it may choose a node that violates one or more of the expressions. The node that is most preferred is the one with the greatest sum of weights, i.e. for each node that meets all of the scheduling requirements (resource request, requiredDuringScheduling anti-affinity expressions, etc.), compute a sum by iterating through the elements of this field and adding "weight" to the sum if the node has pods which matches the corresponding podAffinityTerm; the node(s) with the highest sum are the most preferred.
+             */
+            preferredDuringSchedulingIgnoredDuringExecution?: outputs.apps.v1alpha1.APIManagerSpecApicastProductionSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecution[];
+            /**
+             * If the anti-affinity requirements specified by this field are not met at scheduling time, the pod will not be scheduled onto the node. If the anti-affinity requirements specified by this field cease to be met at some point during pod execution (e.g. due to a pod label update), the system may or may not try to eventually evict the pod from its node. When there are multiple elements, the lists of nodes corresponding to each podAffinityTerm are intersected, i.e. all terms must be satisfied.
+             */
+            requiredDuringSchedulingIgnoredDuringExecution?: outputs.apps.v1alpha1.APIManagerSpecApicastProductionSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecution[];
+        }
+
+        /**
+         * The weights of all of the matched WeightedPodAffinityTerm fields are added per-node to find the most preferred node(s)
+         */
+        export interface APIManagerSpecApicastProductionSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecution {
+            /**
+             * Required. A pod affinity term, associated with the corresponding weight.
+             */
+            podAffinityTerm: outputs.apps.v1alpha1.APIManagerSpecApicastProductionSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTerm;
+            /**
+             * weight associated with matching the corresponding podAffinityTerm, in the range 1-100.
+             */
+            weight: number;
+        }
+
+        /**
+         * Required. A pod affinity term, associated with the corresponding weight.
+         */
+        export interface APIManagerSpecApicastProductionSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTerm {
+            /**
+             * A label query over a set of resources, in this case pods.
+             */
+            labelSelector?: outputs.apps.v1alpha1.APIManagerSpecApicastProductionSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelector;
+            /**
+             * namespaces specifies which namespaces the labelSelector applies to (matches against); null or empty list means "this pod's namespace"
+             */
+            namespaces?: string[];
+            /**
+             * This pod should be co-located (affinity) or not co-located (anti-affinity) with the pods matching the labelSelector in the specified namespaces, where co-located is defined as running on a node whose value of the label with key topologyKey matches that of any node on which any of the selected pods is running. Empty topologyKey is not allowed.
+             */
+            topologyKey: string;
+        }
+
+        /**
+         * A label query over a set of resources, in this case pods.
+         */
+        export interface APIManagerSpecApicastProductionSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelector {
+            /**
+             * matchExpressions is a list of label selector requirements. The requirements are ANDed.
+             */
+            matchExpressions?: outputs.apps.v1alpha1.APIManagerSpecApicastProductionSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressions[];
+            /**
+             * matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+             */
+            matchLabels?: {[key: string]: string};
+        }
+
+        /**
+         * A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecApicastProductionSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressions {
+            /**
+             * key is the label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+             */
+            operator: string;
+            /**
+             * values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * Defines a set of pods (namely those matching the labelSelector relative to the given namespace(s)) that this pod should be co-located (affinity) or not co-located (anti-affinity) with, where co-located is defined as running on a node whose value of the label with key <topologyKey> matches that of any node on which a pod of the set of pods is running
+         */
+        export interface APIManagerSpecApicastProductionSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecution {
+            /**
+             * A label query over a set of resources, in this case pods.
+             */
+            labelSelector?: outputs.apps.v1alpha1.APIManagerSpecApicastProductionSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector;
+            /**
+             * namespaces specifies which namespaces the labelSelector applies to (matches against); null or empty list means "this pod's namespace"
+             */
+            namespaces?: string[];
+            /**
+             * This pod should be co-located (affinity) or not co-located (anti-affinity) with the pods matching the labelSelector in the specified namespaces, where co-located is defined as running on a node whose value of the label with key topologyKey matches that of any node on which any of the selected pods is running. Empty topologyKey is not allowed.
+             */
+            topologyKey: string;
+        }
+
+        /**
+         * A label query over a set of resources, in this case pods.
+         */
+        export interface APIManagerSpecApicastProductionSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector {
+            /**
+             * matchExpressions is a list of label selector requirements. The requirements are ANDed.
+             */
+            matchExpressions?: outputs.apps.v1alpha1.APIManagerSpecApicastProductionSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions[];
+            /**
+             * matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+             */
+            matchLabels?: {[key: string]: string};
+        }
+
+        /**
+         * A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecApicastProductionSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions {
+            /**
+             * key is the label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+             */
+            operator: string;
+            /**
+             * values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * The pod this Toleration is attached to tolerates any taint that matches the triple <key,value,effect> using the matching operator <operator>.
+         */
+        export interface APIManagerSpecApicastProductionSpecTolerations {
+            /**
+             * Effect indicates the taint effect to match. Empty means match all taint effects. When specified, allowed values are NoSchedule, PreferNoSchedule and NoExecute.
+             */
+            effect?: string;
+            /**
+             * Key is the taint key that the toleration applies to. Empty means match all taint keys. If the key is empty, operator must be Exists; this combination means to match all values and all keys.
+             */
+            key?: string;
+            /**
+             * Operator represents a key's relationship to the value. Valid operators are Exists and Equal. Defaults to Equal. Exists is equivalent to wildcard for value, so that a pod can tolerate all taints of a particular category.
+             */
+            operator?: string;
+            /**
+             * TolerationSeconds represents the period of time the toleration (which must be of effect NoExecute, otherwise this field is ignored) tolerates the taint. By default, it is not set, which means tolerate the taint forever (do not evict). Zero and negative values will be treated as 0 (evict immediately) by the system.
+             */
+            tolerationSeconds?: number;
+            /**
+             * Value is the taint value the toleration matches to. If the operator is Exists, the value should be empty, otherwise just a regular string.
+             */
+            value?: string;
         }
 
         export interface APIManagerSpecApicastStagingSpec {
+            /**
+             * Affinity is a group of affinity scheduling rules.
+             */
+            affinity?: outputs.apps.v1alpha1.APIManagerSpecApicastStagingSpecAffinity;
             replicas?: number;
+            tolerations?: outputs.apps.v1alpha1.APIManagerSpecApicastStagingSpecTolerations[];
+        }
+
+        /**
+         * Affinity is a group of affinity scheduling rules.
+         */
+        export interface APIManagerSpecApicastStagingSpecAffinity {
+            /**
+             * Describes node affinity scheduling rules for the pod.
+             */
+            nodeAffinity?: outputs.apps.v1alpha1.APIManagerSpecApicastStagingSpecAffinityNodeAffinity;
+            /**
+             * Describes pod affinity scheduling rules (e.g. co-locate this pod in the same node, zone, etc. as some other pod(s)).
+             */
+            podAffinity?: outputs.apps.v1alpha1.APIManagerSpecApicastStagingSpecAffinityPodAffinity;
+            /**
+             * Describes pod anti-affinity scheduling rules (e.g. avoid putting this pod in the same node, zone, etc. as some other pod(s)).
+             */
+            podAntiAffinity?: outputs.apps.v1alpha1.APIManagerSpecApicastStagingSpecAffinityPodAntiAffinity;
+        }
+
+        /**
+         * Describes node affinity scheduling rules for the pod.
+         */
+        export interface APIManagerSpecApicastStagingSpecAffinityNodeAffinity {
+            /**
+             * The scheduler will prefer to schedule pods to nodes that satisfy the affinity expressions specified by this field, but it may choose a node that violates one or more of the expressions. The node that is most preferred is the one with the greatest sum of weights, i.e. for each node that meets all of the scheduling requirements (resource request, requiredDuringScheduling affinity expressions, etc.), compute a sum by iterating through the elements of this field and adding "weight" to the sum if the node matches the corresponding matchExpressions; the node(s) with the highest sum are the most preferred.
+             */
+            preferredDuringSchedulingIgnoredDuringExecution?: outputs.apps.v1alpha1.APIManagerSpecApicastStagingSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecution[];
+            /**
+             * If the affinity requirements specified by this field are not met at scheduling time, the pod will not be scheduled onto the node. If the affinity requirements specified by this field cease to be met at some point during pod execution (e.g. due to an update), the system may or may not try to eventually evict the pod from its node.
+             */
+            requiredDuringSchedulingIgnoredDuringExecution?: outputs.apps.v1alpha1.APIManagerSpecApicastStagingSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecution;
+        }
+
+        /**
+         * An empty preferred scheduling term matches all objects with implicit weight 0 (i.e. it's a no-op). A null preferred scheduling term matches no objects (i.e. is also a no-op).
+         */
+        export interface APIManagerSpecApicastStagingSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecution {
+            /**
+             * A node selector term, associated with the corresponding weight.
+             */
+            preference: outputs.apps.v1alpha1.APIManagerSpecApicastStagingSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreference;
+            /**
+             * Weight associated with matching the corresponding nodeSelectorTerm, in the range 1-100.
+             */
+            weight: number;
+        }
+
+        /**
+         * A node selector term, associated with the corresponding weight.
+         */
+        export interface APIManagerSpecApicastStagingSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreference {
+            /**
+             * A list of node selector requirements by node's labels.
+             */
+            matchExpressions?: outputs.apps.v1alpha1.APIManagerSpecApicastStagingSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressions[];
+            /**
+             * A list of node selector requirements by node's fields.
+             */
+            matchFields?: outputs.apps.v1alpha1.APIManagerSpecApicastStagingSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFields[];
+        }
+
+        /**
+         * A node selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecApicastStagingSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressions {
+            /**
+             * The label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * Represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt.
+             */
+            operator: string;
+            /**
+             * An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. If the operator is Gt or Lt, the values array must have a single element, which will be interpreted as an integer. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * A node selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecApicastStagingSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFields {
+            /**
+             * The label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * Represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt.
+             */
+            operator: string;
+            /**
+             * An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. If the operator is Gt or Lt, the values array must have a single element, which will be interpreted as an integer. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * If the affinity requirements specified by this field are not met at scheduling time, the pod will not be scheduled onto the node. If the affinity requirements specified by this field cease to be met at some point during pod execution (e.g. due to an update), the system may or may not try to eventually evict the pod from its node.
+         */
+        export interface APIManagerSpecApicastStagingSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecution {
+            /**
+             * Required. A list of node selector terms. The terms are ORed.
+             */
+            nodeSelectorTerms: outputs.apps.v1alpha1.APIManagerSpecApicastStagingSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTerms[];
+        }
+
+        /**
+         * A null or empty node selector term matches no objects. The requirements of them are ANDed. The TopologySelectorTerm type implements a subset of the NodeSelectorTerm.
+         */
+        export interface APIManagerSpecApicastStagingSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTerms {
+            /**
+             * A list of node selector requirements by node's labels.
+             */
+            matchExpressions?: outputs.apps.v1alpha1.APIManagerSpecApicastStagingSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressions[];
+            /**
+             * A list of node selector requirements by node's fields.
+             */
+            matchFields?: outputs.apps.v1alpha1.APIManagerSpecApicastStagingSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFields[];
+        }
+
+        /**
+         * A node selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecApicastStagingSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressions {
+            /**
+             * The label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * Represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt.
+             */
+            operator: string;
+            /**
+             * An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. If the operator is Gt or Lt, the values array must have a single element, which will be interpreted as an integer. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * A node selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecApicastStagingSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFields {
+            /**
+             * The label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * Represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt.
+             */
+            operator: string;
+            /**
+             * An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. If the operator is Gt or Lt, the values array must have a single element, which will be interpreted as an integer. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * Describes pod affinity scheduling rules (e.g. co-locate this pod in the same node, zone, etc. as some other pod(s)).
+         */
+        export interface APIManagerSpecApicastStagingSpecAffinityPodAffinity {
+            /**
+             * The scheduler will prefer to schedule pods to nodes that satisfy the affinity expressions specified by this field, but it may choose a node that violates one or more of the expressions. The node that is most preferred is the one with the greatest sum of weights, i.e. for each node that meets all of the scheduling requirements (resource request, requiredDuringScheduling affinity expressions, etc.), compute a sum by iterating through the elements of this field and adding "weight" to the sum if the node has pods which matches the corresponding podAffinityTerm; the node(s) with the highest sum are the most preferred.
+             */
+            preferredDuringSchedulingIgnoredDuringExecution?: outputs.apps.v1alpha1.APIManagerSpecApicastStagingSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecution[];
+            /**
+             * If the affinity requirements specified by this field are not met at scheduling time, the pod will not be scheduled onto the node. If the affinity requirements specified by this field cease to be met at some point during pod execution (e.g. due to a pod label update), the system may or may not try to eventually evict the pod from its node. When there are multiple elements, the lists of nodes corresponding to each podAffinityTerm are intersected, i.e. all terms must be satisfied.
+             */
+            requiredDuringSchedulingIgnoredDuringExecution?: outputs.apps.v1alpha1.APIManagerSpecApicastStagingSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecution[];
+        }
+
+        /**
+         * The weights of all of the matched WeightedPodAffinityTerm fields are added per-node to find the most preferred node(s)
+         */
+        export interface APIManagerSpecApicastStagingSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecution {
+            /**
+             * Required. A pod affinity term, associated with the corresponding weight.
+             */
+            podAffinityTerm: outputs.apps.v1alpha1.APIManagerSpecApicastStagingSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTerm;
+            /**
+             * weight associated with matching the corresponding podAffinityTerm, in the range 1-100.
+             */
+            weight: number;
+        }
+
+        /**
+         * Required. A pod affinity term, associated with the corresponding weight.
+         */
+        export interface APIManagerSpecApicastStagingSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTerm {
+            /**
+             * A label query over a set of resources, in this case pods.
+             */
+            labelSelector?: outputs.apps.v1alpha1.APIManagerSpecApicastStagingSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelector;
+            /**
+             * namespaces specifies which namespaces the labelSelector applies to (matches against); null or empty list means "this pod's namespace"
+             */
+            namespaces?: string[];
+            /**
+             * This pod should be co-located (affinity) or not co-located (anti-affinity) with the pods matching the labelSelector in the specified namespaces, where co-located is defined as running on a node whose value of the label with key topologyKey matches that of any node on which any of the selected pods is running. Empty topologyKey is not allowed.
+             */
+            topologyKey: string;
+        }
+
+        /**
+         * A label query over a set of resources, in this case pods.
+         */
+        export interface APIManagerSpecApicastStagingSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelector {
+            /**
+             * matchExpressions is a list of label selector requirements. The requirements are ANDed.
+             */
+            matchExpressions?: outputs.apps.v1alpha1.APIManagerSpecApicastStagingSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressions[];
+            /**
+             * matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+             */
+            matchLabels?: {[key: string]: string};
+        }
+
+        /**
+         * A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecApicastStagingSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressions {
+            /**
+             * key is the label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+             */
+            operator: string;
+            /**
+             * values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * Defines a set of pods (namely those matching the labelSelector relative to the given namespace(s)) that this pod should be co-located (affinity) or not co-located (anti-affinity) with, where co-located is defined as running on a node whose value of the label with key <topologyKey> matches that of any node on which a pod of the set of pods is running
+         */
+        export interface APIManagerSpecApicastStagingSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecution {
+            /**
+             * A label query over a set of resources, in this case pods.
+             */
+            labelSelector?: outputs.apps.v1alpha1.APIManagerSpecApicastStagingSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector;
+            /**
+             * namespaces specifies which namespaces the labelSelector applies to (matches against); null or empty list means "this pod's namespace"
+             */
+            namespaces?: string[];
+            /**
+             * This pod should be co-located (affinity) or not co-located (anti-affinity) with the pods matching the labelSelector in the specified namespaces, where co-located is defined as running on a node whose value of the label with key topologyKey matches that of any node on which any of the selected pods is running. Empty topologyKey is not allowed.
+             */
+            topologyKey: string;
+        }
+
+        /**
+         * A label query over a set of resources, in this case pods.
+         */
+        export interface APIManagerSpecApicastStagingSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector {
+            /**
+             * matchExpressions is a list of label selector requirements. The requirements are ANDed.
+             */
+            matchExpressions?: outputs.apps.v1alpha1.APIManagerSpecApicastStagingSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions[];
+            /**
+             * matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+             */
+            matchLabels?: {[key: string]: string};
+        }
+
+        /**
+         * A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecApicastStagingSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions {
+            /**
+             * key is the label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+             */
+            operator: string;
+            /**
+             * values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * Describes pod anti-affinity scheduling rules (e.g. avoid putting this pod in the same node, zone, etc. as some other pod(s)).
+         */
+        export interface APIManagerSpecApicastStagingSpecAffinityPodAntiAffinity {
+            /**
+             * The scheduler will prefer to schedule pods to nodes that satisfy the anti-affinity expressions specified by this field, but it may choose a node that violates one or more of the expressions. The node that is most preferred is the one with the greatest sum of weights, i.e. for each node that meets all of the scheduling requirements (resource request, requiredDuringScheduling anti-affinity expressions, etc.), compute a sum by iterating through the elements of this field and adding "weight" to the sum if the node has pods which matches the corresponding podAffinityTerm; the node(s) with the highest sum are the most preferred.
+             */
+            preferredDuringSchedulingIgnoredDuringExecution?: outputs.apps.v1alpha1.APIManagerSpecApicastStagingSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecution[];
+            /**
+             * If the anti-affinity requirements specified by this field are not met at scheduling time, the pod will not be scheduled onto the node. If the anti-affinity requirements specified by this field cease to be met at some point during pod execution (e.g. due to a pod label update), the system may or may not try to eventually evict the pod from its node. When there are multiple elements, the lists of nodes corresponding to each podAffinityTerm are intersected, i.e. all terms must be satisfied.
+             */
+            requiredDuringSchedulingIgnoredDuringExecution?: outputs.apps.v1alpha1.APIManagerSpecApicastStagingSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecution[];
+        }
+
+        /**
+         * The weights of all of the matched WeightedPodAffinityTerm fields are added per-node to find the most preferred node(s)
+         */
+        export interface APIManagerSpecApicastStagingSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecution {
+            /**
+             * Required. A pod affinity term, associated with the corresponding weight.
+             */
+            podAffinityTerm: outputs.apps.v1alpha1.APIManagerSpecApicastStagingSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTerm;
+            /**
+             * weight associated with matching the corresponding podAffinityTerm, in the range 1-100.
+             */
+            weight: number;
+        }
+
+        /**
+         * Required. A pod affinity term, associated with the corresponding weight.
+         */
+        export interface APIManagerSpecApicastStagingSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTerm {
+            /**
+             * A label query over a set of resources, in this case pods.
+             */
+            labelSelector?: outputs.apps.v1alpha1.APIManagerSpecApicastStagingSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelector;
+            /**
+             * namespaces specifies which namespaces the labelSelector applies to (matches against); null or empty list means "this pod's namespace"
+             */
+            namespaces?: string[];
+            /**
+             * This pod should be co-located (affinity) or not co-located (anti-affinity) with the pods matching the labelSelector in the specified namespaces, where co-located is defined as running on a node whose value of the label with key topologyKey matches that of any node on which any of the selected pods is running. Empty topologyKey is not allowed.
+             */
+            topologyKey: string;
+        }
+
+        /**
+         * A label query over a set of resources, in this case pods.
+         */
+        export interface APIManagerSpecApicastStagingSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelector {
+            /**
+             * matchExpressions is a list of label selector requirements. The requirements are ANDed.
+             */
+            matchExpressions?: outputs.apps.v1alpha1.APIManagerSpecApicastStagingSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressions[];
+            /**
+             * matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+             */
+            matchLabels?: {[key: string]: string};
+        }
+
+        /**
+         * A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecApicastStagingSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressions {
+            /**
+             * key is the label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+             */
+            operator: string;
+            /**
+             * values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * Defines a set of pods (namely those matching the labelSelector relative to the given namespace(s)) that this pod should be co-located (affinity) or not co-located (anti-affinity) with, where co-located is defined as running on a node whose value of the label with key <topologyKey> matches that of any node on which a pod of the set of pods is running
+         */
+        export interface APIManagerSpecApicastStagingSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecution {
+            /**
+             * A label query over a set of resources, in this case pods.
+             */
+            labelSelector?: outputs.apps.v1alpha1.APIManagerSpecApicastStagingSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector;
+            /**
+             * namespaces specifies which namespaces the labelSelector applies to (matches against); null or empty list means "this pod's namespace"
+             */
+            namespaces?: string[];
+            /**
+             * This pod should be co-located (affinity) or not co-located (anti-affinity) with the pods matching the labelSelector in the specified namespaces, where co-located is defined as running on a node whose value of the label with key topologyKey matches that of any node on which any of the selected pods is running. Empty topologyKey is not allowed.
+             */
+            topologyKey: string;
+        }
+
+        /**
+         * A label query over a set of resources, in this case pods.
+         */
+        export interface APIManagerSpecApicastStagingSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector {
+            /**
+             * matchExpressions is a list of label selector requirements. The requirements are ANDed.
+             */
+            matchExpressions?: outputs.apps.v1alpha1.APIManagerSpecApicastStagingSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions[];
+            /**
+             * matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+             */
+            matchLabels?: {[key: string]: string};
+        }
+
+        /**
+         * A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecApicastStagingSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions {
+            /**
+             * key is the label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+             */
+            operator: string;
+            /**
+             * values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * The pod this Toleration is attached to tolerates any taint that matches the triple <key,value,effect> using the matching operator <operator>.
+         */
+        export interface APIManagerSpecApicastStagingSpecTolerations {
+            /**
+             * Effect indicates the taint effect to match. Empty means match all taint effects. When specified, allowed values are NoSchedule, PreferNoSchedule and NoExecute.
+             */
+            effect?: string;
+            /**
+             * Key is the taint key that the toleration applies to. Empty means match all taint keys. If the key is empty, operator must be Exists; this combination means to match all values and all keys.
+             */
+            key?: string;
+            /**
+             * Operator represents a key's relationship to the value. Valid operators are Exists and Equal. Defaults to Equal. Exists is equivalent to wildcard for value, so that a pod can tolerate all taints of a particular category.
+             */
+            operator?: string;
+            /**
+             * TolerationSeconds represents the period of time the toleration (which must be of effect NoExecute, otherwise this field is ignored) tolerates the taint. By default, it is not set, which means tolerate the taint forever (do not evict). Zero and negative values will be treated as 0 (evict immediately) by the system.
+             */
+            tolerationSeconds?: number;
+            /**
+             * Value is the taint value the toleration matches to. If the operator is Exists, the value should be empty, otherwise just a regular string.
+             */
+            value?: string;
         }
 
         export interface APIManagerSpecBackend {
             cronSpec?: outputs.apps.v1alpha1.APIManagerSpecBackendCronSpec;
             image?: string;
             listenerSpec?: outputs.apps.v1alpha1.APIManagerSpecBackendListenerSpec;
+            /**
+             * Affinity is a group of affinity scheduling rules.
+             */
+            redisAffinity?: outputs.apps.v1alpha1.APIManagerSpecBackendRedisAffinity;
             redisImage?: string;
+            redisPersistentVolumeClaim?: outputs.apps.v1alpha1.APIManagerSpecBackendRedisPersistentVolumeClaim;
+            redisTolerations?: outputs.apps.v1alpha1.APIManagerSpecBackendRedisTolerations[];
             workerSpec?: outputs.apps.v1alpha1.APIManagerSpecBackendWorkerSpec;
         }
 
         export interface APIManagerSpecBackendCronSpec {
+            /**
+             * Affinity is a group of affinity scheduling rules.
+             */
+            affinity?: outputs.apps.v1alpha1.APIManagerSpecBackendCronSpecAffinity;
             replicas?: number;
+            tolerations?: outputs.apps.v1alpha1.APIManagerSpecBackendCronSpecTolerations[];
+        }
+
+        /**
+         * Affinity is a group of affinity scheduling rules.
+         */
+        export interface APIManagerSpecBackendCronSpecAffinity {
+            /**
+             * Describes node affinity scheduling rules for the pod.
+             */
+            nodeAffinity?: outputs.apps.v1alpha1.APIManagerSpecBackendCronSpecAffinityNodeAffinity;
+            /**
+             * Describes pod affinity scheduling rules (e.g. co-locate this pod in the same node, zone, etc. as some other pod(s)).
+             */
+            podAffinity?: outputs.apps.v1alpha1.APIManagerSpecBackendCronSpecAffinityPodAffinity;
+            /**
+             * Describes pod anti-affinity scheduling rules (e.g. avoid putting this pod in the same node, zone, etc. as some other pod(s)).
+             */
+            podAntiAffinity?: outputs.apps.v1alpha1.APIManagerSpecBackendCronSpecAffinityPodAntiAffinity;
+        }
+
+        /**
+         * Describes node affinity scheduling rules for the pod.
+         */
+        export interface APIManagerSpecBackendCronSpecAffinityNodeAffinity {
+            /**
+             * The scheduler will prefer to schedule pods to nodes that satisfy the affinity expressions specified by this field, but it may choose a node that violates one or more of the expressions. The node that is most preferred is the one with the greatest sum of weights, i.e. for each node that meets all of the scheduling requirements (resource request, requiredDuringScheduling affinity expressions, etc.), compute a sum by iterating through the elements of this field and adding "weight" to the sum if the node matches the corresponding matchExpressions; the node(s) with the highest sum are the most preferred.
+             */
+            preferredDuringSchedulingIgnoredDuringExecution?: outputs.apps.v1alpha1.APIManagerSpecBackendCronSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecution[];
+            /**
+             * If the affinity requirements specified by this field are not met at scheduling time, the pod will not be scheduled onto the node. If the affinity requirements specified by this field cease to be met at some point during pod execution (e.g. due to an update), the system may or may not try to eventually evict the pod from its node.
+             */
+            requiredDuringSchedulingIgnoredDuringExecution?: outputs.apps.v1alpha1.APIManagerSpecBackendCronSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecution;
+        }
+
+        /**
+         * An empty preferred scheduling term matches all objects with implicit weight 0 (i.e. it's a no-op). A null preferred scheduling term matches no objects (i.e. is also a no-op).
+         */
+        export interface APIManagerSpecBackendCronSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecution {
+            /**
+             * A node selector term, associated with the corresponding weight.
+             */
+            preference: outputs.apps.v1alpha1.APIManagerSpecBackendCronSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreference;
+            /**
+             * Weight associated with matching the corresponding nodeSelectorTerm, in the range 1-100.
+             */
+            weight: number;
+        }
+
+        /**
+         * A node selector term, associated with the corresponding weight.
+         */
+        export interface APIManagerSpecBackendCronSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreference {
+            /**
+             * A list of node selector requirements by node's labels.
+             */
+            matchExpressions?: outputs.apps.v1alpha1.APIManagerSpecBackendCronSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressions[];
+            /**
+             * A list of node selector requirements by node's fields.
+             */
+            matchFields?: outputs.apps.v1alpha1.APIManagerSpecBackendCronSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFields[];
+        }
+
+        /**
+         * A node selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecBackendCronSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressions {
+            /**
+             * The label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * Represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt.
+             */
+            operator: string;
+            /**
+             * An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. If the operator is Gt or Lt, the values array must have a single element, which will be interpreted as an integer. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * A node selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecBackendCronSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFields {
+            /**
+             * The label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * Represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt.
+             */
+            operator: string;
+            /**
+             * An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. If the operator is Gt or Lt, the values array must have a single element, which will be interpreted as an integer. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * If the affinity requirements specified by this field are not met at scheduling time, the pod will not be scheduled onto the node. If the affinity requirements specified by this field cease to be met at some point during pod execution (e.g. due to an update), the system may or may not try to eventually evict the pod from its node.
+         */
+        export interface APIManagerSpecBackendCronSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecution {
+            /**
+             * Required. A list of node selector terms. The terms are ORed.
+             */
+            nodeSelectorTerms: outputs.apps.v1alpha1.APIManagerSpecBackendCronSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTerms[];
+        }
+
+        /**
+         * A null or empty node selector term matches no objects. The requirements of them are ANDed. The TopologySelectorTerm type implements a subset of the NodeSelectorTerm.
+         */
+        export interface APIManagerSpecBackendCronSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTerms {
+            /**
+             * A list of node selector requirements by node's labels.
+             */
+            matchExpressions?: outputs.apps.v1alpha1.APIManagerSpecBackendCronSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressions[];
+            /**
+             * A list of node selector requirements by node's fields.
+             */
+            matchFields?: outputs.apps.v1alpha1.APIManagerSpecBackendCronSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFields[];
+        }
+
+        /**
+         * A node selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecBackendCronSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressions {
+            /**
+             * The label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * Represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt.
+             */
+            operator: string;
+            /**
+             * An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. If the operator is Gt or Lt, the values array must have a single element, which will be interpreted as an integer. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * A node selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecBackendCronSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFields {
+            /**
+             * The label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * Represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt.
+             */
+            operator: string;
+            /**
+             * An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. If the operator is Gt or Lt, the values array must have a single element, which will be interpreted as an integer. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * Describes pod affinity scheduling rules (e.g. co-locate this pod in the same node, zone, etc. as some other pod(s)).
+         */
+        export interface APIManagerSpecBackendCronSpecAffinityPodAffinity {
+            /**
+             * The scheduler will prefer to schedule pods to nodes that satisfy the affinity expressions specified by this field, but it may choose a node that violates one or more of the expressions. The node that is most preferred is the one with the greatest sum of weights, i.e. for each node that meets all of the scheduling requirements (resource request, requiredDuringScheduling affinity expressions, etc.), compute a sum by iterating through the elements of this field and adding "weight" to the sum if the node has pods which matches the corresponding podAffinityTerm; the node(s) with the highest sum are the most preferred.
+             */
+            preferredDuringSchedulingIgnoredDuringExecution?: outputs.apps.v1alpha1.APIManagerSpecBackendCronSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecution[];
+            /**
+             * If the affinity requirements specified by this field are not met at scheduling time, the pod will not be scheduled onto the node. If the affinity requirements specified by this field cease to be met at some point during pod execution (e.g. due to a pod label update), the system may or may not try to eventually evict the pod from its node. When there are multiple elements, the lists of nodes corresponding to each podAffinityTerm are intersected, i.e. all terms must be satisfied.
+             */
+            requiredDuringSchedulingIgnoredDuringExecution?: outputs.apps.v1alpha1.APIManagerSpecBackendCronSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecution[];
+        }
+
+        /**
+         * The weights of all of the matched WeightedPodAffinityTerm fields are added per-node to find the most preferred node(s)
+         */
+        export interface APIManagerSpecBackendCronSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecution {
+            /**
+             * Required. A pod affinity term, associated with the corresponding weight.
+             */
+            podAffinityTerm: outputs.apps.v1alpha1.APIManagerSpecBackendCronSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTerm;
+            /**
+             * weight associated with matching the corresponding podAffinityTerm, in the range 1-100.
+             */
+            weight: number;
+        }
+
+        /**
+         * Required. A pod affinity term, associated with the corresponding weight.
+         */
+        export interface APIManagerSpecBackendCronSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTerm {
+            /**
+             * A label query over a set of resources, in this case pods.
+             */
+            labelSelector?: outputs.apps.v1alpha1.APIManagerSpecBackendCronSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelector;
+            /**
+             * namespaces specifies which namespaces the labelSelector applies to (matches against); null or empty list means "this pod's namespace"
+             */
+            namespaces?: string[];
+            /**
+             * This pod should be co-located (affinity) or not co-located (anti-affinity) with the pods matching the labelSelector in the specified namespaces, where co-located is defined as running on a node whose value of the label with key topologyKey matches that of any node on which any of the selected pods is running. Empty topologyKey is not allowed.
+             */
+            topologyKey: string;
+        }
+
+        /**
+         * A label query over a set of resources, in this case pods.
+         */
+        export interface APIManagerSpecBackendCronSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelector {
+            /**
+             * matchExpressions is a list of label selector requirements. The requirements are ANDed.
+             */
+            matchExpressions?: outputs.apps.v1alpha1.APIManagerSpecBackendCronSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressions[];
+            /**
+             * matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+             */
+            matchLabels?: {[key: string]: string};
+        }
+
+        /**
+         * A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecBackendCronSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressions {
+            /**
+             * key is the label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+             */
+            operator: string;
+            /**
+             * values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * Defines a set of pods (namely those matching the labelSelector relative to the given namespace(s)) that this pod should be co-located (affinity) or not co-located (anti-affinity) with, where co-located is defined as running on a node whose value of the label with key <topologyKey> matches that of any node on which a pod of the set of pods is running
+         */
+        export interface APIManagerSpecBackendCronSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecution {
+            /**
+             * A label query over a set of resources, in this case pods.
+             */
+            labelSelector?: outputs.apps.v1alpha1.APIManagerSpecBackendCronSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector;
+            /**
+             * namespaces specifies which namespaces the labelSelector applies to (matches against); null or empty list means "this pod's namespace"
+             */
+            namespaces?: string[];
+            /**
+             * This pod should be co-located (affinity) or not co-located (anti-affinity) with the pods matching the labelSelector in the specified namespaces, where co-located is defined as running on a node whose value of the label with key topologyKey matches that of any node on which any of the selected pods is running. Empty topologyKey is not allowed.
+             */
+            topologyKey: string;
+        }
+
+        /**
+         * A label query over a set of resources, in this case pods.
+         */
+        export interface APIManagerSpecBackendCronSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector {
+            /**
+             * matchExpressions is a list of label selector requirements. The requirements are ANDed.
+             */
+            matchExpressions?: outputs.apps.v1alpha1.APIManagerSpecBackendCronSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions[];
+            /**
+             * matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+             */
+            matchLabels?: {[key: string]: string};
+        }
+
+        /**
+         * A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecBackendCronSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions {
+            /**
+             * key is the label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+             */
+            operator: string;
+            /**
+             * values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * Describes pod anti-affinity scheduling rules (e.g. avoid putting this pod in the same node, zone, etc. as some other pod(s)).
+         */
+        export interface APIManagerSpecBackendCronSpecAffinityPodAntiAffinity {
+            /**
+             * The scheduler will prefer to schedule pods to nodes that satisfy the anti-affinity expressions specified by this field, but it may choose a node that violates one or more of the expressions. The node that is most preferred is the one with the greatest sum of weights, i.e. for each node that meets all of the scheduling requirements (resource request, requiredDuringScheduling anti-affinity expressions, etc.), compute a sum by iterating through the elements of this field and adding "weight" to the sum if the node has pods which matches the corresponding podAffinityTerm; the node(s) with the highest sum are the most preferred.
+             */
+            preferredDuringSchedulingIgnoredDuringExecution?: outputs.apps.v1alpha1.APIManagerSpecBackendCronSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecution[];
+            /**
+             * If the anti-affinity requirements specified by this field are not met at scheduling time, the pod will not be scheduled onto the node. If the anti-affinity requirements specified by this field cease to be met at some point during pod execution (e.g. due to a pod label update), the system may or may not try to eventually evict the pod from its node. When there are multiple elements, the lists of nodes corresponding to each podAffinityTerm are intersected, i.e. all terms must be satisfied.
+             */
+            requiredDuringSchedulingIgnoredDuringExecution?: outputs.apps.v1alpha1.APIManagerSpecBackendCronSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecution[];
+        }
+
+        /**
+         * The weights of all of the matched WeightedPodAffinityTerm fields are added per-node to find the most preferred node(s)
+         */
+        export interface APIManagerSpecBackendCronSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecution {
+            /**
+             * Required. A pod affinity term, associated with the corresponding weight.
+             */
+            podAffinityTerm: outputs.apps.v1alpha1.APIManagerSpecBackendCronSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTerm;
+            /**
+             * weight associated with matching the corresponding podAffinityTerm, in the range 1-100.
+             */
+            weight: number;
+        }
+
+        /**
+         * Required. A pod affinity term, associated with the corresponding weight.
+         */
+        export interface APIManagerSpecBackendCronSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTerm {
+            /**
+             * A label query over a set of resources, in this case pods.
+             */
+            labelSelector?: outputs.apps.v1alpha1.APIManagerSpecBackendCronSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelector;
+            /**
+             * namespaces specifies which namespaces the labelSelector applies to (matches against); null or empty list means "this pod's namespace"
+             */
+            namespaces?: string[];
+            /**
+             * This pod should be co-located (affinity) or not co-located (anti-affinity) with the pods matching the labelSelector in the specified namespaces, where co-located is defined as running on a node whose value of the label with key topologyKey matches that of any node on which any of the selected pods is running. Empty topologyKey is not allowed.
+             */
+            topologyKey: string;
+        }
+
+        /**
+         * A label query over a set of resources, in this case pods.
+         */
+        export interface APIManagerSpecBackendCronSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelector {
+            /**
+             * matchExpressions is a list of label selector requirements. The requirements are ANDed.
+             */
+            matchExpressions?: outputs.apps.v1alpha1.APIManagerSpecBackendCronSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressions[];
+            /**
+             * matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+             */
+            matchLabels?: {[key: string]: string};
+        }
+
+        /**
+         * A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecBackendCronSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressions {
+            /**
+             * key is the label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+             */
+            operator: string;
+            /**
+             * values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * Defines a set of pods (namely those matching the labelSelector relative to the given namespace(s)) that this pod should be co-located (affinity) or not co-located (anti-affinity) with, where co-located is defined as running on a node whose value of the label with key <topologyKey> matches that of any node on which a pod of the set of pods is running
+         */
+        export interface APIManagerSpecBackendCronSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecution {
+            /**
+             * A label query over a set of resources, in this case pods.
+             */
+            labelSelector?: outputs.apps.v1alpha1.APIManagerSpecBackendCronSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector;
+            /**
+             * namespaces specifies which namespaces the labelSelector applies to (matches against); null or empty list means "this pod's namespace"
+             */
+            namespaces?: string[];
+            /**
+             * This pod should be co-located (affinity) or not co-located (anti-affinity) with the pods matching the labelSelector in the specified namespaces, where co-located is defined as running on a node whose value of the label with key topologyKey matches that of any node on which any of the selected pods is running. Empty topologyKey is not allowed.
+             */
+            topologyKey: string;
+        }
+
+        /**
+         * A label query over a set of resources, in this case pods.
+         */
+        export interface APIManagerSpecBackendCronSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector {
+            /**
+             * matchExpressions is a list of label selector requirements. The requirements are ANDed.
+             */
+            matchExpressions?: outputs.apps.v1alpha1.APIManagerSpecBackendCronSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions[];
+            /**
+             * matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+             */
+            matchLabels?: {[key: string]: string};
+        }
+
+        /**
+         * A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecBackendCronSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions {
+            /**
+             * key is the label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+             */
+            operator: string;
+            /**
+             * values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * The pod this Toleration is attached to tolerates any taint that matches the triple <key,value,effect> using the matching operator <operator>.
+         */
+        export interface APIManagerSpecBackendCronSpecTolerations {
+            /**
+             * Effect indicates the taint effect to match. Empty means match all taint effects. When specified, allowed values are NoSchedule, PreferNoSchedule and NoExecute.
+             */
+            effect?: string;
+            /**
+             * Key is the taint key that the toleration applies to. Empty means match all taint keys. If the key is empty, operator must be Exists; this combination means to match all values and all keys.
+             */
+            key?: string;
+            /**
+             * Operator represents a key's relationship to the value. Valid operators are Exists and Equal. Defaults to Equal. Exists is equivalent to wildcard for value, so that a pod can tolerate all taints of a particular category.
+             */
+            operator?: string;
+            /**
+             * TolerationSeconds represents the period of time the toleration (which must be of effect NoExecute, otherwise this field is ignored) tolerates the taint. By default, it is not set, which means tolerate the taint forever (do not evict). Zero and negative values will be treated as 0 (evict immediately) by the system.
+             */
+            tolerationSeconds?: number;
+            /**
+             * Value is the taint value the toleration matches to. If the operator is Exists, the value should be empty, otherwise just a regular string.
+             */
+            value?: string;
         }
 
         export interface APIManagerSpecBackendListenerSpec {
+            /**
+             * Affinity is a group of affinity scheduling rules.
+             */
+            affinity?: outputs.apps.v1alpha1.APIManagerSpecBackendListenerSpecAffinity;
             replicas?: number;
+            tolerations?: outputs.apps.v1alpha1.APIManagerSpecBackendListenerSpecTolerations[];
+        }
+
+        /**
+         * Affinity is a group of affinity scheduling rules.
+         */
+        export interface APIManagerSpecBackendListenerSpecAffinity {
+            /**
+             * Describes node affinity scheduling rules for the pod.
+             */
+            nodeAffinity?: outputs.apps.v1alpha1.APIManagerSpecBackendListenerSpecAffinityNodeAffinity;
+            /**
+             * Describes pod affinity scheduling rules (e.g. co-locate this pod in the same node, zone, etc. as some other pod(s)).
+             */
+            podAffinity?: outputs.apps.v1alpha1.APIManagerSpecBackendListenerSpecAffinityPodAffinity;
+            /**
+             * Describes pod anti-affinity scheduling rules (e.g. avoid putting this pod in the same node, zone, etc. as some other pod(s)).
+             */
+            podAntiAffinity?: outputs.apps.v1alpha1.APIManagerSpecBackendListenerSpecAffinityPodAntiAffinity;
+        }
+
+        /**
+         * Describes node affinity scheduling rules for the pod.
+         */
+        export interface APIManagerSpecBackendListenerSpecAffinityNodeAffinity {
+            /**
+             * The scheduler will prefer to schedule pods to nodes that satisfy the affinity expressions specified by this field, but it may choose a node that violates one or more of the expressions. The node that is most preferred is the one with the greatest sum of weights, i.e. for each node that meets all of the scheduling requirements (resource request, requiredDuringScheduling affinity expressions, etc.), compute a sum by iterating through the elements of this field and adding "weight" to the sum if the node matches the corresponding matchExpressions; the node(s) with the highest sum are the most preferred.
+             */
+            preferredDuringSchedulingIgnoredDuringExecution?: outputs.apps.v1alpha1.APIManagerSpecBackendListenerSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecution[];
+            /**
+             * If the affinity requirements specified by this field are not met at scheduling time, the pod will not be scheduled onto the node. If the affinity requirements specified by this field cease to be met at some point during pod execution (e.g. due to an update), the system may or may not try to eventually evict the pod from its node.
+             */
+            requiredDuringSchedulingIgnoredDuringExecution?: outputs.apps.v1alpha1.APIManagerSpecBackendListenerSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecution;
+        }
+
+        /**
+         * An empty preferred scheduling term matches all objects with implicit weight 0 (i.e. it's a no-op). A null preferred scheduling term matches no objects (i.e. is also a no-op).
+         */
+        export interface APIManagerSpecBackendListenerSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecution {
+            /**
+             * A node selector term, associated with the corresponding weight.
+             */
+            preference: outputs.apps.v1alpha1.APIManagerSpecBackendListenerSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreference;
+            /**
+             * Weight associated with matching the corresponding nodeSelectorTerm, in the range 1-100.
+             */
+            weight: number;
+        }
+
+        /**
+         * A node selector term, associated with the corresponding weight.
+         */
+        export interface APIManagerSpecBackendListenerSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreference {
+            /**
+             * A list of node selector requirements by node's labels.
+             */
+            matchExpressions?: outputs.apps.v1alpha1.APIManagerSpecBackendListenerSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressions[];
+            /**
+             * A list of node selector requirements by node's fields.
+             */
+            matchFields?: outputs.apps.v1alpha1.APIManagerSpecBackendListenerSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFields[];
+        }
+
+        /**
+         * A node selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecBackendListenerSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressions {
+            /**
+             * The label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * Represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt.
+             */
+            operator: string;
+            /**
+             * An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. If the operator is Gt or Lt, the values array must have a single element, which will be interpreted as an integer. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * A node selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecBackendListenerSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFields {
+            /**
+             * The label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * Represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt.
+             */
+            operator: string;
+            /**
+             * An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. If the operator is Gt or Lt, the values array must have a single element, which will be interpreted as an integer. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * If the affinity requirements specified by this field are not met at scheduling time, the pod will not be scheduled onto the node. If the affinity requirements specified by this field cease to be met at some point during pod execution (e.g. due to an update), the system may or may not try to eventually evict the pod from its node.
+         */
+        export interface APIManagerSpecBackendListenerSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecution {
+            /**
+             * Required. A list of node selector terms. The terms are ORed.
+             */
+            nodeSelectorTerms: outputs.apps.v1alpha1.APIManagerSpecBackendListenerSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTerms[];
+        }
+
+        /**
+         * A null or empty node selector term matches no objects. The requirements of them are ANDed. The TopologySelectorTerm type implements a subset of the NodeSelectorTerm.
+         */
+        export interface APIManagerSpecBackendListenerSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTerms {
+            /**
+             * A list of node selector requirements by node's labels.
+             */
+            matchExpressions?: outputs.apps.v1alpha1.APIManagerSpecBackendListenerSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressions[];
+            /**
+             * A list of node selector requirements by node's fields.
+             */
+            matchFields?: outputs.apps.v1alpha1.APIManagerSpecBackendListenerSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFields[];
+        }
+
+        /**
+         * A node selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecBackendListenerSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressions {
+            /**
+             * The label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * Represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt.
+             */
+            operator: string;
+            /**
+             * An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. If the operator is Gt or Lt, the values array must have a single element, which will be interpreted as an integer. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * A node selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecBackendListenerSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFields {
+            /**
+             * The label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * Represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt.
+             */
+            operator: string;
+            /**
+             * An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. If the operator is Gt or Lt, the values array must have a single element, which will be interpreted as an integer. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * Describes pod affinity scheduling rules (e.g. co-locate this pod in the same node, zone, etc. as some other pod(s)).
+         */
+        export interface APIManagerSpecBackendListenerSpecAffinityPodAffinity {
+            /**
+             * The scheduler will prefer to schedule pods to nodes that satisfy the affinity expressions specified by this field, but it may choose a node that violates one or more of the expressions. The node that is most preferred is the one with the greatest sum of weights, i.e. for each node that meets all of the scheduling requirements (resource request, requiredDuringScheduling affinity expressions, etc.), compute a sum by iterating through the elements of this field and adding "weight" to the sum if the node has pods which matches the corresponding podAffinityTerm; the node(s) with the highest sum are the most preferred.
+             */
+            preferredDuringSchedulingIgnoredDuringExecution?: outputs.apps.v1alpha1.APIManagerSpecBackendListenerSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecution[];
+            /**
+             * If the affinity requirements specified by this field are not met at scheduling time, the pod will not be scheduled onto the node. If the affinity requirements specified by this field cease to be met at some point during pod execution (e.g. due to a pod label update), the system may or may not try to eventually evict the pod from its node. When there are multiple elements, the lists of nodes corresponding to each podAffinityTerm are intersected, i.e. all terms must be satisfied.
+             */
+            requiredDuringSchedulingIgnoredDuringExecution?: outputs.apps.v1alpha1.APIManagerSpecBackendListenerSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecution[];
+        }
+
+        /**
+         * The weights of all of the matched WeightedPodAffinityTerm fields are added per-node to find the most preferred node(s)
+         */
+        export interface APIManagerSpecBackendListenerSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecution {
+            /**
+             * Required. A pod affinity term, associated with the corresponding weight.
+             */
+            podAffinityTerm: outputs.apps.v1alpha1.APIManagerSpecBackendListenerSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTerm;
+            /**
+             * weight associated with matching the corresponding podAffinityTerm, in the range 1-100.
+             */
+            weight: number;
+        }
+
+        /**
+         * Required. A pod affinity term, associated with the corresponding weight.
+         */
+        export interface APIManagerSpecBackendListenerSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTerm {
+            /**
+             * A label query over a set of resources, in this case pods.
+             */
+            labelSelector?: outputs.apps.v1alpha1.APIManagerSpecBackendListenerSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelector;
+            /**
+             * namespaces specifies which namespaces the labelSelector applies to (matches against); null or empty list means "this pod's namespace"
+             */
+            namespaces?: string[];
+            /**
+             * This pod should be co-located (affinity) or not co-located (anti-affinity) with the pods matching the labelSelector in the specified namespaces, where co-located is defined as running on a node whose value of the label with key topologyKey matches that of any node on which any of the selected pods is running. Empty topologyKey is not allowed.
+             */
+            topologyKey: string;
+        }
+
+        /**
+         * A label query over a set of resources, in this case pods.
+         */
+        export interface APIManagerSpecBackendListenerSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelector {
+            /**
+             * matchExpressions is a list of label selector requirements. The requirements are ANDed.
+             */
+            matchExpressions?: outputs.apps.v1alpha1.APIManagerSpecBackendListenerSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressions[];
+            /**
+             * matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+             */
+            matchLabels?: {[key: string]: string};
+        }
+
+        /**
+         * A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecBackendListenerSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressions {
+            /**
+             * key is the label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+             */
+            operator: string;
+            /**
+             * values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * Defines a set of pods (namely those matching the labelSelector relative to the given namespace(s)) that this pod should be co-located (affinity) or not co-located (anti-affinity) with, where co-located is defined as running on a node whose value of the label with key <topologyKey> matches that of any node on which a pod of the set of pods is running
+         */
+        export interface APIManagerSpecBackendListenerSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecution {
+            /**
+             * A label query over a set of resources, in this case pods.
+             */
+            labelSelector?: outputs.apps.v1alpha1.APIManagerSpecBackendListenerSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector;
+            /**
+             * namespaces specifies which namespaces the labelSelector applies to (matches against); null or empty list means "this pod's namespace"
+             */
+            namespaces?: string[];
+            /**
+             * This pod should be co-located (affinity) or not co-located (anti-affinity) with the pods matching the labelSelector in the specified namespaces, where co-located is defined as running on a node whose value of the label with key topologyKey matches that of any node on which any of the selected pods is running. Empty topologyKey is not allowed.
+             */
+            topologyKey: string;
+        }
+
+        /**
+         * A label query over a set of resources, in this case pods.
+         */
+        export interface APIManagerSpecBackendListenerSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector {
+            /**
+             * matchExpressions is a list of label selector requirements. The requirements are ANDed.
+             */
+            matchExpressions?: outputs.apps.v1alpha1.APIManagerSpecBackendListenerSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions[];
+            /**
+             * matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+             */
+            matchLabels?: {[key: string]: string};
+        }
+
+        /**
+         * A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecBackendListenerSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions {
+            /**
+             * key is the label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+             */
+            operator: string;
+            /**
+             * values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * Describes pod anti-affinity scheduling rules (e.g. avoid putting this pod in the same node, zone, etc. as some other pod(s)).
+         */
+        export interface APIManagerSpecBackendListenerSpecAffinityPodAntiAffinity {
+            /**
+             * The scheduler will prefer to schedule pods to nodes that satisfy the anti-affinity expressions specified by this field, but it may choose a node that violates one or more of the expressions. The node that is most preferred is the one with the greatest sum of weights, i.e. for each node that meets all of the scheduling requirements (resource request, requiredDuringScheduling anti-affinity expressions, etc.), compute a sum by iterating through the elements of this field and adding "weight" to the sum if the node has pods which matches the corresponding podAffinityTerm; the node(s) with the highest sum are the most preferred.
+             */
+            preferredDuringSchedulingIgnoredDuringExecution?: outputs.apps.v1alpha1.APIManagerSpecBackendListenerSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecution[];
+            /**
+             * If the anti-affinity requirements specified by this field are not met at scheduling time, the pod will not be scheduled onto the node. If the anti-affinity requirements specified by this field cease to be met at some point during pod execution (e.g. due to a pod label update), the system may or may not try to eventually evict the pod from its node. When there are multiple elements, the lists of nodes corresponding to each podAffinityTerm are intersected, i.e. all terms must be satisfied.
+             */
+            requiredDuringSchedulingIgnoredDuringExecution?: outputs.apps.v1alpha1.APIManagerSpecBackendListenerSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecution[];
+        }
+
+        /**
+         * The weights of all of the matched WeightedPodAffinityTerm fields are added per-node to find the most preferred node(s)
+         */
+        export interface APIManagerSpecBackendListenerSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecution {
+            /**
+             * Required. A pod affinity term, associated with the corresponding weight.
+             */
+            podAffinityTerm: outputs.apps.v1alpha1.APIManagerSpecBackendListenerSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTerm;
+            /**
+             * weight associated with matching the corresponding podAffinityTerm, in the range 1-100.
+             */
+            weight: number;
+        }
+
+        /**
+         * Required. A pod affinity term, associated with the corresponding weight.
+         */
+        export interface APIManagerSpecBackendListenerSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTerm {
+            /**
+             * A label query over a set of resources, in this case pods.
+             */
+            labelSelector?: outputs.apps.v1alpha1.APIManagerSpecBackendListenerSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelector;
+            /**
+             * namespaces specifies which namespaces the labelSelector applies to (matches against); null or empty list means "this pod's namespace"
+             */
+            namespaces?: string[];
+            /**
+             * This pod should be co-located (affinity) or not co-located (anti-affinity) with the pods matching the labelSelector in the specified namespaces, where co-located is defined as running on a node whose value of the label with key topologyKey matches that of any node on which any of the selected pods is running. Empty topologyKey is not allowed.
+             */
+            topologyKey: string;
+        }
+
+        /**
+         * A label query over a set of resources, in this case pods.
+         */
+        export interface APIManagerSpecBackendListenerSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelector {
+            /**
+             * matchExpressions is a list of label selector requirements. The requirements are ANDed.
+             */
+            matchExpressions?: outputs.apps.v1alpha1.APIManagerSpecBackendListenerSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressions[];
+            /**
+             * matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+             */
+            matchLabels?: {[key: string]: string};
+        }
+
+        /**
+         * A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecBackendListenerSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressions {
+            /**
+             * key is the label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+             */
+            operator: string;
+            /**
+             * values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * Defines a set of pods (namely those matching the labelSelector relative to the given namespace(s)) that this pod should be co-located (affinity) or not co-located (anti-affinity) with, where co-located is defined as running on a node whose value of the label with key <topologyKey> matches that of any node on which a pod of the set of pods is running
+         */
+        export interface APIManagerSpecBackendListenerSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecution {
+            /**
+             * A label query over a set of resources, in this case pods.
+             */
+            labelSelector?: outputs.apps.v1alpha1.APIManagerSpecBackendListenerSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector;
+            /**
+             * namespaces specifies which namespaces the labelSelector applies to (matches against); null or empty list means "this pod's namespace"
+             */
+            namespaces?: string[];
+            /**
+             * This pod should be co-located (affinity) or not co-located (anti-affinity) with the pods matching the labelSelector in the specified namespaces, where co-located is defined as running on a node whose value of the label with key topologyKey matches that of any node on which any of the selected pods is running. Empty topologyKey is not allowed.
+             */
+            topologyKey: string;
+        }
+
+        /**
+         * A label query over a set of resources, in this case pods.
+         */
+        export interface APIManagerSpecBackendListenerSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector {
+            /**
+             * matchExpressions is a list of label selector requirements. The requirements are ANDed.
+             */
+            matchExpressions?: outputs.apps.v1alpha1.APIManagerSpecBackendListenerSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions[];
+            /**
+             * matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+             */
+            matchLabels?: {[key: string]: string};
+        }
+
+        /**
+         * A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecBackendListenerSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions {
+            /**
+             * key is the label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+             */
+            operator: string;
+            /**
+             * values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * The pod this Toleration is attached to tolerates any taint that matches the triple <key,value,effect> using the matching operator <operator>.
+         */
+        export interface APIManagerSpecBackendListenerSpecTolerations {
+            /**
+             * Effect indicates the taint effect to match. Empty means match all taint effects. When specified, allowed values are NoSchedule, PreferNoSchedule and NoExecute.
+             */
+            effect?: string;
+            /**
+             * Key is the taint key that the toleration applies to. Empty means match all taint keys. If the key is empty, operator must be Exists; this combination means to match all values and all keys.
+             */
+            key?: string;
+            /**
+             * Operator represents a key's relationship to the value. Valid operators are Exists and Equal. Defaults to Equal. Exists is equivalent to wildcard for value, so that a pod can tolerate all taints of a particular category.
+             */
+            operator?: string;
+            /**
+             * TolerationSeconds represents the period of time the toleration (which must be of effect NoExecute, otherwise this field is ignored) tolerates the taint. By default, it is not set, which means tolerate the taint forever (do not evict). Zero and negative values will be treated as 0 (evict immediately) by the system.
+             */
+            tolerationSeconds?: number;
+            /**
+             * Value is the taint value the toleration matches to. If the operator is Exists, the value should be empty, otherwise just a regular string.
+             */
+            value?: string;
+        }
+
+        /**
+         * Affinity is a group of affinity scheduling rules.
+         */
+        export interface APIManagerSpecBackendRedisAffinity {
+            /**
+             * Describes node affinity scheduling rules for the pod.
+             */
+            nodeAffinity?: outputs.apps.v1alpha1.APIManagerSpecBackendRedisAffinityNodeAffinity;
+            /**
+             * Describes pod affinity scheduling rules (e.g. co-locate this pod in the same node, zone, etc. as some other pod(s)).
+             */
+            podAffinity?: outputs.apps.v1alpha1.APIManagerSpecBackendRedisAffinityPodAffinity;
+            /**
+             * Describes pod anti-affinity scheduling rules (e.g. avoid putting this pod in the same node, zone, etc. as some other pod(s)).
+             */
+            podAntiAffinity?: outputs.apps.v1alpha1.APIManagerSpecBackendRedisAffinityPodAntiAffinity;
+        }
+
+        /**
+         * Describes node affinity scheduling rules for the pod.
+         */
+        export interface APIManagerSpecBackendRedisAffinityNodeAffinity {
+            /**
+             * The scheduler will prefer to schedule pods to nodes that satisfy the affinity expressions specified by this field, but it may choose a node that violates one or more of the expressions. The node that is most preferred is the one with the greatest sum of weights, i.e. for each node that meets all of the scheduling requirements (resource request, requiredDuringScheduling affinity expressions, etc.), compute a sum by iterating through the elements of this field and adding "weight" to the sum if the node matches the corresponding matchExpressions; the node(s) with the highest sum are the most preferred.
+             */
+            preferredDuringSchedulingIgnoredDuringExecution?: outputs.apps.v1alpha1.APIManagerSpecBackendRedisAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecution[];
+            /**
+             * If the affinity requirements specified by this field are not met at scheduling time, the pod will not be scheduled onto the node. If the affinity requirements specified by this field cease to be met at some point during pod execution (e.g. due to an update), the system may or may not try to eventually evict the pod from its node.
+             */
+            requiredDuringSchedulingIgnoredDuringExecution?: outputs.apps.v1alpha1.APIManagerSpecBackendRedisAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecution;
+        }
+
+        /**
+         * An empty preferred scheduling term matches all objects with implicit weight 0 (i.e. it's a no-op). A null preferred scheduling term matches no objects (i.e. is also a no-op).
+         */
+        export interface APIManagerSpecBackendRedisAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecution {
+            /**
+             * A node selector term, associated with the corresponding weight.
+             */
+            preference: outputs.apps.v1alpha1.APIManagerSpecBackendRedisAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreference;
+            /**
+             * Weight associated with matching the corresponding nodeSelectorTerm, in the range 1-100.
+             */
+            weight: number;
+        }
+
+        /**
+         * A node selector term, associated with the corresponding weight.
+         */
+        export interface APIManagerSpecBackendRedisAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreference {
+            /**
+             * A list of node selector requirements by node's labels.
+             */
+            matchExpressions?: outputs.apps.v1alpha1.APIManagerSpecBackendRedisAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressions[];
+            /**
+             * A list of node selector requirements by node's fields.
+             */
+            matchFields?: outputs.apps.v1alpha1.APIManagerSpecBackendRedisAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFields[];
+        }
+
+        /**
+         * A node selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecBackendRedisAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressions {
+            /**
+             * The label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * Represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt.
+             */
+            operator: string;
+            /**
+             * An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. If the operator is Gt or Lt, the values array must have a single element, which will be interpreted as an integer. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * A node selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecBackendRedisAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFields {
+            /**
+             * The label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * Represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt.
+             */
+            operator: string;
+            /**
+             * An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. If the operator is Gt or Lt, the values array must have a single element, which will be interpreted as an integer. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * If the affinity requirements specified by this field are not met at scheduling time, the pod will not be scheduled onto the node. If the affinity requirements specified by this field cease to be met at some point during pod execution (e.g. due to an update), the system may or may not try to eventually evict the pod from its node.
+         */
+        export interface APIManagerSpecBackendRedisAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecution {
+            /**
+             * Required. A list of node selector terms. The terms are ORed.
+             */
+            nodeSelectorTerms: outputs.apps.v1alpha1.APIManagerSpecBackendRedisAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTerms[];
+        }
+
+        /**
+         * A null or empty node selector term matches no objects. The requirements of them are ANDed. The TopologySelectorTerm type implements a subset of the NodeSelectorTerm.
+         */
+        export interface APIManagerSpecBackendRedisAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTerms {
+            /**
+             * A list of node selector requirements by node's labels.
+             */
+            matchExpressions?: outputs.apps.v1alpha1.APIManagerSpecBackendRedisAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressions[];
+            /**
+             * A list of node selector requirements by node's fields.
+             */
+            matchFields?: outputs.apps.v1alpha1.APIManagerSpecBackendRedisAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFields[];
+        }
+
+        /**
+         * A node selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecBackendRedisAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressions {
+            /**
+             * The label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * Represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt.
+             */
+            operator: string;
+            /**
+             * An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. If the operator is Gt or Lt, the values array must have a single element, which will be interpreted as an integer. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * A node selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecBackendRedisAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFields {
+            /**
+             * The label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * Represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt.
+             */
+            operator: string;
+            /**
+             * An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. If the operator is Gt or Lt, the values array must have a single element, which will be interpreted as an integer. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * Describes pod affinity scheduling rules (e.g. co-locate this pod in the same node, zone, etc. as some other pod(s)).
+         */
+        export interface APIManagerSpecBackendRedisAffinityPodAffinity {
+            /**
+             * The scheduler will prefer to schedule pods to nodes that satisfy the affinity expressions specified by this field, but it may choose a node that violates one or more of the expressions. The node that is most preferred is the one with the greatest sum of weights, i.e. for each node that meets all of the scheduling requirements (resource request, requiredDuringScheduling affinity expressions, etc.), compute a sum by iterating through the elements of this field and adding "weight" to the sum if the node has pods which matches the corresponding podAffinityTerm; the node(s) with the highest sum are the most preferred.
+             */
+            preferredDuringSchedulingIgnoredDuringExecution?: outputs.apps.v1alpha1.APIManagerSpecBackendRedisAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecution[];
+            /**
+             * If the affinity requirements specified by this field are not met at scheduling time, the pod will not be scheduled onto the node. If the affinity requirements specified by this field cease to be met at some point during pod execution (e.g. due to a pod label update), the system may or may not try to eventually evict the pod from its node. When there are multiple elements, the lists of nodes corresponding to each podAffinityTerm are intersected, i.e. all terms must be satisfied.
+             */
+            requiredDuringSchedulingIgnoredDuringExecution?: outputs.apps.v1alpha1.APIManagerSpecBackendRedisAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecution[];
+        }
+
+        /**
+         * The weights of all of the matched WeightedPodAffinityTerm fields are added per-node to find the most preferred node(s)
+         */
+        export interface APIManagerSpecBackendRedisAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecution {
+            /**
+             * Required. A pod affinity term, associated with the corresponding weight.
+             */
+            podAffinityTerm: outputs.apps.v1alpha1.APIManagerSpecBackendRedisAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTerm;
+            /**
+             * weight associated with matching the corresponding podAffinityTerm, in the range 1-100.
+             */
+            weight: number;
+        }
+
+        /**
+         * Required. A pod affinity term, associated with the corresponding weight.
+         */
+        export interface APIManagerSpecBackendRedisAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTerm {
+            /**
+             * A label query over a set of resources, in this case pods.
+             */
+            labelSelector?: outputs.apps.v1alpha1.APIManagerSpecBackendRedisAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelector;
+            /**
+             * namespaces specifies which namespaces the labelSelector applies to (matches against); null or empty list means "this pod's namespace"
+             */
+            namespaces?: string[];
+            /**
+             * This pod should be co-located (affinity) or not co-located (anti-affinity) with the pods matching the labelSelector in the specified namespaces, where co-located is defined as running on a node whose value of the label with key topologyKey matches that of any node on which any of the selected pods is running. Empty topologyKey is not allowed.
+             */
+            topologyKey: string;
+        }
+
+        /**
+         * A label query over a set of resources, in this case pods.
+         */
+        export interface APIManagerSpecBackendRedisAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelector {
+            /**
+             * matchExpressions is a list of label selector requirements. The requirements are ANDed.
+             */
+            matchExpressions?: outputs.apps.v1alpha1.APIManagerSpecBackendRedisAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressions[];
+            /**
+             * matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+             */
+            matchLabels?: {[key: string]: string};
+        }
+
+        /**
+         * A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecBackendRedisAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressions {
+            /**
+             * key is the label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+             */
+            operator: string;
+            /**
+             * values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * Defines a set of pods (namely those matching the labelSelector relative to the given namespace(s)) that this pod should be co-located (affinity) or not co-located (anti-affinity) with, where co-located is defined as running on a node whose value of the label with key <topologyKey> matches that of any node on which a pod of the set of pods is running
+         */
+        export interface APIManagerSpecBackendRedisAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecution {
+            /**
+             * A label query over a set of resources, in this case pods.
+             */
+            labelSelector?: outputs.apps.v1alpha1.APIManagerSpecBackendRedisAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector;
+            /**
+             * namespaces specifies which namespaces the labelSelector applies to (matches against); null or empty list means "this pod's namespace"
+             */
+            namespaces?: string[];
+            /**
+             * This pod should be co-located (affinity) or not co-located (anti-affinity) with the pods matching the labelSelector in the specified namespaces, where co-located is defined as running on a node whose value of the label with key topologyKey matches that of any node on which any of the selected pods is running. Empty topologyKey is not allowed.
+             */
+            topologyKey: string;
+        }
+
+        /**
+         * A label query over a set of resources, in this case pods.
+         */
+        export interface APIManagerSpecBackendRedisAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector {
+            /**
+             * matchExpressions is a list of label selector requirements. The requirements are ANDed.
+             */
+            matchExpressions?: outputs.apps.v1alpha1.APIManagerSpecBackendRedisAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions[];
+            /**
+             * matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+             */
+            matchLabels?: {[key: string]: string};
+        }
+
+        /**
+         * A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecBackendRedisAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions {
+            /**
+             * key is the label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+             */
+            operator: string;
+            /**
+             * values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * Describes pod anti-affinity scheduling rules (e.g. avoid putting this pod in the same node, zone, etc. as some other pod(s)).
+         */
+        export interface APIManagerSpecBackendRedisAffinityPodAntiAffinity {
+            /**
+             * The scheduler will prefer to schedule pods to nodes that satisfy the anti-affinity expressions specified by this field, but it may choose a node that violates one or more of the expressions. The node that is most preferred is the one with the greatest sum of weights, i.e. for each node that meets all of the scheduling requirements (resource request, requiredDuringScheduling anti-affinity expressions, etc.), compute a sum by iterating through the elements of this field and adding "weight" to the sum if the node has pods which matches the corresponding podAffinityTerm; the node(s) with the highest sum are the most preferred.
+             */
+            preferredDuringSchedulingIgnoredDuringExecution?: outputs.apps.v1alpha1.APIManagerSpecBackendRedisAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecution[];
+            /**
+             * If the anti-affinity requirements specified by this field are not met at scheduling time, the pod will not be scheduled onto the node. If the anti-affinity requirements specified by this field cease to be met at some point during pod execution (e.g. due to a pod label update), the system may or may not try to eventually evict the pod from its node. When there are multiple elements, the lists of nodes corresponding to each podAffinityTerm are intersected, i.e. all terms must be satisfied.
+             */
+            requiredDuringSchedulingIgnoredDuringExecution?: outputs.apps.v1alpha1.APIManagerSpecBackendRedisAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecution[];
+        }
+
+        /**
+         * The weights of all of the matched WeightedPodAffinityTerm fields are added per-node to find the most preferred node(s)
+         */
+        export interface APIManagerSpecBackendRedisAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecution {
+            /**
+             * Required. A pod affinity term, associated with the corresponding weight.
+             */
+            podAffinityTerm: outputs.apps.v1alpha1.APIManagerSpecBackendRedisAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTerm;
+            /**
+             * weight associated with matching the corresponding podAffinityTerm, in the range 1-100.
+             */
+            weight: number;
+        }
+
+        /**
+         * Required. A pod affinity term, associated with the corresponding weight.
+         */
+        export interface APIManagerSpecBackendRedisAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTerm {
+            /**
+             * A label query over a set of resources, in this case pods.
+             */
+            labelSelector?: outputs.apps.v1alpha1.APIManagerSpecBackendRedisAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelector;
+            /**
+             * namespaces specifies which namespaces the labelSelector applies to (matches against); null or empty list means "this pod's namespace"
+             */
+            namespaces?: string[];
+            /**
+             * This pod should be co-located (affinity) or not co-located (anti-affinity) with the pods matching the labelSelector in the specified namespaces, where co-located is defined as running on a node whose value of the label with key topologyKey matches that of any node on which any of the selected pods is running. Empty topologyKey is not allowed.
+             */
+            topologyKey: string;
+        }
+
+        /**
+         * A label query over a set of resources, in this case pods.
+         */
+        export interface APIManagerSpecBackendRedisAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelector {
+            /**
+             * matchExpressions is a list of label selector requirements. The requirements are ANDed.
+             */
+            matchExpressions?: outputs.apps.v1alpha1.APIManagerSpecBackendRedisAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressions[];
+            /**
+             * matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+             */
+            matchLabels?: {[key: string]: string};
+        }
+
+        /**
+         * A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecBackendRedisAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressions {
+            /**
+             * key is the label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+             */
+            operator: string;
+            /**
+             * values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * Defines a set of pods (namely those matching the labelSelector relative to the given namespace(s)) that this pod should be co-located (affinity) or not co-located (anti-affinity) with, where co-located is defined as running on a node whose value of the label with key <topologyKey> matches that of any node on which a pod of the set of pods is running
+         */
+        export interface APIManagerSpecBackendRedisAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecution {
+            /**
+             * A label query over a set of resources, in this case pods.
+             */
+            labelSelector?: outputs.apps.v1alpha1.APIManagerSpecBackendRedisAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector;
+            /**
+             * namespaces specifies which namespaces the labelSelector applies to (matches against); null or empty list means "this pod's namespace"
+             */
+            namespaces?: string[];
+            /**
+             * This pod should be co-located (affinity) or not co-located (anti-affinity) with the pods matching the labelSelector in the specified namespaces, where co-located is defined as running on a node whose value of the label with key topologyKey matches that of any node on which any of the selected pods is running. Empty topologyKey is not allowed.
+             */
+            topologyKey: string;
+        }
+
+        /**
+         * A label query over a set of resources, in this case pods.
+         */
+        export interface APIManagerSpecBackendRedisAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector {
+            /**
+             * matchExpressions is a list of label selector requirements. The requirements are ANDed.
+             */
+            matchExpressions?: outputs.apps.v1alpha1.APIManagerSpecBackendRedisAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions[];
+            /**
+             * matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+             */
+            matchLabels?: {[key: string]: string};
+        }
+
+        /**
+         * A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecBackendRedisAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions {
+            /**
+             * key is the label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+             */
+            operator: string;
+            /**
+             * values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        export interface APIManagerSpecBackendRedisPersistentVolumeClaim {
+            storageClassName?: string;
+        }
+
+        /**
+         * The pod this Toleration is attached to tolerates any taint that matches the triple <key,value,effect> using the matching operator <operator>.
+         */
+        export interface APIManagerSpecBackendRedisTolerations {
+            /**
+             * Effect indicates the taint effect to match. Empty means match all taint effects. When specified, allowed values are NoSchedule, PreferNoSchedule and NoExecute.
+             */
+            effect?: string;
+            /**
+             * Key is the taint key that the toleration applies to. Empty means match all taint keys. If the key is empty, operator must be Exists; this combination means to match all values and all keys.
+             */
+            key?: string;
+            /**
+             * Operator represents a key's relationship to the value. Valid operators are Exists and Equal. Defaults to Equal. Exists is equivalent to wildcard for value, so that a pod can tolerate all taints of a particular category.
+             */
+            operator?: string;
+            /**
+             * TolerationSeconds represents the period of time the toleration (which must be of effect NoExecute, otherwise this field is ignored) tolerates the taint. By default, it is not set, which means tolerate the taint forever (do not evict). Zero and negative values will be treated as 0 (evict immediately) by the system.
+             */
+            tolerationSeconds?: number;
+            /**
+             * Value is the taint value the toleration matches to. If the operator is Exists, the value should be empty, otherwise just a regular string.
+             */
+            value?: string;
         }
 
         export interface APIManagerSpecBackendWorkerSpec {
+            /**
+             * Affinity is a group of affinity scheduling rules.
+             */
+            affinity?: outputs.apps.v1alpha1.APIManagerSpecBackendWorkerSpecAffinity;
             replicas?: number;
+            tolerations?: outputs.apps.v1alpha1.APIManagerSpecBackendWorkerSpecTolerations[];
+        }
+
+        /**
+         * Affinity is a group of affinity scheduling rules.
+         */
+        export interface APIManagerSpecBackendWorkerSpecAffinity {
+            /**
+             * Describes node affinity scheduling rules for the pod.
+             */
+            nodeAffinity?: outputs.apps.v1alpha1.APIManagerSpecBackendWorkerSpecAffinityNodeAffinity;
+            /**
+             * Describes pod affinity scheduling rules (e.g. co-locate this pod in the same node, zone, etc. as some other pod(s)).
+             */
+            podAffinity?: outputs.apps.v1alpha1.APIManagerSpecBackendWorkerSpecAffinityPodAffinity;
+            /**
+             * Describes pod anti-affinity scheduling rules (e.g. avoid putting this pod in the same node, zone, etc. as some other pod(s)).
+             */
+            podAntiAffinity?: outputs.apps.v1alpha1.APIManagerSpecBackendWorkerSpecAffinityPodAntiAffinity;
+        }
+
+        /**
+         * Describes node affinity scheduling rules for the pod.
+         */
+        export interface APIManagerSpecBackendWorkerSpecAffinityNodeAffinity {
+            /**
+             * The scheduler will prefer to schedule pods to nodes that satisfy the affinity expressions specified by this field, but it may choose a node that violates one or more of the expressions. The node that is most preferred is the one with the greatest sum of weights, i.e. for each node that meets all of the scheduling requirements (resource request, requiredDuringScheduling affinity expressions, etc.), compute a sum by iterating through the elements of this field and adding "weight" to the sum if the node matches the corresponding matchExpressions; the node(s) with the highest sum are the most preferred.
+             */
+            preferredDuringSchedulingIgnoredDuringExecution?: outputs.apps.v1alpha1.APIManagerSpecBackendWorkerSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecution[];
+            /**
+             * If the affinity requirements specified by this field are not met at scheduling time, the pod will not be scheduled onto the node. If the affinity requirements specified by this field cease to be met at some point during pod execution (e.g. due to an update), the system may or may not try to eventually evict the pod from its node.
+             */
+            requiredDuringSchedulingIgnoredDuringExecution?: outputs.apps.v1alpha1.APIManagerSpecBackendWorkerSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecution;
+        }
+
+        /**
+         * An empty preferred scheduling term matches all objects with implicit weight 0 (i.e. it's a no-op). A null preferred scheduling term matches no objects (i.e. is also a no-op).
+         */
+        export interface APIManagerSpecBackendWorkerSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecution {
+            /**
+             * A node selector term, associated with the corresponding weight.
+             */
+            preference: outputs.apps.v1alpha1.APIManagerSpecBackendWorkerSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreference;
+            /**
+             * Weight associated with matching the corresponding nodeSelectorTerm, in the range 1-100.
+             */
+            weight: number;
+        }
+
+        /**
+         * A node selector term, associated with the corresponding weight.
+         */
+        export interface APIManagerSpecBackendWorkerSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreference {
+            /**
+             * A list of node selector requirements by node's labels.
+             */
+            matchExpressions?: outputs.apps.v1alpha1.APIManagerSpecBackendWorkerSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressions[];
+            /**
+             * A list of node selector requirements by node's fields.
+             */
+            matchFields?: outputs.apps.v1alpha1.APIManagerSpecBackendWorkerSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFields[];
+        }
+
+        /**
+         * A node selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecBackendWorkerSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressions {
+            /**
+             * The label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * Represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt.
+             */
+            operator: string;
+            /**
+             * An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. If the operator is Gt or Lt, the values array must have a single element, which will be interpreted as an integer. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * A node selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecBackendWorkerSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFields {
+            /**
+             * The label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * Represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt.
+             */
+            operator: string;
+            /**
+             * An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. If the operator is Gt or Lt, the values array must have a single element, which will be interpreted as an integer. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * If the affinity requirements specified by this field are not met at scheduling time, the pod will not be scheduled onto the node. If the affinity requirements specified by this field cease to be met at some point during pod execution (e.g. due to an update), the system may or may not try to eventually evict the pod from its node.
+         */
+        export interface APIManagerSpecBackendWorkerSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecution {
+            /**
+             * Required. A list of node selector terms. The terms are ORed.
+             */
+            nodeSelectorTerms: outputs.apps.v1alpha1.APIManagerSpecBackendWorkerSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTerms[];
+        }
+
+        /**
+         * A null or empty node selector term matches no objects. The requirements of them are ANDed. The TopologySelectorTerm type implements a subset of the NodeSelectorTerm.
+         */
+        export interface APIManagerSpecBackendWorkerSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTerms {
+            /**
+             * A list of node selector requirements by node's labels.
+             */
+            matchExpressions?: outputs.apps.v1alpha1.APIManagerSpecBackendWorkerSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressions[];
+            /**
+             * A list of node selector requirements by node's fields.
+             */
+            matchFields?: outputs.apps.v1alpha1.APIManagerSpecBackendWorkerSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFields[];
+        }
+
+        /**
+         * A node selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecBackendWorkerSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressions {
+            /**
+             * The label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * Represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt.
+             */
+            operator: string;
+            /**
+             * An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. If the operator is Gt or Lt, the values array must have a single element, which will be interpreted as an integer. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * A node selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecBackendWorkerSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFields {
+            /**
+             * The label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * Represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt.
+             */
+            operator: string;
+            /**
+             * An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. If the operator is Gt or Lt, the values array must have a single element, which will be interpreted as an integer. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * Describes pod affinity scheduling rules (e.g. co-locate this pod in the same node, zone, etc. as some other pod(s)).
+         */
+        export interface APIManagerSpecBackendWorkerSpecAffinityPodAffinity {
+            /**
+             * The scheduler will prefer to schedule pods to nodes that satisfy the affinity expressions specified by this field, but it may choose a node that violates one or more of the expressions. The node that is most preferred is the one with the greatest sum of weights, i.e. for each node that meets all of the scheduling requirements (resource request, requiredDuringScheduling affinity expressions, etc.), compute a sum by iterating through the elements of this field and adding "weight" to the sum if the node has pods which matches the corresponding podAffinityTerm; the node(s) with the highest sum are the most preferred.
+             */
+            preferredDuringSchedulingIgnoredDuringExecution?: outputs.apps.v1alpha1.APIManagerSpecBackendWorkerSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecution[];
+            /**
+             * If the affinity requirements specified by this field are not met at scheduling time, the pod will not be scheduled onto the node. If the affinity requirements specified by this field cease to be met at some point during pod execution (e.g. due to a pod label update), the system may or may not try to eventually evict the pod from its node. When there are multiple elements, the lists of nodes corresponding to each podAffinityTerm are intersected, i.e. all terms must be satisfied.
+             */
+            requiredDuringSchedulingIgnoredDuringExecution?: outputs.apps.v1alpha1.APIManagerSpecBackendWorkerSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecution[];
+        }
+
+        /**
+         * The weights of all of the matched WeightedPodAffinityTerm fields are added per-node to find the most preferred node(s)
+         */
+        export interface APIManagerSpecBackendWorkerSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecution {
+            /**
+             * Required. A pod affinity term, associated with the corresponding weight.
+             */
+            podAffinityTerm: outputs.apps.v1alpha1.APIManagerSpecBackendWorkerSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTerm;
+            /**
+             * weight associated with matching the corresponding podAffinityTerm, in the range 1-100.
+             */
+            weight: number;
+        }
+
+        /**
+         * Required. A pod affinity term, associated with the corresponding weight.
+         */
+        export interface APIManagerSpecBackendWorkerSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTerm {
+            /**
+             * A label query over a set of resources, in this case pods.
+             */
+            labelSelector?: outputs.apps.v1alpha1.APIManagerSpecBackendWorkerSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelector;
+            /**
+             * namespaces specifies which namespaces the labelSelector applies to (matches against); null or empty list means "this pod's namespace"
+             */
+            namespaces?: string[];
+            /**
+             * This pod should be co-located (affinity) or not co-located (anti-affinity) with the pods matching the labelSelector in the specified namespaces, where co-located is defined as running on a node whose value of the label with key topologyKey matches that of any node on which any of the selected pods is running. Empty topologyKey is not allowed.
+             */
+            topologyKey: string;
+        }
+
+        /**
+         * A label query over a set of resources, in this case pods.
+         */
+        export interface APIManagerSpecBackendWorkerSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelector {
+            /**
+             * matchExpressions is a list of label selector requirements. The requirements are ANDed.
+             */
+            matchExpressions?: outputs.apps.v1alpha1.APIManagerSpecBackendWorkerSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressions[];
+            /**
+             * matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+             */
+            matchLabels?: {[key: string]: string};
+        }
+
+        /**
+         * A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecBackendWorkerSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressions {
+            /**
+             * key is the label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+             */
+            operator: string;
+            /**
+             * values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * Defines a set of pods (namely those matching the labelSelector relative to the given namespace(s)) that this pod should be co-located (affinity) or not co-located (anti-affinity) with, where co-located is defined as running on a node whose value of the label with key <topologyKey> matches that of any node on which a pod of the set of pods is running
+         */
+        export interface APIManagerSpecBackendWorkerSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecution {
+            /**
+             * A label query over a set of resources, in this case pods.
+             */
+            labelSelector?: outputs.apps.v1alpha1.APIManagerSpecBackendWorkerSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector;
+            /**
+             * namespaces specifies which namespaces the labelSelector applies to (matches against); null or empty list means "this pod's namespace"
+             */
+            namespaces?: string[];
+            /**
+             * This pod should be co-located (affinity) or not co-located (anti-affinity) with the pods matching the labelSelector in the specified namespaces, where co-located is defined as running on a node whose value of the label with key topologyKey matches that of any node on which any of the selected pods is running. Empty topologyKey is not allowed.
+             */
+            topologyKey: string;
+        }
+
+        /**
+         * A label query over a set of resources, in this case pods.
+         */
+        export interface APIManagerSpecBackendWorkerSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector {
+            /**
+             * matchExpressions is a list of label selector requirements. The requirements are ANDed.
+             */
+            matchExpressions?: outputs.apps.v1alpha1.APIManagerSpecBackendWorkerSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions[];
+            /**
+             * matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+             */
+            matchLabels?: {[key: string]: string};
+        }
+
+        /**
+         * A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecBackendWorkerSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions {
+            /**
+             * key is the label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+             */
+            operator: string;
+            /**
+             * values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * Describes pod anti-affinity scheduling rules (e.g. avoid putting this pod in the same node, zone, etc. as some other pod(s)).
+         */
+        export interface APIManagerSpecBackendWorkerSpecAffinityPodAntiAffinity {
+            /**
+             * The scheduler will prefer to schedule pods to nodes that satisfy the anti-affinity expressions specified by this field, but it may choose a node that violates one or more of the expressions. The node that is most preferred is the one with the greatest sum of weights, i.e. for each node that meets all of the scheduling requirements (resource request, requiredDuringScheduling anti-affinity expressions, etc.), compute a sum by iterating through the elements of this field and adding "weight" to the sum if the node has pods which matches the corresponding podAffinityTerm; the node(s) with the highest sum are the most preferred.
+             */
+            preferredDuringSchedulingIgnoredDuringExecution?: outputs.apps.v1alpha1.APIManagerSpecBackendWorkerSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecution[];
+            /**
+             * If the anti-affinity requirements specified by this field are not met at scheduling time, the pod will not be scheduled onto the node. If the anti-affinity requirements specified by this field cease to be met at some point during pod execution (e.g. due to a pod label update), the system may or may not try to eventually evict the pod from its node. When there are multiple elements, the lists of nodes corresponding to each podAffinityTerm are intersected, i.e. all terms must be satisfied.
+             */
+            requiredDuringSchedulingIgnoredDuringExecution?: outputs.apps.v1alpha1.APIManagerSpecBackendWorkerSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecution[];
+        }
+
+        /**
+         * The weights of all of the matched WeightedPodAffinityTerm fields are added per-node to find the most preferred node(s)
+         */
+        export interface APIManagerSpecBackendWorkerSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecution {
+            /**
+             * Required. A pod affinity term, associated with the corresponding weight.
+             */
+            podAffinityTerm: outputs.apps.v1alpha1.APIManagerSpecBackendWorkerSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTerm;
+            /**
+             * weight associated with matching the corresponding podAffinityTerm, in the range 1-100.
+             */
+            weight: number;
+        }
+
+        /**
+         * Required. A pod affinity term, associated with the corresponding weight.
+         */
+        export interface APIManagerSpecBackendWorkerSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTerm {
+            /**
+             * A label query over a set of resources, in this case pods.
+             */
+            labelSelector?: outputs.apps.v1alpha1.APIManagerSpecBackendWorkerSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelector;
+            /**
+             * namespaces specifies which namespaces the labelSelector applies to (matches against); null or empty list means "this pod's namespace"
+             */
+            namespaces?: string[];
+            /**
+             * This pod should be co-located (affinity) or not co-located (anti-affinity) with the pods matching the labelSelector in the specified namespaces, where co-located is defined as running on a node whose value of the label with key topologyKey matches that of any node on which any of the selected pods is running. Empty topologyKey is not allowed.
+             */
+            topologyKey: string;
+        }
+
+        /**
+         * A label query over a set of resources, in this case pods.
+         */
+        export interface APIManagerSpecBackendWorkerSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelector {
+            /**
+             * matchExpressions is a list of label selector requirements. The requirements are ANDed.
+             */
+            matchExpressions?: outputs.apps.v1alpha1.APIManagerSpecBackendWorkerSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressions[];
+            /**
+             * matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+             */
+            matchLabels?: {[key: string]: string};
+        }
+
+        /**
+         * A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecBackendWorkerSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressions {
+            /**
+             * key is the label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+             */
+            operator: string;
+            /**
+             * values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * Defines a set of pods (namely those matching the labelSelector relative to the given namespace(s)) that this pod should be co-located (affinity) or not co-located (anti-affinity) with, where co-located is defined as running on a node whose value of the label with key <topologyKey> matches that of any node on which a pod of the set of pods is running
+         */
+        export interface APIManagerSpecBackendWorkerSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecution {
+            /**
+             * A label query over a set of resources, in this case pods.
+             */
+            labelSelector?: outputs.apps.v1alpha1.APIManagerSpecBackendWorkerSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector;
+            /**
+             * namespaces specifies which namespaces the labelSelector applies to (matches against); null or empty list means "this pod's namespace"
+             */
+            namespaces?: string[];
+            /**
+             * This pod should be co-located (affinity) or not co-located (anti-affinity) with the pods matching the labelSelector in the specified namespaces, where co-located is defined as running on a node whose value of the label with key topologyKey matches that of any node on which any of the selected pods is running. Empty topologyKey is not allowed.
+             */
+            topologyKey: string;
+        }
+
+        /**
+         * A label query over a set of resources, in this case pods.
+         */
+        export interface APIManagerSpecBackendWorkerSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector {
+            /**
+             * matchExpressions is a list of label selector requirements. The requirements are ANDed.
+             */
+            matchExpressions?: outputs.apps.v1alpha1.APIManagerSpecBackendWorkerSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions[];
+            /**
+             * matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+             */
+            matchLabels?: {[key: string]: string};
+        }
+
+        /**
+         * A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecBackendWorkerSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions {
+            /**
+             * key is the label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+             */
+            operator: string;
+            /**
+             * values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * The pod this Toleration is attached to tolerates any taint that matches the triple <key,value,effect> using the matching operator <operator>.
+         */
+        export interface APIManagerSpecBackendWorkerSpecTolerations {
+            /**
+             * Effect indicates the taint effect to match. Empty means match all taint effects. When specified, allowed values are NoSchedule, PreferNoSchedule and NoExecute.
+             */
+            effect?: string;
+            /**
+             * Key is the taint key that the toleration applies to. Empty means match all taint keys. If the key is empty, operator must be Exists; this combination means to match all values and all keys.
+             */
+            key?: string;
+            /**
+             * Operator represents a key's relationship to the value. Valid operators are Exists and Equal. Defaults to Equal. Exists is equivalent to wildcard for value, so that a pod can tolerate all taints of a particular category.
+             */
+            operator?: string;
+            /**
+             * TolerationSeconds represents the period of time the toleration (which must be of effect NoExecute, otherwise this field is ignored) tolerates the taint. By default, it is not set, which means tolerate the taint forever (do not evict). Zero and negative values will be treated as 0 (evict immediately) by the system.
+             */
+            tolerationSeconds?: number;
+            /**
+             * Value is the taint value the toleration matches to. If the operator is Exists, the value should be empty, otherwise just a regular string.
+             */
+            value?: string;
         }
 
         export interface APIManagerSpecHighAvailability {
+            enabled?: boolean;
+        }
+
+        export interface APIManagerSpecMonitoring {
             enabled?: boolean;
         }
 
@@ -74,13 +2906,468 @@ export namespace apps {
             database?: outputs.apps.v1alpha1.APIManagerSpecSystemDatabase;
             fileStorage?: outputs.apps.v1alpha1.APIManagerSpecSystemFileStorage;
             image?: string;
+            /**
+             * Affinity is a group of affinity scheduling rules.
+             */
+            memcachedAffinity?: outputs.apps.v1alpha1.APIManagerSpecSystemMemcachedAffinity;
             memcachedImage?: string;
+            memcachedTolerations?: outputs.apps.v1alpha1.APIManagerSpecSystemMemcachedTolerations[];
+            /**
+             * Affinity is a group of affinity scheduling rules.
+             */
+            redisAffinity?: outputs.apps.v1alpha1.APIManagerSpecSystemRedisAffinity;
             redisImage?: string;
+            redisPersistentVolumeClaim?: outputs.apps.v1alpha1.APIManagerSpecSystemRedisPersistentVolumeClaim;
+            redisTolerations?: outputs.apps.v1alpha1.APIManagerSpecSystemRedisTolerations[];
             sidekiqSpec?: outputs.apps.v1alpha1.APIManagerSpecSystemSidekiqSpec;
+            sphinxSpec?: outputs.apps.v1alpha1.APIManagerSpecSystemSphinxSpec;
         }
 
         export interface APIManagerSpecSystemAppSpec {
+            /**
+             * Affinity is a group of affinity scheduling rules.
+             */
+            affinity?: outputs.apps.v1alpha1.APIManagerSpecSystemAppSpecAffinity;
             replicas?: number;
+            tolerations?: outputs.apps.v1alpha1.APIManagerSpecSystemAppSpecTolerations[];
+        }
+
+        /**
+         * Affinity is a group of affinity scheduling rules.
+         */
+        export interface APIManagerSpecSystemAppSpecAffinity {
+            /**
+             * Describes node affinity scheduling rules for the pod.
+             */
+            nodeAffinity?: outputs.apps.v1alpha1.APIManagerSpecSystemAppSpecAffinityNodeAffinity;
+            /**
+             * Describes pod affinity scheduling rules (e.g. co-locate this pod in the same node, zone, etc. as some other pod(s)).
+             */
+            podAffinity?: outputs.apps.v1alpha1.APIManagerSpecSystemAppSpecAffinityPodAffinity;
+            /**
+             * Describes pod anti-affinity scheduling rules (e.g. avoid putting this pod in the same node, zone, etc. as some other pod(s)).
+             */
+            podAntiAffinity?: outputs.apps.v1alpha1.APIManagerSpecSystemAppSpecAffinityPodAntiAffinity;
+        }
+
+        /**
+         * Describes node affinity scheduling rules for the pod.
+         */
+        export interface APIManagerSpecSystemAppSpecAffinityNodeAffinity {
+            /**
+             * The scheduler will prefer to schedule pods to nodes that satisfy the affinity expressions specified by this field, but it may choose a node that violates one or more of the expressions. The node that is most preferred is the one with the greatest sum of weights, i.e. for each node that meets all of the scheduling requirements (resource request, requiredDuringScheduling affinity expressions, etc.), compute a sum by iterating through the elements of this field and adding "weight" to the sum if the node matches the corresponding matchExpressions; the node(s) with the highest sum are the most preferred.
+             */
+            preferredDuringSchedulingIgnoredDuringExecution?: outputs.apps.v1alpha1.APIManagerSpecSystemAppSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecution[];
+            /**
+             * If the affinity requirements specified by this field are not met at scheduling time, the pod will not be scheduled onto the node. If the affinity requirements specified by this field cease to be met at some point during pod execution (e.g. due to an update), the system may or may not try to eventually evict the pod from its node.
+             */
+            requiredDuringSchedulingIgnoredDuringExecution?: outputs.apps.v1alpha1.APIManagerSpecSystemAppSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecution;
+        }
+
+        /**
+         * An empty preferred scheduling term matches all objects with implicit weight 0 (i.e. it's a no-op). A null preferred scheduling term matches no objects (i.e. is also a no-op).
+         */
+        export interface APIManagerSpecSystemAppSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecution {
+            /**
+             * A node selector term, associated with the corresponding weight.
+             */
+            preference: outputs.apps.v1alpha1.APIManagerSpecSystemAppSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreference;
+            /**
+             * Weight associated with matching the corresponding nodeSelectorTerm, in the range 1-100.
+             */
+            weight: number;
+        }
+
+        /**
+         * A node selector term, associated with the corresponding weight.
+         */
+        export interface APIManagerSpecSystemAppSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreference {
+            /**
+             * A list of node selector requirements by node's labels.
+             */
+            matchExpressions?: outputs.apps.v1alpha1.APIManagerSpecSystemAppSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressions[];
+            /**
+             * A list of node selector requirements by node's fields.
+             */
+            matchFields?: outputs.apps.v1alpha1.APIManagerSpecSystemAppSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFields[];
+        }
+
+        /**
+         * A node selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecSystemAppSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressions {
+            /**
+             * The label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * Represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt.
+             */
+            operator: string;
+            /**
+             * An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. If the operator is Gt or Lt, the values array must have a single element, which will be interpreted as an integer. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * A node selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecSystemAppSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFields {
+            /**
+             * The label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * Represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt.
+             */
+            operator: string;
+            /**
+             * An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. If the operator is Gt or Lt, the values array must have a single element, which will be interpreted as an integer. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * If the affinity requirements specified by this field are not met at scheduling time, the pod will not be scheduled onto the node. If the affinity requirements specified by this field cease to be met at some point during pod execution (e.g. due to an update), the system may or may not try to eventually evict the pod from its node.
+         */
+        export interface APIManagerSpecSystemAppSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecution {
+            /**
+             * Required. A list of node selector terms. The terms are ORed.
+             */
+            nodeSelectorTerms: outputs.apps.v1alpha1.APIManagerSpecSystemAppSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTerms[];
+        }
+
+        /**
+         * A null or empty node selector term matches no objects. The requirements of them are ANDed. The TopologySelectorTerm type implements a subset of the NodeSelectorTerm.
+         */
+        export interface APIManagerSpecSystemAppSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTerms {
+            /**
+             * A list of node selector requirements by node's labels.
+             */
+            matchExpressions?: outputs.apps.v1alpha1.APIManagerSpecSystemAppSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressions[];
+            /**
+             * A list of node selector requirements by node's fields.
+             */
+            matchFields?: outputs.apps.v1alpha1.APIManagerSpecSystemAppSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFields[];
+        }
+
+        /**
+         * A node selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecSystemAppSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressions {
+            /**
+             * The label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * Represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt.
+             */
+            operator: string;
+            /**
+             * An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. If the operator is Gt or Lt, the values array must have a single element, which will be interpreted as an integer. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * A node selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecSystemAppSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFields {
+            /**
+             * The label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * Represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt.
+             */
+            operator: string;
+            /**
+             * An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. If the operator is Gt or Lt, the values array must have a single element, which will be interpreted as an integer. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * Describes pod affinity scheduling rules (e.g. co-locate this pod in the same node, zone, etc. as some other pod(s)).
+         */
+        export interface APIManagerSpecSystemAppSpecAffinityPodAffinity {
+            /**
+             * The scheduler will prefer to schedule pods to nodes that satisfy the affinity expressions specified by this field, but it may choose a node that violates one or more of the expressions. The node that is most preferred is the one with the greatest sum of weights, i.e. for each node that meets all of the scheduling requirements (resource request, requiredDuringScheduling affinity expressions, etc.), compute a sum by iterating through the elements of this field and adding "weight" to the sum if the node has pods which matches the corresponding podAffinityTerm; the node(s) with the highest sum are the most preferred.
+             */
+            preferredDuringSchedulingIgnoredDuringExecution?: outputs.apps.v1alpha1.APIManagerSpecSystemAppSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecution[];
+            /**
+             * If the affinity requirements specified by this field are not met at scheduling time, the pod will not be scheduled onto the node. If the affinity requirements specified by this field cease to be met at some point during pod execution (e.g. due to a pod label update), the system may or may not try to eventually evict the pod from its node. When there are multiple elements, the lists of nodes corresponding to each podAffinityTerm are intersected, i.e. all terms must be satisfied.
+             */
+            requiredDuringSchedulingIgnoredDuringExecution?: outputs.apps.v1alpha1.APIManagerSpecSystemAppSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecution[];
+        }
+
+        /**
+         * The weights of all of the matched WeightedPodAffinityTerm fields are added per-node to find the most preferred node(s)
+         */
+        export interface APIManagerSpecSystemAppSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecution {
+            /**
+             * Required. A pod affinity term, associated with the corresponding weight.
+             */
+            podAffinityTerm: outputs.apps.v1alpha1.APIManagerSpecSystemAppSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTerm;
+            /**
+             * weight associated with matching the corresponding podAffinityTerm, in the range 1-100.
+             */
+            weight: number;
+        }
+
+        /**
+         * Required. A pod affinity term, associated with the corresponding weight.
+         */
+        export interface APIManagerSpecSystemAppSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTerm {
+            /**
+             * A label query over a set of resources, in this case pods.
+             */
+            labelSelector?: outputs.apps.v1alpha1.APIManagerSpecSystemAppSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelector;
+            /**
+             * namespaces specifies which namespaces the labelSelector applies to (matches against); null or empty list means "this pod's namespace"
+             */
+            namespaces?: string[];
+            /**
+             * This pod should be co-located (affinity) or not co-located (anti-affinity) with the pods matching the labelSelector in the specified namespaces, where co-located is defined as running on a node whose value of the label with key topologyKey matches that of any node on which any of the selected pods is running. Empty topologyKey is not allowed.
+             */
+            topologyKey: string;
+        }
+
+        /**
+         * A label query over a set of resources, in this case pods.
+         */
+        export interface APIManagerSpecSystemAppSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelector {
+            /**
+             * matchExpressions is a list of label selector requirements. The requirements are ANDed.
+             */
+            matchExpressions?: outputs.apps.v1alpha1.APIManagerSpecSystemAppSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressions[];
+            /**
+             * matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+             */
+            matchLabels?: {[key: string]: string};
+        }
+
+        /**
+         * A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecSystemAppSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressions {
+            /**
+             * key is the label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+             */
+            operator: string;
+            /**
+             * values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * Defines a set of pods (namely those matching the labelSelector relative to the given namespace(s)) that this pod should be co-located (affinity) or not co-located (anti-affinity) with, where co-located is defined as running on a node whose value of the label with key <topologyKey> matches that of any node on which a pod of the set of pods is running
+         */
+        export interface APIManagerSpecSystemAppSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecution {
+            /**
+             * A label query over a set of resources, in this case pods.
+             */
+            labelSelector?: outputs.apps.v1alpha1.APIManagerSpecSystemAppSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector;
+            /**
+             * namespaces specifies which namespaces the labelSelector applies to (matches against); null or empty list means "this pod's namespace"
+             */
+            namespaces?: string[];
+            /**
+             * This pod should be co-located (affinity) or not co-located (anti-affinity) with the pods matching the labelSelector in the specified namespaces, where co-located is defined as running on a node whose value of the label with key topologyKey matches that of any node on which any of the selected pods is running. Empty topologyKey is not allowed.
+             */
+            topologyKey: string;
+        }
+
+        /**
+         * A label query over a set of resources, in this case pods.
+         */
+        export interface APIManagerSpecSystemAppSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector {
+            /**
+             * matchExpressions is a list of label selector requirements. The requirements are ANDed.
+             */
+            matchExpressions?: outputs.apps.v1alpha1.APIManagerSpecSystemAppSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions[];
+            /**
+             * matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+             */
+            matchLabels?: {[key: string]: string};
+        }
+
+        /**
+         * A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecSystemAppSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions {
+            /**
+             * key is the label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+             */
+            operator: string;
+            /**
+             * values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * Describes pod anti-affinity scheduling rules (e.g. avoid putting this pod in the same node, zone, etc. as some other pod(s)).
+         */
+        export interface APIManagerSpecSystemAppSpecAffinityPodAntiAffinity {
+            /**
+             * The scheduler will prefer to schedule pods to nodes that satisfy the anti-affinity expressions specified by this field, but it may choose a node that violates one or more of the expressions. The node that is most preferred is the one with the greatest sum of weights, i.e. for each node that meets all of the scheduling requirements (resource request, requiredDuringScheduling anti-affinity expressions, etc.), compute a sum by iterating through the elements of this field and adding "weight" to the sum if the node has pods which matches the corresponding podAffinityTerm; the node(s) with the highest sum are the most preferred.
+             */
+            preferredDuringSchedulingIgnoredDuringExecution?: outputs.apps.v1alpha1.APIManagerSpecSystemAppSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecution[];
+            /**
+             * If the anti-affinity requirements specified by this field are not met at scheduling time, the pod will not be scheduled onto the node. If the anti-affinity requirements specified by this field cease to be met at some point during pod execution (e.g. due to a pod label update), the system may or may not try to eventually evict the pod from its node. When there are multiple elements, the lists of nodes corresponding to each podAffinityTerm are intersected, i.e. all terms must be satisfied.
+             */
+            requiredDuringSchedulingIgnoredDuringExecution?: outputs.apps.v1alpha1.APIManagerSpecSystemAppSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecution[];
+        }
+
+        /**
+         * The weights of all of the matched WeightedPodAffinityTerm fields are added per-node to find the most preferred node(s)
+         */
+        export interface APIManagerSpecSystemAppSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecution {
+            /**
+             * Required. A pod affinity term, associated with the corresponding weight.
+             */
+            podAffinityTerm: outputs.apps.v1alpha1.APIManagerSpecSystemAppSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTerm;
+            /**
+             * weight associated with matching the corresponding podAffinityTerm, in the range 1-100.
+             */
+            weight: number;
+        }
+
+        /**
+         * Required. A pod affinity term, associated with the corresponding weight.
+         */
+        export interface APIManagerSpecSystemAppSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTerm {
+            /**
+             * A label query over a set of resources, in this case pods.
+             */
+            labelSelector?: outputs.apps.v1alpha1.APIManagerSpecSystemAppSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelector;
+            /**
+             * namespaces specifies which namespaces the labelSelector applies to (matches against); null or empty list means "this pod's namespace"
+             */
+            namespaces?: string[];
+            /**
+             * This pod should be co-located (affinity) or not co-located (anti-affinity) with the pods matching the labelSelector in the specified namespaces, where co-located is defined as running on a node whose value of the label with key topologyKey matches that of any node on which any of the selected pods is running. Empty topologyKey is not allowed.
+             */
+            topologyKey: string;
+        }
+
+        /**
+         * A label query over a set of resources, in this case pods.
+         */
+        export interface APIManagerSpecSystemAppSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelector {
+            /**
+             * matchExpressions is a list of label selector requirements. The requirements are ANDed.
+             */
+            matchExpressions?: outputs.apps.v1alpha1.APIManagerSpecSystemAppSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressions[];
+            /**
+             * matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+             */
+            matchLabels?: {[key: string]: string};
+        }
+
+        /**
+         * A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecSystemAppSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressions {
+            /**
+             * key is the label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+             */
+            operator: string;
+            /**
+             * values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * Defines a set of pods (namely those matching the labelSelector relative to the given namespace(s)) that this pod should be co-located (affinity) or not co-located (anti-affinity) with, where co-located is defined as running on a node whose value of the label with key <topologyKey> matches that of any node on which a pod of the set of pods is running
+         */
+        export interface APIManagerSpecSystemAppSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecution {
+            /**
+             * A label query over a set of resources, in this case pods.
+             */
+            labelSelector?: outputs.apps.v1alpha1.APIManagerSpecSystemAppSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector;
+            /**
+             * namespaces specifies which namespaces the labelSelector applies to (matches against); null or empty list means "this pod's namespace"
+             */
+            namespaces?: string[];
+            /**
+             * This pod should be co-located (affinity) or not co-located (anti-affinity) with the pods matching the labelSelector in the specified namespaces, where co-located is defined as running on a node whose value of the label with key topologyKey matches that of any node on which any of the selected pods is running. Empty topologyKey is not allowed.
+             */
+            topologyKey: string;
+        }
+
+        /**
+         * A label query over a set of resources, in this case pods.
+         */
+        export interface APIManagerSpecSystemAppSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector {
+            /**
+             * matchExpressions is a list of label selector requirements. The requirements are ANDed.
+             */
+            matchExpressions?: outputs.apps.v1alpha1.APIManagerSpecSystemAppSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions[];
+            /**
+             * matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+             */
+            matchLabels?: {[key: string]: string};
+        }
+
+        /**
+         * A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecSystemAppSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions {
+            /**
+             * key is the label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+             */
+            operator: string;
+            /**
+             * values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * The pod this Toleration is attached to tolerates any taint that matches the triple <key,value,effect> using the matching operator <operator>.
+         */
+        export interface APIManagerSpecSystemAppSpecTolerations {
+            /**
+             * Effect indicates the taint effect to match. Empty means match all taint effects. When specified, allowed values are NoSchedule, PreferNoSchedule and NoExecute.
+             */
+            effect?: string;
+            /**
+             * Key is the taint key that the toleration applies to. Empty means match all taint keys. If the key is empty, operator must be Exists; this combination means to match all values and all keys.
+             */
+            key?: string;
+            /**
+             * Operator represents a key's relationship to the value. Valid operators are Exists and Equal. Defaults to Equal. Exists is equivalent to wildcard for value, so that a pod can tolerate all taints of a particular category.
+             */
+            operator?: string;
+            /**
+             * TolerationSeconds represents the period of time the toleration (which must be of effect NoExecute, otherwise this field is ignored) tolerates the taint. By default, it is not set, which means tolerate the taint forever (do not evict). Zero and negative values will be treated as 0 (evict immediately) by the system.
+             */
+            tolerationSeconds?: number;
+            /**
+             * Value is the taint value the toleration matches to. If the operator is Exists, the value should be empty, otherwise just a regular string.
+             */
+            value?: string;
         }
 
         export interface APIManagerSpecSystemDatabase {
@@ -95,11 +3382,1350 @@ export namespace apps {
          * Union type. Only one of the fields can be set
          */
         export interface APIManagerSpecSystemDatabaseMysql {
+            /**
+             * Affinity is a group of affinity scheduling rules.
+             */
+            affinity?: outputs.apps.v1alpha1.APIManagerSpecSystemDatabaseMysqlAffinity;
             image?: string;
+            persistentVolumeClaim?: outputs.apps.v1alpha1.APIManagerSpecSystemDatabaseMysqlPersistentVolumeClaim;
+            tolerations?: outputs.apps.v1alpha1.APIManagerSpecSystemDatabaseMysqlTolerations[];
+        }
+
+        /**
+         * Affinity is a group of affinity scheduling rules.
+         */
+        export interface APIManagerSpecSystemDatabaseMysqlAffinity {
+            /**
+             * Describes node affinity scheduling rules for the pod.
+             */
+            nodeAffinity?: outputs.apps.v1alpha1.APIManagerSpecSystemDatabaseMysqlAffinityNodeAffinity;
+            /**
+             * Describes pod affinity scheduling rules (e.g. co-locate this pod in the same node, zone, etc. as some other pod(s)).
+             */
+            podAffinity?: outputs.apps.v1alpha1.APIManagerSpecSystemDatabaseMysqlAffinityPodAffinity;
+            /**
+             * Describes pod anti-affinity scheduling rules (e.g. avoid putting this pod in the same node, zone, etc. as some other pod(s)).
+             */
+            podAntiAffinity?: outputs.apps.v1alpha1.APIManagerSpecSystemDatabaseMysqlAffinityPodAntiAffinity;
+        }
+
+        /**
+         * Describes node affinity scheduling rules for the pod.
+         */
+        export interface APIManagerSpecSystemDatabaseMysqlAffinityNodeAffinity {
+            /**
+             * The scheduler will prefer to schedule pods to nodes that satisfy the affinity expressions specified by this field, but it may choose a node that violates one or more of the expressions. The node that is most preferred is the one with the greatest sum of weights, i.e. for each node that meets all of the scheduling requirements (resource request, requiredDuringScheduling affinity expressions, etc.), compute a sum by iterating through the elements of this field and adding "weight" to the sum if the node matches the corresponding matchExpressions; the node(s) with the highest sum are the most preferred.
+             */
+            preferredDuringSchedulingIgnoredDuringExecution?: outputs.apps.v1alpha1.APIManagerSpecSystemDatabaseMysqlAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecution[];
+            /**
+             * If the affinity requirements specified by this field are not met at scheduling time, the pod will not be scheduled onto the node. If the affinity requirements specified by this field cease to be met at some point during pod execution (e.g. due to an update), the system may or may not try to eventually evict the pod from its node.
+             */
+            requiredDuringSchedulingIgnoredDuringExecution?: outputs.apps.v1alpha1.APIManagerSpecSystemDatabaseMysqlAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecution;
+        }
+
+        /**
+         * An empty preferred scheduling term matches all objects with implicit weight 0 (i.e. it's a no-op). A null preferred scheduling term matches no objects (i.e. is also a no-op).
+         */
+        export interface APIManagerSpecSystemDatabaseMysqlAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecution {
+            /**
+             * A node selector term, associated with the corresponding weight.
+             */
+            preference: outputs.apps.v1alpha1.APIManagerSpecSystemDatabaseMysqlAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreference;
+            /**
+             * Weight associated with matching the corresponding nodeSelectorTerm, in the range 1-100.
+             */
+            weight: number;
+        }
+
+        /**
+         * A node selector term, associated with the corresponding weight.
+         */
+        export interface APIManagerSpecSystemDatabaseMysqlAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreference {
+            /**
+             * A list of node selector requirements by node's labels.
+             */
+            matchExpressions?: outputs.apps.v1alpha1.APIManagerSpecSystemDatabaseMysqlAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressions[];
+            /**
+             * A list of node selector requirements by node's fields.
+             */
+            matchFields?: outputs.apps.v1alpha1.APIManagerSpecSystemDatabaseMysqlAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFields[];
+        }
+
+        /**
+         * A node selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecSystemDatabaseMysqlAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressions {
+            /**
+             * The label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * Represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt.
+             */
+            operator: string;
+            /**
+             * An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. If the operator is Gt or Lt, the values array must have a single element, which will be interpreted as an integer. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * A node selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecSystemDatabaseMysqlAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFields {
+            /**
+             * The label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * Represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt.
+             */
+            operator: string;
+            /**
+             * An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. If the operator is Gt or Lt, the values array must have a single element, which will be interpreted as an integer. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * If the affinity requirements specified by this field are not met at scheduling time, the pod will not be scheduled onto the node. If the affinity requirements specified by this field cease to be met at some point during pod execution (e.g. due to an update), the system may or may not try to eventually evict the pod from its node.
+         */
+        export interface APIManagerSpecSystemDatabaseMysqlAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecution {
+            /**
+             * Required. A list of node selector terms. The terms are ORed.
+             */
+            nodeSelectorTerms: outputs.apps.v1alpha1.APIManagerSpecSystemDatabaseMysqlAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTerms[];
+        }
+
+        /**
+         * A null or empty node selector term matches no objects. The requirements of them are ANDed. The TopologySelectorTerm type implements a subset of the NodeSelectorTerm.
+         */
+        export interface APIManagerSpecSystemDatabaseMysqlAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTerms {
+            /**
+             * A list of node selector requirements by node's labels.
+             */
+            matchExpressions?: outputs.apps.v1alpha1.APIManagerSpecSystemDatabaseMysqlAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressions[];
+            /**
+             * A list of node selector requirements by node's fields.
+             */
+            matchFields?: outputs.apps.v1alpha1.APIManagerSpecSystemDatabaseMysqlAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFields[];
+        }
+
+        /**
+         * A node selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecSystemDatabaseMysqlAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressions {
+            /**
+             * The label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * Represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt.
+             */
+            operator: string;
+            /**
+             * An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. If the operator is Gt or Lt, the values array must have a single element, which will be interpreted as an integer. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * A node selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecSystemDatabaseMysqlAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFields {
+            /**
+             * The label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * Represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt.
+             */
+            operator: string;
+            /**
+             * An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. If the operator is Gt or Lt, the values array must have a single element, which will be interpreted as an integer. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * Describes pod affinity scheduling rules (e.g. co-locate this pod in the same node, zone, etc. as some other pod(s)).
+         */
+        export interface APIManagerSpecSystemDatabaseMysqlAffinityPodAffinity {
+            /**
+             * The scheduler will prefer to schedule pods to nodes that satisfy the affinity expressions specified by this field, but it may choose a node that violates one or more of the expressions. The node that is most preferred is the one with the greatest sum of weights, i.e. for each node that meets all of the scheduling requirements (resource request, requiredDuringScheduling affinity expressions, etc.), compute a sum by iterating through the elements of this field and adding "weight" to the sum if the node has pods which matches the corresponding podAffinityTerm; the node(s) with the highest sum are the most preferred.
+             */
+            preferredDuringSchedulingIgnoredDuringExecution?: outputs.apps.v1alpha1.APIManagerSpecSystemDatabaseMysqlAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecution[];
+            /**
+             * If the affinity requirements specified by this field are not met at scheduling time, the pod will not be scheduled onto the node. If the affinity requirements specified by this field cease to be met at some point during pod execution (e.g. due to a pod label update), the system may or may not try to eventually evict the pod from its node. When there are multiple elements, the lists of nodes corresponding to each podAffinityTerm are intersected, i.e. all terms must be satisfied.
+             */
+            requiredDuringSchedulingIgnoredDuringExecution?: outputs.apps.v1alpha1.APIManagerSpecSystemDatabaseMysqlAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecution[];
+        }
+
+        /**
+         * The weights of all of the matched WeightedPodAffinityTerm fields are added per-node to find the most preferred node(s)
+         */
+        export interface APIManagerSpecSystemDatabaseMysqlAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecution {
+            /**
+             * Required. A pod affinity term, associated with the corresponding weight.
+             */
+            podAffinityTerm: outputs.apps.v1alpha1.APIManagerSpecSystemDatabaseMysqlAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTerm;
+            /**
+             * weight associated with matching the corresponding podAffinityTerm, in the range 1-100.
+             */
+            weight: number;
+        }
+
+        /**
+         * Required. A pod affinity term, associated with the corresponding weight.
+         */
+        export interface APIManagerSpecSystemDatabaseMysqlAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTerm {
+            /**
+             * A label query over a set of resources, in this case pods.
+             */
+            labelSelector?: outputs.apps.v1alpha1.APIManagerSpecSystemDatabaseMysqlAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelector;
+            /**
+             * namespaces specifies which namespaces the labelSelector applies to (matches against); null or empty list means "this pod's namespace"
+             */
+            namespaces?: string[];
+            /**
+             * This pod should be co-located (affinity) or not co-located (anti-affinity) with the pods matching the labelSelector in the specified namespaces, where co-located is defined as running on a node whose value of the label with key topologyKey matches that of any node on which any of the selected pods is running. Empty topologyKey is not allowed.
+             */
+            topologyKey: string;
+        }
+
+        /**
+         * A label query over a set of resources, in this case pods.
+         */
+        export interface APIManagerSpecSystemDatabaseMysqlAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelector {
+            /**
+             * matchExpressions is a list of label selector requirements. The requirements are ANDed.
+             */
+            matchExpressions?: outputs.apps.v1alpha1.APIManagerSpecSystemDatabaseMysqlAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressions[];
+            /**
+             * matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+             */
+            matchLabels?: {[key: string]: string};
+        }
+
+        /**
+         * A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecSystemDatabaseMysqlAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressions {
+            /**
+             * key is the label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+             */
+            operator: string;
+            /**
+             * values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * Defines a set of pods (namely those matching the labelSelector relative to the given namespace(s)) that this pod should be co-located (affinity) or not co-located (anti-affinity) with, where co-located is defined as running on a node whose value of the label with key <topologyKey> matches that of any node on which a pod of the set of pods is running
+         */
+        export interface APIManagerSpecSystemDatabaseMysqlAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecution {
+            /**
+             * A label query over a set of resources, in this case pods.
+             */
+            labelSelector?: outputs.apps.v1alpha1.APIManagerSpecSystemDatabaseMysqlAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector;
+            /**
+             * namespaces specifies which namespaces the labelSelector applies to (matches against); null or empty list means "this pod's namespace"
+             */
+            namespaces?: string[];
+            /**
+             * This pod should be co-located (affinity) or not co-located (anti-affinity) with the pods matching the labelSelector in the specified namespaces, where co-located is defined as running on a node whose value of the label with key topologyKey matches that of any node on which any of the selected pods is running. Empty topologyKey is not allowed.
+             */
+            topologyKey: string;
+        }
+
+        /**
+         * A label query over a set of resources, in this case pods.
+         */
+        export interface APIManagerSpecSystemDatabaseMysqlAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector {
+            /**
+             * matchExpressions is a list of label selector requirements. The requirements are ANDed.
+             */
+            matchExpressions?: outputs.apps.v1alpha1.APIManagerSpecSystemDatabaseMysqlAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions[];
+            /**
+             * matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+             */
+            matchLabels?: {[key: string]: string};
+        }
+
+        /**
+         * A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecSystemDatabaseMysqlAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions {
+            /**
+             * key is the label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+             */
+            operator: string;
+            /**
+             * values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * Describes pod anti-affinity scheduling rules (e.g. avoid putting this pod in the same node, zone, etc. as some other pod(s)).
+         */
+        export interface APIManagerSpecSystemDatabaseMysqlAffinityPodAntiAffinity {
+            /**
+             * The scheduler will prefer to schedule pods to nodes that satisfy the anti-affinity expressions specified by this field, but it may choose a node that violates one or more of the expressions. The node that is most preferred is the one with the greatest sum of weights, i.e. for each node that meets all of the scheduling requirements (resource request, requiredDuringScheduling anti-affinity expressions, etc.), compute a sum by iterating through the elements of this field and adding "weight" to the sum if the node has pods which matches the corresponding podAffinityTerm; the node(s) with the highest sum are the most preferred.
+             */
+            preferredDuringSchedulingIgnoredDuringExecution?: outputs.apps.v1alpha1.APIManagerSpecSystemDatabaseMysqlAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecution[];
+            /**
+             * If the anti-affinity requirements specified by this field are not met at scheduling time, the pod will not be scheduled onto the node. If the anti-affinity requirements specified by this field cease to be met at some point during pod execution (e.g. due to a pod label update), the system may or may not try to eventually evict the pod from its node. When there are multiple elements, the lists of nodes corresponding to each podAffinityTerm are intersected, i.e. all terms must be satisfied.
+             */
+            requiredDuringSchedulingIgnoredDuringExecution?: outputs.apps.v1alpha1.APIManagerSpecSystemDatabaseMysqlAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecution[];
+        }
+
+        /**
+         * The weights of all of the matched WeightedPodAffinityTerm fields are added per-node to find the most preferred node(s)
+         */
+        export interface APIManagerSpecSystemDatabaseMysqlAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecution {
+            /**
+             * Required. A pod affinity term, associated with the corresponding weight.
+             */
+            podAffinityTerm: outputs.apps.v1alpha1.APIManagerSpecSystemDatabaseMysqlAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTerm;
+            /**
+             * weight associated with matching the corresponding podAffinityTerm, in the range 1-100.
+             */
+            weight: number;
+        }
+
+        /**
+         * Required. A pod affinity term, associated with the corresponding weight.
+         */
+        export interface APIManagerSpecSystemDatabaseMysqlAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTerm {
+            /**
+             * A label query over a set of resources, in this case pods.
+             */
+            labelSelector?: outputs.apps.v1alpha1.APIManagerSpecSystemDatabaseMysqlAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelector;
+            /**
+             * namespaces specifies which namespaces the labelSelector applies to (matches against); null or empty list means "this pod's namespace"
+             */
+            namespaces?: string[];
+            /**
+             * This pod should be co-located (affinity) or not co-located (anti-affinity) with the pods matching the labelSelector in the specified namespaces, where co-located is defined as running on a node whose value of the label with key topologyKey matches that of any node on which any of the selected pods is running. Empty topologyKey is not allowed.
+             */
+            topologyKey: string;
+        }
+
+        /**
+         * A label query over a set of resources, in this case pods.
+         */
+        export interface APIManagerSpecSystemDatabaseMysqlAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelector {
+            /**
+             * matchExpressions is a list of label selector requirements. The requirements are ANDed.
+             */
+            matchExpressions?: outputs.apps.v1alpha1.APIManagerSpecSystemDatabaseMysqlAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressions[];
+            /**
+             * matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+             */
+            matchLabels?: {[key: string]: string};
+        }
+
+        /**
+         * A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecSystemDatabaseMysqlAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressions {
+            /**
+             * key is the label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+             */
+            operator: string;
+            /**
+             * values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * Defines a set of pods (namely those matching the labelSelector relative to the given namespace(s)) that this pod should be co-located (affinity) or not co-located (anti-affinity) with, where co-located is defined as running on a node whose value of the label with key <topologyKey> matches that of any node on which a pod of the set of pods is running
+         */
+        export interface APIManagerSpecSystemDatabaseMysqlAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecution {
+            /**
+             * A label query over a set of resources, in this case pods.
+             */
+            labelSelector?: outputs.apps.v1alpha1.APIManagerSpecSystemDatabaseMysqlAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector;
+            /**
+             * namespaces specifies which namespaces the labelSelector applies to (matches against); null or empty list means "this pod's namespace"
+             */
+            namespaces?: string[];
+            /**
+             * This pod should be co-located (affinity) or not co-located (anti-affinity) with the pods matching the labelSelector in the specified namespaces, where co-located is defined as running on a node whose value of the label with key topologyKey matches that of any node on which any of the selected pods is running. Empty topologyKey is not allowed.
+             */
+            topologyKey: string;
+        }
+
+        /**
+         * A label query over a set of resources, in this case pods.
+         */
+        export interface APIManagerSpecSystemDatabaseMysqlAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector {
+            /**
+             * matchExpressions is a list of label selector requirements. The requirements are ANDed.
+             */
+            matchExpressions?: outputs.apps.v1alpha1.APIManagerSpecSystemDatabaseMysqlAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions[];
+            /**
+             * matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+             */
+            matchLabels?: {[key: string]: string};
+        }
+
+        /**
+         * A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecSystemDatabaseMysqlAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions {
+            /**
+             * key is the label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+             */
+            operator: string;
+            /**
+             * values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        export interface APIManagerSpecSystemDatabaseMysqlPersistentVolumeClaim {
+            storageClassName?: string;
+        }
+
+        /**
+         * The pod this Toleration is attached to tolerates any taint that matches the triple <key,value,effect> using the matching operator <operator>.
+         */
+        export interface APIManagerSpecSystemDatabaseMysqlTolerations {
+            /**
+             * Effect indicates the taint effect to match. Empty means match all taint effects. When specified, allowed values are NoSchedule, PreferNoSchedule and NoExecute.
+             */
+            effect?: string;
+            /**
+             * Key is the taint key that the toleration applies to. Empty means match all taint keys. If the key is empty, operator must be Exists; this combination means to match all values and all keys.
+             */
+            key?: string;
+            /**
+             * Operator represents a key's relationship to the value. Valid operators are Exists and Equal. Defaults to Equal. Exists is equivalent to wildcard for value, so that a pod can tolerate all taints of a particular category.
+             */
+            operator?: string;
+            /**
+             * TolerationSeconds represents the period of time the toleration (which must be of effect NoExecute, otherwise this field is ignored) tolerates the taint. By default, it is not set, which means tolerate the taint forever (do not evict). Zero and negative values will be treated as 0 (evict immediately) by the system.
+             */
+            tolerationSeconds?: number;
+            /**
+             * Value is the taint value the toleration matches to. If the operator is Exists, the value should be empty, otherwise just a regular string.
+             */
+            value?: string;
         }
 
         export interface APIManagerSpecSystemDatabasePostgresql {
+            /**
+             * Affinity is a group of affinity scheduling rules.
+             */
+            affinity?: outputs.apps.v1alpha1.APIManagerSpecSystemDatabasePostgresqlAffinity;
             image?: string;
+            persistentVolumeClaim?: outputs.apps.v1alpha1.APIManagerSpecSystemDatabasePostgresqlPersistentVolumeClaim;
+            tolerations?: outputs.apps.v1alpha1.APIManagerSpecSystemDatabasePostgresqlTolerations[];
+        }
+
+        /**
+         * Affinity is a group of affinity scheduling rules.
+         */
+        export interface APIManagerSpecSystemDatabasePostgresqlAffinity {
+            /**
+             * Describes node affinity scheduling rules for the pod.
+             */
+            nodeAffinity?: outputs.apps.v1alpha1.APIManagerSpecSystemDatabasePostgresqlAffinityNodeAffinity;
+            /**
+             * Describes pod affinity scheduling rules (e.g. co-locate this pod in the same node, zone, etc. as some other pod(s)).
+             */
+            podAffinity?: outputs.apps.v1alpha1.APIManagerSpecSystemDatabasePostgresqlAffinityPodAffinity;
+            /**
+             * Describes pod anti-affinity scheduling rules (e.g. avoid putting this pod in the same node, zone, etc. as some other pod(s)).
+             */
+            podAntiAffinity?: outputs.apps.v1alpha1.APIManagerSpecSystemDatabasePostgresqlAffinityPodAntiAffinity;
+        }
+
+        /**
+         * Describes node affinity scheduling rules for the pod.
+         */
+        export interface APIManagerSpecSystemDatabasePostgresqlAffinityNodeAffinity {
+            /**
+             * The scheduler will prefer to schedule pods to nodes that satisfy the affinity expressions specified by this field, but it may choose a node that violates one or more of the expressions. The node that is most preferred is the one with the greatest sum of weights, i.e. for each node that meets all of the scheduling requirements (resource request, requiredDuringScheduling affinity expressions, etc.), compute a sum by iterating through the elements of this field and adding "weight" to the sum if the node matches the corresponding matchExpressions; the node(s) with the highest sum are the most preferred.
+             */
+            preferredDuringSchedulingIgnoredDuringExecution?: outputs.apps.v1alpha1.APIManagerSpecSystemDatabasePostgresqlAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecution[];
+            /**
+             * If the affinity requirements specified by this field are not met at scheduling time, the pod will not be scheduled onto the node. If the affinity requirements specified by this field cease to be met at some point during pod execution (e.g. due to an update), the system may or may not try to eventually evict the pod from its node.
+             */
+            requiredDuringSchedulingIgnoredDuringExecution?: outputs.apps.v1alpha1.APIManagerSpecSystemDatabasePostgresqlAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecution;
+        }
+
+        /**
+         * An empty preferred scheduling term matches all objects with implicit weight 0 (i.e. it's a no-op). A null preferred scheduling term matches no objects (i.e. is also a no-op).
+         */
+        export interface APIManagerSpecSystemDatabasePostgresqlAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecution {
+            /**
+             * A node selector term, associated with the corresponding weight.
+             */
+            preference: outputs.apps.v1alpha1.APIManagerSpecSystemDatabasePostgresqlAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreference;
+            /**
+             * Weight associated with matching the corresponding nodeSelectorTerm, in the range 1-100.
+             */
+            weight: number;
+        }
+
+        /**
+         * A node selector term, associated with the corresponding weight.
+         */
+        export interface APIManagerSpecSystemDatabasePostgresqlAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreference {
+            /**
+             * A list of node selector requirements by node's labels.
+             */
+            matchExpressions?: outputs.apps.v1alpha1.APIManagerSpecSystemDatabasePostgresqlAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressions[];
+            /**
+             * A list of node selector requirements by node's fields.
+             */
+            matchFields?: outputs.apps.v1alpha1.APIManagerSpecSystemDatabasePostgresqlAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFields[];
+        }
+
+        /**
+         * A node selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecSystemDatabasePostgresqlAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressions {
+            /**
+             * The label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * Represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt.
+             */
+            operator: string;
+            /**
+             * An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. If the operator is Gt or Lt, the values array must have a single element, which will be interpreted as an integer. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * A node selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecSystemDatabasePostgresqlAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFields {
+            /**
+             * The label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * Represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt.
+             */
+            operator: string;
+            /**
+             * An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. If the operator is Gt or Lt, the values array must have a single element, which will be interpreted as an integer. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * If the affinity requirements specified by this field are not met at scheduling time, the pod will not be scheduled onto the node. If the affinity requirements specified by this field cease to be met at some point during pod execution (e.g. due to an update), the system may or may not try to eventually evict the pod from its node.
+         */
+        export interface APIManagerSpecSystemDatabasePostgresqlAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecution {
+            /**
+             * Required. A list of node selector terms. The terms are ORed.
+             */
+            nodeSelectorTerms: outputs.apps.v1alpha1.APIManagerSpecSystemDatabasePostgresqlAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTerms[];
+        }
+
+        /**
+         * A null or empty node selector term matches no objects. The requirements of them are ANDed. The TopologySelectorTerm type implements a subset of the NodeSelectorTerm.
+         */
+        export interface APIManagerSpecSystemDatabasePostgresqlAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTerms {
+            /**
+             * A list of node selector requirements by node's labels.
+             */
+            matchExpressions?: outputs.apps.v1alpha1.APIManagerSpecSystemDatabasePostgresqlAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressions[];
+            /**
+             * A list of node selector requirements by node's fields.
+             */
+            matchFields?: outputs.apps.v1alpha1.APIManagerSpecSystemDatabasePostgresqlAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFields[];
+        }
+
+        /**
+         * A node selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecSystemDatabasePostgresqlAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressions {
+            /**
+             * The label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * Represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt.
+             */
+            operator: string;
+            /**
+             * An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. If the operator is Gt or Lt, the values array must have a single element, which will be interpreted as an integer. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * A node selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecSystemDatabasePostgresqlAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFields {
+            /**
+             * The label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * Represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt.
+             */
+            operator: string;
+            /**
+             * An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. If the operator is Gt or Lt, the values array must have a single element, which will be interpreted as an integer. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * Describes pod affinity scheduling rules (e.g. co-locate this pod in the same node, zone, etc. as some other pod(s)).
+         */
+        export interface APIManagerSpecSystemDatabasePostgresqlAffinityPodAffinity {
+            /**
+             * The scheduler will prefer to schedule pods to nodes that satisfy the affinity expressions specified by this field, but it may choose a node that violates one or more of the expressions. The node that is most preferred is the one with the greatest sum of weights, i.e. for each node that meets all of the scheduling requirements (resource request, requiredDuringScheduling affinity expressions, etc.), compute a sum by iterating through the elements of this field and adding "weight" to the sum if the node has pods which matches the corresponding podAffinityTerm; the node(s) with the highest sum are the most preferred.
+             */
+            preferredDuringSchedulingIgnoredDuringExecution?: outputs.apps.v1alpha1.APIManagerSpecSystemDatabasePostgresqlAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecution[];
+            /**
+             * If the affinity requirements specified by this field are not met at scheduling time, the pod will not be scheduled onto the node. If the affinity requirements specified by this field cease to be met at some point during pod execution (e.g. due to a pod label update), the system may or may not try to eventually evict the pod from its node. When there are multiple elements, the lists of nodes corresponding to each podAffinityTerm are intersected, i.e. all terms must be satisfied.
+             */
+            requiredDuringSchedulingIgnoredDuringExecution?: outputs.apps.v1alpha1.APIManagerSpecSystemDatabasePostgresqlAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecution[];
+        }
+
+        /**
+         * The weights of all of the matched WeightedPodAffinityTerm fields are added per-node to find the most preferred node(s)
+         */
+        export interface APIManagerSpecSystemDatabasePostgresqlAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecution {
+            /**
+             * Required. A pod affinity term, associated with the corresponding weight.
+             */
+            podAffinityTerm: outputs.apps.v1alpha1.APIManagerSpecSystemDatabasePostgresqlAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTerm;
+            /**
+             * weight associated with matching the corresponding podAffinityTerm, in the range 1-100.
+             */
+            weight: number;
+        }
+
+        /**
+         * Required. A pod affinity term, associated with the corresponding weight.
+         */
+        export interface APIManagerSpecSystemDatabasePostgresqlAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTerm {
+            /**
+             * A label query over a set of resources, in this case pods.
+             */
+            labelSelector?: outputs.apps.v1alpha1.APIManagerSpecSystemDatabasePostgresqlAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelector;
+            /**
+             * namespaces specifies which namespaces the labelSelector applies to (matches against); null or empty list means "this pod's namespace"
+             */
+            namespaces?: string[];
+            /**
+             * This pod should be co-located (affinity) or not co-located (anti-affinity) with the pods matching the labelSelector in the specified namespaces, where co-located is defined as running on a node whose value of the label with key topologyKey matches that of any node on which any of the selected pods is running. Empty topologyKey is not allowed.
+             */
+            topologyKey: string;
+        }
+
+        /**
+         * A label query over a set of resources, in this case pods.
+         */
+        export interface APIManagerSpecSystemDatabasePostgresqlAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelector {
+            /**
+             * matchExpressions is a list of label selector requirements. The requirements are ANDed.
+             */
+            matchExpressions?: outputs.apps.v1alpha1.APIManagerSpecSystemDatabasePostgresqlAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressions[];
+            /**
+             * matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+             */
+            matchLabels?: {[key: string]: string};
+        }
+
+        /**
+         * A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecSystemDatabasePostgresqlAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressions {
+            /**
+             * key is the label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+             */
+            operator: string;
+            /**
+             * values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * Defines a set of pods (namely those matching the labelSelector relative to the given namespace(s)) that this pod should be co-located (affinity) or not co-located (anti-affinity) with, where co-located is defined as running on a node whose value of the label with key <topologyKey> matches that of any node on which a pod of the set of pods is running
+         */
+        export interface APIManagerSpecSystemDatabasePostgresqlAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecution {
+            /**
+             * A label query over a set of resources, in this case pods.
+             */
+            labelSelector?: outputs.apps.v1alpha1.APIManagerSpecSystemDatabasePostgresqlAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector;
+            /**
+             * namespaces specifies which namespaces the labelSelector applies to (matches against); null or empty list means "this pod's namespace"
+             */
+            namespaces?: string[];
+            /**
+             * This pod should be co-located (affinity) or not co-located (anti-affinity) with the pods matching the labelSelector in the specified namespaces, where co-located is defined as running on a node whose value of the label with key topologyKey matches that of any node on which any of the selected pods is running. Empty topologyKey is not allowed.
+             */
+            topologyKey: string;
+        }
+
+        /**
+         * A label query over a set of resources, in this case pods.
+         */
+        export interface APIManagerSpecSystemDatabasePostgresqlAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector {
+            /**
+             * matchExpressions is a list of label selector requirements. The requirements are ANDed.
+             */
+            matchExpressions?: outputs.apps.v1alpha1.APIManagerSpecSystemDatabasePostgresqlAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions[];
+            /**
+             * matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+             */
+            matchLabels?: {[key: string]: string};
+        }
+
+        /**
+         * A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecSystemDatabasePostgresqlAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions {
+            /**
+             * key is the label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+             */
+            operator: string;
+            /**
+             * values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * Describes pod anti-affinity scheduling rules (e.g. avoid putting this pod in the same node, zone, etc. as some other pod(s)).
+         */
+        export interface APIManagerSpecSystemDatabasePostgresqlAffinityPodAntiAffinity {
+            /**
+             * The scheduler will prefer to schedule pods to nodes that satisfy the anti-affinity expressions specified by this field, but it may choose a node that violates one or more of the expressions. The node that is most preferred is the one with the greatest sum of weights, i.e. for each node that meets all of the scheduling requirements (resource request, requiredDuringScheduling anti-affinity expressions, etc.), compute a sum by iterating through the elements of this field and adding "weight" to the sum if the node has pods which matches the corresponding podAffinityTerm; the node(s) with the highest sum are the most preferred.
+             */
+            preferredDuringSchedulingIgnoredDuringExecution?: outputs.apps.v1alpha1.APIManagerSpecSystemDatabasePostgresqlAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecution[];
+            /**
+             * If the anti-affinity requirements specified by this field are not met at scheduling time, the pod will not be scheduled onto the node. If the anti-affinity requirements specified by this field cease to be met at some point during pod execution (e.g. due to a pod label update), the system may or may not try to eventually evict the pod from its node. When there are multiple elements, the lists of nodes corresponding to each podAffinityTerm are intersected, i.e. all terms must be satisfied.
+             */
+            requiredDuringSchedulingIgnoredDuringExecution?: outputs.apps.v1alpha1.APIManagerSpecSystemDatabasePostgresqlAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecution[];
+        }
+
+        /**
+         * The weights of all of the matched WeightedPodAffinityTerm fields are added per-node to find the most preferred node(s)
+         */
+        export interface APIManagerSpecSystemDatabasePostgresqlAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecution {
+            /**
+             * Required. A pod affinity term, associated with the corresponding weight.
+             */
+            podAffinityTerm: outputs.apps.v1alpha1.APIManagerSpecSystemDatabasePostgresqlAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTerm;
+            /**
+             * weight associated with matching the corresponding podAffinityTerm, in the range 1-100.
+             */
+            weight: number;
+        }
+
+        /**
+         * Required. A pod affinity term, associated with the corresponding weight.
+         */
+        export interface APIManagerSpecSystemDatabasePostgresqlAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTerm {
+            /**
+             * A label query over a set of resources, in this case pods.
+             */
+            labelSelector?: outputs.apps.v1alpha1.APIManagerSpecSystemDatabasePostgresqlAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelector;
+            /**
+             * namespaces specifies which namespaces the labelSelector applies to (matches against); null or empty list means "this pod's namespace"
+             */
+            namespaces?: string[];
+            /**
+             * This pod should be co-located (affinity) or not co-located (anti-affinity) with the pods matching the labelSelector in the specified namespaces, where co-located is defined as running on a node whose value of the label with key topologyKey matches that of any node on which any of the selected pods is running. Empty topologyKey is not allowed.
+             */
+            topologyKey: string;
+        }
+
+        /**
+         * A label query over a set of resources, in this case pods.
+         */
+        export interface APIManagerSpecSystemDatabasePostgresqlAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelector {
+            /**
+             * matchExpressions is a list of label selector requirements. The requirements are ANDed.
+             */
+            matchExpressions?: outputs.apps.v1alpha1.APIManagerSpecSystemDatabasePostgresqlAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressions[];
+            /**
+             * matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+             */
+            matchLabels?: {[key: string]: string};
+        }
+
+        /**
+         * A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecSystemDatabasePostgresqlAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressions {
+            /**
+             * key is the label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+             */
+            operator: string;
+            /**
+             * values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * Defines a set of pods (namely those matching the labelSelector relative to the given namespace(s)) that this pod should be co-located (affinity) or not co-located (anti-affinity) with, where co-located is defined as running on a node whose value of the label with key <topologyKey> matches that of any node on which a pod of the set of pods is running
+         */
+        export interface APIManagerSpecSystemDatabasePostgresqlAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecution {
+            /**
+             * A label query over a set of resources, in this case pods.
+             */
+            labelSelector?: outputs.apps.v1alpha1.APIManagerSpecSystemDatabasePostgresqlAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector;
+            /**
+             * namespaces specifies which namespaces the labelSelector applies to (matches against); null or empty list means "this pod's namespace"
+             */
+            namespaces?: string[];
+            /**
+             * This pod should be co-located (affinity) or not co-located (anti-affinity) with the pods matching the labelSelector in the specified namespaces, where co-located is defined as running on a node whose value of the label with key topologyKey matches that of any node on which any of the selected pods is running. Empty topologyKey is not allowed.
+             */
+            topologyKey: string;
+        }
+
+        /**
+         * A label query over a set of resources, in this case pods.
+         */
+        export interface APIManagerSpecSystemDatabasePostgresqlAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector {
+            /**
+             * matchExpressions is a list of label selector requirements. The requirements are ANDed.
+             */
+            matchExpressions?: outputs.apps.v1alpha1.APIManagerSpecSystemDatabasePostgresqlAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions[];
+            /**
+             * matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+             */
+            matchLabels?: {[key: string]: string};
+        }
+
+        /**
+         * A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecSystemDatabasePostgresqlAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions {
+            /**
+             * key is the label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+             */
+            operator: string;
+            /**
+             * values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        export interface APIManagerSpecSystemDatabasePostgresqlPersistentVolumeClaim {
+            /**
+             * Affinity is a group of affinity scheduling rules.
+             */
+            affinity?: outputs.apps.v1alpha1.APIManagerSpecSystemDatabasePostgresqlPersistentVolumeClaimAffinity;
+            storageClassName?: string;
+            tolerations?: outputs.apps.v1alpha1.APIManagerSpecSystemDatabasePostgresqlPersistentVolumeClaimTolerations[];
+        }
+
+        /**
+         * Affinity is a group of affinity scheduling rules.
+         */
+        export interface APIManagerSpecSystemDatabasePostgresqlPersistentVolumeClaimAffinity {
+            /**
+             * Describes node affinity scheduling rules for the pod.
+             */
+            nodeAffinity?: outputs.apps.v1alpha1.APIManagerSpecSystemDatabasePostgresqlPersistentVolumeClaimAffinityNodeAffinity;
+            /**
+             * Describes pod affinity scheduling rules (e.g. co-locate this pod in the same node, zone, etc. as some other pod(s)).
+             */
+            podAffinity?: outputs.apps.v1alpha1.APIManagerSpecSystemDatabasePostgresqlPersistentVolumeClaimAffinityPodAffinity;
+            /**
+             * Describes pod anti-affinity scheduling rules (e.g. avoid putting this pod in the same node, zone, etc. as some other pod(s)).
+             */
+            podAntiAffinity?: outputs.apps.v1alpha1.APIManagerSpecSystemDatabasePostgresqlPersistentVolumeClaimAffinityPodAntiAffinity;
+        }
+
+        /**
+         * Describes node affinity scheduling rules for the pod.
+         */
+        export interface APIManagerSpecSystemDatabasePostgresqlPersistentVolumeClaimAffinityNodeAffinity {
+            /**
+             * The scheduler will prefer to schedule pods to nodes that satisfy the affinity expressions specified by this field, but it may choose a node that violates one or more of the expressions. The node that is most preferred is the one with the greatest sum of weights, i.e. for each node that meets all of the scheduling requirements (resource request, requiredDuringScheduling affinity expressions, etc.), compute a sum by iterating through the elements of this field and adding "weight" to the sum if the node matches the corresponding matchExpressions; the node(s) with the highest sum are the most preferred.
+             */
+            preferredDuringSchedulingIgnoredDuringExecution?: outputs.apps.v1alpha1.APIManagerSpecSystemDatabasePostgresqlPersistentVolumeClaimAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecution[];
+            /**
+             * If the affinity requirements specified by this field are not met at scheduling time, the pod will not be scheduled onto the node. If the affinity requirements specified by this field cease to be met at some point during pod execution (e.g. due to an update), the system may or may not try to eventually evict the pod from its node.
+             */
+            requiredDuringSchedulingIgnoredDuringExecution?: outputs.apps.v1alpha1.APIManagerSpecSystemDatabasePostgresqlPersistentVolumeClaimAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecution;
+        }
+
+        /**
+         * An empty preferred scheduling term matches all objects with implicit weight 0 (i.e. it's a no-op). A null preferred scheduling term matches no objects (i.e. is also a no-op).
+         */
+        export interface APIManagerSpecSystemDatabasePostgresqlPersistentVolumeClaimAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecution {
+            /**
+             * A node selector term, associated with the corresponding weight.
+             */
+            preference: outputs.apps.v1alpha1.APIManagerSpecSystemDatabasePostgresqlPersistentVolumeClaimAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreference;
+            /**
+             * Weight associated with matching the corresponding nodeSelectorTerm, in the range 1-100.
+             */
+            weight: number;
+        }
+
+        /**
+         * A node selector term, associated with the corresponding weight.
+         */
+        export interface APIManagerSpecSystemDatabasePostgresqlPersistentVolumeClaimAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreference {
+            /**
+             * A list of node selector requirements by node's labels.
+             */
+            matchExpressions?: outputs.apps.v1alpha1.APIManagerSpecSystemDatabasePostgresqlPersistentVolumeClaimAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressions[];
+            /**
+             * A list of node selector requirements by node's fields.
+             */
+            matchFields?: outputs.apps.v1alpha1.APIManagerSpecSystemDatabasePostgresqlPersistentVolumeClaimAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFields[];
+        }
+
+        /**
+         * A node selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecSystemDatabasePostgresqlPersistentVolumeClaimAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressions {
+            /**
+             * The label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * Represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt.
+             */
+            operator: string;
+            /**
+             * An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. If the operator is Gt or Lt, the values array must have a single element, which will be interpreted as an integer. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * A node selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecSystemDatabasePostgresqlPersistentVolumeClaimAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFields {
+            /**
+             * The label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * Represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt.
+             */
+            operator: string;
+            /**
+             * An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. If the operator is Gt or Lt, the values array must have a single element, which will be interpreted as an integer. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * If the affinity requirements specified by this field are not met at scheduling time, the pod will not be scheduled onto the node. If the affinity requirements specified by this field cease to be met at some point during pod execution (e.g. due to an update), the system may or may not try to eventually evict the pod from its node.
+         */
+        export interface APIManagerSpecSystemDatabasePostgresqlPersistentVolumeClaimAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecution {
+            /**
+             * Required. A list of node selector terms. The terms are ORed.
+             */
+            nodeSelectorTerms: outputs.apps.v1alpha1.APIManagerSpecSystemDatabasePostgresqlPersistentVolumeClaimAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTerms[];
+        }
+
+        /**
+         * A null or empty node selector term matches no objects. The requirements of them are ANDed. The TopologySelectorTerm type implements a subset of the NodeSelectorTerm.
+         */
+        export interface APIManagerSpecSystemDatabasePostgresqlPersistentVolumeClaimAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTerms {
+            /**
+             * A list of node selector requirements by node's labels.
+             */
+            matchExpressions?: outputs.apps.v1alpha1.APIManagerSpecSystemDatabasePostgresqlPersistentVolumeClaimAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressions[];
+            /**
+             * A list of node selector requirements by node's fields.
+             */
+            matchFields?: outputs.apps.v1alpha1.APIManagerSpecSystemDatabasePostgresqlPersistentVolumeClaimAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFields[];
+        }
+
+        /**
+         * A node selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecSystemDatabasePostgresqlPersistentVolumeClaimAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressions {
+            /**
+             * The label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * Represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt.
+             */
+            operator: string;
+            /**
+             * An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. If the operator is Gt or Lt, the values array must have a single element, which will be interpreted as an integer. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * A node selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecSystemDatabasePostgresqlPersistentVolumeClaimAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFields {
+            /**
+             * The label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * Represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt.
+             */
+            operator: string;
+            /**
+             * An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. If the operator is Gt or Lt, the values array must have a single element, which will be interpreted as an integer. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * Describes pod affinity scheduling rules (e.g. co-locate this pod in the same node, zone, etc. as some other pod(s)).
+         */
+        export interface APIManagerSpecSystemDatabasePostgresqlPersistentVolumeClaimAffinityPodAffinity {
+            /**
+             * The scheduler will prefer to schedule pods to nodes that satisfy the affinity expressions specified by this field, but it may choose a node that violates one or more of the expressions. The node that is most preferred is the one with the greatest sum of weights, i.e. for each node that meets all of the scheduling requirements (resource request, requiredDuringScheduling affinity expressions, etc.), compute a sum by iterating through the elements of this field and adding "weight" to the sum if the node has pods which matches the corresponding podAffinityTerm; the node(s) with the highest sum are the most preferred.
+             */
+            preferredDuringSchedulingIgnoredDuringExecution?: outputs.apps.v1alpha1.APIManagerSpecSystemDatabasePostgresqlPersistentVolumeClaimAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecution[];
+            /**
+             * If the affinity requirements specified by this field are not met at scheduling time, the pod will not be scheduled onto the node. If the affinity requirements specified by this field cease to be met at some point during pod execution (e.g. due to a pod label update), the system may or may not try to eventually evict the pod from its node. When there are multiple elements, the lists of nodes corresponding to each podAffinityTerm are intersected, i.e. all terms must be satisfied.
+             */
+            requiredDuringSchedulingIgnoredDuringExecution?: outputs.apps.v1alpha1.APIManagerSpecSystemDatabasePostgresqlPersistentVolumeClaimAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecution[];
+        }
+
+        /**
+         * The weights of all of the matched WeightedPodAffinityTerm fields are added per-node to find the most preferred node(s)
+         */
+        export interface APIManagerSpecSystemDatabasePostgresqlPersistentVolumeClaimAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecution {
+            /**
+             * Required. A pod affinity term, associated with the corresponding weight.
+             */
+            podAffinityTerm: outputs.apps.v1alpha1.APIManagerSpecSystemDatabasePostgresqlPersistentVolumeClaimAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTerm;
+            /**
+             * weight associated with matching the corresponding podAffinityTerm, in the range 1-100.
+             */
+            weight: number;
+        }
+
+        /**
+         * Required. A pod affinity term, associated with the corresponding weight.
+         */
+        export interface APIManagerSpecSystemDatabasePostgresqlPersistentVolumeClaimAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTerm {
+            /**
+             * A label query over a set of resources, in this case pods.
+             */
+            labelSelector?: outputs.apps.v1alpha1.APIManagerSpecSystemDatabasePostgresqlPersistentVolumeClaimAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelector;
+            /**
+             * namespaces specifies which namespaces the labelSelector applies to (matches against); null or empty list means "this pod's namespace"
+             */
+            namespaces?: string[];
+            /**
+             * This pod should be co-located (affinity) or not co-located (anti-affinity) with the pods matching the labelSelector in the specified namespaces, where co-located is defined as running on a node whose value of the label with key topologyKey matches that of any node on which any of the selected pods is running. Empty topologyKey is not allowed.
+             */
+            topologyKey: string;
+        }
+
+        /**
+         * A label query over a set of resources, in this case pods.
+         */
+        export interface APIManagerSpecSystemDatabasePostgresqlPersistentVolumeClaimAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelector {
+            /**
+             * matchExpressions is a list of label selector requirements. The requirements are ANDed.
+             */
+            matchExpressions?: outputs.apps.v1alpha1.APIManagerSpecSystemDatabasePostgresqlPersistentVolumeClaimAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressions[];
+            /**
+             * matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+             */
+            matchLabels?: {[key: string]: string};
+        }
+
+        /**
+         * A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecSystemDatabasePostgresqlPersistentVolumeClaimAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressions {
+            /**
+             * key is the label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+             */
+            operator: string;
+            /**
+             * values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * Defines a set of pods (namely those matching the labelSelector relative to the given namespace(s)) that this pod should be co-located (affinity) or not co-located (anti-affinity) with, where co-located is defined as running on a node whose value of the label with key <topologyKey> matches that of any node on which a pod of the set of pods is running
+         */
+        export interface APIManagerSpecSystemDatabasePostgresqlPersistentVolumeClaimAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecution {
+            /**
+             * A label query over a set of resources, in this case pods.
+             */
+            labelSelector?: outputs.apps.v1alpha1.APIManagerSpecSystemDatabasePostgresqlPersistentVolumeClaimAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector;
+            /**
+             * namespaces specifies which namespaces the labelSelector applies to (matches against); null or empty list means "this pod's namespace"
+             */
+            namespaces?: string[];
+            /**
+             * This pod should be co-located (affinity) or not co-located (anti-affinity) with the pods matching the labelSelector in the specified namespaces, where co-located is defined as running on a node whose value of the label with key topologyKey matches that of any node on which any of the selected pods is running. Empty topologyKey is not allowed.
+             */
+            topologyKey: string;
+        }
+
+        /**
+         * A label query over a set of resources, in this case pods.
+         */
+        export interface APIManagerSpecSystemDatabasePostgresqlPersistentVolumeClaimAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector {
+            /**
+             * matchExpressions is a list of label selector requirements. The requirements are ANDed.
+             */
+            matchExpressions?: outputs.apps.v1alpha1.APIManagerSpecSystemDatabasePostgresqlPersistentVolumeClaimAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions[];
+            /**
+             * matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+             */
+            matchLabels?: {[key: string]: string};
+        }
+
+        /**
+         * A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecSystemDatabasePostgresqlPersistentVolumeClaimAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions {
+            /**
+             * key is the label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+             */
+            operator: string;
+            /**
+             * values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * Describes pod anti-affinity scheduling rules (e.g. avoid putting this pod in the same node, zone, etc. as some other pod(s)).
+         */
+        export interface APIManagerSpecSystemDatabasePostgresqlPersistentVolumeClaimAffinityPodAntiAffinity {
+            /**
+             * The scheduler will prefer to schedule pods to nodes that satisfy the anti-affinity expressions specified by this field, but it may choose a node that violates one or more of the expressions. The node that is most preferred is the one with the greatest sum of weights, i.e. for each node that meets all of the scheduling requirements (resource request, requiredDuringScheduling anti-affinity expressions, etc.), compute a sum by iterating through the elements of this field and adding "weight" to the sum if the node has pods which matches the corresponding podAffinityTerm; the node(s) with the highest sum are the most preferred.
+             */
+            preferredDuringSchedulingIgnoredDuringExecution?: outputs.apps.v1alpha1.APIManagerSpecSystemDatabasePostgresqlPersistentVolumeClaimAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecution[];
+            /**
+             * If the anti-affinity requirements specified by this field are not met at scheduling time, the pod will not be scheduled onto the node. If the anti-affinity requirements specified by this field cease to be met at some point during pod execution (e.g. due to a pod label update), the system may or may not try to eventually evict the pod from its node. When there are multiple elements, the lists of nodes corresponding to each podAffinityTerm are intersected, i.e. all terms must be satisfied.
+             */
+            requiredDuringSchedulingIgnoredDuringExecution?: outputs.apps.v1alpha1.APIManagerSpecSystemDatabasePostgresqlPersistentVolumeClaimAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecution[];
+        }
+
+        /**
+         * The weights of all of the matched WeightedPodAffinityTerm fields are added per-node to find the most preferred node(s)
+         */
+        export interface APIManagerSpecSystemDatabasePostgresqlPersistentVolumeClaimAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecution {
+            /**
+             * Required. A pod affinity term, associated with the corresponding weight.
+             */
+            podAffinityTerm: outputs.apps.v1alpha1.APIManagerSpecSystemDatabasePostgresqlPersistentVolumeClaimAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTerm;
+            /**
+             * weight associated with matching the corresponding podAffinityTerm, in the range 1-100.
+             */
+            weight: number;
+        }
+
+        /**
+         * Required. A pod affinity term, associated with the corresponding weight.
+         */
+        export interface APIManagerSpecSystemDatabasePostgresqlPersistentVolumeClaimAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTerm {
+            /**
+             * A label query over a set of resources, in this case pods.
+             */
+            labelSelector?: outputs.apps.v1alpha1.APIManagerSpecSystemDatabasePostgresqlPersistentVolumeClaimAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelector;
+            /**
+             * namespaces specifies which namespaces the labelSelector applies to (matches against); null or empty list means "this pod's namespace"
+             */
+            namespaces?: string[];
+            /**
+             * This pod should be co-located (affinity) or not co-located (anti-affinity) with the pods matching the labelSelector in the specified namespaces, where co-located is defined as running on a node whose value of the label with key topologyKey matches that of any node on which any of the selected pods is running. Empty topologyKey is not allowed.
+             */
+            topologyKey: string;
+        }
+
+        /**
+         * A label query over a set of resources, in this case pods.
+         */
+        export interface APIManagerSpecSystemDatabasePostgresqlPersistentVolumeClaimAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelector {
+            /**
+             * matchExpressions is a list of label selector requirements. The requirements are ANDed.
+             */
+            matchExpressions?: outputs.apps.v1alpha1.APIManagerSpecSystemDatabasePostgresqlPersistentVolumeClaimAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressions[];
+            /**
+             * matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+             */
+            matchLabels?: {[key: string]: string};
+        }
+
+        /**
+         * A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecSystemDatabasePostgresqlPersistentVolumeClaimAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressions {
+            /**
+             * key is the label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+             */
+            operator: string;
+            /**
+             * values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * Defines a set of pods (namely those matching the labelSelector relative to the given namespace(s)) that this pod should be co-located (affinity) or not co-located (anti-affinity) with, where co-located is defined as running on a node whose value of the label with key <topologyKey> matches that of any node on which a pod of the set of pods is running
+         */
+        export interface APIManagerSpecSystemDatabasePostgresqlPersistentVolumeClaimAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecution {
+            /**
+             * A label query over a set of resources, in this case pods.
+             */
+            labelSelector?: outputs.apps.v1alpha1.APIManagerSpecSystemDatabasePostgresqlPersistentVolumeClaimAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector;
+            /**
+             * namespaces specifies which namespaces the labelSelector applies to (matches against); null or empty list means "this pod's namespace"
+             */
+            namespaces?: string[];
+            /**
+             * This pod should be co-located (affinity) or not co-located (anti-affinity) with the pods matching the labelSelector in the specified namespaces, where co-located is defined as running on a node whose value of the label with key topologyKey matches that of any node on which any of the selected pods is running. Empty topologyKey is not allowed.
+             */
+            topologyKey: string;
+        }
+
+        /**
+         * A label query over a set of resources, in this case pods.
+         */
+        export interface APIManagerSpecSystemDatabasePostgresqlPersistentVolumeClaimAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector {
+            /**
+             * matchExpressions is a list of label selector requirements. The requirements are ANDed.
+             */
+            matchExpressions?: outputs.apps.v1alpha1.APIManagerSpecSystemDatabasePostgresqlPersistentVolumeClaimAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions[];
+            /**
+             * matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+             */
+            matchLabels?: {[key: string]: string};
+        }
+
+        /**
+         * A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecSystemDatabasePostgresqlPersistentVolumeClaimAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions {
+            /**
+             * key is the label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+             */
+            operator: string;
+            /**
+             * values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * The pod this Toleration is attached to tolerates any taint that matches the triple <key,value,effect> using the matching operator <operator>.
+         */
+        export interface APIManagerSpecSystemDatabasePostgresqlPersistentVolumeClaimTolerations {
+            /**
+             * Effect indicates the taint effect to match. Empty means match all taint effects. When specified, allowed values are NoSchedule, PreferNoSchedule and NoExecute.
+             */
+            effect?: string;
+            /**
+             * Key is the taint key that the toleration applies to. Empty means match all taint keys. If the key is empty, operator must be Exists; this combination means to match all values and all keys.
+             */
+            key?: string;
+            /**
+             * Operator represents a key's relationship to the value. Valid operators are Exists and Equal. Defaults to Equal. Exists is equivalent to wildcard for value, so that a pod can tolerate all taints of a particular category.
+             */
+            operator?: string;
+            /**
+             * TolerationSeconds represents the period of time the toleration (which must be of effect NoExecute, otherwise this field is ignored) tolerates the taint. By default, it is not set, which means tolerate the taint forever (do not evict). Zero and negative values will be treated as 0 (evict immediately) by the system.
+             */
+            tolerationSeconds?: number;
+            /**
+             * Value is the taint value the toleration matches to. If the operator is Exists, the value should be empty, otherwise just a regular string.
+             */
+            value?: string;
+        }
+
+        /**
+         * The pod this Toleration is attached to tolerates any taint that matches the triple <key,value,effect> using the matching operator <operator>.
+         */
+        export interface APIManagerSpecSystemDatabasePostgresqlTolerations {
+            /**
+             * Effect indicates the taint effect to match. Empty means match all taint effects. When specified, allowed values are NoSchedule, PreferNoSchedule and NoExecute.
+             */
+            effect?: string;
+            /**
+             * Key is the taint key that the toleration applies to. Empty means match all taint keys. If the key is empty, operator must be Exists; this combination means to match all values and all keys.
+             */
+            key?: string;
+            /**
+             * Operator represents a key's relationship to the value. Valid operators are Exists and Equal. Defaults to Equal. Exists is equivalent to wildcard for value, so that a pod can tolerate all taints of a particular category.
+             */
+            operator?: string;
+            /**
+             * TolerationSeconds represents the period of time the toleration (which must be of effect NoExecute, otherwise this field is ignored) tolerates the taint. By default, it is not set, which means tolerate the taint forever (do not evict). Zero and negative values will be treated as 0 (evict immediately) by the system.
+             */
+            tolerationSeconds?: number;
+            /**
+             * Value is the taint value the toleration matches to. If the operator is Exists, the value should be empty, otherwise just a regular string.
+             */
+            value?: string;
         }
 
         export interface APIManagerSpecSystemFileStorage {
@@ -136,6 +4762,9 @@ export namespace apps {
          * Deprecated
          */
         export interface APIManagerSpecSystemFileStorageAmazonSimpleStorageServiceAwsCredentialsSecret {
+            /**
+             * Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+             */
             name?: string;
         }
 
@@ -147,34 +4776,3147 @@ export namespace apps {
         }
 
         export interface APIManagerSpecSystemFileStorageSimpleStorageService {
+            /**
+             * LocalObjectReference contains enough information to let you locate the referenced object inside the same namespace.
+             */
             configurationSecretRef: outputs.apps.v1alpha1.APIManagerSpecSystemFileStorageSimpleStorageServiceConfigurationSecretRef;
         }
 
+        /**
+         * LocalObjectReference contains enough information to let you locate the referenced object inside the same namespace.
+         */
         export interface APIManagerSpecSystemFileStorageSimpleStorageServiceConfigurationSecretRef {
+            /**
+             * Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+             */
             name?: string;
         }
 
+        /**
+         * Affinity is a group of affinity scheduling rules.
+         */
+        export interface APIManagerSpecSystemMemcachedAffinity {
+            /**
+             * Describes node affinity scheduling rules for the pod.
+             */
+            nodeAffinity?: outputs.apps.v1alpha1.APIManagerSpecSystemMemcachedAffinityNodeAffinity;
+            /**
+             * Describes pod affinity scheduling rules (e.g. co-locate this pod in the same node, zone, etc. as some other pod(s)).
+             */
+            podAffinity?: outputs.apps.v1alpha1.APIManagerSpecSystemMemcachedAffinityPodAffinity;
+            /**
+             * Describes pod anti-affinity scheduling rules (e.g. avoid putting this pod in the same node, zone, etc. as some other pod(s)).
+             */
+            podAntiAffinity?: outputs.apps.v1alpha1.APIManagerSpecSystemMemcachedAffinityPodAntiAffinity;
+        }
+
+        /**
+         * Describes node affinity scheduling rules for the pod.
+         */
+        export interface APIManagerSpecSystemMemcachedAffinityNodeAffinity {
+            /**
+             * The scheduler will prefer to schedule pods to nodes that satisfy the affinity expressions specified by this field, but it may choose a node that violates one or more of the expressions. The node that is most preferred is the one with the greatest sum of weights, i.e. for each node that meets all of the scheduling requirements (resource request, requiredDuringScheduling affinity expressions, etc.), compute a sum by iterating through the elements of this field and adding "weight" to the sum if the node matches the corresponding matchExpressions; the node(s) with the highest sum are the most preferred.
+             */
+            preferredDuringSchedulingIgnoredDuringExecution?: outputs.apps.v1alpha1.APIManagerSpecSystemMemcachedAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecution[];
+            /**
+             * If the affinity requirements specified by this field are not met at scheduling time, the pod will not be scheduled onto the node. If the affinity requirements specified by this field cease to be met at some point during pod execution (e.g. due to an update), the system may or may not try to eventually evict the pod from its node.
+             */
+            requiredDuringSchedulingIgnoredDuringExecution?: outputs.apps.v1alpha1.APIManagerSpecSystemMemcachedAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecution;
+        }
+
+        /**
+         * An empty preferred scheduling term matches all objects with implicit weight 0 (i.e. it's a no-op). A null preferred scheduling term matches no objects (i.e. is also a no-op).
+         */
+        export interface APIManagerSpecSystemMemcachedAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecution {
+            /**
+             * A node selector term, associated with the corresponding weight.
+             */
+            preference: outputs.apps.v1alpha1.APIManagerSpecSystemMemcachedAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreference;
+            /**
+             * Weight associated with matching the corresponding nodeSelectorTerm, in the range 1-100.
+             */
+            weight: number;
+        }
+
+        /**
+         * A node selector term, associated with the corresponding weight.
+         */
+        export interface APIManagerSpecSystemMemcachedAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreference {
+            /**
+             * A list of node selector requirements by node's labels.
+             */
+            matchExpressions?: outputs.apps.v1alpha1.APIManagerSpecSystemMemcachedAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressions[];
+            /**
+             * A list of node selector requirements by node's fields.
+             */
+            matchFields?: outputs.apps.v1alpha1.APIManagerSpecSystemMemcachedAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFields[];
+        }
+
+        /**
+         * A node selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecSystemMemcachedAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressions {
+            /**
+             * The label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * Represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt.
+             */
+            operator: string;
+            /**
+             * An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. If the operator is Gt or Lt, the values array must have a single element, which will be interpreted as an integer. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * A node selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecSystemMemcachedAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFields {
+            /**
+             * The label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * Represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt.
+             */
+            operator: string;
+            /**
+             * An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. If the operator is Gt or Lt, the values array must have a single element, which will be interpreted as an integer. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * If the affinity requirements specified by this field are not met at scheduling time, the pod will not be scheduled onto the node. If the affinity requirements specified by this field cease to be met at some point during pod execution (e.g. due to an update), the system may or may not try to eventually evict the pod from its node.
+         */
+        export interface APIManagerSpecSystemMemcachedAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecution {
+            /**
+             * Required. A list of node selector terms. The terms are ORed.
+             */
+            nodeSelectorTerms: outputs.apps.v1alpha1.APIManagerSpecSystemMemcachedAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTerms[];
+        }
+
+        /**
+         * A null or empty node selector term matches no objects. The requirements of them are ANDed. The TopologySelectorTerm type implements a subset of the NodeSelectorTerm.
+         */
+        export interface APIManagerSpecSystemMemcachedAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTerms {
+            /**
+             * A list of node selector requirements by node's labels.
+             */
+            matchExpressions?: outputs.apps.v1alpha1.APIManagerSpecSystemMemcachedAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressions[];
+            /**
+             * A list of node selector requirements by node's fields.
+             */
+            matchFields?: outputs.apps.v1alpha1.APIManagerSpecSystemMemcachedAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFields[];
+        }
+
+        /**
+         * A node selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecSystemMemcachedAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressions {
+            /**
+             * The label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * Represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt.
+             */
+            operator: string;
+            /**
+             * An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. If the operator is Gt or Lt, the values array must have a single element, which will be interpreted as an integer. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * A node selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecSystemMemcachedAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFields {
+            /**
+             * The label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * Represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt.
+             */
+            operator: string;
+            /**
+             * An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. If the operator is Gt or Lt, the values array must have a single element, which will be interpreted as an integer. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * Describes pod affinity scheduling rules (e.g. co-locate this pod in the same node, zone, etc. as some other pod(s)).
+         */
+        export interface APIManagerSpecSystemMemcachedAffinityPodAffinity {
+            /**
+             * The scheduler will prefer to schedule pods to nodes that satisfy the affinity expressions specified by this field, but it may choose a node that violates one or more of the expressions. The node that is most preferred is the one with the greatest sum of weights, i.e. for each node that meets all of the scheduling requirements (resource request, requiredDuringScheduling affinity expressions, etc.), compute a sum by iterating through the elements of this field and adding "weight" to the sum if the node has pods which matches the corresponding podAffinityTerm; the node(s) with the highest sum are the most preferred.
+             */
+            preferredDuringSchedulingIgnoredDuringExecution?: outputs.apps.v1alpha1.APIManagerSpecSystemMemcachedAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecution[];
+            /**
+             * If the affinity requirements specified by this field are not met at scheduling time, the pod will not be scheduled onto the node. If the affinity requirements specified by this field cease to be met at some point during pod execution (e.g. due to a pod label update), the system may or may not try to eventually evict the pod from its node. When there are multiple elements, the lists of nodes corresponding to each podAffinityTerm are intersected, i.e. all terms must be satisfied.
+             */
+            requiredDuringSchedulingIgnoredDuringExecution?: outputs.apps.v1alpha1.APIManagerSpecSystemMemcachedAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecution[];
+        }
+
+        /**
+         * The weights of all of the matched WeightedPodAffinityTerm fields are added per-node to find the most preferred node(s)
+         */
+        export interface APIManagerSpecSystemMemcachedAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecution {
+            /**
+             * Required. A pod affinity term, associated with the corresponding weight.
+             */
+            podAffinityTerm: outputs.apps.v1alpha1.APIManagerSpecSystemMemcachedAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTerm;
+            /**
+             * weight associated with matching the corresponding podAffinityTerm, in the range 1-100.
+             */
+            weight: number;
+        }
+
+        /**
+         * Required. A pod affinity term, associated with the corresponding weight.
+         */
+        export interface APIManagerSpecSystemMemcachedAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTerm {
+            /**
+             * A label query over a set of resources, in this case pods.
+             */
+            labelSelector?: outputs.apps.v1alpha1.APIManagerSpecSystemMemcachedAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelector;
+            /**
+             * namespaces specifies which namespaces the labelSelector applies to (matches against); null or empty list means "this pod's namespace"
+             */
+            namespaces?: string[];
+            /**
+             * This pod should be co-located (affinity) or not co-located (anti-affinity) with the pods matching the labelSelector in the specified namespaces, where co-located is defined as running on a node whose value of the label with key topologyKey matches that of any node on which any of the selected pods is running. Empty topologyKey is not allowed.
+             */
+            topologyKey: string;
+        }
+
+        /**
+         * A label query over a set of resources, in this case pods.
+         */
+        export interface APIManagerSpecSystemMemcachedAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelector {
+            /**
+             * matchExpressions is a list of label selector requirements. The requirements are ANDed.
+             */
+            matchExpressions?: outputs.apps.v1alpha1.APIManagerSpecSystemMemcachedAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressions[];
+            /**
+             * matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+             */
+            matchLabels?: {[key: string]: string};
+        }
+
+        /**
+         * A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecSystemMemcachedAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressions {
+            /**
+             * key is the label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+             */
+            operator: string;
+            /**
+             * values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * Defines a set of pods (namely those matching the labelSelector relative to the given namespace(s)) that this pod should be co-located (affinity) or not co-located (anti-affinity) with, where co-located is defined as running on a node whose value of the label with key <topologyKey> matches that of any node on which a pod of the set of pods is running
+         */
+        export interface APIManagerSpecSystemMemcachedAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecution {
+            /**
+             * A label query over a set of resources, in this case pods.
+             */
+            labelSelector?: outputs.apps.v1alpha1.APIManagerSpecSystemMemcachedAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector;
+            /**
+             * namespaces specifies which namespaces the labelSelector applies to (matches against); null or empty list means "this pod's namespace"
+             */
+            namespaces?: string[];
+            /**
+             * This pod should be co-located (affinity) or not co-located (anti-affinity) with the pods matching the labelSelector in the specified namespaces, where co-located is defined as running on a node whose value of the label with key topologyKey matches that of any node on which any of the selected pods is running. Empty topologyKey is not allowed.
+             */
+            topologyKey: string;
+        }
+
+        /**
+         * A label query over a set of resources, in this case pods.
+         */
+        export interface APIManagerSpecSystemMemcachedAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector {
+            /**
+             * matchExpressions is a list of label selector requirements. The requirements are ANDed.
+             */
+            matchExpressions?: outputs.apps.v1alpha1.APIManagerSpecSystemMemcachedAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions[];
+            /**
+             * matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+             */
+            matchLabels?: {[key: string]: string};
+        }
+
+        /**
+         * A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecSystemMemcachedAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions {
+            /**
+             * key is the label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+             */
+            operator: string;
+            /**
+             * values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * Describes pod anti-affinity scheduling rules (e.g. avoid putting this pod in the same node, zone, etc. as some other pod(s)).
+         */
+        export interface APIManagerSpecSystemMemcachedAffinityPodAntiAffinity {
+            /**
+             * The scheduler will prefer to schedule pods to nodes that satisfy the anti-affinity expressions specified by this field, but it may choose a node that violates one or more of the expressions. The node that is most preferred is the one with the greatest sum of weights, i.e. for each node that meets all of the scheduling requirements (resource request, requiredDuringScheduling anti-affinity expressions, etc.), compute a sum by iterating through the elements of this field and adding "weight" to the sum if the node has pods which matches the corresponding podAffinityTerm; the node(s) with the highest sum are the most preferred.
+             */
+            preferredDuringSchedulingIgnoredDuringExecution?: outputs.apps.v1alpha1.APIManagerSpecSystemMemcachedAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecution[];
+            /**
+             * If the anti-affinity requirements specified by this field are not met at scheduling time, the pod will not be scheduled onto the node. If the anti-affinity requirements specified by this field cease to be met at some point during pod execution (e.g. due to a pod label update), the system may or may not try to eventually evict the pod from its node. When there are multiple elements, the lists of nodes corresponding to each podAffinityTerm are intersected, i.e. all terms must be satisfied.
+             */
+            requiredDuringSchedulingIgnoredDuringExecution?: outputs.apps.v1alpha1.APIManagerSpecSystemMemcachedAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecution[];
+        }
+
+        /**
+         * The weights of all of the matched WeightedPodAffinityTerm fields are added per-node to find the most preferred node(s)
+         */
+        export interface APIManagerSpecSystemMemcachedAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecution {
+            /**
+             * Required. A pod affinity term, associated with the corresponding weight.
+             */
+            podAffinityTerm: outputs.apps.v1alpha1.APIManagerSpecSystemMemcachedAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTerm;
+            /**
+             * weight associated with matching the corresponding podAffinityTerm, in the range 1-100.
+             */
+            weight: number;
+        }
+
+        /**
+         * Required. A pod affinity term, associated with the corresponding weight.
+         */
+        export interface APIManagerSpecSystemMemcachedAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTerm {
+            /**
+             * A label query over a set of resources, in this case pods.
+             */
+            labelSelector?: outputs.apps.v1alpha1.APIManagerSpecSystemMemcachedAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelector;
+            /**
+             * namespaces specifies which namespaces the labelSelector applies to (matches against); null or empty list means "this pod's namespace"
+             */
+            namespaces?: string[];
+            /**
+             * This pod should be co-located (affinity) or not co-located (anti-affinity) with the pods matching the labelSelector in the specified namespaces, where co-located is defined as running on a node whose value of the label with key topologyKey matches that of any node on which any of the selected pods is running. Empty topologyKey is not allowed.
+             */
+            topologyKey: string;
+        }
+
+        /**
+         * A label query over a set of resources, in this case pods.
+         */
+        export interface APIManagerSpecSystemMemcachedAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelector {
+            /**
+             * matchExpressions is a list of label selector requirements. The requirements are ANDed.
+             */
+            matchExpressions?: outputs.apps.v1alpha1.APIManagerSpecSystemMemcachedAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressions[];
+            /**
+             * matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+             */
+            matchLabels?: {[key: string]: string};
+        }
+
+        /**
+         * A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecSystemMemcachedAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressions {
+            /**
+             * key is the label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+             */
+            operator: string;
+            /**
+             * values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * Defines a set of pods (namely those matching the labelSelector relative to the given namespace(s)) that this pod should be co-located (affinity) or not co-located (anti-affinity) with, where co-located is defined as running on a node whose value of the label with key <topologyKey> matches that of any node on which a pod of the set of pods is running
+         */
+        export interface APIManagerSpecSystemMemcachedAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecution {
+            /**
+             * A label query over a set of resources, in this case pods.
+             */
+            labelSelector?: outputs.apps.v1alpha1.APIManagerSpecSystemMemcachedAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector;
+            /**
+             * namespaces specifies which namespaces the labelSelector applies to (matches against); null or empty list means "this pod's namespace"
+             */
+            namespaces?: string[];
+            /**
+             * This pod should be co-located (affinity) or not co-located (anti-affinity) with the pods matching the labelSelector in the specified namespaces, where co-located is defined as running on a node whose value of the label with key topologyKey matches that of any node on which any of the selected pods is running. Empty topologyKey is not allowed.
+             */
+            topologyKey: string;
+        }
+
+        /**
+         * A label query over a set of resources, in this case pods.
+         */
+        export interface APIManagerSpecSystemMemcachedAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector {
+            /**
+             * matchExpressions is a list of label selector requirements. The requirements are ANDed.
+             */
+            matchExpressions?: outputs.apps.v1alpha1.APIManagerSpecSystemMemcachedAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions[];
+            /**
+             * matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+             */
+            matchLabels?: {[key: string]: string};
+        }
+
+        /**
+         * A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecSystemMemcachedAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions {
+            /**
+             * key is the label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+             */
+            operator: string;
+            /**
+             * values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * The pod this Toleration is attached to tolerates any taint that matches the triple <key,value,effect> using the matching operator <operator>.
+         */
+        export interface APIManagerSpecSystemMemcachedTolerations {
+            /**
+             * Effect indicates the taint effect to match. Empty means match all taint effects. When specified, allowed values are NoSchedule, PreferNoSchedule and NoExecute.
+             */
+            effect?: string;
+            /**
+             * Key is the taint key that the toleration applies to. Empty means match all taint keys. If the key is empty, operator must be Exists; this combination means to match all values and all keys.
+             */
+            key?: string;
+            /**
+             * Operator represents a key's relationship to the value. Valid operators are Exists and Equal. Defaults to Equal. Exists is equivalent to wildcard for value, so that a pod can tolerate all taints of a particular category.
+             */
+            operator?: string;
+            /**
+             * TolerationSeconds represents the period of time the toleration (which must be of effect NoExecute, otherwise this field is ignored) tolerates the taint. By default, it is not set, which means tolerate the taint forever (do not evict). Zero and negative values will be treated as 0 (evict immediately) by the system.
+             */
+            tolerationSeconds?: number;
+            /**
+             * Value is the taint value the toleration matches to. If the operator is Exists, the value should be empty, otherwise just a regular string.
+             */
+            value?: string;
+        }
+
+        /**
+         * Affinity is a group of affinity scheduling rules.
+         */
+        export interface APIManagerSpecSystemRedisAffinity {
+            /**
+             * Describes node affinity scheduling rules for the pod.
+             */
+            nodeAffinity?: outputs.apps.v1alpha1.APIManagerSpecSystemRedisAffinityNodeAffinity;
+            /**
+             * Describes pod affinity scheduling rules (e.g. co-locate this pod in the same node, zone, etc. as some other pod(s)).
+             */
+            podAffinity?: outputs.apps.v1alpha1.APIManagerSpecSystemRedisAffinityPodAffinity;
+            /**
+             * Describes pod anti-affinity scheduling rules (e.g. avoid putting this pod in the same node, zone, etc. as some other pod(s)).
+             */
+            podAntiAffinity?: outputs.apps.v1alpha1.APIManagerSpecSystemRedisAffinityPodAntiAffinity;
+        }
+
+        /**
+         * Describes node affinity scheduling rules for the pod.
+         */
+        export interface APIManagerSpecSystemRedisAffinityNodeAffinity {
+            /**
+             * The scheduler will prefer to schedule pods to nodes that satisfy the affinity expressions specified by this field, but it may choose a node that violates one or more of the expressions. The node that is most preferred is the one with the greatest sum of weights, i.e. for each node that meets all of the scheduling requirements (resource request, requiredDuringScheduling affinity expressions, etc.), compute a sum by iterating through the elements of this field and adding "weight" to the sum if the node matches the corresponding matchExpressions; the node(s) with the highest sum are the most preferred.
+             */
+            preferredDuringSchedulingIgnoredDuringExecution?: outputs.apps.v1alpha1.APIManagerSpecSystemRedisAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecution[];
+            /**
+             * If the affinity requirements specified by this field are not met at scheduling time, the pod will not be scheduled onto the node. If the affinity requirements specified by this field cease to be met at some point during pod execution (e.g. due to an update), the system may or may not try to eventually evict the pod from its node.
+             */
+            requiredDuringSchedulingIgnoredDuringExecution?: outputs.apps.v1alpha1.APIManagerSpecSystemRedisAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecution;
+        }
+
+        /**
+         * An empty preferred scheduling term matches all objects with implicit weight 0 (i.e. it's a no-op). A null preferred scheduling term matches no objects (i.e. is also a no-op).
+         */
+        export interface APIManagerSpecSystemRedisAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecution {
+            /**
+             * A node selector term, associated with the corresponding weight.
+             */
+            preference: outputs.apps.v1alpha1.APIManagerSpecSystemRedisAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreference;
+            /**
+             * Weight associated with matching the corresponding nodeSelectorTerm, in the range 1-100.
+             */
+            weight: number;
+        }
+
+        /**
+         * A node selector term, associated with the corresponding weight.
+         */
+        export interface APIManagerSpecSystemRedisAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreference {
+            /**
+             * A list of node selector requirements by node's labels.
+             */
+            matchExpressions?: outputs.apps.v1alpha1.APIManagerSpecSystemRedisAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressions[];
+            /**
+             * A list of node selector requirements by node's fields.
+             */
+            matchFields?: outputs.apps.v1alpha1.APIManagerSpecSystemRedisAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFields[];
+        }
+
+        /**
+         * A node selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecSystemRedisAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressions {
+            /**
+             * The label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * Represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt.
+             */
+            operator: string;
+            /**
+             * An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. If the operator is Gt or Lt, the values array must have a single element, which will be interpreted as an integer. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * A node selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecSystemRedisAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFields {
+            /**
+             * The label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * Represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt.
+             */
+            operator: string;
+            /**
+             * An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. If the operator is Gt or Lt, the values array must have a single element, which will be interpreted as an integer. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * If the affinity requirements specified by this field are not met at scheduling time, the pod will not be scheduled onto the node. If the affinity requirements specified by this field cease to be met at some point during pod execution (e.g. due to an update), the system may or may not try to eventually evict the pod from its node.
+         */
+        export interface APIManagerSpecSystemRedisAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecution {
+            /**
+             * Required. A list of node selector terms. The terms are ORed.
+             */
+            nodeSelectorTerms: outputs.apps.v1alpha1.APIManagerSpecSystemRedisAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTerms[];
+        }
+
+        /**
+         * A null or empty node selector term matches no objects. The requirements of them are ANDed. The TopologySelectorTerm type implements a subset of the NodeSelectorTerm.
+         */
+        export interface APIManagerSpecSystemRedisAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTerms {
+            /**
+             * A list of node selector requirements by node's labels.
+             */
+            matchExpressions?: outputs.apps.v1alpha1.APIManagerSpecSystemRedisAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressions[];
+            /**
+             * A list of node selector requirements by node's fields.
+             */
+            matchFields?: outputs.apps.v1alpha1.APIManagerSpecSystemRedisAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFields[];
+        }
+
+        /**
+         * A node selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecSystemRedisAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressions {
+            /**
+             * The label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * Represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt.
+             */
+            operator: string;
+            /**
+             * An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. If the operator is Gt or Lt, the values array must have a single element, which will be interpreted as an integer. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * A node selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecSystemRedisAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFields {
+            /**
+             * The label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * Represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt.
+             */
+            operator: string;
+            /**
+             * An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. If the operator is Gt or Lt, the values array must have a single element, which will be interpreted as an integer. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * Describes pod affinity scheduling rules (e.g. co-locate this pod in the same node, zone, etc. as some other pod(s)).
+         */
+        export interface APIManagerSpecSystemRedisAffinityPodAffinity {
+            /**
+             * The scheduler will prefer to schedule pods to nodes that satisfy the affinity expressions specified by this field, but it may choose a node that violates one or more of the expressions. The node that is most preferred is the one with the greatest sum of weights, i.e. for each node that meets all of the scheduling requirements (resource request, requiredDuringScheduling affinity expressions, etc.), compute a sum by iterating through the elements of this field and adding "weight" to the sum if the node has pods which matches the corresponding podAffinityTerm; the node(s) with the highest sum are the most preferred.
+             */
+            preferredDuringSchedulingIgnoredDuringExecution?: outputs.apps.v1alpha1.APIManagerSpecSystemRedisAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecution[];
+            /**
+             * If the affinity requirements specified by this field are not met at scheduling time, the pod will not be scheduled onto the node. If the affinity requirements specified by this field cease to be met at some point during pod execution (e.g. due to a pod label update), the system may or may not try to eventually evict the pod from its node. When there are multiple elements, the lists of nodes corresponding to each podAffinityTerm are intersected, i.e. all terms must be satisfied.
+             */
+            requiredDuringSchedulingIgnoredDuringExecution?: outputs.apps.v1alpha1.APIManagerSpecSystemRedisAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecution[];
+        }
+
+        /**
+         * The weights of all of the matched WeightedPodAffinityTerm fields are added per-node to find the most preferred node(s)
+         */
+        export interface APIManagerSpecSystemRedisAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecution {
+            /**
+             * Required. A pod affinity term, associated with the corresponding weight.
+             */
+            podAffinityTerm: outputs.apps.v1alpha1.APIManagerSpecSystemRedisAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTerm;
+            /**
+             * weight associated with matching the corresponding podAffinityTerm, in the range 1-100.
+             */
+            weight: number;
+        }
+
+        /**
+         * Required. A pod affinity term, associated with the corresponding weight.
+         */
+        export interface APIManagerSpecSystemRedisAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTerm {
+            /**
+             * A label query over a set of resources, in this case pods.
+             */
+            labelSelector?: outputs.apps.v1alpha1.APIManagerSpecSystemRedisAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelector;
+            /**
+             * namespaces specifies which namespaces the labelSelector applies to (matches against); null or empty list means "this pod's namespace"
+             */
+            namespaces?: string[];
+            /**
+             * This pod should be co-located (affinity) or not co-located (anti-affinity) with the pods matching the labelSelector in the specified namespaces, where co-located is defined as running on a node whose value of the label with key topologyKey matches that of any node on which any of the selected pods is running. Empty topologyKey is not allowed.
+             */
+            topologyKey: string;
+        }
+
+        /**
+         * A label query over a set of resources, in this case pods.
+         */
+        export interface APIManagerSpecSystemRedisAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelector {
+            /**
+             * matchExpressions is a list of label selector requirements. The requirements are ANDed.
+             */
+            matchExpressions?: outputs.apps.v1alpha1.APIManagerSpecSystemRedisAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressions[];
+            /**
+             * matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+             */
+            matchLabels?: {[key: string]: string};
+        }
+
+        /**
+         * A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecSystemRedisAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressions {
+            /**
+             * key is the label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+             */
+            operator: string;
+            /**
+             * values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * Defines a set of pods (namely those matching the labelSelector relative to the given namespace(s)) that this pod should be co-located (affinity) or not co-located (anti-affinity) with, where co-located is defined as running on a node whose value of the label with key <topologyKey> matches that of any node on which a pod of the set of pods is running
+         */
+        export interface APIManagerSpecSystemRedisAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecution {
+            /**
+             * A label query over a set of resources, in this case pods.
+             */
+            labelSelector?: outputs.apps.v1alpha1.APIManagerSpecSystemRedisAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector;
+            /**
+             * namespaces specifies which namespaces the labelSelector applies to (matches against); null or empty list means "this pod's namespace"
+             */
+            namespaces?: string[];
+            /**
+             * This pod should be co-located (affinity) or not co-located (anti-affinity) with the pods matching the labelSelector in the specified namespaces, where co-located is defined as running on a node whose value of the label with key topologyKey matches that of any node on which any of the selected pods is running. Empty topologyKey is not allowed.
+             */
+            topologyKey: string;
+        }
+
+        /**
+         * A label query over a set of resources, in this case pods.
+         */
+        export interface APIManagerSpecSystemRedisAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector {
+            /**
+             * matchExpressions is a list of label selector requirements. The requirements are ANDed.
+             */
+            matchExpressions?: outputs.apps.v1alpha1.APIManagerSpecSystemRedisAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions[];
+            /**
+             * matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+             */
+            matchLabels?: {[key: string]: string};
+        }
+
+        /**
+         * A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecSystemRedisAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions {
+            /**
+             * key is the label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+             */
+            operator: string;
+            /**
+             * values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * Describes pod anti-affinity scheduling rules (e.g. avoid putting this pod in the same node, zone, etc. as some other pod(s)).
+         */
+        export interface APIManagerSpecSystemRedisAffinityPodAntiAffinity {
+            /**
+             * The scheduler will prefer to schedule pods to nodes that satisfy the anti-affinity expressions specified by this field, but it may choose a node that violates one or more of the expressions. The node that is most preferred is the one with the greatest sum of weights, i.e. for each node that meets all of the scheduling requirements (resource request, requiredDuringScheduling anti-affinity expressions, etc.), compute a sum by iterating through the elements of this field and adding "weight" to the sum if the node has pods which matches the corresponding podAffinityTerm; the node(s) with the highest sum are the most preferred.
+             */
+            preferredDuringSchedulingIgnoredDuringExecution?: outputs.apps.v1alpha1.APIManagerSpecSystemRedisAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecution[];
+            /**
+             * If the anti-affinity requirements specified by this field are not met at scheduling time, the pod will not be scheduled onto the node. If the anti-affinity requirements specified by this field cease to be met at some point during pod execution (e.g. due to a pod label update), the system may or may not try to eventually evict the pod from its node. When there are multiple elements, the lists of nodes corresponding to each podAffinityTerm are intersected, i.e. all terms must be satisfied.
+             */
+            requiredDuringSchedulingIgnoredDuringExecution?: outputs.apps.v1alpha1.APIManagerSpecSystemRedisAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecution[];
+        }
+
+        /**
+         * The weights of all of the matched WeightedPodAffinityTerm fields are added per-node to find the most preferred node(s)
+         */
+        export interface APIManagerSpecSystemRedisAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecution {
+            /**
+             * Required. A pod affinity term, associated with the corresponding weight.
+             */
+            podAffinityTerm: outputs.apps.v1alpha1.APIManagerSpecSystemRedisAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTerm;
+            /**
+             * weight associated with matching the corresponding podAffinityTerm, in the range 1-100.
+             */
+            weight: number;
+        }
+
+        /**
+         * Required. A pod affinity term, associated with the corresponding weight.
+         */
+        export interface APIManagerSpecSystemRedisAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTerm {
+            /**
+             * A label query over a set of resources, in this case pods.
+             */
+            labelSelector?: outputs.apps.v1alpha1.APIManagerSpecSystemRedisAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelector;
+            /**
+             * namespaces specifies which namespaces the labelSelector applies to (matches against); null or empty list means "this pod's namespace"
+             */
+            namespaces?: string[];
+            /**
+             * This pod should be co-located (affinity) or not co-located (anti-affinity) with the pods matching the labelSelector in the specified namespaces, where co-located is defined as running on a node whose value of the label with key topologyKey matches that of any node on which any of the selected pods is running. Empty topologyKey is not allowed.
+             */
+            topologyKey: string;
+        }
+
+        /**
+         * A label query over a set of resources, in this case pods.
+         */
+        export interface APIManagerSpecSystemRedisAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelector {
+            /**
+             * matchExpressions is a list of label selector requirements. The requirements are ANDed.
+             */
+            matchExpressions?: outputs.apps.v1alpha1.APIManagerSpecSystemRedisAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressions[];
+            /**
+             * matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+             */
+            matchLabels?: {[key: string]: string};
+        }
+
+        /**
+         * A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecSystemRedisAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressions {
+            /**
+             * key is the label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+             */
+            operator: string;
+            /**
+             * values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * Defines a set of pods (namely those matching the labelSelector relative to the given namespace(s)) that this pod should be co-located (affinity) or not co-located (anti-affinity) with, where co-located is defined as running on a node whose value of the label with key <topologyKey> matches that of any node on which a pod of the set of pods is running
+         */
+        export interface APIManagerSpecSystemRedisAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecution {
+            /**
+             * A label query over a set of resources, in this case pods.
+             */
+            labelSelector?: outputs.apps.v1alpha1.APIManagerSpecSystemRedisAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector;
+            /**
+             * namespaces specifies which namespaces the labelSelector applies to (matches against); null or empty list means "this pod's namespace"
+             */
+            namespaces?: string[];
+            /**
+             * This pod should be co-located (affinity) or not co-located (anti-affinity) with the pods matching the labelSelector in the specified namespaces, where co-located is defined as running on a node whose value of the label with key topologyKey matches that of any node on which any of the selected pods is running. Empty topologyKey is not allowed.
+             */
+            topologyKey: string;
+        }
+
+        /**
+         * A label query over a set of resources, in this case pods.
+         */
+        export interface APIManagerSpecSystemRedisAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector {
+            /**
+             * matchExpressions is a list of label selector requirements. The requirements are ANDed.
+             */
+            matchExpressions?: outputs.apps.v1alpha1.APIManagerSpecSystemRedisAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions[];
+            /**
+             * matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+             */
+            matchLabels?: {[key: string]: string};
+        }
+
+        /**
+         * A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecSystemRedisAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions {
+            /**
+             * key is the label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+             */
+            operator: string;
+            /**
+             * values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        export interface APIManagerSpecSystemRedisPersistentVolumeClaim {
+            storageClassName?: string;
+        }
+
+        /**
+         * The pod this Toleration is attached to tolerates any taint that matches the triple <key,value,effect> using the matching operator <operator>.
+         */
+        export interface APIManagerSpecSystemRedisTolerations {
+            /**
+             * Effect indicates the taint effect to match. Empty means match all taint effects. When specified, allowed values are NoSchedule, PreferNoSchedule and NoExecute.
+             */
+            effect?: string;
+            /**
+             * Key is the taint key that the toleration applies to. Empty means match all taint keys. If the key is empty, operator must be Exists; this combination means to match all values and all keys.
+             */
+            key?: string;
+            /**
+             * Operator represents a key's relationship to the value. Valid operators are Exists and Equal. Defaults to Equal. Exists is equivalent to wildcard for value, so that a pod can tolerate all taints of a particular category.
+             */
+            operator?: string;
+            /**
+             * TolerationSeconds represents the period of time the toleration (which must be of effect NoExecute, otherwise this field is ignored) tolerates the taint. By default, it is not set, which means tolerate the taint forever (do not evict). Zero and negative values will be treated as 0 (evict immediately) by the system.
+             */
+            tolerationSeconds?: number;
+            /**
+             * Value is the taint value the toleration matches to. If the operator is Exists, the value should be empty, otherwise just a regular string.
+             */
+            value?: string;
+        }
+
         export interface APIManagerSpecSystemSidekiqSpec {
+            /**
+             * Affinity is a group of affinity scheduling rules.
+             */
+            affinity?: outputs.apps.v1alpha1.APIManagerSpecSystemSidekiqSpecAffinity;
             replicas?: number;
+            tolerations?: outputs.apps.v1alpha1.APIManagerSpecSystemSidekiqSpecTolerations[];
+        }
+
+        /**
+         * Affinity is a group of affinity scheduling rules.
+         */
+        export interface APIManagerSpecSystemSidekiqSpecAffinity {
+            /**
+             * Describes node affinity scheduling rules for the pod.
+             */
+            nodeAffinity?: outputs.apps.v1alpha1.APIManagerSpecSystemSidekiqSpecAffinityNodeAffinity;
+            /**
+             * Describes pod affinity scheduling rules (e.g. co-locate this pod in the same node, zone, etc. as some other pod(s)).
+             */
+            podAffinity?: outputs.apps.v1alpha1.APIManagerSpecSystemSidekiqSpecAffinityPodAffinity;
+            /**
+             * Describes pod anti-affinity scheduling rules (e.g. avoid putting this pod in the same node, zone, etc. as some other pod(s)).
+             */
+            podAntiAffinity?: outputs.apps.v1alpha1.APIManagerSpecSystemSidekiqSpecAffinityPodAntiAffinity;
+        }
+
+        /**
+         * Describes node affinity scheduling rules for the pod.
+         */
+        export interface APIManagerSpecSystemSidekiqSpecAffinityNodeAffinity {
+            /**
+             * The scheduler will prefer to schedule pods to nodes that satisfy the affinity expressions specified by this field, but it may choose a node that violates one or more of the expressions. The node that is most preferred is the one with the greatest sum of weights, i.e. for each node that meets all of the scheduling requirements (resource request, requiredDuringScheduling affinity expressions, etc.), compute a sum by iterating through the elements of this field and adding "weight" to the sum if the node matches the corresponding matchExpressions; the node(s) with the highest sum are the most preferred.
+             */
+            preferredDuringSchedulingIgnoredDuringExecution?: outputs.apps.v1alpha1.APIManagerSpecSystemSidekiqSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecution[];
+            /**
+             * If the affinity requirements specified by this field are not met at scheduling time, the pod will not be scheduled onto the node. If the affinity requirements specified by this field cease to be met at some point during pod execution (e.g. due to an update), the system may or may not try to eventually evict the pod from its node.
+             */
+            requiredDuringSchedulingIgnoredDuringExecution?: outputs.apps.v1alpha1.APIManagerSpecSystemSidekiqSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecution;
+        }
+
+        /**
+         * An empty preferred scheduling term matches all objects with implicit weight 0 (i.e. it's a no-op). A null preferred scheduling term matches no objects (i.e. is also a no-op).
+         */
+        export interface APIManagerSpecSystemSidekiqSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecution {
+            /**
+             * A node selector term, associated with the corresponding weight.
+             */
+            preference: outputs.apps.v1alpha1.APIManagerSpecSystemSidekiqSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreference;
+            /**
+             * Weight associated with matching the corresponding nodeSelectorTerm, in the range 1-100.
+             */
+            weight: number;
+        }
+
+        /**
+         * A node selector term, associated with the corresponding weight.
+         */
+        export interface APIManagerSpecSystemSidekiqSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreference {
+            /**
+             * A list of node selector requirements by node's labels.
+             */
+            matchExpressions?: outputs.apps.v1alpha1.APIManagerSpecSystemSidekiqSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressions[];
+            /**
+             * A list of node selector requirements by node's fields.
+             */
+            matchFields?: outputs.apps.v1alpha1.APIManagerSpecSystemSidekiqSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFields[];
+        }
+
+        /**
+         * A node selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecSystemSidekiqSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressions {
+            /**
+             * The label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * Represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt.
+             */
+            operator: string;
+            /**
+             * An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. If the operator is Gt or Lt, the values array must have a single element, which will be interpreted as an integer. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * A node selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecSystemSidekiqSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFields {
+            /**
+             * The label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * Represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt.
+             */
+            operator: string;
+            /**
+             * An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. If the operator is Gt or Lt, the values array must have a single element, which will be interpreted as an integer. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * If the affinity requirements specified by this field are not met at scheduling time, the pod will not be scheduled onto the node. If the affinity requirements specified by this field cease to be met at some point during pod execution (e.g. due to an update), the system may or may not try to eventually evict the pod from its node.
+         */
+        export interface APIManagerSpecSystemSidekiqSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecution {
+            /**
+             * Required. A list of node selector terms. The terms are ORed.
+             */
+            nodeSelectorTerms: outputs.apps.v1alpha1.APIManagerSpecSystemSidekiqSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTerms[];
+        }
+
+        /**
+         * A null or empty node selector term matches no objects. The requirements of them are ANDed. The TopologySelectorTerm type implements a subset of the NodeSelectorTerm.
+         */
+        export interface APIManagerSpecSystemSidekiqSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTerms {
+            /**
+             * A list of node selector requirements by node's labels.
+             */
+            matchExpressions?: outputs.apps.v1alpha1.APIManagerSpecSystemSidekiqSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressions[];
+            /**
+             * A list of node selector requirements by node's fields.
+             */
+            matchFields?: outputs.apps.v1alpha1.APIManagerSpecSystemSidekiqSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFields[];
+        }
+
+        /**
+         * A node selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecSystemSidekiqSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressions {
+            /**
+             * The label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * Represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt.
+             */
+            operator: string;
+            /**
+             * An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. If the operator is Gt or Lt, the values array must have a single element, which will be interpreted as an integer. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * A node selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecSystemSidekiqSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFields {
+            /**
+             * The label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * Represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt.
+             */
+            operator: string;
+            /**
+             * An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. If the operator is Gt or Lt, the values array must have a single element, which will be interpreted as an integer. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * Describes pod affinity scheduling rules (e.g. co-locate this pod in the same node, zone, etc. as some other pod(s)).
+         */
+        export interface APIManagerSpecSystemSidekiqSpecAffinityPodAffinity {
+            /**
+             * The scheduler will prefer to schedule pods to nodes that satisfy the affinity expressions specified by this field, but it may choose a node that violates one or more of the expressions. The node that is most preferred is the one with the greatest sum of weights, i.e. for each node that meets all of the scheduling requirements (resource request, requiredDuringScheduling affinity expressions, etc.), compute a sum by iterating through the elements of this field and adding "weight" to the sum if the node has pods which matches the corresponding podAffinityTerm; the node(s) with the highest sum are the most preferred.
+             */
+            preferredDuringSchedulingIgnoredDuringExecution?: outputs.apps.v1alpha1.APIManagerSpecSystemSidekiqSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecution[];
+            /**
+             * If the affinity requirements specified by this field are not met at scheduling time, the pod will not be scheduled onto the node. If the affinity requirements specified by this field cease to be met at some point during pod execution (e.g. due to a pod label update), the system may or may not try to eventually evict the pod from its node. When there are multiple elements, the lists of nodes corresponding to each podAffinityTerm are intersected, i.e. all terms must be satisfied.
+             */
+            requiredDuringSchedulingIgnoredDuringExecution?: outputs.apps.v1alpha1.APIManagerSpecSystemSidekiqSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecution[];
+        }
+
+        /**
+         * The weights of all of the matched WeightedPodAffinityTerm fields are added per-node to find the most preferred node(s)
+         */
+        export interface APIManagerSpecSystemSidekiqSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecution {
+            /**
+             * Required. A pod affinity term, associated with the corresponding weight.
+             */
+            podAffinityTerm: outputs.apps.v1alpha1.APIManagerSpecSystemSidekiqSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTerm;
+            /**
+             * weight associated with matching the corresponding podAffinityTerm, in the range 1-100.
+             */
+            weight: number;
+        }
+
+        /**
+         * Required. A pod affinity term, associated with the corresponding weight.
+         */
+        export interface APIManagerSpecSystemSidekiqSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTerm {
+            /**
+             * A label query over a set of resources, in this case pods.
+             */
+            labelSelector?: outputs.apps.v1alpha1.APIManagerSpecSystemSidekiqSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelector;
+            /**
+             * namespaces specifies which namespaces the labelSelector applies to (matches against); null or empty list means "this pod's namespace"
+             */
+            namespaces?: string[];
+            /**
+             * This pod should be co-located (affinity) or not co-located (anti-affinity) with the pods matching the labelSelector in the specified namespaces, where co-located is defined as running on a node whose value of the label with key topologyKey matches that of any node on which any of the selected pods is running. Empty topologyKey is not allowed.
+             */
+            topologyKey: string;
+        }
+
+        /**
+         * A label query over a set of resources, in this case pods.
+         */
+        export interface APIManagerSpecSystemSidekiqSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelector {
+            /**
+             * matchExpressions is a list of label selector requirements. The requirements are ANDed.
+             */
+            matchExpressions?: outputs.apps.v1alpha1.APIManagerSpecSystemSidekiqSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressions[];
+            /**
+             * matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+             */
+            matchLabels?: {[key: string]: string};
+        }
+
+        /**
+         * A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecSystemSidekiqSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressions {
+            /**
+             * key is the label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+             */
+            operator: string;
+            /**
+             * values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * Defines a set of pods (namely those matching the labelSelector relative to the given namespace(s)) that this pod should be co-located (affinity) or not co-located (anti-affinity) with, where co-located is defined as running on a node whose value of the label with key <topologyKey> matches that of any node on which a pod of the set of pods is running
+         */
+        export interface APIManagerSpecSystemSidekiqSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecution {
+            /**
+             * A label query over a set of resources, in this case pods.
+             */
+            labelSelector?: outputs.apps.v1alpha1.APIManagerSpecSystemSidekiqSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector;
+            /**
+             * namespaces specifies which namespaces the labelSelector applies to (matches against); null or empty list means "this pod's namespace"
+             */
+            namespaces?: string[];
+            /**
+             * This pod should be co-located (affinity) or not co-located (anti-affinity) with the pods matching the labelSelector in the specified namespaces, where co-located is defined as running on a node whose value of the label with key topologyKey matches that of any node on which any of the selected pods is running. Empty topologyKey is not allowed.
+             */
+            topologyKey: string;
+        }
+
+        /**
+         * A label query over a set of resources, in this case pods.
+         */
+        export interface APIManagerSpecSystemSidekiqSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector {
+            /**
+             * matchExpressions is a list of label selector requirements. The requirements are ANDed.
+             */
+            matchExpressions?: outputs.apps.v1alpha1.APIManagerSpecSystemSidekiqSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions[];
+            /**
+             * matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+             */
+            matchLabels?: {[key: string]: string};
+        }
+
+        /**
+         * A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecSystemSidekiqSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions {
+            /**
+             * key is the label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+             */
+            operator: string;
+            /**
+             * values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * Describes pod anti-affinity scheduling rules (e.g. avoid putting this pod in the same node, zone, etc. as some other pod(s)).
+         */
+        export interface APIManagerSpecSystemSidekiqSpecAffinityPodAntiAffinity {
+            /**
+             * The scheduler will prefer to schedule pods to nodes that satisfy the anti-affinity expressions specified by this field, but it may choose a node that violates one or more of the expressions. The node that is most preferred is the one with the greatest sum of weights, i.e. for each node that meets all of the scheduling requirements (resource request, requiredDuringScheduling anti-affinity expressions, etc.), compute a sum by iterating through the elements of this field and adding "weight" to the sum if the node has pods which matches the corresponding podAffinityTerm; the node(s) with the highest sum are the most preferred.
+             */
+            preferredDuringSchedulingIgnoredDuringExecution?: outputs.apps.v1alpha1.APIManagerSpecSystemSidekiqSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecution[];
+            /**
+             * If the anti-affinity requirements specified by this field are not met at scheduling time, the pod will not be scheduled onto the node. If the anti-affinity requirements specified by this field cease to be met at some point during pod execution (e.g. due to a pod label update), the system may or may not try to eventually evict the pod from its node. When there are multiple elements, the lists of nodes corresponding to each podAffinityTerm are intersected, i.e. all terms must be satisfied.
+             */
+            requiredDuringSchedulingIgnoredDuringExecution?: outputs.apps.v1alpha1.APIManagerSpecSystemSidekiqSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecution[];
+        }
+
+        /**
+         * The weights of all of the matched WeightedPodAffinityTerm fields are added per-node to find the most preferred node(s)
+         */
+        export interface APIManagerSpecSystemSidekiqSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecution {
+            /**
+             * Required. A pod affinity term, associated with the corresponding weight.
+             */
+            podAffinityTerm: outputs.apps.v1alpha1.APIManagerSpecSystemSidekiqSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTerm;
+            /**
+             * weight associated with matching the corresponding podAffinityTerm, in the range 1-100.
+             */
+            weight: number;
+        }
+
+        /**
+         * Required. A pod affinity term, associated with the corresponding weight.
+         */
+        export interface APIManagerSpecSystemSidekiqSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTerm {
+            /**
+             * A label query over a set of resources, in this case pods.
+             */
+            labelSelector?: outputs.apps.v1alpha1.APIManagerSpecSystemSidekiqSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelector;
+            /**
+             * namespaces specifies which namespaces the labelSelector applies to (matches against); null or empty list means "this pod's namespace"
+             */
+            namespaces?: string[];
+            /**
+             * This pod should be co-located (affinity) or not co-located (anti-affinity) with the pods matching the labelSelector in the specified namespaces, where co-located is defined as running on a node whose value of the label with key topologyKey matches that of any node on which any of the selected pods is running. Empty topologyKey is not allowed.
+             */
+            topologyKey: string;
+        }
+
+        /**
+         * A label query over a set of resources, in this case pods.
+         */
+        export interface APIManagerSpecSystemSidekiqSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelector {
+            /**
+             * matchExpressions is a list of label selector requirements. The requirements are ANDed.
+             */
+            matchExpressions?: outputs.apps.v1alpha1.APIManagerSpecSystemSidekiqSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressions[];
+            /**
+             * matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+             */
+            matchLabels?: {[key: string]: string};
+        }
+
+        /**
+         * A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecSystemSidekiqSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressions {
+            /**
+             * key is the label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+             */
+            operator: string;
+            /**
+             * values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * Defines a set of pods (namely those matching the labelSelector relative to the given namespace(s)) that this pod should be co-located (affinity) or not co-located (anti-affinity) with, where co-located is defined as running on a node whose value of the label with key <topologyKey> matches that of any node on which a pod of the set of pods is running
+         */
+        export interface APIManagerSpecSystemSidekiqSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecution {
+            /**
+             * A label query over a set of resources, in this case pods.
+             */
+            labelSelector?: outputs.apps.v1alpha1.APIManagerSpecSystemSidekiqSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector;
+            /**
+             * namespaces specifies which namespaces the labelSelector applies to (matches against); null or empty list means "this pod's namespace"
+             */
+            namespaces?: string[];
+            /**
+             * This pod should be co-located (affinity) or not co-located (anti-affinity) with the pods matching the labelSelector in the specified namespaces, where co-located is defined as running on a node whose value of the label with key topologyKey matches that of any node on which any of the selected pods is running. Empty topologyKey is not allowed.
+             */
+            topologyKey: string;
+        }
+
+        /**
+         * A label query over a set of resources, in this case pods.
+         */
+        export interface APIManagerSpecSystemSidekiqSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector {
+            /**
+             * matchExpressions is a list of label selector requirements. The requirements are ANDed.
+             */
+            matchExpressions?: outputs.apps.v1alpha1.APIManagerSpecSystemSidekiqSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions[];
+            /**
+             * matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+             */
+            matchLabels?: {[key: string]: string};
+        }
+
+        /**
+         * A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecSystemSidekiqSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions {
+            /**
+             * key is the label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+             */
+            operator: string;
+            /**
+             * values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * The pod this Toleration is attached to tolerates any taint that matches the triple <key,value,effect> using the matching operator <operator>.
+         */
+        export interface APIManagerSpecSystemSidekiqSpecTolerations {
+            /**
+             * Effect indicates the taint effect to match. Empty means match all taint effects. When specified, allowed values are NoSchedule, PreferNoSchedule and NoExecute.
+             */
+            effect?: string;
+            /**
+             * Key is the taint key that the toleration applies to. Empty means match all taint keys. If the key is empty, operator must be Exists; this combination means to match all values and all keys.
+             */
+            key?: string;
+            /**
+             * Operator represents a key's relationship to the value. Valid operators are Exists and Equal. Defaults to Equal. Exists is equivalent to wildcard for value, so that a pod can tolerate all taints of a particular category.
+             */
+            operator?: string;
+            /**
+             * TolerationSeconds represents the period of time the toleration (which must be of effect NoExecute, otherwise this field is ignored) tolerates the taint. By default, it is not set, which means tolerate the taint forever (do not evict). Zero and negative values will be treated as 0 (evict immediately) by the system.
+             */
+            tolerationSeconds?: number;
+            /**
+             * Value is the taint value the toleration matches to. If the operator is Exists, the value should be empty, otherwise just a regular string.
+             */
+            value?: string;
+        }
+
+        export interface APIManagerSpecSystemSphinxSpec {
+            /**
+             * Affinity is a group of affinity scheduling rules.
+             */
+            affinity?: outputs.apps.v1alpha1.APIManagerSpecSystemSphinxSpecAffinity;
+            tolerations?: outputs.apps.v1alpha1.APIManagerSpecSystemSphinxSpecTolerations[];
+        }
+
+        /**
+         * Affinity is a group of affinity scheduling rules.
+         */
+        export interface APIManagerSpecSystemSphinxSpecAffinity {
+            /**
+             * Describes node affinity scheduling rules for the pod.
+             */
+            nodeAffinity?: outputs.apps.v1alpha1.APIManagerSpecSystemSphinxSpecAffinityNodeAffinity;
+            /**
+             * Describes pod affinity scheduling rules (e.g. co-locate this pod in the same node, zone, etc. as some other pod(s)).
+             */
+            podAffinity?: outputs.apps.v1alpha1.APIManagerSpecSystemSphinxSpecAffinityPodAffinity;
+            /**
+             * Describes pod anti-affinity scheduling rules (e.g. avoid putting this pod in the same node, zone, etc. as some other pod(s)).
+             */
+            podAntiAffinity?: outputs.apps.v1alpha1.APIManagerSpecSystemSphinxSpecAffinityPodAntiAffinity;
+        }
+
+        /**
+         * Describes node affinity scheduling rules for the pod.
+         */
+        export interface APIManagerSpecSystemSphinxSpecAffinityNodeAffinity {
+            /**
+             * The scheduler will prefer to schedule pods to nodes that satisfy the affinity expressions specified by this field, but it may choose a node that violates one or more of the expressions. The node that is most preferred is the one with the greatest sum of weights, i.e. for each node that meets all of the scheduling requirements (resource request, requiredDuringScheduling affinity expressions, etc.), compute a sum by iterating through the elements of this field and adding "weight" to the sum if the node matches the corresponding matchExpressions; the node(s) with the highest sum are the most preferred.
+             */
+            preferredDuringSchedulingIgnoredDuringExecution?: outputs.apps.v1alpha1.APIManagerSpecSystemSphinxSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecution[];
+            /**
+             * If the affinity requirements specified by this field are not met at scheduling time, the pod will not be scheduled onto the node. If the affinity requirements specified by this field cease to be met at some point during pod execution (e.g. due to an update), the system may or may not try to eventually evict the pod from its node.
+             */
+            requiredDuringSchedulingIgnoredDuringExecution?: outputs.apps.v1alpha1.APIManagerSpecSystemSphinxSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecution;
+        }
+
+        /**
+         * An empty preferred scheduling term matches all objects with implicit weight 0 (i.e. it's a no-op). A null preferred scheduling term matches no objects (i.e. is also a no-op).
+         */
+        export interface APIManagerSpecSystemSphinxSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecution {
+            /**
+             * A node selector term, associated with the corresponding weight.
+             */
+            preference: outputs.apps.v1alpha1.APIManagerSpecSystemSphinxSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreference;
+            /**
+             * Weight associated with matching the corresponding nodeSelectorTerm, in the range 1-100.
+             */
+            weight: number;
+        }
+
+        /**
+         * A node selector term, associated with the corresponding weight.
+         */
+        export interface APIManagerSpecSystemSphinxSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreference {
+            /**
+             * A list of node selector requirements by node's labels.
+             */
+            matchExpressions?: outputs.apps.v1alpha1.APIManagerSpecSystemSphinxSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressions[];
+            /**
+             * A list of node selector requirements by node's fields.
+             */
+            matchFields?: outputs.apps.v1alpha1.APIManagerSpecSystemSphinxSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFields[];
+        }
+
+        /**
+         * A node selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecSystemSphinxSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressions {
+            /**
+             * The label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * Represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt.
+             */
+            operator: string;
+            /**
+             * An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. If the operator is Gt or Lt, the values array must have a single element, which will be interpreted as an integer. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * A node selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecSystemSphinxSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFields {
+            /**
+             * The label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * Represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt.
+             */
+            operator: string;
+            /**
+             * An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. If the operator is Gt or Lt, the values array must have a single element, which will be interpreted as an integer. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * If the affinity requirements specified by this field are not met at scheduling time, the pod will not be scheduled onto the node. If the affinity requirements specified by this field cease to be met at some point during pod execution (e.g. due to an update), the system may or may not try to eventually evict the pod from its node.
+         */
+        export interface APIManagerSpecSystemSphinxSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecution {
+            /**
+             * Required. A list of node selector terms. The terms are ORed.
+             */
+            nodeSelectorTerms: outputs.apps.v1alpha1.APIManagerSpecSystemSphinxSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTerms[];
+        }
+
+        /**
+         * A null or empty node selector term matches no objects. The requirements of them are ANDed. The TopologySelectorTerm type implements a subset of the NodeSelectorTerm.
+         */
+        export interface APIManagerSpecSystemSphinxSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTerms {
+            /**
+             * A list of node selector requirements by node's labels.
+             */
+            matchExpressions?: outputs.apps.v1alpha1.APIManagerSpecSystemSphinxSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressions[];
+            /**
+             * A list of node selector requirements by node's fields.
+             */
+            matchFields?: outputs.apps.v1alpha1.APIManagerSpecSystemSphinxSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFields[];
+        }
+
+        /**
+         * A node selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecSystemSphinxSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressions {
+            /**
+             * The label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * Represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt.
+             */
+            operator: string;
+            /**
+             * An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. If the operator is Gt or Lt, the values array must have a single element, which will be interpreted as an integer. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * A node selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecSystemSphinxSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFields {
+            /**
+             * The label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * Represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt.
+             */
+            operator: string;
+            /**
+             * An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. If the operator is Gt or Lt, the values array must have a single element, which will be interpreted as an integer. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * Describes pod affinity scheduling rules (e.g. co-locate this pod in the same node, zone, etc. as some other pod(s)).
+         */
+        export interface APIManagerSpecSystemSphinxSpecAffinityPodAffinity {
+            /**
+             * The scheduler will prefer to schedule pods to nodes that satisfy the affinity expressions specified by this field, but it may choose a node that violates one or more of the expressions. The node that is most preferred is the one with the greatest sum of weights, i.e. for each node that meets all of the scheduling requirements (resource request, requiredDuringScheduling affinity expressions, etc.), compute a sum by iterating through the elements of this field and adding "weight" to the sum if the node has pods which matches the corresponding podAffinityTerm; the node(s) with the highest sum are the most preferred.
+             */
+            preferredDuringSchedulingIgnoredDuringExecution?: outputs.apps.v1alpha1.APIManagerSpecSystemSphinxSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecution[];
+            /**
+             * If the affinity requirements specified by this field are not met at scheduling time, the pod will not be scheduled onto the node. If the affinity requirements specified by this field cease to be met at some point during pod execution (e.g. due to a pod label update), the system may or may not try to eventually evict the pod from its node. When there are multiple elements, the lists of nodes corresponding to each podAffinityTerm are intersected, i.e. all terms must be satisfied.
+             */
+            requiredDuringSchedulingIgnoredDuringExecution?: outputs.apps.v1alpha1.APIManagerSpecSystemSphinxSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecution[];
+        }
+
+        /**
+         * The weights of all of the matched WeightedPodAffinityTerm fields are added per-node to find the most preferred node(s)
+         */
+        export interface APIManagerSpecSystemSphinxSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecution {
+            /**
+             * Required. A pod affinity term, associated with the corresponding weight.
+             */
+            podAffinityTerm: outputs.apps.v1alpha1.APIManagerSpecSystemSphinxSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTerm;
+            /**
+             * weight associated with matching the corresponding podAffinityTerm, in the range 1-100.
+             */
+            weight: number;
+        }
+
+        /**
+         * Required. A pod affinity term, associated with the corresponding weight.
+         */
+        export interface APIManagerSpecSystemSphinxSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTerm {
+            /**
+             * A label query over a set of resources, in this case pods.
+             */
+            labelSelector?: outputs.apps.v1alpha1.APIManagerSpecSystemSphinxSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelector;
+            /**
+             * namespaces specifies which namespaces the labelSelector applies to (matches against); null or empty list means "this pod's namespace"
+             */
+            namespaces?: string[];
+            /**
+             * This pod should be co-located (affinity) or not co-located (anti-affinity) with the pods matching the labelSelector in the specified namespaces, where co-located is defined as running on a node whose value of the label with key topologyKey matches that of any node on which any of the selected pods is running. Empty topologyKey is not allowed.
+             */
+            topologyKey: string;
+        }
+
+        /**
+         * A label query over a set of resources, in this case pods.
+         */
+        export interface APIManagerSpecSystemSphinxSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelector {
+            /**
+             * matchExpressions is a list of label selector requirements. The requirements are ANDed.
+             */
+            matchExpressions?: outputs.apps.v1alpha1.APIManagerSpecSystemSphinxSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressions[];
+            /**
+             * matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+             */
+            matchLabels?: {[key: string]: string};
+        }
+
+        /**
+         * A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecSystemSphinxSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressions {
+            /**
+             * key is the label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+             */
+            operator: string;
+            /**
+             * values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * Defines a set of pods (namely those matching the labelSelector relative to the given namespace(s)) that this pod should be co-located (affinity) or not co-located (anti-affinity) with, where co-located is defined as running on a node whose value of the label with key <topologyKey> matches that of any node on which a pod of the set of pods is running
+         */
+        export interface APIManagerSpecSystemSphinxSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecution {
+            /**
+             * A label query over a set of resources, in this case pods.
+             */
+            labelSelector?: outputs.apps.v1alpha1.APIManagerSpecSystemSphinxSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector;
+            /**
+             * namespaces specifies which namespaces the labelSelector applies to (matches against); null or empty list means "this pod's namespace"
+             */
+            namespaces?: string[];
+            /**
+             * This pod should be co-located (affinity) or not co-located (anti-affinity) with the pods matching the labelSelector in the specified namespaces, where co-located is defined as running on a node whose value of the label with key topologyKey matches that of any node on which any of the selected pods is running. Empty topologyKey is not allowed.
+             */
+            topologyKey: string;
+        }
+
+        /**
+         * A label query over a set of resources, in this case pods.
+         */
+        export interface APIManagerSpecSystemSphinxSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector {
+            /**
+             * matchExpressions is a list of label selector requirements. The requirements are ANDed.
+             */
+            matchExpressions?: outputs.apps.v1alpha1.APIManagerSpecSystemSphinxSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions[];
+            /**
+             * matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+             */
+            matchLabels?: {[key: string]: string};
+        }
+
+        /**
+         * A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecSystemSphinxSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions {
+            /**
+             * key is the label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+             */
+            operator: string;
+            /**
+             * values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * Describes pod anti-affinity scheduling rules (e.g. avoid putting this pod in the same node, zone, etc. as some other pod(s)).
+         */
+        export interface APIManagerSpecSystemSphinxSpecAffinityPodAntiAffinity {
+            /**
+             * The scheduler will prefer to schedule pods to nodes that satisfy the anti-affinity expressions specified by this field, but it may choose a node that violates one or more of the expressions. The node that is most preferred is the one with the greatest sum of weights, i.e. for each node that meets all of the scheduling requirements (resource request, requiredDuringScheduling anti-affinity expressions, etc.), compute a sum by iterating through the elements of this field and adding "weight" to the sum if the node has pods which matches the corresponding podAffinityTerm; the node(s) with the highest sum are the most preferred.
+             */
+            preferredDuringSchedulingIgnoredDuringExecution?: outputs.apps.v1alpha1.APIManagerSpecSystemSphinxSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecution[];
+            /**
+             * If the anti-affinity requirements specified by this field are not met at scheduling time, the pod will not be scheduled onto the node. If the anti-affinity requirements specified by this field cease to be met at some point during pod execution (e.g. due to a pod label update), the system may or may not try to eventually evict the pod from its node. When there are multiple elements, the lists of nodes corresponding to each podAffinityTerm are intersected, i.e. all terms must be satisfied.
+             */
+            requiredDuringSchedulingIgnoredDuringExecution?: outputs.apps.v1alpha1.APIManagerSpecSystemSphinxSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecution[];
+        }
+
+        /**
+         * The weights of all of the matched WeightedPodAffinityTerm fields are added per-node to find the most preferred node(s)
+         */
+        export interface APIManagerSpecSystemSphinxSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecution {
+            /**
+             * Required. A pod affinity term, associated with the corresponding weight.
+             */
+            podAffinityTerm: outputs.apps.v1alpha1.APIManagerSpecSystemSphinxSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTerm;
+            /**
+             * weight associated with matching the corresponding podAffinityTerm, in the range 1-100.
+             */
+            weight: number;
+        }
+
+        /**
+         * Required. A pod affinity term, associated with the corresponding weight.
+         */
+        export interface APIManagerSpecSystemSphinxSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTerm {
+            /**
+             * A label query over a set of resources, in this case pods.
+             */
+            labelSelector?: outputs.apps.v1alpha1.APIManagerSpecSystemSphinxSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelector;
+            /**
+             * namespaces specifies which namespaces the labelSelector applies to (matches against); null or empty list means "this pod's namespace"
+             */
+            namespaces?: string[];
+            /**
+             * This pod should be co-located (affinity) or not co-located (anti-affinity) with the pods matching the labelSelector in the specified namespaces, where co-located is defined as running on a node whose value of the label with key topologyKey matches that of any node on which any of the selected pods is running. Empty topologyKey is not allowed.
+             */
+            topologyKey: string;
+        }
+
+        /**
+         * A label query over a set of resources, in this case pods.
+         */
+        export interface APIManagerSpecSystemSphinxSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelector {
+            /**
+             * matchExpressions is a list of label selector requirements. The requirements are ANDed.
+             */
+            matchExpressions?: outputs.apps.v1alpha1.APIManagerSpecSystemSphinxSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressions[];
+            /**
+             * matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+             */
+            matchLabels?: {[key: string]: string};
+        }
+
+        /**
+         * A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecSystemSphinxSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressions {
+            /**
+             * key is the label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+             */
+            operator: string;
+            /**
+             * values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * Defines a set of pods (namely those matching the labelSelector relative to the given namespace(s)) that this pod should be co-located (affinity) or not co-located (anti-affinity) with, where co-located is defined as running on a node whose value of the label with key <topologyKey> matches that of any node on which a pod of the set of pods is running
+         */
+        export interface APIManagerSpecSystemSphinxSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecution {
+            /**
+             * A label query over a set of resources, in this case pods.
+             */
+            labelSelector?: outputs.apps.v1alpha1.APIManagerSpecSystemSphinxSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector;
+            /**
+             * namespaces specifies which namespaces the labelSelector applies to (matches against); null or empty list means "this pod's namespace"
+             */
+            namespaces?: string[];
+            /**
+             * This pod should be co-located (affinity) or not co-located (anti-affinity) with the pods matching the labelSelector in the specified namespaces, where co-located is defined as running on a node whose value of the label with key topologyKey matches that of any node on which any of the selected pods is running. Empty topologyKey is not allowed.
+             */
+            topologyKey: string;
+        }
+
+        /**
+         * A label query over a set of resources, in this case pods.
+         */
+        export interface APIManagerSpecSystemSphinxSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector {
+            /**
+             * matchExpressions is a list of label selector requirements. The requirements are ANDed.
+             */
+            matchExpressions?: outputs.apps.v1alpha1.APIManagerSpecSystemSphinxSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions[];
+            /**
+             * matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+             */
+            matchLabels?: {[key: string]: string};
+        }
+
+        /**
+         * A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecSystemSphinxSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions {
+            /**
+             * key is the label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+             */
+            operator: string;
+            /**
+             * values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * The pod this Toleration is attached to tolerates any taint that matches the triple <key,value,effect> using the matching operator <operator>.
+         */
+        export interface APIManagerSpecSystemSphinxSpecTolerations {
+            /**
+             * Effect indicates the taint effect to match. Empty means match all taint effects. When specified, allowed values are NoSchedule, PreferNoSchedule and NoExecute.
+             */
+            effect?: string;
+            /**
+             * Key is the taint key that the toleration applies to. Empty means match all taint keys. If the key is empty, operator must be Exists; this combination means to match all values and all keys.
+             */
+            key?: string;
+            /**
+             * Operator represents a key's relationship to the value. Valid operators are Exists and Equal. Defaults to Equal. Exists is equivalent to wildcard for value, so that a pod can tolerate all taints of a particular category.
+             */
+            operator?: string;
+            /**
+             * TolerationSeconds represents the period of time the toleration (which must be of effect NoExecute, otherwise this field is ignored) tolerates the taint. By default, it is not set, which means tolerate the taint forever (do not evict). Zero and negative values will be treated as 0 (evict immediately) by the system.
+             */
+            tolerationSeconds?: number;
+            /**
+             * Value is the taint value the toleration matches to. If the operator is Exists, the value should be empty, otherwise just a regular string.
+             */
+            value?: string;
         }
 
         export interface APIManagerSpecZync {
             appSpec?: outputs.apps.v1alpha1.APIManagerSpecZyncAppSpec;
+            /**
+             * Affinity is a group of affinity scheduling rules.
+             */
+            databaseAffinity?: outputs.apps.v1alpha1.APIManagerSpecZyncDatabaseAffinity;
+            databaseTolerations?: outputs.apps.v1alpha1.APIManagerSpecZyncDatabaseTolerations[];
             image?: string;
             postgreSQLImage?: string;
             queSpec?: outputs.apps.v1alpha1.APIManagerSpecZyncQueSpec;
         }
 
         export interface APIManagerSpecZyncAppSpec {
+            /**
+             * Affinity is a group of affinity scheduling rules.
+             */
+            affinity?: outputs.apps.v1alpha1.APIManagerSpecZyncAppSpecAffinity;
             replicas?: number;
+            tolerations?: outputs.apps.v1alpha1.APIManagerSpecZyncAppSpecTolerations[];
+        }
+
+        /**
+         * Affinity is a group of affinity scheduling rules.
+         */
+        export interface APIManagerSpecZyncAppSpecAffinity {
+            /**
+             * Describes node affinity scheduling rules for the pod.
+             */
+            nodeAffinity?: outputs.apps.v1alpha1.APIManagerSpecZyncAppSpecAffinityNodeAffinity;
+            /**
+             * Describes pod affinity scheduling rules (e.g. co-locate this pod in the same node, zone, etc. as some other pod(s)).
+             */
+            podAffinity?: outputs.apps.v1alpha1.APIManagerSpecZyncAppSpecAffinityPodAffinity;
+            /**
+             * Describes pod anti-affinity scheduling rules (e.g. avoid putting this pod in the same node, zone, etc. as some other pod(s)).
+             */
+            podAntiAffinity?: outputs.apps.v1alpha1.APIManagerSpecZyncAppSpecAffinityPodAntiAffinity;
+        }
+
+        /**
+         * Describes node affinity scheduling rules for the pod.
+         */
+        export interface APIManagerSpecZyncAppSpecAffinityNodeAffinity {
+            /**
+             * The scheduler will prefer to schedule pods to nodes that satisfy the affinity expressions specified by this field, but it may choose a node that violates one or more of the expressions. The node that is most preferred is the one with the greatest sum of weights, i.e. for each node that meets all of the scheduling requirements (resource request, requiredDuringScheduling affinity expressions, etc.), compute a sum by iterating through the elements of this field and adding "weight" to the sum if the node matches the corresponding matchExpressions; the node(s) with the highest sum are the most preferred.
+             */
+            preferredDuringSchedulingIgnoredDuringExecution?: outputs.apps.v1alpha1.APIManagerSpecZyncAppSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecution[];
+            /**
+             * If the affinity requirements specified by this field are not met at scheduling time, the pod will not be scheduled onto the node. If the affinity requirements specified by this field cease to be met at some point during pod execution (e.g. due to an update), the system may or may not try to eventually evict the pod from its node.
+             */
+            requiredDuringSchedulingIgnoredDuringExecution?: outputs.apps.v1alpha1.APIManagerSpecZyncAppSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecution;
+        }
+
+        /**
+         * An empty preferred scheduling term matches all objects with implicit weight 0 (i.e. it's a no-op). A null preferred scheduling term matches no objects (i.e. is also a no-op).
+         */
+        export interface APIManagerSpecZyncAppSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecution {
+            /**
+             * A node selector term, associated with the corresponding weight.
+             */
+            preference: outputs.apps.v1alpha1.APIManagerSpecZyncAppSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreference;
+            /**
+             * Weight associated with matching the corresponding nodeSelectorTerm, in the range 1-100.
+             */
+            weight: number;
+        }
+
+        /**
+         * A node selector term, associated with the corresponding weight.
+         */
+        export interface APIManagerSpecZyncAppSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreference {
+            /**
+             * A list of node selector requirements by node's labels.
+             */
+            matchExpressions?: outputs.apps.v1alpha1.APIManagerSpecZyncAppSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressions[];
+            /**
+             * A list of node selector requirements by node's fields.
+             */
+            matchFields?: outputs.apps.v1alpha1.APIManagerSpecZyncAppSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFields[];
+        }
+
+        /**
+         * A node selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecZyncAppSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressions {
+            /**
+             * The label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * Represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt.
+             */
+            operator: string;
+            /**
+             * An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. If the operator is Gt or Lt, the values array must have a single element, which will be interpreted as an integer. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * A node selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecZyncAppSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFields {
+            /**
+             * The label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * Represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt.
+             */
+            operator: string;
+            /**
+             * An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. If the operator is Gt or Lt, the values array must have a single element, which will be interpreted as an integer. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * If the affinity requirements specified by this field are not met at scheduling time, the pod will not be scheduled onto the node. If the affinity requirements specified by this field cease to be met at some point during pod execution (e.g. due to an update), the system may or may not try to eventually evict the pod from its node.
+         */
+        export interface APIManagerSpecZyncAppSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecution {
+            /**
+             * Required. A list of node selector terms. The terms are ORed.
+             */
+            nodeSelectorTerms: outputs.apps.v1alpha1.APIManagerSpecZyncAppSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTerms[];
+        }
+
+        /**
+         * A null or empty node selector term matches no objects. The requirements of them are ANDed. The TopologySelectorTerm type implements a subset of the NodeSelectorTerm.
+         */
+        export interface APIManagerSpecZyncAppSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTerms {
+            /**
+             * A list of node selector requirements by node's labels.
+             */
+            matchExpressions?: outputs.apps.v1alpha1.APIManagerSpecZyncAppSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressions[];
+            /**
+             * A list of node selector requirements by node's fields.
+             */
+            matchFields?: outputs.apps.v1alpha1.APIManagerSpecZyncAppSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFields[];
+        }
+
+        /**
+         * A node selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecZyncAppSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressions {
+            /**
+             * The label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * Represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt.
+             */
+            operator: string;
+            /**
+             * An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. If the operator is Gt or Lt, the values array must have a single element, which will be interpreted as an integer. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * A node selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecZyncAppSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFields {
+            /**
+             * The label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * Represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt.
+             */
+            operator: string;
+            /**
+             * An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. If the operator is Gt or Lt, the values array must have a single element, which will be interpreted as an integer. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * Describes pod affinity scheduling rules (e.g. co-locate this pod in the same node, zone, etc. as some other pod(s)).
+         */
+        export interface APIManagerSpecZyncAppSpecAffinityPodAffinity {
+            /**
+             * The scheduler will prefer to schedule pods to nodes that satisfy the affinity expressions specified by this field, but it may choose a node that violates one or more of the expressions. The node that is most preferred is the one with the greatest sum of weights, i.e. for each node that meets all of the scheduling requirements (resource request, requiredDuringScheduling affinity expressions, etc.), compute a sum by iterating through the elements of this field and adding "weight" to the sum if the node has pods which matches the corresponding podAffinityTerm; the node(s) with the highest sum are the most preferred.
+             */
+            preferredDuringSchedulingIgnoredDuringExecution?: outputs.apps.v1alpha1.APIManagerSpecZyncAppSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecution[];
+            /**
+             * If the affinity requirements specified by this field are not met at scheduling time, the pod will not be scheduled onto the node. If the affinity requirements specified by this field cease to be met at some point during pod execution (e.g. due to a pod label update), the system may or may not try to eventually evict the pod from its node. When there are multiple elements, the lists of nodes corresponding to each podAffinityTerm are intersected, i.e. all terms must be satisfied.
+             */
+            requiredDuringSchedulingIgnoredDuringExecution?: outputs.apps.v1alpha1.APIManagerSpecZyncAppSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecution[];
+        }
+
+        /**
+         * The weights of all of the matched WeightedPodAffinityTerm fields are added per-node to find the most preferred node(s)
+         */
+        export interface APIManagerSpecZyncAppSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecution {
+            /**
+             * Required. A pod affinity term, associated with the corresponding weight.
+             */
+            podAffinityTerm: outputs.apps.v1alpha1.APIManagerSpecZyncAppSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTerm;
+            /**
+             * weight associated with matching the corresponding podAffinityTerm, in the range 1-100.
+             */
+            weight: number;
+        }
+
+        /**
+         * Required. A pod affinity term, associated with the corresponding weight.
+         */
+        export interface APIManagerSpecZyncAppSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTerm {
+            /**
+             * A label query over a set of resources, in this case pods.
+             */
+            labelSelector?: outputs.apps.v1alpha1.APIManagerSpecZyncAppSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelector;
+            /**
+             * namespaces specifies which namespaces the labelSelector applies to (matches against); null or empty list means "this pod's namespace"
+             */
+            namespaces?: string[];
+            /**
+             * This pod should be co-located (affinity) or not co-located (anti-affinity) with the pods matching the labelSelector in the specified namespaces, where co-located is defined as running on a node whose value of the label with key topologyKey matches that of any node on which any of the selected pods is running. Empty topologyKey is not allowed.
+             */
+            topologyKey: string;
+        }
+
+        /**
+         * A label query over a set of resources, in this case pods.
+         */
+        export interface APIManagerSpecZyncAppSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelector {
+            /**
+             * matchExpressions is a list of label selector requirements. The requirements are ANDed.
+             */
+            matchExpressions?: outputs.apps.v1alpha1.APIManagerSpecZyncAppSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressions[];
+            /**
+             * matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+             */
+            matchLabels?: {[key: string]: string};
+        }
+
+        /**
+         * A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecZyncAppSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressions {
+            /**
+             * key is the label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+             */
+            operator: string;
+            /**
+             * values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * Defines a set of pods (namely those matching the labelSelector relative to the given namespace(s)) that this pod should be co-located (affinity) or not co-located (anti-affinity) with, where co-located is defined as running on a node whose value of the label with key <topologyKey> matches that of any node on which a pod of the set of pods is running
+         */
+        export interface APIManagerSpecZyncAppSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecution {
+            /**
+             * A label query over a set of resources, in this case pods.
+             */
+            labelSelector?: outputs.apps.v1alpha1.APIManagerSpecZyncAppSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector;
+            /**
+             * namespaces specifies which namespaces the labelSelector applies to (matches against); null or empty list means "this pod's namespace"
+             */
+            namespaces?: string[];
+            /**
+             * This pod should be co-located (affinity) or not co-located (anti-affinity) with the pods matching the labelSelector in the specified namespaces, where co-located is defined as running on a node whose value of the label with key topologyKey matches that of any node on which any of the selected pods is running. Empty topologyKey is not allowed.
+             */
+            topologyKey: string;
+        }
+
+        /**
+         * A label query over a set of resources, in this case pods.
+         */
+        export interface APIManagerSpecZyncAppSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector {
+            /**
+             * matchExpressions is a list of label selector requirements. The requirements are ANDed.
+             */
+            matchExpressions?: outputs.apps.v1alpha1.APIManagerSpecZyncAppSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions[];
+            /**
+             * matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+             */
+            matchLabels?: {[key: string]: string};
+        }
+
+        /**
+         * A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecZyncAppSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions {
+            /**
+             * key is the label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+             */
+            operator: string;
+            /**
+             * values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * Describes pod anti-affinity scheduling rules (e.g. avoid putting this pod in the same node, zone, etc. as some other pod(s)).
+         */
+        export interface APIManagerSpecZyncAppSpecAffinityPodAntiAffinity {
+            /**
+             * The scheduler will prefer to schedule pods to nodes that satisfy the anti-affinity expressions specified by this field, but it may choose a node that violates one or more of the expressions. The node that is most preferred is the one with the greatest sum of weights, i.e. for each node that meets all of the scheduling requirements (resource request, requiredDuringScheduling anti-affinity expressions, etc.), compute a sum by iterating through the elements of this field and adding "weight" to the sum if the node has pods which matches the corresponding podAffinityTerm; the node(s) with the highest sum are the most preferred.
+             */
+            preferredDuringSchedulingIgnoredDuringExecution?: outputs.apps.v1alpha1.APIManagerSpecZyncAppSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecution[];
+            /**
+             * If the anti-affinity requirements specified by this field are not met at scheduling time, the pod will not be scheduled onto the node. If the anti-affinity requirements specified by this field cease to be met at some point during pod execution (e.g. due to a pod label update), the system may or may not try to eventually evict the pod from its node. When there are multiple elements, the lists of nodes corresponding to each podAffinityTerm are intersected, i.e. all terms must be satisfied.
+             */
+            requiredDuringSchedulingIgnoredDuringExecution?: outputs.apps.v1alpha1.APIManagerSpecZyncAppSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecution[];
+        }
+
+        /**
+         * The weights of all of the matched WeightedPodAffinityTerm fields are added per-node to find the most preferred node(s)
+         */
+        export interface APIManagerSpecZyncAppSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecution {
+            /**
+             * Required. A pod affinity term, associated with the corresponding weight.
+             */
+            podAffinityTerm: outputs.apps.v1alpha1.APIManagerSpecZyncAppSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTerm;
+            /**
+             * weight associated with matching the corresponding podAffinityTerm, in the range 1-100.
+             */
+            weight: number;
+        }
+
+        /**
+         * Required. A pod affinity term, associated with the corresponding weight.
+         */
+        export interface APIManagerSpecZyncAppSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTerm {
+            /**
+             * A label query over a set of resources, in this case pods.
+             */
+            labelSelector?: outputs.apps.v1alpha1.APIManagerSpecZyncAppSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelector;
+            /**
+             * namespaces specifies which namespaces the labelSelector applies to (matches against); null or empty list means "this pod's namespace"
+             */
+            namespaces?: string[];
+            /**
+             * This pod should be co-located (affinity) or not co-located (anti-affinity) with the pods matching the labelSelector in the specified namespaces, where co-located is defined as running on a node whose value of the label with key topologyKey matches that of any node on which any of the selected pods is running. Empty topologyKey is not allowed.
+             */
+            topologyKey: string;
+        }
+
+        /**
+         * A label query over a set of resources, in this case pods.
+         */
+        export interface APIManagerSpecZyncAppSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelector {
+            /**
+             * matchExpressions is a list of label selector requirements. The requirements are ANDed.
+             */
+            matchExpressions?: outputs.apps.v1alpha1.APIManagerSpecZyncAppSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressions[];
+            /**
+             * matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+             */
+            matchLabels?: {[key: string]: string};
+        }
+
+        /**
+         * A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecZyncAppSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressions {
+            /**
+             * key is the label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+             */
+            operator: string;
+            /**
+             * values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * Defines a set of pods (namely those matching the labelSelector relative to the given namespace(s)) that this pod should be co-located (affinity) or not co-located (anti-affinity) with, where co-located is defined as running on a node whose value of the label with key <topologyKey> matches that of any node on which a pod of the set of pods is running
+         */
+        export interface APIManagerSpecZyncAppSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecution {
+            /**
+             * A label query over a set of resources, in this case pods.
+             */
+            labelSelector?: outputs.apps.v1alpha1.APIManagerSpecZyncAppSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector;
+            /**
+             * namespaces specifies which namespaces the labelSelector applies to (matches against); null or empty list means "this pod's namespace"
+             */
+            namespaces?: string[];
+            /**
+             * This pod should be co-located (affinity) or not co-located (anti-affinity) with the pods matching the labelSelector in the specified namespaces, where co-located is defined as running on a node whose value of the label with key topologyKey matches that of any node on which any of the selected pods is running. Empty topologyKey is not allowed.
+             */
+            topologyKey: string;
+        }
+
+        /**
+         * A label query over a set of resources, in this case pods.
+         */
+        export interface APIManagerSpecZyncAppSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector {
+            /**
+             * matchExpressions is a list of label selector requirements. The requirements are ANDed.
+             */
+            matchExpressions?: outputs.apps.v1alpha1.APIManagerSpecZyncAppSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions[];
+            /**
+             * matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+             */
+            matchLabels?: {[key: string]: string};
+        }
+
+        /**
+         * A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecZyncAppSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions {
+            /**
+             * key is the label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+             */
+            operator: string;
+            /**
+             * values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * The pod this Toleration is attached to tolerates any taint that matches the triple <key,value,effect> using the matching operator <operator>.
+         */
+        export interface APIManagerSpecZyncAppSpecTolerations {
+            /**
+             * Effect indicates the taint effect to match. Empty means match all taint effects. When specified, allowed values are NoSchedule, PreferNoSchedule and NoExecute.
+             */
+            effect?: string;
+            /**
+             * Key is the taint key that the toleration applies to. Empty means match all taint keys. If the key is empty, operator must be Exists; this combination means to match all values and all keys.
+             */
+            key?: string;
+            /**
+             * Operator represents a key's relationship to the value. Valid operators are Exists and Equal. Defaults to Equal. Exists is equivalent to wildcard for value, so that a pod can tolerate all taints of a particular category.
+             */
+            operator?: string;
+            /**
+             * TolerationSeconds represents the period of time the toleration (which must be of effect NoExecute, otherwise this field is ignored) tolerates the taint. By default, it is not set, which means tolerate the taint forever (do not evict). Zero and negative values will be treated as 0 (evict immediately) by the system.
+             */
+            tolerationSeconds?: number;
+            /**
+             * Value is the taint value the toleration matches to. If the operator is Exists, the value should be empty, otherwise just a regular string.
+             */
+            value?: string;
+        }
+
+        /**
+         * Affinity is a group of affinity scheduling rules.
+         */
+        export interface APIManagerSpecZyncDatabaseAffinity {
+            /**
+             * Describes node affinity scheduling rules for the pod.
+             */
+            nodeAffinity?: outputs.apps.v1alpha1.APIManagerSpecZyncDatabaseAffinityNodeAffinity;
+            /**
+             * Describes pod affinity scheduling rules (e.g. co-locate this pod in the same node, zone, etc. as some other pod(s)).
+             */
+            podAffinity?: outputs.apps.v1alpha1.APIManagerSpecZyncDatabaseAffinityPodAffinity;
+            /**
+             * Describes pod anti-affinity scheduling rules (e.g. avoid putting this pod in the same node, zone, etc. as some other pod(s)).
+             */
+            podAntiAffinity?: outputs.apps.v1alpha1.APIManagerSpecZyncDatabaseAffinityPodAntiAffinity;
+        }
+
+        /**
+         * Describes node affinity scheduling rules for the pod.
+         */
+        export interface APIManagerSpecZyncDatabaseAffinityNodeAffinity {
+            /**
+             * The scheduler will prefer to schedule pods to nodes that satisfy the affinity expressions specified by this field, but it may choose a node that violates one or more of the expressions. The node that is most preferred is the one with the greatest sum of weights, i.e. for each node that meets all of the scheduling requirements (resource request, requiredDuringScheduling affinity expressions, etc.), compute a sum by iterating through the elements of this field and adding "weight" to the sum if the node matches the corresponding matchExpressions; the node(s) with the highest sum are the most preferred.
+             */
+            preferredDuringSchedulingIgnoredDuringExecution?: outputs.apps.v1alpha1.APIManagerSpecZyncDatabaseAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecution[];
+            /**
+             * If the affinity requirements specified by this field are not met at scheduling time, the pod will not be scheduled onto the node. If the affinity requirements specified by this field cease to be met at some point during pod execution (e.g. due to an update), the system may or may not try to eventually evict the pod from its node.
+             */
+            requiredDuringSchedulingIgnoredDuringExecution?: outputs.apps.v1alpha1.APIManagerSpecZyncDatabaseAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecution;
+        }
+
+        /**
+         * An empty preferred scheduling term matches all objects with implicit weight 0 (i.e. it's a no-op). A null preferred scheduling term matches no objects (i.e. is also a no-op).
+         */
+        export interface APIManagerSpecZyncDatabaseAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecution {
+            /**
+             * A node selector term, associated with the corresponding weight.
+             */
+            preference: outputs.apps.v1alpha1.APIManagerSpecZyncDatabaseAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreference;
+            /**
+             * Weight associated with matching the corresponding nodeSelectorTerm, in the range 1-100.
+             */
+            weight: number;
+        }
+
+        /**
+         * A node selector term, associated with the corresponding weight.
+         */
+        export interface APIManagerSpecZyncDatabaseAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreference {
+            /**
+             * A list of node selector requirements by node's labels.
+             */
+            matchExpressions?: outputs.apps.v1alpha1.APIManagerSpecZyncDatabaseAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressions[];
+            /**
+             * A list of node selector requirements by node's fields.
+             */
+            matchFields?: outputs.apps.v1alpha1.APIManagerSpecZyncDatabaseAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFields[];
+        }
+
+        /**
+         * A node selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecZyncDatabaseAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressions {
+            /**
+             * The label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * Represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt.
+             */
+            operator: string;
+            /**
+             * An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. If the operator is Gt or Lt, the values array must have a single element, which will be interpreted as an integer. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * A node selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecZyncDatabaseAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFields {
+            /**
+             * The label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * Represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt.
+             */
+            operator: string;
+            /**
+             * An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. If the operator is Gt or Lt, the values array must have a single element, which will be interpreted as an integer. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * If the affinity requirements specified by this field are not met at scheduling time, the pod will not be scheduled onto the node. If the affinity requirements specified by this field cease to be met at some point during pod execution (e.g. due to an update), the system may or may not try to eventually evict the pod from its node.
+         */
+        export interface APIManagerSpecZyncDatabaseAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecution {
+            /**
+             * Required. A list of node selector terms. The terms are ORed.
+             */
+            nodeSelectorTerms: outputs.apps.v1alpha1.APIManagerSpecZyncDatabaseAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTerms[];
+        }
+
+        /**
+         * A null or empty node selector term matches no objects. The requirements of them are ANDed. The TopologySelectorTerm type implements a subset of the NodeSelectorTerm.
+         */
+        export interface APIManagerSpecZyncDatabaseAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTerms {
+            /**
+             * A list of node selector requirements by node's labels.
+             */
+            matchExpressions?: outputs.apps.v1alpha1.APIManagerSpecZyncDatabaseAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressions[];
+            /**
+             * A list of node selector requirements by node's fields.
+             */
+            matchFields?: outputs.apps.v1alpha1.APIManagerSpecZyncDatabaseAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFields[];
+        }
+
+        /**
+         * A node selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecZyncDatabaseAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressions {
+            /**
+             * The label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * Represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt.
+             */
+            operator: string;
+            /**
+             * An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. If the operator is Gt or Lt, the values array must have a single element, which will be interpreted as an integer. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * A node selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecZyncDatabaseAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFields {
+            /**
+             * The label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * Represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt.
+             */
+            operator: string;
+            /**
+             * An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. If the operator is Gt or Lt, the values array must have a single element, which will be interpreted as an integer. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * Describes pod affinity scheduling rules (e.g. co-locate this pod in the same node, zone, etc. as some other pod(s)).
+         */
+        export interface APIManagerSpecZyncDatabaseAffinityPodAffinity {
+            /**
+             * The scheduler will prefer to schedule pods to nodes that satisfy the affinity expressions specified by this field, but it may choose a node that violates one or more of the expressions. The node that is most preferred is the one with the greatest sum of weights, i.e. for each node that meets all of the scheduling requirements (resource request, requiredDuringScheduling affinity expressions, etc.), compute a sum by iterating through the elements of this field and adding "weight" to the sum if the node has pods which matches the corresponding podAffinityTerm; the node(s) with the highest sum are the most preferred.
+             */
+            preferredDuringSchedulingIgnoredDuringExecution?: outputs.apps.v1alpha1.APIManagerSpecZyncDatabaseAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecution[];
+            /**
+             * If the affinity requirements specified by this field are not met at scheduling time, the pod will not be scheduled onto the node. If the affinity requirements specified by this field cease to be met at some point during pod execution (e.g. due to a pod label update), the system may or may not try to eventually evict the pod from its node. When there are multiple elements, the lists of nodes corresponding to each podAffinityTerm are intersected, i.e. all terms must be satisfied.
+             */
+            requiredDuringSchedulingIgnoredDuringExecution?: outputs.apps.v1alpha1.APIManagerSpecZyncDatabaseAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecution[];
+        }
+
+        /**
+         * The weights of all of the matched WeightedPodAffinityTerm fields are added per-node to find the most preferred node(s)
+         */
+        export interface APIManagerSpecZyncDatabaseAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecution {
+            /**
+             * Required. A pod affinity term, associated with the corresponding weight.
+             */
+            podAffinityTerm: outputs.apps.v1alpha1.APIManagerSpecZyncDatabaseAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTerm;
+            /**
+             * weight associated with matching the corresponding podAffinityTerm, in the range 1-100.
+             */
+            weight: number;
+        }
+
+        /**
+         * Required. A pod affinity term, associated with the corresponding weight.
+         */
+        export interface APIManagerSpecZyncDatabaseAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTerm {
+            /**
+             * A label query over a set of resources, in this case pods.
+             */
+            labelSelector?: outputs.apps.v1alpha1.APIManagerSpecZyncDatabaseAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelector;
+            /**
+             * namespaces specifies which namespaces the labelSelector applies to (matches against); null or empty list means "this pod's namespace"
+             */
+            namespaces?: string[];
+            /**
+             * This pod should be co-located (affinity) or not co-located (anti-affinity) with the pods matching the labelSelector in the specified namespaces, where co-located is defined as running on a node whose value of the label with key topologyKey matches that of any node on which any of the selected pods is running. Empty topologyKey is not allowed.
+             */
+            topologyKey: string;
+        }
+
+        /**
+         * A label query over a set of resources, in this case pods.
+         */
+        export interface APIManagerSpecZyncDatabaseAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelector {
+            /**
+             * matchExpressions is a list of label selector requirements. The requirements are ANDed.
+             */
+            matchExpressions?: outputs.apps.v1alpha1.APIManagerSpecZyncDatabaseAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressions[];
+            /**
+             * matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+             */
+            matchLabels?: {[key: string]: string};
+        }
+
+        /**
+         * A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecZyncDatabaseAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressions {
+            /**
+             * key is the label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+             */
+            operator: string;
+            /**
+             * values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * Defines a set of pods (namely those matching the labelSelector relative to the given namespace(s)) that this pod should be co-located (affinity) or not co-located (anti-affinity) with, where co-located is defined as running on a node whose value of the label with key <topologyKey> matches that of any node on which a pod of the set of pods is running
+         */
+        export interface APIManagerSpecZyncDatabaseAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecution {
+            /**
+             * A label query over a set of resources, in this case pods.
+             */
+            labelSelector?: outputs.apps.v1alpha1.APIManagerSpecZyncDatabaseAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector;
+            /**
+             * namespaces specifies which namespaces the labelSelector applies to (matches against); null or empty list means "this pod's namespace"
+             */
+            namespaces?: string[];
+            /**
+             * This pod should be co-located (affinity) or not co-located (anti-affinity) with the pods matching the labelSelector in the specified namespaces, where co-located is defined as running on a node whose value of the label with key topologyKey matches that of any node on which any of the selected pods is running. Empty topologyKey is not allowed.
+             */
+            topologyKey: string;
+        }
+
+        /**
+         * A label query over a set of resources, in this case pods.
+         */
+        export interface APIManagerSpecZyncDatabaseAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector {
+            /**
+             * matchExpressions is a list of label selector requirements. The requirements are ANDed.
+             */
+            matchExpressions?: outputs.apps.v1alpha1.APIManagerSpecZyncDatabaseAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions[];
+            /**
+             * matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+             */
+            matchLabels?: {[key: string]: string};
+        }
+
+        /**
+         * A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecZyncDatabaseAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions {
+            /**
+             * key is the label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+             */
+            operator: string;
+            /**
+             * values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * Describes pod anti-affinity scheduling rules (e.g. avoid putting this pod in the same node, zone, etc. as some other pod(s)).
+         */
+        export interface APIManagerSpecZyncDatabaseAffinityPodAntiAffinity {
+            /**
+             * The scheduler will prefer to schedule pods to nodes that satisfy the anti-affinity expressions specified by this field, but it may choose a node that violates one or more of the expressions. The node that is most preferred is the one with the greatest sum of weights, i.e. for each node that meets all of the scheduling requirements (resource request, requiredDuringScheduling anti-affinity expressions, etc.), compute a sum by iterating through the elements of this field and adding "weight" to the sum if the node has pods which matches the corresponding podAffinityTerm; the node(s) with the highest sum are the most preferred.
+             */
+            preferredDuringSchedulingIgnoredDuringExecution?: outputs.apps.v1alpha1.APIManagerSpecZyncDatabaseAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecution[];
+            /**
+             * If the anti-affinity requirements specified by this field are not met at scheduling time, the pod will not be scheduled onto the node. If the anti-affinity requirements specified by this field cease to be met at some point during pod execution (e.g. due to a pod label update), the system may or may not try to eventually evict the pod from its node. When there are multiple elements, the lists of nodes corresponding to each podAffinityTerm are intersected, i.e. all terms must be satisfied.
+             */
+            requiredDuringSchedulingIgnoredDuringExecution?: outputs.apps.v1alpha1.APIManagerSpecZyncDatabaseAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecution[];
+        }
+
+        /**
+         * The weights of all of the matched WeightedPodAffinityTerm fields are added per-node to find the most preferred node(s)
+         */
+        export interface APIManagerSpecZyncDatabaseAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecution {
+            /**
+             * Required. A pod affinity term, associated with the corresponding weight.
+             */
+            podAffinityTerm: outputs.apps.v1alpha1.APIManagerSpecZyncDatabaseAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTerm;
+            /**
+             * weight associated with matching the corresponding podAffinityTerm, in the range 1-100.
+             */
+            weight: number;
+        }
+
+        /**
+         * Required. A pod affinity term, associated with the corresponding weight.
+         */
+        export interface APIManagerSpecZyncDatabaseAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTerm {
+            /**
+             * A label query over a set of resources, in this case pods.
+             */
+            labelSelector?: outputs.apps.v1alpha1.APIManagerSpecZyncDatabaseAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelector;
+            /**
+             * namespaces specifies which namespaces the labelSelector applies to (matches against); null or empty list means "this pod's namespace"
+             */
+            namespaces?: string[];
+            /**
+             * This pod should be co-located (affinity) or not co-located (anti-affinity) with the pods matching the labelSelector in the specified namespaces, where co-located is defined as running on a node whose value of the label with key topologyKey matches that of any node on which any of the selected pods is running. Empty topologyKey is not allowed.
+             */
+            topologyKey: string;
+        }
+
+        /**
+         * A label query over a set of resources, in this case pods.
+         */
+        export interface APIManagerSpecZyncDatabaseAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelector {
+            /**
+             * matchExpressions is a list of label selector requirements. The requirements are ANDed.
+             */
+            matchExpressions?: outputs.apps.v1alpha1.APIManagerSpecZyncDatabaseAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressions[];
+            /**
+             * matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+             */
+            matchLabels?: {[key: string]: string};
+        }
+
+        /**
+         * A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecZyncDatabaseAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressions {
+            /**
+             * key is the label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+             */
+            operator: string;
+            /**
+             * values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * Defines a set of pods (namely those matching the labelSelector relative to the given namespace(s)) that this pod should be co-located (affinity) or not co-located (anti-affinity) with, where co-located is defined as running on a node whose value of the label with key <topologyKey> matches that of any node on which a pod of the set of pods is running
+         */
+        export interface APIManagerSpecZyncDatabaseAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecution {
+            /**
+             * A label query over a set of resources, in this case pods.
+             */
+            labelSelector?: outputs.apps.v1alpha1.APIManagerSpecZyncDatabaseAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector;
+            /**
+             * namespaces specifies which namespaces the labelSelector applies to (matches against); null or empty list means "this pod's namespace"
+             */
+            namespaces?: string[];
+            /**
+             * This pod should be co-located (affinity) or not co-located (anti-affinity) with the pods matching the labelSelector in the specified namespaces, where co-located is defined as running on a node whose value of the label with key topologyKey matches that of any node on which any of the selected pods is running. Empty topologyKey is not allowed.
+             */
+            topologyKey: string;
+        }
+
+        /**
+         * A label query over a set of resources, in this case pods.
+         */
+        export interface APIManagerSpecZyncDatabaseAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector {
+            /**
+             * matchExpressions is a list of label selector requirements. The requirements are ANDed.
+             */
+            matchExpressions?: outputs.apps.v1alpha1.APIManagerSpecZyncDatabaseAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions[];
+            /**
+             * matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+             */
+            matchLabels?: {[key: string]: string};
+        }
+
+        /**
+         * A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecZyncDatabaseAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions {
+            /**
+             * key is the label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+             */
+            operator: string;
+            /**
+             * values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * The pod this Toleration is attached to tolerates any taint that matches the triple <key,value,effect> using the matching operator <operator>.
+         */
+        export interface APIManagerSpecZyncDatabaseTolerations {
+            /**
+             * Effect indicates the taint effect to match. Empty means match all taint effects. When specified, allowed values are NoSchedule, PreferNoSchedule and NoExecute.
+             */
+            effect?: string;
+            /**
+             * Key is the taint key that the toleration applies to. Empty means match all taint keys. If the key is empty, operator must be Exists; this combination means to match all values and all keys.
+             */
+            key?: string;
+            /**
+             * Operator represents a key's relationship to the value. Valid operators are Exists and Equal. Defaults to Equal. Exists is equivalent to wildcard for value, so that a pod can tolerate all taints of a particular category.
+             */
+            operator?: string;
+            /**
+             * TolerationSeconds represents the period of time the toleration (which must be of effect NoExecute, otherwise this field is ignored) tolerates the taint. By default, it is not set, which means tolerate the taint forever (do not evict). Zero and negative values will be treated as 0 (evict immediately) by the system.
+             */
+            tolerationSeconds?: number;
+            /**
+             * Value is the taint value the toleration matches to. If the operator is Exists, the value should be empty, otherwise just a regular string.
+             */
+            value?: string;
         }
 
         export interface APIManagerSpecZyncQueSpec {
+            /**
+             * Affinity is a group of affinity scheduling rules.
+             */
+            affinity?: outputs.apps.v1alpha1.APIManagerSpecZyncQueSpecAffinity;
             replicas?: number;
+            tolerations?: outputs.apps.v1alpha1.APIManagerSpecZyncQueSpecTolerations[];
         }
 
+        /**
+         * Affinity is a group of affinity scheduling rules.
+         */
+        export interface APIManagerSpecZyncQueSpecAffinity {
+            /**
+             * Describes node affinity scheduling rules for the pod.
+             */
+            nodeAffinity?: outputs.apps.v1alpha1.APIManagerSpecZyncQueSpecAffinityNodeAffinity;
+            /**
+             * Describes pod affinity scheduling rules (e.g. co-locate this pod in the same node, zone, etc. as some other pod(s)).
+             */
+            podAffinity?: outputs.apps.v1alpha1.APIManagerSpecZyncQueSpecAffinityPodAffinity;
+            /**
+             * Describes pod anti-affinity scheduling rules (e.g. avoid putting this pod in the same node, zone, etc. as some other pod(s)).
+             */
+            podAntiAffinity?: outputs.apps.v1alpha1.APIManagerSpecZyncQueSpecAffinityPodAntiAffinity;
+        }
+
+        /**
+         * Describes node affinity scheduling rules for the pod.
+         */
+        export interface APIManagerSpecZyncQueSpecAffinityNodeAffinity {
+            /**
+             * The scheduler will prefer to schedule pods to nodes that satisfy the affinity expressions specified by this field, but it may choose a node that violates one or more of the expressions. The node that is most preferred is the one with the greatest sum of weights, i.e. for each node that meets all of the scheduling requirements (resource request, requiredDuringScheduling affinity expressions, etc.), compute a sum by iterating through the elements of this field and adding "weight" to the sum if the node matches the corresponding matchExpressions; the node(s) with the highest sum are the most preferred.
+             */
+            preferredDuringSchedulingIgnoredDuringExecution?: outputs.apps.v1alpha1.APIManagerSpecZyncQueSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecution[];
+            /**
+             * If the affinity requirements specified by this field are not met at scheduling time, the pod will not be scheduled onto the node. If the affinity requirements specified by this field cease to be met at some point during pod execution (e.g. due to an update), the system may or may not try to eventually evict the pod from its node.
+             */
+            requiredDuringSchedulingIgnoredDuringExecution?: outputs.apps.v1alpha1.APIManagerSpecZyncQueSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecution;
+        }
+
+        /**
+         * An empty preferred scheduling term matches all objects with implicit weight 0 (i.e. it's a no-op). A null preferred scheduling term matches no objects (i.e. is also a no-op).
+         */
+        export interface APIManagerSpecZyncQueSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecution {
+            /**
+             * A node selector term, associated with the corresponding weight.
+             */
+            preference: outputs.apps.v1alpha1.APIManagerSpecZyncQueSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreference;
+            /**
+             * Weight associated with matching the corresponding nodeSelectorTerm, in the range 1-100.
+             */
+            weight: number;
+        }
+
+        /**
+         * A node selector term, associated with the corresponding weight.
+         */
+        export interface APIManagerSpecZyncQueSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreference {
+            /**
+             * A list of node selector requirements by node's labels.
+             */
+            matchExpressions?: outputs.apps.v1alpha1.APIManagerSpecZyncQueSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressions[];
+            /**
+             * A list of node selector requirements by node's fields.
+             */
+            matchFields?: outputs.apps.v1alpha1.APIManagerSpecZyncQueSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFields[];
+        }
+
+        /**
+         * A node selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecZyncQueSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressions {
+            /**
+             * The label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * Represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt.
+             */
+            operator: string;
+            /**
+             * An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. If the operator is Gt or Lt, the values array must have a single element, which will be interpreted as an integer. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * A node selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecZyncQueSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFields {
+            /**
+             * The label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * Represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt.
+             */
+            operator: string;
+            /**
+             * An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. If the operator is Gt or Lt, the values array must have a single element, which will be interpreted as an integer. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * If the affinity requirements specified by this field are not met at scheduling time, the pod will not be scheduled onto the node. If the affinity requirements specified by this field cease to be met at some point during pod execution (e.g. due to an update), the system may or may not try to eventually evict the pod from its node.
+         */
+        export interface APIManagerSpecZyncQueSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecution {
+            /**
+             * Required. A list of node selector terms. The terms are ORed.
+             */
+            nodeSelectorTerms: outputs.apps.v1alpha1.APIManagerSpecZyncQueSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTerms[];
+        }
+
+        /**
+         * A null or empty node selector term matches no objects. The requirements of them are ANDed. The TopologySelectorTerm type implements a subset of the NodeSelectorTerm.
+         */
+        export interface APIManagerSpecZyncQueSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTerms {
+            /**
+             * A list of node selector requirements by node's labels.
+             */
+            matchExpressions?: outputs.apps.v1alpha1.APIManagerSpecZyncQueSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressions[];
+            /**
+             * A list of node selector requirements by node's fields.
+             */
+            matchFields?: outputs.apps.v1alpha1.APIManagerSpecZyncQueSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFields[];
+        }
+
+        /**
+         * A node selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecZyncQueSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressions {
+            /**
+             * The label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * Represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt.
+             */
+            operator: string;
+            /**
+             * An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. If the operator is Gt or Lt, the values array must have a single element, which will be interpreted as an integer. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * A node selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecZyncQueSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFields {
+            /**
+             * The label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * Represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt.
+             */
+            operator: string;
+            /**
+             * An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. If the operator is Gt or Lt, the values array must have a single element, which will be interpreted as an integer. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * Describes pod affinity scheduling rules (e.g. co-locate this pod in the same node, zone, etc. as some other pod(s)).
+         */
+        export interface APIManagerSpecZyncQueSpecAffinityPodAffinity {
+            /**
+             * The scheduler will prefer to schedule pods to nodes that satisfy the affinity expressions specified by this field, but it may choose a node that violates one or more of the expressions. The node that is most preferred is the one with the greatest sum of weights, i.e. for each node that meets all of the scheduling requirements (resource request, requiredDuringScheduling affinity expressions, etc.), compute a sum by iterating through the elements of this field and adding "weight" to the sum if the node has pods which matches the corresponding podAffinityTerm; the node(s) with the highest sum are the most preferred.
+             */
+            preferredDuringSchedulingIgnoredDuringExecution?: outputs.apps.v1alpha1.APIManagerSpecZyncQueSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecution[];
+            /**
+             * If the affinity requirements specified by this field are not met at scheduling time, the pod will not be scheduled onto the node. If the affinity requirements specified by this field cease to be met at some point during pod execution (e.g. due to a pod label update), the system may or may not try to eventually evict the pod from its node. When there are multiple elements, the lists of nodes corresponding to each podAffinityTerm are intersected, i.e. all terms must be satisfied.
+             */
+            requiredDuringSchedulingIgnoredDuringExecution?: outputs.apps.v1alpha1.APIManagerSpecZyncQueSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecution[];
+        }
+
+        /**
+         * The weights of all of the matched WeightedPodAffinityTerm fields are added per-node to find the most preferred node(s)
+         */
+        export interface APIManagerSpecZyncQueSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecution {
+            /**
+             * Required. A pod affinity term, associated with the corresponding weight.
+             */
+            podAffinityTerm: outputs.apps.v1alpha1.APIManagerSpecZyncQueSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTerm;
+            /**
+             * weight associated with matching the corresponding podAffinityTerm, in the range 1-100.
+             */
+            weight: number;
+        }
+
+        /**
+         * Required. A pod affinity term, associated with the corresponding weight.
+         */
+        export interface APIManagerSpecZyncQueSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTerm {
+            /**
+             * A label query over a set of resources, in this case pods.
+             */
+            labelSelector?: outputs.apps.v1alpha1.APIManagerSpecZyncQueSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelector;
+            /**
+             * namespaces specifies which namespaces the labelSelector applies to (matches against); null or empty list means "this pod's namespace"
+             */
+            namespaces?: string[];
+            /**
+             * This pod should be co-located (affinity) or not co-located (anti-affinity) with the pods matching the labelSelector in the specified namespaces, where co-located is defined as running on a node whose value of the label with key topologyKey matches that of any node on which any of the selected pods is running. Empty topologyKey is not allowed.
+             */
+            topologyKey: string;
+        }
+
+        /**
+         * A label query over a set of resources, in this case pods.
+         */
+        export interface APIManagerSpecZyncQueSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelector {
+            /**
+             * matchExpressions is a list of label selector requirements. The requirements are ANDed.
+             */
+            matchExpressions?: outputs.apps.v1alpha1.APIManagerSpecZyncQueSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressions[];
+            /**
+             * matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+             */
+            matchLabels?: {[key: string]: string};
+        }
+
+        /**
+         * A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecZyncQueSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressions {
+            /**
+             * key is the label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+             */
+            operator: string;
+            /**
+             * values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * Defines a set of pods (namely those matching the labelSelector relative to the given namespace(s)) that this pod should be co-located (affinity) or not co-located (anti-affinity) with, where co-located is defined as running on a node whose value of the label with key <topologyKey> matches that of any node on which a pod of the set of pods is running
+         */
+        export interface APIManagerSpecZyncQueSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecution {
+            /**
+             * A label query over a set of resources, in this case pods.
+             */
+            labelSelector?: outputs.apps.v1alpha1.APIManagerSpecZyncQueSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector;
+            /**
+             * namespaces specifies which namespaces the labelSelector applies to (matches against); null or empty list means "this pod's namespace"
+             */
+            namespaces?: string[];
+            /**
+             * This pod should be co-located (affinity) or not co-located (anti-affinity) with the pods matching the labelSelector in the specified namespaces, where co-located is defined as running on a node whose value of the label with key topologyKey matches that of any node on which any of the selected pods is running. Empty topologyKey is not allowed.
+             */
+            topologyKey: string;
+        }
+
+        /**
+         * A label query over a set of resources, in this case pods.
+         */
+        export interface APIManagerSpecZyncQueSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector {
+            /**
+             * matchExpressions is a list of label selector requirements. The requirements are ANDed.
+             */
+            matchExpressions?: outputs.apps.v1alpha1.APIManagerSpecZyncQueSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions[];
+            /**
+             * matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+             */
+            matchLabels?: {[key: string]: string};
+        }
+
+        /**
+         * A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecZyncQueSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions {
+            /**
+             * key is the label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+             */
+            operator: string;
+            /**
+             * values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * Describes pod anti-affinity scheduling rules (e.g. avoid putting this pod in the same node, zone, etc. as some other pod(s)).
+         */
+        export interface APIManagerSpecZyncQueSpecAffinityPodAntiAffinity {
+            /**
+             * The scheduler will prefer to schedule pods to nodes that satisfy the anti-affinity expressions specified by this field, but it may choose a node that violates one or more of the expressions. The node that is most preferred is the one with the greatest sum of weights, i.e. for each node that meets all of the scheduling requirements (resource request, requiredDuringScheduling anti-affinity expressions, etc.), compute a sum by iterating through the elements of this field and adding "weight" to the sum if the node has pods which matches the corresponding podAffinityTerm; the node(s) with the highest sum are the most preferred.
+             */
+            preferredDuringSchedulingIgnoredDuringExecution?: outputs.apps.v1alpha1.APIManagerSpecZyncQueSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecution[];
+            /**
+             * If the anti-affinity requirements specified by this field are not met at scheduling time, the pod will not be scheduled onto the node. If the anti-affinity requirements specified by this field cease to be met at some point during pod execution (e.g. due to a pod label update), the system may or may not try to eventually evict the pod from its node. When there are multiple elements, the lists of nodes corresponding to each podAffinityTerm are intersected, i.e. all terms must be satisfied.
+             */
+            requiredDuringSchedulingIgnoredDuringExecution?: outputs.apps.v1alpha1.APIManagerSpecZyncQueSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecution[];
+        }
+
+        /**
+         * The weights of all of the matched WeightedPodAffinityTerm fields are added per-node to find the most preferred node(s)
+         */
+        export interface APIManagerSpecZyncQueSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecution {
+            /**
+             * Required. A pod affinity term, associated with the corresponding weight.
+             */
+            podAffinityTerm: outputs.apps.v1alpha1.APIManagerSpecZyncQueSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTerm;
+            /**
+             * weight associated with matching the corresponding podAffinityTerm, in the range 1-100.
+             */
+            weight: number;
+        }
+
+        /**
+         * Required. A pod affinity term, associated with the corresponding weight.
+         */
+        export interface APIManagerSpecZyncQueSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTerm {
+            /**
+             * A label query over a set of resources, in this case pods.
+             */
+            labelSelector?: outputs.apps.v1alpha1.APIManagerSpecZyncQueSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelector;
+            /**
+             * namespaces specifies which namespaces the labelSelector applies to (matches against); null or empty list means "this pod's namespace"
+             */
+            namespaces?: string[];
+            /**
+             * This pod should be co-located (affinity) or not co-located (anti-affinity) with the pods matching the labelSelector in the specified namespaces, where co-located is defined as running on a node whose value of the label with key topologyKey matches that of any node on which any of the selected pods is running. Empty topologyKey is not allowed.
+             */
+            topologyKey: string;
+        }
+
+        /**
+         * A label query over a set of resources, in this case pods.
+         */
+        export interface APIManagerSpecZyncQueSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelector {
+            /**
+             * matchExpressions is a list of label selector requirements. The requirements are ANDed.
+             */
+            matchExpressions?: outputs.apps.v1alpha1.APIManagerSpecZyncQueSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressions[];
+            /**
+             * matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+             */
+            matchLabels?: {[key: string]: string};
+        }
+
+        /**
+         * A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecZyncQueSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressions {
+            /**
+             * key is the label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+             */
+            operator: string;
+            /**
+             * values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * Defines a set of pods (namely those matching the labelSelector relative to the given namespace(s)) that this pod should be co-located (affinity) or not co-located (anti-affinity) with, where co-located is defined as running on a node whose value of the label with key <topologyKey> matches that of any node on which a pod of the set of pods is running
+         */
+        export interface APIManagerSpecZyncQueSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecution {
+            /**
+             * A label query over a set of resources, in this case pods.
+             */
+            labelSelector?: outputs.apps.v1alpha1.APIManagerSpecZyncQueSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector;
+            /**
+             * namespaces specifies which namespaces the labelSelector applies to (matches against); null or empty list means "this pod's namespace"
+             */
+            namespaces?: string[];
+            /**
+             * This pod should be co-located (affinity) or not co-located (anti-affinity) with the pods matching the labelSelector in the specified namespaces, where co-located is defined as running on a node whose value of the label with key topologyKey matches that of any node on which any of the selected pods is running. Empty topologyKey is not allowed.
+             */
+            topologyKey: string;
+        }
+
+        /**
+         * A label query over a set of resources, in this case pods.
+         */
+        export interface APIManagerSpecZyncQueSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector {
+            /**
+             * matchExpressions is a list of label selector requirements. The requirements are ANDed.
+             */
+            matchExpressions?: outputs.apps.v1alpha1.APIManagerSpecZyncQueSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions[];
+            /**
+             * matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+             */
+            matchLabels?: {[key: string]: string};
+        }
+
+        /**
+         * A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+         */
+        export interface APIManagerSpecZyncQueSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions {
+            /**
+             * key is the label key that the selector applies to.
+             */
+            key: string;
+            /**
+             * operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+             */
+            operator: string;
+            /**
+             * values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+             */
+            values?: string[];
+        }
+
+        /**
+         * The pod this Toleration is attached to tolerates any taint that matches the triple <key,value,effect> using the matching operator <operator>.
+         */
+        export interface APIManagerSpecZyncQueSpecTolerations {
+            /**
+             * Effect indicates the taint effect to match. Empty means match all taint effects. When specified, allowed values are NoSchedule, PreferNoSchedule and NoExecute.
+             */
+            effect?: string;
+            /**
+             * Key is the taint key that the toleration applies to. Empty means match all taint keys. If the key is empty, operator must be Exists; this combination means to match all values and all keys.
+             */
+            key?: string;
+            /**
+             * Operator represents a key's relationship to the value. Valid operators are Exists and Equal. Defaults to Equal. Exists is equivalent to wildcard for value, so that a pod can tolerate all taints of a particular category.
+             */
+            operator?: string;
+            /**
+             * TolerationSeconds represents the period of time the toleration (which must be of effect NoExecute, otherwise this field is ignored) tolerates the taint. By default, it is not set, which means tolerate the taint forever (do not evict). Zero and negative values will be treated as 0 (evict immediately) by the system.
+             */
+            tolerationSeconds?: number;
+            /**
+             * Value is the taint value the toleration matches to. If the operator is Exists, the value should be empty, otherwise just a regular string.
+             */
+            value?: string;
+        }
+
+        /**
+         * APIManagerStatus defines the observed state of APIManager
+         */
         export interface APIManagerStatus {
             conditions?: outputs.apps.v1alpha1.APIManagerStatusConditions[];
+            /**
+             * APIManager Deployment Configs
+             */
             deployments: outputs.apps.v1alpha1.APIManagerStatusDeployments;
         }
 
@@ -183,6 +7925,9 @@ export namespace apps {
             type: string;
         }
 
+        /**
+         * APIManager Deployment Configs
+         */
         export interface APIManagerStatusDeployments {
             /**
              * Deployments are ready to serve requests
@@ -202,301 +7947,604 @@ export namespace apps {
 
 export namespace capabilities {
     export namespace v1alpha1 {
-        export interface APISpec {
-            description: string;
-            integrationMethod: outputs.capabilities.v1alpha1.APISpecIntegrationMethod;
-            metricSelector?: outputs.capabilities.v1alpha1.APISpecMetricSelector;
-            planSelector?: outputs.capabilities.v1alpha1.APISpecPlanSelector;
-        }
-
-        export interface APISpecIntegrationMethod {
-            apicastHosted?: outputs.capabilities.v1alpha1.APISpecIntegrationMethodApicastHosted;
-            apicastOnPrem?: outputs.capabilities.v1alpha1.APISpecIntegrationMethodApicastOnPrem;
-            codePlugin?: outputs.capabilities.v1alpha1.APISpecIntegrationMethodCodePlugin;
-        }
-
-        export interface APISpecIntegrationMethodApicastHosted {
-            apiTestGetRequest: string;
-            authenticationSettings: outputs.capabilities.v1alpha1.APISpecIntegrationMethodApicastHostedAuthenticationSettings;
-            mappingRulesSelector?: outputs.capabilities.v1alpha1.APISpecIntegrationMethodApicastHostedMappingRulesSelector;
-            policiesSelector?: outputs.capabilities.v1alpha1.APISpecIntegrationMethodApicastHostedPoliciesSelector;
-            privateBaseURL: string;
-        }
-
-        export interface APISpecIntegrationMethodApicastHostedAuthenticationSettings {
-            credentials: outputs.capabilities.v1alpha1.APISpecIntegrationMethodApicastHostedAuthenticationSettingsCredentials;
-            errors: outputs.capabilities.v1alpha1.APISpecIntegrationMethodApicastHostedAuthenticationSettingsErrors;
-            hostHeader: string;
-            secretToken: string;
-        }
-
-        export interface APISpecIntegrationMethodApicastHostedAuthenticationSettingsCredentials {
-            apiKey?: outputs.capabilities.v1alpha1.APISpecIntegrationMethodApicastHostedAuthenticationSettingsCredentialsApiKey;
-            appID?: outputs.capabilities.v1alpha1.APISpecIntegrationMethodApicastHostedAuthenticationSettingsCredentialsAppID;
-            openIDConnector?: outputs.capabilities.v1alpha1.APISpecIntegrationMethodApicastHostedAuthenticationSettingsCredentialsOpenIDConnector;
-        }
-
-        export interface APISpecIntegrationMethodApicastHostedAuthenticationSettingsCredentialsApiKey {
-            authParameterName: string;
-            credentialsLocation: string;
-        }
-
-        export interface APISpecIntegrationMethodApicastHostedAuthenticationSettingsCredentialsAppID {
-            appIDParameterName: string;
-            appKeyParameterName: string;
-            credentialsLocation: string;
-        }
-
-        export interface APISpecIntegrationMethodApicastHostedAuthenticationSettingsCredentialsOpenIDConnector {
-            credentialsLocation: string;
-            issuer: string;
-        }
-
-        export interface APISpecIntegrationMethodApicastHostedAuthenticationSettingsErrors {
-            authenticationFailed: outputs.capabilities.v1alpha1.APISpecIntegrationMethodApicastHostedAuthenticationSettingsErrorsAuthenticationFailed;
-            authenticationMissing: outputs.capabilities.v1alpha1.APISpecIntegrationMethodApicastHostedAuthenticationSettingsErrorsAuthenticationMissing;
-        }
-
-        export interface APISpecIntegrationMethodApicastHostedAuthenticationSettingsErrorsAuthenticationFailed {
-            contentType: string;
-            responseBody: string;
-            responseCode: number;
-        }
-
-        export interface APISpecIntegrationMethodApicastHostedAuthenticationSettingsErrorsAuthenticationMissing {
-            contentType: string;
-            responseBody: string;
-            responseCode: number;
-        }
-
-        export interface APISpecIntegrationMethodApicastHostedMappingRulesSelector {
-            matchExpressions?: any[];
-            matchLabels?: {[key: string]: any};
-        }
-
-        export interface APISpecIntegrationMethodApicastHostedPoliciesSelector {
-            matchExpressions?: any[];
-            matchLabels?: {[key: string]: any};
-        }
-
-        export interface APISpecIntegrationMethodApicastOnPrem {
-            apiTestGetRequest: string;
-            authenticationSettings: outputs.capabilities.v1alpha1.APISpecIntegrationMethodApicastOnPremAuthenticationSettings;
-            mappingRulesSelector?: outputs.capabilities.v1alpha1.APISpecIntegrationMethodApicastOnPremMappingRulesSelector;
-            policiesSelector?: outputs.capabilities.v1alpha1.APISpecIntegrationMethodApicastOnPremPoliciesSelector;
-            privateBaseURL: string;
-            productionPublicBaseURL: string;
-            stagingPublicBaseURL: string;
-        }
-
-        export interface APISpecIntegrationMethodApicastOnPremAuthenticationSettings {
-            credentials: outputs.capabilities.v1alpha1.APISpecIntegrationMethodApicastOnPremAuthenticationSettingsCredentials;
-            errors: outputs.capabilities.v1alpha1.APISpecIntegrationMethodApicastOnPremAuthenticationSettingsErrors;
-            hostHeader: string;
-            secretToken: string;
-        }
-
-        export interface APISpecIntegrationMethodApicastOnPremAuthenticationSettingsCredentials {
-            apiKey?: outputs.capabilities.v1alpha1.APISpecIntegrationMethodApicastOnPremAuthenticationSettingsCredentialsApiKey;
-            appID?: outputs.capabilities.v1alpha1.APISpecIntegrationMethodApicastOnPremAuthenticationSettingsCredentialsAppID;
-            openIDConnector?: outputs.capabilities.v1alpha1.APISpecIntegrationMethodApicastOnPremAuthenticationSettingsCredentialsOpenIDConnector;
-        }
-
-        export interface APISpecIntegrationMethodApicastOnPremAuthenticationSettingsCredentialsApiKey {
-            authParameterName: string;
-            credentialsLocation: string;
-        }
-
-        export interface APISpecIntegrationMethodApicastOnPremAuthenticationSettingsCredentialsAppID {
-            appIDParameterName: string;
-            appKeyParameterName: string;
-            credentialsLocation: string;
-        }
-
-        export interface APISpecIntegrationMethodApicastOnPremAuthenticationSettingsCredentialsOpenIDConnector {
-            credentialsLocation: string;
-            issuer: string;
-        }
-
-        export interface APISpecIntegrationMethodApicastOnPremAuthenticationSettingsErrors {
-            authenticationFailed: outputs.capabilities.v1alpha1.APISpecIntegrationMethodApicastOnPremAuthenticationSettingsErrorsAuthenticationFailed;
-            authenticationMissing: outputs.capabilities.v1alpha1.APISpecIntegrationMethodApicastOnPremAuthenticationSettingsErrorsAuthenticationMissing;
-        }
-
-        export interface APISpecIntegrationMethodApicastOnPremAuthenticationSettingsErrorsAuthenticationFailed {
-            contentType: string;
-            responseBody: string;
-            responseCode: number;
-        }
-
-        export interface APISpecIntegrationMethodApicastOnPremAuthenticationSettingsErrorsAuthenticationMissing {
-            contentType: string;
-            responseBody: string;
-            responseCode: number;
-        }
-
-        export interface APISpecIntegrationMethodApicastOnPremMappingRulesSelector {
-            matchExpressions?: any[];
-            matchLabels?: {[key: string]: any};
-        }
-
-        export interface APISpecIntegrationMethodApicastOnPremPoliciesSelector {
-            matchExpressions?: any[];
-            matchLabels?: {[key: string]: any};
-        }
-
-        export interface APISpecIntegrationMethodCodePlugin {
-            authenticationSettings: outputs.capabilities.v1alpha1.APISpecIntegrationMethodCodePluginAuthenticationSettings;
-        }
-
-        export interface APISpecIntegrationMethodCodePluginAuthenticationSettings {
-            credentials: outputs.capabilities.v1alpha1.APISpecIntegrationMethodCodePluginAuthenticationSettingsCredentials;
-        }
-
-        export interface APISpecIntegrationMethodCodePluginAuthenticationSettingsCredentials {
-            apiKey?: outputs.capabilities.v1alpha1.APISpecIntegrationMethodCodePluginAuthenticationSettingsCredentialsApiKey;
-            appID?: outputs.capabilities.v1alpha1.APISpecIntegrationMethodCodePluginAuthenticationSettingsCredentialsAppID;
-            openIDConnector?: outputs.capabilities.v1alpha1.APISpecIntegrationMethodCodePluginAuthenticationSettingsCredentialsOpenIDConnector;
-        }
-
-        export interface APISpecIntegrationMethodCodePluginAuthenticationSettingsCredentialsApiKey {
-            authParameterName: string;
-            credentialsLocation: string;
-        }
-
-        export interface APISpecIntegrationMethodCodePluginAuthenticationSettingsCredentialsAppID {
-            appIDParameterName: string;
-            appKeyParameterName: string;
-            credentialsLocation: string;
-        }
-
-        export interface APISpecIntegrationMethodCodePluginAuthenticationSettingsCredentialsOpenIDConnector {
-            credentialsLocation: string;
-            issuer: string;
-        }
-
-        export interface APISpecMetricSelector {
-            matchExpressions?: any[];
-            matchLabels?: {[key: string]: any};
-        }
-
-        export interface APISpecPlanSelector {
-            matchExpressions?: any[];
-            matchLabels?: {[key: string]: any};
-        }
-
-        export interface BindingSpec {
-            apiSelector?: outputs.capabilities.v1alpha1.BindingSpecApiSelector;
-            credentialsRef: outputs.capabilities.v1alpha1.BindingSpecCredentialsRef;
-        }
-
-        export interface BindingSpecApiSelector {
-            matchExpressions?: any[];
-            matchLabels?: {[key: string]: any};
-        }
-
-        export interface BindingSpecCredentialsRef {
-            name?: string;
-            namespace?: string;
-        }
-
-        export interface BindingStatus {
-            currentState?: string;
-            desiredState?: string;
-            lastSync?: outputs.capabilities.v1alpha1.BindingStatusLastSync;
-            previousState?: string;
-        }
-
-        export interface BindingStatusLastSync {
-            nanos?: number;
-            seconds?: number;
-        }
-
-        export interface LimitSpec {
-            maxValue: number;
-            metricRef: outputs.capabilities.v1alpha1.LimitSpecMetricRef;
-            period: string;
-        }
-
-        export interface LimitSpecMetricRef {
-            apiVersion?: string;
-            fieldPath?: string;
-            kind?: string;
-            name?: string;
-            namespace?: string;
-            resourceVersion?: string;
-            uid?: string;
-        }
-
-        export interface MappingRuleSpec {
-            increment: number;
-            method: string;
-            metricRef: outputs.capabilities.v1alpha1.MappingRuleSpecMetricRef;
-            path: string;
-        }
-
-        export interface MappingRuleSpecMetricRef {
-            apiVersion?: string;
-            fieldPath?: string;
-            kind?: string;
-            name?: string;
-            namespace?: string;
-            resourceVersion?: string;
-            uid?: string;
-        }
-
-        export interface MetricSpec {
-            description: string;
-            incrementHits: boolean;
-            unit: string;
-        }
-
-        export interface PlanSpec {
-            approvalRequired: boolean;
-            costs?: outputs.capabilities.v1alpha1.PlanSpecCosts;
-            default: boolean;
-            limitSelector: outputs.capabilities.v1alpha1.PlanSpecLimitSelector;
-            trialPeriod: number;
-        }
-
-        export interface PlanSpecCosts {
-            costMonth?: number;
-            setupFee?: number;
-        }
-
-        export interface PlanSpecLimitSelector {
-            matchExpressions?: any[];
-            matchLabels?: {[key: string]: any};
-        }
-
+        /**
+         * TenantSpec defines the desired state of Tenant
+         */
         export interface TenantSpec {
             email: string;
+            /**
+             * SecretReference represents a Secret Reference. It has enough information to retrieve secret in any namespace
+             */
             masterCredentialsRef: outputs.capabilities.v1alpha1.TenantSpecMasterCredentialsRef;
             organizationName: string;
+            /**
+             * SecretReference represents a Secret Reference. It has enough information to retrieve secret in any namespace
+             */
             passwordCredentialsRef: outputs.capabilities.v1alpha1.TenantSpecPasswordCredentialsRef;
             systemMasterUrl: string;
+            /**
+             * SecretReference represents a Secret Reference. It has enough information to retrieve secret in any namespace
+             */
             tenantSecretRef: outputs.capabilities.v1alpha1.TenantSpecTenantSecretRef;
             username: string;
         }
 
+        /**
+         * SecretReference represents a Secret Reference. It has enough information to retrieve secret in any namespace
+         */
         export interface TenantSpecMasterCredentialsRef {
+            /**
+             * Name is unique within a namespace to reference a secret resource.
+             */
             name?: string;
+            /**
+             * Namespace defines the space within which the secret name must be unique.
+             */
             namespace?: string;
         }
 
+        /**
+         * SecretReference represents a Secret Reference. It has enough information to retrieve secret in any namespace
+         */
         export interface TenantSpecPasswordCredentialsRef {
+            /**
+             * Name is unique within a namespace to reference a secret resource.
+             */
             name?: string;
+            /**
+             * Namespace defines the space within which the secret name must be unique.
+             */
             namespace?: string;
         }
 
+        /**
+         * SecretReference represents a Secret Reference. It has enough information to retrieve secret in any namespace
+         */
         export interface TenantSpecTenantSecretRef {
+            /**
+             * Name is unique within a namespace to reference a secret resource.
+             */
             name?: string;
+            /**
+             * Namespace defines the space within which the secret name must be unique.
+             */
             namespace?: string;
         }
 
+        /**
+         * TenantStatus defines the observed state of Tenant
+         */
         export interface TenantStatus {
             adminId: number;
             tenantId: number;
+        }
+    }
+
+    export namespace v1beta1 {
+        /**
+         * BackendSpec defines the desired state of Backend
+         */
+        export interface BackendSpec {
+            /**
+             * Description is a human readable text of the backend
+             */
+            description?: string;
+            mappingRules?: outputs.capabilities.v1beta1.BackendSpecMappingRules[];
+            /**
+             * Methods Map: system_name -> MethodSpec system_name attr is unique for all metrics AND methods In other words, if metric's system_name is A, there is no metric or method with system_name A.
+             */
+            methods?: {[key: string]: outputs.capabilities.v1beta1.BackendSpecMethods};
+            /**
+             * Metrics Map: system_name -> MetricSpec system_name attr is unique for all metrics AND methods In other words, if metric's system_name is A, there is no metric or method with system_name A.
+             */
+            metrics?: {[key: string]: outputs.capabilities.v1beta1.BackendSpecMetrics};
+            /**
+             * Name is human readable name for the backend
+             */
+            name: string;
+            /**
+             * PrivateBaseURL Private Base URL of the API
+             */
+            privateBaseURL: string;
+            /**
+             * ProviderAccountRef references account provider credentials
+             */
+            providerAccountRef?: outputs.capabilities.v1beta1.BackendSpecProviderAccountRef;
+            /**
+             * SystemName identifies uniquely the product within the account provider Default value will be sanitized Name
+             */
+            systemName?: string;
+        }
+
+        /**
+         * MappingRuleSpec defines the desired state of Product's MappingRule
+         */
+        export interface BackendSpecMappingRules {
+            httpMethod: string;
+            increment: number;
+            metricMethodRef: string;
+            pattern: string;
+            position?: number;
+        }
+
+        /**
+         * MethodSpec defines the desired state of Product's Method
+         */
+        export interface BackendSpecMethods {
+            description?: string;
+            friendlyName: string;
+        }
+
+        /**
+         * MetricSpec defines the desired state of Product's Metric
+         */
+        export interface BackendSpecMetrics {
+            description?: string;
+            friendlyName: string;
+            unit: string;
+        }
+
+        /**
+         * ProviderAccountRef references account provider credentials
+         */
+        export interface BackendSpecProviderAccountRef {
+            /**
+             * Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+             */
+            name?: string;
+        }
+
+        /**
+         * BackendStatus defines the observed state of Backend
+         */
+        export interface BackendStatus {
+            backendId?: number;
+            /**
+             * Current state of the 3scale backend. Conditions represent the latest available observations of an object's state
+             */
+            conditions?: outputs.capabilities.v1beta1.BackendStatusConditions[];
+            /**
+             * ObservedGeneration reflects the generation of the most recently observed Backend Spec.
+             */
+            observedGeneration?: number;
+        }
+
+        /**
+         * Condition represents an observation of an object's state. Conditions are an extension mechanism intended to be used when the details of an observation are not a priori known or would not apply to all instances of a given Kind. 
+         *  Conditions should be added to explicitly convey properties that users and components care about rather than requiring those properties to be inferred from other observations. Once defined, the meaning of a Condition can not be changed arbitrarily - it becomes part of the API, and has the same backwards- and forwards-compatibility concerns of any other part of the API.
+         */
+        export interface BackendStatusConditions {
+            lastTransitionTime?: string;
+            message?: string;
+            /**
+             * ConditionReason is intended to be a one-word, CamelCase representation of the category of cause of the current status. It is intended to be used in concise output, such as one-line kubectl get output, and in summarizing occurrences of causes.
+             */
+            reason?: string;
+            status: string;
+            /**
+             * ConditionType is the type of the condition and is typically a CamelCased word or short phrase. 
+             *  Condition types should indicate state in the "abnormal-true" polarity. For example, if the condition indicates when a policy is invalid, the "is valid" case is probably the norm, so the condition should be called "Invalid".
+             */
+            type: string;
+        }
+
+        /**
+         * ProductSpec defines the desired state of Product
+         */
+        export interface ProductSpec {
+            /**
+             * Application Plans Map: system_name -> Application Plan Spec
+             */
+            applicationPlans?: {[key: string]: outputs.capabilities.v1beta1.ProductSpecApplicationPlans};
+            /**
+             * Backend usage will be a map of Map: system_name -> BackendUsageSpec Having system_name as the index, the structure ensures one backend is not used multiple times.
+             */
+            backendUsages?: {[key: string]: outputs.capabilities.v1beta1.ProductSpecBackendUsages};
+            /**
+             * Deployment defined 3scale product deployment mode
+             */
+            deployment?: outputs.capabilities.v1beta1.ProductSpecDeployment;
+            /**
+             * Description is a human readable text of the product
+             */
+            description?: string;
+            /**
+             * Mapping Rules Array: MappingRule Spec
+             */
+            mappingRules?: outputs.capabilities.v1beta1.ProductSpecMappingRules[];
+            /**
+             * Methods Map: system_name -> MethodSpec system_name attr is unique for all metrics AND methods In other words, if metric's system_name is A, there is no metric or method with system_name A.
+             */
+            methods?: {[key: string]: outputs.capabilities.v1beta1.ProductSpecMethods};
+            /**
+             * Metrics Map: system_name -> MetricSpec system_name attr is unique for all metrics AND methods In other words, if metric's system_name is A, there is no metric or method with system_name A.
+             */
+            metrics?: {[key: string]: outputs.capabilities.v1beta1.ProductSpecMetrics};
+            /**
+             * Name is human readable name for the product
+             */
+            name: string;
+            /**
+             * ProviderAccountRef references account provider credentials
+             */
+            providerAccountRef?: outputs.capabilities.v1beta1.ProductSpecProviderAccountRef;
+            /**
+             * SystemName identifies uniquely the product within the account provider Default value will be sanitized Name
+             */
+            systemName?: string;
+        }
+
+        /**
+         * ApplicationPlanSpec defines the desired state of Product's Application Plan
+         */
+        export interface ProductSpecApplicationPlans {
+            /**
+             * Set whether or not applications can be created on demand or if approval is required from you before they are activated.
+             */
+            appsRequireApproval?: boolean;
+            /**
+             * Cost per Month (USD)
+             */
+            costMonth?: string;
+            /**
+             * Limits
+             */
+            limits?: outputs.capabilities.v1beta1.ProductSpecApplicationPlansLimits[];
+            name?: string;
+            /**
+             * Pricing Rules
+             */
+            pricingRules?: outputs.capabilities.v1beta1.ProductSpecApplicationPlansPricingRules[];
+            /**
+             * Setup fee (USD)
+             */
+            setupFee?: string;
+            /**
+             * Trial Period (days)
+             */
+            trialPeriod?: number;
+        }
+
+        /**
+         * LimitSpec defines the maximum value a metric can take on a contract before the user is no longer authorized to use resources. Once a limit has been passed in a given period, reject messages will be issued if the service is accessed under this contract.
+         */
+        export interface ProductSpecApplicationPlansLimits {
+            /**
+             * Metric or Method Reference
+             */
+            metricMethodRef: outputs.capabilities.v1beta1.ProductSpecApplicationPlansLimitsMetricMethodRef;
+            /**
+             * Limit Period
+             */
+            period: string;
+            /**
+             * Limit Value
+             */
+            value: number;
+        }
+
+        /**
+         * Metric or Method Reference
+         */
+        export interface ProductSpecApplicationPlansLimitsMetricMethodRef {
+            /**
+             * BackendSystemName identifies uniquely the backend Backend reference must be used by the product
+             */
+            backend?: string;
+            /**
+             * SystemName identifies uniquely the metric or methods
+             */
+            systemName: string;
+        }
+
+        /**
+         * PricingRuleSpec defines the cost of each operation performed on an API. Multiple pricing rules on the same metric divide up the ranges of when a pricing rule applies.
+         */
+        export interface ProductSpecApplicationPlansPricingRules {
+            /**
+             * Range From
+             */
+            from: number;
+            /**
+             * Metric or Method Reference
+             */
+            metricMethodRef: outputs.capabilities.v1beta1.ProductSpecApplicationPlansPricingRulesMetricMethodRef;
+            /**
+             * Price per unit (USD)
+             */
+            pricePerUnit: string;
+            /**
+             * Range To
+             */
+            to: number;
+        }
+
+        /**
+         * Metric or Method Reference
+         */
+        export interface ProductSpecApplicationPlansPricingRulesMetricMethodRef {
+            /**
+             * BackendSystemName identifies uniquely the backend Backend reference must be used by the product
+             */
+            backend?: string;
+            /**
+             * SystemName identifies uniquely the metric or methods
+             */
+            systemName: string;
+        }
+
+        /**
+         * BackendUsageSpec defines the desired state of Product's Backend Usages
+         */
+        export interface ProductSpecBackendUsages {
+            path: string;
+        }
+
+        /**
+         * Deployment defined 3scale product deployment mode
+         */
+        export interface ProductSpecDeployment {
+            /**
+             * ApicastHostedSpec defines the desired state of Product Apicast Hosted
+             */
+            apicastHosted?: outputs.capabilities.v1beta1.ProductSpecDeploymentApicastHosted;
+            /**
+             * ApicastSelfManagedSpec defines the desired state of Product Apicast Self Managed
+             */
+            apicastSelfManaged?: outputs.capabilities.v1beta1.ProductSpecDeploymentApicastSelfManaged;
+        }
+
+        /**
+         * ApicastHostedSpec defines the desired state of Product Apicast Hosted
+         */
+        export interface ProductSpecDeploymentApicastHosted {
+            /**
+             * AuthenticationSpec defines the desired state of Product Authentication
+             */
+            authentication?: outputs.capabilities.v1beta1.ProductSpecDeploymentApicastHostedAuthentication;
+        }
+
+        /**
+         * AuthenticationSpec defines the desired state of Product Authentication
+         */
+        export interface ProductSpecDeploymentApicastHostedAuthentication {
+            /**
+             * AppKeyAppIDAuthenticationSpec defines the desired state of AppKey&AppId Authentication
+             */
+            appKeyAppID?: outputs.capabilities.v1beta1.ProductSpecDeploymentApicastHostedAuthenticationAppKeyAppID;
+            /**
+             * UserKeyAuthenticationSpec defines the desired state of User Key Authentication
+             */
+            userkey?: outputs.capabilities.v1beta1.ProductSpecDeploymentApicastHostedAuthenticationUserkey;
+        }
+
+        /**
+         * AppKeyAppIDAuthenticationSpec defines the desired state of AppKey&AppId Authentication
+         */
+        export interface ProductSpecDeploymentApicastHostedAuthenticationAppKeyAppID {
+            /**
+             * AppID is the name of the parameter that acts of behalf of app id
+             */
+            appID?: string;
+            /**
+             * AppKey is the name of the parameter that acts of behalf of app key
+             */
+            appKey?: string;
+            /**
+             * CredentialsLoc available options: headers: As HTTP Headers query: As query parameters (GET) or body parameters (POST/PUT/DELETE) authorization: As HTTP Basic Authentication
+             */
+            credentials?: string;
+            /**
+             * SecuritySpec defines the desired state of Authentication Security
+             */
+            security?: outputs.capabilities.v1beta1.ProductSpecDeploymentApicastHostedAuthenticationAppKeyAppIDSecurity;
+        }
+
+        /**
+         * SecuritySpec defines the desired state of Authentication Security
+         */
+        export interface ProductSpecDeploymentApicastHostedAuthenticationAppKeyAppIDSecurity {
+            /**
+             * HostHeader Lets you define a custom Host request header. This is needed if your API backend only accepts traffic from a specific host.
+             */
+            hostHeader?: string;
+            /**
+             * SecretToken Enables you to block any direct developer requests to your API backend; each 3scale API gateway call to your API backend contains a request header called X-3scale-proxy-secret-token. The value of this header can be set by you here. It's up to you ensure your backend only allows calls with this secret header.
+             */
+            secretToken?: string;
+        }
+
+        /**
+         * UserKeyAuthenticationSpec defines the desired state of User Key Authentication
+         */
+        export interface ProductSpecDeploymentApicastHostedAuthenticationUserkey {
+            authUserKey?: string;
+            /**
+             * Credentials Location available options: headers: As HTTP Headers query: As query parameters (GET) or body parameters (POST/PUT/DELETE) authorization: As HTTP Basic Authentication
+             */
+            credentials?: string;
+            /**
+             * SecuritySpec defines the desired state of Authentication Security
+             */
+            security?: outputs.capabilities.v1beta1.ProductSpecDeploymentApicastHostedAuthenticationUserkeySecurity;
+        }
+
+        /**
+         * SecuritySpec defines the desired state of Authentication Security
+         */
+        export interface ProductSpecDeploymentApicastHostedAuthenticationUserkeySecurity {
+            /**
+             * HostHeader Lets you define a custom Host request header. This is needed if your API backend only accepts traffic from a specific host.
+             */
+            hostHeader?: string;
+            /**
+             * SecretToken Enables you to block any direct developer requests to your API backend; each 3scale API gateway call to your API backend contains a request header called X-3scale-proxy-secret-token. The value of this header can be set by you here. It's up to you ensure your backend only allows calls with this secret header.
+             */
+            secretToken?: string;
+        }
+
+        /**
+         * ApicastSelfManagedSpec defines the desired state of Product Apicast Self Managed
+         */
+        export interface ProductSpecDeploymentApicastSelfManaged {
+            /**
+             * AuthenticationSpec defines the desired state of Product Authentication
+             */
+            authentication?: outputs.capabilities.v1beta1.ProductSpecDeploymentApicastSelfManagedAuthentication;
+            productionPublicBaseURL?: string;
+            stagingPublicBaseURL?: string;
+        }
+
+        /**
+         * AuthenticationSpec defines the desired state of Product Authentication
+         */
+        export interface ProductSpecDeploymentApicastSelfManagedAuthentication {
+            /**
+             * AppKeyAppIDAuthenticationSpec defines the desired state of AppKey&AppId Authentication
+             */
+            appKeyAppID?: outputs.capabilities.v1beta1.ProductSpecDeploymentApicastSelfManagedAuthenticationAppKeyAppID;
+            /**
+             * UserKeyAuthenticationSpec defines the desired state of User Key Authentication
+             */
+            userkey?: outputs.capabilities.v1beta1.ProductSpecDeploymentApicastSelfManagedAuthenticationUserkey;
+        }
+
+        /**
+         * AppKeyAppIDAuthenticationSpec defines the desired state of AppKey&AppId Authentication
+         */
+        export interface ProductSpecDeploymentApicastSelfManagedAuthenticationAppKeyAppID {
+            /**
+             * AppID is the name of the parameter that acts of behalf of app id
+             */
+            appID?: string;
+            /**
+             * AppKey is the name of the parameter that acts of behalf of app key
+             */
+            appKey?: string;
+            /**
+             * CredentialsLoc available options: headers: As HTTP Headers query: As query parameters (GET) or body parameters (POST/PUT/DELETE) authorization: As HTTP Basic Authentication
+             */
+            credentials?: string;
+            /**
+             * SecuritySpec defines the desired state of Authentication Security
+             */
+            security?: outputs.capabilities.v1beta1.ProductSpecDeploymentApicastSelfManagedAuthenticationAppKeyAppIDSecurity;
+        }
+
+        /**
+         * SecuritySpec defines the desired state of Authentication Security
+         */
+        export interface ProductSpecDeploymentApicastSelfManagedAuthenticationAppKeyAppIDSecurity {
+            /**
+             * HostHeader Lets you define a custom Host request header. This is needed if your API backend only accepts traffic from a specific host.
+             */
+            hostHeader?: string;
+            /**
+             * SecretToken Enables you to block any direct developer requests to your API backend; each 3scale API gateway call to your API backend contains a request header called X-3scale-proxy-secret-token. The value of this header can be set by you here. It's up to you ensure your backend only allows calls with this secret header.
+             */
+            secretToken?: string;
+        }
+
+        /**
+         * UserKeyAuthenticationSpec defines the desired state of User Key Authentication
+         */
+        export interface ProductSpecDeploymentApicastSelfManagedAuthenticationUserkey {
+            authUserKey?: string;
+            /**
+             * Credentials Location available options: headers: As HTTP Headers query: As query parameters (GET) or body parameters (POST/PUT/DELETE) authorization: As HTTP Basic Authentication
+             */
+            credentials?: string;
+            /**
+             * SecuritySpec defines the desired state of Authentication Security
+             */
+            security?: outputs.capabilities.v1beta1.ProductSpecDeploymentApicastSelfManagedAuthenticationUserkeySecurity;
+        }
+
+        /**
+         * SecuritySpec defines the desired state of Authentication Security
+         */
+        export interface ProductSpecDeploymentApicastSelfManagedAuthenticationUserkeySecurity {
+            /**
+             * HostHeader Lets you define a custom Host request header. This is needed if your API backend only accepts traffic from a specific host.
+             */
+            hostHeader?: string;
+            /**
+             * SecretToken Enables you to block any direct developer requests to your API backend; each 3scale API gateway call to your API backend contains a request header called X-3scale-proxy-secret-token. The value of this header can be set by you here. It's up to you ensure your backend only allows calls with this secret header.
+             */
+            secretToken?: string;
+        }
+
+        /**
+         * MappingRuleSpec defines the desired state of Product's MappingRule
+         */
+        export interface ProductSpecMappingRules {
+            httpMethod: string;
+            increment: number;
+            metricMethodRef: string;
+            pattern: string;
+            position?: number;
+        }
+
+        /**
+         * MethodSpec defines the desired state of Product's Method
+         */
+        export interface ProductSpecMethods {
+            description?: string;
+            friendlyName: string;
+        }
+
+        /**
+         * MetricSpec defines the desired state of Product's Metric
+         */
+        export interface ProductSpecMetrics {
+            description?: string;
+            friendlyName: string;
+            unit: string;
+        }
+
+        /**
+         * ProviderAccountRef references account provider credentials
+         */
+        export interface ProductSpecProviderAccountRef {
+            /**
+             * Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+             */
+            name?: string;
+        }
+
+        /**
+         * ProductStatus defines the observed state of Product
+         */
+        export interface ProductStatus {
+            /**
+             * Current state of the 3scale product. Conditions represent the latest available observations of an object's state
+             */
+            conditions?: outputs.capabilities.v1beta1.ProductStatusConditions[];
+            /**
+             * ObservedGeneration reflects the generation of the most recently observed Product Spec.
+             */
+            observedGeneration?: number;
+            productId?: number;
+            state?: string;
+        }
+
+        /**
+         * Condition represents an observation of an object's state. Conditions are an extension mechanism intended to be used when the details of an observation are not a priori known or would not apply to all instances of a given Kind. 
+         *  Conditions should be added to explicitly convey properties that users and components care about rather than requiring those properties to be inferred from other observations. Once defined, the meaning of a Condition can not be changed arbitrarily - it becomes part of the API, and has the same backwards- and forwards-compatibility concerns of any other part of the API.
+         */
+        export interface ProductStatusConditions {
+            lastTransitionTime?: string;
+            message?: string;
+            /**
+             * ConditionReason is intended to be a one-word, CamelCase representation of the category of cause of the current status. It is intended to be used in concise output, such as one-line kubectl get output, and in summarizing occurrences of causes.
+             */
+            reason?: string;
+            status: string;
+            /**
+             * ConditionType is the type of the condition and is typically a CamelCased word or short phrase. 
+             *  Condition types should indicate state in the "abnormal-true" polarity. For example, if the condition indicates when a policy is invalid, the "is valid" case is probably the norm, so the condition should be called "Invalid".
+             */
+            type: string;
         }
     }
 }

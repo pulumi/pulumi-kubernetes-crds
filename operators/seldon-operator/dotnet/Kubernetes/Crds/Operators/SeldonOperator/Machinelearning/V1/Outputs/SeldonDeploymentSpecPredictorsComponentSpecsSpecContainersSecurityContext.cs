@@ -49,6 +49,10 @@ namespace Pulumi.Kubernetes.Types.Outputs.Machinelearning.V1
         /// The SELinux context to be applied to the container. If unspecified, the container runtime will allocate a random SELinux context for each container.  May also be set in PodSecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
         /// </summary>
         public readonly Pulumi.Kubernetes.Types.Outputs.Machinelearning.V1.SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersSecurityContextSeLinuxOptions SeLinuxOptions;
+        /// <summary>
+        /// The Windows specific settings applied to all containers. If unspecified, the options from the PodSecurityContext will be used. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
+        /// </summary>
+        public readonly Pulumi.Kubernetes.Types.Outputs.Machinelearning.V1.SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersSecurityContextWindowsOptions WindowsOptions;
 
         [OutputConstructor]
         private SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersSecurityContext(
@@ -68,7 +72,9 @@ namespace Pulumi.Kubernetes.Types.Outputs.Machinelearning.V1
 
             int runAsUser,
 
-            Pulumi.Kubernetes.Types.Outputs.Machinelearning.V1.SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersSecurityContextSeLinuxOptions seLinuxOptions)
+            Pulumi.Kubernetes.Types.Outputs.Machinelearning.V1.SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersSecurityContextSeLinuxOptions seLinuxOptions,
+
+            Pulumi.Kubernetes.Types.Outputs.Machinelearning.V1.SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersSecurityContextWindowsOptions windowsOptions)
         {
             AllowPrivilegeEscalation = allowPrivilegeEscalation;
             Capabilities = capabilities;
@@ -79,6 +85,7 @@ namespace Pulumi.Kubernetes.Types.Outputs.Machinelearning.V1
             RunAsNonRoot = runAsNonRoot;
             RunAsUser = runAsUser;
             SeLinuxOptions = seLinuxOptions;
+            WindowsOptions = windowsOptions;
         }
     }
 }

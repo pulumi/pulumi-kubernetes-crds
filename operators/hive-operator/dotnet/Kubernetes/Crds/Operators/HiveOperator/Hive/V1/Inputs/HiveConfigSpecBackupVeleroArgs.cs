@@ -21,6 +21,12 @@ namespace Pulumi.Kubernetes.Types.Inputs.Hive.V1
         [Input("enabled")]
         public Input<bool>? Enabled { get; set; }
 
+        /// <summary>
+        /// Namespace specifies in which namespace velero backup objects should be created. If not specified, the default is a namespace named "velero".
+        /// </summary>
+        [Input("namespace")]
+        public Input<string>? Namespace { get; set; }
+
         public HiveConfigSpecBackupVeleroArgs()
         {
         }

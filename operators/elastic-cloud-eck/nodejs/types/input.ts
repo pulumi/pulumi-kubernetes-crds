@@ -168,6 +168,10 @@ export namespace apm {
          */
         export interface ApmServerSpecHttpServiceSpecPorts {
             /**
+             * The application protocol for this port. This field follows standard Kubernetes label syntax. Un-prefixed names are reserved for IANA standard service names (as per RFC-6335 and http://www.iana.org/assignments/service-names). Non-standard protocols should use prefixed names such as mycompany.com/my-custom-protocol. Field can be enabled with ServiceAppProtocol feature gate.
+             */
+            appProtocol?: pulumi.Input<string>;
+            /**
              * The name of this port within the service. This must be a DNS_LABEL. All ports within a ServiceSpec must have unique names. When considering the endpoints for a Service, this must match the 'name' field in the EndpointPort. Optional if only one ServicePort is defined on this service.
              */
             name?: pulumi.Input<string>;
@@ -312,13 +316,16 @@ export namespace apm {
          * ApmServerStatus defines the observed state of ApmServer
          */
         export interface ApmServerStatus {
+            /**
+             * AvailableNodes is the number of available replicas in the deployment.
+             */
             availableNodes?: pulumi.Input<number>;
             /**
              * ElasticsearchAssociationStatus is the status of any auto-linking to Elasticsearch clusters.
              */
             elasticsearchAssociationStatus?: pulumi.Input<string>;
             /**
-             * ApmServerHealth expresses the status of the Apm Server instances.
+             * Health of the deployment.
              */
             health?: pulumi.Input<string>;
             /**
@@ -333,6 +340,10 @@ export namespace apm {
              * ExternalService is the name of the service the agents should connect to.
              */
             service?: pulumi.Input<string>;
+            /**
+             * Version of the stack resource currently running. During version upgrades, multiple versions may run in parallel: this value specifies the lowest version currently running.
+             */
+            version?: pulumi.Input<string>;
         }
     }
 }
@@ -410,6 +421,44 @@ export namespace beat {
          */
         export interface BeatSpecDeployment {
             replicas?: pulumi.Input<number>;
+            /**
+             * DeploymentStrategy describes how to replace existing pods with new ones.
+             */
+            strategy?: pulumi.Input<inputs.beat.v1beta1.BeatSpecDeploymentStrategy>;
+        }
+
+        /**
+         * DeploymentStrategy describes how to replace existing pods with new ones.
+         */
+        export interface BeatSpecDeploymentStrategy {
+            /**
+             * Rolling update config params. Present only if DeploymentStrategyType = RollingUpdate. --- TODO: Update this to follow our convention for oneOf, whatever we decide it to be.
+             */
+            rollingUpdate?: pulumi.Input<inputs.beat.v1beta1.BeatSpecDeploymentStrategyRollingUpdate>;
+            /**
+             * Type of deployment. Can be "Recreate" or "RollingUpdate". Default is RollingUpdate.
+             */
+            type?: pulumi.Input<string>;
+        }
+
+        /**
+         * Rolling update config params. Present only if DeploymentStrategyType = RollingUpdate. --- TODO: Update this to follow our convention for oneOf, whatever we decide it to be.
+         */
+        export interface BeatSpecDeploymentStrategyRollingUpdate {
+            /**
+             * The maximum number of pods that can be scheduled above the desired number of pods. Value can be an absolute number (ex: 5) or a percentage of desired pods (ex: 10%). This can not be 0 if MaxUnavailable is 0. Absolute number is calculated from percentage by rounding up. Defaults to 25%. Example: when this is set to 30%, the new ReplicaSet can be scaled up immediately when the rolling update starts, such that the total number of old and new pods do not exceed 130% of desired pods. Once old pods have been killed, new ReplicaSet can be scaled up further, ensuring that total number of pods running at any time during the update is at most 130% of desired pods.
+             */
+            maxSurge?: pulumi.Input<inputs.beat.v1beta1.BeatSpecDeploymentStrategyRollingUpdateMaxSurge>;
+            /**
+             * The maximum number of pods that can be unavailable during the update. Value can be an absolute number (ex: 5) or a percentage of desired pods (ex: 10%). Absolute number is calculated from percentage by rounding down. This can not be 0 if MaxSurge is 0. Defaults to 25%. Example: when this is set to 30%, the old ReplicaSet can be scaled down to 70% of desired pods immediately when the rolling update starts. Once new pods are ready, old ReplicaSet can be scaled down further, followed by scaling up the new ReplicaSet, ensuring that the total number of pods available at all times during the update is at least 70% of desired pods.
+             */
+            maxUnavailable?: pulumi.Input<inputs.beat.v1beta1.BeatSpecDeploymentStrategyRollingUpdateMaxUnavailable>;
+        }
+
+        export interface BeatSpecDeploymentStrategyRollingUpdateMaxSurge {
+        }
+
+        export interface BeatSpecDeploymentStrategyRollingUpdateMaxUnavailable {
         }
 
         /**
@@ -483,6 +532,10 @@ export namespace beat {
              * AssociationStatus is the status of an association resource.
              */
             kibanaAssociationStatus?: pulumi.Input<string>;
+            /**
+             * Version of the stack resource currently running. During version upgrades, multiple versions may run in parallel: this value specifies the lowest version currently running.
+             */
+            version?: pulumi.Input<string>;
         }
     }
 }
@@ -672,6 +725,10 @@ export namespace elasticsearch {
          */
         export interface ElasticsearchSpecHttpServiceSpecPorts {
             /**
+             * The application protocol for this port. This field follows standard Kubernetes label syntax. Un-prefixed names are reserved for IANA standard service names (as per RFC-6335 and http://www.iana.org/assignments/service-names). Non-standard protocols should use prefixed names such as mycompany.com/my-custom-protocol. Field can be enabled with ServiceAppProtocol feature gate.
+             */
+            appProtocol?: pulumi.Input<string>;
+            /**
              * The name of this port within the service. This must be a DNS_LABEL. All ports within a ServiceSpec must have unique names. When considering the endpoints for a Service, this must match the 'name' field in the EndpointPort. Optional if only one ServicePort is defined on this service.
              */
             name?: pulumi.Input<string>;
@@ -831,7 +888,7 @@ export namespace elasticsearch {
              */
             accessModes?: pulumi.Input<pulumi.Input<string>[]>;
             /**
-             * This field requires the VolumeSnapshotDataSource alpha feature gate to be enabled and currently VolumeSnapshot is the only supported data source. If the provisioner can support VolumeSnapshot data source, it will create a new volume and data will be restored to the volume at the same time. If the provisioner does not support VolumeSnapshot data source, volume will not be created and the failure will be reported as an event. In the future, we plan to support more data source types and the behavior of the provisioner may change.
+             * This field can be used to specify either: * An existing VolumeSnapshot object (snapshot.storage.k8s.io/VolumeSnapshot - Beta) * An existing PVC (PersistentVolumeClaim) * An existing custom resource/object that implements data population (Alpha) In order to use VolumeSnapshot object types, the appropriate feature gate must be enabled (VolumeSnapshotDataSource or AnyVolumeDataSource) If the provisioner or an external controller can support the specified data source, it will create a new volume based on the contents of the specified data source. If the specified data source is not supported, the volume will not be created and the failure will be reported as an event. In the future, we plan to support more data source types and the behavior of the provisioner may change.
              */
             dataSource?: pulumi.Input<inputs.elasticsearch.v1.ElasticsearchSpecNodeSetsVolumeClaimTemplatesSpecDataSource>;
             /**
@@ -847,7 +904,7 @@ export namespace elasticsearch {
              */
             storageClassName?: pulumi.Input<string>;
             /**
-             * volumeMode defines what type of volume is required by the claim. Value of Filesystem is implied when not included in claim spec. This is a beta feature.
+             * volumeMode defines what type of volume is required by the claim. Value of Filesystem is implied when not included in claim spec.
              */
             volumeMode?: pulumi.Input<string>;
             /**
@@ -857,7 +914,7 @@ export namespace elasticsearch {
         }
 
         /**
-         * This field requires the VolumeSnapshotDataSource alpha feature gate to be enabled and currently VolumeSnapshot is the only supported data source. If the provisioner can support VolumeSnapshot data source, it will create a new volume and data will be restored to the volume at the same time. If the provisioner does not support VolumeSnapshot data source, volume will not be created and the failure will be reported as an event. In the future, we plan to support more data source types and the behavior of the provisioner may change.
+         * This field can be used to specify either: * An existing VolumeSnapshot object (snapshot.storage.k8s.io/VolumeSnapshot - Beta) * An existing PVC (PersistentVolumeClaim) * An existing custom resource/object that implements data population (Alpha) In order to use VolumeSnapshot object types, the appropriate feature gate must be enabled (VolumeSnapshotDataSource or AnyVolumeDataSource) If the provisioner or an external controller can support the specified data source, it will create a new volume based on the contents of the specified data source. If the specified data source is not supported, the volume will not be created and the failure will be reported as an event. In the future, we plan to support more data source types and the behavior of the provisioner may change.
          */
         export interface ElasticsearchSpecNodeSetsVolumeClaimTemplatesSpecDataSource {
             /**
@@ -1199,6 +1256,10 @@ export namespace elasticsearch {
          */
         export interface ElasticsearchSpecTransportServiceSpecPorts {
             /**
+             * The application protocol for this port. This field follows standard Kubernetes label syntax. Un-prefixed names are reserved for IANA standard service names (as per RFC-6335 and http://www.iana.org/assignments/service-names). Non-standard protocols should use prefixed names such as mycompany.com/my-custom-protocol. Field can be enabled with ServiceAppProtocol feature gate.
+             */
+            appProtocol?: pulumi.Input<string>;
+            /**
              * The name of this port within the service. This must be a DNS_LABEL. All ports within a ServiceSpec must have unique names. When considering the endpoints for a Service, this must match the 'name' field in the EndpointPort. Optional if only one ServicePort is defined on this service.
              */
             name?: pulumi.Input<string>;
@@ -1271,6 +1332,9 @@ export namespace elasticsearch {
          * ElasticsearchStatus defines the observed state of Elasticsearch
          */
         export interface ElasticsearchStatus {
+            /**
+             * AvailableNodes is the number of available instances.
+             */
             availableNodes?: pulumi.Input<number>;
             /**
              * ElasticsearchHealth is the health of the cluster as returned by the health API.
@@ -1280,6 +1344,10 @@ export namespace elasticsearch {
              * ElasticsearchOrchestrationPhase is the phase Elasticsearch is in from the controller point of view.
              */
             phase?: pulumi.Input<string>;
+            /**
+             * Version of the stack resource currently running. During version upgrades, multiple versions may run in parallel: this value specifies the lowest version currently running.
+             */
+            version?: pulumi.Input<string>;
         }
     }
 }
@@ -1451,6 +1519,10 @@ export namespace enterprisesearch {
          */
         export interface EnterpriseSearchSpecHttpServiceSpecPorts {
             /**
+             * The application protocol for this port. This field follows standard Kubernetes label syntax. Un-prefixed names are reserved for IANA standard service names (as per RFC-6335 and http://www.iana.org/assignments/service-names). Non-standard protocols should use prefixed names such as mycompany.com/my-custom-protocol. Field can be enabled with ServiceAppProtocol feature gate.
+             */
+            appProtocol?: pulumi.Input<string>;
+            /**
              * The name of this port within the service. This must be a DNS_LABEL. All ports within a ServiceSpec must have unique names. When considering the endpoints for a Service, this must match the 'name' field in the EndpointPort. Optional if only one ServicePort is defined on this service.
              */
             name?: pulumi.Input<string>;
@@ -1557,15 +1629,22 @@ export namespace enterprisesearch {
              * Association is the status of any auto-linking to Elasticsearch clusters.
              */
             associationStatus?: pulumi.Input<string>;
+            /**
+             * AvailableNodes is the number of available replicas in the deployment.
+             */
             availableNodes?: pulumi.Input<number>;
             /**
-             * EnterpriseSearchHealth expresses the health of the Enterprise Search instances.
+             * Health of the deployment.
              */
             health?: pulumi.Input<string>;
             /**
              * ExternalService is the name of the service associated to the Enterprise Search Pods.
              */
             service?: pulumi.Input<string>;
+            /**
+             * Version of the stack resource currently running. During version upgrades, multiple versions may run in parallel: this value specifies the lowest version currently running.
+             */
+            version?: pulumi.Input<string>;
         }
     }
 }
@@ -1727,6 +1806,10 @@ export namespace kibana {
          */
         export interface KibanaSpecHttpServiceSpecPorts {
             /**
+             * The application protocol for this port. This field follows standard Kubernetes label syntax. Un-prefixed names are reserved for IANA standard service names (as per RFC-6335 and http://www.iana.org/assignments/service-names). Non-standard protocols should use prefixed names such as mycompany.com/my-custom-protocol. Field can be enabled with ServiceAppProtocol feature gate.
+             */
+            appProtocol?: pulumi.Input<string>;
+            /**
              * The name of this port within the service. This must be a DNS_LABEL. All ports within a ServiceSpec must have unique names. When considering the endpoints for a Service, this must match the 'name' field in the EndpointPort. Optional if only one ServicePort is defined on this service.
              */
             name?: pulumi.Input<string>;
@@ -1861,11 +1944,18 @@ export namespace kibana {
              * AssociationStatus is the status of an association resource.
              */
             associationStatus?: pulumi.Input<string>;
+            /**
+             * AvailableNodes is the number of available replicas in the deployment.
+             */
             availableNodes?: pulumi.Input<number>;
             /**
-             * KibanaHealth expresses the status of the Kibana instances.
+             * Health of the deployment.
              */
             health?: pulumi.Input<string>;
+            /**
+             * Version of the stack resource currently running. During version upgrades, multiple versions may run in parallel: this value specifies the lowest version currently running.
+             */
+            version?: pulumi.Input<string>;
         }
     }
 }

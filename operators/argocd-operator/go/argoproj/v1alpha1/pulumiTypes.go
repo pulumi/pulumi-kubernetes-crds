@@ -129,6 +129,8 @@ func (o AppProjectMetadataOutput) ToAppProjectMetadataOutputWithContext(ctx cont
 
 // AppProjectSpec is the specification of an AppProject
 type AppProjectSpec struct {
+	// ClusterResourceBlacklist contains list of blacklisted cluster level resources
+	ClusterResourceBlacklist []AppProjectSpecClusterResourceBlacklist `pulumi:"clusterResourceBlacklist"`
 	// ClusterResourceWhitelist contains list of whitelisted cluster level resources
 	ClusterResourceWhitelist []AppProjectSpecClusterResourceWhitelist `pulumi:"clusterResourceWhitelist"`
 	// Description contains optional project description
@@ -143,6 +145,8 @@ type AppProjectSpec struct {
 	OrphanedResources *AppProjectSpecOrphanedResources `pulumi:"orphanedResources"`
 	// Roles are user defined RBAC roles associated with this project
 	Roles []AppProjectSpecRoles `pulumi:"roles"`
+	// List of PGP key IDs that commits to be synced to must be signed with
+	SignatureKeys []AppProjectSpecSignatureKeys `pulumi:"signatureKeys"`
 	// SourceRepos contains list of repository URLs which can be used for deployment
 	SourceRepos []string `pulumi:"sourceRepos"`
 	// SyncWindows controls when syncs can be run for apps in this project
@@ -162,6 +166,8 @@ type AppProjectSpecInput interface {
 
 // AppProjectSpec is the specification of an AppProject
 type AppProjectSpecArgs struct {
+	// ClusterResourceBlacklist contains list of blacklisted cluster level resources
+	ClusterResourceBlacklist AppProjectSpecClusterResourceBlacklistArrayInput `pulumi:"clusterResourceBlacklist"`
 	// ClusterResourceWhitelist contains list of whitelisted cluster level resources
 	ClusterResourceWhitelist AppProjectSpecClusterResourceWhitelistArrayInput `pulumi:"clusterResourceWhitelist"`
 	// Description contains optional project description
@@ -176,6 +182,8 @@ type AppProjectSpecArgs struct {
 	OrphanedResources AppProjectSpecOrphanedResourcesPtrInput `pulumi:"orphanedResources"`
 	// Roles are user defined RBAC roles associated with this project
 	Roles AppProjectSpecRolesArrayInput `pulumi:"roles"`
+	// List of PGP key IDs that commits to be synced to must be signed with
+	SignatureKeys AppProjectSpecSignatureKeysArrayInput `pulumi:"signatureKeys"`
 	// SourceRepos contains list of repository URLs which can be used for deployment
 	SourceRepos pulumi.StringArrayInput `pulumi:"sourceRepos"`
 	// SyncWindows controls when syncs can be run for apps in this project
@@ -260,6 +268,11 @@ func (o AppProjectSpecOutput) ToAppProjectSpecPtrOutputWithContext(ctx context.C
 	}).(AppProjectSpecPtrOutput)
 }
 
+// ClusterResourceBlacklist contains list of blacklisted cluster level resources
+func (o AppProjectSpecOutput) ClusterResourceBlacklist() AppProjectSpecClusterResourceBlacklistArrayOutput {
+	return o.ApplyT(func(v AppProjectSpec) []AppProjectSpecClusterResourceBlacklist { return v.ClusterResourceBlacklist }).(AppProjectSpecClusterResourceBlacklistArrayOutput)
+}
+
 // ClusterResourceWhitelist contains list of whitelisted cluster level resources
 func (o AppProjectSpecOutput) ClusterResourceWhitelist() AppProjectSpecClusterResourceWhitelistArrayOutput {
 	return o.ApplyT(func(v AppProjectSpec) []AppProjectSpecClusterResourceWhitelist { return v.ClusterResourceWhitelist }).(AppProjectSpecClusterResourceWhitelistArrayOutput)
@@ -295,6 +308,11 @@ func (o AppProjectSpecOutput) Roles() AppProjectSpecRolesArrayOutput {
 	return o.ApplyT(func(v AppProjectSpec) []AppProjectSpecRoles { return v.Roles }).(AppProjectSpecRolesArrayOutput)
 }
 
+// List of PGP key IDs that commits to be synced to must be signed with
+func (o AppProjectSpecOutput) SignatureKeys() AppProjectSpecSignatureKeysArrayOutput {
+	return o.ApplyT(func(v AppProjectSpec) []AppProjectSpecSignatureKeys { return v.SignatureKeys }).(AppProjectSpecSignatureKeysArrayOutput)
+}
+
 // SourceRepos contains list of repository URLs which can be used for deployment
 func (o AppProjectSpecOutput) SourceRepos() pulumi.StringArrayOutput {
 	return o.ApplyT(func(v AppProjectSpec) []string { return v.SourceRepos }).(pulumi.StringArrayOutput)
@@ -321,6 +339,16 @@ func (o AppProjectSpecPtrOutput) ToAppProjectSpecPtrOutputWithContext(ctx contex
 
 func (o AppProjectSpecPtrOutput) Elem() AppProjectSpecOutput {
 	return o.ApplyT(func(v *AppProjectSpec) AppProjectSpec { return *v }).(AppProjectSpecOutput)
+}
+
+// ClusterResourceBlacklist contains list of blacklisted cluster level resources
+func (o AppProjectSpecPtrOutput) ClusterResourceBlacklist() AppProjectSpecClusterResourceBlacklistArrayOutput {
+	return o.ApplyT(func(v *AppProjectSpec) []AppProjectSpecClusterResourceBlacklist {
+		if v == nil {
+			return nil
+		}
+		return v.ClusterResourceBlacklist
+	}).(AppProjectSpecClusterResourceBlacklistArrayOutput)
 }
 
 // ClusterResourceWhitelist contains list of whitelisted cluster level resources
@@ -393,6 +421,16 @@ func (o AppProjectSpecPtrOutput) Roles() AppProjectSpecRolesArrayOutput {
 	}).(AppProjectSpecRolesArrayOutput)
 }
 
+// List of PGP key IDs that commits to be synced to must be signed with
+func (o AppProjectSpecPtrOutput) SignatureKeys() AppProjectSpecSignatureKeysArrayOutput {
+	return o.ApplyT(func(v *AppProjectSpec) []AppProjectSpecSignatureKeys {
+		if v == nil {
+			return nil
+		}
+		return v.SignatureKeys
+	}).(AppProjectSpecSignatureKeysArrayOutput)
+}
+
 // SourceRepos contains list of repository URLs which can be used for deployment
 func (o AppProjectSpecPtrOutput) SourceRepos() pulumi.StringArrayOutput {
 	return o.ApplyT(func(v *AppProjectSpec) []string {
@@ -411,6 +449,109 @@ func (o AppProjectSpecPtrOutput) SyncWindows() AppProjectSpecSyncWindowsArrayOut
 		}
 		return v.SyncWindows
 	}).(AppProjectSpecSyncWindowsArrayOutput)
+}
+
+// GroupKind specifies a Group and a Kind, but does not force a version.  This is useful for identifying concepts during lookup stages without having partially valid types
+type AppProjectSpecClusterResourceBlacklist struct {
+	Group string `pulumi:"group"`
+	Kind  string `pulumi:"kind"`
+}
+
+// AppProjectSpecClusterResourceBlacklistInput is an input type that accepts AppProjectSpecClusterResourceBlacklistArgs and AppProjectSpecClusterResourceBlacklistOutput values.
+// You can construct a concrete instance of `AppProjectSpecClusterResourceBlacklistInput` via:
+//
+//          AppProjectSpecClusterResourceBlacklistArgs{...}
+type AppProjectSpecClusterResourceBlacklistInput interface {
+	pulumi.Input
+
+	ToAppProjectSpecClusterResourceBlacklistOutput() AppProjectSpecClusterResourceBlacklistOutput
+	ToAppProjectSpecClusterResourceBlacklistOutputWithContext(context.Context) AppProjectSpecClusterResourceBlacklistOutput
+}
+
+// GroupKind specifies a Group and a Kind, but does not force a version.  This is useful for identifying concepts during lookup stages without having partially valid types
+type AppProjectSpecClusterResourceBlacklistArgs struct {
+	Group pulumi.StringInput `pulumi:"group"`
+	Kind  pulumi.StringInput `pulumi:"kind"`
+}
+
+func (AppProjectSpecClusterResourceBlacklistArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*AppProjectSpecClusterResourceBlacklist)(nil)).Elem()
+}
+
+func (i AppProjectSpecClusterResourceBlacklistArgs) ToAppProjectSpecClusterResourceBlacklistOutput() AppProjectSpecClusterResourceBlacklistOutput {
+	return i.ToAppProjectSpecClusterResourceBlacklistOutputWithContext(context.Background())
+}
+
+func (i AppProjectSpecClusterResourceBlacklistArgs) ToAppProjectSpecClusterResourceBlacklistOutputWithContext(ctx context.Context) AppProjectSpecClusterResourceBlacklistOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(AppProjectSpecClusterResourceBlacklistOutput)
+}
+
+// AppProjectSpecClusterResourceBlacklistArrayInput is an input type that accepts AppProjectSpecClusterResourceBlacklistArray and AppProjectSpecClusterResourceBlacklistArrayOutput values.
+// You can construct a concrete instance of `AppProjectSpecClusterResourceBlacklistArrayInput` via:
+//
+//          AppProjectSpecClusterResourceBlacklistArray{ AppProjectSpecClusterResourceBlacklistArgs{...} }
+type AppProjectSpecClusterResourceBlacklistArrayInput interface {
+	pulumi.Input
+
+	ToAppProjectSpecClusterResourceBlacklistArrayOutput() AppProjectSpecClusterResourceBlacklistArrayOutput
+	ToAppProjectSpecClusterResourceBlacklistArrayOutputWithContext(context.Context) AppProjectSpecClusterResourceBlacklistArrayOutput
+}
+
+type AppProjectSpecClusterResourceBlacklistArray []AppProjectSpecClusterResourceBlacklistInput
+
+func (AppProjectSpecClusterResourceBlacklistArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]AppProjectSpecClusterResourceBlacklist)(nil)).Elem()
+}
+
+func (i AppProjectSpecClusterResourceBlacklistArray) ToAppProjectSpecClusterResourceBlacklistArrayOutput() AppProjectSpecClusterResourceBlacklistArrayOutput {
+	return i.ToAppProjectSpecClusterResourceBlacklistArrayOutputWithContext(context.Background())
+}
+
+func (i AppProjectSpecClusterResourceBlacklistArray) ToAppProjectSpecClusterResourceBlacklistArrayOutputWithContext(ctx context.Context) AppProjectSpecClusterResourceBlacklistArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(AppProjectSpecClusterResourceBlacklistArrayOutput)
+}
+
+// GroupKind specifies a Group and a Kind, but does not force a version.  This is useful for identifying concepts during lookup stages without having partially valid types
+type AppProjectSpecClusterResourceBlacklistOutput struct{ *pulumi.OutputState }
+
+func (AppProjectSpecClusterResourceBlacklistOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*AppProjectSpecClusterResourceBlacklist)(nil)).Elem()
+}
+
+func (o AppProjectSpecClusterResourceBlacklistOutput) ToAppProjectSpecClusterResourceBlacklistOutput() AppProjectSpecClusterResourceBlacklistOutput {
+	return o
+}
+
+func (o AppProjectSpecClusterResourceBlacklistOutput) ToAppProjectSpecClusterResourceBlacklistOutputWithContext(ctx context.Context) AppProjectSpecClusterResourceBlacklistOutput {
+	return o
+}
+
+func (o AppProjectSpecClusterResourceBlacklistOutput) Group() pulumi.StringOutput {
+	return o.ApplyT(func(v AppProjectSpecClusterResourceBlacklist) string { return v.Group }).(pulumi.StringOutput)
+}
+
+func (o AppProjectSpecClusterResourceBlacklistOutput) Kind() pulumi.StringOutput {
+	return o.ApplyT(func(v AppProjectSpecClusterResourceBlacklist) string { return v.Kind }).(pulumi.StringOutput)
+}
+
+type AppProjectSpecClusterResourceBlacklistArrayOutput struct{ *pulumi.OutputState }
+
+func (AppProjectSpecClusterResourceBlacklistArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]AppProjectSpecClusterResourceBlacklist)(nil)).Elem()
+}
+
+func (o AppProjectSpecClusterResourceBlacklistArrayOutput) ToAppProjectSpecClusterResourceBlacklistArrayOutput() AppProjectSpecClusterResourceBlacklistArrayOutput {
+	return o
+}
+
+func (o AppProjectSpecClusterResourceBlacklistArrayOutput) ToAppProjectSpecClusterResourceBlacklistArrayOutputWithContext(ctx context.Context) AppProjectSpecClusterResourceBlacklistArrayOutput {
+	return o
+}
+
+func (o AppProjectSpecClusterResourceBlacklistArrayOutput) Index(i pulumi.IntInput) AppProjectSpecClusterResourceBlacklistOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) AppProjectSpecClusterResourceBlacklist {
+		return vs[0].([]AppProjectSpecClusterResourceBlacklist)[vs[1].(int)]
+	}).(AppProjectSpecClusterResourceBlacklistOutput)
 }
 
 // GroupKind specifies a Group and a Kind, but does not force a version.  This is useful for identifying concepts during lookup stages without having partially valid types
@@ -518,6 +659,8 @@ func (o AppProjectSpecClusterResourceWhitelistArrayOutput) Index(i pulumi.IntInp
 
 // ApplicationDestination contains deployment destination information
 type AppProjectSpecDestinations struct {
+	// Name of the destination cluster which can be used instead of server (url) field
+	Name *string `pulumi:"name"`
 	// Namespace overrides the environment namespace value in the ksonnet app.yaml
 	Namespace *string `pulumi:"namespace"`
 	// Server overrides the environment server value in the ksonnet app.yaml
@@ -537,6 +680,8 @@ type AppProjectSpecDestinationsInput interface {
 
 // ApplicationDestination contains deployment destination information
 type AppProjectSpecDestinationsArgs struct {
+	// Name of the destination cluster which can be used instead of server (url) field
+	Name pulumi.StringPtrInput `pulumi:"name"`
 	// Namespace overrides the environment namespace value in the ksonnet app.yaml
 	Namespace pulumi.StringPtrInput `pulumi:"namespace"`
 	// Server overrides the environment server value in the ksonnet app.yaml
@@ -593,6 +738,11 @@ func (o AppProjectSpecDestinationsOutput) ToAppProjectSpecDestinationsOutput() A
 
 func (o AppProjectSpecDestinationsOutput) ToAppProjectSpecDestinationsOutputWithContext(ctx context.Context) AppProjectSpecDestinationsOutput {
 	return o
+}
+
+// Name of the destination cluster which can be used instead of server (url) field
+func (o AppProjectSpecDestinationsOutput) Name() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v AppProjectSpecDestinations) *string { return v.Name }).(pulumi.StringPtrOutput)
 }
 
 // Namespace overrides the environment namespace value in the ksonnet app.yaml
@@ -833,6 +983,7 @@ func (o AppProjectSpecNamespaceResourceWhitelistArrayOutput) Index(i pulumi.IntI
 
 // OrphanedResources specifies if controller should monitor orphaned resources of apps in this project
 type AppProjectSpecOrphanedResources struct {
+	Ignore []AppProjectSpecOrphanedResourcesIgnore `pulumi:"ignore"`
 	// Warn indicates if warning condition should be created for apps which have orphaned resources
 	Warn *bool `pulumi:"warn"`
 }
@@ -850,6 +1001,7 @@ type AppProjectSpecOrphanedResourcesInput interface {
 
 // OrphanedResources specifies if controller should monitor orphaned resources of apps in this project
 type AppProjectSpecOrphanedResourcesArgs struct {
+	Ignore AppProjectSpecOrphanedResourcesIgnoreArrayInput `pulumi:"ignore"`
 	// Warn indicates if warning condition should be created for apps which have orphaned resources
 	Warn pulumi.BoolPtrInput `pulumi:"warn"`
 }
@@ -931,6 +1083,9 @@ func (o AppProjectSpecOrphanedResourcesOutput) ToAppProjectSpecOrphanedResources
 		return &v
 	}).(AppProjectSpecOrphanedResourcesPtrOutput)
 }
+func (o AppProjectSpecOrphanedResourcesOutput) Ignore() AppProjectSpecOrphanedResourcesIgnoreArrayOutput {
+	return o.ApplyT(func(v AppProjectSpecOrphanedResources) []AppProjectSpecOrphanedResourcesIgnore { return v.Ignore }).(AppProjectSpecOrphanedResourcesIgnoreArrayOutput)
+}
 
 // Warn indicates if warning condition should be created for apps which have orphaned resources
 func (o AppProjectSpecOrphanedResourcesOutput) Warn() pulumi.BoolPtrOutput {
@@ -955,6 +1110,15 @@ func (o AppProjectSpecOrphanedResourcesPtrOutput) Elem() AppProjectSpecOrphanedR
 	return o.ApplyT(func(v *AppProjectSpecOrphanedResources) AppProjectSpecOrphanedResources { return *v }).(AppProjectSpecOrphanedResourcesOutput)
 }
 
+func (o AppProjectSpecOrphanedResourcesPtrOutput) Ignore() AppProjectSpecOrphanedResourcesIgnoreArrayOutput {
+	return o.ApplyT(func(v *AppProjectSpecOrphanedResources) []AppProjectSpecOrphanedResourcesIgnore {
+		if v == nil {
+			return nil
+		}
+		return v.Ignore
+	}).(AppProjectSpecOrphanedResourcesIgnoreArrayOutput)
+}
+
 // Warn indicates if warning condition should be created for apps which have orphaned resources
 func (o AppProjectSpecOrphanedResourcesPtrOutput) Warn() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v *AppProjectSpecOrphanedResources) *bool {
@@ -963,6 +1127,112 @@ func (o AppProjectSpecOrphanedResourcesPtrOutput) Warn() pulumi.BoolPtrOutput {
 		}
 		return v.Warn
 	}).(pulumi.BoolPtrOutput)
+}
+
+type AppProjectSpecOrphanedResourcesIgnore struct {
+	Group *string `pulumi:"group"`
+	Kind  *string `pulumi:"kind"`
+	Name  *string `pulumi:"name"`
+}
+
+// AppProjectSpecOrphanedResourcesIgnoreInput is an input type that accepts AppProjectSpecOrphanedResourcesIgnoreArgs and AppProjectSpecOrphanedResourcesIgnoreOutput values.
+// You can construct a concrete instance of `AppProjectSpecOrphanedResourcesIgnoreInput` via:
+//
+//          AppProjectSpecOrphanedResourcesIgnoreArgs{...}
+type AppProjectSpecOrphanedResourcesIgnoreInput interface {
+	pulumi.Input
+
+	ToAppProjectSpecOrphanedResourcesIgnoreOutput() AppProjectSpecOrphanedResourcesIgnoreOutput
+	ToAppProjectSpecOrphanedResourcesIgnoreOutputWithContext(context.Context) AppProjectSpecOrphanedResourcesIgnoreOutput
+}
+
+type AppProjectSpecOrphanedResourcesIgnoreArgs struct {
+	Group pulumi.StringPtrInput `pulumi:"group"`
+	Kind  pulumi.StringPtrInput `pulumi:"kind"`
+	Name  pulumi.StringPtrInput `pulumi:"name"`
+}
+
+func (AppProjectSpecOrphanedResourcesIgnoreArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*AppProjectSpecOrphanedResourcesIgnore)(nil)).Elem()
+}
+
+func (i AppProjectSpecOrphanedResourcesIgnoreArgs) ToAppProjectSpecOrphanedResourcesIgnoreOutput() AppProjectSpecOrphanedResourcesIgnoreOutput {
+	return i.ToAppProjectSpecOrphanedResourcesIgnoreOutputWithContext(context.Background())
+}
+
+func (i AppProjectSpecOrphanedResourcesIgnoreArgs) ToAppProjectSpecOrphanedResourcesIgnoreOutputWithContext(ctx context.Context) AppProjectSpecOrphanedResourcesIgnoreOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(AppProjectSpecOrphanedResourcesIgnoreOutput)
+}
+
+// AppProjectSpecOrphanedResourcesIgnoreArrayInput is an input type that accepts AppProjectSpecOrphanedResourcesIgnoreArray and AppProjectSpecOrphanedResourcesIgnoreArrayOutput values.
+// You can construct a concrete instance of `AppProjectSpecOrphanedResourcesIgnoreArrayInput` via:
+//
+//          AppProjectSpecOrphanedResourcesIgnoreArray{ AppProjectSpecOrphanedResourcesIgnoreArgs{...} }
+type AppProjectSpecOrphanedResourcesIgnoreArrayInput interface {
+	pulumi.Input
+
+	ToAppProjectSpecOrphanedResourcesIgnoreArrayOutput() AppProjectSpecOrphanedResourcesIgnoreArrayOutput
+	ToAppProjectSpecOrphanedResourcesIgnoreArrayOutputWithContext(context.Context) AppProjectSpecOrphanedResourcesIgnoreArrayOutput
+}
+
+type AppProjectSpecOrphanedResourcesIgnoreArray []AppProjectSpecOrphanedResourcesIgnoreInput
+
+func (AppProjectSpecOrphanedResourcesIgnoreArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]AppProjectSpecOrphanedResourcesIgnore)(nil)).Elem()
+}
+
+func (i AppProjectSpecOrphanedResourcesIgnoreArray) ToAppProjectSpecOrphanedResourcesIgnoreArrayOutput() AppProjectSpecOrphanedResourcesIgnoreArrayOutput {
+	return i.ToAppProjectSpecOrphanedResourcesIgnoreArrayOutputWithContext(context.Background())
+}
+
+func (i AppProjectSpecOrphanedResourcesIgnoreArray) ToAppProjectSpecOrphanedResourcesIgnoreArrayOutputWithContext(ctx context.Context) AppProjectSpecOrphanedResourcesIgnoreArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(AppProjectSpecOrphanedResourcesIgnoreArrayOutput)
+}
+
+type AppProjectSpecOrphanedResourcesIgnoreOutput struct{ *pulumi.OutputState }
+
+func (AppProjectSpecOrphanedResourcesIgnoreOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*AppProjectSpecOrphanedResourcesIgnore)(nil)).Elem()
+}
+
+func (o AppProjectSpecOrphanedResourcesIgnoreOutput) ToAppProjectSpecOrphanedResourcesIgnoreOutput() AppProjectSpecOrphanedResourcesIgnoreOutput {
+	return o
+}
+
+func (o AppProjectSpecOrphanedResourcesIgnoreOutput) ToAppProjectSpecOrphanedResourcesIgnoreOutputWithContext(ctx context.Context) AppProjectSpecOrphanedResourcesIgnoreOutput {
+	return o
+}
+
+func (o AppProjectSpecOrphanedResourcesIgnoreOutput) Group() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v AppProjectSpecOrphanedResourcesIgnore) *string { return v.Group }).(pulumi.StringPtrOutput)
+}
+
+func (o AppProjectSpecOrphanedResourcesIgnoreOutput) Kind() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v AppProjectSpecOrphanedResourcesIgnore) *string { return v.Kind }).(pulumi.StringPtrOutput)
+}
+
+func (o AppProjectSpecOrphanedResourcesIgnoreOutput) Name() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v AppProjectSpecOrphanedResourcesIgnore) *string { return v.Name }).(pulumi.StringPtrOutput)
+}
+
+type AppProjectSpecOrphanedResourcesIgnoreArrayOutput struct{ *pulumi.OutputState }
+
+func (AppProjectSpecOrphanedResourcesIgnoreArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]AppProjectSpecOrphanedResourcesIgnore)(nil)).Elem()
+}
+
+func (o AppProjectSpecOrphanedResourcesIgnoreArrayOutput) ToAppProjectSpecOrphanedResourcesIgnoreArrayOutput() AppProjectSpecOrphanedResourcesIgnoreArrayOutput {
+	return o
+}
+
+func (o AppProjectSpecOrphanedResourcesIgnoreArrayOutput) ToAppProjectSpecOrphanedResourcesIgnoreArrayOutputWithContext(ctx context.Context) AppProjectSpecOrphanedResourcesIgnoreArrayOutput {
+	return o
+}
+
+func (o AppProjectSpecOrphanedResourcesIgnoreArrayOutput) Index(i pulumi.IntInput) AppProjectSpecOrphanedResourcesIgnoreOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) AppProjectSpecOrphanedResourcesIgnore {
+		return vs[0].([]AppProjectSpecOrphanedResourcesIgnore)[vs[1].(int)]
+	}).(AppProjectSpecOrphanedResourcesIgnoreOutput)
 }
 
 // ProjectRole represents a role that has access to a project
@@ -1208,6 +1478,106 @@ func (o AppProjectSpecRolesJwtTokensArrayOutput) Index(i pulumi.IntInput) AppPro
 	return pulumi.All(o, i).ApplyT(func(vs []interface{}) AppProjectSpecRolesJwtTokens {
 		return vs[0].([]AppProjectSpecRolesJwtTokens)[vs[1].(int)]
 	}).(AppProjectSpecRolesJwtTokensOutput)
+}
+
+// SignatureKey is the specification of a key required to verify commit signatures with
+type AppProjectSpecSignatureKeys struct {
+	// The ID of the key in hexadecimal notation
+	KeyID string `pulumi:"keyID"`
+}
+
+// AppProjectSpecSignatureKeysInput is an input type that accepts AppProjectSpecSignatureKeysArgs and AppProjectSpecSignatureKeysOutput values.
+// You can construct a concrete instance of `AppProjectSpecSignatureKeysInput` via:
+//
+//          AppProjectSpecSignatureKeysArgs{...}
+type AppProjectSpecSignatureKeysInput interface {
+	pulumi.Input
+
+	ToAppProjectSpecSignatureKeysOutput() AppProjectSpecSignatureKeysOutput
+	ToAppProjectSpecSignatureKeysOutputWithContext(context.Context) AppProjectSpecSignatureKeysOutput
+}
+
+// SignatureKey is the specification of a key required to verify commit signatures with
+type AppProjectSpecSignatureKeysArgs struct {
+	// The ID of the key in hexadecimal notation
+	KeyID pulumi.StringInput `pulumi:"keyID"`
+}
+
+func (AppProjectSpecSignatureKeysArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*AppProjectSpecSignatureKeys)(nil)).Elem()
+}
+
+func (i AppProjectSpecSignatureKeysArgs) ToAppProjectSpecSignatureKeysOutput() AppProjectSpecSignatureKeysOutput {
+	return i.ToAppProjectSpecSignatureKeysOutputWithContext(context.Background())
+}
+
+func (i AppProjectSpecSignatureKeysArgs) ToAppProjectSpecSignatureKeysOutputWithContext(ctx context.Context) AppProjectSpecSignatureKeysOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(AppProjectSpecSignatureKeysOutput)
+}
+
+// AppProjectSpecSignatureKeysArrayInput is an input type that accepts AppProjectSpecSignatureKeysArray and AppProjectSpecSignatureKeysArrayOutput values.
+// You can construct a concrete instance of `AppProjectSpecSignatureKeysArrayInput` via:
+//
+//          AppProjectSpecSignatureKeysArray{ AppProjectSpecSignatureKeysArgs{...} }
+type AppProjectSpecSignatureKeysArrayInput interface {
+	pulumi.Input
+
+	ToAppProjectSpecSignatureKeysArrayOutput() AppProjectSpecSignatureKeysArrayOutput
+	ToAppProjectSpecSignatureKeysArrayOutputWithContext(context.Context) AppProjectSpecSignatureKeysArrayOutput
+}
+
+type AppProjectSpecSignatureKeysArray []AppProjectSpecSignatureKeysInput
+
+func (AppProjectSpecSignatureKeysArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]AppProjectSpecSignatureKeys)(nil)).Elem()
+}
+
+func (i AppProjectSpecSignatureKeysArray) ToAppProjectSpecSignatureKeysArrayOutput() AppProjectSpecSignatureKeysArrayOutput {
+	return i.ToAppProjectSpecSignatureKeysArrayOutputWithContext(context.Background())
+}
+
+func (i AppProjectSpecSignatureKeysArray) ToAppProjectSpecSignatureKeysArrayOutputWithContext(ctx context.Context) AppProjectSpecSignatureKeysArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(AppProjectSpecSignatureKeysArrayOutput)
+}
+
+// SignatureKey is the specification of a key required to verify commit signatures with
+type AppProjectSpecSignatureKeysOutput struct{ *pulumi.OutputState }
+
+func (AppProjectSpecSignatureKeysOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*AppProjectSpecSignatureKeys)(nil)).Elem()
+}
+
+func (o AppProjectSpecSignatureKeysOutput) ToAppProjectSpecSignatureKeysOutput() AppProjectSpecSignatureKeysOutput {
+	return o
+}
+
+func (o AppProjectSpecSignatureKeysOutput) ToAppProjectSpecSignatureKeysOutputWithContext(ctx context.Context) AppProjectSpecSignatureKeysOutput {
+	return o
+}
+
+// The ID of the key in hexadecimal notation
+func (o AppProjectSpecSignatureKeysOutput) KeyID() pulumi.StringOutput {
+	return o.ApplyT(func(v AppProjectSpecSignatureKeys) string { return v.KeyID }).(pulumi.StringOutput)
+}
+
+type AppProjectSpecSignatureKeysArrayOutput struct{ *pulumi.OutputState }
+
+func (AppProjectSpecSignatureKeysArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]AppProjectSpecSignatureKeys)(nil)).Elem()
+}
+
+func (o AppProjectSpecSignatureKeysArrayOutput) ToAppProjectSpecSignatureKeysArrayOutput() AppProjectSpecSignatureKeysArrayOutput {
+	return o
+}
+
+func (o AppProjectSpecSignatureKeysArrayOutput) ToAppProjectSpecSignatureKeysArrayOutputWithContext(ctx context.Context) AppProjectSpecSignatureKeysArrayOutput {
+	return o
+}
+
+func (o AppProjectSpecSignatureKeysArrayOutput) Index(i pulumi.IntInput) AppProjectSpecSignatureKeysOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) AppProjectSpecSignatureKeys {
+		return vs[0].([]AppProjectSpecSignatureKeys)[vs[1].(int)]
+	}).(AppProjectSpecSignatureKeysOutput)
 }
 
 // SyncWindow contains the kind, time, duration and attributes that are used to assign the syncWindows to apps
@@ -1503,6 +1873,8 @@ type ApplicationOperation struct {
 	Info []ApplicationOperationInfo `pulumi:"info"`
 	// OperationInitiator holds information about the operation initiator
 	InitiatedBy *ApplicationOperationInitiatedBy `pulumi:"initiatedBy"`
+	// Retry controls failed sync retry behavior
+	Retry *ApplicationOperationRetry `pulumi:"retry"`
 	// SyncOperation contains sync operation details.
 	Sync *ApplicationOperationSync `pulumi:"sync"`
 }
@@ -1523,6 +1895,8 @@ type ApplicationOperationArgs struct {
 	Info ApplicationOperationInfoArrayInput `pulumi:"info"`
 	// OperationInitiator holds information about the operation initiator
 	InitiatedBy ApplicationOperationInitiatedByPtrInput `pulumi:"initiatedBy"`
+	// Retry controls failed sync retry behavior
+	Retry ApplicationOperationRetryPtrInput `pulumi:"retry"`
 	// SyncOperation contains sync operation details.
 	Sync ApplicationOperationSyncPtrInput `pulumi:"sync"`
 }
@@ -1613,6 +1987,11 @@ func (o ApplicationOperationOutput) InitiatedBy() ApplicationOperationInitiatedB
 	return o.ApplyT(func(v ApplicationOperation) *ApplicationOperationInitiatedBy { return v.InitiatedBy }).(ApplicationOperationInitiatedByPtrOutput)
 }
 
+// Retry controls failed sync retry behavior
+func (o ApplicationOperationOutput) Retry() ApplicationOperationRetryPtrOutput {
+	return o.ApplyT(func(v ApplicationOperation) *ApplicationOperationRetry { return v.Retry }).(ApplicationOperationRetryPtrOutput)
+}
+
 // SyncOperation contains sync operation details.
 func (o ApplicationOperationOutput) Sync() ApplicationOperationSyncPtrOutput {
 	return o.ApplyT(func(v ApplicationOperation) *ApplicationOperationSync { return v.Sync }).(ApplicationOperationSyncPtrOutput)
@@ -1653,6 +2032,16 @@ func (o ApplicationOperationPtrOutput) InitiatedBy() ApplicationOperationInitiat
 		}
 		return v.InitiatedBy
 	}).(ApplicationOperationInitiatedByPtrOutput)
+}
+
+// Retry controls failed sync retry behavior
+func (o ApplicationOperationPtrOutput) Retry() ApplicationOperationRetryPtrOutput {
+	return o.ApplyT(func(v *ApplicationOperation) *ApplicationOperationRetry {
+		if v == nil {
+			return nil
+		}
+		return v.Retry
+	}).(ApplicationOperationRetryPtrOutput)
 }
 
 // SyncOperation contains sync operation details.
@@ -1915,6 +2304,331 @@ func (o ApplicationOperationInitiatedByPtrOutput) Username() pulumi.StringPtrOut
 			return nil
 		}
 		return v.Username
+	}).(pulumi.StringPtrOutput)
+}
+
+// Retry controls failed sync retry behavior
+type ApplicationOperationRetry struct {
+	// Backoff is a backoff strategy
+	Backoff *ApplicationOperationRetryBackoff `pulumi:"backoff"`
+	// Limit is the maximum number of attempts when retrying a container
+	Limit *int `pulumi:"limit"`
+}
+
+// ApplicationOperationRetryInput is an input type that accepts ApplicationOperationRetryArgs and ApplicationOperationRetryOutput values.
+// You can construct a concrete instance of `ApplicationOperationRetryInput` via:
+//
+//          ApplicationOperationRetryArgs{...}
+type ApplicationOperationRetryInput interface {
+	pulumi.Input
+
+	ToApplicationOperationRetryOutput() ApplicationOperationRetryOutput
+	ToApplicationOperationRetryOutputWithContext(context.Context) ApplicationOperationRetryOutput
+}
+
+// Retry controls failed sync retry behavior
+type ApplicationOperationRetryArgs struct {
+	// Backoff is a backoff strategy
+	Backoff ApplicationOperationRetryBackoffPtrInput `pulumi:"backoff"`
+	// Limit is the maximum number of attempts when retrying a container
+	Limit pulumi.IntPtrInput `pulumi:"limit"`
+}
+
+func (ApplicationOperationRetryArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*ApplicationOperationRetry)(nil)).Elem()
+}
+
+func (i ApplicationOperationRetryArgs) ToApplicationOperationRetryOutput() ApplicationOperationRetryOutput {
+	return i.ToApplicationOperationRetryOutputWithContext(context.Background())
+}
+
+func (i ApplicationOperationRetryArgs) ToApplicationOperationRetryOutputWithContext(ctx context.Context) ApplicationOperationRetryOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(ApplicationOperationRetryOutput)
+}
+
+func (i ApplicationOperationRetryArgs) ToApplicationOperationRetryPtrOutput() ApplicationOperationRetryPtrOutput {
+	return i.ToApplicationOperationRetryPtrOutputWithContext(context.Background())
+}
+
+func (i ApplicationOperationRetryArgs) ToApplicationOperationRetryPtrOutputWithContext(ctx context.Context) ApplicationOperationRetryPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(ApplicationOperationRetryOutput).ToApplicationOperationRetryPtrOutputWithContext(ctx)
+}
+
+// ApplicationOperationRetryPtrInput is an input type that accepts ApplicationOperationRetryArgs, ApplicationOperationRetryPtr and ApplicationOperationRetryPtrOutput values.
+// You can construct a concrete instance of `ApplicationOperationRetryPtrInput` via:
+//
+//          ApplicationOperationRetryArgs{...}
+//
+//  or:
+//
+//          nil
+type ApplicationOperationRetryPtrInput interface {
+	pulumi.Input
+
+	ToApplicationOperationRetryPtrOutput() ApplicationOperationRetryPtrOutput
+	ToApplicationOperationRetryPtrOutputWithContext(context.Context) ApplicationOperationRetryPtrOutput
+}
+
+type applicationOperationRetryPtrType ApplicationOperationRetryArgs
+
+func ApplicationOperationRetryPtr(v *ApplicationOperationRetryArgs) ApplicationOperationRetryPtrInput {
+	return (*applicationOperationRetryPtrType)(v)
+}
+
+func (*applicationOperationRetryPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**ApplicationOperationRetry)(nil)).Elem()
+}
+
+func (i *applicationOperationRetryPtrType) ToApplicationOperationRetryPtrOutput() ApplicationOperationRetryPtrOutput {
+	return i.ToApplicationOperationRetryPtrOutputWithContext(context.Background())
+}
+
+func (i *applicationOperationRetryPtrType) ToApplicationOperationRetryPtrOutputWithContext(ctx context.Context) ApplicationOperationRetryPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(ApplicationOperationRetryPtrOutput)
+}
+
+// Retry controls failed sync retry behavior
+type ApplicationOperationRetryOutput struct{ *pulumi.OutputState }
+
+func (ApplicationOperationRetryOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*ApplicationOperationRetry)(nil)).Elem()
+}
+
+func (o ApplicationOperationRetryOutput) ToApplicationOperationRetryOutput() ApplicationOperationRetryOutput {
+	return o
+}
+
+func (o ApplicationOperationRetryOutput) ToApplicationOperationRetryOutputWithContext(ctx context.Context) ApplicationOperationRetryOutput {
+	return o
+}
+
+func (o ApplicationOperationRetryOutput) ToApplicationOperationRetryPtrOutput() ApplicationOperationRetryPtrOutput {
+	return o.ToApplicationOperationRetryPtrOutputWithContext(context.Background())
+}
+
+func (o ApplicationOperationRetryOutput) ToApplicationOperationRetryPtrOutputWithContext(ctx context.Context) ApplicationOperationRetryPtrOutput {
+	return o.ApplyT(func(v ApplicationOperationRetry) *ApplicationOperationRetry {
+		return &v
+	}).(ApplicationOperationRetryPtrOutput)
+}
+
+// Backoff is a backoff strategy
+func (o ApplicationOperationRetryOutput) Backoff() ApplicationOperationRetryBackoffPtrOutput {
+	return o.ApplyT(func(v ApplicationOperationRetry) *ApplicationOperationRetryBackoff { return v.Backoff }).(ApplicationOperationRetryBackoffPtrOutput)
+}
+
+// Limit is the maximum number of attempts when retrying a container
+func (o ApplicationOperationRetryOutput) Limit() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v ApplicationOperationRetry) *int { return v.Limit }).(pulumi.IntPtrOutput)
+}
+
+type ApplicationOperationRetryPtrOutput struct{ *pulumi.OutputState }
+
+func (ApplicationOperationRetryPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**ApplicationOperationRetry)(nil)).Elem()
+}
+
+func (o ApplicationOperationRetryPtrOutput) ToApplicationOperationRetryPtrOutput() ApplicationOperationRetryPtrOutput {
+	return o
+}
+
+func (o ApplicationOperationRetryPtrOutput) ToApplicationOperationRetryPtrOutputWithContext(ctx context.Context) ApplicationOperationRetryPtrOutput {
+	return o
+}
+
+func (o ApplicationOperationRetryPtrOutput) Elem() ApplicationOperationRetryOutput {
+	return o.ApplyT(func(v *ApplicationOperationRetry) ApplicationOperationRetry { return *v }).(ApplicationOperationRetryOutput)
+}
+
+// Backoff is a backoff strategy
+func (o ApplicationOperationRetryPtrOutput) Backoff() ApplicationOperationRetryBackoffPtrOutput {
+	return o.ApplyT(func(v *ApplicationOperationRetry) *ApplicationOperationRetryBackoff {
+		if v == nil {
+			return nil
+		}
+		return v.Backoff
+	}).(ApplicationOperationRetryBackoffPtrOutput)
+}
+
+// Limit is the maximum number of attempts when retrying a container
+func (o ApplicationOperationRetryPtrOutput) Limit() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *ApplicationOperationRetry) *int {
+		if v == nil {
+			return nil
+		}
+		return v.Limit
+	}).(pulumi.IntPtrOutput)
+}
+
+// Backoff is a backoff strategy
+type ApplicationOperationRetryBackoff struct {
+	// Duration is the amount to back off. Default unit is seconds, but could also be a duration (e.g. "2m", "1h")
+	Duration *string `pulumi:"duration"`
+	// Factor is a factor to multiply the base duration after each failed retry
+	Factor *int `pulumi:"factor"`
+	// MaxDuration is the maximum amount of time allowed for the backoff strategy
+	MaxDuration *string `pulumi:"maxDuration"`
+}
+
+// ApplicationOperationRetryBackoffInput is an input type that accepts ApplicationOperationRetryBackoffArgs and ApplicationOperationRetryBackoffOutput values.
+// You can construct a concrete instance of `ApplicationOperationRetryBackoffInput` via:
+//
+//          ApplicationOperationRetryBackoffArgs{...}
+type ApplicationOperationRetryBackoffInput interface {
+	pulumi.Input
+
+	ToApplicationOperationRetryBackoffOutput() ApplicationOperationRetryBackoffOutput
+	ToApplicationOperationRetryBackoffOutputWithContext(context.Context) ApplicationOperationRetryBackoffOutput
+}
+
+// Backoff is a backoff strategy
+type ApplicationOperationRetryBackoffArgs struct {
+	// Duration is the amount to back off. Default unit is seconds, but could also be a duration (e.g. "2m", "1h")
+	Duration pulumi.StringPtrInput `pulumi:"duration"`
+	// Factor is a factor to multiply the base duration after each failed retry
+	Factor pulumi.IntPtrInput `pulumi:"factor"`
+	// MaxDuration is the maximum amount of time allowed for the backoff strategy
+	MaxDuration pulumi.StringPtrInput `pulumi:"maxDuration"`
+}
+
+func (ApplicationOperationRetryBackoffArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*ApplicationOperationRetryBackoff)(nil)).Elem()
+}
+
+func (i ApplicationOperationRetryBackoffArgs) ToApplicationOperationRetryBackoffOutput() ApplicationOperationRetryBackoffOutput {
+	return i.ToApplicationOperationRetryBackoffOutputWithContext(context.Background())
+}
+
+func (i ApplicationOperationRetryBackoffArgs) ToApplicationOperationRetryBackoffOutputWithContext(ctx context.Context) ApplicationOperationRetryBackoffOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(ApplicationOperationRetryBackoffOutput)
+}
+
+func (i ApplicationOperationRetryBackoffArgs) ToApplicationOperationRetryBackoffPtrOutput() ApplicationOperationRetryBackoffPtrOutput {
+	return i.ToApplicationOperationRetryBackoffPtrOutputWithContext(context.Background())
+}
+
+func (i ApplicationOperationRetryBackoffArgs) ToApplicationOperationRetryBackoffPtrOutputWithContext(ctx context.Context) ApplicationOperationRetryBackoffPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(ApplicationOperationRetryBackoffOutput).ToApplicationOperationRetryBackoffPtrOutputWithContext(ctx)
+}
+
+// ApplicationOperationRetryBackoffPtrInput is an input type that accepts ApplicationOperationRetryBackoffArgs, ApplicationOperationRetryBackoffPtr and ApplicationOperationRetryBackoffPtrOutput values.
+// You can construct a concrete instance of `ApplicationOperationRetryBackoffPtrInput` via:
+//
+//          ApplicationOperationRetryBackoffArgs{...}
+//
+//  or:
+//
+//          nil
+type ApplicationOperationRetryBackoffPtrInput interface {
+	pulumi.Input
+
+	ToApplicationOperationRetryBackoffPtrOutput() ApplicationOperationRetryBackoffPtrOutput
+	ToApplicationOperationRetryBackoffPtrOutputWithContext(context.Context) ApplicationOperationRetryBackoffPtrOutput
+}
+
+type applicationOperationRetryBackoffPtrType ApplicationOperationRetryBackoffArgs
+
+func ApplicationOperationRetryBackoffPtr(v *ApplicationOperationRetryBackoffArgs) ApplicationOperationRetryBackoffPtrInput {
+	return (*applicationOperationRetryBackoffPtrType)(v)
+}
+
+func (*applicationOperationRetryBackoffPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**ApplicationOperationRetryBackoff)(nil)).Elem()
+}
+
+func (i *applicationOperationRetryBackoffPtrType) ToApplicationOperationRetryBackoffPtrOutput() ApplicationOperationRetryBackoffPtrOutput {
+	return i.ToApplicationOperationRetryBackoffPtrOutputWithContext(context.Background())
+}
+
+func (i *applicationOperationRetryBackoffPtrType) ToApplicationOperationRetryBackoffPtrOutputWithContext(ctx context.Context) ApplicationOperationRetryBackoffPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(ApplicationOperationRetryBackoffPtrOutput)
+}
+
+// Backoff is a backoff strategy
+type ApplicationOperationRetryBackoffOutput struct{ *pulumi.OutputState }
+
+func (ApplicationOperationRetryBackoffOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*ApplicationOperationRetryBackoff)(nil)).Elem()
+}
+
+func (o ApplicationOperationRetryBackoffOutput) ToApplicationOperationRetryBackoffOutput() ApplicationOperationRetryBackoffOutput {
+	return o
+}
+
+func (o ApplicationOperationRetryBackoffOutput) ToApplicationOperationRetryBackoffOutputWithContext(ctx context.Context) ApplicationOperationRetryBackoffOutput {
+	return o
+}
+
+func (o ApplicationOperationRetryBackoffOutput) ToApplicationOperationRetryBackoffPtrOutput() ApplicationOperationRetryBackoffPtrOutput {
+	return o.ToApplicationOperationRetryBackoffPtrOutputWithContext(context.Background())
+}
+
+func (o ApplicationOperationRetryBackoffOutput) ToApplicationOperationRetryBackoffPtrOutputWithContext(ctx context.Context) ApplicationOperationRetryBackoffPtrOutput {
+	return o.ApplyT(func(v ApplicationOperationRetryBackoff) *ApplicationOperationRetryBackoff {
+		return &v
+	}).(ApplicationOperationRetryBackoffPtrOutput)
+}
+
+// Duration is the amount to back off. Default unit is seconds, but could also be a duration (e.g. "2m", "1h")
+func (o ApplicationOperationRetryBackoffOutput) Duration() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v ApplicationOperationRetryBackoff) *string { return v.Duration }).(pulumi.StringPtrOutput)
+}
+
+// Factor is a factor to multiply the base duration after each failed retry
+func (o ApplicationOperationRetryBackoffOutput) Factor() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v ApplicationOperationRetryBackoff) *int { return v.Factor }).(pulumi.IntPtrOutput)
+}
+
+// MaxDuration is the maximum amount of time allowed for the backoff strategy
+func (o ApplicationOperationRetryBackoffOutput) MaxDuration() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v ApplicationOperationRetryBackoff) *string { return v.MaxDuration }).(pulumi.StringPtrOutput)
+}
+
+type ApplicationOperationRetryBackoffPtrOutput struct{ *pulumi.OutputState }
+
+func (ApplicationOperationRetryBackoffPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**ApplicationOperationRetryBackoff)(nil)).Elem()
+}
+
+func (o ApplicationOperationRetryBackoffPtrOutput) ToApplicationOperationRetryBackoffPtrOutput() ApplicationOperationRetryBackoffPtrOutput {
+	return o
+}
+
+func (o ApplicationOperationRetryBackoffPtrOutput) ToApplicationOperationRetryBackoffPtrOutputWithContext(ctx context.Context) ApplicationOperationRetryBackoffPtrOutput {
+	return o
+}
+
+func (o ApplicationOperationRetryBackoffPtrOutput) Elem() ApplicationOperationRetryBackoffOutput {
+	return o.ApplyT(func(v *ApplicationOperationRetryBackoff) ApplicationOperationRetryBackoff { return *v }).(ApplicationOperationRetryBackoffOutput)
+}
+
+// Duration is the amount to back off. Default unit is seconds, but could also be a duration (e.g. "2m", "1h")
+func (o ApplicationOperationRetryBackoffPtrOutput) Duration() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *ApplicationOperationRetryBackoff) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Duration
+	}).(pulumi.StringPtrOutput)
+}
+
+// Factor is a factor to multiply the base duration after each failed retry
+func (o ApplicationOperationRetryBackoffPtrOutput) Factor() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *ApplicationOperationRetryBackoff) *int {
+		if v == nil {
+			return nil
+		}
+		return v.Factor
+	}).(pulumi.IntPtrOutput)
+}
+
+// MaxDuration is the maximum amount of time allowed for the backoff strategy
+func (o ApplicationOperationRetryBackoffPtrOutput) MaxDuration() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *ApplicationOperationRetryBackoff) *string {
+		if v == nil {
+			return nil
+		}
+		return v.MaxDuration
 	}).(pulumi.StringPtrOutput)
 }
 
@@ -2187,9 +2901,10 @@ func (o ApplicationOperationSyncPtrOutput) SyncStrategy() ApplicationOperationSy
 
 // SyncOperationResource contains resources to sync.
 type ApplicationOperationSyncResources struct {
-	Group *string `pulumi:"group"`
-	Kind  string  `pulumi:"kind"`
-	Name  string  `pulumi:"name"`
+	Group     *string `pulumi:"group"`
+	Kind      string  `pulumi:"kind"`
+	Name      string  `pulumi:"name"`
+	Namespace *string `pulumi:"namespace"`
 }
 
 // ApplicationOperationSyncResourcesInput is an input type that accepts ApplicationOperationSyncResourcesArgs and ApplicationOperationSyncResourcesOutput values.
@@ -2205,9 +2920,10 @@ type ApplicationOperationSyncResourcesInput interface {
 
 // SyncOperationResource contains resources to sync.
 type ApplicationOperationSyncResourcesArgs struct {
-	Group pulumi.StringPtrInput `pulumi:"group"`
-	Kind  pulumi.StringInput    `pulumi:"kind"`
-	Name  pulumi.StringInput    `pulumi:"name"`
+	Group     pulumi.StringPtrInput `pulumi:"group"`
+	Kind      pulumi.StringInput    `pulumi:"kind"`
+	Name      pulumi.StringInput    `pulumi:"name"`
+	Namespace pulumi.StringPtrInput `pulumi:"namespace"`
 }
 
 func (ApplicationOperationSyncResourcesArgs) ElementType() reflect.Type {
@@ -2272,6 +2988,10 @@ func (o ApplicationOperationSyncResourcesOutput) Kind() pulumi.StringOutput {
 
 func (o ApplicationOperationSyncResourcesOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v ApplicationOperationSyncResources) string { return v.Name }).(pulumi.StringOutput)
+}
+
+func (o ApplicationOperationSyncResourcesOutput) Namespace() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v ApplicationOperationSyncResources) *string { return v.Namespace }).(pulumi.StringPtrOutput)
 }
 
 type ApplicationOperationSyncResourcesArrayOutput struct{ *pulumi.OutputState }
@@ -2735,6 +3455,8 @@ func (o ApplicationOperationSyncSourceDirectoryPtrOutput) Recurse() pulumi.BoolP
 type ApplicationOperationSyncSourceDirectoryJsonnet struct {
 	// ExtVars is a list of Jsonnet External Variables
 	ExtVars []ApplicationOperationSyncSourceDirectoryJsonnetExtVars `pulumi:"extVars"`
+	// Additional library search dirs
+	Libs []string `pulumi:"libs"`
 	// TLAS is a list of Jsonnet Top-level Arguments
 	Tlas []ApplicationOperationSyncSourceDirectoryJsonnetTlas `pulumi:"tlas"`
 }
@@ -2754,6 +3476,8 @@ type ApplicationOperationSyncSourceDirectoryJsonnetInput interface {
 type ApplicationOperationSyncSourceDirectoryJsonnetArgs struct {
 	// ExtVars is a list of Jsonnet External Variables
 	ExtVars ApplicationOperationSyncSourceDirectoryJsonnetExtVarsArrayInput `pulumi:"extVars"`
+	// Additional library search dirs
+	Libs pulumi.StringArrayInput `pulumi:"libs"`
 	// TLAS is a list of Jsonnet Top-level Arguments
 	Tlas ApplicationOperationSyncSourceDirectoryJsonnetTlasArrayInput `pulumi:"tlas"`
 }
@@ -2843,6 +3567,11 @@ func (o ApplicationOperationSyncSourceDirectoryJsonnetOutput) ExtVars() Applicat
 	}).(ApplicationOperationSyncSourceDirectoryJsonnetExtVarsArrayOutput)
 }
 
+// Additional library search dirs
+func (o ApplicationOperationSyncSourceDirectoryJsonnetOutput) Libs() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v ApplicationOperationSyncSourceDirectoryJsonnet) []string { return v.Libs }).(pulumi.StringArrayOutput)
+}
+
 // TLAS is a list of Jsonnet Top-level Arguments
 func (o ApplicationOperationSyncSourceDirectoryJsonnetOutput) Tlas() ApplicationOperationSyncSourceDirectoryJsonnetTlasArrayOutput {
 	return o.ApplyT(func(v ApplicationOperationSyncSourceDirectoryJsonnet) []ApplicationOperationSyncSourceDirectoryJsonnetTlas {
@@ -2878,6 +3607,16 @@ func (o ApplicationOperationSyncSourceDirectoryJsonnetPtrOutput) ExtVars() Appli
 		}
 		return v.ExtVars
 	}).(ApplicationOperationSyncSourceDirectoryJsonnetExtVarsArrayOutput)
+}
+
+// Additional library search dirs
+func (o ApplicationOperationSyncSourceDirectoryJsonnetPtrOutput) Libs() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v *ApplicationOperationSyncSourceDirectoryJsonnet) []string {
+		if v == nil {
+			return nil
+		}
+		return v.Libs
+	}).(pulumi.StringArrayOutput)
 }
 
 // TLAS is a list of Jsonnet Top-level Arguments
@@ -4994,6 +5733,8 @@ func (o ApplicationSpecPtrOutput) SyncPolicy() ApplicationSpecSyncPolicyPtrOutpu
 
 // Destination overrides the kubernetes server and namespace defined in the environment ksonnet app.yaml
 type ApplicationSpecDestination struct {
+	// Name of the destination cluster which can be used instead of server (url) field
+	Name *string `pulumi:"name"`
 	// Namespace overrides the environment namespace value in the ksonnet app.yaml
 	Namespace *string `pulumi:"namespace"`
 	// Server overrides the environment server value in the ksonnet app.yaml
@@ -5013,6 +5754,8 @@ type ApplicationSpecDestinationInput interface {
 
 // Destination overrides the kubernetes server and namespace defined in the environment ksonnet app.yaml
 type ApplicationSpecDestinationArgs struct {
+	// Name of the destination cluster which can be used instead of server (url) field
+	Name pulumi.StringPtrInput `pulumi:"name"`
 	// Namespace overrides the environment namespace value in the ksonnet app.yaml
 	Namespace pulumi.StringPtrInput `pulumi:"namespace"`
 	// Server overrides the environment server value in the ksonnet app.yaml
@@ -5097,6 +5840,11 @@ func (o ApplicationSpecDestinationOutput) ToApplicationSpecDestinationPtrOutputW
 	}).(ApplicationSpecDestinationPtrOutput)
 }
 
+// Name of the destination cluster which can be used instead of server (url) field
+func (o ApplicationSpecDestinationOutput) Name() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v ApplicationSpecDestination) *string { return v.Name }).(pulumi.StringPtrOutput)
+}
+
 // Namespace overrides the environment namespace value in the ksonnet app.yaml
 func (o ApplicationSpecDestinationOutput) Namespace() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v ApplicationSpecDestination) *string { return v.Namespace }).(pulumi.StringPtrOutput)
@@ -5123,6 +5871,16 @@ func (o ApplicationSpecDestinationPtrOutput) ToApplicationSpecDestinationPtrOutp
 
 func (o ApplicationSpecDestinationPtrOutput) Elem() ApplicationSpecDestinationOutput {
 	return o.ApplyT(func(v *ApplicationSpecDestination) ApplicationSpecDestination { return *v }).(ApplicationSpecDestinationOutput)
+}
+
+// Name of the destination cluster which can be used instead of server (url) field
+func (o ApplicationSpecDestinationPtrOutput) Name() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *ApplicationSpecDestination) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Name
+	}).(pulumi.StringPtrOutput)
 }
 
 // Namespace overrides the environment namespace value in the ksonnet app.yaml
@@ -5805,6 +6563,8 @@ func (o ApplicationSpecSourceDirectoryPtrOutput) Recurse() pulumi.BoolPtrOutput 
 type ApplicationSpecSourceDirectoryJsonnet struct {
 	// ExtVars is a list of Jsonnet External Variables
 	ExtVars []ApplicationSpecSourceDirectoryJsonnetExtVars `pulumi:"extVars"`
+	// Additional library search dirs
+	Libs []string `pulumi:"libs"`
 	// TLAS is a list of Jsonnet Top-level Arguments
 	Tlas []ApplicationSpecSourceDirectoryJsonnetTlas `pulumi:"tlas"`
 }
@@ -5824,6 +6584,8 @@ type ApplicationSpecSourceDirectoryJsonnetInput interface {
 type ApplicationSpecSourceDirectoryJsonnetArgs struct {
 	// ExtVars is a list of Jsonnet External Variables
 	ExtVars ApplicationSpecSourceDirectoryJsonnetExtVarsArrayInput `pulumi:"extVars"`
+	// Additional library search dirs
+	Libs pulumi.StringArrayInput `pulumi:"libs"`
 	// TLAS is a list of Jsonnet Top-level Arguments
 	Tlas ApplicationSpecSourceDirectoryJsonnetTlasArrayInput `pulumi:"tlas"`
 }
@@ -5913,6 +6675,11 @@ func (o ApplicationSpecSourceDirectoryJsonnetOutput) ExtVars() ApplicationSpecSo
 	}).(ApplicationSpecSourceDirectoryJsonnetExtVarsArrayOutput)
 }
 
+// Additional library search dirs
+func (o ApplicationSpecSourceDirectoryJsonnetOutput) Libs() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v ApplicationSpecSourceDirectoryJsonnet) []string { return v.Libs }).(pulumi.StringArrayOutput)
+}
+
 // TLAS is a list of Jsonnet Top-level Arguments
 func (o ApplicationSpecSourceDirectoryJsonnetOutput) Tlas() ApplicationSpecSourceDirectoryJsonnetTlasArrayOutput {
 	return o.ApplyT(func(v ApplicationSpecSourceDirectoryJsonnet) []ApplicationSpecSourceDirectoryJsonnetTlas {
@@ -5946,6 +6713,16 @@ func (o ApplicationSpecSourceDirectoryJsonnetPtrOutput) ExtVars() ApplicationSpe
 		}
 		return v.ExtVars
 	}).(ApplicationSpecSourceDirectoryJsonnetExtVarsArrayOutput)
+}
+
+// Additional library search dirs
+func (o ApplicationSpecSourceDirectoryJsonnetPtrOutput) Libs() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v *ApplicationSpecSourceDirectoryJsonnet) []string {
+		if v == nil {
+			return nil
+		}
+		return v.Libs
+	}).(pulumi.StringArrayOutput)
 }
 
 // TLAS is a list of Jsonnet Top-level Arguments
@@ -7385,6 +8162,8 @@ func (o ApplicationSpecSourcePluginEnvArrayOutput) Index(i pulumi.IntInput) Appl
 type ApplicationSpecSyncPolicy struct {
 	// Automated will keep an application synced to the target revision
 	Automated *ApplicationSpecSyncPolicyAutomated `pulumi:"automated"`
+	// Retry controls failed sync retry behavior
+	Retry *ApplicationSpecSyncPolicyRetry `pulumi:"retry"`
 	// Options allow you to specify whole app sync-options
 	SyncOptions []string `pulumi:"syncOptions"`
 }
@@ -7404,6 +8183,8 @@ type ApplicationSpecSyncPolicyInput interface {
 type ApplicationSpecSyncPolicyArgs struct {
 	// Automated will keep an application synced to the target revision
 	Automated ApplicationSpecSyncPolicyAutomatedPtrInput `pulumi:"automated"`
+	// Retry controls failed sync retry behavior
+	Retry ApplicationSpecSyncPolicyRetryPtrInput `pulumi:"retry"`
 	// Options allow you to specify whole app sync-options
 	SyncOptions pulumi.StringArrayInput `pulumi:"syncOptions"`
 }
@@ -7491,6 +8272,11 @@ func (o ApplicationSpecSyncPolicyOutput) Automated() ApplicationSpecSyncPolicyAu
 	return o.ApplyT(func(v ApplicationSpecSyncPolicy) *ApplicationSpecSyncPolicyAutomated { return v.Automated }).(ApplicationSpecSyncPolicyAutomatedPtrOutput)
 }
 
+// Retry controls failed sync retry behavior
+func (o ApplicationSpecSyncPolicyOutput) Retry() ApplicationSpecSyncPolicyRetryPtrOutput {
+	return o.ApplyT(func(v ApplicationSpecSyncPolicy) *ApplicationSpecSyncPolicyRetry { return v.Retry }).(ApplicationSpecSyncPolicyRetryPtrOutput)
+}
+
 // Options allow you to specify whole app sync-options
 func (o ApplicationSpecSyncPolicyOutput) SyncOptions() pulumi.StringArrayOutput {
 	return o.ApplyT(func(v ApplicationSpecSyncPolicy) []string { return v.SyncOptions }).(pulumi.StringArrayOutput)
@@ -7522,6 +8308,16 @@ func (o ApplicationSpecSyncPolicyPtrOutput) Automated() ApplicationSpecSyncPolic
 		}
 		return v.Automated
 	}).(ApplicationSpecSyncPolicyAutomatedPtrOutput)
+}
+
+// Retry controls failed sync retry behavior
+func (o ApplicationSpecSyncPolicyPtrOutput) Retry() ApplicationSpecSyncPolicyRetryPtrOutput {
+	return o.ApplyT(func(v *ApplicationSpecSyncPolicy) *ApplicationSpecSyncPolicyRetry {
+		if v == nil {
+			return nil
+		}
+		return v.Retry
+	}).(ApplicationSpecSyncPolicyRetryPtrOutput)
 }
 
 // Options allow you to specify whole app sync-options
@@ -7687,13 +8483,338 @@ func (o ApplicationSpecSyncPolicyAutomatedPtrOutput) SelfHeal() pulumi.BoolPtrOu
 	}).(pulumi.BoolPtrOutput)
 }
 
+// Retry controls failed sync retry behavior
+type ApplicationSpecSyncPolicyRetry struct {
+	// Backoff is a backoff strategy
+	Backoff *ApplicationSpecSyncPolicyRetryBackoff `pulumi:"backoff"`
+	// Limit is the maximum number of attempts when retrying a container
+	Limit *int `pulumi:"limit"`
+}
+
+// ApplicationSpecSyncPolicyRetryInput is an input type that accepts ApplicationSpecSyncPolicyRetryArgs and ApplicationSpecSyncPolicyRetryOutput values.
+// You can construct a concrete instance of `ApplicationSpecSyncPolicyRetryInput` via:
+//
+//          ApplicationSpecSyncPolicyRetryArgs{...}
+type ApplicationSpecSyncPolicyRetryInput interface {
+	pulumi.Input
+
+	ToApplicationSpecSyncPolicyRetryOutput() ApplicationSpecSyncPolicyRetryOutput
+	ToApplicationSpecSyncPolicyRetryOutputWithContext(context.Context) ApplicationSpecSyncPolicyRetryOutput
+}
+
+// Retry controls failed sync retry behavior
+type ApplicationSpecSyncPolicyRetryArgs struct {
+	// Backoff is a backoff strategy
+	Backoff ApplicationSpecSyncPolicyRetryBackoffPtrInput `pulumi:"backoff"`
+	// Limit is the maximum number of attempts when retrying a container
+	Limit pulumi.IntPtrInput `pulumi:"limit"`
+}
+
+func (ApplicationSpecSyncPolicyRetryArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*ApplicationSpecSyncPolicyRetry)(nil)).Elem()
+}
+
+func (i ApplicationSpecSyncPolicyRetryArgs) ToApplicationSpecSyncPolicyRetryOutput() ApplicationSpecSyncPolicyRetryOutput {
+	return i.ToApplicationSpecSyncPolicyRetryOutputWithContext(context.Background())
+}
+
+func (i ApplicationSpecSyncPolicyRetryArgs) ToApplicationSpecSyncPolicyRetryOutputWithContext(ctx context.Context) ApplicationSpecSyncPolicyRetryOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(ApplicationSpecSyncPolicyRetryOutput)
+}
+
+func (i ApplicationSpecSyncPolicyRetryArgs) ToApplicationSpecSyncPolicyRetryPtrOutput() ApplicationSpecSyncPolicyRetryPtrOutput {
+	return i.ToApplicationSpecSyncPolicyRetryPtrOutputWithContext(context.Background())
+}
+
+func (i ApplicationSpecSyncPolicyRetryArgs) ToApplicationSpecSyncPolicyRetryPtrOutputWithContext(ctx context.Context) ApplicationSpecSyncPolicyRetryPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(ApplicationSpecSyncPolicyRetryOutput).ToApplicationSpecSyncPolicyRetryPtrOutputWithContext(ctx)
+}
+
+// ApplicationSpecSyncPolicyRetryPtrInput is an input type that accepts ApplicationSpecSyncPolicyRetryArgs, ApplicationSpecSyncPolicyRetryPtr and ApplicationSpecSyncPolicyRetryPtrOutput values.
+// You can construct a concrete instance of `ApplicationSpecSyncPolicyRetryPtrInput` via:
+//
+//          ApplicationSpecSyncPolicyRetryArgs{...}
+//
+//  or:
+//
+//          nil
+type ApplicationSpecSyncPolicyRetryPtrInput interface {
+	pulumi.Input
+
+	ToApplicationSpecSyncPolicyRetryPtrOutput() ApplicationSpecSyncPolicyRetryPtrOutput
+	ToApplicationSpecSyncPolicyRetryPtrOutputWithContext(context.Context) ApplicationSpecSyncPolicyRetryPtrOutput
+}
+
+type applicationSpecSyncPolicyRetryPtrType ApplicationSpecSyncPolicyRetryArgs
+
+func ApplicationSpecSyncPolicyRetryPtr(v *ApplicationSpecSyncPolicyRetryArgs) ApplicationSpecSyncPolicyRetryPtrInput {
+	return (*applicationSpecSyncPolicyRetryPtrType)(v)
+}
+
+func (*applicationSpecSyncPolicyRetryPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**ApplicationSpecSyncPolicyRetry)(nil)).Elem()
+}
+
+func (i *applicationSpecSyncPolicyRetryPtrType) ToApplicationSpecSyncPolicyRetryPtrOutput() ApplicationSpecSyncPolicyRetryPtrOutput {
+	return i.ToApplicationSpecSyncPolicyRetryPtrOutputWithContext(context.Background())
+}
+
+func (i *applicationSpecSyncPolicyRetryPtrType) ToApplicationSpecSyncPolicyRetryPtrOutputWithContext(ctx context.Context) ApplicationSpecSyncPolicyRetryPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(ApplicationSpecSyncPolicyRetryPtrOutput)
+}
+
+// Retry controls failed sync retry behavior
+type ApplicationSpecSyncPolicyRetryOutput struct{ *pulumi.OutputState }
+
+func (ApplicationSpecSyncPolicyRetryOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*ApplicationSpecSyncPolicyRetry)(nil)).Elem()
+}
+
+func (o ApplicationSpecSyncPolicyRetryOutput) ToApplicationSpecSyncPolicyRetryOutput() ApplicationSpecSyncPolicyRetryOutput {
+	return o
+}
+
+func (o ApplicationSpecSyncPolicyRetryOutput) ToApplicationSpecSyncPolicyRetryOutputWithContext(ctx context.Context) ApplicationSpecSyncPolicyRetryOutput {
+	return o
+}
+
+func (o ApplicationSpecSyncPolicyRetryOutput) ToApplicationSpecSyncPolicyRetryPtrOutput() ApplicationSpecSyncPolicyRetryPtrOutput {
+	return o.ToApplicationSpecSyncPolicyRetryPtrOutputWithContext(context.Background())
+}
+
+func (o ApplicationSpecSyncPolicyRetryOutput) ToApplicationSpecSyncPolicyRetryPtrOutputWithContext(ctx context.Context) ApplicationSpecSyncPolicyRetryPtrOutput {
+	return o.ApplyT(func(v ApplicationSpecSyncPolicyRetry) *ApplicationSpecSyncPolicyRetry {
+		return &v
+	}).(ApplicationSpecSyncPolicyRetryPtrOutput)
+}
+
+// Backoff is a backoff strategy
+func (o ApplicationSpecSyncPolicyRetryOutput) Backoff() ApplicationSpecSyncPolicyRetryBackoffPtrOutput {
+	return o.ApplyT(func(v ApplicationSpecSyncPolicyRetry) *ApplicationSpecSyncPolicyRetryBackoff { return v.Backoff }).(ApplicationSpecSyncPolicyRetryBackoffPtrOutput)
+}
+
+// Limit is the maximum number of attempts when retrying a container
+func (o ApplicationSpecSyncPolicyRetryOutput) Limit() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v ApplicationSpecSyncPolicyRetry) *int { return v.Limit }).(pulumi.IntPtrOutput)
+}
+
+type ApplicationSpecSyncPolicyRetryPtrOutput struct{ *pulumi.OutputState }
+
+func (ApplicationSpecSyncPolicyRetryPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**ApplicationSpecSyncPolicyRetry)(nil)).Elem()
+}
+
+func (o ApplicationSpecSyncPolicyRetryPtrOutput) ToApplicationSpecSyncPolicyRetryPtrOutput() ApplicationSpecSyncPolicyRetryPtrOutput {
+	return o
+}
+
+func (o ApplicationSpecSyncPolicyRetryPtrOutput) ToApplicationSpecSyncPolicyRetryPtrOutputWithContext(ctx context.Context) ApplicationSpecSyncPolicyRetryPtrOutput {
+	return o
+}
+
+func (o ApplicationSpecSyncPolicyRetryPtrOutput) Elem() ApplicationSpecSyncPolicyRetryOutput {
+	return o.ApplyT(func(v *ApplicationSpecSyncPolicyRetry) ApplicationSpecSyncPolicyRetry { return *v }).(ApplicationSpecSyncPolicyRetryOutput)
+}
+
+// Backoff is a backoff strategy
+func (o ApplicationSpecSyncPolicyRetryPtrOutput) Backoff() ApplicationSpecSyncPolicyRetryBackoffPtrOutput {
+	return o.ApplyT(func(v *ApplicationSpecSyncPolicyRetry) *ApplicationSpecSyncPolicyRetryBackoff {
+		if v == nil {
+			return nil
+		}
+		return v.Backoff
+	}).(ApplicationSpecSyncPolicyRetryBackoffPtrOutput)
+}
+
+// Limit is the maximum number of attempts when retrying a container
+func (o ApplicationSpecSyncPolicyRetryPtrOutput) Limit() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *ApplicationSpecSyncPolicyRetry) *int {
+		if v == nil {
+			return nil
+		}
+		return v.Limit
+	}).(pulumi.IntPtrOutput)
+}
+
+// Backoff is a backoff strategy
+type ApplicationSpecSyncPolicyRetryBackoff struct {
+	// Duration is the amount to back off. Default unit is seconds, but could also be a duration (e.g. "2m", "1h")
+	Duration *string `pulumi:"duration"`
+	// Factor is a factor to multiply the base duration after each failed retry
+	Factor *int `pulumi:"factor"`
+	// MaxDuration is the maximum amount of time allowed for the backoff strategy
+	MaxDuration *string `pulumi:"maxDuration"`
+}
+
+// ApplicationSpecSyncPolicyRetryBackoffInput is an input type that accepts ApplicationSpecSyncPolicyRetryBackoffArgs and ApplicationSpecSyncPolicyRetryBackoffOutput values.
+// You can construct a concrete instance of `ApplicationSpecSyncPolicyRetryBackoffInput` via:
+//
+//          ApplicationSpecSyncPolicyRetryBackoffArgs{...}
+type ApplicationSpecSyncPolicyRetryBackoffInput interface {
+	pulumi.Input
+
+	ToApplicationSpecSyncPolicyRetryBackoffOutput() ApplicationSpecSyncPolicyRetryBackoffOutput
+	ToApplicationSpecSyncPolicyRetryBackoffOutputWithContext(context.Context) ApplicationSpecSyncPolicyRetryBackoffOutput
+}
+
+// Backoff is a backoff strategy
+type ApplicationSpecSyncPolicyRetryBackoffArgs struct {
+	// Duration is the amount to back off. Default unit is seconds, but could also be a duration (e.g. "2m", "1h")
+	Duration pulumi.StringPtrInput `pulumi:"duration"`
+	// Factor is a factor to multiply the base duration after each failed retry
+	Factor pulumi.IntPtrInput `pulumi:"factor"`
+	// MaxDuration is the maximum amount of time allowed for the backoff strategy
+	MaxDuration pulumi.StringPtrInput `pulumi:"maxDuration"`
+}
+
+func (ApplicationSpecSyncPolicyRetryBackoffArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*ApplicationSpecSyncPolicyRetryBackoff)(nil)).Elem()
+}
+
+func (i ApplicationSpecSyncPolicyRetryBackoffArgs) ToApplicationSpecSyncPolicyRetryBackoffOutput() ApplicationSpecSyncPolicyRetryBackoffOutput {
+	return i.ToApplicationSpecSyncPolicyRetryBackoffOutputWithContext(context.Background())
+}
+
+func (i ApplicationSpecSyncPolicyRetryBackoffArgs) ToApplicationSpecSyncPolicyRetryBackoffOutputWithContext(ctx context.Context) ApplicationSpecSyncPolicyRetryBackoffOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(ApplicationSpecSyncPolicyRetryBackoffOutput)
+}
+
+func (i ApplicationSpecSyncPolicyRetryBackoffArgs) ToApplicationSpecSyncPolicyRetryBackoffPtrOutput() ApplicationSpecSyncPolicyRetryBackoffPtrOutput {
+	return i.ToApplicationSpecSyncPolicyRetryBackoffPtrOutputWithContext(context.Background())
+}
+
+func (i ApplicationSpecSyncPolicyRetryBackoffArgs) ToApplicationSpecSyncPolicyRetryBackoffPtrOutputWithContext(ctx context.Context) ApplicationSpecSyncPolicyRetryBackoffPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(ApplicationSpecSyncPolicyRetryBackoffOutput).ToApplicationSpecSyncPolicyRetryBackoffPtrOutputWithContext(ctx)
+}
+
+// ApplicationSpecSyncPolicyRetryBackoffPtrInput is an input type that accepts ApplicationSpecSyncPolicyRetryBackoffArgs, ApplicationSpecSyncPolicyRetryBackoffPtr and ApplicationSpecSyncPolicyRetryBackoffPtrOutput values.
+// You can construct a concrete instance of `ApplicationSpecSyncPolicyRetryBackoffPtrInput` via:
+//
+//          ApplicationSpecSyncPolicyRetryBackoffArgs{...}
+//
+//  or:
+//
+//          nil
+type ApplicationSpecSyncPolicyRetryBackoffPtrInput interface {
+	pulumi.Input
+
+	ToApplicationSpecSyncPolicyRetryBackoffPtrOutput() ApplicationSpecSyncPolicyRetryBackoffPtrOutput
+	ToApplicationSpecSyncPolicyRetryBackoffPtrOutputWithContext(context.Context) ApplicationSpecSyncPolicyRetryBackoffPtrOutput
+}
+
+type applicationSpecSyncPolicyRetryBackoffPtrType ApplicationSpecSyncPolicyRetryBackoffArgs
+
+func ApplicationSpecSyncPolicyRetryBackoffPtr(v *ApplicationSpecSyncPolicyRetryBackoffArgs) ApplicationSpecSyncPolicyRetryBackoffPtrInput {
+	return (*applicationSpecSyncPolicyRetryBackoffPtrType)(v)
+}
+
+func (*applicationSpecSyncPolicyRetryBackoffPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**ApplicationSpecSyncPolicyRetryBackoff)(nil)).Elem()
+}
+
+func (i *applicationSpecSyncPolicyRetryBackoffPtrType) ToApplicationSpecSyncPolicyRetryBackoffPtrOutput() ApplicationSpecSyncPolicyRetryBackoffPtrOutput {
+	return i.ToApplicationSpecSyncPolicyRetryBackoffPtrOutputWithContext(context.Background())
+}
+
+func (i *applicationSpecSyncPolicyRetryBackoffPtrType) ToApplicationSpecSyncPolicyRetryBackoffPtrOutputWithContext(ctx context.Context) ApplicationSpecSyncPolicyRetryBackoffPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(ApplicationSpecSyncPolicyRetryBackoffPtrOutput)
+}
+
+// Backoff is a backoff strategy
+type ApplicationSpecSyncPolicyRetryBackoffOutput struct{ *pulumi.OutputState }
+
+func (ApplicationSpecSyncPolicyRetryBackoffOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*ApplicationSpecSyncPolicyRetryBackoff)(nil)).Elem()
+}
+
+func (o ApplicationSpecSyncPolicyRetryBackoffOutput) ToApplicationSpecSyncPolicyRetryBackoffOutput() ApplicationSpecSyncPolicyRetryBackoffOutput {
+	return o
+}
+
+func (o ApplicationSpecSyncPolicyRetryBackoffOutput) ToApplicationSpecSyncPolicyRetryBackoffOutputWithContext(ctx context.Context) ApplicationSpecSyncPolicyRetryBackoffOutput {
+	return o
+}
+
+func (o ApplicationSpecSyncPolicyRetryBackoffOutput) ToApplicationSpecSyncPolicyRetryBackoffPtrOutput() ApplicationSpecSyncPolicyRetryBackoffPtrOutput {
+	return o.ToApplicationSpecSyncPolicyRetryBackoffPtrOutputWithContext(context.Background())
+}
+
+func (o ApplicationSpecSyncPolicyRetryBackoffOutput) ToApplicationSpecSyncPolicyRetryBackoffPtrOutputWithContext(ctx context.Context) ApplicationSpecSyncPolicyRetryBackoffPtrOutput {
+	return o.ApplyT(func(v ApplicationSpecSyncPolicyRetryBackoff) *ApplicationSpecSyncPolicyRetryBackoff {
+		return &v
+	}).(ApplicationSpecSyncPolicyRetryBackoffPtrOutput)
+}
+
+// Duration is the amount to back off. Default unit is seconds, but could also be a duration (e.g. "2m", "1h")
+func (o ApplicationSpecSyncPolicyRetryBackoffOutput) Duration() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v ApplicationSpecSyncPolicyRetryBackoff) *string { return v.Duration }).(pulumi.StringPtrOutput)
+}
+
+// Factor is a factor to multiply the base duration after each failed retry
+func (o ApplicationSpecSyncPolicyRetryBackoffOutput) Factor() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v ApplicationSpecSyncPolicyRetryBackoff) *int { return v.Factor }).(pulumi.IntPtrOutput)
+}
+
+// MaxDuration is the maximum amount of time allowed for the backoff strategy
+func (o ApplicationSpecSyncPolicyRetryBackoffOutput) MaxDuration() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v ApplicationSpecSyncPolicyRetryBackoff) *string { return v.MaxDuration }).(pulumi.StringPtrOutput)
+}
+
+type ApplicationSpecSyncPolicyRetryBackoffPtrOutput struct{ *pulumi.OutputState }
+
+func (ApplicationSpecSyncPolicyRetryBackoffPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**ApplicationSpecSyncPolicyRetryBackoff)(nil)).Elem()
+}
+
+func (o ApplicationSpecSyncPolicyRetryBackoffPtrOutput) ToApplicationSpecSyncPolicyRetryBackoffPtrOutput() ApplicationSpecSyncPolicyRetryBackoffPtrOutput {
+	return o
+}
+
+func (o ApplicationSpecSyncPolicyRetryBackoffPtrOutput) ToApplicationSpecSyncPolicyRetryBackoffPtrOutputWithContext(ctx context.Context) ApplicationSpecSyncPolicyRetryBackoffPtrOutput {
+	return o
+}
+
+func (o ApplicationSpecSyncPolicyRetryBackoffPtrOutput) Elem() ApplicationSpecSyncPolicyRetryBackoffOutput {
+	return o.ApplyT(func(v *ApplicationSpecSyncPolicyRetryBackoff) ApplicationSpecSyncPolicyRetryBackoff { return *v }).(ApplicationSpecSyncPolicyRetryBackoffOutput)
+}
+
+// Duration is the amount to back off. Default unit is seconds, but could also be a duration (e.g. "2m", "1h")
+func (o ApplicationSpecSyncPolicyRetryBackoffPtrOutput) Duration() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *ApplicationSpecSyncPolicyRetryBackoff) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Duration
+	}).(pulumi.StringPtrOutput)
+}
+
+// Factor is a factor to multiply the base duration after each failed retry
+func (o ApplicationSpecSyncPolicyRetryBackoffPtrOutput) Factor() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *ApplicationSpecSyncPolicyRetryBackoff) *int {
+		if v == nil {
+			return nil
+		}
+		return v.Factor
+	}).(pulumi.IntPtrOutput)
+}
+
+// MaxDuration is the maximum amount of time allowed for the backoff strategy
+func (o ApplicationSpecSyncPolicyRetryBackoffPtrOutput) MaxDuration() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *ApplicationSpecSyncPolicyRetryBackoff) *string {
+		if v == nil {
+			return nil
+		}
+		return v.MaxDuration
+	}).(pulumi.StringPtrOutput)
+}
+
 // ApplicationStatus contains information about application sync, health status
 type ApplicationStatus struct {
 	Conditions []ApplicationStatusConditions `pulumi:"conditions"`
 	Health     *ApplicationStatusHealth      `pulumi:"health"`
 	// RevisionHistories is a array of history, oldest first and newest last
 	History []ApplicationStatusHistory `pulumi:"history"`
-	// ObservedAt indicates when the application state was updated without querying latest git state
+	// ObservedAt indicates when the application state was updated without querying latest git state Deprecated: controller no longer updates ObservedAt field
 	ObservedAt *string `pulumi:"observedAt"`
 	// OperationState contains information about state of currently performing operation on application.
 	OperationState *ApplicationStatusOperationState `pulumi:"operationState"`
@@ -7723,7 +8844,7 @@ type ApplicationStatusArgs struct {
 	Health     ApplicationStatusHealthPtrInput       `pulumi:"health"`
 	// RevisionHistories is a array of history, oldest first and newest last
 	History ApplicationStatusHistoryArrayInput `pulumi:"history"`
-	// ObservedAt indicates when the application state was updated without querying latest git state
+	// ObservedAt indicates when the application state was updated without querying latest git state Deprecated: controller no longer updates ObservedAt field
 	ObservedAt pulumi.StringPtrInput `pulumi:"observedAt"`
 	// OperationState contains information about state of currently performing operation on application.
 	OperationState ApplicationStatusOperationStatePtrInput `pulumi:"operationState"`
@@ -7826,7 +8947,7 @@ func (o ApplicationStatusOutput) History() ApplicationStatusHistoryArrayOutput {
 	return o.ApplyT(func(v ApplicationStatus) []ApplicationStatusHistory { return v.History }).(ApplicationStatusHistoryArrayOutput)
 }
 
-// ObservedAt indicates when the application state was updated without querying latest git state
+// ObservedAt indicates when the application state was updated without querying latest git state Deprecated: controller no longer updates ObservedAt field
 func (o ApplicationStatusOutput) ObservedAt() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v ApplicationStatus) *string { return v.ObservedAt }).(pulumi.StringPtrOutput)
 }
@@ -7904,7 +9025,7 @@ func (o ApplicationStatusPtrOutput) History() ApplicationStatusHistoryArrayOutpu
 	}).(ApplicationStatusHistoryArrayOutput)
 }
 
-// ObservedAt indicates when the application state was updated without querying latest git state
+// ObservedAt indicates when the application state was updated without querying latest git state Deprecated: controller no longer updates ObservedAt field
 func (o ApplicationStatusPtrOutput) ObservedAt() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *ApplicationStatus) *string {
 		if v == nil {
@@ -8236,9 +9357,14 @@ func (o ApplicationStatusHealthPtrOutput) Status() pulumi.StringPtrOutput {
 
 // RevisionHistory contains information relevant to an application deployment
 type ApplicationStatusHistory struct {
+	// DeployStartedAt holds the time the deployment started
+	DeployStartedAt *string `pulumi:"deployStartedAt"`
+	// DeployedAt holds the time the deployment completed
 	DeployedAt string `pulumi:"deployedAt"`
-	Id         int    `pulumi:"id"`
-	Revision   string `pulumi:"revision"`
+	// ID is an auto incrementing identifier of the RevisionHistory
+	Id int `pulumi:"id"`
+	// Revision holds the revision of the sync
+	Revision string `pulumi:"revision"`
 	// ApplicationSource contains information about github repository, path within repository and target application environment.
 	Source *ApplicationStatusHistorySource `pulumi:"source"`
 }
@@ -8256,9 +9382,14 @@ type ApplicationStatusHistoryInput interface {
 
 // RevisionHistory contains information relevant to an application deployment
 type ApplicationStatusHistoryArgs struct {
+	// DeployStartedAt holds the time the deployment started
+	DeployStartedAt pulumi.StringPtrInput `pulumi:"deployStartedAt"`
+	// DeployedAt holds the time the deployment completed
 	DeployedAt pulumi.StringInput `pulumi:"deployedAt"`
-	Id         pulumi.IntInput    `pulumi:"id"`
-	Revision   pulumi.StringInput `pulumi:"revision"`
+	// ID is an auto incrementing identifier of the RevisionHistory
+	Id pulumi.IntInput `pulumi:"id"`
+	// Revision holds the revision of the sync
+	Revision pulumi.StringInput `pulumi:"revision"`
 	// ApplicationSource contains information about github repository, path within repository and target application environment.
 	Source ApplicationStatusHistorySourcePtrInput `pulumi:"source"`
 }
@@ -8315,14 +9446,22 @@ func (o ApplicationStatusHistoryOutput) ToApplicationStatusHistoryOutputWithCont
 	return o
 }
 
+// DeployStartedAt holds the time the deployment started
+func (o ApplicationStatusHistoryOutput) DeployStartedAt() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v ApplicationStatusHistory) *string { return v.DeployStartedAt }).(pulumi.StringPtrOutput)
+}
+
+// DeployedAt holds the time the deployment completed
 func (o ApplicationStatusHistoryOutput) DeployedAt() pulumi.StringOutput {
 	return o.ApplyT(func(v ApplicationStatusHistory) string { return v.DeployedAt }).(pulumi.StringOutput)
 }
 
+// ID is an auto incrementing identifier of the RevisionHistory
 func (o ApplicationStatusHistoryOutput) Id() pulumi.IntOutput {
 	return o.ApplyT(func(v ApplicationStatusHistory) int { return v.Id }).(pulumi.IntOutput)
 }
 
+// Revision holds the revision of the sync
 func (o ApplicationStatusHistoryOutput) Revision() pulumi.StringOutput {
 	return o.ApplyT(func(v ApplicationStatusHistory) string { return v.Revision }).(pulumi.StringOutput)
 }
@@ -8793,6 +9932,8 @@ func (o ApplicationStatusHistorySourceDirectoryPtrOutput) Recurse() pulumi.BoolP
 type ApplicationStatusHistorySourceDirectoryJsonnet struct {
 	// ExtVars is a list of Jsonnet External Variables
 	ExtVars []ApplicationStatusHistorySourceDirectoryJsonnetExtVars `pulumi:"extVars"`
+	// Additional library search dirs
+	Libs []string `pulumi:"libs"`
 	// TLAS is a list of Jsonnet Top-level Arguments
 	Tlas []ApplicationStatusHistorySourceDirectoryJsonnetTlas `pulumi:"tlas"`
 }
@@ -8812,6 +9953,8 @@ type ApplicationStatusHistorySourceDirectoryJsonnetInput interface {
 type ApplicationStatusHistorySourceDirectoryJsonnetArgs struct {
 	// ExtVars is a list of Jsonnet External Variables
 	ExtVars ApplicationStatusHistorySourceDirectoryJsonnetExtVarsArrayInput `pulumi:"extVars"`
+	// Additional library search dirs
+	Libs pulumi.StringArrayInput `pulumi:"libs"`
 	// TLAS is a list of Jsonnet Top-level Arguments
 	Tlas ApplicationStatusHistorySourceDirectoryJsonnetTlasArrayInput `pulumi:"tlas"`
 }
@@ -8901,6 +10044,11 @@ func (o ApplicationStatusHistorySourceDirectoryJsonnetOutput) ExtVars() Applicat
 	}).(ApplicationStatusHistorySourceDirectoryJsonnetExtVarsArrayOutput)
 }
 
+// Additional library search dirs
+func (o ApplicationStatusHistorySourceDirectoryJsonnetOutput) Libs() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v ApplicationStatusHistorySourceDirectoryJsonnet) []string { return v.Libs }).(pulumi.StringArrayOutput)
+}
+
 // TLAS is a list of Jsonnet Top-level Arguments
 func (o ApplicationStatusHistorySourceDirectoryJsonnetOutput) Tlas() ApplicationStatusHistorySourceDirectoryJsonnetTlasArrayOutput {
 	return o.ApplyT(func(v ApplicationStatusHistorySourceDirectoryJsonnet) []ApplicationStatusHistorySourceDirectoryJsonnetTlas {
@@ -8936,6 +10084,16 @@ func (o ApplicationStatusHistorySourceDirectoryJsonnetPtrOutput) ExtVars() Appli
 		}
 		return v.ExtVars
 	}).(ApplicationStatusHistorySourceDirectoryJsonnetExtVarsArrayOutput)
+}
+
+// Additional library search dirs
+func (o ApplicationStatusHistorySourceDirectoryJsonnetPtrOutput) Libs() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v *ApplicationStatusHistorySourceDirectoryJsonnet) []string {
+		if v == nil {
+			return nil
+		}
+		return v.Libs
+	}).(pulumi.StringArrayOutput)
 }
 
 // TLAS is a list of Jsonnet Top-level Arguments
@@ -10387,6 +11545,8 @@ type ApplicationStatusOperationState struct {
 	Operation ApplicationStatusOperationStateOperation `pulumi:"operation"`
 	// Phase is the current phase of the operation
 	Phase string `pulumi:"phase"`
+	// RetryCount contains time of operation retries
+	RetryCount *int `pulumi:"retryCount"`
 	// StartedAt contains time of operation start
 	StartedAt string `pulumi:"startedAt"`
 	// SyncResult is the result of a Sync operation
@@ -10414,6 +11574,8 @@ type ApplicationStatusOperationStateArgs struct {
 	Operation ApplicationStatusOperationStateOperationInput `pulumi:"operation"`
 	// Phase is the current phase of the operation
 	Phase pulumi.StringInput `pulumi:"phase"`
+	// RetryCount contains time of operation retries
+	RetryCount pulumi.IntPtrInput `pulumi:"retryCount"`
 	// StartedAt contains time of operation start
 	StartedAt pulumi.StringInput `pulumi:"startedAt"`
 	// SyncResult is the result of a Sync operation
@@ -10518,6 +11680,11 @@ func (o ApplicationStatusOperationStateOutput) Phase() pulumi.StringOutput {
 	return o.ApplyT(func(v ApplicationStatusOperationState) string { return v.Phase }).(pulumi.StringOutput)
 }
 
+// RetryCount contains time of operation retries
+func (o ApplicationStatusOperationStateOutput) RetryCount() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v ApplicationStatusOperationState) *int { return v.RetryCount }).(pulumi.IntPtrOutput)
+}
+
 // StartedAt contains time of operation start
 func (o ApplicationStatusOperationStateOutput) StartedAt() pulumi.StringOutput {
 	return o.ApplyT(func(v ApplicationStatusOperationState) string { return v.StartedAt }).(pulumi.StringOutput)
@@ -10588,6 +11755,16 @@ func (o ApplicationStatusOperationStatePtrOutput) Phase() pulumi.StringPtrOutput
 	}).(pulumi.StringPtrOutput)
 }
 
+// RetryCount contains time of operation retries
+func (o ApplicationStatusOperationStatePtrOutput) RetryCount() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *ApplicationStatusOperationState) *int {
+		if v == nil {
+			return nil
+		}
+		return v.RetryCount
+	}).(pulumi.IntPtrOutput)
+}
+
 // StartedAt contains time of operation start
 func (o ApplicationStatusOperationStatePtrOutput) StartedAt() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *ApplicationStatusOperationState) *string {
@@ -10613,6 +11790,8 @@ type ApplicationStatusOperationStateOperation struct {
 	Info []ApplicationStatusOperationStateOperationInfo `pulumi:"info"`
 	// OperationInitiator holds information about the operation initiator
 	InitiatedBy *ApplicationStatusOperationStateOperationInitiatedBy `pulumi:"initiatedBy"`
+	// Retry controls failed sync retry behavior
+	Retry *ApplicationStatusOperationStateOperationRetry `pulumi:"retry"`
 	// SyncOperation contains sync operation details.
 	Sync *ApplicationStatusOperationStateOperationSync `pulumi:"sync"`
 }
@@ -10633,6 +11812,8 @@ type ApplicationStatusOperationStateOperationArgs struct {
 	Info ApplicationStatusOperationStateOperationInfoArrayInput `pulumi:"info"`
 	// OperationInitiator holds information about the operation initiator
 	InitiatedBy ApplicationStatusOperationStateOperationInitiatedByPtrInput `pulumi:"initiatedBy"`
+	// Retry controls failed sync retry behavior
+	Retry ApplicationStatusOperationStateOperationRetryPtrInput `pulumi:"retry"`
 	// SyncOperation contains sync operation details.
 	Sync ApplicationStatusOperationStateOperationSyncPtrInput `pulumi:"sync"`
 }
@@ -10727,6 +11908,13 @@ func (o ApplicationStatusOperationStateOperationOutput) InitiatedBy() Applicatio
 	}).(ApplicationStatusOperationStateOperationInitiatedByPtrOutput)
 }
 
+// Retry controls failed sync retry behavior
+func (o ApplicationStatusOperationStateOperationOutput) Retry() ApplicationStatusOperationStateOperationRetryPtrOutput {
+	return o.ApplyT(func(v ApplicationStatusOperationStateOperation) *ApplicationStatusOperationStateOperationRetry {
+		return v.Retry
+	}).(ApplicationStatusOperationStateOperationRetryPtrOutput)
+}
+
 // SyncOperation contains sync operation details.
 func (o ApplicationStatusOperationStateOperationOutput) Sync() ApplicationStatusOperationStateOperationSyncPtrOutput {
 	return o.ApplyT(func(v ApplicationStatusOperationStateOperation) *ApplicationStatusOperationStateOperationSync {
@@ -10769,6 +11957,16 @@ func (o ApplicationStatusOperationStateOperationPtrOutput) InitiatedBy() Applica
 		}
 		return v.InitiatedBy
 	}).(ApplicationStatusOperationStateOperationInitiatedByPtrOutput)
+}
+
+// Retry controls failed sync retry behavior
+func (o ApplicationStatusOperationStateOperationPtrOutput) Retry() ApplicationStatusOperationStateOperationRetryPtrOutput {
+	return o.ApplyT(func(v *ApplicationStatusOperationStateOperation) *ApplicationStatusOperationStateOperationRetry {
+		if v == nil {
+			return nil
+		}
+		return v.Retry
+	}).(ApplicationStatusOperationStateOperationRetryPtrOutput)
 }
 
 // SyncOperation contains sync operation details.
@@ -11033,6 +12231,337 @@ func (o ApplicationStatusOperationStateOperationInitiatedByPtrOutput) Username()
 			return nil
 		}
 		return v.Username
+	}).(pulumi.StringPtrOutput)
+}
+
+// Retry controls failed sync retry behavior
+type ApplicationStatusOperationStateOperationRetry struct {
+	// Backoff is a backoff strategy
+	Backoff *ApplicationStatusOperationStateOperationRetryBackoff `pulumi:"backoff"`
+	// Limit is the maximum number of attempts when retrying a container
+	Limit *int `pulumi:"limit"`
+}
+
+// ApplicationStatusOperationStateOperationRetryInput is an input type that accepts ApplicationStatusOperationStateOperationRetryArgs and ApplicationStatusOperationStateOperationRetryOutput values.
+// You can construct a concrete instance of `ApplicationStatusOperationStateOperationRetryInput` via:
+//
+//          ApplicationStatusOperationStateOperationRetryArgs{...}
+type ApplicationStatusOperationStateOperationRetryInput interface {
+	pulumi.Input
+
+	ToApplicationStatusOperationStateOperationRetryOutput() ApplicationStatusOperationStateOperationRetryOutput
+	ToApplicationStatusOperationStateOperationRetryOutputWithContext(context.Context) ApplicationStatusOperationStateOperationRetryOutput
+}
+
+// Retry controls failed sync retry behavior
+type ApplicationStatusOperationStateOperationRetryArgs struct {
+	// Backoff is a backoff strategy
+	Backoff ApplicationStatusOperationStateOperationRetryBackoffPtrInput `pulumi:"backoff"`
+	// Limit is the maximum number of attempts when retrying a container
+	Limit pulumi.IntPtrInput `pulumi:"limit"`
+}
+
+func (ApplicationStatusOperationStateOperationRetryArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*ApplicationStatusOperationStateOperationRetry)(nil)).Elem()
+}
+
+func (i ApplicationStatusOperationStateOperationRetryArgs) ToApplicationStatusOperationStateOperationRetryOutput() ApplicationStatusOperationStateOperationRetryOutput {
+	return i.ToApplicationStatusOperationStateOperationRetryOutputWithContext(context.Background())
+}
+
+func (i ApplicationStatusOperationStateOperationRetryArgs) ToApplicationStatusOperationStateOperationRetryOutputWithContext(ctx context.Context) ApplicationStatusOperationStateOperationRetryOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(ApplicationStatusOperationStateOperationRetryOutput)
+}
+
+func (i ApplicationStatusOperationStateOperationRetryArgs) ToApplicationStatusOperationStateOperationRetryPtrOutput() ApplicationStatusOperationStateOperationRetryPtrOutput {
+	return i.ToApplicationStatusOperationStateOperationRetryPtrOutputWithContext(context.Background())
+}
+
+func (i ApplicationStatusOperationStateOperationRetryArgs) ToApplicationStatusOperationStateOperationRetryPtrOutputWithContext(ctx context.Context) ApplicationStatusOperationStateOperationRetryPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(ApplicationStatusOperationStateOperationRetryOutput).ToApplicationStatusOperationStateOperationRetryPtrOutputWithContext(ctx)
+}
+
+// ApplicationStatusOperationStateOperationRetryPtrInput is an input type that accepts ApplicationStatusOperationStateOperationRetryArgs, ApplicationStatusOperationStateOperationRetryPtr and ApplicationStatusOperationStateOperationRetryPtrOutput values.
+// You can construct a concrete instance of `ApplicationStatusOperationStateOperationRetryPtrInput` via:
+//
+//          ApplicationStatusOperationStateOperationRetryArgs{...}
+//
+//  or:
+//
+//          nil
+type ApplicationStatusOperationStateOperationRetryPtrInput interface {
+	pulumi.Input
+
+	ToApplicationStatusOperationStateOperationRetryPtrOutput() ApplicationStatusOperationStateOperationRetryPtrOutput
+	ToApplicationStatusOperationStateOperationRetryPtrOutputWithContext(context.Context) ApplicationStatusOperationStateOperationRetryPtrOutput
+}
+
+type applicationStatusOperationStateOperationRetryPtrType ApplicationStatusOperationStateOperationRetryArgs
+
+func ApplicationStatusOperationStateOperationRetryPtr(v *ApplicationStatusOperationStateOperationRetryArgs) ApplicationStatusOperationStateOperationRetryPtrInput {
+	return (*applicationStatusOperationStateOperationRetryPtrType)(v)
+}
+
+func (*applicationStatusOperationStateOperationRetryPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**ApplicationStatusOperationStateOperationRetry)(nil)).Elem()
+}
+
+func (i *applicationStatusOperationStateOperationRetryPtrType) ToApplicationStatusOperationStateOperationRetryPtrOutput() ApplicationStatusOperationStateOperationRetryPtrOutput {
+	return i.ToApplicationStatusOperationStateOperationRetryPtrOutputWithContext(context.Background())
+}
+
+func (i *applicationStatusOperationStateOperationRetryPtrType) ToApplicationStatusOperationStateOperationRetryPtrOutputWithContext(ctx context.Context) ApplicationStatusOperationStateOperationRetryPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(ApplicationStatusOperationStateOperationRetryPtrOutput)
+}
+
+// Retry controls failed sync retry behavior
+type ApplicationStatusOperationStateOperationRetryOutput struct{ *pulumi.OutputState }
+
+func (ApplicationStatusOperationStateOperationRetryOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*ApplicationStatusOperationStateOperationRetry)(nil)).Elem()
+}
+
+func (o ApplicationStatusOperationStateOperationRetryOutput) ToApplicationStatusOperationStateOperationRetryOutput() ApplicationStatusOperationStateOperationRetryOutput {
+	return o
+}
+
+func (o ApplicationStatusOperationStateOperationRetryOutput) ToApplicationStatusOperationStateOperationRetryOutputWithContext(ctx context.Context) ApplicationStatusOperationStateOperationRetryOutput {
+	return o
+}
+
+func (o ApplicationStatusOperationStateOperationRetryOutput) ToApplicationStatusOperationStateOperationRetryPtrOutput() ApplicationStatusOperationStateOperationRetryPtrOutput {
+	return o.ToApplicationStatusOperationStateOperationRetryPtrOutputWithContext(context.Background())
+}
+
+func (o ApplicationStatusOperationStateOperationRetryOutput) ToApplicationStatusOperationStateOperationRetryPtrOutputWithContext(ctx context.Context) ApplicationStatusOperationStateOperationRetryPtrOutput {
+	return o.ApplyT(func(v ApplicationStatusOperationStateOperationRetry) *ApplicationStatusOperationStateOperationRetry {
+		return &v
+	}).(ApplicationStatusOperationStateOperationRetryPtrOutput)
+}
+
+// Backoff is a backoff strategy
+func (o ApplicationStatusOperationStateOperationRetryOutput) Backoff() ApplicationStatusOperationStateOperationRetryBackoffPtrOutput {
+	return o.ApplyT(func(v ApplicationStatusOperationStateOperationRetry) *ApplicationStatusOperationStateOperationRetryBackoff {
+		return v.Backoff
+	}).(ApplicationStatusOperationStateOperationRetryBackoffPtrOutput)
+}
+
+// Limit is the maximum number of attempts when retrying a container
+func (o ApplicationStatusOperationStateOperationRetryOutput) Limit() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v ApplicationStatusOperationStateOperationRetry) *int { return v.Limit }).(pulumi.IntPtrOutput)
+}
+
+type ApplicationStatusOperationStateOperationRetryPtrOutput struct{ *pulumi.OutputState }
+
+func (ApplicationStatusOperationStateOperationRetryPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**ApplicationStatusOperationStateOperationRetry)(nil)).Elem()
+}
+
+func (o ApplicationStatusOperationStateOperationRetryPtrOutput) ToApplicationStatusOperationStateOperationRetryPtrOutput() ApplicationStatusOperationStateOperationRetryPtrOutput {
+	return o
+}
+
+func (o ApplicationStatusOperationStateOperationRetryPtrOutput) ToApplicationStatusOperationStateOperationRetryPtrOutputWithContext(ctx context.Context) ApplicationStatusOperationStateOperationRetryPtrOutput {
+	return o
+}
+
+func (o ApplicationStatusOperationStateOperationRetryPtrOutput) Elem() ApplicationStatusOperationStateOperationRetryOutput {
+	return o.ApplyT(func(v *ApplicationStatusOperationStateOperationRetry) ApplicationStatusOperationStateOperationRetry {
+		return *v
+	}).(ApplicationStatusOperationStateOperationRetryOutput)
+}
+
+// Backoff is a backoff strategy
+func (o ApplicationStatusOperationStateOperationRetryPtrOutput) Backoff() ApplicationStatusOperationStateOperationRetryBackoffPtrOutput {
+	return o.ApplyT(func(v *ApplicationStatusOperationStateOperationRetry) *ApplicationStatusOperationStateOperationRetryBackoff {
+		if v == nil {
+			return nil
+		}
+		return v.Backoff
+	}).(ApplicationStatusOperationStateOperationRetryBackoffPtrOutput)
+}
+
+// Limit is the maximum number of attempts when retrying a container
+func (o ApplicationStatusOperationStateOperationRetryPtrOutput) Limit() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *ApplicationStatusOperationStateOperationRetry) *int {
+		if v == nil {
+			return nil
+		}
+		return v.Limit
+	}).(pulumi.IntPtrOutput)
+}
+
+// Backoff is a backoff strategy
+type ApplicationStatusOperationStateOperationRetryBackoff struct {
+	// Duration is the amount to back off. Default unit is seconds, but could also be a duration (e.g. "2m", "1h")
+	Duration *string `pulumi:"duration"`
+	// Factor is a factor to multiply the base duration after each failed retry
+	Factor *int `pulumi:"factor"`
+	// MaxDuration is the maximum amount of time allowed for the backoff strategy
+	MaxDuration *string `pulumi:"maxDuration"`
+}
+
+// ApplicationStatusOperationStateOperationRetryBackoffInput is an input type that accepts ApplicationStatusOperationStateOperationRetryBackoffArgs and ApplicationStatusOperationStateOperationRetryBackoffOutput values.
+// You can construct a concrete instance of `ApplicationStatusOperationStateOperationRetryBackoffInput` via:
+//
+//          ApplicationStatusOperationStateOperationRetryBackoffArgs{...}
+type ApplicationStatusOperationStateOperationRetryBackoffInput interface {
+	pulumi.Input
+
+	ToApplicationStatusOperationStateOperationRetryBackoffOutput() ApplicationStatusOperationStateOperationRetryBackoffOutput
+	ToApplicationStatusOperationStateOperationRetryBackoffOutputWithContext(context.Context) ApplicationStatusOperationStateOperationRetryBackoffOutput
+}
+
+// Backoff is a backoff strategy
+type ApplicationStatusOperationStateOperationRetryBackoffArgs struct {
+	// Duration is the amount to back off. Default unit is seconds, but could also be a duration (e.g. "2m", "1h")
+	Duration pulumi.StringPtrInput `pulumi:"duration"`
+	// Factor is a factor to multiply the base duration after each failed retry
+	Factor pulumi.IntPtrInput `pulumi:"factor"`
+	// MaxDuration is the maximum amount of time allowed for the backoff strategy
+	MaxDuration pulumi.StringPtrInput `pulumi:"maxDuration"`
+}
+
+func (ApplicationStatusOperationStateOperationRetryBackoffArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*ApplicationStatusOperationStateOperationRetryBackoff)(nil)).Elem()
+}
+
+func (i ApplicationStatusOperationStateOperationRetryBackoffArgs) ToApplicationStatusOperationStateOperationRetryBackoffOutput() ApplicationStatusOperationStateOperationRetryBackoffOutput {
+	return i.ToApplicationStatusOperationStateOperationRetryBackoffOutputWithContext(context.Background())
+}
+
+func (i ApplicationStatusOperationStateOperationRetryBackoffArgs) ToApplicationStatusOperationStateOperationRetryBackoffOutputWithContext(ctx context.Context) ApplicationStatusOperationStateOperationRetryBackoffOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(ApplicationStatusOperationStateOperationRetryBackoffOutput)
+}
+
+func (i ApplicationStatusOperationStateOperationRetryBackoffArgs) ToApplicationStatusOperationStateOperationRetryBackoffPtrOutput() ApplicationStatusOperationStateOperationRetryBackoffPtrOutput {
+	return i.ToApplicationStatusOperationStateOperationRetryBackoffPtrOutputWithContext(context.Background())
+}
+
+func (i ApplicationStatusOperationStateOperationRetryBackoffArgs) ToApplicationStatusOperationStateOperationRetryBackoffPtrOutputWithContext(ctx context.Context) ApplicationStatusOperationStateOperationRetryBackoffPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(ApplicationStatusOperationStateOperationRetryBackoffOutput).ToApplicationStatusOperationStateOperationRetryBackoffPtrOutputWithContext(ctx)
+}
+
+// ApplicationStatusOperationStateOperationRetryBackoffPtrInput is an input type that accepts ApplicationStatusOperationStateOperationRetryBackoffArgs, ApplicationStatusOperationStateOperationRetryBackoffPtr and ApplicationStatusOperationStateOperationRetryBackoffPtrOutput values.
+// You can construct a concrete instance of `ApplicationStatusOperationStateOperationRetryBackoffPtrInput` via:
+//
+//          ApplicationStatusOperationStateOperationRetryBackoffArgs{...}
+//
+//  or:
+//
+//          nil
+type ApplicationStatusOperationStateOperationRetryBackoffPtrInput interface {
+	pulumi.Input
+
+	ToApplicationStatusOperationStateOperationRetryBackoffPtrOutput() ApplicationStatusOperationStateOperationRetryBackoffPtrOutput
+	ToApplicationStatusOperationStateOperationRetryBackoffPtrOutputWithContext(context.Context) ApplicationStatusOperationStateOperationRetryBackoffPtrOutput
+}
+
+type applicationStatusOperationStateOperationRetryBackoffPtrType ApplicationStatusOperationStateOperationRetryBackoffArgs
+
+func ApplicationStatusOperationStateOperationRetryBackoffPtr(v *ApplicationStatusOperationStateOperationRetryBackoffArgs) ApplicationStatusOperationStateOperationRetryBackoffPtrInput {
+	return (*applicationStatusOperationStateOperationRetryBackoffPtrType)(v)
+}
+
+func (*applicationStatusOperationStateOperationRetryBackoffPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**ApplicationStatusOperationStateOperationRetryBackoff)(nil)).Elem()
+}
+
+func (i *applicationStatusOperationStateOperationRetryBackoffPtrType) ToApplicationStatusOperationStateOperationRetryBackoffPtrOutput() ApplicationStatusOperationStateOperationRetryBackoffPtrOutput {
+	return i.ToApplicationStatusOperationStateOperationRetryBackoffPtrOutputWithContext(context.Background())
+}
+
+func (i *applicationStatusOperationStateOperationRetryBackoffPtrType) ToApplicationStatusOperationStateOperationRetryBackoffPtrOutputWithContext(ctx context.Context) ApplicationStatusOperationStateOperationRetryBackoffPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(ApplicationStatusOperationStateOperationRetryBackoffPtrOutput)
+}
+
+// Backoff is a backoff strategy
+type ApplicationStatusOperationStateOperationRetryBackoffOutput struct{ *pulumi.OutputState }
+
+func (ApplicationStatusOperationStateOperationRetryBackoffOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*ApplicationStatusOperationStateOperationRetryBackoff)(nil)).Elem()
+}
+
+func (o ApplicationStatusOperationStateOperationRetryBackoffOutput) ToApplicationStatusOperationStateOperationRetryBackoffOutput() ApplicationStatusOperationStateOperationRetryBackoffOutput {
+	return o
+}
+
+func (o ApplicationStatusOperationStateOperationRetryBackoffOutput) ToApplicationStatusOperationStateOperationRetryBackoffOutputWithContext(ctx context.Context) ApplicationStatusOperationStateOperationRetryBackoffOutput {
+	return o
+}
+
+func (o ApplicationStatusOperationStateOperationRetryBackoffOutput) ToApplicationStatusOperationStateOperationRetryBackoffPtrOutput() ApplicationStatusOperationStateOperationRetryBackoffPtrOutput {
+	return o.ToApplicationStatusOperationStateOperationRetryBackoffPtrOutputWithContext(context.Background())
+}
+
+func (o ApplicationStatusOperationStateOperationRetryBackoffOutput) ToApplicationStatusOperationStateOperationRetryBackoffPtrOutputWithContext(ctx context.Context) ApplicationStatusOperationStateOperationRetryBackoffPtrOutput {
+	return o.ApplyT(func(v ApplicationStatusOperationStateOperationRetryBackoff) *ApplicationStatusOperationStateOperationRetryBackoff {
+		return &v
+	}).(ApplicationStatusOperationStateOperationRetryBackoffPtrOutput)
+}
+
+// Duration is the amount to back off. Default unit is seconds, but could also be a duration (e.g. "2m", "1h")
+func (o ApplicationStatusOperationStateOperationRetryBackoffOutput) Duration() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v ApplicationStatusOperationStateOperationRetryBackoff) *string { return v.Duration }).(pulumi.StringPtrOutput)
+}
+
+// Factor is a factor to multiply the base duration after each failed retry
+func (o ApplicationStatusOperationStateOperationRetryBackoffOutput) Factor() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v ApplicationStatusOperationStateOperationRetryBackoff) *int { return v.Factor }).(pulumi.IntPtrOutput)
+}
+
+// MaxDuration is the maximum amount of time allowed for the backoff strategy
+func (o ApplicationStatusOperationStateOperationRetryBackoffOutput) MaxDuration() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v ApplicationStatusOperationStateOperationRetryBackoff) *string { return v.MaxDuration }).(pulumi.StringPtrOutput)
+}
+
+type ApplicationStatusOperationStateOperationRetryBackoffPtrOutput struct{ *pulumi.OutputState }
+
+func (ApplicationStatusOperationStateOperationRetryBackoffPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**ApplicationStatusOperationStateOperationRetryBackoff)(nil)).Elem()
+}
+
+func (o ApplicationStatusOperationStateOperationRetryBackoffPtrOutput) ToApplicationStatusOperationStateOperationRetryBackoffPtrOutput() ApplicationStatusOperationStateOperationRetryBackoffPtrOutput {
+	return o
+}
+
+func (o ApplicationStatusOperationStateOperationRetryBackoffPtrOutput) ToApplicationStatusOperationStateOperationRetryBackoffPtrOutputWithContext(ctx context.Context) ApplicationStatusOperationStateOperationRetryBackoffPtrOutput {
+	return o
+}
+
+func (o ApplicationStatusOperationStateOperationRetryBackoffPtrOutput) Elem() ApplicationStatusOperationStateOperationRetryBackoffOutput {
+	return o.ApplyT(func(v *ApplicationStatusOperationStateOperationRetryBackoff) ApplicationStatusOperationStateOperationRetryBackoff {
+		return *v
+	}).(ApplicationStatusOperationStateOperationRetryBackoffOutput)
+}
+
+// Duration is the amount to back off. Default unit is seconds, but could also be a duration (e.g. "2m", "1h")
+func (o ApplicationStatusOperationStateOperationRetryBackoffPtrOutput) Duration() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *ApplicationStatusOperationStateOperationRetryBackoff) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Duration
+	}).(pulumi.StringPtrOutput)
+}
+
+// Factor is a factor to multiply the base duration after each failed retry
+func (o ApplicationStatusOperationStateOperationRetryBackoffPtrOutput) Factor() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *ApplicationStatusOperationStateOperationRetryBackoff) *int {
+		if v == nil {
+			return nil
+		}
+		return v.Factor
+	}).(pulumi.IntPtrOutput)
+}
+
+// MaxDuration is the maximum amount of time allowed for the backoff strategy
+func (o ApplicationStatusOperationStateOperationRetryBackoffPtrOutput) MaxDuration() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *ApplicationStatusOperationStateOperationRetryBackoff) *string {
+		if v == nil {
+			return nil
+		}
+		return v.MaxDuration
 	}).(pulumi.StringPtrOutput)
 }
 
@@ -11313,9 +12842,10 @@ func (o ApplicationStatusOperationStateOperationSyncPtrOutput) SyncStrategy() Ap
 
 // SyncOperationResource contains resources to sync.
 type ApplicationStatusOperationStateOperationSyncResources struct {
-	Group *string `pulumi:"group"`
-	Kind  string  `pulumi:"kind"`
-	Name  string  `pulumi:"name"`
+	Group     *string `pulumi:"group"`
+	Kind      string  `pulumi:"kind"`
+	Name      string  `pulumi:"name"`
+	Namespace *string `pulumi:"namespace"`
 }
 
 // ApplicationStatusOperationStateOperationSyncResourcesInput is an input type that accepts ApplicationStatusOperationStateOperationSyncResourcesArgs and ApplicationStatusOperationStateOperationSyncResourcesOutput values.
@@ -11331,9 +12861,10 @@ type ApplicationStatusOperationStateOperationSyncResourcesInput interface {
 
 // SyncOperationResource contains resources to sync.
 type ApplicationStatusOperationStateOperationSyncResourcesArgs struct {
-	Group pulumi.StringPtrInput `pulumi:"group"`
-	Kind  pulumi.StringInput    `pulumi:"kind"`
-	Name  pulumi.StringInput    `pulumi:"name"`
+	Group     pulumi.StringPtrInput `pulumi:"group"`
+	Kind      pulumi.StringInput    `pulumi:"kind"`
+	Name      pulumi.StringInput    `pulumi:"name"`
+	Namespace pulumi.StringPtrInput `pulumi:"namespace"`
 }
 
 func (ApplicationStatusOperationStateOperationSyncResourcesArgs) ElementType() reflect.Type {
@@ -11398,6 +12929,10 @@ func (o ApplicationStatusOperationStateOperationSyncResourcesOutput) Kind() pulu
 
 func (o ApplicationStatusOperationStateOperationSyncResourcesOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v ApplicationStatusOperationStateOperationSyncResources) string { return v.Name }).(pulumi.StringOutput)
+}
+
+func (o ApplicationStatusOperationStateOperationSyncResourcesOutput) Namespace() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v ApplicationStatusOperationStateOperationSyncResources) *string { return v.Namespace }).(pulumi.StringPtrOutput)
 }
 
 type ApplicationStatusOperationStateOperationSyncResourcesArrayOutput struct{ *pulumi.OutputState }
@@ -11875,6 +13410,8 @@ func (o ApplicationStatusOperationStateOperationSyncSourceDirectoryPtrOutput) Re
 type ApplicationStatusOperationStateOperationSyncSourceDirectoryJsonnet struct {
 	// ExtVars is a list of Jsonnet External Variables
 	ExtVars []ApplicationStatusOperationStateOperationSyncSourceDirectoryJsonnetExtVars `pulumi:"extVars"`
+	// Additional library search dirs
+	Libs []string `pulumi:"libs"`
 	// TLAS is a list of Jsonnet Top-level Arguments
 	Tlas []ApplicationStatusOperationStateOperationSyncSourceDirectoryJsonnetTlas `pulumi:"tlas"`
 }
@@ -11894,6 +13431,8 @@ type ApplicationStatusOperationStateOperationSyncSourceDirectoryJsonnetInput int
 type ApplicationStatusOperationStateOperationSyncSourceDirectoryJsonnetArgs struct {
 	// ExtVars is a list of Jsonnet External Variables
 	ExtVars ApplicationStatusOperationStateOperationSyncSourceDirectoryJsonnetExtVarsArrayInput `pulumi:"extVars"`
+	// Additional library search dirs
+	Libs pulumi.StringArrayInput `pulumi:"libs"`
 	// TLAS is a list of Jsonnet Top-level Arguments
 	Tlas ApplicationStatusOperationStateOperationSyncSourceDirectoryJsonnetTlasArrayInput `pulumi:"tlas"`
 }
@@ -11983,6 +13522,11 @@ func (o ApplicationStatusOperationStateOperationSyncSourceDirectoryJsonnetOutput
 	}).(ApplicationStatusOperationStateOperationSyncSourceDirectoryJsonnetExtVarsArrayOutput)
 }
 
+// Additional library search dirs
+func (o ApplicationStatusOperationStateOperationSyncSourceDirectoryJsonnetOutput) Libs() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v ApplicationStatusOperationStateOperationSyncSourceDirectoryJsonnet) []string { return v.Libs }).(pulumi.StringArrayOutput)
+}
+
 // TLAS is a list of Jsonnet Top-level Arguments
 func (o ApplicationStatusOperationStateOperationSyncSourceDirectoryJsonnetOutput) Tlas() ApplicationStatusOperationStateOperationSyncSourceDirectoryJsonnetTlasArrayOutput {
 	return o.ApplyT(func(v ApplicationStatusOperationStateOperationSyncSourceDirectoryJsonnet) []ApplicationStatusOperationStateOperationSyncSourceDirectoryJsonnetTlas {
@@ -12018,6 +13562,16 @@ func (o ApplicationStatusOperationStateOperationSyncSourceDirectoryJsonnetPtrOut
 		}
 		return v.ExtVars
 	}).(ApplicationStatusOperationStateOperationSyncSourceDirectoryJsonnetExtVarsArrayOutput)
+}
+
+// Additional library search dirs
+func (o ApplicationStatusOperationStateOperationSyncSourceDirectoryJsonnetPtrOutput) Libs() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v *ApplicationStatusOperationStateOperationSyncSourceDirectoryJsonnet) []string {
+		if v == nil {
+			return nil
+		}
+		return v.Libs
+	}).(pulumi.StringArrayOutput)
 }
 
 // TLAS is a list of Jsonnet Top-level Arguments
@@ -14707,6 +16261,8 @@ func (o ApplicationStatusOperationStateSyncResultSourceDirectoryPtrOutput) Recur
 type ApplicationStatusOperationStateSyncResultSourceDirectoryJsonnet struct {
 	// ExtVars is a list of Jsonnet External Variables
 	ExtVars []ApplicationStatusOperationStateSyncResultSourceDirectoryJsonnetExtVars `pulumi:"extVars"`
+	// Additional library search dirs
+	Libs []string `pulumi:"libs"`
 	// TLAS is a list of Jsonnet Top-level Arguments
 	Tlas []ApplicationStatusOperationStateSyncResultSourceDirectoryJsonnetTlas `pulumi:"tlas"`
 }
@@ -14726,6 +16282,8 @@ type ApplicationStatusOperationStateSyncResultSourceDirectoryJsonnetInput interf
 type ApplicationStatusOperationStateSyncResultSourceDirectoryJsonnetArgs struct {
 	// ExtVars is a list of Jsonnet External Variables
 	ExtVars ApplicationStatusOperationStateSyncResultSourceDirectoryJsonnetExtVarsArrayInput `pulumi:"extVars"`
+	// Additional library search dirs
+	Libs pulumi.StringArrayInput `pulumi:"libs"`
 	// TLAS is a list of Jsonnet Top-level Arguments
 	Tlas ApplicationStatusOperationStateSyncResultSourceDirectoryJsonnetTlasArrayInput `pulumi:"tlas"`
 }
@@ -14815,6 +16373,11 @@ func (o ApplicationStatusOperationStateSyncResultSourceDirectoryJsonnetOutput) E
 	}).(ApplicationStatusOperationStateSyncResultSourceDirectoryJsonnetExtVarsArrayOutput)
 }
 
+// Additional library search dirs
+func (o ApplicationStatusOperationStateSyncResultSourceDirectoryJsonnetOutput) Libs() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v ApplicationStatusOperationStateSyncResultSourceDirectoryJsonnet) []string { return v.Libs }).(pulumi.StringArrayOutput)
+}
+
 // TLAS is a list of Jsonnet Top-level Arguments
 func (o ApplicationStatusOperationStateSyncResultSourceDirectoryJsonnetOutput) Tlas() ApplicationStatusOperationStateSyncResultSourceDirectoryJsonnetTlasArrayOutput {
 	return o.ApplyT(func(v ApplicationStatusOperationStateSyncResultSourceDirectoryJsonnet) []ApplicationStatusOperationStateSyncResultSourceDirectoryJsonnetTlas {
@@ -14850,6 +16413,16 @@ func (o ApplicationStatusOperationStateSyncResultSourceDirectoryJsonnetPtrOutput
 		}
 		return v.ExtVars
 	}).(ApplicationStatusOperationStateSyncResultSourceDirectoryJsonnetExtVarsArrayOutput)
+}
+
+// Additional library search dirs
+func (o ApplicationStatusOperationStateSyncResultSourceDirectoryJsonnetPtrOutput) Libs() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v *ApplicationStatusOperationStateSyncResultSourceDirectoryJsonnet) []string {
+		if v == nil {
+			return nil
+		}
+		return v.Libs
+	}).(pulumi.StringArrayOutput)
 }
 
 // TLAS is a list of Jsonnet Top-level Arguments
@@ -17071,6 +18644,8 @@ func (o ApplicationStatusSyncComparedToPtrOutput) Source() ApplicationStatusSync
 
 // ApplicationDestination contains deployment destination information
 type ApplicationStatusSyncComparedToDestination struct {
+	// Name of the destination cluster which can be used instead of server (url) field
+	Name *string `pulumi:"name"`
 	// Namespace overrides the environment namespace value in the ksonnet app.yaml
 	Namespace *string `pulumi:"namespace"`
 	// Server overrides the environment server value in the ksonnet app.yaml
@@ -17090,6 +18665,8 @@ type ApplicationStatusSyncComparedToDestinationInput interface {
 
 // ApplicationDestination contains deployment destination information
 type ApplicationStatusSyncComparedToDestinationArgs struct {
+	// Name of the destination cluster which can be used instead of server (url) field
+	Name pulumi.StringPtrInput `pulumi:"name"`
 	// Namespace overrides the environment namespace value in the ksonnet app.yaml
 	Namespace pulumi.StringPtrInput `pulumi:"namespace"`
 	// Server overrides the environment server value in the ksonnet app.yaml
@@ -17174,6 +18751,11 @@ func (o ApplicationStatusSyncComparedToDestinationOutput) ToApplicationStatusSyn
 	}).(ApplicationStatusSyncComparedToDestinationPtrOutput)
 }
 
+// Name of the destination cluster which can be used instead of server (url) field
+func (o ApplicationStatusSyncComparedToDestinationOutput) Name() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v ApplicationStatusSyncComparedToDestination) *string { return v.Name }).(pulumi.StringPtrOutput)
+}
+
 // Namespace overrides the environment namespace value in the ksonnet app.yaml
 func (o ApplicationStatusSyncComparedToDestinationOutput) Namespace() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v ApplicationStatusSyncComparedToDestination) *string { return v.Namespace }).(pulumi.StringPtrOutput)
@@ -17202,6 +18784,16 @@ func (o ApplicationStatusSyncComparedToDestinationPtrOutput) Elem() ApplicationS
 	return o.ApplyT(func(v *ApplicationStatusSyncComparedToDestination) ApplicationStatusSyncComparedToDestination {
 		return *v
 	}).(ApplicationStatusSyncComparedToDestinationOutput)
+}
+
+// Name of the destination cluster which can be used instead of server (url) field
+func (o ApplicationStatusSyncComparedToDestinationPtrOutput) Name() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *ApplicationStatusSyncComparedToDestination) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Name
+	}).(pulumi.StringPtrOutput)
 }
 
 // Namespace overrides the environment namespace value in the ksonnet app.yaml
@@ -17677,6 +19269,8 @@ func (o ApplicationStatusSyncComparedToSourceDirectoryPtrOutput) Recurse() pulum
 type ApplicationStatusSyncComparedToSourceDirectoryJsonnet struct {
 	// ExtVars is a list of Jsonnet External Variables
 	ExtVars []ApplicationStatusSyncComparedToSourceDirectoryJsonnetExtVars `pulumi:"extVars"`
+	// Additional library search dirs
+	Libs []string `pulumi:"libs"`
 	// TLAS is a list of Jsonnet Top-level Arguments
 	Tlas []ApplicationStatusSyncComparedToSourceDirectoryJsonnetTlas `pulumi:"tlas"`
 }
@@ -17696,6 +19290,8 @@ type ApplicationStatusSyncComparedToSourceDirectoryJsonnetInput interface {
 type ApplicationStatusSyncComparedToSourceDirectoryJsonnetArgs struct {
 	// ExtVars is a list of Jsonnet External Variables
 	ExtVars ApplicationStatusSyncComparedToSourceDirectoryJsonnetExtVarsArrayInput `pulumi:"extVars"`
+	// Additional library search dirs
+	Libs pulumi.StringArrayInput `pulumi:"libs"`
 	// TLAS is a list of Jsonnet Top-level Arguments
 	Tlas ApplicationStatusSyncComparedToSourceDirectoryJsonnetTlasArrayInput `pulumi:"tlas"`
 }
@@ -17785,6 +19381,11 @@ func (o ApplicationStatusSyncComparedToSourceDirectoryJsonnetOutput) ExtVars() A
 	}).(ApplicationStatusSyncComparedToSourceDirectoryJsonnetExtVarsArrayOutput)
 }
 
+// Additional library search dirs
+func (o ApplicationStatusSyncComparedToSourceDirectoryJsonnetOutput) Libs() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v ApplicationStatusSyncComparedToSourceDirectoryJsonnet) []string { return v.Libs }).(pulumi.StringArrayOutput)
+}
+
 // TLAS is a list of Jsonnet Top-level Arguments
 func (o ApplicationStatusSyncComparedToSourceDirectoryJsonnetOutput) Tlas() ApplicationStatusSyncComparedToSourceDirectoryJsonnetTlasArrayOutput {
 	return o.ApplyT(func(v ApplicationStatusSyncComparedToSourceDirectoryJsonnet) []ApplicationStatusSyncComparedToSourceDirectoryJsonnetTlas {
@@ -17820,6 +19421,16 @@ func (o ApplicationStatusSyncComparedToSourceDirectoryJsonnetPtrOutput) ExtVars(
 		}
 		return v.ExtVars
 	}).(ApplicationStatusSyncComparedToSourceDirectoryJsonnetExtVarsArrayOutput)
+}
+
+// Additional library search dirs
+func (o ApplicationStatusSyncComparedToSourceDirectoryJsonnetPtrOutput) Libs() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v *ApplicationStatusSyncComparedToSourceDirectoryJsonnet) []string {
+		if v == nil {
+			return nil
+		}
+		return v.Libs
+	}).(pulumi.StringArrayOutput)
 }
 
 // TLAS is a list of Jsonnet Top-level Arguments
@@ -19864,7 +21475,7 @@ func (o ArgoCDExportSpecStoragePtrOutput) SecretName() pulumi.StringPtrOutput {
 type ArgoCDExportSpecStoragePvc struct {
 	// AccessModes contains the desired access modes the volume should have. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#access-modes-1
 	AccessModes []string `pulumi:"accessModes"`
-	// This field requires the VolumeSnapshotDataSource alpha feature gate to be enabled and currently VolumeSnapshot is the only supported data source. If the provisioner can support VolumeSnapshot data source, it will create a new volume and data will be restored to the volume at the same time. If the provisioner does not support VolumeSnapshot data source, volume will not be created and the failure will be reported as an event. In the future, we plan to support more data source types and the behavior of the provisioner may change.
+	// This field can be used to specify either: * An existing VolumeSnapshot object (snapshot.storage.k8s.io/VolumeSnapshot - Beta) * An existing PVC (PersistentVolumeClaim) * An existing custom resource/object that implements data population (Alpha) In order to use VolumeSnapshot object types, the appropriate feature gate must be enabled (VolumeSnapshotDataSource or AnyVolumeDataSource) If the provisioner or an external controller can support the specified data source, it will create a new volume based on the contents of the specified data source. If the specified data source is not supported, the volume will not be created and the failure will be reported as an event. In the future, we plan to support more data source types and the behavior of the provisioner may change.
 	DataSource *ArgoCDExportSpecStoragePvcDataSource `pulumi:"dataSource"`
 	// Resources represents the minimum resources the volume should have. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#resources
 	Resources *ArgoCDExportSpecStoragePvcResources `pulumi:"resources"`
@@ -19872,7 +21483,7 @@ type ArgoCDExportSpecStoragePvc struct {
 	Selector *ArgoCDExportSpecStoragePvcSelector `pulumi:"selector"`
 	// Name of the StorageClass required by the claim. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#class-1
 	StorageClassName *string `pulumi:"storageClassName"`
-	// volumeMode defines what type of volume is required by the claim. Value of Filesystem is implied when not included in claim spec. This is a beta feature.
+	// volumeMode defines what type of volume is required by the claim. Value of Filesystem is implied when not included in claim spec.
 	VolumeMode *string `pulumi:"volumeMode"`
 	// VolumeName is the binding reference to the PersistentVolume backing this claim.
 	VolumeName *string `pulumi:"volumeName"`
@@ -19893,7 +21504,7 @@ type ArgoCDExportSpecStoragePvcInput interface {
 type ArgoCDExportSpecStoragePvcArgs struct {
 	// AccessModes contains the desired access modes the volume should have. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#access-modes-1
 	AccessModes pulumi.StringArrayInput `pulumi:"accessModes"`
-	// This field requires the VolumeSnapshotDataSource alpha feature gate to be enabled and currently VolumeSnapshot is the only supported data source. If the provisioner can support VolumeSnapshot data source, it will create a new volume and data will be restored to the volume at the same time. If the provisioner does not support VolumeSnapshot data source, volume will not be created and the failure will be reported as an event. In the future, we plan to support more data source types and the behavior of the provisioner may change.
+	// This field can be used to specify either: * An existing VolumeSnapshot object (snapshot.storage.k8s.io/VolumeSnapshot - Beta) * An existing PVC (PersistentVolumeClaim) * An existing custom resource/object that implements data population (Alpha) In order to use VolumeSnapshot object types, the appropriate feature gate must be enabled (VolumeSnapshotDataSource or AnyVolumeDataSource) If the provisioner or an external controller can support the specified data source, it will create a new volume based on the contents of the specified data source. If the specified data source is not supported, the volume will not be created and the failure will be reported as an event. In the future, we plan to support more data source types and the behavior of the provisioner may change.
 	DataSource ArgoCDExportSpecStoragePvcDataSourcePtrInput `pulumi:"dataSource"`
 	// Resources represents the minimum resources the volume should have. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#resources
 	Resources ArgoCDExportSpecStoragePvcResourcesPtrInput `pulumi:"resources"`
@@ -19901,7 +21512,7 @@ type ArgoCDExportSpecStoragePvcArgs struct {
 	Selector ArgoCDExportSpecStoragePvcSelectorPtrInput `pulumi:"selector"`
 	// Name of the StorageClass required by the claim. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#class-1
 	StorageClassName pulumi.StringPtrInput `pulumi:"storageClassName"`
-	// volumeMode defines what type of volume is required by the claim. Value of Filesystem is implied when not included in claim spec. This is a beta feature.
+	// volumeMode defines what type of volume is required by the claim. Value of Filesystem is implied when not included in claim spec.
 	VolumeMode pulumi.StringPtrInput `pulumi:"volumeMode"`
 	// VolumeName is the binding reference to the PersistentVolume backing this claim.
 	VolumeName pulumi.StringPtrInput `pulumi:"volumeName"`
@@ -19990,7 +21601,7 @@ func (o ArgoCDExportSpecStoragePvcOutput) AccessModes() pulumi.StringArrayOutput
 	return o.ApplyT(func(v ArgoCDExportSpecStoragePvc) []string { return v.AccessModes }).(pulumi.StringArrayOutput)
 }
 
-// This field requires the VolumeSnapshotDataSource alpha feature gate to be enabled and currently VolumeSnapshot is the only supported data source. If the provisioner can support VolumeSnapshot data source, it will create a new volume and data will be restored to the volume at the same time. If the provisioner does not support VolumeSnapshot data source, volume will not be created and the failure will be reported as an event. In the future, we plan to support more data source types and the behavior of the provisioner may change.
+// This field can be used to specify either: * An existing VolumeSnapshot object (snapshot.storage.k8s.io/VolumeSnapshot - Beta) * An existing PVC (PersistentVolumeClaim) * An existing custom resource/object that implements data population (Alpha) In order to use VolumeSnapshot object types, the appropriate feature gate must be enabled (VolumeSnapshotDataSource or AnyVolumeDataSource) If the provisioner or an external controller can support the specified data source, it will create a new volume based on the contents of the specified data source. If the specified data source is not supported, the volume will not be created and the failure will be reported as an event. In the future, we plan to support more data source types and the behavior of the provisioner may change.
 func (o ArgoCDExportSpecStoragePvcOutput) DataSource() ArgoCDExportSpecStoragePvcDataSourcePtrOutput {
 	return o.ApplyT(func(v ArgoCDExportSpecStoragePvc) *ArgoCDExportSpecStoragePvcDataSource { return v.DataSource }).(ArgoCDExportSpecStoragePvcDataSourcePtrOutput)
 }
@@ -20010,7 +21621,7 @@ func (o ArgoCDExportSpecStoragePvcOutput) StorageClassName() pulumi.StringPtrOut
 	return o.ApplyT(func(v ArgoCDExportSpecStoragePvc) *string { return v.StorageClassName }).(pulumi.StringPtrOutput)
 }
 
-// volumeMode defines what type of volume is required by the claim. Value of Filesystem is implied when not included in claim spec. This is a beta feature.
+// volumeMode defines what type of volume is required by the claim. Value of Filesystem is implied when not included in claim spec.
 func (o ArgoCDExportSpecStoragePvcOutput) VolumeMode() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v ArgoCDExportSpecStoragePvc) *string { return v.VolumeMode }).(pulumi.StringPtrOutput)
 }
@@ -20048,7 +21659,7 @@ func (o ArgoCDExportSpecStoragePvcPtrOutput) AccessModes() pulumi.StringArrayOut
 	}).(pulumi.StringArrayOutput)
 }
 
-// This field requires the VolumeSnapshotDataSource alpha feature gate to be enabled and currently VolumeSnapshot is the only supported data source. If the provisioner can support VolumeSnapshot data source, it will create a new volume and data will be restored to the volume at the same time. If the provisioner does not support VolumeSnapshot data source, volume will not be created and the failure will be reported as an event. In the future, we plan to support more data source types and the behavior of the provisioner may change.
+// This field can be used to specify either: * An existing VolumeSnapshot object (snapshot.storage.k8s.io/VolumeSnapshot - Beta) * An existing PVC (PersistentVolumeClaim) * An existing custom resource/object that implements data population (Alpha) In order to use VolumeSnapshot object types, the appropriate feature gate must be enabled (VolumeSnapshotDataSource or AnyVolumeDataSource) If the provisioner or an external controller can support the specified data source, it will create a new volume based on the contents of the specified data source. If the specified data source is not supported, the volume will not be created and the failure will be reported as an event. In the future, we plan to support more data source types and the behavior of the provisioner may change.
 func (o ArgoCDExportSpecStoragePvcPtrOutput) DataSource() ArgoCDExportSpecStoragePvcDataSourcePtrOutput {
 	return o.ApplyT(func(v *ArgoCDExportSpecStoragePvc) *ArgoCDExportSpecStoragePvcDataSource {
 		if v == nil {
@@ -20088,7 +21699,7 @@ func (o ArgoCDExportSpecStoragePvcPtrOutput) StorageClassName() pulumi.StringPtr
 	}).(pulumi.StringPtrOutput)
 }
 
-// volumeMode defines what type of volume is required by the claim. Value of Filesystem is implied when not included in claim spec. This is a beta feature.
+// volumeMode defines what type of volume is required by the claim. Value of Filesystem is implied when not included in claim spec.
 func (o ArgoCDExportSpecStoragePvcPtrOutput) VolumeMode() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *ArgoCDExportSpecStoragePvc) *string {
 		if v == nil {
@@ -20108,7 +21719,7 @@ func (o ArgoCDExportSpecStoragePvcPtrOutput) VolumeName() pulumi.StringPtrOutput
 	}).(pulumi.StringPtrOutput)
 }
 
-// This field requires the VolumeSnapshotDataSource alpha feature gate to be enabled and currently VolumeSnapshot is the only supported data source. If the provisioner can support VolumeSnapshot data source, it will create a new volume and data will be restored to the volume at the same time. If the provisioner does not support VolumeSnapshot data source, volume will not be created and the failure will be reported as an event. In the future, we plan to support more data source types and the behavior of the provisioner may change.
+// This field can be used to specify either: * An existing VolumeSnapshot object (snapshot.storage.k8s.io/VolumeSnapshot - Beta) * An existing PVC (PersistentVolumeClaim) * An existing custom resource/object that implements data population (Alpha) In order to use VolumeSnapshot object types, the appropriate feature gate must be enabled (VolumeSnapshotDataSource or AnyVolumeDataSource) If the provisioner or an external controller can support the specified data source, it will create a new volume based on the contents of the specified data source. If the specified data source is not supported, the volume will not be created and the failure will be reported as an event. In the future, we plan to support more data source types and the behavior of the provisioner may change.
 type ArgoCDExportSpecStoragePvcDataSource struct {
 	// APIGroup is the group for the resource being referenced. If APIGroup is not specified, the specified Kind must be in the core API group. For any other third-party types, APIGroup is required.
 	ApiGroup *string `pulumi:"apiGroup"`
@@ -20129,7 +21740,7 @@ type ArgoCDExportSpecStoragePvcDataSourceInput interface {
 	ToArgoCDExportSpecStoragePvcDataSourceOutputWithContext(context.Context) ArgoCDExportSpecStoragePvcDataSourceOutput
 }
 
-// This field requires the VolumeSnapshotDataSource alpha feature gate to be enabled and currently VolumeSnapshot is the only supported data source. If the provisioner can support VolumeSnapshot data source, it will create a new volume and data will be restored to the volume at the same time. If the provisioner does not support VolumeSnapshot data source, volume will not be created and the failure will be reported as an event. In the future, we plan to support more data source types and the behavior of the provisioner may change.
+// This field can be used to specify either: * An existing VolumeSnapshot object (snapshot.storage.k8s.io/VolumeSnapshot - Beta) * An existing PVC (PersistentVolumeClaim) * An existing custom resource/object that implements data population (Alpha) In order to use VolumeSnapshot object types, the appropriate feature gate must be enabled (VolumeSnapshotDataSource or AnyVolumeDataSource) If the provisioner or an external controller can support the specified data source, it will create a new volume based on the contents of the specified data source. If the specified data source is not supported, the volume will not be created and the failure will be reported as an event. In the future, we plan to support more data source types and the behavior of the provisioner may change.
 type ArgoCDExportSpecStoragePvcDataSourceArgs struct {
 	// APIGroup is the group for the resource being referenced. If APIGroup is not specified, the specified Kind must be in the core API group. For any other third-party types, APIGroup is required.
 	ApiGroup pulumi.StringPtrInput `pulumi:"apiGroup"`
@@ -20192,7 +21803,7 @@ func (i *argoCDExportSpecStoragePvcDataSourcePtrType) ToArgoCDExportSpecStorageP
 	return pulumi.ToOutputWithContext(ctx, i).(ArgoCDExportSpecStoragePvcDataSourcePtrOutput)
 }
 
-// This field requires the VolumeSnapshotDataSource alpha feature gate to be enabled and currently VolumeSnapshot is the only supported data source. If the provisioner can support VolumeSnapshot data source, it will create a new volume and data will be restored to the volume at the same time. If the provisioner does not support VolumeSnapshot data source, volume will not be created and the failure will be reported as an event. In the future, we plan to support more data source types and the behavior of the provisioner may change.
+// This field can be used to specify either: * An existing VolumeSnapshot object (snapshot.storage.k8s.io/VolumeSnapshot - Beta) * An existing PVC (PersistentVolumeClaim) * An existing custom resource/object that implements data population (Alpha) In order to use VolumeSnapshot object types, the appropriate feature gate must be enabled (VolumeSnapshotDataSource or AnyVolumeDataSource) If the provisioner or an external controller can support the specified data source, it will create a new volume based on the contents of the specified data source. If the specified data source is not supported, the volume will not be created and the failure will be reported as an event. In the future, we plan to support more data source types and the behavior of the provisioner may change.
 type ArgoCDExportSpecStoragePvcDataSourceOutput struct{ *pulumi.OutputState }
 
 func (ArgoCDExportSpecStoragePvcDataSourceOutput) ElementType() reflect.Type {
@@ -21138,7 +22749,7 @@ type ArgoCDSpec struct {
 	// InitialRepositories to configure Argo CD with upon creation of the cluster.
 	InitialRepositories *string `pulumi:"initialRepositories"`
 	// InitialSSHKnownHosts defines the SSH known hosts data upon creation of the cluster for connecting Git repositories via SSH.
-	InitialSSHKnownHosts *string `pulumi:"initialSSHKnownHosts"`
+	InitialSSHKnownHosts *ArgoCDSpecInitialSSHKnownHosts `pulumi:"initialSSHKnownHosts"`
 	// KustomizeBuildOptions is used to specify build options/parameters to use with `kustomize build`.
 	KustomizeBuildOptions *string `pulumi:"kustomizeBuildOptions"`
 	// OIDCConfig is the OIDC configuration as an alternative to dex.
@@ -21157,6 +22768,8 @@ type ArgoCDSpec struct {
 	ResourceCustomizations *string `pulumi:"resourceCustomizations"`
 	// ResourceExclusions is used to completely ignore entire classes of resource group/kinds.
 	ResourceExclusions *string `pulumi:"resourceExclusions"`
+	// ResourceInclusions is used to only include specific group/kinds in the reconciliation process.
+	ResourceInclusions *string `pulumi:"resourceInclusions"`
 	// Server defines the options for the ArgoCD Server component.
 	Server *ArgoCDSpecServer `pulumi:"server"`
 	// StatusBadgeEnabled toggles application status badge feature.
@@ -21209,7 +22822,7 @@ type ArgoCDSpecArgs struct {
 	// InitialRepositories to configure Argo CD with upon creation of the cluster.
 	InitialRepositories pulumi.StringPtrInput `pulumi:"initialRepositories"`
 	// InitialSSHKnownHosts defines the SSH known hosts data upon creation of the cluster for connecting Git repositories via SSH.
-	InitialSSHKnownHosts pulumi.StringPtrInput `pulumi:"initialSSHKnownHosts"`
+	InitialSSHKnownHosts ArgoCDSpecInitialSSHKnownHostsPtrInput `pulumi:"initialSSHKnownHosts"`
 	// KustomizeBuildOptions is used to specify build options/parameters to use with `kustomize build`.
 	KustomizeBuildOptions pulumi.StringPtrInput `pulumi:"kustomizeBuildOptions"`
 	// OIDCConfig is the OIDC configuration as an alternative to dex.
@@ -21228,6 +22841,8 @@ type ArgoCDSpecArgs struct {
 	ResourceCustomizations pulumi.StringPtrInput `pulumi:"resourceCustomizations"`
 	// ResourceExclusions is used to completely ignore entire classes of resource group/kinds.
 	ResourceExclusions pulumi.StringPtrInput `pulumi:"resourceExclusions"`
+	// ResourceInclusions is used to only include specific group/kinds in the reconciliation process.
+	ResourceInclusions pulumi.StringPtrInput `pulumi:"resourceInclusions"`
 	// Server defines the options for the ArgoCD Server component.
 	Server ArgoCDSpecServerPtrInput `pulumi:"server"`
 	// StatusBadgeEnabled toggles application status badge feature.
@@ -21384,8 +22999,8 @@ func (o ArgoCDSpecOutput) InitialRepositories() pulumi.StringPtrOutput {
 }
 
 // InitialSSHKnownHosts defines the SSH known hosts data upon creation of the cluster for connecting Git repositories via SSH.
-func (o ArgoCDSpecOutput) InitialSSHKnownHosts() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v ArgoCDSpec) *string { return v.InitialSSHKnownHosts }).(pulumi.StringPtrOutput)
+func (o ArgoCDSpecOutput) InitialSSHKnownHosts() ArgoCDSpecInitialSSHKnownHostsPtrOutput {
+	return o.ApplyT(func(v ArgoCDSpec) *ArgoCDSpecInitialSSHKnownHosts { return v.InitialSSHKnownHosts }).(ArgoCDSpecInitialSSHKnownHostsPtrOutput)
 }
 
 // KustomizeBuildOptions is used to specify build options/parameters to use with `kustomize build`.
@@ -21431,6 +23046,11 @@ func (o ArgoCDSpecOutput) ResourceCustomizations() pulumi.StringPtrOutput {
 // ResourceExclusions is used to completely ignore entire classes of resource group/kinds.
 func (o ArgoCDSpecOutput) ResourceExclusions() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v ArgoCDSpec) *string { return v.ResourceExclusions }).(pulumi.StringPtrOutput)
+}
+
+// ResourceInclusions is used to only include specific group/kinds in the reconciliation process.
+func (o ArgoCDSpecOutput) ResourceInclusions() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v ArgoCDSpec) *string { return v.ResourceInclusions }).(pulumi.StringPtrOutput)
 }
 
 // Server defines the options for the ArgoCD Server component.
@@ -21607,13 +23227,13 @@ func (o ArgoCDSpecPtrOutput) InitialRepositories() pulumi.StringPtrOutput {
 }
 
 // InitialSSHKnownHosts defines the SSH known hosts data upon creation of the cluster for connecting Git repositories via SSH.
-func (o ArgoCDSpecPtrOutput) InitialSSHKnownHosts() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *ArgoCDSpec) *string {
+func (o ArgoCDSpecPtrOutput) InitialSSHKnownHosts() ArgoCDSpecInitialSSHKnownHostsPtrOutput {
+	return o.ApplyT(func(v *ArgoCDSpec) *ArgoCDSpecInitialSSHKnownHosts {
 		if v == nil {
 			return nil
 		}
 		return v.InitialSSHKnownHosts
-	}).(pulumi.StringPtrOutput)
+	}).(ArgoCDSpecInitialSSHKnownHostsPtrOutput)
 }
 
 // KustomizeBuildOptions is used to specify build options/parameters to use with `kustomize build`.
@@ -21706,6 +23326,16 @@ func (o ArgoCDSpecPtrOutput) ResourceExclusions() pulumi.StringPtrOutput {
 	}).(pulumi.StringPtrOutput)
 }
 
+// ResourceInclusions is used to only include specific group/kinds in the reconciliation process.
+func (o ArgoCDSpecPtrOutput) ResourceInclusions() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *ArgoCDSpec) *string {
+		if v == nil {
+			return nil
+		}
+		return v.ResourceInclusions
+	}).(pulumi.StringPtrOutput)
+}
+
 // Server defines the options for the ArgoCD Server component.
 func (o ArgoCDSpecPtrOutput) Server() ArgoCDSpecServerPtrOutput {
 	return o.ApplyT(func(v *ArgoCDSpec) *ArgoCDSpecServer {
@@ -21758,6 +23388,9 @@ func (o ArgoCDSpecPtrOutput) Version() pulumi.StringPtrOutput {
 
 // Controller defines the Application Controller options for ArgoCD.
 type ArgoCDSpecController struct {
+	// AppSync is used to control the sync frequency, by default the ArgoCD controller polls Git every 3m by default.
+	//  Set this to a duration, e.g. 10m or 600s to control the synchronisation frequency.
+	AppSync *string `pulumi:"appSync"`
 	// Processors contains the options for the Application Controller processors.
 	Processors *ArgoCDSpecControllerProcessors `pulumi:"processors"`
 	// Resources defines the Compute Resources required by the container for the Application Controller.
@@ -21777,6 +23410,9 @@ type ArgoCDSpecControllerInput interface {
 
 // Controller defines the Application Controller options for ArgoCD.
 type ArgoCDSpecControllerArgs struct {
+	// AppSync is used to control the sync frequency, by default the ArgoCD controller polls Git every 3m by default.
+	//  Set this to a duration, e.g. 10m or 600s to control the synchronisation frequency.
+	AppSync pulumi.StringPtrInput `pulumi:"appSync"`
 	// Processors contains the options for the Application Controller processors.
 	Processors ArgoCDSpecControllerProcessorsPtrInput `pulumi:"processors"`
 	// Resources defines the Compute Resources required by the container for the Application Controller.
@@ -21861,6 +23497,12 @@ func (o ArgoCDSpecControllerOutput) ToArgoCDSpecControllerPtrOutputWithContext(c
 	}).(ArgoCDSpecControllerPtrOutput)
 }
 
+// AppSync is used to control the sync frequency, by default the ArgoCD controller polls Git every 3m by default.
+//  Set this to a duration, e.g. 10m or 600s to control the synchronisation frequency.
+func (o ArgoCDSpecControllerOutput) AppSync() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v ArgoCDSpecController) *string { return v.AppSync }).(pulumi.StringPtrOutput)
+}
+
 // Processors contains the options for the Application Controller processors.
 func (o ArgoCDSpecControllerOutput) Processors() ArgoCDSpecControllerProcessorsPtrOutput {
 	return o.ApplyT(func(v ArgoCDSpecController) *ArgoCDSpecControllerProcessors { return v.Processors }).(ArgoCDSpecControllerProcessorsPtrOutput)
@@ -21887,6 +23529,17 @@ func (o ArgoCDSpecControllerPtrOutput) ToArgoCDSpecControllerPtrOutputWithContex
 
 func (o ArgoCDSpecControllerPtrOutput) Elem() ArgoCDSpecControllerOutput {
 	return o.ApplyT(func(v *ArgoCDSpecController) ArgoCDSpecController { return *v }).(ArgoCDSpecControllerOutput)
+}
+
+// AppSync is used to control the sync frequency, by default the ArgoCD controller polls Git every 3m by default.
+//  Set this to a duration, e.g. 10m or 600s to control the synchronisation frequency.
+func (o ArgoCDSpecControllerPtrOutput) AppSync() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *ArgoCDSpecController) *string {
+		if v == nil {
+			return nil
+		}
+		return v.AppSync
+	}).(pulumi.StringPtrOutput)
 }
 
 // Processors contains the options for the Application Controller processors.
@@ -24367,6 +26020,10 @@ func (o ArgoCDSpecGrafanaRouteTlsPtrOutput) Termination() pulumi.StringPtrOutput
 type ArgoCDSpecHa struct {
 	// Enabled will toggle HA support globally for Argo CD.
 	Enabled bool `pulumi:"enabled"`
+	// RedisProxyImage is the Redis HAProxy container image.
+	RedisProxyImage *string `pulumi:"redisProxyImage"`
+	// RedisProxyVersion is the Redis HAProxy container image tag.
+	RedisProxyVersion *string `pulumi:"redisProxyVersion"`
 }
 
 // ArgoCDSpecHaInput is an input type that accepts ArgoCDSpecHaArgs and ArgoCDSpecHaOutput values.
@@ -24384,6 +26041,10 @@ type ArgoCDSpecHaInput interface {
 type ArgoCDSpecHaArgs struct {
 	// Enabled will toggle HA support globally for Argo CD.
 	Enabled pulumi.BoolInput `pulumi:"enabled"`
+	// RedisProxyImage is the Redis HAProxy container image.
+	RedisProxyImage pulumi.StringPtrInput `pulumi:"redisProxyImage"`
+	// RedisProxyVersion is the Redis HAProxy container image tag.
+	RedisProxyVersion pulumi.StringPtrInput `pulumi:"redisProxyVersion"`
 }
 
 func (ArgoCDSpecHaArgs) ElementType() reflect.Type {
@@ -24469,6 +26130,16 @@ func (o ArgoCDSpecHaOutput) Enabled() pulumi.BoolOutput {
 	return o.ApplyT(func(v ArgoCDSpecHa) bool { return v.Enabled }).(pulumi.BoolOutput)
 }
 
+// RedisProxyImage is the Redis HAProxy container image.
+func (o ArgoCDSpecHaOutput) RedisProxyImage() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v ArgoCDSpecHa) *string { return v.RedisProxyImage }).(pulumi.StringPtrOutput)
+}
+
+// RedisProxyVersion is the Redis HAProxy container image tag.
+func (o ArgoCDSpecHaOutput) RedisProxyVersion() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v ArgoCDSpecHa) *string { return v.RedisProxyVersion }).(pulumi.StringPtrOutput)
+}
+
 type ArgoCDSpecHaPtrOutput struct{ *pulumi.OutputState }
 
 func (ArgoCDSpecHaPtrOutput) ElementType() reflect.Type {
@@ -24495,6 +26166,26 @@ func (o ArgoCDSpecHaPtrOutput) Enabled() pulumi.BoolPtrOutput {
 		}
 		return &v.Enabled
 	}).(pulumi.BoolPtrOutput)
+}
+
+// RedisProxyImage is the Redis HAProxy container image.
+func (o ArgoCDSpecHaPtrOutput) RedisProxyImage() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *ArgoCDSpecHa) *string {
+		if v == nil {
+			return nil
+		}
+		return v.RedisProxyImage
+	}).(pulumi.StringPtrOutput)
+}
+
+// RedisProxyVersion is the Redis HAProxy container image tag.
+func (o ArgoCDSpecHaPtrOutput) RedisProxyVersion() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *ArgoCDSpecHa) *string {
+		if v == nil {
+			return nil
+		}
+		return v.RedisProxyVersion
+	}).(pulumi.StringPtrOutput)
 }
 
 // Import is the import/restore options for ArgoCD.
@@ -24647,6 +26338,159 @@ func (o ArgoCDSpecImportPtrOutput) Namespace() pulumi.StringPtrOutput {
 			return nil
 		}
 		return v.Namespace
+	}).(pulumi.StringPtrOutput)
+}
+
+// InitialSSHKnownHosts defines the SSH known hosts data upon creation of the cluster for connecting Git repositories via SSH.
+type ArgoCDSpecInitialSSHKnownHosts struct {
+	// ExcludeDefaultHosts describes whether you would like to include the default list of SSH Known Hosts provided by ArgoCD.
+	Excludedefaulthosts *bool `pulumi:"excludedefaulthosts"`
+	// Keys describes a custom set of SSH Known Hosts that you would like to have included in your ArgoCD server.
+	Keys *string `pulumi:"keys"`
+}
+
+// ArgoCDSpecInitialSSHKnownHostsInput is an input type that accepts ArgoCDSpecInitialSSHKnownHostsArgs and ArgoCDSpecInitialSSHKnownHostsOutput values.
+// You can construct a concrete instance of `ArgoCDSpecInitialSSHKnownHostsInput` via:
+//
+//          ArgoCDSpecInitialSSHKnownHostsArgs{...}
+type ArgoCDSpecInitialSSHKnownHostsInput interface {
+	pulumi.Input
+
+	ToArgoCDSpecInitialSSHKnownHostsOutput() ArgoCDSpecInitialSSHKnownHostsOutput
+	ToArgoCDSpecInitialSSHKnownHostsOutputWithContext(context.Context) ArgoCDSpecInitialSSHKnownHostsOutput
+}
+
+// InitialSSHKnownHosts defines the SSH known hosts data upon creation of the cluster for connecting Git repositories via SSH.
+type ArgoCDSpecInitialSSHKnownHostsArgs struct {
+	// ExcludeDefaultHosts describes whether you would like to include the default list of SSH Known Hosts provided by ArgoCD.
+	Excludedefaulthosts pulumi.BoolPtrInput `pulumi:"excludedefaulthosts"`
+	// Keys describes a custom set of SSH Known Hosts that you would like to have included in your ArgoCD server.
+	Keys pulumi.StringPtrInput `pulumi:"keys"`
+}
+
+func (ArgoCDSpecInitialSSHKnownHostsArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*ArgoCDSpecInitialSSHKnownHosts)(nil)).Elem()
+}
+
+func (i ArgoCDSpecInitialSSHKnownHostsArgs) ToArgoCDSpecInitialSSHKnownHostsOutput() ArgoCDSpecInitialSSHKnownHostsOutput {
+	return i.ToArgoCDSpecInitialSSHKnownHostsOutputWithContext(context.Background())
+}
+
+func (i ArgoCDSpecInitialSSHKnownHostsArgs) ToArgoCDSpecInitialSSHKnownHostsOutputWithContext(ctx context.Context) ArgoCDSpecInitialSSHKnownHostsOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(ArgoCDSpecInitialSSHKnownHostsOutput)
+}
+
+func (i ArgoCDSpecInitialSSHKnownHostsArgs) ToArgoCDSpecInitialSSHKnownHostsPtrOutput() ArgoCDSpecInitialSSHKnownHostsPtrOutput {
+	return i.ToArgoCDSpecInitialSSHKnownHostsPtrOutputWithContext(context.Background())
+}
+
+func (i ArgoCDSpecInitialSSHKnownHostsArgs) ToArgoCDSpecInitialSSHKnownHostsPtrOutputWithContext(ctx context.Context) ArgoCDSpecInitialSSHKnownHostsPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(ArgoCDSpecInitialSSHKnownHostsOutput).ToArgoCDSpecInitialSSHKnownHostsPtrOutputWithContext(ctx)
+}
+
+// ArgoCDSpecInitialSSHKnownHostsPtrInput is an input type that accepts ArgoCDSpecInitialSSHKnownHostsArgs, ArgoCDSpecInitialSSHKnownHostsPtr and ArgoCDSpecInitialSSHKnownHostsPtrOutput values.
+// You can construct a concrete instance of `ArgoCDSpecInitialSSHKnownHostsPtrInput` via:
+//
+//          ArgoCDSpecInitialSSHKnownHostsArgs{...}
+//
+//  or:
+//
+//          nil
+type ArgoCDSpecInitialSSHKnownHostsPtrInput interface {
+	pulumi.Input
+
+	ToArgoCDSpecInitialSSHKnownHostsPtrOutput() ArgoCDSpecInitialSSHKnownHostsPtrOutput
+	ToArgoCDSpecInitialSSHKnownHostsPtrOutputWithContext(context.Context) ArgoCDSpecInitialSSHKnownHostsPtrOutput
+}
+
+type argoCDSpecInitialSSHKnownHostsPtrType ArgoCDSpecInitialSSHKnownHostsArgs
+
+func ArgoCDSpecInitialSSHKnownHostsPtr(v *ArgoCDSpecInitialSSHKnownHostsArgs) ArgoCDSpecInitialSSHKnownHostsPtrInput {
+	return (*argoCDSpecInitialSSHKnownHostsPtrType)(v)
+}
+
+func (*argoCDSpecInitialSSHKnownHostsPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**ArgoCDSpecInitialSSHKnownHosts)(nil)).Elem()
+}
+
+func (i *argoCDSpecInitialSSHKnownHostsPtrType) ToArgoCDSpecInitialSSHKnownHostsPtrOutput() ArgoCDSpecInitialSSHKnownHostsPtrOutput {
+	return i.ToArgoCDSpecInitialSSHKnownHostsPtrOutputWithContext(context.Background())
+}
+
+func (i *argoCDSpecInitialSSHKnownHostsPtrType) ToArgoCDSpecInitialSSHKnownHostsPtrOutputWithContext(ctx context.Context) ArgoCDSpecInitialSSHKnownHostsPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(ArgoCDSpecInitialSSHKnownHostsPtrOutput)
+}
+
+// InitialSSHKnownHosts defines the SSH known hosts data upon creation of the cluster for connecting Git repositories via SSH.
+type ArgoCDSpecInitialSSHKnownHostsOutput struct{ *pulumi.OutputState }
+
+func (ArgoCDSpecInitialSSHKnownHostsOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*ArgoCDSpecInitialSSHKnownHosts)(nil)).Elem()
+}
+
+func (o ArgoCDSpecInitialSSHKnownHostsOutput) ToArgoCDSpecInitialSSHKnownHostsOutput() ArgoCDSpecInitialSSHKnownHostsOutput {
+	return o
+}
+
+func (o ArgoCDSpecInitialSSHKnownHostsOutput) ToArgoCDSpecInitialSSHKnownHostsOutputWithContext(ctx context.Context) ArgoCDSpecInitialSSHKnownHostsOutput {
+	return o
+}
+
+func (o ArgoCDSpecInitialSSHKnownHostsOutput) ToArgoCDSpecInitialSSHKnownHostsPtrOutput() ArgoCDSpecInitialSSHKnownHostsPtrOutput {
+	return o.ToArgoCDSpecInitialSSHKnownHostsPtrOutputWithContext(context.Background())
+}
+
+func (o ArgoCDSpecInitialSSHKnownHostsOutput) ToArgoCDSpecInitialSSHKnownHostsPtrOutputWithContext(ctx context.Context) ArgoCDSpecInitialSSHKnownHostsPtrOutput {
+	return o.ApplyT(func(v ArgoCDSpecInitialSSHKnownHosts) *ArgoCDSpecInitialSSHKnownHosts {
+		return &v
+	}).(ArgoCDSpecInitialSSHKnownHostsPtrOutput)
+}
+
+// ExcludeDefaultHosts describes whether you would like to include the default list of SSH Known Hosts provided by ArgoCD.
+func (o ArgoCDSpecInitialSSHKnownHostsOutput) Excludedefaulthosts() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v ArgoCDSpecInitialSSHKnownHosts) *bool { return v.Excludedefaulthosts }).(pulumi.BoolPtrOutput)
+}
+
+// Keys describes a custom set of SSH Known Hosts that you would like to have included in your ArgoCD server.
+func (o ArgoCDSpecInitialSSHKnownHostsOutput) Keys() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v ArgoCDSpecInitialSSHKnownHosts) *string { return v.Keys }).(pulumi.StringPtrOutput)
+}
+
+type ArgoCDSpecInitialSSHKnownHostsPtrOutput struct{ *pulumi.OutputState }
+
+func (ArgoCDSpecInitialSSHKnownHostsPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**ArgoCDSpecInitialSSHKnownHosts)(nil)).Elem()
+}
+
+func (o ArgoCDSpecInitialSSHKnownHostsPtrOutput) ToArgoCDSpecInitialSSHKnownHostsPtrOutput() ArgoCDSpecInitialSSHKnownHostsPtrOutput {
+	return o
+}
+
+func (o ArgoCDSpecInitialSSHKnownHostsPtrOutput) ToArgoCDSpecInitialSSHKnownHostsPtrOutputWithContext(ctx context.Context) ArgoCDSpecInitialSSHKnownHostsPtrOutput {
+	return o
+}
+
+func (o ArgoCDSpecInitialSSHKnownHostsPtrOutput) Elem() ArgoCDSpecInitialSSHKnownHostsOutput {
+	return o.ApplyT(func(v *ArgoCDSpecInitialSSHKnownHosts) ArgoCDSpecInitialSSHKnownHosts { return *v }).(ArgoCDSpecInitialSSHKnownHostsOutput)
+}
+
+// ExcludeDefaultHosts describes whether you would like to include the default list of SSH Known Hosts provided by ArgoCD.
+func (o ArgoCDSpecInitialSSHKnownHostsPtrOutput) Excludedefaulthosts() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *ArgoCDSpecInitialSSHKnownHosts) *bool {
+		if v == nil {
+			return nil
+		}
+		return v.Excludedefaulthosts
+	}).(pulumi.BoolPtrOutput)
+}
+
+// Keys describes a custom set of SSH Known Hosts that you would like to have included in your ArgoCD server.
+func (o ArgoCDSpecInitialSSHKnownHostsPtrOutput) Keys() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *ArgoCDSpecInitialSSHKnownHosts) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Keys
 	}).(pulumi.StringPtrOutput)
 }
 
@@ -30039,6 +31883,8 @@ func init() {
 	pulumi.RegisterOutputType(AppProjectMetadataOutput{})
 	pulumi.RegisterOutputType(AppProjectSpecOutput{})
 	pulumi.RegisterOutputType(AppProjectSpecPtrOutput{})
+	pulumi.RegisterOutputType(AppProjectSpecClusterResourceBlacklistOutput{})
+	pulumi.RegisterOutputType(AppProjectSpecClusterResourceBlacklistArrayOutput{})
 	pulumi.RegisterOutputType(AppProjectSpecClusterResourceWhitelistOutput{})
 	pulumi.RegisterOutputType(AppProjectSpecClusterResourceWhitelistArrayOutput{})
 	pulumi.RegisterOutputType(AppProjectSpecDestinationsOutput{})
@@ -30049,10 +31895,14 @@ func init() {
 	pulumi.RegisterOutputType(AppProjectSpecNamespaceResourceWhitelistArrayOutput{})
 	pulumi.RegisterOutputType(AppProjectSpecOrphanedResourcesOutput{})
 	pulumi.RegisterOutputType(AppProjectSpecOrphanedResourcesPtrOutput{})
+	pulumi.RegisterOutputType(AppProjectSpecOrphanedResourcesIgnoreOutput{})
+	pulumi.RegisterOutputType(AppProjectSpecOrphanedResourcesIgnoreArrayOutput{})
 	pulumi.RegisterOutputType(AppProjectSpecRolesOutput{})
 	pulumi.RegisterOutputType(AppProjectSpecRolesArrayOutput{})
 	pulumi.RegisterOutputType(AppProjectSpecRolesJwtTokensOutput{})
 	pulumi.RegisterOutputType(AppProjectSpecRolesJwtTokensArrayOutput{})
+	pulumi.RegisterOutputType(AppProjectSpecSignatureKeysOutput{})
+	pulumi.RegisterOutputType(AppProjectSpecSignatureKeysArrayOutput{})
 	pulumi.RegisterOutputType(AppProjectSpecSyncWindowsOutput{})
 	pulumi.RegisterOutputType(AppProjectSpecSyncWindowsArrayOutput{})
 	pulumi.RegisterOutputType(ApplicationTypeOutput{})
@@ -30063,6 +31913,10 @@ func init() {
 	pulumi.RegisterOutputType(ApplicationOperationInfoArrayOutput{})
 	pulumi.RegisterOutputType(ApplicationOperationInitiatedByOutput{})
 	pulumi.RegisterOutputType(ApplicationOperationInitiatedByPtrOutput{})
+	pulumi.RegisterOutputType(ApplicationOperationRetryOutput{})
+	pulumi.RegisterOutputType(ApplicationOperationRetryPtrOutput{})
+	pulumi.RegisterOutputType(ApplicationOperationRetryBackoffOutput{})
+	pulumi.RegisterOutputType(ApplicationOperationRetryBackoffPtrOutput{})
 	pulumi.RegisterOutputType(ApplicationOperationSyncOutput{})
 	pulumi.RegisterOutputType(ApplicationOperationSyncPtrOutput{})
 	pulumi.RegisterOutputType(ApplicationOperationSyncResourcesOutput{})
@@ -30139,6 +31993,10 @@ func init() {
 	pulumi.RegisterOutputType(ApplicationSpecSyncPolicyPtrOutput{})
 	pulumi.RegisterOutputType(ApplicationSpecSyncPolicyAutomatedOutput{})
 	pulumi.RegisterOutputType(ApplicationSpecSyncPolicyAutomatedPtrOutput{})
+	pulumi.RegisterOutputType(ApplicationSpecSyncPolicyRetryOutput{})
+	pulumi.RegisterOutputType(ApplicationSpecSyncPolicyRetryPtrOutput{})
+	pulumi.RegisterOutputType(ApplicationSpecSyncPolicyRetryBackoffOutput{})
+	pulumi.RegisterOutputType(ApplicationSpecSyncPolicyRetryBackoffPtrOutput{})
 	pulumi.RegisterOutputType(ApplicationStatusOutput{})
 	pulumi.RegisterOutputType(ApplicationStatusPtrOutput{})
 	pulumi.RegisterOutputType(ApplicationStatusConditionsOutput{})
@@ -30182,6 +32040,10 @@ func init() {
 	pulumi.RegisterOutputType(ApplicationStatusOperationStateOperationInfoArrayOutput{})
 	pulumi.RegisterOutputType(ApplicationStatusOperationStateOperationInitiatedByOutput{})
 	pulumi.RegisterOutputType(ApplicationStatusOperationStateOperationInitiatedByPtrOutput{})
+	pulumi.RegisterOutputType(ApplicationStatusOperationStateOperationRetryOutput{})
+	pulumi.RegisterOutputType(ApplicationStatusOperationStateOperationRetryPtrOutput{})
+	pulumi.RegisterOutputType(ApplicationStatusOperationStateOperationRetryBackoffOutput{})
+	pulumi.RegisterOutputType(ApplicationStatusOperationStateOperationRetryBackoffPtrOutput{})
 	pulumi.RegisterOutputType(ApplicationStatusOperationStateOperationSyncOutput{})
 	pulumi.RegisterOutputType(ApplicationStatusOperationStateOperationSyncPtrOutput{})
 	pulumi.RegisterOutputType(ApplicationStatusOperationStateOperationSyncResourcesOutput{})
@@ -30356,6 +32218,8 @@ func init() {
 	pulumi.RegisterOutputType(ArgoCDSpecHaPtrOutput{})
 	pulumi.RegisterOutputType(ArgoCDSpecImportOutput{})
 	pulumi.RegisterOutputType(ArgoCDSpecImportPtrOutput{})
+	pulumi.RegisterOutputType(ArgoCDSpecInitialSSHKnownHostsOutput{})
+	pulumi.RegisterOutputType(ArgoCDSpecInitialSSHKnownHostsPtrOutput{})
 	pulumi.RegisterOutputType(ArgoCDSpecPrometheusOutput{})
 	pulumi.RegisterOutputType(ArgoCDSpecPrometheusPtrOutput{})
 	pulumi.RegisterOutputType(ArgoCDSpecPrometheusIngressOutput{})

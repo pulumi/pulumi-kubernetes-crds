@@ -68,6 +68,7 @@ __all__ = [
     'KafkaBridgeSpecTemplatePodAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions',
     'KafkaBridgeSpecTemplatePodDisruptionBudget',
     'KafkaBridgeSpecTemplatePodDisruptionBudgetMetadata',
+    'KafkaBridgeSpecTemplatePodHostAliases',
     'KafkaBridgeSpecTemplatePodImagePullSecrets',
     'KafkaBridgeSpecTemplatePodMetadata',
     'KafkaBridgeSpecTemplatePodSecurityContext',
@@ -80,8 +81,6 @@ __all__ = [
     'KafkaBridgeSpecTracing',
     'KafkaBridgeStatus',
     'KafkaBridgeStatusConditions',
-    'KafkaBridgeStatusPodSelector',
-    'KafkaBridgeStatusPodSelectorMatchExpressions',
     'KafkaConnectorSpec',
     'KafkaConnectorStatus',
     'KafkaConnectorStatusConditions',
@@ -153,6 +152,12 @@ __all__ = [
     'KafkaMirrorMaker2SpecTemplateConnectContainerSecurityContextWindowsOptions',
     'KafkaMirrorMaker2SpecTemplateDeployment',
     'KafkaMirrorMaker2SpecTemplateDeploymentMetadata',
+    'KafkaMirrorMaker2SpecTemplateInitContainer',
+    'KafkaMirrorMaker2SpecTemplateInitContainerEnv',
+    'KafkaMirrorMaker2SpecTemplateInitContainerSecurityContext',
+    'KafkaMirrorMaker2SpecTemplateInitContainerSecurityContextCapabilities',
+    'KafkaMirrorMaker2SpecTemplateInitContainerSecurityContextSeLinuxOptions',
+    'KafkaMirrorMaker2SpecTemplateInitContainerSecurityContextWindowsOptions',
     'KafkaMirrorMaker2SpecTemplatePod',
     'KafkaMirrorMaker2SpecTemplatePodAffinity',
     'KafkaMirrorMaker2SpecTemplatePodAffinityNodeAffinity',
@@ -182,6 +187,7 @@ __all__ = [
     'KafkaMirrorMaker2SpecTemplatePodAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions',
     'KafkaMirrorMaker2SpecTemplatePodDisruptionBudget',
     'KafkaMirrorMaker2SpecTemplatePodDisruptionBudgetMetadata',
+    'KafkaMirrorMaker2SpecTemplatePodHostAliases',
     'KafkaMirrorMaker2SpecTemplatePodImagePullSecrets',
     'KafkaMirrorMaker2SpecTemplatePodMetadata',
     'KafkaMirrorMaker2SpecTemplatePodSecurityContext',
@@ -194,8 +200,6 @@ __all__ = [
     'KafkaMirrorMaker2Status',
     'KafkaMirrorMaker2StatusConditions',
     'KafkaMirrorMaker2StatusConnectorPlugins',
-    'KafkaMirrorMaker2StatusPodSelector',
-    'KafkaMirrorMaker2StatusPodSelectorMatchExpressions',
     'KafkaRebalanceSpec',
     'KafkaRebalanceStatus',
     'KafkaRebalanceStatusConditions',
@@ -1643,11 +1647,14 @@ class KafkaBridgeSpecTemplateBridgeContainerSecurityContextSeLinuxOptions(dict):
 class KafkaBridgeSpecTemplateBridgeContainerSecurityContextWindowsOptions(dict):
     def __init__(__self__, *,
                  gmsa_credential_spec: Optional[str] = None,
-                 gmsa_credential_spec_name: Optional[str] = None):
+                 gmsa_credential_spec_name: Optional[str] = None,
+                 run_as_user_name: Optional[str] = None):
         if gmsa_credential_spec is not None:
             pulumi.set(__self__, "gmsa_credential_spec", gmsa_credential_spec)
         if gmsa_credential_spec_name is not None:
             pulumi.set(__self__, "gmsa_credential_spec_name", gmsa_credential_spec_name)
+        if run_as_user_name is not None:
+            pulumi.set(__self__, "run_as_user_name", run_as_user_name)
 
     @property
     @pulumi.getter(name="gmsaCredentialSpec")
@@ -1658,6 +1665,11 @@ class KafkaBridgeSpecTemplateBridgeContainerSecurityContextWindowsOptions(dict):
     @pulumi.getter(name="gmsaCredentialSpecName")
     def gmsa_credential_spec_name(self) -> Optional[str]:
         return pulumi.get(self, "gmsa_credential_spec_name")
+
+    @property
+    @pulumi.getter(name="runAsUserName")
+    def run_as_user_name(self) -> Optional[str]:
+        return pulumi.get(self, "run_as_user_name")
 
     def _translate_property(self, prop):
         return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
@@ -1734,6 +1746,7 @@ class KafkaBridgeSpecTemplatePod(dict):
     """
     def __init__(__self__, *,
                  affinity: Optional['outputs.KafkaBridgeSpecTemplatePodAffinity'] = None,
+                 host_aliases: Optional[Sequence['outputs.KafkaBridgeSpecTemplatePodHostAliases']] = None,
                  image_pull_secrets: Optional[Sequence['outputs.KafkaBridgeSpecTemplatePodImagePullSecrets']] = None,
                  metadata: Optional['outputs.KafkaBridgeSpecTemplatePodMetadata'] = None,
                  priority_class_name: Optional[str] = None,
@@ -1744,6 +1757,7 @@ class KafkaBridgeSpecTemplatePod(dict):
         """
         Template for Kafka Bridge `Pods`.
         :param 'KafkaBridgeSpecTemplatePodAffinityArgs' affinity: The pod's affinity rules.
+        :param Sequence['KafkaBridgeSpecTemplatePodHostAliasesArgs'] host_aliases: The pod's HostAliases. HostAliases is an optional list of hosts and IPs that will be injected into the pod's hosts file if specified.
         :param Sequence['KafkaBridgeSpecTemplatePodImagePullSecretsArgs'] image_pull_secrets: List of references to secrets in the same namespace to use for pulling any of the images used by this Pod. When the `STRIMZI_IMAGE_PULL_SECRETS` environment variable in Cluster Operator and the `imagePullSecrets` option are specified, only the `imagePullSecrets` variable is used and the `STRIMZI_IMAGE_PULL_SECRETS` variable is ignored.
         :param 'KafkaBridgeSpecTemplatePodMetadataArgs' metadata: Metadata applied to the resource.
         :param str priority_class_name: The name of the priority class used to assign priority to the pods. For more information about priority classes, see {K8sPriorityClass}.
@@ -1754,6 +1768,8 @@ class KafkaBridgeSpecTemplatePod(dict):
         """
         if affinity is not None:
             pulumi.set(__self__, "affinity", affinity)
+        if host_aliases is not None:
+            pulumi.set(__self__, "host_aliases", host_aliases)
         if image_pull_secrets is not None:
             pulumi.set(__self__, "image_pull_secrets", image_pull_secrets)
         if metadata is not None:
@@ -1776,6 +1792,14 @@ class KafkaBridgeSpecTemplatePod(dict):
         The pod's affinity rules.
         """
         return pulumi.get(self, "affinity")
+
+    @property
+    @pulumi.getter(name="hostAliases")
+    def host_aliases(self) -> Optional[Sequence['outputs.KafkaBridgeSpecTemplatePodHostAliases']]:
+        """
+        The pod's HostAliases. HostAliases is an optional list of hosts and IPs that will be injected into the pod's hosts file if specified.
+        """
+        return pulumi.get(self, "host_aliases")
 
     @property
     @pulumi.getter(name="imagePullSecrets")
@@ -2640,6 +2664,30 @@ class KafkaBridgeSpecTemplatePodDisruptionBudgetMetadata(dict):
 
 
 @pulumi.output_type
+class KafkaBridgeSpecTemplatePodHostAliases(dict):
+    def __init__(__self__, *,
+                 hostnames: Optional[Sequence[str]] = None,
+                 ip: Optional[str] = None):
+        if hostnames is not None:
+            pulumi.set(__self__, "hostnames", hostnames)
+        if ip is not None:
+            pulumi.set(__self__, "ip", ip)
+
+    @property
+    @pulumi.getter
+    def hostnames(self) -> Optional[Sequence[str]]:
+        return pulumi.get(self, "hostnames")
+
+    @property
+    @pulumi.getter
+    def ip(self) -> Optional[str]:
+        return pulumi.get(self, "ip")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
 class KafkaBridgeSpecTemplatePodImagePullSecrets(dict):
     def __init__(__self__, *,
                  name: Optional[str] = None):
@@ -2700,6 +2748,7 @@ class KafkaBridgeSpecTemplatePodSecurityContext(dict):
     """
     def __init__(__self__, *,
                  fs_group: Optional[int] = None,
+                 fs_group_change_policy: Optional[str] = None,
                  run_as_group: Optional[int] = None,
                  run_as_non_root: Optional[bool] = None,
                  run_as_user: Optional[int] = None,
@@ -2712,6 +2761,8 @@ class KafkaBridgeSpecTemplatePodSecurityContext(dict):
         """
         if fs_group is not None:
             pulumi.set(__self__, "fs_group", fs_group)
+        if fs_group_change_policy is not None:
+            pulumi.set(__self__, "fs_group_change_policy", fs_group_change_policy)
         if run_as_group is not None:
             pulumi.set(__self__, "run_as_group", run_as_group)
         if run_as_non_root is not None:
@@ -2731,6 +2782,11 @@ class KafkaBridgeSpecTemplatePodSecurityContext(dict):
     @pulumi.getter(name="fsGroup")
     def fs_group(self) -> Optional[int]:
         return pulumi.get(self, "fs_group")
+
+    @property
+    @pulumi.getter(name="fsGroupChangePolicy")
+    def fs_group_change_policy(self) -> Optional[str]:
+        return pulumi.get(self, "fs_group_change_policy")
 
     @property
     @pulumi.getter(name="runAsGroup")
@@ -2839,11 +2895,14 @@ class KafkaBridgeSpecTemplatePodSecurityContextSysctls(dict):
 class KafkaBridgeSpecTemplatePodSecurityContextWindowsOptions(dict):
     def __init__(__self__, *,
                  gmsa_credential_spec: Optional[str] = None,
-                 gmsa_credential_spec_name: Optional[str] = None):
+                 gmsa_credential_spec_name: Optional[str] = None,
+                 run_as_user_name: Optional[str] = None):
         if gmsa_credential_spec is not None:
             pulumi.set(__self__, "gmsa_credential_spec", gmsa_credential_spec)
         if gmsa_credential_spec_name is not None:
             pulumi.set(__self__, "gmsa_credential_spec_name", gmsa_credential_spec_name)
+        if run_as_user_name is not None:
+            pulumi.set(__self__, "run_as_user_name", run_as_user_name)
 
     @property
     @pulumi.getter(name="gmsaCredentialSpec")
@@ -2854,6 +2913,11 @@ class KafkaBridgeSpecTemplatePodSecurityContextWindowsOptions(dict):
     @pulumi.getter(name="gmsaCredentialSpecName")
     def gmsa_credential_spec_name(self) -> Optional[str]:
         return pulumi.get(self, "gmsa_credential_spec_name")
+
+    @property
+    @pulumi.getter(name="runAsUserName")
+    def run_as_user_name(self) -> Optional[str]:
+        return pulumi.get(self, "run_as_user_name")
 
     def _translate_property(self, prop):
         return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
@@ -2997,24 +3061,24 @@ class KafkaBridgeStatus(dict):
     """
     def __init__(__self__, *,
                  conditions: Optional[Sequence['outputs.KafkaBridgeStatusConditions']] = None,
+                 label_selector: Optional[str] = None,
                  observed_generation: Optional[int] = None,
-                 pod_selector: Optional['outputs.KafkaBridgeStatusPodSelector'] = None,
                  replicas: Optional[int] = None,
                  url: Optional[str] = None):
         """
         The status of the Kafka Bridge.
         :param Sequence['KafkaBridgeStatusConditionsArgs'] conditions: List of status conditions.
+        :param str label_selector: Label selector for pods providing this resource.
         :param int observed_generation: The generation of the CRD that was last reconciled by the operator.
-        :param 'KafkaBridgeStatusPodSelectorArgs' pod_selector: Label selector for pods providing this resource.
         :param int replicas: The current number of pods being used to provide this resource.
         :param str url: The URL at which external client applications can access the Kafka Bridge.
         """
         if conditions is not None:
             pulumi.set(__self__, "conditions", conditions)
+        if label_selector is not None:
+            pulumi.set(__self__, "label_selector", label_selector)
         if observed_generation is not None:
             pulumi.set(__self__, "observed_generation", observed_generation)
-        if pod_selector is not None:
-            pulumi.set(__self__, "pod_selector", pod_selector)
         if replicas is not None:
             pulumi.set(__self__, "replicas", replicas)
         if url is not None:
@@ -3029,20 +3093,20 @@ class KafkaBridgeStatus(dict):
         return pulumi.get(self, "conditions")
 
     @property
+    @pulumi.getter(name="labelSelector")
+    def label_selector(self) -> Optional[str]:
+        """
+        Label selector for pods providing this resource.
+        """
+        return pulumi.get(self, "label_selector")
+
+    @property
     @pulumi.getter(name="observedGeneration")
     def observed_generation(self) -> Optional[int]:
         """
         The generation of the CRD that was last reconciled by the operator.
         """
         return pulumi.get(self, "observed_generation")
-
-    @property
-    @pulumi.getter(name="podSelector")
-    def pod_selector(self) -> Optional['outputs.KafkaBridgeStatusPodSelector']:
-        """
-        Label selector for pods providing this resource.
-        """
-        return pulumi.get(self, "pod_selector")
 
     @property
     @pulumi.getter
@@ -3129,68 +3193,6 @@ class KafkaBridgeStatusConditions(dict):
         The unique identifier of a condition, used to distinguish between other conditions in the resource.
         """
         return pulumi.get(self, "type")
-
-    def _translate_property(self, prop):
-        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
-
-
-@pulumi.output_type
-class KafkaBridgeStatusPodSelector(dict):
-    """
-    Label selector for pods providing this resource.
-    """
-    def __init__(__self__, *,
-                 match_expressions: Optional[Sequence['outputs.KafkaBridgeStatusPodSelectorMatchExpressions']] = None,
-                 match_labels: Optional[Mapping[str, Any]] = None):
-        """
-        Label selector for pods providing this resource.
-        """
-        if match_expressions is not None:
-            pulumi.set(__self__, "match_expressions", match_expressions)
-        if match_labels is not None:
-            pulumi.set(__self__, "match_labels", match_labels)
-
-    @property
-    @pulumi.getter(name="matchExpressions")
-    def match_expressions(self) -> Optional[Sequence['outputs.KafkaBridgeStatusPodSelectorMatchExpressions']]:
-        return pulumi.get(self, "match_expressions")
-
-    @property
-    @pulumi.getter(name="matchLabels")
-    def match_labels(self) -> Optional[Mapping[str, Any]]:
-        return pulumi.get(self, "match_labels")
-
-    def _translate_property(self, prop):
-        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
-
-
-@pulumi.output_type
-class KafkaBridgeStatusPodSelectorMatchExpressions(dict):
-    def __init__(__self__, *,
-                 key: Optional[str] = None,
-                 operator: Optional[str] = None,
-                 values: Optional[Sequence[str]] = None):
-        if key is not None:
-            pulumi.set(__self__, "key", key)
-        if operator is not None:
-            pulumi.set(__self__, "operator", operator)
-        if values is not None:
-            pulumi.set(__self__, "values", values)
-
-    @property
-    @pulumi.getter
-    def key(self) -> Optional[str]:
-        return pulumi.get(self, "key")
-
-    @property
-    @pulumi.getter
-    def operator(self) -> Optional[str]:
-        return pulumi.get(self, "operator")
-
-    @property
-    @pulumi.getter
-    def values(self) -> Optional[Sequence[str]]:
-        return pulumi.get(self, "values")
 
     def _translate_property(self, prop):
         return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
@@ -5858,6 +5860,7 @@ class KafkaMirrorMaker2SpecTemplate(dict):
                  api_service: Optional['outputs.KafkaMirrorMaker2SpecTemplateApiService'] = None,
                  connect_container: Optional['outputs.KafkaMirrorMaker2SpecTemplateConnectContainer'] = None,
                  deployment: Optional['outputs.KafkaMirrorMaker2SpecTemplateDeployment'] = None,
+                 init_container: Optional['outputs.KafkaMirrorMaker2SpecTemplateInitContainer'] = None,
                  pod: Optional['outputs.KafkaMirrorMaker2SpecTemplatePod'] = None,
                  pod_disruption_budget: Optional['outputs.KafkaMirrorMaker2SpecTemplatePodDisruptionBudget'] = None):
         """
@@ -5865,6 +5868,7 @@ class KafkaMirrorMaker2SpecTemplate(dict):
         :param 'KafkaMirrorMaker2SpecTemplateApiServiceArgs' api_service: Template for Kafka Connect API `Service`.
         :param 'KafkaMirrorMaker2SpecTemplateConnectContainerArgs' connect_container: Template for the Kafka Connect container.
         :param 'KafkaMirrorMaker2SpecTemplateDeploymentArgs' deployment: Template for Kafka Connect `Deployment`.
+        :param 'KafkaMirrorMaker2SpecTemplateInitContainerArgs' init_container: Template for the Kafka init container.
         :param 'KafkaMirrorMaker2SpecTemplatePodArgs' pod: Template for Kafka Connect `Pods`.
         :param 'KafkaMirrorMaker2SpecTemplatePodDisruptionBudgetArgs' pod_disruption_budget: Template for Kafka Connect `PodDisruptionBudget`.
         """
@@ -5874,6 +5878,8 @@ class KafkaMirrorMaker2SpecTemplate(dict):
             pulumi.set(__self__, "connect_container", connect_container)
         if deployment is not None:
             pulumi.set(__self__, "deployment", deployment)
+        if init_container is not None:
+            pulumi.set(__self__, "init_container", init_container)
         if pod is not None:
             pulumi.set(__self__, "pod", pod)
         if pod_disruption_budget is not None:
@@ -5902,6 +5908,14 @@ class KafkaMirrorMaker2SpecTemplate(dict):
         Template for Kafka Connect `Deployment`.
         """
         return pulumi.get(self, "deployment")
+
+    @property
+    @pulumi.getter(name="initContainer")
+    def init_container(self) -> Optional['outputs.KafkaMirrorMaker2SpecTemplateInitContainer']:
+        """
+        Template for the Kafka init container.
+        """
+        return pulumi.get(self, "init_container")
 
     @property
     @pulumi.getter
@@ -6221,11 +6235,14 @@ class KafkaMirrorMaker2SpecTemplateConnectContainerSecurityContextSeLinuxOptions
 class KafkaMirrorMaker2SpecTemplateConnectContainerSecurityContextWindowsOptions(dict):
     def __init__(__self__, *,
                  gmsa_credential_spec: Optional[str] = None,
-                 gmsa_credential_spec_name: Optional[str] = None):
+                 gmsa_credential_spec_name: Optional[str] = None,
+                 run_as_user_name: Optional[str] = None):
         if gmsa_credential_spec is not None:
             pulumi.set(__self__, "gmsa_credential_spec", gmsa_credential_spec)
         if gmsa_credential_spec_name is not None:
             pulumi.set(__self__, "gmsa_credential_spec_name", gmsa_credential_spec_name)
+        if run_as_user_name is not None:
+            pulumi.set(__self__, "run_as_user_name", run_as_user_name)
 
     @property
     @pulumi.getter(name="gmsaCredentialSpec")
@@ -6236,6 +6253,11 @@ class KafkaMirrorMaker2SpecTemplateConnectContainerSecurityContextWindowsOptions
     @pulumi.getter(name="gmsaCredentialSpecName")
     def gmsa_credential_spec_name(self) -> Optional[str]:
         return pulumi.get(self, "gmsa_credential_spec_name")
+
+    @property
+    @pulumi.getter(name="runAsUserName")
+    def run_as_user_name(self) -> Optional[str]:
+        return pulumi.get(self, "run_as_user_name")
 
     def _translate_property(self, prop):
         return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
@@ -6306,12 +6328,275 @@ class KafkaMirrorMaker2SpecTemplateDeploymentMetadata(dict):
 
 
 @pulumi.output_type
+class KafkaMirrorMaker2SpecTemplateInitContainer(dict):
+    """
+    Template for the Kafka init container.
+    """
+    def __init__(__self__, *,
+                 env: Optional[Sequence['outputs.KafkaMirrorMaker2SpecTemplateInitContainerEnv']] = None,
+                 security_context: Optional['outputs.KafkaMirrorMaker2SpecTemplateInitContainerSecurityContext'] = None):
+        """
+        Template for the Kafka init container.
+        :param Sequence['KafkaMirrorMaker2SpecTemplateInitContainerEnvArgs'] env: Environment variables which should be applied to the container.
+        :param 'KafkaMirrorMaker2SpecTemplateInitContainerSecurityContextArgs' security_context: Security context for the container.
+        """
+        if env is not None:
+            pulumi.set(__self__, "env", env)
+        if security_context is not None:
+            pulumi.set(__self__, "security_context", security_context)
+
+    @property
+    @pulumi.getter
+    def env(self) -> Optional[Sequence['outputs.KafkaMirrorMaker2SpecTemplateInitContainerEnv']]:
+        """
+        Environment variables which should be applied to the container.
+        """
+        return pulumi.get(self, "env")
+
+    @property
+    @pulumi.getter(name="securityContext")
+    def security_context(self) -> Optional['outputs.KafkaMirrorMaker2SpecTemplateInitContainerSecurityContext']:
+        """
+        Security context for the container.
+        """
+        return pulumi.get(self, "security_context")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class KafkaMirrorMaker2SpecTemplateInitContainerEnv(dict):
+    def __init__(__self__, *,
+                 name: Optional[str] = None,
+                 value: Optional[str] = None):
+        """
+        :param str name: The environment variable key.
+        :param str value: The environment variable value.
+        """
+        if name is not None:
+            pulumi.set(__self__, "name", name)
+        if value is not None:
+            pulumi.set(__self__, "value", value)
+
+    @property
+    @pulumi.getter
+    def name(self) -> Optional[str]:
+        """
+        The environment variable key.
+        """
+        return pulumi.get(self, "name")
+
+    @property
+    @pulumi.getter
+    def value(self) -> Optional[str]:
+        """
+        The environment variable value.
+        """
+        return pulumi.get(self, "value")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class KafkaMirrorMaker2SpecTemplateInitContainerSecurityContext(dict):
+    """
+    Security context for the container.
+    """
+    def __init__(__self__, *,
+                 allow_privilege_escalation: Optional[bool] = None,
+                 capabilities: Optional['outputs.KafkaMirrorMaker2SpecTemplateInitContainerSecurityContextCapabilities'] = None,
+                 privileged: Optional[bool] = None,
+                 proc_mount: Optional[str] = None,
+                 read_only_root_filesystem: Optional[bool] = None,
+                 run_as_group: Optional[int] = None,
+                 run_as_non_root: Optional[bool] = None,
+                 run_as_user: Optional[int] = None,
+                 se_linux_options: Optional['outputs.KafkaMirrorMaker2SpecTemplateInitContainerSecurityContextSeLinuxOptions'] = None,
+                 windows_options: Optional['outputs.KafkaMirrorMaker2SpecTemplateInitContainerSecurityContextWindowsOptions'] = None):
+        """
+        Security context for the container.
+        """
+        if allow_privilege_escalation is not None:
+            pulumi.set(__self__, "allow_privilege_escalation", allow_privilege_escalation)
+        if capabilities is not None:
+            pulumi.set(__self__, "capabilities", capabilities)
+        if privileged is not None:
+            pulumi.set(__self__, "privileged", privileged)
+        if proc_mount is not None:
+            pulumi.set(__self__, "proc_mount", proc_mount)
+        if read_only_root_filesystem is not None:
+            pulumi.set(__self__, "read_only_root_filesystem", read_only_root_filesystem)
+        if run_as_group is not None:
+            pulumi.set(__self__, "run_as_group", run_as_group)
+        if run_as_non_root is not None:
+            pulumi.set(__self__, "run_as_non_root", run_as_non_root)
+        if run_as_user is not None:
+            pulumi.set(__self__, "run_as_user", run_as_user)
+        if se_linux_options is not None:
+            pulumi.set(__self__, "se_linux_options", se_linux_options)
+        if windows_options is not None:
+            pulumi.set(__self__, "windows_options", windows_options)
+
+    @property
+    @pulumi.getter(name="allowPrivilegeEscalation")
+    def allow_privilege_escalation(self) -> Optional[bool]:
+        return pulumi.get(self, "allow_privilege_escalation")
+
+    @property
+    @pulumi.getter
+    def capabilities(self) -> Optional['outputs.KafkaMirrorMaker2SpecTemplateInitContainerSecurityContextCapabilities']:
+        return pulumi.get(self, "capabilities")
+
+    @property
+    @pulumi.getter
+    def privileged(self) -> Optional[bool]:
+        return pulumi.get(self, "privileged")
+
+    @property
+    @pulumi.getter(name="procMount")
+    def proc_mount(self) -> Optional[str]:
+        return pulumi.get(self, "proc_mount")
+
+    @property
+    @pulumi.getter(name="readOnlyRootFilesystem")
+    def read_only_root_filesystem(self) -> Optional[bool]:
+        return pulumi.get(self, "read_only_root_filesystem")
+
+    @property
+    @pulumi.getter(name="runAsGroup")
+    def run_as_group(self) -> Optional[int]:
+        return pulumi.get(self, "run_as_group")
+
+    @property
+    @pulumi.getter(name="runAsNonRoot")
+    def run_as_non_root(self) -> Optional[bool]:
+        return pulumi.get(self, "run_as_non_root")
+
+    @property
+    @pulumi.getter(name="runAsUser")
+    def run_as_user(self) -> Optional[int]:
+        return pulumi.get(self, "run_as_user")
+
+    @property
+    @pulumi.getter(name="seLinuxOptions")
+    def se_linux_options(self) -> Optional['outputs.KafkaMirrorMaker2SpecTemplateInitContainerSecurityContextSeLinuxOptions']:
+        return pulumi.get(self, "se_linux_options")
+
+    @property
+    @pulumi.getter(name="windowsOptions")
+    def windows_options(self) -> Optional['outputs.KafkaMirrorMaker2SpecTemplateInitContainerSecurityContextWindowsOptions']:
+        return pulumi.get(self, "windows_options")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class KafkaMirrorMaker2SpecTemplateInitContainerSecurityContextCapabilities(dict):
+    def __init__(__self__, *,
+                 add: Optional[Sequence[str]] = None,
+                 drop: Optional[Sequence[str]] = None):
+        if add is not None:
+            pulumi.set(__self__, "add", add)
+        if drop is not None:
+            pulumi.set(__self__, "drop", drop)
+
+    @property
+    @pulumi.getter
+    def add(self) -> Optional[Sequence[str]]:
+        return pulumi.get(self, "add")
+
+    @property
+    @pulumi.getter
+    def drop(self) -> Optional[Sequence[str]]:
+        return pulumi.get(self, "drop")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class KafkaMirrorMaker2SpecTemplateInitContainerSecurityContextSeLinuxOptions(dict):
+    def __init__(__self__, *,
+                 level: Optional[str] = None,
+                 role: Optional[str] = None,
+                 type: Optional[str] = None,
+                 user: Optional[str] = None):
+        if level is not None:
+            pulumi.set(__self__, "level", level)
+        if role is not None:
+            pulumi.set(__self__, "role", role)
+        if type is not None:
+            pulumi.set(__self__, "type", type)
+        if user is not None:
+            pulumi.set(__self__, "user", user)
+
+    @property
+    @pulumi.getter
+    def level(self) -> Optional[str]:
+        return pulumi.get(self, "level")
+
+    @property
+    @pulumi.getter
+    def role(self) -> Optional[str]:
+        return pulumi.get(self, "role")
+
+    @property
+    @pulumi.getter
+    def type(self) -> Optional[str]:
+        return pulumi.get(self, "type")
+
+    @property
+    @pulumi.getter
+    def user(self) -> Optional[str]:
+        return pulumi.get(self, "user")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class KafkaMirrorMaker2SpecTemplateInitContainerSecurityContextWindowsOptions(dict):
+    def __init__(__self__, *,
+                 gmsa_credential_spec: Optional[str] = None,
+                 gmsa_credential_spec_name: Optional[str] = None,
+                 run_as_user_name: Optional[str] = None):
+        if gmsa_credential_spec is not None:
+            pulumi.set(__self__, "gmsa_credential_spec", gmsa_credential_spec)
+        if gmsa_credential_spec_name is not None:
+            pulumi.set(__self__, "gmsa_credential_spec_name", gmsa_credential_spec_name)
+        if run_as_user_name is not None:
+            pulumi.set(__self__, "run_as_user_name", run_as_user_name)
+
+    @property
+    @pulumi.getter(name="gmsaCredentialSpec")
+    def gmsa_credential_spec(self) -> Optional[str]:
+        return pulumi.get(self, "gmsa_credential_spec")
+
+    @property
+    @pulumi.getter(name="gmsaCredentialSpecName")
+    def gmsa_credential_spec_name(self) -> Optional[str]:
+        return pulumi.get(self, "gmsa_credential_spec_name")
+
+    @property
+    @pulumi.getter(name="runAsUserName")
+    def run_as_user_name(self) -> Optional[str]:
+        return pulumi.get(self, "run_as_user_name")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
 class KafkaMirrorMaker2SpecTemplatePod(dict):
     """
     Template for Kafka Connect `Pods`.
     """
     def __init__(__self__, *,
                  affinity: Optional['outputs.KafkaMirrorMaker2SpecTemplatePodAffinity'] = None,
+                 host_aliases: Optional[Sequence['outputs.KafkaMirrorMaker2SpecTemplatePodHostAliases']] = None,
                  image_pull_secrets: Optional[Sequence['outputs.KafkaMirrorMaker2SpecTemplatePodImagePullSecrets']] = None,
                  metadata: Optional['outputs.KafkaMirrorMaker2SpecTemplatePodMetadata'] = None,
                  priority_class_name: Optional[str] = None,
@@ -6322,6 +6607,7 @@ class KafkaMirrorMaker2SpecTemplatePod(dict):
         """
         Template for Kafka Connect `Pods`.
         :param 'KafkaMirrorMaker2SpecTemplatePodAffinityArgs' affinity: The pod's affinity rules.
+        :param Sequence['KafkaMirrorMaker2SpecTemplatePodHostAliasesArgs'] host_aliases: The pod's HostAliases. HostAliases is an optional list of hosts and IPs that will be injected into the pod's hosts file if specified.
         :param Sequence['KafkaMirrorMaker2SpecTemplatePodImagePullSecretsArgs'] image_pull_secrets: List of references to secrets in the same namespace to use for pulling any of the images used by this Pod. When the `STRIMZI_IMAGE_PULL_SECRETS` environment variable in Cluster Operator and the `imagePullSecrets` option are specified, only the `imagePullSecrets` variable is used and the `STRIMZI_IMAGE_PULL_SECRETS` variable is ignored.
         :param 'KafkaMirrorMaker2SpecTemplatePodMetadataArgs' metadata: Metadata applied to the resource.
         :param str priority_class_name: The name of the priority class used to assign priority to the pods. For more information about priority classes, see {K8sPriorityClass}.
@@ -6332,6 +6618,8 @@ class KafkaMirrorMaker2SpecTemplatePod(dict):
         """
         if affinity is not None:
             pulumi.set(__self__, "affinity", affinity)
+        if host_aliases is not None:
+            pulumi.set(__self__, "host_aliases", host_aliases)
         if image_pull_secrets is not None:
             pulumi.set(__self__, "image_pull_secrets", image_pull_secrets)
         if metadata is not None:
@@ -6354,6 +6642,14 @@ class KafkaMirrorMaker2SpecTemplatePod(dict):
         The pod's affinity rules.
         """
         return pulumi.get(self, "affinity")
+
+    @property
+    @pulumi.getter(name="hostAliases")
+    def host_aliases(self) -> Optional[Sequence['outputs.KafkaMirrorMaker2SpecTemplatePodHostAliases']]:
+        """
+        The pod's HostAliases. HostAliases is an optional list of hosts and IPs that will be injected into the pod's hosts file if specified.
+        """
+        return pulumi.get(self, "host_aliases")
 
     @property
     @pulumi.getter(name="imagePullSecrets")
@@ -7218,6 +7514,30 @@ class KafkaMirrorMaker2SpecTemplatePodDisruptionBudgetMetadata(dict):
 
 
 @pulumi.output_type
+class KafkaMirrorMaker2SpecTemplatePodHostAliases(dict):
+    def __init__(__self__, *,
+                 hostnames: Optional[Sequence[str]] = None,
+                 ip: Optional[str] = None):
+        if hostnames is not None:
+            pulumi.set(__self__, "hostnames", hostnames)
+        if ip is not None:
+            pulumi.set(__self__, "ip", ip)
+
+    @property
+    @pulumi.getter
+    def hostnames(self) -> Optional[Sequence[str]]:
+        return pulumi.get(self, "hostnames")
+
+    @property
+    @pulumi.getter
+    def ip(self) -> Optional[str]:
+        return pulumi.get(self, "ip")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
 class KafkaMirrorMaker2SpecTemplatePodImagePullSecrets(dict):
     def __init__(__self__, *,
                  name: Optional[str] = None):
@@ -7278,6 +7598,7 @@ class KafkaMirrorMaker2SpecTemplatePodSecurityContext(dict):
     """
     def __init__(__self__, *,
                  fs_group: Optional[int] = None,
+                 fs_group_change_policy: Optional[str] = None,
                  run_as_group: Optional[int] = None,
                  run_as_non_root: Optional[bool] = None,
                  run_as_user: Optional[int] = None,
@@ -7290,6 +7611,8 @@ class KafkaMirrorMaker2SpecTemplatePodSecurityContext(dict):
         """
         if fs_group is not None:
             pulumi.set(__self__, "fs_group", fs_group)
+        if fs_group_change_policy is not None:
+            pulumi.set(__self__, "fs_group_change_policy", fs_group_change_policy)
         if run_as_group is not None:
             pulumi.set(__self__, "run_as_group", run_as_group)
         if run_as_non_root is not None:
@@ -7309,6 +7632,11 @@ class KafkaMirrorMaker2SpecTemplatePodSecurityContext(dict):
     @pulumi.getter(name="fsGroup")
     def fs_group(self) -> Optional[int]:
         return pulumi.get(self, "fs_group")
+
+    @property
+    @pulumi.getter(name="fsGroupChangePolicy")
+    def fs_group_change_policy(self) -> Optional[str]:
+        return pulumi.get(self, "fs_group_change_policy")
 
     @property
     @pulumi.getter(name="runAsGroup")
@@ -7417,11 +7745,14 @@ class KafkaMirrorMaker2SpecTemplatePodSecurityContextSysctls(dict):
 class KafkaMirrorMaker2SpecTemplatePodSecurityContextWindowsOptions(dict):
     def __init__(__self__, *,
                  gmsa_credential_spec: Optional[str] = None,
-                 gmsa_credential_spec_name: Optional[str] = None):
+                 gmsa_credential_spec_name: Optional[str] = None,
+                 run_as_user_name: Optional[str] = None):
         if gmsa_credential_spec is not None:
             pulumi.set(__self__, "gmsa_credential_spec", gmsa_credential_spec)
         if gmsa_credential_spec_name is not None:
             pulumi.set(__self__, "gmsa_credential_spec_name", gmsa_credential_spec_name)
+        if run_as_user_name is not None:
+            pulumi.set(__self__, "run_as_user_name", run_as_user_name)
 
     @property
     @pulumi.getter(name="gmsaCredentialSpec")
@@ -7432,6 +7763,11 @@ class KafkaMirrorMaker2SpecTemplatePodSecurityContextWindowsOptions(dict):
     @pulumi.getter(name="gmsaCredentialSpecName")
     def gmsa_credential_spec_name(self) -> Optional[str]:
         return pulumi.get(self, "gmsa_credential_spec_name")
+
+    @property
+    @pulumi.getter(name="runAsUserName")
+    def run_as_user_name(self) -> Optional[str]:
+        return pulumi.get(self, "run_as_user_name")
 
     def _translate_property(self, prop):
         return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
@@ -7567,8 +7903,8 @@ class KafkaMirrorMaker2Status(dict):
                  conditions: Optional[Sequence['outputs.KafkaMirrorMaker2StatusConditions']] = None,
                  connector_plugins: Optional[Sequence['outputs.KafkaMirrorMaker2StatusConnectorPlugins']] = None,
                  connectors: Optional[Sequence[Mapping[str, Any]]] = None,
+                 label_selector: Optional[str] = None,
                  observed_generation: Optional[int] = None,
-                 pod_selector: Optional['outputs.KafkaMirrorMaker2StatusPodSelector'] = None,
                  replicas: Optional[int] = None,
                  url: Optional[str] = None):
         """
@@ -7576,8 +7912,8 @@ class KafkaMirrorMaker2Status(dict):
         :param Sequence['KafkaMirrorMaker2StatusConditionsArgs'] conditions: List of status conditions.
         :param Sequence['KafkaMirrorMaker2StatusConnectorPluginsArgs'] connector_plugins: The list of connector plugins available in this Kafka Connect deployment.
         :param Sequence[Mapping[str, Any]] connectors: List of MirrorMaker 2.0 connector statuses, as reported by the Kafka Connect REST API.
+        :param str label_selector: Label selector for pods providing this resource.
         :param int observed_generation: The generation of the CRD that was last reconciled by the operator.
-        :param 'KafkaMirrorMaker2StatusPodSelectorArgs' pod_selector: Label selector for pods providing this resource.
         :param int replicas: The current number of pods being used to provide this resource.
         :param str url: The URL of the REST API endpoint for managing and monitoring Kafka Connect connectors.
         """
@@ -7587,10 +7923,10 @@ class KafkaMirrorMaker2Status(dict):
             pulumi.set(__self__, "connector_plugins", connector_plugins)
         if connectors is not None:
             pulumi.set(__self__, "connectors", connectors)
+        if label_selector is not None:
+            pulumi.set(__self__, "label_selector", label_selector)
         if observed_generation is not None:
             pulumi.set(__self__, "observed_generation", observed_generation)
-        if pod_selector is not None:
-            pulumi.set(__self__, "pod_selector", pod_selector)
         if replicas is not None:
             pulumi.set(__self__, "replicas", replicas)
         if url is not None:
@@ -7621,20 +7957,20 @@ class KafkaMirrorMaker2Status(dict):
         return pulumi.get(self, "connectors")
 
     @property
+    @pulumi.getter(name="labelSelector")
+    def label_selector(self) -> Optional[str]:
+        """
+        Label selector for pods providing this resource.
+        """
+        return pulumi.get(self, "label_selector")
+
+    @property
     @pulumi.getter(name="observedGeneration")
     def observed_generation(self) -> Optional[int]:
         """
         The generation of the CRD that was last reconciled by the operator.
         """
         return pulumi.get(self, "observed_generation")
-
-    @property
-    @pulumi.getter(name="podSelector")
-    def pod_selector(self) -> Optional['outputs.KafkaMirrorMaker2StatusPodSelector']:
-        """
-        Label selector for pods providing this resource.
-        """
-        return pulumi.get(self, "pod_selector")
 
     @property
     @pulumi.getter
@@ -7773,68 +8109,6 @@ class KafkaMirrorMaker2StatusConnectorPlugins(dict):
 
 
 @pulumi.output_type
-class KafkaMirrorMaker2StatusPodSelector(dict):
-    """
-    Label selector for pods providing this resource.
-    """
-    def __init__(__self__, *,
-                 match_expressions: Optional[Sequence['outputs.KafkaMirrorMaker2StatusPodSelectorMatchExpressions']] = None,
-                 match_labels: Optional[Mapping[str, Any]] = None):
-        """
-        Label selector for pods providing this resource.
-        """
-        if match_expressions is not None:
-            pulumi.set(__self__, "match_expressions", match_expressions)
-        if match_labels is not None:
-            pulumi.set(__self__, "match_labels", match_labels)
-
-    @property
-    @pulumi.getter(name="matchExpressions")
-    def match_expressions(self) -> Optional[Sequence['outputs.KafkaMirrorMaker2StatusPodSelectorMatchExpressions']]:
-        return pulumi.get(self, "match_expressions")
-
-    @property
-    @pulumi.getter(name="matchLabels")
-    def match_labels(self) -> Optional[Mapping[str, Any]]:
-        return pulumi.get(self, "match_labels")
-
-    def _translate_property(self, prop):
-        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
-
-
-@pulumi.output_type
-class KafkaMirrorMaker2StatusPodSelectorMatchExpressions(dict):
-    def __init__(__self__, *,
-                 key: Optional[str] = None,
-                 operator: Optional[str] = None,
-                 values: Optional[Sequence[str]] = None):
-        if key is not None:
-            pulumi.set(__self__, "key", key)
-        if operator is not None:
-            pulumi.set(__self__, "operator", operator)
-        if values is not None:
-            pulumi.set(__self__, "values", values)
-
-    @property
-    @pulumi.getter
-    def key(self) -> Optional[str]:
-        return pulumi.get(self, "key")
-
-    @property
-    @pulumi.getter
-    def operator(self) -> Optional[str]:
-        return pulumi.get(self, "operator")
-
-    @property
-    @pulumi.getter
-    def values(self) -> Optional[Sequence[str]]:
-        return pulumi.get(self, "values")
-
-    def _translate_property(self, prop):
-        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
-
-
-@pulumi.output_type
 class KafkaRebalanceSpec(dict):
     """
     The specification of the Kafka rebalance.
@@ -7845,6 +8119,7 @@ class KafkaRebalanceSpec(dict):
                  concurrent_partition_movements_per_broker: Optional[int] = None,
                  excluded_topics: Optional[str] = None,
                  goals: Optional[Sequence[str]] = None,
+                 replica_movement_strategies: Optional[Sequence[str]] = None,
                  replication_throttle: Optional[int] = None,
                  skip_hard_goal_check: Optional[bool] = None):
         """
@@ -7854,6 +8129,7 @@ class KafkaRebalanceSpec(dict):
         :param int concurrent_partition_movements_per_broker: The upper bound of ongoing partition replica movements going into/out of each broker. Default is 5.
         :param str excluded_topics: A regular expression where any matching topics will be excluded from the calculation of optimization proposals. This expression will be parsed by the java.util.regex.Pattern class; for more information on the supported formar consult the documentation for that class.
         :param Sequence[str] goals: A list of goals, ordered by decreasing priority, to use for generating and executing the rebalance proposal. The supported goals are available at https://github.com/linkedin/cruise-control#goals. If an empty goals list is provided, the goals declared in the default.goals Cruise Control configuration parameter are used.
+        :param Sequence[str] replica_movement_strategies: A list of strategy class names used to determine the execution order for the replica movements in the generated optimization proposal. By default BaseReplicaMovementStrategy is used, which will execute the replica movements in the order that they were generated.
         :param int replication_throttle: The upper bound, in bytes per second, on the bandwidth used to move replicas. There is no limit by default.
         :param bool skip_hard_goal_check: Whether to allow the hard goals specified in the Kafka CR to be skipped in optimization proposal generation. This can be useful when some of those hard goals are preventing a balance solution being found. Default is false.
         """
@@ -7867,6 +8143,8 @@ class KafkaRebalanceSpec(dict):
             pulumi.set(__self__, "excluded_topics", excluded_topics)
         if goals is not None:
             pulumi.set(__self__, "goals", goals)
+        if replica_movement_strategies is not None:
+            pulumi.set(__self__, "replica_movement_strategies", replica_movement_strategies)
         if replication_throttle is not None:
             pulumi.set(__self__, "replication_throttle", replication_throttle)
         if skip_hard_goal_check is not None:
@@ -7911,6 +8189,14 @@ class KafkaRebalanceSpec(dict):
         A list of goals, ordered by decreasing priority, to use for generating and executing the rebalance proposal. The supported goals are available at https://github.com/linkedin/cruise-control#goals. If an empty goals list is provided, the goals declared in the default.goals Cruise Control configuration parameter are used.
         """
         return pulumi.get(self, "goals")
+
+    @property
+    @pulumi.getter(name="replicaMovementStrategies")
+    def replica_movement_strategies(self) -> Optional[Sequence[str]]:
+        """
+        A list of strategy class names used to determine the execution order for the replica movements in the generated optimization proposal. By default BaseReplicaMovementStrategy is used, which will execute the replica movements in the order that they were generated.
+        """
+        return pulumi.get(self, "replica_movement_strategies")
 
     @property
     @pulumi.getter(name="replicationThrottle")

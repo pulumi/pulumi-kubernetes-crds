@@ -3,4 +3,6 @@
 
 // Export members:
 export * from "./pgcluster";
+export * from "./pgpolicy";
+export * from "./pgreplica";
 export * from "./pgtask";

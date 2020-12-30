@@ -18,25 +18,32 @@ namespace Pulumi.Kubernetes.Types.Outputs.Build.V1Alpha1
         /// </summary>
         public readonly Pulumi.Kubernetes.Types.Outputs.Build.V1Alpha1.BuildRunSpecBuildRef BuildRef;
         /// <summary>
-        /// Compute Resources required by the build container which can overwrite the configuration in Build. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
+        /// Output refers to the location where the generated image would be pushed to. It will overwrite the output image in build spec
         /// </summary>
-        public readonly Pulumi.Kubernetes.Types.Outputs.Build.V1Alpha1.BuildRunSpecResources Resources;
+        public readonly Pulumi.Kubernetes.Types.Outputs.Build.V1Alpha1.BuildRunSpecOutput Output;
         /// <summary>
         /// ServiceAccount refers to the kubernetes serviceaccount which is used for resource control. Default serviceaccount will be set if it is empty
         /// </summary>
-        public readonly string ServiceAccount;
+        public readonly Pulumi.Kubernetes.Types.Outputs.Build.V1Alpha1.BuildRunSpecServiceAccount ServiceAccount;
+        /// <summary>
+        /// Timeout defines the maximum run time of this build run.
+        /// </summary>
+        public readonly string Timeout;
 
         [OutputConstructor]
         private BuildRunSpec(
             Pulumi.Kubernetes.Types.Outputs.Build.V1Alpha1.BuildRunSpecBuildRef buildRef,
 
-            Pulumi.Kubernetes.Types.Outputs.Build.V1Alpha1.BuildRunSpecResources resources,
+            Pulumi.Kubernetes.Types.Outputs.Build.V1Alpha1.BuildRunSpecOutput output,
 
-            string serviceAccount)
+            Pulumi.Kubernetes.Types.Outputs.Build.V1Alpha1.BuildRunSpecServiceAccount serviceAccount,
+
+            string timeout)
         {
             BuildRef = buildRef;
-            Resources = resources;
+            Output = output;
             ServiceAccount = serviceAccount;
+            Timeout = timeout;
         }
     }
 }

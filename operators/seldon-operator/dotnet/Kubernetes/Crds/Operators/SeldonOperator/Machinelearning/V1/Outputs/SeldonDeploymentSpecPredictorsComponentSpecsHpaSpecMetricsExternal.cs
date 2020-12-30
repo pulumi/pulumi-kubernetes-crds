@@ -24,11 +24,11 @@ namespace Pulumi.Kubernetes.Types.Outputs.Machinelearning.V1
         /// <summary>
         /// targetAverageValue is the target per-pod value of global metric (as a quantity). Mutually exclusive with TargetValue.
         /// </summary>
-        public readonly string TargetAverageValue;
+        public readonly Pulumi.Kubernetes.Types.Outputs.Machinelearning.V1.SeldonDeploymentSpecPredictorsComponentSpecsHpaSpecMetricsExternalTargetAverageValue TargetAverageValue;
         /// <summary>
         /// targetValue is the target value of the metric (as a quantity). Mutually exclusive with TargetAverageValue.
         /// </summary>
-        public readonly string TargetValue;
+        public readonly Pulumi.Kubernetes.Types.Outputs.Machinelearning.V1.SeldonDeploymentSpecPredictorsComponentSpecsHpaSpecMetricsExternalTargetValue TargetValue;
 
         [OutputConstructor]
         private SeldonDeploymentSpecPredictorsComponentSpecsHpaSpecMetricsExternal(
@@ -36,9 +36,9 @@ namespace Pulumi.Kubernetes.Types.Outputs.Machinelearning.V1
 
             Pulumi.Kubernetes.Types.Outputs.Machinelearning.V1.SeldonDeploymentSpecPredictorsComponentSpecsHpaSpecMetricsExternalMetricSelector metricSelector,
 
-            string targetAverageValue,
+            Pulumi.Kubernetes.Types.Outputs.Machinelearning.V1.SeldonDeploymentSpecPredictorsComponentSpecsHpaSpecMetricsExternalTargetAverageValue targetAverageValue,
 
-            string targetValue)
+            Pulumi.Kubernetes.Types.Outputs.Machinelearning.V1.SeldonDeploymentSpecPredictorsComponentSpecsHpaSpecMetricsExternalTargetValue targetValue)
         {
             MetricName = metricName;
             MetricSelector = metricSelector;

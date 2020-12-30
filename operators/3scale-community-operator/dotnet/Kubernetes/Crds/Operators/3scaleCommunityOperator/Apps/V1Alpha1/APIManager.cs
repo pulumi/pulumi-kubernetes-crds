@@ -9,6 +9,9 @@ using Pulumi.Serialization;
 
 namespace Pulumi.Pulumi.Kubernetes.Crds.Operators.3scaleCommunityOperator.Apps.V1Alpha1
 {
+    /// <summary>
+    /// APIManager is the Schema for the apimanagers API
+    /// </summary>
     public partial class APIManager : KubernetesResource
     {
         [Output("apiVersion")]
@@ -20,9 +23,15 @@ namespace Pulumi.Pulumi.Kubernetes.Crds.Operators.3scaleCommunityOperator.Apps.V
         [Output("metadata")]
         public Output<Pulumi.Kubernetes.Types.Outputs.Meta.V1.ObjectMeta> Metadata { get; private set; } = null!;
 
+        /// <summary>
+        /// APIManagerSpec defines the desired state of APIManager
+        /// </summary>
         [Output("spec")]
         public Output<Pulumi.Kubernetes.Types.Outputs.Apps.V1Alpha1.APIManagerSpec> Spec { get; private set; } = null!;
 
+        /// <summary>
+        /// APIManagerStatus defines the observed state of APIManager
+        /// </summary>
         [Output("status")]
         public Output<Pulumi.Kubernetes.Types.Outputs.Apps.V1Alpha1.APIManagerStatus> Status { get; private set; } = null!;
 
@@ -95,9 +104,15 @@ namespace Pulumi.Kubernetes.Types.Inputs.Apps.V1Alpha1
         [Input("metadata")]
         public Input<Pulumi.Kubernetes.Types.Inputs.Meta.V1.ObjectMetaArgs>? Metadata { get; set; }
 
+        /// <summary>
+        /// APIManagerSpec defines the desired state of APIManager
+        /// </summary>
         [Input("spec")]
         public Input<Pulumi.Kubernetes.Types.Inputs.Apps.V1Alpha1.APIManagerSpecArgs>? Spec { get; set; }
 
+        /// <summary>
+        /// APIManagerStatus defines the observed state of APIManager
+        /// </summary>
         [Input("status")]
         public Input<Pulumi.Kubernetes.Types.Inputs.Apps.V1Alpha1.APIManagerStatusArgs>? Status { get; set; }
 

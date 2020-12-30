@@ -13,12 +13,21 @@ namespace Pulumi.Kubernetes.Types.Outputs.Infinispan.V1
     [OutputType]
     public sealed class InfinispanSpecServiceContainer
     {
+        public readonly bool EphemeralStorage;
         public readonly string Storage;
+        public readonly string StorageClassName;
 
         [OutputConstructor]
-        private InfinispanSpecServiceContainer(string storage)
+        private InfinispanSpecServiceContainer(
+            bool ephemeralStorage,
+
+            string storage,
+
+            string storageClassName)
         {
+            EphemeralStorage = ephemeralStorage;
             Storage = storage;
+            StorageClassName = storageClassName;
         }
     }
 }

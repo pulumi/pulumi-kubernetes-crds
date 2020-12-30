@@ -10,14 +10,17 @@ import (
 	"github.com/pulumi/pulumi/sdk/v2/go/pulumi"
 )
 
+// API is the Schema for the apis API
 type API struct {
 	pulumi.CustomResourceState
 
 	ApiVersion pulumi.StringPtrOutput     `pulumi:"apiVersion"`
 	Kind       pulumi.StringPtrOutput     `pulumi:"kind"`
 	Metadata   metav1.ObjectMetaPtrOutput `pulumi:"metadata"`
-	Spec       APISpecPtrOutput           `pulumi:"spec"`
-	Status     pulumi.MapOutput           `pulumi:"status"`
+	// APISpec defines the desired state of API
+	Spec APISpecPtrOutput `pulumi:"spec"`
+	// APIStatus defines the observed state of API
+	Status APIStatusPtrOutput `pulumi:"status"`
 }
 
 // NewAPI registers a new resource with the given unique name, arguments, and options.
@@ -50,19 +53,23 @@ func GetAPI(ctx *pulumi.Context,
 
 // Input properties used for looking up and filtering API resources.
 type apiState struct {
-	ApiVersion *string                `pulumi:"apiVersion"`
-	Kind       *string                `pulumi:"kind"`
-	Metadata   *metav1.ObjectMeta     `pulumi:"metadata"`
-	Spec       *APISpec               `pulumi:"spec"`
-	Status     map[string]interface{} `pulumi:"status"`
+	ApiVersion *string            `pulumi:"apiVersion"`
+	Kind       *string            `pulumi:"kind"`
+	Metadata   *metav1.ObjectMeta `pulumi:"metadata"`
+	// APISpec defines the desired state of API
+	Spec *APISpec `pulumi:"spec"`
+	// APIStatus defines the observed state of API
+	Status *APIStatus `pulumi:"status"`
 }
 
 type APIState struct {
 	ApiVersion pulumi.StringPtrInput
 	Kind       pulumi.StringPtrInput
 	Metadata   metav1.ObjectMetaPtrInput
-	Spec       APISpecPtrInput
-	Status     pulumi.MapInput
+	// APISpec defines the desired state of API
+	Spec APISpecPtrInput
+	// APIStatus defines the observed state of API
+	Status APIStatusPtrInput
 }
 
 func (APIState) ElementType() reflect.Type {
@@ -70,11 +77,13 @@ func (APIState) ElementType() reflect.Type {
 }
 
 type apiArgs struct {
-	ApiVersion *string                `pulumi:"apiVersion"`
-	Kind       *string                `pulumi:"kind"`
-	Metadata   *metav1.ObjectMeta     `pulumi:"metadata"`
-	Spec       *APISpec               `pulumi:"spec"`
-	Status     map[string]interface{} `pulumi:"status"`
+	ApiVersion *string            `pulumi:"apiVersion"`
+	Kind       *string            `pulumi:"kind"`
+	Metadata   *metav1.ObjectMeta `pulumi:"metadata"`
+	// APISpec defines the desired state of API
+	Spec *APISpec `pulumi:"spec"`
+	// APIStatus defines the observed state of API
+	Status *APIStatus `pulumi:"status"`
 }
 
 // The set of arguments for constructing a API resource.
@@ -82,8 +91,10 @@ type APIArgs struct {
 	ApiVersion pulumi.StringPtrInput
 	Kind       pulumi.StringPtrInput
 	Metadata   metav1.ObjectMetaPtrInput
-	Spec       APISpecPtrInput
-	Status     pulumi.MapInput
+	// APISpec defines the desired state of API
+	Spec APISpecPtrInput
+	// APIStatus defines the observed state of API
+	Status APIStatusPtrInput
 }
 
 func (APIArgs) ElementType() reflect.Type {

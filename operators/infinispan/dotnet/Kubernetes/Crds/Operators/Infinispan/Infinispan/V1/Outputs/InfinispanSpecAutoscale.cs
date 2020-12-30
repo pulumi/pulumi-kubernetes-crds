@@ -13,6 +13,7 @@ namespace Pulumi.Kubernetes.Types.Outputs.Infinispan.V1
     [OutputType]
     public sealed class InfinispanSpecAutoscale
     {
+        public readonly bool Disabled;
         public readonly int MaxMemUsagePercent;
         public readonly int MaxReplicas;
         public readonly int MinMemUsagePercent;
@@ -20,6 +21,8 @@ namespace Pulumi.Kubernetes.Types.Outputs.Infinispan.V1
 
         [OutputConstructor]
         private InfinispanSpecAutoscale(
+            bool disabled,
+
             int maxMemUsagePercent,
 
             int maxReplicas,
@@ -28,6 +31,7 @@ namespace Pulumi.Kubernetes.Types.Outputs.Infinispan.V1
 
             int minReplicas)
         {
+            Disabled = disabled;
             MaxMemUsagePercent = maxMemUsagePercent;
             MaxReplicas = maxReplicas;
             MinMemUsagePercent = minMemUsagePercent;

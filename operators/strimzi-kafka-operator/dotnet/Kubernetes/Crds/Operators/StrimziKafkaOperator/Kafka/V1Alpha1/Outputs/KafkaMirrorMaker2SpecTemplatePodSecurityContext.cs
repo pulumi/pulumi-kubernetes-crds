@@ -14,6 +14,7 @@ namespace Pulumi.Kubernetes.Types.Outputs.Kafka.V1Alpha1
     public sealed class KafkaMirrorMaker2SpecTemplatePodSecurityContext
     {
         public readonly int FsGroup;
+        public readonly string FsGroupChangePolicy;
         public readonly int RunAsGroup;
         public readonly bool RunAsNonRoot;
         public readonly int RunAsUser;
@@ -25,6 +26,8 @@ namespace Pulumi.Kubernetes.Types.Outputs.Kafka.V1Alpha1
         [OutputConstructor]
         private KafkaMirrorMaker2SpecTemplatePodSecurityContext(
             int fsGroup,
+
+            string fsGroupChangePolicy,
 
             int runAsGroup,
 
@@ -41,6 +44,7 @@ namespace Pulumi.Kubernetes.Types.Outputs.Kafka.V1Alpha1
             Pulumi.Kubernetes.Types.Outputs.Kafka.V1Alpha1.KafkaMirrorMaker2SpecTemplatePodSecurityContextWindowsOptions windowsOptions)
         {
             FsGroup = fsGroup;
+            FsGroupChangePolicy = fsGroupChangePolicy;
             RunAsGroup = runAsGroup;
             RunAsNonRoot = runAsNonRoot;
             RunAsUser = runAsUser;

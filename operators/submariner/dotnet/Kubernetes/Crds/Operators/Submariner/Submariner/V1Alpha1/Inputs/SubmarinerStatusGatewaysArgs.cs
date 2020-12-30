@@ -12,28 +12,25 @@ namespace Pulumi.Kubernetes.Types.Inputs.Submariner.V1Alpha1
 
     public class SubmarinerStatusGatewaysArgs : Pulumi.ResourceArgs
     {
-        /// <summary>
-        /// APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#resources
-        /// </summary>
-        [Input("apiVersion")]
-        public Input<string>? ApiVersion { get; set; }
-
-        /// <summary>
-        /// Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds
-        /// </summary>
-        [Input("kind")]
-        public Input<string>? Kind { get; set; }
-
-        [Input("metadata")]
-        private InputMap<object>? _metadata;
-        public InputMap<object> Metadata
+        [Input("connections", required: true)]
+        private InputList<Pulumi.Kubernetes.Types.Inputs.Submariner.V1Alpha1.SubmarinerStatusGatewaysConnectionsArgs>? _connections;
+        public InputList<Pulumi.Kubernetes.Types.Inputs.Submariner.V1Alpha1.SubmarinerStatusGatewaysConnectionsArgs> Connections
         {
-            get => _metadata ?? (_metadata = new InputMap<object>());
-            set => _metadata = value;
+            get => _connections ?? (_connections = new InputList<Pulumi.Kubernetes.Types.Inputs.Submariner.V1Alpha1.SubmarinerStatusGatewaysConnectionsArgs>());
+            set => _connections = value;
         }
 
-        [Input("status", required: true)]
-        public Input<Pulumi.Kubernetes.Types.Inputs.Submariner.V1Alpha1.SubmarinerStatusGatewaysStatusArgs> Status { get; set; } = null!;
+        [Input("haStatus", required: true)]
+        public Input<string> HaStatus { get; set; } = null!;
+
+        [Input("localEndpoint", required: true)]
+        public Input<Pulumi.Kubernetes.Types.Inputs.Submariner.V1Alpha1.SubmarinerStatusGatewaysLocalEndpointArgs> LocalEndpoint { get; set; } = null!;
+
+        [Input("statusFailure", required: true)]
+        public Input<string> StatusFailure { get; set; } = null!;
+
+        [Input("version", required: true)]
+        public Input<string> Version { get; set; } = null!;
 
         public SubmarinerStatusGatewaysArgs()
         {

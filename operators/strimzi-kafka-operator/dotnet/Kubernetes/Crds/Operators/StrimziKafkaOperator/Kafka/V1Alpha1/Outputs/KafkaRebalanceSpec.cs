@@ -34,6 +34,10 @@ namespace Pulumi.Kubernetes.Types.Outputs.Kafka.V1Alpha1
         /// </summary>
         public readonly ImmutableArray<string> Goals;
         /// <summary>
+        /// A list of strategy class names used to determine the execution order for the replica movements in the generated optimization proposal. By default BaseReplicaMovementStrategy is used, which will execute the replica movements in the order that they were generated.
+        /// </summary>
+        public readonly ImmutableArray<string> ReplicaMovementStrategies;
+        /// <summary>
         /// The upper bound, in bytes per second, on the bandwidth used to move replicas. There is no limit by default.
         /// </summary>
         public readonly int ReplicationThrottle;
@@ -54,6 +58,8 @@ namespace Pulumi.Kubernetes.Types.Outputs.Kafka.V1Alpha1
 
             ImmutableArray<string> goals,
 
+            ImmutableArray<string> replicaMovementStrategies,
+
             int replicationThrottle,
 
             bool skipHardGoalCheck)
@@ -63,6 +69,7 @@ namespace Pulumi.Kubernetes.Types.Outputs.Kafka.V1Alpha1
             ConcurrentPartitionMovementsPerBroker = concurrentPartitionMovementsPerBroker;
             ExcludedTopics = excludedTopics;
             Goals = goals;
+            ReplicaMovementStrategies = replicaMovementStrategies;
             ReplicationThrottle = replicationThrottle;
             SkipHardGoalCheck = skipHardGoalCheck;
         }

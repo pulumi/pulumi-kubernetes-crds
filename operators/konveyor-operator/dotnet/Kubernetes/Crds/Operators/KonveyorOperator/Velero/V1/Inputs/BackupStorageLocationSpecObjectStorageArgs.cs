@@ -22,6 +22,12 @@ namespace Pulumi.Kubernetes.Types.Inputs.Velero.V1
         public Input<string> Bucket { get; set; } = null!;
 
         /// <summary>
+        /// CACert defines a CA bundle to use when verifying TLS connections to the provider.
+        /// </summary>
+        [Input("caCert")]
+        public Input<string>? CaCert { get; set; }
+
+        /// <summary>
         /// Prefix is the path inside a bucket to use for Velero storage. Optional.
         /// </summary>
         [Input("prefix")]

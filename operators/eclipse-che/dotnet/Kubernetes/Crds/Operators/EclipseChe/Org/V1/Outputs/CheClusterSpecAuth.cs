@@ -34,6 +34,10 @@ namespace Pulumi.Kubernetes.Types.Outputs.Org.V1
         /// </summary>
         public readonly string IdentityProviderImagePullPolicy;
         /// <summary>
+        /// Ingress custom settings
+        /// </summary>
+        public readonly Pulumi.Kubernetes.Types.Outputs.Org.V1.CheClusterSpecAuthIdentityProviderIngress IdentityProviderIngress;
+        /// <summary>
         /// Overrides the password of Keycloak admin user. This is useful to override it ONLY if you use an external Identity Provider (see the `externalIdentityProvider` field). If omitted or left blank, it will be set to an auto-generated password.
         /// </summary>
         public readonly string IdentityProviderPassword;
@@ -49,6 +53,10 @@ namespace Pulumi.Kubernetes.Types.Outputs.Org.V1
         /// Name of a Identity provider (Keycloak / RH SSO) realm that should be used for Che. This is useful to override it ONLY if you use an external Identity Provider (see the `externalIdentityProvider` field). If omitted or left blank, it will be set to the value of the `flavour` field.
         /// </summary>
         public readonly string IdentityProviderRealm;
+        /// <summary>
+        /// Route custom settings
+        /// </summary>
+        public readonly Pulumi.Kubernetes.Types.Outputs.Org.V1.CheClusterSpecAuthIdentityProviderRoute IdentityProviderRoute;
         /// <summary>
         /// The secret that contains `user` and `password` for Identity Provider. If the secret is defined then `identityProviderAdminUserName` and `identityProviderPassword` are ignored. If the value is omitted or left blank then there are two scenarios: 1. `identityProviderAdminUserName` and `identityProviderPassword` are defined, then they will be used. 2. `identityProviderAdminUserName` or `identityProviderPassword` are not defined, then a new secret with the name `che-identity-secret` will be created with default value `admin` for `user` and with an auto-generated value for `password`.
         /// </summary>
@@ -86,6 +94,8 @@ namespace Pulumi.Kubernetes.Types.Outputs.Org.V1
 
             string identityProviderImagePullPolicy,
 
+            Pulumi.Kubernetes.Types.Outputs.Org.V1.CheClusterSpecAuthIdentityProviderIngress identityProviderIngress,
+
             string identityProviderPassword,
 
             string identityProviderPostgresPassword,
@@ -93,6 +103,8 @@ namespace Pulumi.Kubernetes.Types.Outputs.Org.V1
             string identityProviderPostgresSecret,
 
             string identityProviderRealm,
+
+            Pulumi.Kubernetes.Types.Outputs.Org.V1.CheClusterSpecAuthIdentityProviderRoute identityProviderRoute,
 
             string identityProviderSecret,
 
@@ -111,10 +123,12 @@ namespace Pulumi.Kubernetes.Types.Outputs.Org.V1
             IdentityProviderClientId = identityProviderClientId;
             IdentityProviderImage = identityProviderImage;
             IdentityProviderImagePullPolicy = identityProviderImagePullPolicy;
+            IdentityProviderIngress = identityProviderIngress;
             IdentityProviderPassword = identityProviderPassword;
             IdentityProviderPostgresPassword = identityProviderPostgresPassword;
             IdentityProviderPostgresSecret = identityProviderPostgresSecret;
             IdentityProviderRealm = identityProviderRealm;
+            IdentityProviderRoute = identityProviderRoute;
             IdentityProviderSecret = identityProviderSecret;
             IdentityProviderURL = identityProviderURL;
             OAuthClientName = oAuthClientName;

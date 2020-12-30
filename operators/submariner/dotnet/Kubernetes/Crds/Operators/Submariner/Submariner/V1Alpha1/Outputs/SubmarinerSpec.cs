@@ -26,8 +26,11 @@ namespace Pulumi.Kubernetes.Types.Outputs.Submariner.V1Alpha1
         public readonly string ClusterCIDR;
         public readonly string ClusterID;
         public readonly string ColorCodes;
+        public readonly Pulumi.Kubernetes.Types.Outputs.Submariner.V1Alpha1.SubmarinerSpecConnectionHealthCheck ConnectionHealthCheck;
+        public readonly ImmutableArray<string> CustomDomains;
         public readonly bool Debug;
         public readonly string GlobalCIDR;
+        public readonly ImmutableDictionary<string, string> ImageOverrides;
         public readonly string Namespace;
         public readonly bool NatEnabled;
         public readonly string Repository;
@@ -63,9 +66,15 @@ namespace Pulumi.Kubernetes.Types.Outputs.Submariner.V1Alpha1
 
             string colorCodes,
 
+            Pulumi.Kubernetes.Types.Outputs.Submariner.V1Alpha1.SubmarinerSpecConnectionHealthCheck connectionHealthCheck,
+
+            ImmutableArray<string> customDomains,
+
             bool debug,
 
             string globalCIDR,
+
+            ImmutableDictionary<string, string> imageOverrides,
 
             string @namespace,
 
@@ -92,8 +101,11 @@ namespace Pulumi.Kubernetes.Types.Outputs.Submariner.V1Alpha1
             ClusterCIDR = clusterCIDR;
             ClusterID = clusterID;
             ColorCodes = colorCodes;
+            ConnectionHealthCheck = connectionHealthCheck;
+            CustomDomains = customDomains;
             Debug = debug;
             GlobalCIDR = globalCIDR;
+            ImageOverrides = imageOverrides;
             Namespace = @namespace;
             NatEnabled = natEnabled;
             Repository = repository;

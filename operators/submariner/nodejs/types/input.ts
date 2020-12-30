@@ -10,22 +10,6 @@ import {ObjectMeta} from "../meta/v1";
 export namespace submariner {
     export namespace v1alpha1 {
         /**
-         * ServiceDiscoverySpec defines the desired state of ServiceDiscovery
-         */
-        export interface ServiceDiscoverySpec {
-            brokerK8sApiServer: pulumi.Input<string>;
-            brokerK8sApiServerToken: pulumi.Input<string>;
-            brokerK8sCA: pulumi.Input<string>;
-            brokerK8sRemoteNamespace: pulumi.Input<string>;
-            clusterID: pulumi.Input<string>;
-            debug: pulumi.Input<boolean>;
-            globalnetEnabled?: pulumi.Input<boolean>;
-            namespace: pulumi.Input<string>;
-            repository?: pulumi.Input<string>;
-            version?: pulumi.Input<string>;
-        }
-
-        /**
          * SubmarinerSpec defines the desired state of Submariner
          */
         export interface SubmarinerSpec {
@@ -42,8 +26,11 @@ export namespace submariner {
             clusterCIDR: pulumi.Input<string>;
             clusterID: pulumi.Input<string>;
             colorCodes?: pulumi.Input<string>;
+            connectionHealthCheck?: pulumi.Input<inputs.submariner.v1alpha1.SubmarinerSpecConnectionHealthCheck>;
+            customDomains?: pulumi.Input<pulumi.Input<string>[]>;
             debug: pulumi.Input<boolean>;
             globalCIDR?: pulumi.Input<string>;
+            imageOverrides?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
             namespace: pulumi.Input<string>;
             natEnabled: pulumi.Input<boolean>;
             repository?: pulumi.Input<string>;
@@ -52,35 +39,125 @@ export namespace submariner {
             version?: pulumi.Input<string>;
         }
 
+        export interface SubmarinerSpecConnectionHealthCheck {
+            enabled?: pulumi.Input<boolean>;
+            /**
+             * The interval at which health check pings are sent.
+             */
+            intervalSeconds?: pulumi.Input<number>;
+            /**
+             * The maximum number of packets lost at which the health checker will mark the connection as down.
+             */
+            maxPacketLossCount?: pulumi.Input<number>;
+        }
+
         /**
          * SubmarinerStatus defines the observed state of Submariner
          */
         export interface SubmarinerStatus {
-            clusterCIDR: pulumi.Input<string>;
+            clusterCIDR?: pulumi.Input<string>;
             clusterID: pulumi.Input<string>;
             colorCodes?: pulumi.Input<string>;
-            /**
-             * DaemonSetStatus represents the current status of a daemon set.
-             */
             engineDaemonSetStatus?: pulumi.Input<inputs.submariner.v1alpha1.SubmarinerStatusEngineDaemonSetStatus>;
             gateways?: pulumi.Input<pulumi.Input<inputs.submariner.v1alpha1.SubmarinerStatusGateways>[]>;
             globalCIDR?: pulumi.Input<string>;
-            /**
-             * DaemonSetStatus represents the current status of a daemon set.
-             */
             globalnetDaemonSetStatus?: pulumi.Input<inputs.submariner.v1alpha1.SubmarinerStatusGlobalnetDaemonSetStatus>;
             natEnabled: pulumi.Input<boolean>;
+            networkPlugin?: pulumi.Input<string>;
+            routeAgentDaemonSetStatus?: pulumi.Input<inputs.submariner.v1alpha1.SubmarinerStatusRouteAgentDaemonSetStatus>;
+            serviceCIDR?: pulumi.Input<string>;
+        }
+
+        export interface SubmarinerStatusEngineDaemonSetStatus {
+            lastResourceVersion?: pulumi.Input<string>;
+            mismatchedContainerImages: pulumi.Input<boolean>;
+            nonReadyContainerStates?: pulumi.Input<pulumi.Input<inputs.submariner.v1alpha1.SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStates>[]>;
             /**
              * DaemonSetStatus represents the current status of a daemon set.
              */
-            routeAgentDaemonSetStatus?: pulumi.Input<inputs.submariner.v1alpha1.SubmarinerStatusRouteAgentDaemonSetStatus>;
-            serviceCIDR: pulumi.Input<string>;
+            status?: pulumi.Input<inputs.submariner.v1alpha1.SubmarinerStatusEngineDaemonSetStatusStatus>;
+        }
+
+        /**
+         * ContainerState holds a possible state of container. Only one of its members may be specified. If none of them is specified, the default one is ContainerStateWaiting.
+         */
+        export interface SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStates {
+            /**
+             * Details about a running container
+             */
+            running?: pulumi.Input<inputs.submariner.v1alpha1.SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunning>;
+            /**
+             * Details about a terminated container
+             */
+            terminated?: pulumi.Input<inputs.submariner.v1alpha1.SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminated>;
+            /**
+             * Details about a waiting container
+             */
+            waiting?: pulumi.Input<inputs.submariner.v1alpha1.SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaiting>;
+        }
+
+        /**
+         * Details about a running container
+         */
+        export interface SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunning {
+            /**
+             * Time at which the container was last (re-)started
+             */
+            startedAt?: pulumi.Input<string>;
+        }
+
+        /**
+         * Details about a terminated container
+         */
+        export interface SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminated {
+            /**
+             * Container's ID in the format 'docker://<container_id>'
+             */
+            containerID?: pulumi.Input<string>;
+            /**
+             * Exit status from the last termination of the container
+             */
+            exitCode: pulumi.Input<number>;
+            /**
+             * Time at which the container last terminated
+             */
+            finishedAt?: pulumi.Input<string>;
+            /**
+             * Message regarding the last termination of the container
+             */
+            message?: pulumi.Input<string>;
+            /**
+             * (brief) reason from the last termination of the container
+             */
+            reason?: pulumi.Input<string>;
+            /**
+             * Signal from the last termination of the container
+             */
+            signal?: pulumi.Input<number>;
+            /**
+             * Time at which previous execution of the container started
+             */
+            startedAt?: pulumi.Input<string>;
+        }
+
+        /**
+         * Details about a waiting container
+         */
+        export interface SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaiting {
+            /**
+             * Message regarding why the container is not yet running.
+             */
+            message?: pulumi.Input<string>;
+            /**
+             * (brief) reason the container is not yet running.
+             */
+            reason?: pulumi.Input<string>;
         }
 
         /**
          * DaemonSetStatus represents the current status of a daemon set.
          */
-        export interface SubmarinerStatusEngineDaemonSetStatus {
+        export interface SubmarinerStatusEngineDaemonSetStatusStatus {
             /**
              * Count of hash collisions for the DaemonSet. The DaemonSet controller uses this field as a collision avoidance mechanism when it needs to create the name for the newest ControllerRevision.
              */
@@ -88,7 +165,7 @@ export namespace submariner {
             /**
              * Represents the latest available observations of a DaemonSet's current state.
              */
-            conditions?: pulumi.Input<pulumi.Input<inputs.submariner.v1alpha1.SubmarinerStatusEngineDaemonSetStatusConditions>[]>;
+            conditions?: pulumi.Input<pulumi.Input<inputs.submariner.v1alpha1.SubmarinerStatusEngineDaemonSetStatusStatusConditions>[]>;
             /**
              * The number of nodes that are running at least 1 daemon pod and are supposed to run the daemon pod. More info: https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/
              */
@@ -126,7 +203,7 @@ export namespace submariner {
         /**
          * DaemonSetCondition describes the state of a DaemonSet at a certain point.
          */
-        export interface SubmarinerStatusEngineDaemonSetStatusConditions {
+        export interface SubmarinerStatusEngineDaemonSetStatusStatusConditions {
             /**
              * Last time the condition transitioned from one status to another.
              */
@@ -150,49 +227,29 @@ export namespace submariner {
         }
 
         export interface SubmarinerStatusGateways {
-            /**
-             * APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#resources
-             */
-            apiVersion?: pulumi.Input<string>;
-            /**
-             * Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds
-             */
-            kind?: pulumi.Input<string>;
-            metadata?: pulumi.Input<{[key: string]: any}>;
-            status: pulumi.Input<inputs.submariner.v1alpha1.SubmarinerStatusGatewaysStatus>;
-        }
-
-        export interface SubmarinerStatusGatewaysStatus {
-            connections: pulumi.Input<pulumi.Input<inputs.submariner.v1alpha1.SubmarinerStatusGatewaysStatusConnections>[]>;
+            connections: pulumi.Input<pulumi.Input<inputs.submariner.v1alpha1.SubmarinerStatusGatewaysConnections>[]>;
             haStatus: pulumi.Input<string>;
-            localEndpoint: pulumi.Input<inputs.submariner.v1alpha1.SubmarinerStatusGatewaysStatusLocalEndpoint>;
+            localEndpoint: pulumi.Input<inputs.submariner.v1alpha1.SubmarinerStatusGatewaysLocalEndpoint>;
             statusFailure: pulumi.Input<string>;
             version: pulumi.Input<string>;
         }
 
-        export interface SubmarinerStatusGatewaysStatusConnections {
-            endpoint: pulumi.Input<inputs.submariner.v1alpha1.SubmarinerStatusGatewaysStatusConnectionsEndpoint>;
+        export interface SubmarinerStatusGatewaysConnections {
+            endpoint: pulumi.Input<inputs.submariner.v1alpha1.SubmarinerStatusGatewaysConnectionsEndpoint>;
+            /**
+             * LatencySpec describes the round trip time information for a packet between the gateway pods of two clusters.
+             */
+            latencyRTT?: pulumi.Input<inputs.submariner.v1alpha1.SubmarinerStatusGatewaysConnectionsLatencyRTT>;
             status: pulumi.Input<string>;
             statusMessage: pulumi.Input<string>;
         }
 
-        export interface SubmarinerStatusGatewaysStatusConnectionsEndpoint {
+        export interface SubmarinerStatusGatewaysConnectionsEndpoint {
             backend: pulumi.Input<string>;
             backend_config?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
             cable_name: pulumi.Input<string>;
             cluster_id: pulumi.Input<string>;
-            hostname: pulumi.Input<string>;
-            nat_enabled: pulumi.Input<boolean>;
-            private_ip: pulumi.Input<string>;
-            public_ip: pulumi.Input<string>;
-            subnets: pulumi.Input<pulumi.Input<string>[]>;
-        }
-
-        export interface SubmarinerStatusGatewaysStatusLocalEndpoint {
-            backend: pulumi.Input<string>;
-            backend_config?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
-            cable_name: pulumi.Input<string>;
-            cluster_id: pulumi.Input<string>;
+            healthCheckIP?: pulumi.Input<string>;
             hostname: pulumi.Input<string>;
             nat_enabled: pulumi.Input<boolean>;
             private_ip: pulumi.Input<string>;
@@ -201,9 +258,119 @@ export namespace submariner {
         }
 
         /**
+         * LatencySpec describes the round trip time information for a packet between the gateway pods of two clusters.
+         */
+        export interface SubmarinerStatusGatewaysConnectionsLatencyRTT {
+            average?: pulumi.Input<string>;
+            last?: pulumi.Input<string>;
+            max?: pulumi.Input<string>;
+            min?: pulumi.Input<string>;
+            stdDev?: pulumi.Input<string>;
+        }
+
+        export interface SubmarinerStatusGatewaysLocalEndpoint {
+            backend: pulumi.Input<string>;
+            backend_config?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+            cable_name: pulumi.Input<string>;
+            cluster_id: pulumi.Input<string>;
+            healthCheckIP?: pulumi.Input<string>;
+            hostname: pulumi.Input<string>;
+            nat_enabled: pulumi.Input<boolean>;
+            private_ip: pulumi.Input<string>;
+            public_ip: pulumi.Input<string>;
+            subnets: pulumi.Input<pulumi.Input<string>[]>;
+        }
+
+        export interface SubmarinerStatusGlobalnetDaemonSetStatus {
+            lastResourceVersion?: pulumi.Input<string>;
+            mismatchedContainerImages: pulumi.Input<boolean>;
+            nonReadyContainerStates?: pulumi.Input<pulumi.Input<inputs.submariner.v1alpha1.SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStates>[]>;
+            /**
+             * DaemonSetStatus represents the current status of a daemon set.
+             */
+            status?: pulumi.Input<inputs.submariner.v1alpha1.SubmarinerStatusGlobalnetDaemonSetStatusStatus>;
+        }
+
+        /**
+         * ContainerState holds a possible state of container. Only one of its members may be specified. If none of them is specified, the default one is ContainerStateWaiting.
+         */
+        export interface SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStates {
+            /**
+             * Details about a running container
+             */
+            running?: pulumi.Input<inputs.submariner.v1alpha1.SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunning>;
+            /**
+             * Details about a terminated container
+             */
+            terminated?: pulumi.Input<inputs.submariner.v1alpha1.SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminated>;
+            /**
+             * Details about a waiting container
+             */
+            waiting?: pulumi.Input<inputs.submariner.v1alpha1.SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaiting>;
+        }
+
+        /**
+         * Details about a running container
+         */
+        export interface SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunning {
+            /**
+             * Time at which the container was last (re-)started
+             */
+            startedAt?: pulumi.Input<string>;
+        }
+
+        /**
+         * Details about a terminated container
+         */
+        export interface SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminated {
+            /**
+             * Container's ID in the format 'docker://<container_id>'
+             */
+            containerID?: pulumi.Input<string>;
+            /**
+             * Exit status from the last termination of the container
+             */
+            exitCode: pulumi.Input<number>;
+            /**
+             * Time at which the container last terminated
+             */
+            finishedAt?: pulumi.Input<string>;
+            /**
+             * Message regarding the last termination of the container
+             */
+            message?: pulumi.Input<string>;
+            /**
+             * (brief) reason from the last termination of the container
+             */
+            reason?: pulumi.Input<string>;
+            /**
+             * Signal from the last termination of the container
+             */
+            signal?: pulumi.Input<number>;
+            /**
+             * Time at which previous execution of the container started
+             */
+            startedAt?: pulumi.Input<string>;
+        }
+
+        /**
+         * Details about a waiting container
+         */
+        export interface SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaiting {
+            /**
+             * Message regarding why the container is not yet running.
+             */
+            message?: pulumi.Input<string>;
+            /**
+             * (brief) reason the container is not yet running.
+             */
+            reason?: pulumi.Input<string>;
+        }
+
+        /**
          * DaemonSetStatus represents the current status of a daemon set.
          */
-        export interface SubmarinerStatusGlobalnetDaemonSetStatus {
+        export interface SubmarinerStatusGlobalnetDaemonSetStatusStatus {
             /**
              * Count of hash collisions for the DaemonSet. The DaemonSet controller uses this field as a collision avoidance mechanism when it needs to create the name for the newest ControllerRevision.
              */
@@ -211,7 +378,7 @@ export namespace submariner {
             /**
              * Represents the latest available observations of a DaemonSet's current state.
              */
-            conditions?: pulumi.Input<pulumi.Input<inputs.submariner.v1alpha1.SubmarinerStatusGlobalnetDaemonSetStatusConditions>[]>;
+            conditions?: pulumi.Input<pulumi.Input<inputs.submariner.v1alpha1.SubmarinerStatusGlobalnetDaemonSetStatusStatusConditions>[]>;
             /**
              * The number of nodes that are running at least 1 daemon pod and are supposed to run the daemon pod. More info: https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/
              */
@@ -249,7 +416,7 @@ export namespace submariner {
         /**
          * DaemonSetCondition describes the state of a DaemonSet at a certain point.
          */
-        export interface SubmarinerStatusGlobalnetDaemonSetStatusConditions {
+        export interface SubmarinerStatusGlobalnetDaemonSetStatusStatusConditions {
             /**
              * Last time the condition transitioned from one status to another.
              */
@@ -272,10 +439,96 @@ export namespace submariner {
             type: pulumi.Input<string>;
         }
 
+        export interface SubmarinerStatusRouteAgentDaemonSetStatus {
+            lastResourceVersion?: pulumi.Input<string>;
+            mismatchedContainerImages: pulumi.Input<boolean>;
+            nonReadyContainerStates?: pulumi.Input<pulumi.Input<inputs.submariner.v1alpha1.SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStates>[]>;
+            /**
+             * DaemonSetStatus represents the current status of a daemon set.
+             */
+            status?: pulumi.Input<inputs.submariner.v1alpha1.SubmarinerStatusRouteAgentDaemonSetStatusStatus>;
+        }
+
+        /**
+         * ContainerState holds a possible state of container. Only one of its members may be specified. If none of them is specified, the default one is ContainerStateWaiting.
+         */
+        export interface SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStates {
+            /**
+             * Details about a running container
+             */
+            running?: pulumi.Input<inputs.submariner.v1alpha1.SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunning>;
+            /**
+             * Details about a terminated container
+             */
+            terminated?: pulumi.Input<inputs.submariner.v1alpha1.SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminated>;
+            /**
+             * Details about a waiting container
+             */
+            waiting?: pulumi.Input<inputs.submariner.v1alpha1.SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaiting>;
+        }
+
+        /**
+         * Details about a running container
+         */
+        export interface SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunning {
+            /**
+             * Time at which the container was last (re-)started
+             */
+            startedAt?: pulumi.Input<string>;
+        }
+
+        /**
+         * Details about a terminated container
+         */
+        export interface SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminated {
+            /**
+             * Container's ID in the format 'docker://<container_id>'
+             */
+            containerID?: pulumi.Input<string>;
+            /**
+             * Exit status from the last termination of the container
+             */
+            exitCode: pulumi.Input<number>;
+            /**
+             * Time at which the container last terminated
+             */
+            finishedAt?: pulumi.Input<string>;
+            /**
+             * Message regarding the last termination of the container
+             */
+            message?: pulumi.Input<string>;
+            /**
+             * (brief) reason from the last termination of the container
+             */
+            reason?: pulumi.Input<string>;
+            /**
+             * Signal from the last termination of the container
+             */
+            signal?: pulumi.Input<number>;
+            /**
+             * Time at which previous execution of the container started
+             */
+            startedAt?: pulumi.Input<string>;
+        }
+
+        /**
+         * Details about a waiting container
+         */
+        export interface SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaiting {
+            /**
+             * Message regarding why the container is not yet running.
+             */
+            message?: pulumi.Input<string>;
+            /**
+             * (brief) reason the container is not yet running.
+             */
+            reason?: pulumi.Input<string>;
+        }
+
         /**
          * DaemonSetStatus represents the current status of a daemon set.
          */
-        export interface SubmarinerStatusRouteAgentDaemonSetStatus {
+        export interface SubmarinerStatusRouteAgentDaemonSetStatusStatus {
             /**
              * Count of hash collisions for the DaemonSet. The DaemonSet controller uses this field as a collision avoidance mechanism when it needs to create the name for the newest ControllerRevision.
              */
@@ -283,7 +536,7 @@ export namespace submariner {
             /**
              * Represents the latest available observations of a DaemonSet's current state.
              */
-            conditions?: pulumi.Input<pulumi.Input<inputs.submariner.v1alpha1.SubmarinerStatusRouteAgentDaemonSetStatusConditions>[]>;
+            conditions?: pulumi.Input<pulumi.Input<inputs.submariner.v1alpha1.SubmarinerStatusRouteAgentDaemonSetStatusStatusConditions>[]>;
             /**
              * The number of nodes that are running at least 1 daemon pod and are supposed to run the daemon pod. More info: https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/
              */
@@ -321,7 +574,7 @@ export namespace submariner {
         /**
          * DaemonSetCondition describes the state of a DaemonSet at a certain point.
          */
-        export interface SubmarinerStatusRouteAgentDaemonSetStatusConditions {
+        export interface SubmarinerStatusRouteAgentDaemonSetStatusStatusConditions {
             /**
              * Last time the condition transitioned from one status to another.
              */

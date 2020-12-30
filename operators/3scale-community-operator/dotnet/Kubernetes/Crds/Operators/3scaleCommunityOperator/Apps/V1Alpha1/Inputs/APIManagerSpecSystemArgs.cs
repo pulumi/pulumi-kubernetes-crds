@@ -24,14 +24,48 @@ namespace Pulumi.Kubernetes.Types.Inputs.Apps.V1Alpha1
         [Input("image")]
         public Input<string>? Image { get; set; }
 
+        /// <summary>
+        /// Affinity is a group of affinity scheduling rules.
+        /// </summary>
+        [Input("memcachedAffinity")]
+        public Input<Pulumi.Kubernetes.Types.Inputs.Apps.V1Alpha1.APIManagerSpecSystemMemcachedAffinityArgs>? MemcachedAffinity { get; set; }
+
         [Input("memcachedImage")]
         public Input<string>? MemcachedImage { get; set; }
+
+        [Input("memcachedTolerations")]
+        private InputList<Pulumi.Kubernetes.Types.Inputs.Apps.V1Alpha1.APIManagerSpecSystemMemcachedTolerationsArgs>? _memcachedTolerations;
+        public InputList<Pulumi.Kubernetes.Types.Inputs.Apps.V1Alpha1.APIManagerSpecSystemMemcachedTolerationsArgs> MemcachedTolerations
+        {
+            get => _memcachedTolerations ?? (_memcachedTolerations = new InputList<Pulumi.Kubernetes.Types.Inputs.Apps.V1Alpha1.APIManagerSpecSystemMemcachedTolerationsArgs>());
+            set => _memcachedTolerations = value;
+        }
+
+        /// <summary>
+        /// Affinity is a group of affinity scheduling rules.
+        /// </summary>
+        [Input("redisAffinity")]
+        public Input<Pulumi.Kubernetes.Types.Inputs.Apps.V1Alpha1.APIManagerSpecSystemRedisAffinityArgs>? RedisAffinity { get; set; }
 
         [Input("redisImage")]
         public Input<string>? RedisImage { get; set; }
 
+        [Input("redisPersistentVolumeClaim")]
+        public Input<Pulumi.Kubernetes.Types.Inputs.Apps.V1Alpha1.APIManagerSpecSystemRedisPersistentVolumeClaimArgs>? RedisPersistentVolumeClaim { get; set; }
+
+        [Input("redisTolerations")]
+        private InputList<Pulumi.Kubernetes.Types.Inputs.Apps.V1Alpha1.APIManagerSpecSystemRedisTolerationsArgs>? _redisTolerations;
+        public InputList<Pulumi.Kubernetes.Types.Inputs.Apps.V1Alpha1.APIManagerSpecSystemRedisTolerationsArgs> RedisTolerations
+        {
+            get => _redisTolerations ?? (_redisTolerations = new InputList<Pulumi.Kubernetes.Types.Inputs.Apps.V1Alpha1.APIManagerSpecSystemRedisTolerationsArgs>());
+            set => _redisTolerations = value;
+        }
+
         [Input("sidekiqSpec")]
         public Input<Pulumi.Kubernetes.Types.Inputs.Apps.V1Alpha1.APIManagerSpecSystemSidekiqSpecArgs>? SidekiqSpec { get; set; }
+
+        [Input("sphinxSpec")]
+        public Input<Pulumi.Kubernetes.Types.Inputs.Apps.V1Alpha1.APIManagerSpecSystemSphinxSpecArgs>? SphinxSpec { get; set; }
 
         public APIManagerSpecSystemArgs()
         {

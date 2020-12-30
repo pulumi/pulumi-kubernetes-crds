@@ -10,10 +10,17 @@ using Pulumi.Serialization;
 namespace Pulumi.Kubernetes.Types.Inputs.Wso2.V1Alpha1
 {
 
+    /// <summary>
+    /// Interceptors for API. Default value "&lt;empty&gt;".
+    /// </summary>
     public class APISpecDefinitionInterceptorsArgs : Pulumi.ResourceArgs
     {
         [Input("ballerina")]
         private InputList<string>? _ballerina;
+
+        /// <summary>
+        /// Ballerina interceptors. Default value "&lt;empty&gt;".
+        /// </summary>
         public InputList<string> Ballerina
         {
             get => _ballerina ?? (_ballerina = new InputList<string>());
@@ -22,6 +29,10 @@ namespace Pulumi.Kubernetes.Types.Inputs.Wso2.V1Alpha1
 
         [Input("java")]
         private InputList<string>? _java;
+
+        /// <summary>
+        /// Java interceptors. Default value "&lt;empty&gt;".
+        /// </summary>
         public InputList<string> Java
         {
             get => _java ?? (_java = new InputList<string>());

@@ -21,6 +21,18 @@ namespace Pulumi.Kubernetes.Types.Inputs.Storage.V1
         [Input("allowVolumeExpansion")]
         public Input<bool>? AllowVolumeExpansion { get; set; }
 
+        [Input("allowedTopologies")]
+        private InputList<Pulumi.Kubernetes.Types.Inputs.Storage.V1.CSIUnitySpecDriverStorageClassAllowedTopologiesArgs>? _allowedTopologies;
+
+        /// <summary>
+        /// Restrict the node topologies where volumes can be dynamically provisioned.
+        /// </summary>
+        public InputList<Pulumi.Kubernetes.Types.Inputs.Storage.V1.CSIUnitySpecDriverStorageClassAllowedTopologiesArgs> AllowedTopologies
+        {
+            get => _allowedTopologies ?? (_allowedTopologies = new InputList<Pulumi.Kubernetes.Types.Inputs.Storage.V1.CSIUnitySpecDriverStorageClassAllowedTopologiesArgs>());
+            set => _allowedTopologies = value;
+        }
+
         /// <summary>
         /// DefaultSc is a boolean flag to indicate if the storage class is going to be marked as default
         /// </summary>

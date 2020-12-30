@@ -26,6 +26,10 @@ namespace Pulumi.Kubernetes.Types.Outputs.Org.V1
         /// </summary>
         public readonly bool AllowUserDefinedWorkspaceNamespaces;
         /// <summary>
+        /// Comma-separated list of ClusterRoles that will be assigned to che ServiceAccount. Be aware that che-operator has to already have all permissions in these ClusterRoles to be able to grant them.
+        /// </summary>
+        public readonly string CheClusterRoles;
+        /// <summary>
         /// Enables the debug mode for Che server. Defaults to `false`.
         /// </summary>
         public readonly string CheDebug;
@@ -58,6 +62,14 @@ namespace Pulumi.Kubernetes.Types.Outputs.Org.V1
         /// </summary>
         public readonly string CheLogLevel;
         /// <summary>
+        /// Che server ingress custom settings
+        /// </summary>
+        public readonly Pulumi.Kubernetes.Types.Outputs.Org.V1.CheClusterSpecServerCheServerIngress CheServerIngress;
+        /// <summary>
+        /// Che server route custom settings
+        /// </summary>
+        public readonly Pulumi.Kubernetes.Types.Outputs.Org.V1.CheClusterSpecServerCheServerRoute CheServerRoute;
+        /// <summary>
         /// Custom cluster role bound to the user for the Che workspaces. The default roles are used if this is omitted or left blank.
         /// </summary>
         public readonly string CheWorkspaceClusterRole;
@@ -70,6 +82,10 @@ namespace Pulumi.Kubernetes.Types.Outputs.Org.V1
         /// </summary>
         public readonly string DevfileRegistryImage;
         /// <summary>
+        /// Devfile registry ingress custom settings
+        /// </summary>
+        public readonly Pulumi.Kubernetes.Types.Outputs.Org.V1.CheClusterSpecServerDevfileRegistryIngress DevfileRegistryIngress;
+        /// <summary>
         /// Overrides the memory limit used in the Devfile registry deployment. Defaults to 256Mi.
         /// </summary>
         public readonly string DevfileRegistryMemoryLimit;
@@ -81,6 +97,10 @@ namespace Pulumi.Kubernetes.Types.Outputs.Org.V1
         /// Overrides the image pull policy used in the Devfile registry deployment. Default value is `Always` for `nightly` or `latest` images, and `IfNotPresent` in other cases.
         /// </summary>
         public readonly string DevfileRegistryPullPolicy;
+        /// <summary>
+        /// Devfile registry route custom settings
+        /// </summary>
+        public readonly Pulumi.Kubernetes.Types.Outputs.Org.V1.CheClusterSpecServerDevfileRegistryRoute DevfileRegistryRoute;
         /// <summary>
         /// Public URL of the Devfile registry, that serves sample, ready-to-use devfiles. You should set it ONLY if you use an external devfile registry (see the `externalDevfileRegistry` field). By default this will be automatically calculated by the operator.
         /// </summary>
@@ -98,13 +118,17 @@ namespace Pulumi.Kubernetes.Types.Outputs.Org.V1
         /// </summary>
         public readonly bool GitSelfSignedCert;
         /// <summary>
-        /// List of hosts that should not use the configured proxy. Use `|`` as delimiter, eg `localhost|my.host.com|123.42.12.32` Only use when configuring a proxy is required. Operator respects OpenShift cluster wide proxy configuration and no additional configuration is required, but defining `nonProxyHosts` in a custom resource leads to merging non proxy hosts lists from the cluster proxy configuration and ones defined in the custom resources. (see the doc https://docs.openshift.com/container-platform/4.4/networking/enable-cluster-wide-proxy.html) (see also the `proxyURL` fields).
+        /// List of hosts that should not use the configured proxy. So specify wild card domain use the following form `.&lt;DOMAIN&gt;` and `|` as delimiter, eg: `localhost|.my.host.com|123.42.12.32` Only use when configuring a proxy is required. Operator respects OpenShift cluster wide proxy configuration and no additional configuration is required, but defining `nonProxyHosts` in a custom resource leads to merging non proxy hosts lists from the cluster proxy configuration and ones defined in the custom resources. (see the doc https://docs.openshift.com/container-platform/4.4/networking/enable-cluster-wide-proxy.html) (see also the `proxyURL` fields).
         /// </summary>
         public readonly string NonProxyHosts;
         /// <summary>
-        /// Overrides the container image used in the Plugin registry deployment. This includes the image tag. Omit it or leave it empty to use the defaut container image provided by the operator.
+        /// Overrides the container image used in the Plugin registry deployment. This includes the image tag. Omit it or leave it empty to use the default container image provided by the operator.
         /// </summary>
         public readonly string PluginRegistryImage;
+        /// <summary>
+        /// Plugin registry ingress custom settings
+        /// </summary>
+        public readonly Pulumi.Kubernetes.Types.Outputs.Org.V1.CheClusterSpecServerPluginRegistryIngress PluginRegistryIngress;
         /// <summary>
         /// Overrides the memory limit used in the Plugin registry deployment. Defaults to 256Mi.
         /// </summary>
@@ -117,6 +141,10 @@ namespace Pulumi.Kubernetes.Types.Outputs.Org.V1
         /// Overrides the image pull policy used in the Plugin registry deployment. Default value is `Always` for `nightly` or `latest` images, and `IfNotPresent` in other cases.
         /// </summary>
         public readonly string PluginRegistryPullPolicy;
+        /// <summary>
+        /// Plugin registry route custom settings
+        /// </summary>
+        public readonly Pulumi.Kubernetes.Types.Outputs.Org.V1.CheClusterSpecServerPluginRegistryRoute PluginRegistryRoute;
         /// <summary>
         /// Public URL of the Plugin registry, that serves sample ready-to-use devfiles. You should set it ONLY if you use an external devfile registry (see the `externalPluginRegistry` field). By default this will be automatically calculated by the operator.
         /// </summary>
@@ -146,6 +174,10 @@ namespace Pulumi.Kubernetes.Types.Outputs.Org.V1
         /// </summary>
         public readonly bool SelfSignedCert;
         /// <summary>
+        /// Sets the server and workspaces exposure type. Possible values are "multi-host", "single-host", "default-host". Defaults to "multi-host" which creates a separate ingress (or route on OpenShift) for every required endpoint. "single-host" makes Che exposed on a single hostname with workspaces exposed on subpaths. Please read the docs to learn about the limitations of this approach. Also consult the `singleHostExposureType` property to further configure how the operator and Che server make that happen on Kubernetes. "default-host" exposes che server on the host of the cluster. Please read the docs to learn about the limitations of this approach.
+        /// </summary>
+        public readonly string ServerExposureStrategy;
+        /// <summary>
         /// Overrides the memory limit used in the Che server deployment. Defaults to 1Gi.
         /// </summary>
         public readonly string ServerMemoryLimit;
@@ -158,9 +190,25 @@ namespace Pulumi.Kubernetes.Types.Outputs.Org.V1
         /// </summary>
         public readonly string ServerTrustStoreConfigMapName;
         /// <summary>
+        /// The labels that need to be present (and are put) on the configmaps representing the gateway configuration.
+        /// </summary>
+        public readonly ImmutableDictionary<string, string> SingleHostGatewayConfigMapLabels;
+        /// <summary>
+        /// The image used for the gateway sidecar that provides configuration to the gateway. Omit it or leave it empty to use the defaut container image provided by the operator.
+        /// </summary>
+        public readonly string SingleHostGatewayConfigSidecarImage;
+        /// <summary>
+        /// The image used for the gateway in the single host mode. Omit it or leave it empty to use the defaut container image provided by the operator.
+        /// </summary>
+        public readonly string SingleHostGatewayImage;
+        /// <summary>
         /// Deprecated. Instructs the operator to deploy Che in TLS mode. This is enabled by default. Disabling TLS may cause malfunction of some Che components.
         /// </summary>
         public readonly bool TlsSupport;
+        /// <summary>
+        /// Use internal cluster svc names to communicate between components to speed up the traffic and avoid proxy issues. The default value is `true`.
+        /// </summary>
+        public readonly bool UseInternalClusterSVCNames;
         /// <summary>
         /// Defines Kubernetes default namespace in which user's workspaces are created if user does not override it. It's possible to use &lt;username&gt;, &lt;userid&gt; and &lt;workspaceid&gt; placeholders (e.g.: che-workspace-&lt;username&gt;). In that case, new namespace will be created for each user (or workspace). Is used by OpenShift infra as well to specify Project
         /// </summary>
@@ -173,6 +221,8 @@ namespace Pulumi.Kubernetes.Types.Outputs.Org.V1
             string airGapContainerRegistryOrganization,
 
             bool allowUserDefinedWorkspaceNamespaces,
+
+            string cheClusterRoles,
 
             string cheDebug,
 
@@ -190,17 +240,25 @@ namespace Pulumi.Kubernetes.Types.Outputs.Org.V1
 
             string cheLogLevel,
 
+            Pulumi.Kubernetes.Types.Outputs.Org.V1.CheClusterSpecServerCheServerIngress cheServerIngress,
+
+            Pulumi.Kubernetes.Types.Outputs.Org.V1.CheClusterSpecServerCheServerRoute cheServerRoute,
+
             string cheWorkspaceClusterRole,
 
             ImmutableDictionary<string, string> customCheProperties,
 
             string devfileRegistryImage,
 
+            Pulumi.Kubernetes.Types.Outputs.Org.V1.CheClusterSpecServerDevfileRegistryIngress devfileRegistryIngress,
+
             string devfileRegistryMemoryLimit,
 
             string devfileRegistryMemoryRequest,
 
             string devfileRegistryPullPolicy,
+
+            Pulumi.Kubernetes.Types.Outputs.Org.V1.CheClusterSpecServerDevfileRegistryRoute devfileRegistryRoute,
 
             string devfileRegistryUrl,
 
@@ -214,11 +272,15 @@ namespace Pulumi.Kubernetes.Types.Outputs.Org.V1
 
             string pluginRegistryImage,
 
+            Pulumi.Kubernetes.Types.Outputs.Org.V1.CheClusterSpecServerPluginRegistryIngress pluginRegistryIngress,
+
             string pluginRegistryMemoryLimit,
 
             string pluginRegistryMemoryRequest,
 
             string pluginRegistryPullPolicy,
+
+            Pulumi.Kubernetes.Types.Outputs.Org.V1.CheClusterSpecServerPluginRegistryRoute pluginRegistryRoute,
 
             string pluginRegistryUrl,
 
@@ -234,19 +296,30 @@ namespace Pulumi.Kubernetes.Types.Outputs.Org.V1
 
             bool selfSignedCert,
 
+            string serverExposureStrategy,
+
             string serverMemoryLimit,
 
             string serverMemoryRequest,
 
             string serverTrustStoreConfigMapName,
 
+            ImmutableDictionary<string, string> singleHostGatewayConfigMapLabels,
+
+            string singleHostGatewayConfigSidecarImage,
+
+            string singleHostGatewayImage,
+
             bool tlsSupport,
+
+            bool useInternalClusterSVCNames,
 
             string workspaceNamespaceDefault)
         {
             AirGapContainerRegistryHostname = airGapContainerRegistryHostname;
             AirGapContainerRegistryOrganization = airGapContainerRegistryOrganization;
             AllowUserDefinedWorkspaceNamespaces = allowUserDefinedWorkspaceNamespaces;
+            CheClusterRoles = cheClusterRoles;
             CheDebug = cheDebug;
             CheFlavor = cheFlavor;
             CheHost = cheHost;
@@ -255,21 +328,27 @@ namespace Pulumi.Kubernetes.Types.Outputs.Org.V1
             CheImagePullPolicy = cheImagePullPolicy;
             CheImageTag = cheImageTag;
             CheLogLevel = cheLogLevel;
+            CheServerIngress = cheServerIngress;
+            CheServerRoute = cheServerRoute;
             CheWorkspaceClusterRole = cheWorkspaceClusterRole;
             CustomCheProperties = customCheProperties;
             DevfileRegistryImage = devfileRegistryImage;
+            DevfileRegistryIngress = devfileRegistryIngress;
             DevfileRegistryMemoryLimit = devfileRegistryMemoryLimit;
             DevfileRegistryMemoryRequest = devfileRegistryMemoryRequest;
             DevfileRegistryPullPolicy = devfileRegistryPullPolicy;
+            DevfileRegistryRoute = devfileRegistryRoute;
             DevfileRegistryUrl = devfileRegistryUrl;
             ExternalDevfileRegistry = externalDevfileRegistry;
             ExternalPluginRegistry = externalPluginRegistry;
             GitSelfSignedCert = gitSelfSignedCert;
             NonProxyHosts = nonProxyHosts;
             PluginRegistryImage = pluginRegistryImage;
+            PluginRegistryIngress = pluginRegistryIngress;
             PluginRegistryMemoryLimit = pluginRegistryMemoryLimit;
             PluginRegistryMemoryRequest = pluginRegistryMemoryRequest;
             PluginRegistryPullPolicy = pluginRegistryPullPolicy;
+            PluginRegistryRoute = pluginRegistryRoute;
             PluginRegistryUrl = pluginRegistryUrl;
             ProxyPassword = proxyPassword;
             ProxyPort = proxyPort;
@@ -277,10 +356,15 @@ namespace Pulumi.Kubernetes.Types.Outputs.Org.V1
             ProxyURL = proxyURL;
             ProxyUser = proxyUser;
             SelfSignedCert = selfSignedCert;
+            ServerExposureStrategy = serverExposureStrategy;
             ServerMemoryLimit = serverMemoryLimit;
             ServerMemoryRequest = serverMemoryRequest;
             ServerTrustStoreConfigMapName = serverTrustStoreConfigMapName;
+            SingleHostGatewayConfigMapLabels = singleHostGatewayConfigMapLabels;
+            SingleHostGatewayConfigSidecarImage = singleHostGatewayConfigSidecarImage;
+            SingleHostGatewayImage = singleHostGatewayImage;
             TlsSupport = tlsSupport;
+            UseInternalClusterSVCNames = useInternalClusterSVCNames;
             WorkspaceNamespaceDefault = workspaceNamespaceDefault;
         }
     }

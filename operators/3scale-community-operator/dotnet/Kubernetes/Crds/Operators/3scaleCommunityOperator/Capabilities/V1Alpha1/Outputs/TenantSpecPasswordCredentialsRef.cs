@@ -13,7 +13,13 @@ namespace Pulumi.Kubernetes.Types.Outputs.Capabilities.V1Alpha1
     [OutputType]
     public sealed class TenantSpecPasswordCredentialsRef
     {
+        /// <summary>
+        /// Name is unique within a namespace to reference a secret resource.
+        /// </summary>
         public readonly string Name;
+        /// <summary>
+        /// Namespace defines the space within which the secret name must be unique.
+        /// </summary>
         public readonly string Namespace;
 
         [OutputConstructor]

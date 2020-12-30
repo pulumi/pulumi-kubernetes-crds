@@ -24,6 +24,9 @@ namespace Pulumi.Kubernetes.Types.Inputs.Argoproj.V1Alpha1
         [Input("name", required: true)]
         public Input<string> Name { get; set; } = null!;
 
+        [Input("namespace")]
+        public Input<string>? Namespace { get; set; }
+
         public ApplicationStatusOperationStateOperationSyncResourcesArgs()
         {
         }

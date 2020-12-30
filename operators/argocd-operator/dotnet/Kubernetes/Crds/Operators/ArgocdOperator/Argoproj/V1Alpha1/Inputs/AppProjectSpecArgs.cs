@@ -15,6 +15,18 @@ namespace Pulumi.Kubernetes.Types.Inputs.Argoproj.V1Alpha1
     /// </summary>
     public class AppProjectSpecArgs : Pulumi.ResourceArgs
     {
+        [Input("clusterResourceBlacklist")]
+        private InputList<Pulumi.Kubernetes.Types.Inputs.Argoproj.V1Alpha1.AppProjectSpecClusterResourceBlacklistArgs>? _clusterResourceBlacklist;
+
+        /// <summary>
+        /// ClusterResourceBlacklist contains list of blacklisted cluster level resources
+        /// </summary>
+        public InputList<Pulumi.Kubernetes.Types.Inputs.Argoproj.V1Alpha1.AppProjectSpecClusterResourceBlacklistArgs> ClusterResourceBlacklist
+        {
+            get => _clusterResourceBlacklist ?? (_clusterResourceBlacklist = new InputList<Pulumi.Kubernetes.Types.Inputs.Argoproj.V1Alpha1.AppProjectSpecClusterResourceBlacklistArgs>());
+            set => _clusterResourceBlacklist = value;
+        }
+
         [Input("clusterResourceWhitelist")]
         private InputList<Pulumi.Kubernetes.Types.Inputs.Argoproj.V1Alpha1.AppProjectSpecClusterResourceWhitelistArgs>? _clusterResourceWhitelist;
 
@@ -85,6 +97,18 @@ namespace Pulumi.Kubernetes.Types.Inputs.Argoproj.V1Alpha1
         {
             get => _roles ?? (_roles = new InputList<Pulumi.Kubernetes.Types.Inputs.Argoproj.V1Alpha1.AppProjectSpecRolesArgs>());
             set => _roles = value;
+        }
+
+        [Input("signatureKeys")]
+        private InputList<Pulumi.Kubernetes.Types.Inputs.Argoproj.V1Alpha1.AppProjectSpecSignatureKeysArgs>? _signatureKeys;
+
+        /// <summary>
+        /// List of PGP key IDs that commits to be synced to must be signed with
+        /// </summary>
+        public InputList<Pulumi.Kubernetes.Types.Inputs.Argoproj.V1Alpha1.AppProjectSpecSignatureKeysArgs> SignatureKeys
+        {
+            get => _signatureKeys ?? (_signatureKeys = new InputList<Pulumi.Kubernetes.Types.Inputs.Argoproj.V1Alpha1.AppProjectSpecSignatureKeysArgs>());
+            set => _signatureKeys = value;
         }
 
         [Input("sourceRepos")]

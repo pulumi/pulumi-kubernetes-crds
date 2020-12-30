@@ -34,10 +34,22 @@ namespace Pulumi.Kubernetes.Types.Inputs.Velero.V1
         public Input<string>? Expiration { get; set; }
 
         /// <summary>
+        /// FormatVersion is the backup format version, including major, minor, and patch version.
+        /// </summary>
+        [Input("formatVersion")]
+        public Input<string>? FormatVersion { get; set; }
+
+        /// <summary>
         /// Phase is the current state of the Backup.
         /// </summary>
         [Input("phase")]
         public Input<string>? Phase { get; set; }
+
+        /// <summary>
+        /// Progress contains information about the backup's execution progress. Note that this information is best-effort only -- if Velero fails to update it during a backup for any reason, it may be inaccurate/stale.
+        /// </summary>
+        [Input("progress")]
+        public Input<Pulumi.Kubernetes.Types.Inputs.Velero.V1.BackupStatusProgressArgs>? Progress { get; set; }
 
         /// <summary>
         /// StartTimestamp records the time a backup was started. Separate from CreationTimestamp, since that value changes on restores. The server's time is used for StartTimestamps
@@ -58,7 +70,7 @@ namespace Pulumi.Kubernetes.Types.Inputs.Velero.V1
         }
 
         /// <summary>
-        /// Version is the backup format version.
+        /// Version is the backup format major version. Deprecated: Please see FormatVersion
         /// </summary>
         [Input("version")]
         public Input<int>? Version { get; set; }

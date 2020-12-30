@@ -4,6 +4,8 @@
 
 # Export this package's modules as members:
 from .CSIPowerMax import *
+from .CSIPowerMaxRevProxy import *
+from .CSIPowerStore import *
 from .CSIUnity import *
 from .CSIIsilon import *
 from .CSIVXFlexOS import *

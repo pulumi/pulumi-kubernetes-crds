@@ -15,8 +15,14 @@ namespace Pulumi.Kubernetes.Types.Inputs.Infinispan.V1
     /// </summary>
     public class InfinispanSpecServiceContainerArgs : Pulumi.ResourceArgs
     {
-        [Input("storage", required: true)]
-        public Input<string> Storage { get; set; } = null!;
+        [Input("ephemeralStorage")]
+        public Input<bool>? EphemeralStorage { get; set; }
+
+        [Input("storage")]
+        public Input<string>? Storage { get; set; }
+
+        [Input("storageClassName")]
+        public Input<string>? StorageClassName { get; set; }
 
         public InfinispanSpecServiceContainerArgs()
         {

@@ -13,23 +13,34 @@ namespace Pulumi.Kubernetes.Types.Outputs.Machinelearning.V1
     [OutputType]
     public sealed class SeldonDeploymentStatus
     {
+        /// <summary>
+        /// Addressable placeholder until duckv1 issue is fixed:    https://github.com/kubernetes-sigs/controller-tools/issues/391
+        /// </summary>
+        public readonly Pulumi.Kubernetes.Types.Outputs.Machinelearning.V1.SeldonDeploymentStatusAddress Address;
         public readonly ImmutableDictionary<string, Pulumi.Kubernetes.Types.Outputs.Machinelearning.V1.SeldonDeploymentStatusDeploymentStatus> DeploymentStatus;
         public readonly string Description;
+        public readonly int Replicas;
         public readonly ImmutableDictionary<string, Pulumi.Kubernetes.Types.Outputs.Machinelearning.V1.SeldonDeploymentStatusServiceStatus> ServiceStatus;
         public readonly string State;
 
         [OutputConstructor]
         private SeldonDeploymentStatus(
+            Pulumi.Kubernetes.Types.Outputs.Machinelearning.V1.SeldonDeploymentStatusAddress address,
+
             ImmutableDictionary<string, Pulumi.Kubernetes.Types.Outputs.Machinelearning.V1.SeldonDeploymentStatusDeploymentStatus> deploymentStatus,
 
             string description,
+
+            int replicas,
 
             ImmutableDictionary<string, Pulumi.Kubernetes.Types.Outputs.Machinelearning.V1.SeldonDeploymentStatusServiceStatus> serviceStatus,
 
             string state)
         {
+            Address = address;
             DeploymentStatus = deploymentStatus;
             Description = description;
+            Replicas = replicas;
             ServiceStatus = serviceStatus;
             State = state;
         }

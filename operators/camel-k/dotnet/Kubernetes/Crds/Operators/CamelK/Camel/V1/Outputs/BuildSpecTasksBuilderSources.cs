@@ -30,6 +30,14 @@ namespace Pulumi.Kubernetes.Types.Outputs.Camel.V1
         /// </summary>
         public readonly string Loader;
         public readonly string Name;
+        /// <summary>
+        /// List of property names defined in the source (e.g. if type is "template")
+        /// </summary>
+        public readonly ImmutableArray<string> Property-names;
+        /// <summary>
+        /// Type defines the kind of source described by this object
+        /// </summary>
+        public readonly string Type;
 
         [OutputConstructor]
         private BuildSpecTasksBuilderSources(
@@ -47,7 +55,11 @@ namespace Pulumi.Kubernetes.Types.Outputs.Camel.V1
 
             string loader,
 
-            string name)
+            string name,
+
+            ImmutableArray<string> property-names,
+
+            string type)
         {
             Compression = compression;
             Content = content;
@@ -57,6 +69,8 @@ namespace Pulumi.Kubernetes.Types.Outputs.Camel.V1
             Language = language;
             Loader = loader;
             Name = name;
+            Property-names = property-names;
+            Type = type;
         }
     }
 }

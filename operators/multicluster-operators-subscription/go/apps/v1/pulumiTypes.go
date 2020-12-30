@@ -142,6 +142,8 @@ type ChannelSpec struct {
 	ConfigMapRef *ChannelSpecConfigMapRef `pulumi:"configMapRef"`
 	// Criteria for promoting a Deployable from the sourceNamespaces to Channel.
 	Gates *ChannelSpecGates `pulumi:"gates"`
+	// Skip server TLS certificate verification for Git or Helm channel.
+	InsecureSkipVerify *bool `pulumi:"insecureSkipVerify"`
 	// For a `namespace` channel, pathname is the name of the namespace; For a `helmrepo` or `github` channel, pathname is the remote URL for the channel contents; For a `objectbucket` channel, pathname is the URL and name of the bucket.
 	Pathname string `pulumi:"pathname"`
 	// For a `github` channel or a `helmrepo` channel on github, this can be used to reference a Secret which contains the credentials for authentication, i.e. `user` and `accessToken`. For a `objectbucket` channel, this can be used to reference a Secret which contains the AWS credentials, i.e. `AccessKeyID` and `SecretAccessKey`.
@@ -169,6 +171,8 @@ type ChannelSpecArgs struct {
 	ConfigMapRef ChannelSpecConfigMapRefPtrInput `pulumi:"configMapRef"`
 	// Criteria for promoting a Deployable from the sourceNamespaces to Channel.
 	Gates ChannelSpecGatesPtrInput `pulumi:"gates"`
+	// Skip server TLS certificate verification for Git or Helm channel.
+	InsecureSkipVerify pulumi.BoolPtrInput `pulumi:"insecureSkipVerify"`
 	// For a `namespace` channel, pathname is the name of the namespace; For a `helmrepo` or `github` channel, pathname is the remote URL for the channel contents; For a `objectbucket` channel, pathname is the URL and name of the bucket.
 	Pathname pulumi.StringInput `pulumi:"pathname"`
 	// For a `github` channel or a `helmrepo` channel on github, this can be used to reference a Secret which contains the credentials for authentication, i.e. `user` and `accessToken`. For a `objectbucket` channel, this can be used to reference a Secret which contains the AWS credentials, i.e. `AccessKeyID` and `SecretAccessKey`.
@@ -267,6 +271,11 @@ func (o ChannelSpecOutput) Gates() ChannelSpecGatesPtrOutput {
 	return o.ApplyT(func(v ChannelSpec) *ChannelSpecGates { return v.Gates }).(ChannelSpecGatesPtrOutput)
 }
 
+// Skip server TLS certificate verification for Git or Helm channel.
+func (o ChannelSpecOutput) InsecureSkipVerify() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v ChannelSpec) *bool { return v.InsecureSkipVerify }).(pulumi.BoolPtrOutput)
+}
+
 // For a `namespace` channel, pathname is the name of the namespace; For a `helmrepo` or `github` channel, pathname is the remote URL for the channel contents; For a `objectbucket` channel, pathname is the URL and name of the bucket.
 func (o ChannelSpecOutput) Pathname() pulumi.StringOutput {
 	return o.ApplyT(func(v ChannelSpec) string { return v.Pathname }).(pulumi.StringOutput)
@@ -323,6 +332,16 @@ func (o ChannelSpecPtrOutput) Gates() ChannelSpecGatesPtrOutput {
 		}
 		return v.Gates
 	}).(ChannelSpecGatesPtrOutput)
+}
+
+// Skip server TLS certificate verification for Git or Helm channel.
+func (o ChannelSpecPtrOutput) InsecureSkipVerify() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *ChannelSpec) *bool {
+		if v == nil {
+			return nil
+		}
+		return v.InsecureSkipVerify
+	}).(pulumi.BoolPtrOutput)
 }
 
 // For a `namespace` channel, pathname is the name of the namespace; For a `helmrepo` or `github` channel, pathname is the remote URL for the channel contents; For a `objectbucket` channel, pathname is the URL and name of the bucket.
@@ -3312,6 +3331,8 @@ type HelmReleaseRepo struct {
 	ChartName *string `pulumi:"chartName"`
 	// Configuration parameters to access the helm-repo defined in the CatalogSource
 	ConfigMapRef *HelmReleaseRepoConfigMapRef `pulumi:"configMapRef"`
+	// Used to skip repo server's TLS certificate verification
+	InsecureSkipVerify *bool `pulumi:"insecureSkipVerify"`
 	// Secret to use to access the helm-repo defined in the CatalogSource.
 	SecretRef *HelmReleaseRepoSecretRef `pulumi:"secretRef"`
 	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster Important: Run "operator-sdk generate k8s" to regenerate code after modifying this file Add custom validation using kubebuilder tags: https://book-v1.book.kubebuilder.io/beyond_basics/generating_crd.html Source holds the url toward the helm-chart
@@ -3337,6 +3358,8 @@ type HelmReleaseRepoArgs struct {
 	ChartName pulumi.StringPtrInput `pulumi:"chartName"`
 	// Configuration parameters to access the helm-repo defined in the CatalogSource
 	ConfigMapRef HelmReleaseRepoConfigMapRefPtrInput `pulumi:"configMapRef"`
+	// Used to skip repo server's TLS certificate verification
+	InsecureSkipVerify pulumi.BoolPtrInput `pulumi:"insecureSkipVerify"`
 	// Secret to use to access the helm-repo defined in the CatalogSource.
 	SecretRef HelmReleaseRepoSecretRefPtrInput `pulumi:"secretRef"`
 	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster Important: Run "operator-sdk generate k8s" to regenerate code after modifying this file Add custom validation using kubebuilder tags: https://book-v1.book.kubebuilder.io/beyond_basics/generating_crd.html Source holds the url toward the helm-chart
@@ -3433,6 +3456,11 @@ func (o HelmReleaseRepoOutput) ConfigMapRef() HelmReleaseRepoConfigMapRefPtrOutp
 	return o.ApplyT(func(v HelmReleaseRepo) *HelmReleaseRepoConfigMapRef { return v.ConfigMapRef }).(HelmReleaseRepoConfigMapRefPtrOutput)
 }
 
+// Used to skip repo server's TLS certificate verification
+func (o HelmReleaseRepoOutput) InsecureSkipVerify() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v HelmReleaseRepo) *bool { return v.InsecureSkipVerify }).(pulumi.BoolPtrOutput)
+}
+
 // Secret to use to access the helm-repo defined in the CatalogSource.
 func (o HelmReleaseRepoOutput) SecretRef() HelmReleaseRepoSecretRefPtrOutput {
 	return o.ApplyT(func(v HelmReleaseRepo) *HelmReleaseRepoSecretRef { return v.SecretRef }).(HelmReleaseRepoSecretRefPtrOutput)
@@ -3484,6 +3512,16 @@ func (o HelmReleaseRepoPtrOutput) ConfigMapRef() HelmReleaseRepoConfigMapRefPtrO
 		}
 		return v.ConfigMapRef
 	}).(HelmReleaseRepoConfigMapRefPtrOutput)
+}
+
+// Used to skip repo server's TLS certificate verification
+func (o HelmReleaseRepoPtrOutput) InsecureSkipVerify() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *HelmReleaseRepo) *bool {
+		if v == nil {
+			return nil
+		}
+		return v.InsecureSkipVerify
+	}).(pulumi.BoolPtrOutput)
 }
 
 // Secret to use to access the helm-repo defined in the CatalogSource.
@@ -6427,6 +6465,8 @@ func (o SubscriptionMetadataOutput) ToSubscriptionMetadataOutputWithContext(ctx 
 // SubscriptionSpec defines the desired state of Subscription
 type SubscriptionSpec struct {
 	Channel string `pulumi:"channel"`
+	// ObjectReference contains enough information to let you inspect or modify the referred object. --- New uses of this type are discouraged because of difficulty describing its usage when embedded in APIs.  1. Ignored fields.  It includes many fields which are not generally honored.  For instance, ResourceVersion and FieldPath are both very rarely valid in actual usage.  2. Invalid usage help.  It is impossible to add specific help for individual usage.  In most embedded usages, there are particular     restrictions like, "must refer only to types A and B" or "UID not honored" or "name must be restricted".     Those cannot be well described when embedded.  3. Inconsistent validation.  Because the usages are different, the validation rules are different by usage, which makes it hard for users to predict what will happen.  4. The fields are both imprecise and overly precise.  Kind is not a precise mapping to a URL. This can produce ambiguity     during interpretation and require a REST mapping.  In most cases, the dependency is on the group,resource tuple     and the version of the actual struct is irrelevant.  5. We cannot easily change it.  Because this type is embedded in many locations, updates to this type     will affect numerous schemas.  Don't make new APIs embed an underspecified API type they do not control. Instead of using this type, create a locally provided and used type that is well-focused on your reference. For example, ServiceReferences for admission registration: https://github.com/kubernetes/api/blob/release-1.17/admissionregistration/v1/types.go#L533 .
+	Hooksecretref *SubscriptionSpecHooksecretref `pulumi:"hooksecretref"`
 	// To specify 1 package in channel
 	Name *string `pulumi:"name"`
 	// for hub use only to specify the overrides when apply to clusters
@@ -6455,6 +6495,8 @@ type SubscriptionSpecInput interface {
 // SubscriptionSpec defines the desired state of Subscription
 type SubscriptionSpecArgs struct {
 	Channel pulumi.StringInput `pulumi:"channel"`
+	// ObjectReference contains enough information to let you inspect or modify the referred object. --- New uses of this type are discouraged because of difficulty describing its usage when embedded in APIs.  1. Ignored fields.  It includes many fields which are not generally honored.  For instance, ResourceVersion and FieldPath are both very rarely valid in actual usage.  2. Invalid usage help.  It is impossible to add specific help for individual usage.  In most embedded usages, there are particular     restrictions like, "must refer only to types A and B" or "UID not honored" or "name must be restricted".     Those cannot be well described when embedded.  3. Inconsistent validation.  Because the usages are different, the validation rules are different by usage, which makes it hard for users to predict what will happen.  4. The fields are both imprecise and overly precise.  Kind is not a precise mapping to a URL. This can produce ambiguity     during interpretation and require a REST mapping.  In most cases, the dependency is on the group,resource tuple     and the version of the actual struct is irrelevant.  5. We cannot easily change it.  Because this type is embedded in many locations, updates to this type     will affect numerous schemas.  Don't make new APIs embed an underspecified API type they do not control. Instead of using this type, create a locally provided and used type that is well-focused on your reference. For example, ServiceReferences for admission registration: https://github.com/kubernetes/api/blob/release-1.17/admissionregistration/v1/types.go#L533 .
+	Hooksecretref SubscriptionSpecHooksecretrefPtrInput `pulumi:"hooksecretref"`
 	// To specify 1 package in channel
 	Name pulumi.StringPtrInput `pulumi:"name"`
 	// for hub use only to specify the overrides when apply to clusters
@@ -6550,6 +6592,11 @@ func (o SubscriptionSpecOutput) Channel() pulumi.StringOutput {
 	return o.ApplyT(func(v SubscriptionSpec) string { return v.Channel }).(pulumi.StringOutput)
 }
 
+// ObjectReference contains enough information to let you inspect or modify the referred object. --- New uses of this type are discouraged because of difficulty describing its usage when embedded in APIs.  1. Ignored fields.  It includes many fields which are not generally honored.  For instance, ResourceVersion and FieldPath are both very rarely valid in actual usage.  2. Invalid usage help.  It is impossible to add specific help for individual usage.  In most embedded usages, there are particular     restrictions like, "must refer only to types A and B" or "UID not honored" or "name must be restricted".     Those cannot be well described when embedded.  3. Inconsistent validation.  Because the usages are different, the validation rules are different by usage, which makes it hard for users to predict what will happen.  4. The fields are both imprecise and overly precise.  Kind is not a precise mapping to a URL. This can produce ambiguity     during interpretation and require a REST mapping.  In most cases, the dependency is on the group,resource tuple     and the version of the actual struct is irrelevant.  5. We cannot easily change it.  Because this type is embedded in many locations, updates to this type     will affect numerous schemas.  Don't make new APIs embed an underspecified API type they do not control. Instead of using this type, create a locally provided and used type that is well-focused on your reference. For example, ServiceReferences for admission registration: https://github.com/kubernetes/api/blob/release-1.17/admissionregistration/v1/types.go#L533 .
+func (o SubscriptionSpecOutput) Hooksecretref() SubscriptionSpecHooksecretrefPtrOutput {
+	return o.ApplyT(func(v SubscriptionSpec) *SubscriptionSpecHooksecretref { return v.Hooksecretref }).(SubscriptionSpecHooksecretrefPtrOutput)
+}
+
 // To specify 1 package in channel
 func (o SubscriptionSpecOutput) Name() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v SubscriptionSpec) *string { return v.Name }).(pulumi.StringPtrOutput)
@@ -6605,6 +6652,16 @@ func (o SubscriptionSpecPtrOutput) Channel() pulumi.StringPtrOutput {
 		}
 		return &v.Channel
 	}).(pulumi.StringPtrOutput)
+}
+
+// ObjectReference contains enough information to let you inspect or modify the referred object. --- New uses of this type are discouraged because of difficulty describing its usage when embedded in APIs.  1. Ignored fields.  It includes many fields which are not generally honored.  For instance, ResourceVersion and FieldPath are both very rarely valid in actual usage.  2. Invalid usage help.  It is impossible to add specific help for individual usage.  In most embedded usages, there are particular     restrictions like, "must refer only to types A and B" or "UID not honored" or "name must be restricted".     Those cannot be well described when embedded.  3. Inconsistent validation.  Because the usages are different, the validation rules are different by usage, which makes it hard for users to predict what will happen.  4. The fields are both imprecise and overly precise.  Kind is not a precise mapping to a URL. This can produce ambiguity     during interpretation and require a REST mapping.  In most cases, the dependency is on the group,resource tuple     and the version of the actual struct is irrelevant.  5. We cannot easily change it.  Because this type is embedded in many locations, updates to this type     will affect numerous schemas.  Don't make new APIs embed an underspecified API type they do not control. Instead of using this type, create a locally provided and used type that is well-focused on your reference. For example, ServiceReferences for admission registration: https://github.com/kubernetes/api/blob/release-1.17/admissionregistration/v1/types.go#L533 .
+func (o SubscriptionSpecPtrOutput) Hooksecretref() SubscriptionSpecHooksecretrefPtrOutput {
+	return o.ApplyT(func(v *SubscriptionSpec) *SubscriptionSpecHooksecretref {
+		if v == nil {
+			return nil
+		}
+		return v.Hooksecretref
+	}).(SubscriptionSpecHooksecretrefPtrOutput)
 }
 
 // To specify 1 package in channel
@@ -6665,6 +6722,254 @@ func (o SubscriptionSpecPtrOutput) Timewindow() SubscriptionSpecTimewindowPtrOut
 		}
 		return v.Timewindow
 	}).(SubscriptionSpecTimewindowPtrOutput)
+}
+
+// ObjectReference contains enough information to let you inspect or modify the referred object. --- New uses of this type are discouraged because of difficulty describing its usage when embedded in APIs.  1. Ignored fields.  It includes many fields which are not generally honored.  For instance, ResourceVersion and FieldPath are both very rarely valid in actual usage.  2. Invalid usage help.  It is impossible to add specific help for individual usage.  In most embedded usages, there are particular     restrictions like, "must refer only to types A and B" or "UID not honored" or "name must be restricted".     Those cannot be well described when embedded.  3. Inconsistent validation.  Because the usages are different, the validation rules are different by usage, which makes it hard for users to predict what will happen.  4. The fields are both imprecise and overly precise.  Kind is not a precise mapping to a URL. This can produce ambiguity     during interpretation and require a REST mapping.  In most cases, the dependency is on the group,resource tuple     and the version of the actual struct is irrelevant.  5. We cannot easily change it.  Because this type is embedded in many locations, updates to this type     will affect numerous schemas.  Don't make new APIs embed an underspecified API type they do not control. Instead of using this type, create a locally provided and used type that is well-focused on your reference. For example, ServiceReferences for admission registration: https://github.com/kubernetes/api/blob/release-1.17/admissionregistration/v1/types.go#L533 .
+type SubscriptionSpecHooksecretref struct {
+	// API version of the referent.
+	ApiVersion *string `pulumi:"apiVersion"`
+	// If referring to a piece of an object instead of an entire object, this string should contain a valid JSON/Go field access statement, such as desiredState.manifest.containers[2]. For example, if the object reference is to a container within a pod, this would take on a value like: "spec.containers{name}" (where "name" refers to the name of the container that triggered the event) or if no container name is specified "spec.containers[2]" (container with index 2 in this pod). This syntax is chosen only to have some well-defined way of referencing a part of an object. TODO: this design is not final and this field is subject to change in the future.
+	FieldPath *string `pulumi:"fieldPath"`
+	// Kind of the referent. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+	Kind *string `pulumi:"kind"`
+	// Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
+	Name *string `pulumi:"name"`
+	// Namespace of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/
+	Namespace *string `pulumi:"namespace"`
+	// Specific resourceVersion to which this reference is made, if any. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#concurrency-control-and-consistency
+	ResourceVersion *string `pulumi:"resourceVersion"`
+	// UID of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#uids
+	Uid *string `pulumi:"uid"`
+}
+
+// SubscriptionSpecHooksecretrefInput is an input type that accepts SubscriptionSpecHooksecretrefArgs and SubscriptionSpecHooksecretrefOutput values.
+// You can construct a concrete instance of `SubscriptionSpecHooksecretrefInput` via:
+//
+//          SubscriptionSpecHooksecretrefArgs{...}
+type SubscriptionSpecHooksecretrefInput interface {
+	pulumi.Input
+
+	ToSubscriptionSpecHooksecretrefOutput() SubscriptionSpecHooksecretrefOutput
+	ToSubscriptionSpecHooksecretrefOutputWithContext(context.Context) SubscriptionSpecHooksecretrefOutput
+}
+
+// ObjectReference contains enough information to let you inspect or modify the referred object. --- New uses of this type are discouraged because of difficulty describing its usage when embedded in APIs.  1. Ignored fields.  It includes many fields which are not generally honored.  For instance, ResourceVersion and FieldPath are both very rarely valid in actual usage.  2. Invalid usage help.  It is impossible to add specific help for individual usage.  In most embedded usages, there are particular     restrictions like, "must refer only to types A and B" or "UID not honored" or "name must be restricted".     Those cannot be well described when embedded.  3. Inconsistent validation.  Because the usages are different, the validation rules are different by usage, which makes it hard for users to predict what will happen.  4. The fields are both imprecise and overly precise.  Kind is not a precise mapping to a URL. This can produce ambiguity     during interpretation and require a REST mapping.  In most cases, the dependency is on the group,resource tuple     and the version of the actual struct is irrelevant.  5. We cannot easily change it.  Because this type is embedded in many locations, updates to this type     will affect numerous schemas.  Don't make new APIs embed an underspecified API type they do not control. Instead of using this type, create a locally provided and used type that is well-focused on your reference. For example, ServiceReferences for admission registration: https://github.com/kubernetes/api/blob/release-1.17/admissionregistration/v1/types.go#L533 .
+type SubscriptionSpecHooksecretrefArgs struct {
+	// API version of the referent.
+	ApiVersion pulumi.StringPtrInput `pulumi:"apiVersion"`
+	// If referring to a piece of an object instead of an entire object, this string should contain a valid JSON/Go field access statement, such as desiredState.manifest.containers[2]. For example, if the object reference is to a container within a pod, this would take on a value like: "spec.containers{name}" (where "name" refers to the name of the container that triggered the event) or if no container name is specified "spec.containers[2]" (container with index 2 in this pod). This syntax is chosen only to have some well-defined way of referencing a part of an object. TODO: this design is not final and this field is subject to change in the future.
+	FieldPath pulumi.StringPtrInput `pulumi:"fieldPath"`
+	// Kind of the referent. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+	Kind pulumi.StringPtrInput `pulumi:"kind"`
+	// Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
+	Name pulumi.StringPtrInput `pulumi:"name"`
+	// Namespace of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/
+	Namespace pulumi.StringPtrInput `pulumi:"namespace"`
+	// Specific resourceVersion to which this reference is made, if any. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#concurrency-control-and-consistency
+	ResourceVersion pulumi.StringPtrInput `pulumi:"resourceVersion"`
+	// UID of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#uids
+	Uid pulumi.StringPtrInput `pulumi:"uid"`
+}
+
+func (SubscriptionSpecHooksecretrefArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*SubscriptionSpecHooksecretref)(nil)).Elem()
+}
+
+func (i SubscriptionSpecHooksecretrefArgs) ToSubscriptionSpecHooksecretrefOutput() SubscriptionSpecHooksecretrefOutput {
+	return i.ToSubscriptionSpecHooksecretrefOutputWithContext(context.Background())
+}
+
+func (i SubscriptionSpecHooksecretrefArgs) ToSubscriptionSpecHooksecretrefOutputWithContext(ctx context.Context) SubscriptionSpecHooksecretrefOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(SubscriptionSpecHooksecretrefOutput)
+}
+
+func (i SubscriptionSpecHooksecretrefArgs) ToSubscriptionSpecHooksecretrefPtrOutput() SubscriptionSpecHooksecretrefPtrOutput {
+	return i.ToSubscriptionSpecHooksecretrefPtrOutputWithContext(context.Background())
+}
+
+func (i SubscriptionSpecHooksecretrefArgs) ToSubscriptionSpecHooksecretrefPtrOutputWithContext(ctx context.Context) SubscriptionSpecHooksecretrefPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(SubscriptionSpecHooksecretrefOutput).ToSubscriptionSpecHooksecretrefPtrOutputWithContext(ctx)
+}
+
+// SubscriptionSpecHooksecretrefPtrInput is an input type that accepts SubscriptionSpecHooksecretrefArgs, SubscriptionSpecHooksecretrefPtr and SubscriptionSpecHooksecretrefPtrOutput values.
+// You can construct a concrete instance of `SubscriptionSpecHooksecretrefPtrInput` via:
+//
+//          SubscriptionSpecHooksecretrefArgs{...}
+//
+//  or:
+//
+//          nil
+type SubscriptionSpecHooksecretrefPtrInput interface {
+	pulumi.Input
+
+	ToSubscriptionSpecHooksecretrefPtrOutput() SubscriptionSpecHooksecretrefPtrOutput
+	ToSubscriptionSpecHooksecretrefPtrOutputWithContext(context.Context) SubscriptionSpecHooksecretrefPtrOutput
+}
+
+type subscriptionSpecHooksecretrefPtrType SubscriptionSpecHooksecretrefArgs
+
+func SubscriptionSpecHooksecretrefPtr(v *SubscriptionSpecHooksecretrefArgs) SubscriptionSpecHooksecretrefPtrInput {
+	return (*subscriptionSpecHooksecretrefPtrType)(v)
+}
+
+func (*subscriptionSpecHooksecretrefPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**SubscriptionSpecHooksecretref)(nil)).Elem()
+}
+
+func (i *subscriptionSpecHooksecretrefPtrType) ToSubscriptionSpecHooksecretrefPtrOutput() SubscriptionSpecHooksecretrefPtrOutput {
+	return i.ToSubscriptionSpecHooksecretrefPtrOutputWithContext(context.Background())
+}
+
+func (i *subscriptionSpecHooksecretrefPtrType) ToSubscriptionSpecHooksecretrefPtrOutputWithContext(ctx context.Context) SubscriptionSpecHooksecretrefPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(SubscriptionSpecHooksecretrefPtrOutput)
+}
+
+// ObjectReference contains enough information to let you inspect or modify the referred object. --- New uses of this type are discouraged because of difficulty describing its usage when embedded in APIs.  1. Ignored fields.  It includes many fields which are not generally honored.  For instance, ResourceVersion and FieldPath are both very rarely valid in actual usage.  2. Invalid usage help.  It is impossible to add specific help for individual usage.  In most embedded usages, there are particular     restrictions like, "must refer only to types A and B" or "UID not honored" or "name must be restricted".     Those cannot be well described when embedded.  3. Inconsistent validation.  Because the usages are different, the validation rules are different by usage, which makes it hard for users to predict what will happen.  4. The fields are both imprecise and overly precise.  Kind is not a precise mapping to a URL. This can produce ambiguity     during interpretation and require a REST mapping.  In most cases, the dependency is on the group,resource tuple     and the version of the actual struct is irrelevant.  5. We cannot easily change it.  Because this type is embedded in many locations, updates to this type     will affect numerous schemas.  Don't make new APIs embed an underspecified API type they do not control. Instead of using this type, create a locally provided and used type that is well-focused on your reference. For example, ServiceReferences for admission registration: https://github.com/kubernetes/api/blob/release-1.17/admissionregistration/v1/types.go#L533 .
+type SubscriptionSpecHooksecretrefOutput struct{ *pulumi.OutputState }
+
+func (SubscriptionSpecHooksecretrefOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*SubscriptionSpecHooksecretref)(nil)).Elem()
+}
+
+func (o SubscriptionSpecHooksecretrefOutput) ToSubscriptionSpecHooksecretrefOutput() SubscriptionSpecHooksecretrefOutput {
+	return o
+}
+
+func (o SubscriptionSpecHooksecretrefOutput) ToSubscriptionSpecHooksecretrefOutputWithContext(ctx context.Context) SubscriptionSpecHooksecretrefOutput {
+	return o
+}
+
+func (o SubscriptionSpecHooksecretrefOutput) ToSubscriptionSpecHooksecretrefPtrOutput() SubscriptionSpecHooksecretrefPtrOutput {
+	return o.ToSubscriptionSpecHooksecretrefPtrOutputWithContext(context.Background())
+}
+
+func (o SubscriptionSpecHooksecretrefOutput) ToSubscriptionSpecHooksecretrefPtrOutputWithContext(ctx context.Context) SubscriptionSpecHooksecretrefPtrOutput {
+	return o.ApplyT(func(v SubscriptionSpecHooksecretref) *SubscriptionSpecHooksecretref {
+		return &v
+	}).(SubscriptionSpecHooksecretrefPtrOutput)
+}
+
+// API version of the referent.
+func (o SubscriptionSpecHooksecretrefOutput) ApiVersion() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v SubscriptionSpecHooksecretref) *string { return v.ApiVersion }).(pulumi.StringPtrOutput)
+}
+
+// If referring to a piece of an object instead of an entire object, this string should contain a valid JSON/Go field access statement, such as desiredState.manifest.containers[2]. For example, if the object reference is to a container within a pod, this would take on a value like: "spec.containers{name}" (where "name" refers to the name of the container that triggered the event) or if no container name is specified "spec.containers[2]" (container with index 2 in this pod). This syntax is chosen only to have some well-defined way of referencing a part of an object. TODO: this design is not final and this field is subject to change in the future.
+func (o SubscriptionSpecHooksecretrefOutput) FieldPath() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v SubscriptionSpecHooksecretref) *string { return v.FieldPath }).(pulumi.StringPtrOutput)
+}
+
+// Kind of the referent. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+func (o SubscriptionSpecHooksecretrefOutput) Kind() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v SubscriptionSpecHooksecretref) *string { return v.Kind }).(pulumi.StringPtrOutput)
+}
+
+// Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
+func (o SubscriptionSpecHooksecretrefOutput) Name() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v SubscriptionSpecHooksecretref) *string { return v.Name }).(pulumi.StringPtrOutput)
+}
+
+// Namespace of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/
+func (o SubscriptionSpecHooksecretrefOutput) Namespace() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v SubscriptionSpecHooksecretref) *string { return v.Namespace }).(pulumi.StringPtrOutput)
+}
+
+// Specific resourceVersion to which this reference is made, if any. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#concurrency-control-and-consistency
+func (o SubscriptionSpecHooksecretrefOutput) ResourceVersion() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v SubscriptionSpecHooksecretref) *string { return v.ResourceVersion }).(pulumi.StringPtrOutput)
+}
+
+// UID of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#uids
+func (o SubscriptionSpecHooksecretrefOutput) Uid() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v SubscriptionSpecHooksecretref) *string { return v.Uid }).(pulumi.StringPtrOutput)
+}
+
+type SubscriptionSpecHooksecretrefPtrOutput struct{ *pulumi.OutputState }
+
+func (SubscriptionSpecHooksecretrefPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**SubscriptionSpecHooksecretref)(nil)).Elem()
+}
+
+func (o SubscriptionSpecHooksecretrefPtrOutput) ToSubscriptionSpecHooksecretrefPtrOutput() SubscriptionSpecHooksecretrefPtrOutput {
+	return o
+}
+
+func (o SubscriptionSpecHooksecretrefPtrOutput) ToSubscriptionSpecHooksecretrefPtrOutputWithContext(ctx context.Context) SubscriptionSpecHooksecretrefPtrOutput {
+	return o
+}
+
+func (o SubscriptionSpecHooksecretrefPtrOutput) Elem() SubscriptionSpecHooksecretrefOutput {
+	return o.ApplyT(func(v *SubscriptionSpecHooksecretref) SubscriptionSpecHooksecretref { return *v }).(SubscriptionSpecHooksecretrefOutput)
+}
+
+// API version of the referent.
+func (o SubscriptionSpecHooksecretrefPtrOutput) ApiVersion() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *SubscriptionSpecHooksecretref) *string {
+		if v == nil {
+			return nil
+		}
+		return v.ApiVersion
+	}).(pulumi.StringPtrOutput)
+}
+
+// If referring to a piece of an object instead of an entire object, this string should contain a valid JSON/Go field access statement, such as desiredState.manifest.containers[2]. For example, if the object reference is to a container within a pod, this would take on a value like: "spec.containers{name}" (where "name" refers to the name of the container that triggered the event) or if no container name is specified "spec.containers[2]" (container with index 2 in this pod). This syntax is chosen only to have some well-defined way of referencing a part of an object. TODO: this design is not final and this field is subject to change in the future.
+func (o SubscriptionSpecHooksecretrefPtrOutput) FieldPath() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *SubscriptionSpecHooksecretref) *string {
+		if v == nil {
+			return nil
+		}
+		return v.FieldPath
+	}).(pulumi.StringPtrOutput)
+}
+
+// Kind of the referent. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+func (o SubscriptionSpecHooksecretrefPtrOutput) Kind() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *SubscriptionSpecHooksecretref) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Kind
+	}).(pulumi.StringPtrOutput)
+}
+
+// Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
+func (o SubscriptionSpecHooksecretrefPtrOutput) Name() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *SubscriptionSpecHooksecretref) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Name
+	}).(pulumi.StringPtrOutput)
+}
+
+// Namespace of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/
+func (o SubscriptionSpecHooksecretrefPtrOutput) Namespace() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *SubscriptionSpecHooksecretref) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Namespace
+	}).(pulumi.StringPtrOutput)
+}
+
+// Specific resourceVersion to which this reference is made, if any. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#concurrency-control-and-consistency
+func (o SubscriptionSpecHooksecretrefPtrOutput) ResourceVersion() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *SubscriptionSpecHooksecretref) *string {
+		if v == nil {
+			return nil
+		}
+		return v.ResourceVersion
+	}).(pulumi.StringPtrOutput)
+}
+
+// UID of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#uids
+func (o SubscriptionSpecHooksecretrefPtrOutput) Uid() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *SubscriptionSpecHooksecretref) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Uid
+	}).(pulumi.StringPtrOutput)
 }
 
 // Overrides field in deployable
@@ -8502,7 +8807,7 @@ func (o SubscriptionSpecPlacementPlacementRefPtrOutput) Uid() pulumi.StringPtrOu
 
 // help user control when the subscription will take affect
 type SubscriptionSpecTimewindow struct {
-	// Defines the day of the week for the subscription timewindow window https://golang.org/pkg/time/#Weekday
+	// weekdays defined the day of the week for this time window https://golang.org/pkg/time/#Weekday
 	Daysofweek []string                          `pulumi:"daysofweek"`
 	Hours      []SubscriptionSpecTimewindowHours `pulumi:"hours"`
 	// https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
@@ -8524,7 +8829,7 @@ type SubscriptionSpecTimewindowInput interface {
 
 // help user control when the subscription will take affect
 type SubscriptionSpecTimewindowArgs struct {
-	// Defines the day of the week for the subscription timewindow window https://golang.org/pkg/time/#Weekday
+	// weekdays defined the day of the week for this time window https://golang.org/pkg/time/#Weekday
 	Daysofweek pulumi.StringArrayInput                   `pulumi:"daysofweek"`
 	Hours      SubscriptionSpecTimewindowHoursArrayInput `pulumi:"hours"`
 	// https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
@@ -8611,7 +8916,7 @@ func (o SubscriptionSpecTimewindowOutput) ToSubscriptionSpecTimewindowPtrOutputW
 	}).(SubscriptionSpecTimewindowPtrOutput)
 }
 
-// Defines the day of the week for the subscription timewindow window https://golang.org/pkg/time/#Weekday
+// weekdays defined the day of the week for this time window https://golang.org/pkg/time/#Weekday
 func (o SubscriptionSpecTimewindowOutput) Daysofweek() pulumi.StringArrayOutput {
 	return o.ApplyT(func(v SubscriptionSpecTimewindow) []string { return v.Daysofweek }).(pulumi.StringArrayOutput)
 }
@@ -8648,7 +8953,7 @@ func (o SubscriptionSpecTimewindowPtrOutput) Elem() SubscriptionSpecTimewindowOu
 	return o.ApplyT(func(v *SubscriptionSpecTimewindow) SubscriptionSpecTimewindow { return *v }).(SubscriptionSpecTimewindowOutput)
 }
 
-// Defines the day of the week for the subscription timewindow window https://golang.org/pkg/time/#Weekday
+// weekdays defined the day of the week for this time window https://golang.org/pkg/time/#Weekday
 func (o SubscriptionSpecTimewindowPtrOutput) Daysofweek() pulumi.StringArrayOutput {
 	return o.ApplyT(func(v *SubscriptionSpecTimewindow) []string {
 		if v == nil {
@@ -8792,13 +9097,14 @@ func (o SubscriptionSpecTimewindowHoursArrayOutput) Index(i pulumi.IntInput) Sub
 
 // SubscriptionStatus defines the observed state of Subscription Examples - status of a subscription on hub Status: 	phase: Propagated 	statuses: 	  washdc: 		packages: 		  nginx: 			phase: Subscribed 		  mongodb: 			phase: Failed 			Reason: "not authorized" 			Message: "user xxx does not have permission to start pod" 			resourceStatus: {}    toronto: 		packages: 		  nginx: 			phase: Subscribed 		  mongodb: 			phase: Subscribed Status of a subscription on managed cluster will only have 1 cluster in the map.
 type SubscriptionStatus struct {
-	LastUpdateTime *string `pulumi:"lastUpdateTime"`
-	Message        *string `pulumi:"message"`
+	Ansiblejobs    *SubscriptionStatusAnsiblejobs `pulumi:"ansiblejobs"`
+	LastUpdateTime *string                        `pulumi:"lastUpdateTime"`
+	Message        *string                        `pulumi:"message"`
 	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster Important: Run "make" to regenerate code after modifying this file
 	Phase  *string `pulumi:"phase"`
 	Reason *string `pulumi:"reason"`
 	// For endpoint, it is the status of subscription, key is packagename, For hub, it aggregates all status, key is cluster name
-	Statuses interface{} `pulumi:"statuses"`
+	Statuses map[string]SubscriptionStatusStatuses `pulumi:"statuses"`
 }
 
 // SubscriptionStatusInput is an input type that accepts SubscriptionStatusArgs and SubscriptionStatusOutput values.
@@ -8814,13 +9120,14 @@ type SubscriptionStatusInput interface {
 
 // SubscriptionStatus defines the observed state of Subscription Examples - status of a subscription on hub Status: 	phase: Propagated 	statuses: 	  washdc: 		packages: 		  nginx: 			phase: Subscribed 		  mongodb: 			phase: Failed 			Reason: "not authorized" 			Message: "user xxx does not have permission to start pod" 			resourceStatus: {}    toronto: 		packages: 		  nginx: 			phase: Subscribed 		  mongodb: 			phase: Subscribed Status of a subscription on managed cluster will only have 1 cluster in the map.
 type SubscriptionStatusArgs struct {
-	LastUpdateTime pulumi.StringPtrInput `pulumi:"lastUpdateTime"`
-	Message        pulumi.StringPtrInput `pulumi:"message"`
+	Ansiblejobs    SubscriptionStatusAnsiblejobsPtrInput `pulumi:"ansiblejobs"`
+	LastUpdateTime pulumi.StringPtrInput                 `pulumi:"lastUpdateTime"`
+	Message        pulumi.StringPtrInput                 `pulumi:"message"`
 	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster Important: Run "make" to regenerate code after modifying this file
 	Phase  pulumi.StringPtrInput `pulumi:"phase"`
 	Reason pulumi.StringPtrInput `pulumi:"reason"`
 	// For endpoint, it is the status of subscription, key is packagename, For hub, it aggregates all status, key is cluster name
-	Statuses pulumi.Input `pulumi:"statuses"`
+	Statuses SubscriptionStatusStatusesMapInput `pulumi:"statuses"`
 }
 
 func (SubscriptionStatusArgs) ElementType() reflect.Type {
@@ -8900,6 +9207,10 @@ func (o SubscriptionStatusOutput) ToSubscriptionStatusPtrOutputWithContext(ctx c
 		return &v
 	}).(SubscriptionStatusPtrOutput)
 }
+func (o SubscriptionStatusOutput) Ansiblejobs() SubscriptionStatusAnsiblejobsPtrOutput {
+	return o.ApplyT(func(v SubscriptionStatus) *SubscriptionStatusAnsiblejobs { return v.Ansiblejobs }).(SubscriptionStatusAnsiblejobsPtrOutput)
+}
+
 func (o SubscriptionStatusOutput) LastUpdateTime() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v SubscriptionStatus) *string { return v.LastUpdateTime }).(pulumi.StringPtrOutput)
 }
@@ -8918,8 +9229,8 @@ func (o SubscriptionStatusOutput) Reason() pulumi.StringPtrOutput {
 }
 
 // For endpoint, it is the status of subscription, key is packagename, For hub, it aggregates all status, key is cluster name
-func (o SubscriptionStatusOutput) Statuses() pulumi.AnyOutput {
-	return o.ApplyT(func(v SubscriptionStatus) interface{} { return v.Statuses }).(pulumi.AnyOutput)
+func (o SubscriptionStatusOutput) Statuses() SubscriptionStatusStatusesMapOutput {
+	return o.ApplyT(func(v SubscriptionStatus) map[string]SubscriptionStatusStatuses { return v.Statuses }).(SubscriptionStatusStatusesMapOutput)
 }
 
 type SubscriptionStatusPtrOutput struct{ *pulumi.OutputState }
@@ -8938,6 +9249,15 @@ func (o SubscriptionStatusPtrOutput) ToSubscriptionStatusPtrOutputWithContext(ct
 
 func (o SubscriptionStatusPtrOutput) Elem() SubscriptionStatusOutput {
 	return o.ApplyT(func(v *SubscriptionStatus) SubscriptionStatus { return *v }).(SubscriptionStatusOutput)
+}
+
+func (o SubscriptionStatusPtrOutput) Ansiblejobs() SubscriptionStatusAnsiblejobsPtrOutput {
+	return o.ApplyT(func(v *SubscriptionStatus) *SubscriptionStatusAnsiblejobs {
+		if v == nil {
+			return nil
+		}
+		return v.Ansiblejobs
+	}).(SubscriptionStatusAnsiblejobsPtrOutput)
 }
 
 func (o SubscriptionStatusPtrOutput) LastUpdateTime() pulumi.StringPtrOutput {
@@ -8978,13 +9298,448 @@ func (o SubscriptionStatusPtrOutput) Reason() pulumi.StringPtrOutput {
 }
 
 // For endpoint, it is the status of subscription, key is packagename, For hub, it aggregates all status, key is cluster name
-func (o SubscriptionStatusPtrOutput) Statuses() pulumi.AnyOutput {
-	return o.ApplyT(func(v *SubscriptionStatus) interface{} {
+func (o SubscriptionStatusPtrOutput) Statuses() SubscriptionStatusStatusesMapOutput {
+	return o.ApplyT(func(v *SubscriptionStatus) map[string]SubscriptionStatusStatuses {
 		if v == nil {
 			return nil
 		}
 		return v.Statuses
-	}).(pulumi.AnyOutput)
+	}).(SubscriptionStatusStatusesMapOutput)
+}
+
+type SubscriptionStatusAnsiblejobs struct {
+	Lastposthookjob     *string  `pulumi:"lastposthookjob"`
+	Lastprehookjob      *string  `pulumi:"lastprehookjob"`
+	Posthookjobshistory []string `pulumi:"posthookjobshistory"`
+	Prehookjobshistory  []string `pulumi:"prehookjobshistory"`
+}
+
+// SubscriptionStatusAnsiblejobsInput is an input type that accepts SubscriptionStatusAnsiblejobsArgs and SubscriptionStatusAnsiblejobsOutput values.
+// You can construct a concrete instance of `SubscriptionStatusAnsiblejobsInput` via:
+//
+//          SubscriptionStatusAnsiblejobsArgs{...}
+type SubscriptionStatusAnsiblejobsInput interface {
+	pulumi.Input
+
+	ToSubscriptionStatusAnsiblejobsOutput() SubscriptionStatusAnsiblejobsOutput
+	ToSubscriptionStatusAnsiblejobsOutputWithContext(context.Context) SubscriptionStatusAnsiblejobsOutput
+}
+
+type SubscriptionStatusAnsiblejobsArgs struct {
+	Lastposthookjob     pulumi.StringPtrInput   `pulumi:"lastposthookjob"`
+	Lastprehookjob      pulumi.StringPtrInput   `pulumi:"lastprehookjob"`
+	Posthookjobshistory pulumi.StringArrayInput `pulumi:"posthookjobshistory"`
+	Prehookjobshistory  pulumi.StringArrayInput `pulumi:"prehookjobshistory"`
+}
+
+func (SubscriptionStatusAnsiblejobsArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*SubscriptionStatusAnsiblejobs)(nil)).Elem()
+}
+
+func (i SubscriptionStatusAnsiblejobsArgs) ToSubscriptionStatusAnsiblejobsOutput() SubscriptionStatusAnsiblejobsOutput {
+	return i.ToSubscriptionStatusAnsiblejobsOutputWithContext(context.Background())
+}
+
+func (i SubscriptionStatusAnsiblejobsArgs) ToSubscriptionStatusAnsiblejobsOutputWithContext(ctx context.Context) SubscriptionStatusAnsiblejobsOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(SubscriptionStatusAnsiblejobsOutput)
+}
+
+func (i SubscriptionStatusAnsiblejobsArgs) ToSubscriptionStatusAnsiblejobsPtrOutput() SubscriptionStatusAnsiblejobsPtrOutput {
+	return i.ToSubscriptionStatusAnsiblejobsPtrOutputWithContext(context.Background())
+}
+
+func (i SubscriptionStatusAnsiblejobsArgs) ToSubscriptionStatusAnsiblejobsPtrOutputWithContext(ctx context.Context) SubscriptionStatusAnsiblejobsPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(SubscriptionStatusAnsiblejobsOutput).ToSubscriptionStatusAnsiblejobsPtrOutputWithContext(ctx)
+}
+
+// SubscriptionStatusAnsiblejobsPtrInput is an input type that accepts SubscriptionStatusAnsiblejobsArgs, SubscriptionStatusAnsiblejobsPtr and SubscriptionStatusAnsiblejobsPtrOutput values.
+// You can construct a concrete instance of `SubscriptionStatusAnsiblejobsPtrInput` via:
+//
+//          SubscriptionStatusAnsiblejobsArgs{...}
+//
+//  or:
+//
+//          nil
+type SubscriptionStatusAnsiblejobsPtrInput interface {
+	pulumi.Input
+
+	ToSubscriptionStatusAnsiblejobsPtrOutput() SubscriptionStatusAnsiblejobsPtrOutput
+	ToSubscriptionStatusAnsiblejobsPtrOutputWithContext(context.Context) SubscriptionStatusAnsiblejobsPtrOutput
+}
+
+type subscriptionStatusAnsiblejobsPtrType SubscriptionStatusAnsiblejobsArgs
+
+func SubscriptionStatusAnsiblejobsPtr(v *SubscriptionStatusAnsiblejobsArgs) SubscriptionStatusAnsiblejobsPtrInput {
+	return (*subscriptionStatusAnsiblejobsPtrType)(v)
+}
+
+func (*subscriptionStatusAnsiblejobsPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**SubscriptionStatusAnsiblejobs)(nil)).Elem()
+}
+
+func (i *subscriptionStatusAnsiblejobsPtrType) ToSubscriptionStatusAnsiblejobsPtrOutput() SubscriptionStatusAnsiblejobsPtrOutput {
+	return i.ToSubscriptionStatusAnsiblejobsPtrOutputWithContext(context.Background())
+}
+
+func (i *subscriptionStatusAnsiblejobsPtrType) ToSubscriptionStatusAnsiblejobsPtrOutputWithContext(ctx context.Context) SubscriptionStatusAnsiblejobsPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(SubscriptionStatusAnsiblejobsPtrOutput)
+}
+
+type SubscriptionStatusAnsiblejobsOutput struct{ *pulumi.OutputState }
+
+func (SubscriptionStatusAnsiblejobsOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*SubscriptionStatusAnsiblejobs)(nil)).Elem()
+}
+
+func (o SubscriptionStatusAnsiblejobsOutput) ToSubscriptionStatusAnsiblejobsOutput() SubscriptionStatusAnsiblejobsOutput {
+	return o
+}
+
+func (o SubscriptionStatusAnsiblejobsOutput) ToSubscriptionStatusAnsiblejobsOutputWithContext(ctx context.Context) SubscriptionStatusAnsiblejobsOutput {
+	return o
+}
+
+func (o SubscriptionStatusAnsiblejobsOutput) ToSubscriptionStatusAnsiblejobsPtrOutput() SubscriptionStatusAnsiblejobsPtrOutput {
+	return o.ToSubscriptionStatusAnsiblejobsPtrOutputWithContext(context.Background())
+}
+
+func (o SubscriptionStatusAnsiblejobsOutput) ToSubscriptionStatusAnsiblejobsPtrOutputWithContext(ctx context.Context) SubscriptionStatusAnsiblejobsPtrOutput {
+	return o.ApplyT(func(v SubscriptionStatusAnsiblejobs) *SubscriptionStatusAnsiblejobs {
+		return &v
+	}).(SubscriptionStatusAnsiblejobsPtrOutput)
+}
+func (o SubscriptionStatusAnsiblejobsOutput) Lastposthookjob() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v SubscriptionStatusAnsiblejobs) *string { return v.Lastposthookjob }).(pulumi.StringPtrOutput)
+}
+
+func (o SubscriptionStatusAnsiblejobsOutput) Lastprehookjob() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v SubscriptionStatusAnsiblejobs) *string { return v.Lastprehookjob }).(pulumi.StringPtrOutput)
+}
+
+func (o SubscriptionStatusAnsiblejobsOutput) Posthookjobshistory() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v SubscriptionStatusAnsiblejobs) []string { return v.Posthookjobshistory }).(pulumi.StringArrayOutput)
+}
+
+func (o SubscriptionStatusAnsiblejobsOutput) Prehookjobshistory() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v SubscriptionStatusAnsiblejobs) []string { return v.Prehookjobshistory }).(pulumi.StringArrayOutput)
+}
+
+type SubscriptionStatusAnsiblejobsPtrOutput struct{ *pulumi.OutputState }
+
+func (SubscriptionStatusAnsiblejobsPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**SubscriptionStatusAnsiblejobs)(nil)).Elem()
+}
+
+func (o SubscriptionStatusAnsiblejobsPtrOutput) ToSubscriptionStatusAnsiblejobsPtrOutput() SubscriptionStatusAnsiblejobsPtrOutput {
+	return o
+}
+
+func (o SubscriptionStatusAnsiblejobsPtrOutput) ToSubscriptionStatusAnsiblejobsPtrOutputWithContext(ctx context.Context) SubscriptionStatusAnsiblejobsPtrOutput {
+	return o
+}
+
+func (o SubscriptionStatusAnsiblejobsPtrOutput) Elem() SubscriptionStatusAnsiblejobsOutput {
+	return o.ApplyT(func(v *SubscriptionStatusAnsiblejobs) SubscriptionStatusAnsiblejobs { return *v }).(SubscriptionStatusAnsiblejobsOutput)
+}
+
+func (o SubscriptionStatusAnsiblejobsPtrOutput) Lastposthookjob() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *SubscriptionStatusAnsiblejobs) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Lastposthookjob
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o SubscriptionStatusAnsiblejobsPtrOutput) Lastprehookjob() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *SubscriptionStatusAnsiblejobs) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Lastprehookjob
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o SubscriptionStatusAnsiblejobsPtrOutput) Posthookjobshistory() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v *SubscriptionStatusAnsiblejobs) []string {
+		if v == nil {
+			return nil
+		}
+		return v.Posthookjobshistory
+	}).(pulumi.StringArrayOutput)
+}
+
+func (o SubscriptionStatusAnsiblejobsPtrOutput) Prehookjobshistory() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v *SubscriptionStatusAnsiblejobs) []string {
+		if v == nil {
+			return nil
+		}
+		return v.Prehookjobshistory
+	}).(pulumi.StringArrayOutput)
+}
+
+// SubscriptionPerClusterStatus defines status for subscription in each cluster, key is package name
+type SubscriptionStatusStatuses struct {
+	Packages map[string]SubscriptionStatusStatusesPackages `pulumi:"packages"`
+}
+
+// SubscriptionStatusStatusesInput is an input type that accepts SubscriptionStatusStatusesArgs and SubscriptionStatusStatusesOutput values.
+// You can construct a concrete instance of `SubscriptionStatusStatusesInput` via:
+//
+//          SubscriptionStatusStatusesArgs{...}
+type SubscriptionStatusStatusesInput interface {
+	pulumi.Input
+
+	ToSubscriptionStatusStatusesOutput() SubscriptionStatusStatusesOutput
+	ToSubscriptionStatusStatusesOutputWithContext(context.Context) SubscriptionStatusStatusesOutput
+}
+
+// SubscriptionPerClusterStatus defines status for subscription in each cluster, key is package name
+type SubscriptionStatusStatusesArgs struct {
+	Packages SubscriptionStatusStatusesPackagesMapInput `pulumi:"packages"`
+}
+
+func (SubscriptionStatusStatusesArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*SubscriptionStatusStatuses)(nil)).Elem()
+}
+
+func (i SubscriptionStatusStatusesArgs) ToSubscriptionStatusStatusesOutput() SubscriptionStatusStatusesOutput {
+	return i.ToSubscriptionStatusStatusesOutputWithContext(context.Background())
+}
+
+func (i SubscriptionStatusStatusesArgs) ToSubscriptionStatusStatusesOutputWithContext(ctx context.Context) SubscriptionStatusStatusesOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(SubscriptionStatusStatusesOutput)
+}
+
+// SubscriptionStatusStatusesMapInput is an input type that accepts SubscriptionStatusStatusesMap and SubscriptionStatusStatusesMapOutput values.
+// You can construct a concrete instance of `SubscriptionStatusStatusesMapInput` via:
+//
+//          SubscriptionStatusStatusesMap{ "key": SubscriptionStatusStatusesArgs{...} }
+type SubscriptionStatusStatusesMapInput interface {
+	pulumi.Input
+
+	ToSubscriptionStatusStatusesMapOutput() SubscriptionStatusStatusesMapOutput
+	ToSubscriptionStatusStatusesMapOutputWithContext(context.Context) SubscriptionStatusStatusesMapOutput
+}
+
+type SubscriptionStatusStatusesMap map[string]SubscriptionStatusStatusesInput
+
+func (SubscriptionStatusStatusesMap) ElementType() reflect.Type {
+	return reflect.TypeOf((*map[string]SubscriptionStatusStatuses)(nil)).Elem()
+}
+
+func (i SubscriptionStatusStatusesMap) ToSubscriptionStatusStatusesMapOutput() SubscriptionStatusStatusesMapOutput {
+	return i.ToSubscriptionStatusStatusesMapOutputWithContext(context.Background())
+}
+
+func (i SubscriptionStatusStatusesMap) ToSubscriptionStatusStatusesMapOutputWithContext(ctx context.Context) SubscriptionStatusStatusesMapOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(SubscriptionStatusStatusesMapOutput)
+}
+
+// SubscriptionPerClusterStatus defines status for subscription in each cluster, key is package name
+type SubscriptionStatusStatusesOutput struct{ *pulumi.OutputState }
+
+func (SubscriptionStatusStatusesOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*SubscriptionStatusStatuses)(nil)).Elem()
+}
+
+func (o SubscriptionStatusStatusesOutput) ToSubscriptionStatusStatusesOutput() SubscriptionStatusStatusesOutput {
+	return o
+}
+
+func (o SubscriptionStatusStatusesOutput) ToSubscriptionStatusStatusesOutputWithContext(ctx context.Context) SubscriptionStatusStatusesOutput {
+	return o
+}
+
+func (o SubscriptionStatusStatusesOutput) Packages() SubscriptionStatusStatusesPackagesMapOutput {
+	return o.ApplyT(func(v SubscriptionStatusStatuses) map[string]SubscriptionStatusStatusesPackages { return v.Packages }).(SubscriptionStatusStatusesPackagesMapOutput)
+}
+
+type SubscriptionStatusStatusesMapOutput struct{ *pulumi.OutputState }
+
+func (SubscriptionStatusStatusesMapOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*map[string]SubscriptionStatusStatuses)(nil)).Elem()
+}
+
+func (o SubscriptionStatusStatusesMapOutput) ToSubscriptionStatusStatusesMapOutput() SubscriptionStatusStatusesMapOutput {
+	return o
+}
+
+func (o SubscriptionStatusStatusesMapOutput) ToSubscriptionStatusStatusesMapOutputWithContext(ctx context.Context) SubscriptionStatusStatusesMapOutput {
+	return o
+}
+
+func (o SubscriptionStatusStatusesMapOutput) MapIndex(k pulumi.StringInput) SubscriptionStatusStatusesOutput {
+	return pulumi.All(o, k).ApplyT(func(vs []interface{}) SubscriptionStatusStatuses {
+		return vs[0].(map[string]SubscriptionStatusStatuses)[vs[1].(string)]
+	}).(SubscriptionStatusStatusesOutput)
+}
+
+// SubscriptionUnitStatus defines status of a unit (subscription or package)
+type SubscriptionStatusStatusesPackages struct {
+	LastUpdateTime string  `pulumi:"lastUpdateTime"`
+	Message        *string `pulumi:"message"`
+	// Phase are Propagated if it is in hub or Subscribed if it is in endpoint
+	Phase          *string                `pulumi:"phase"`
+	Reason         *string                `pulumi:"reason"`
+	ResourceStatus map[string]interface{} `pulumi:"resourceStatus"`
+}
+
+// SubscriptionStatusStatusesPackagesInput is an input type that accepts SubscriptionStatusStatusesPackagesArgs and SubscriptionStatusStatusesPackagesOutput values.
+// You can construct a concrete instance of `SubscriptionStatusStatusesPackagesInput` via:
+//
+//          SubscriptionStatusStatusesPackagesArgs{...}
+type SubscriptionStatusStatusesPackagesInput interface {
+	pulumi.Input
+
+	ToSubscriptionStatusStatusesPackagesOutput() SubscriptionStatusStatusesPackagesOutput
+	ToSubscriptionStatusStatusesPackagesOutputWithContext(context.Context) SubscriptionStatusStatusesPackagesOutput
+}
+
+// SubscriptionUnitStatus defines status of a unit (subscription or package)
+type SubscriptionStatusStatusesPackagesArgs struct {
+	LastUpdateTime pulumi.StringInput    `pulumi:"lastUpdateTime"`
+	Message        pulumi.StringPtrInput `pulumi:"message"`
+	// Phase are Propagated if it is in hub or Subscribed if it is in endpoint
+	Phase          pulumi.StringPtrInput `pulumi:"phase"`
+	Reason         pulumi.StringPtrInput `pulumi:"reason"`
+	ResourceStatus pulumi.MapInput       `pulumi:"resourceStatus"`
+}
+
+func (SubscriptionStatusStatusesPackagesArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*SubscriptionStatusStatusesPackages)(nil)).Elem()
+}
+
+func (i SubscriptionStatusStatusesPackagesArgs) ToSubscriptionStatusStatusesPackagesOutput() SubscriptionStatusStatusesPackagesOutput {
+	return i.ToSubscriptionStatusStatusesPackagesOutputWithContext(context.Background())
+}
+
+func (i SubscriptionStatusStatusesPackagesArgs) ToSubscriptionStatusStatusesPackagesOutputWithContext(ctx context.Context) SubscriptionStatusStatusesPackagesOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(SubscriptionStatusStatusesPackagesOutput)
+}
+
+// SubscriptionStatusStatusesPackagesMapInput is an input type that accepts SubscriptionStatusStatusesPackagesMap and SubscriptionStatusStatusesPackagesMapOutput values.
+// You can construct a concrete instance of `SubscriptionStatusStatusesPackagesMapInput` via:
+//
+//          SubscriptionStatusStatusesPackagesMap{ "key": SubscriptionStatusStatusesPackagesArgs{...} }
+type SubscriptionStatusStatusesPackagesMapInput interface {
+	pulumi.Input
+
+	ToSubscriptionStatusStatusesPackagesMapOutput() SubscriptionStatusStatusesPackagesMapOutput
+	ToSubscriptionStatusStatusesPackagesMapOutputWithContext(context.Context) SubscriptionStatusStatusesPackagesMapOutput
+}
+
+type SubscriptionStatusStatusesPackagesMap map[string]SubscriptionStatusStatusesPackagesInput
+
+func (SubscriptionStatusStatusesPackagesMap) ElementType() reflect.Type {
+	return reflect.TypeOf((*map[string]SubscriptionStatusStatusesPackages)(nil)).Elem()
+}
+
+func (i SubscriptionStatusStatusesPackagesMap) ToSubscriptionStatusStatusesPackagesMapOutput() SubscriptionStatusStatusesPackagesMapOutput {
+	return i.ToSubscriptionStatusStatusesPackagesMapOutputWithContext(context.Background())
+}
+
+func (i SubscriptionStatusStatusesPackagesMap) ToSubscriptionStatusStatusesPackagesMapOutputWithContext(ctx context.Context) SubscriptionStatusStatusesPackagesMapOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(SubscriptionStatusStatusesPackagesMapOutput)
+}
+
+// SubscriptionUnitStatus defines status of a unit (subscription or package)
+type SubscriptionStatusStatusesPackagesOutput struct{ *pulumi.OutputState }
+
+func (SubscriptionStatusStatusesPackagesOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*SubscriptionStatusStatusesPackages)(nil)).Elem()
+}
+
+func (o SubscriptionStatusStatusesPackagesOutput) ToSubscriptionStatusStatusesPackagesOutput() SubscriptionStatusStatusesPackagesOutput {
+	return o
+}
+
+func (o SubscriptionStatusStatusesPackagesOutput) ToSubscriptionStatusStatusesPackagesOutputWithContext(ctx context.Context) SubscriptionStatusStatusesPackagesOutput {
+	return o
+}
+
+func (o SubscriptionStatusStatusesPackagesOutput) LastUpdateTime() pulumi.StringOutput {
+	return o.ApplyT(func(v SubscriptionStatusStatusesPackages) string { return v.LastUpdateTime }).(pulumi.StringOutput)
+}
+
+func (o SubscriptionStatusStatusesPackagesOutput) Message() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v SubscriptionStatusStatusesPackages) *string { return v.Message }).(pulumi.StringPtrOutput)
+}
+
+// Phase are Propagated if it is in hub or Subscribed if it is in endpoint
+func (o SubscriptionStatusStatusesPackagesOutput) Phase() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v SubscriptionStatusStatusesPackages) *string { return v.Phase }).(pulumi.StringPtrOutput)
+}
+
+func (o SubscriptionStatusStatusesPackagesOutput) Reason() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v SubscriptionStatusStatusesPackages) *string { return v.Reason }).(pulumi.StringPtrOutput)
+}
+
+func (o SubscriptionStatusStatusesPackagesOutput) ResourceStatus() pulumi.MapOutput {
+	return o.ApplyT(func(v SubscriptionStatusStatusesPackages) map[string]interface{} { return v.ResourceStatus }).(pulumi.MapOutput)
+}
+
+type SubscriptionStatusStatusesPackagesMapOutput struct{ *pulumi.OutputState }
+
+func (SubscriptionStatusStatusesPackagesMapOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*map[string]SubscriptionStatusStatusesPackages)(nil)).Elem()
+}
+
+func (o SubscriptionStatusStatusesPackagesMapOutput) ToSubscriptionStatusStatusesPackagesMapOutput() SubscriptionStatusStatusesPackagesMapOutput {
+	return o
+}
+
+func (o SubscriptionStatusStatusesPackagesMapOutput) ToSubscriptionStatusStatusesPackagesMapOutputWithContext(ctx context.Context) SubscriptionStatusStatusesPackagesMapOutput {
+	return o
+}
+
+func (o SubscriptionStatusStatusesPackagesMapOutput) MapIndex(k pulumi.StringInput) SubscriptionStatusStatusesPackagesOutput {
+	return pulumi.All(o, k).ApplyT(func(vs []interface{}) SubscriptionStatusStatusesPackages {
+		return vs[0].(map[string]SubscriptionStatusStatusesPackages)[vs[1].(string)]
+	}).(SubscriptionStatusStatusesPackagesOutput)
+}
+
+type SubscriptionStatusStatusesPackagesResourceStatus struct {
+}
+
+// SubscriptionStatusStatusesPackagesResourceStatusInput is an input type that accepts SubscriptionStatusStatusesPackagesResourceStatusArgs and SubscriptionStatusStatusesPackagesResourceStatusOutput values.
+// You can construct a concrete instance of `SubscriptionStatusStatusesPackagesResourceStatusInput` via:
+//
+//          SubscriptionStatusStatusesPackagesResourceStatusArgs{...}
+type SubscriptionStatusStatusesPackagesResourceStatusInput interface {
+	pulumi.Input
+
+	ToSubscriptionStatusStatusesPackagesResourceStatusOutput() SubscriptionStatusStatusesPackagesResourceStatusOutput
+	ToSubscriptionStatusStatusesPackagesResourceStatusOutputWithContext(context.Context) SubscriptionStatusStatusesPackagesResourceStatusOutput
+}
+
+type SubscriptionStatusStatusesPackagesResourceStatusArgs struct {
+}
+
+func (SubscriptionStatusStatusesPackagesResourceStatusArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*SubscriptionStatusStatusesPackagesResourceStatus)(nil)).Elem()
+}
+
+func (i SubscriptionStatusStatusesPackagesResourceStatusArgs) ToSubscriptionStatusStatusesPackagesResourceStatusOutput() SubscriptionStatusStatusesPackagesResourceStatusOutput {
+	return i.ToSubscriptionStatusStatusesPackagesResourceStatusOutputWithContext(context.Background())
+}
+
+func (i SubscriptionStatusStatusesPackagesResourceStatusArgs) ToSubscriptionStatusStatusesPackagesResourceStatusOutputWithContext(ctx context.Context) SubscriptionStatusStatusesPackagesResourceStatusOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(SubscriptionStatusStatusesPackagesResourceStatusOutput)
+}
+
+type SubscriptionStatusStatusesPackagesResourceStatusOutput struct{ *pulumi.OutputState }
+
+func (SubscriptionStatusStatusesPackagesResourceStatusOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*SubscriptionStatusStatusesPackagesResourceStatus)(nil)).Elem()
+}
+
+func (o SubscriptionStatusStatusesPackagesResourceStatusOutput) ToSubscriptionStatusStatusesPackagesResourceStatusOutput() SubscriptionStatusStatusesPackagesResourceStatusOutput {
+	return o
+}
+
+func (o SubscriptionStatusStatusesPackagesResourceStatusOutput) ToSubscriptionStatusStatusesPackagesResourceStatusOutputWithContext(ctx context.Context) SubscriptionStatusStatusesPackagesResourceStatusOutput {
+	return o
 }
 
 func init() {
@@ -9075,6 +9830,8 @@ func init() {
 	pulumi.RegisterOutputType(SubscriptionMetadataOutput{})
 	pulumi.RegisterOutputType(SubscriptionSpecOutput{})
 	pulumi.RegisterOutputType(SubscriptionSpecPtrOutput{})
+	pulumi.RegisterOutputType(SubscriptionSpecHooksecretrefOutput{})
+	pulumi.RegisterOutputType(SubscriptionSpecHooksecretrefPtrOutput{})
 	pulumi.RegisterOutputType(SubscriptionSpecOverridesOutput{})
 	pulumi.RegisterOutputType(SubscriptionSpecOverridesArrayOutput{})
 	pulumi.RegisterOutputType(SubscriptionSpecOverridesClusterOverridesOutput{})
@@ -9108,4 +9865,11 @@ func init() {
 	pulumi.RegisterOutputType(SubscriptionSpecTimewindowHoursArrayOutput{})
 	pulumi.RegisterOutputType(SubscriptionStatusOutput{})
 	pulumi.RegisterOutputType(SubscriptionStatusPtrOutput{})
+	pulumi.RegisterOutputType(SubscriptionStatusAnsiblejobsOutput{})
+	pulumi.RegisterOutputType(SubscriptionStatusAnsiblejobsPtrOutput{})
+	pulumi.RegisterOutputType(SubscriptionStatusStatusesOutput{})
+	pulumi.RegisterOutputType(SubscriptionStatusStatusesMapOutput{})
+	pulumi.RegisterOutputType(SubscriptionStatusStatusesPackagesOutput{})
+	pulumi.RegisterOutputType(SubscriptionStatusStatusesPackagesMapOutput{})
+	pulumi.RegisterOutputType(SubscriptionStatusStatusesPackagesResourceStatusOutput{})
 }

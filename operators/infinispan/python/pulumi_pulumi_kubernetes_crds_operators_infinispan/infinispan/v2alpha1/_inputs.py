@@ -9,13 +9,274 @@ from typing import Any, Mapping, Optional, Sequence, Union
 from ... import _utilities, _tables
 
 __all__ = [
+    'BackupSpecArgs',
+    'BackupSpecContainerArgs',
+    'BackupSpecResourcesArgs',
+    'BackupSpecVolumeArgs',
+    'BackupStatusArgs',
     'CacheSpecArgs',
     'CacheSpecAdminAuthArgs',
     'CacheSpecAdminAuthPasswordArgs',
     'CacheSpecAdminAuthUsernameArgs',
     'CacheStatusArgs',
     'CacheStatusConditionsArgs',
+    'RestoreSpecArgs',
+    'RestoreSpecContainerArgs',
+    'RestoreSpecResourcesArgs',
+    'RestoreStatusArgs',
 ]
+
+@pulumi.input_type
+class BackupSpecArgs:
+    def __init__(__self__, *,
+                 cluster: pulumi.Input[str],
+                 container: Optional[pulumi.Input['BackupSpecContainerArgs']] = None,
+                 resources: Optional[pulumi.Input['BackupSpecResourcesArgs']] = None,
+                 volume: Optional[pulumi.Input['BackupSpecVolumeArgs']] = None):
+        """
+        BackupSpec defines the desired state of Backup
+        :param pulumi.Input['BackupSpecContainerArgs'] container: InfinispanContainerSpec specify resource requirements per container
+        """
+        pulumi.set(__self__, "cluster", cluster)
+        if container is not None:
+            pulumi.set(__self__, "container", container)
+        if resources is not None:
+            pulumi.set(__self__, "resources", resources)
+        if volume is not None:
+            pulumi.set(__self__, "volume", volume)
+
+    @property
+    @pulumi.getter
+    def cluster(self) -> pulumi.Input[str]:
+        return pulumi.get(self, "cluster")
+
+    @cluster.setter
+    def cluster(self, value: pulumi.Input[str]):
+        pulumi.set(self, "cluster", value)
+
+    @property
+    @pulumi.getter
+    def container(self) -> Optional[pulumi.Input['BackupSpecContainerArgs']]:
+        """
+        InfinispanContainerSpec specify resource requirements per container
+        """
+        return pulumi.get(self, "container")
+
+    @container.setter
+    def container(self, value: Optional[pulumi.Input['BackupSpecContainerArgs']]):
+        pulumi.set(self, "container", value)
+
+    @property
+    @pulumi.getter
+    def resources(self) -> Optional[pulumi.Input['BackupSpecResourcesArgs']]:
+        return pulumi.get(self, "resources")
+
+    @resources.setter
+    def resources(self, value: Optional[pulumi.Input['BackupSpecResourcesArgs']]):
+        pulumi.set(self, "resources", value)
+
+    @property
+    @pulumi.getter
+    def volume(self) -> Optional[pulumi.Input['BackupSpecVolumeArgs']]:
+        return pulumi.get(self, "volume")
+
+    @volume.setter
+    def volume(self, value: Optional[pulumi.Input['BackupSpecVolumeArgs']]):
+        pulumi.set(self, "volume", value)
+
+
+@pulumi.input_type
+class BackupSpecContainerArgs:
+    def __init__(__self__, *,
+                 cpu: Optional[pulumi.Input[str]] = None,
+                 extra_jvm_opts: Optional[pulumi.Input[str]] = None,
+                 memory: Optional[pulumi.Input[str]] = None):
+        """
+        InfinispanContainerSpec specify resource requirements per container
+        """
+        if cpu is not None:
+            pulumi.set(__self__, "cpu", cpu)
+        if extra_jvm_opts is not None:
+            pulumi.set(__self__, "extra_jvm_opts", extra_jvm_opts)
+        if memory is not None:
+            pulumi.set(__self__, "memory", memory)
+
+    @property
+    @pulumi.getter
+    def cpu(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "cpu")
+
+    @cpu.setter
+    def cpu(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "cpu", value)
+
+    @property
+    @pulumi.getter(name="extraJvmOpts")
+    def extra_jvm_opts(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "extra_jvm_opts")
+
+    @extra_jvm_opts.setter
+    def extra_jvm_opts(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "extra_jvm_opts", value)
+
+    @property
+    @pulumi.getter
+    def memory(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "memory")
+
+    @memory.setter
+    def memory(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "memory", value)
+
+
+@pulumi.input_type
+class BackupSpecResourcesArgs:
+    def __init__(__self__, *,
+                 cache_configs: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
+                 caches: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
+                 counters: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
+                 proto_schemas: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
+                 scripts: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None):
+        if cache_configs is not None:
+            pulumi.set(__self__, "cache_configs", cache_configs)
+        if caches is not None:
+            pulumi.set(__self__, "caches", caches)
+        if counters is not None:
+            pulumi.set(__self__, "counters", counters)
+        if proto_schemas is not None:
+            pulumi.set(__self__, "proto_schemas", proto_schemas)
+        if scripts is not None:
+            pulumi.set(__self__, "scripts", scripts)
+
+    @property
+    @pulumi.getter(name="cacheConfigs")
+    def cache_configs(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
+        return pulumi.get(self, "cache_configs")
+
+    @cache_configs.setter
+    def cache_configs(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]):
+        pulumi.set(self, "cache_configs", value)
+
+    @property
+    @pulumi.getter
+    def caches(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
+        return pulumi.get(self, "caches")
+
+    @caches.setter
+    def caches(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]):
+        pulumi.set(self, "caches", value)
+
+    @property
+    @pulumi.getter
+    def counters(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
+        return pulumi.get(self, "counters")
+
+    @counters.setter
+    def counters(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]):
+        pulumi.set(self, "counters", value)
+
+    @property
+    @pulumi.getter(name="protoSchemas")
+    def proto_schemas(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
+        return pulumi.get(self, "proto_schemas")
+
+    @proto_schemas.setter
+    def proto_schemas(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]):
+        pulumi.set(self, "proto_schemas", value)
+
+    @property
+    @pulumi.getter
+    def scripts(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
+        return pulumi.get(self, "scripts")
+
+    @scripts.setter
+    def scripts(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]):
+        pulumi.set(self, "scripts", value)
+
+
+@pulumi.input_type
+class BackupSpecVolumeArgs:
+    def __init__(__self__, *,
+                 storage: Optional[pulumi.Input[str]] = None,
+                 storage_class_name: Optional[pulumi.Input[str]] = None):
+        if storage is not None:
+            pulumi.set(__self__, "storage", storage)
+        if storage_class_name is not None:
+            pulumi.set(__self__, "storage_class_name", storage_class_name)
+
+    @property
+    @pulumi.getter
+    def storage(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "storage")
+
+    @storage.setter
+    def storage(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "storage", value)
+
+    @property
+    @pulumi.getter(name="storageClassName")
+    def storage_class_name(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "storage_class_name")
+
+    @storage_class_name.setter
+    def storage_class_name(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "storage_class_name", value)
+
+
+@pulumi.input_type
+class BackupStatusArgs:
+    def __init__(__self__, *,
+                 phase: pulumi.Input[str],
+                 pvc: Optional[pulumi.Input[str]] = None,
+                 reason: Optional[pulumi.Input[str]] = None):
+        """
+        BackupStatus defines the observed state of Backup
+        :param pulumi.Input[str] phase: State indicates the current state of the backup operation
+        :param pulumi.Input[str] pvc: The name of the created PersistentVolumeClaim used to store the backup
+        :param pulumi.Input[str] reason: Reason indicates the reason for any backup related failures.
+        """
+        pulumi.set(__self__, "phase", phase)
+        if pvc is not None:
+            pulumi.set(__self__, "pvc", pvc)
+        if reason is not None:
+            pulumi.set(__self__, "reason", reason)
+
+    @property
+    @pulumi.getter
+    def phase(self) -> pulumi.Input[str]:
+        """
+        State indicates the current state of the backup operation
+        """
+        return pulumi.get(self, "phase")
+
+    @phase.setter
+    def phase(self, value: pulumi.Input[str]):
+        pulumi.set(self, "phase", value)
+
+    @property
+    @pulumi.getter
+    def pvc(self) -> Optional[pulumi.Input[str]]:
+        """
+        The name of the created PersistentVolumeClaim used to store the backup
+        """
+        return pulumi.get(self, "pvc")
+
+    @pvc.setter
+    def pvc(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "pvc", value)
+
+    @property
+    @pulumi.getter
+    def reason(self) -> Optional[pulumi.Input[str]]:
+        """
+        Reason indicates the reason for any backup related failures.
+        """
+        return pulumi.get(self, "reason")
+
+    @reason.setter
+    def reason(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "reason", value)
+
 
 @pulumi.input_type
 class CacheSpecArgs:
@@ -363,5 +624,211 @@ class CacheStatusConditionsArgs:
     @message.setter
     def message(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "message", value)
+
+
+@pulumi.input_type
+class RestoreSpecArgs:
+    def __init__(__self__, *,
+                 backup: pulumi.Input[str],
+                 cluster: pulumi.Input[str],
+                 container: Optional[pulumi.Input['RestoreSpecContainerArgs']] = None,
+                 resources: Optional[pulumi.Input['RestoreSpecResourcesArgs']] = None):
+        """
+        BackupSpec defines the desired state of Backup
+        :param pulumi.Input['RestoreSpecContainerArgs'] container: InfinispanContainerSpec specify resource requirements per container
+        """
+        pulumi.set(__self__, "backup", backup)
+        pulumi.set(__self__, "cluster", cluster)
+        if container is not None:
+            pulumi.set(__self__, "container", container)
+        if resources is not None:
+            pulumi.set(__self__, "resources", resources)
+
+    @property
+    @pulumi.getter
+    def backup(self) -> pulumi.Input[str]:
+        return pulumi.get(self, "backup")
+
+    @backup.setter
+    def backup(self, value: pulumi.Input[str]):
+        pulumi.set(self, "backup", value)
+
+    @property
+    @pulumi.getter
+    def cluster(self) -> pulumi.Input[str]:
+        return pulumi.get(self, "cluster")
+
+    @cluster.setter
+    def cluster(self, value: pulumi.Input[str]):
+        pulumi.set(self, "cluster", value)
+
+    @property
+    @pulumi.getter
+    def container(self) -> Optional[pulumi.Input['RestoreSpecContainerArgs']]:
+        """
+        InfinispanContainerSpec specify resource requirements per container
+        """
+        return pulumi.get(self, "container")
+
+    @container.setter
+    def container(self, value: Optional[pulumi.Input['RestoreSpecContainerArgs']]):
+        pulumi.set(self, "container", value)
+
+    @property
+    @pulumi.getter
+    def resources(self) -> Optional[pulumi.Input['RestoreSpecResourcesArgs']]:
+        return pulumi.get(self, "resources")
+
+    @resources.setter
+    def resources(self, value: Optional[pulumi.Input['RestoreSpecResourcesArgs']]):
+        pulumi.set(self, "resources", value)
+
+
+@pulumi.input_type
+class RestoreSpecContainerArgs:
+    def __init__(__self__, *,
+                 cpu: Optional[pulumi.Input[str]] = None,
+                 extra_jvm_opts: Optional[pulumi.Input[str]] = None,
+                 memory: Optional[pulumi.Input[str]] = None):
+        """
+        InfinispanContainerSpec specify resource requirements per container
+        """
+        if cpu is not None:
+            pulumi.set(__self__, "cpu", cpu)
+        if extra_jvm_opts is not None:
+            pulumi.set(__self__, "extra_jvm_opts", extra_jvm_opts)
+        if memory is not None:
+            pulumi.set(__self__, "memory", memory)
+
+    @property
+    @pulumi.getter
+    def cpu(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "cpu")
+
+    @cpu.setter
+    def cpu(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "cpu", value)
+
+    @property
+    @pulumi.getter(name="extraJvmOpts")
+    def extra_jvm_opts(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "extra_jvm_opts")
+
+    @extra_jvm_opts.setter
+    def extra_jvm_opts(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "extra_jvm_opts", value)
+
+    @property
+    @pulumi.getter
+    def memory(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "memory")
+
+    @memory.setter
+    def memory(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "memory", value)
+
+
+@pulumi.input_type
+class RestoreSpecResourcesArgs:
+    def __init__(__self__, *,
+                 cache_configs: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
+                 caches: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
+                 counters: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
+                 proto_schemas: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
+                 scripts: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None):
+        if cache_configs is not None:
+            pulumi.set(__self__, "cache_configs", cache_configs)
+        if caches is not None:
+            pulumi.set(__self__, "caches", caches)
+        if counters is not None:
+            pulumi.set(__self__, "counters", counters)
+        if proto_schemas is not None:
+            pulumi.set(__self__, "proto_schemas", proto_schemas)
+        if scripts is not None:
+            pulumi.set(__self__, "scripts", scripts)
+
+    @property
+    @pulumi.getter(name="cacheConfigs")
+    def cache_configs(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
+        return pulumi.get(self, "cache_configs")
+
+    @cache_configs.setter
+    def cache_configs(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]):
+        pulumi.set(self, "cache_configs", value)
+
+    @property
+    @pulumi.getter
+    def caches(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
+        return pulumi.get(self, "caches")
+
+    @caches.setter
+    def caches(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]):
+        pulumi.set(self, "caches", value)
+
+    @property
+    @pulumi.getter
+    def counters(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
+        return pulumi.get(self, "counters")
+
+    @counters.setter
+    def counters(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]):
+        pulumi.set(self, "counters", value)
+
+    @property
+    @pulumi.getter(name="protoSchemas")
+    def proto_schemas(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
+        return pulumi.get(self, "proto_schemas")
+
+    @proto_schemas.setter
+    def proto_schemas(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]):
+        pulumi.set(self, "proto_schemas", value)
+
+    @property
+    @pulumi.getter
+    def scripts(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
+        return pulumi.get(self, "scripts")
+
+    @scripts.setter
+    def scripts(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]):
+        pulumi.set(self, "scripts", value)
+
+
+@pulumi.input_type
+class RestoreStatusArgs:
+    def __init__(__self__, *,
+                 phase: pulumi.Input[str],
+                 reason: Optional[pulumi.Input[str]] = None):
+        """
+        RestoreStatus defines the observed state of Restore
+        :param pulumi.Input[str] phase: State indicates the current state of the restore operation
+        :param pulumi.Input[str] reason: Reason indicates the reason for any Restore related failures.
+        """
+        pulumi.set(__self__, "phase", phase)
+        if reason is not None:
+            pulumi.set(__self__, "reason", reason)
+
+    @property
+    @pulumi.getter
+    def phase(self) -> pulumi.Input[str]:
+        """
+        State indicates the current state of the restore operation
+        """
+        return pulumi.get(self, "phase")
+
+    @phase.setter
+    def phase(self, value: pulumi.Input[str]):
+        pulumi.set(self, "phase", value)
+
+    @property
+    @pulumi.getter
+    def reason(self) -> Optional[pulumi.Input[str]]:
+        """
+        Reason indicates the reason for any Restore related failures.
+        """
+        return pulumi.get(self, "reason")
+
+    @reason.setter
+    def reason(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "reason", value)
 
 

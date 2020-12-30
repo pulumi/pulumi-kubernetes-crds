@@ -118,6 +118,12 @@ namespace Pulumi.Kubernetes.Types.Inputs.Datadoghq.V1Alpha1
         public Input<Pulumi.Kubernetes.Types.Inputs.Datadoghq.V1Alpha1.DatadogAgentSpecAgentLogArgs>? Log { get; set; }
 
         /// <summary>
+        /// Provide Agent Network Policy configuration
+        /// </summary>
+        [Input("networkPolicy")]
+        public Input<Pulumi.Kubernetes.Types.Inputs.Datadoghq.V1Alpha1.DatadogAgentSpecAgentNetworkPolicyArgs>? NetworkPolicy { get; set; }
+
+        /// <summary>
         /// If specified, indicates the pod's priority. "system-node-critical" and "system-cluster-critical" are two special keywords which indicate the highest priorities with the former being the highest priority. Any other name must be defined by creating a PriorityClass object with that name. If not specified, the pod priority will be default or zero if there is no default.
         /// </summary>
         [Input("priorityClassName")]
@@ -134,6 +140,12 @@ namespace Pulumi.Kubernetes.Types.Inputs.Datadoghq.V1Alpha1
         /// </summary>
         [Input("rbac")]
         public Input<Pulumi.Kubernetes.Types.Inputs.Datadoghq.V1Alpha1.DatadogAgentSpecAgentRbacArgs>? Rbac { get; set; }
+
+        /// <summary>
+        /// Security Agent configuration
+        /// </summary>
+        [Input("security")]
+        public Input<Pulumi.Kubernetes.Types.Inputs.Datadoghq.V1Alpha1.DatadogAgentSpecAgentSecurityArgs>? Security { get; set; }
 
         /// <summary>
         /// SystemProbe configuration

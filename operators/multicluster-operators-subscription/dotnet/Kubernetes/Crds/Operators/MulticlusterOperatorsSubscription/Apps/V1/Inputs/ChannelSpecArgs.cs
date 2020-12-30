@@ -28,6 +28,12 @@ namespace Pulumi.Kubernetes.Types.Inputs.Apps.V1
         public Input<Pulumi.Kubernetes.Types.Inputs.Apps.V1.ChannelSpecGatesArgs>? Gates { get; set; }
 
         /// <summary>
+        /// Skip server TLS certificate verification for Git or Helm channel.
+        /// </summary>
+        [Input("insecureSkipVerify")]
+        public Input<bool>? InsecureSkipVerify { get; set; }
+
+        /// <summary>
         /// For a `namespace` channel, pathname is the name of the namespace; For a `helmrepo` or `github` channel, pathname is the remote URL for the channel contents; For a `objectbucket` channel, pathname is the URL and name of the bucket.
         /// </summary>
         [Input("pathname", required: true)]

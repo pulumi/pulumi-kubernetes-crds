@@ -10,23 +10,35 @@ using Pulumi.Serialization;
 namespace Pulumi.Kubernetes.Types.Inputs.Capabilities.V1Alpha1
 {
 
+    /// <summary>
+    /// TenantSpec defines the desired state of Tenant
+    /// </summary>
     public class TenantSpecArgs : Pulumi.ResourceArgs
     {
         [Input("email", required: true)]
         public Input<string> Email { get; set; } = null!;
 
+        /// <summary>
+        /// SecretReference represents a Secret Reference. It has enough information to retrieve secret in any namespace
+        /// </summary>
         [Input("masterCredentialsRef", required: true)]
         public Input<Pulumi.Kubernetes.Types.Inputs.Capabilities.V1Alpha1.TenantSpecMasterCredentialsRefArgs> MasterCredentialsRef { get; set; } = null!;
 
         [Input("organizationName", required: true)]
         public Input<string> OrganizationName { get; set; } = null!;
 
+        /// <summary>
+        /// SecretReference represents a Secret Reference. It has enough information to retrieve secret in any namespace
+        /// </summary>
         [Input("passwordCredentialsRef", required: true)]
         public Input<Pulumi.Kubernetes.Types.Inputs.Capabilities.V1Alpha1.TenantSpecPasswordCredentialsRefArgs> PasswordCredentialsRef { get; set; } = null!;
 
         [Input("systemMasterUrl", required: true)]
         public Input<string> SystemMasterUrl { get; set; } = null!;
 
+        /// <summary>
+        /// SecretReference represents a Secret Reference. It has enough information to retrieve secret in any namespace
+        /// </summary>
         [Input("tenantSecretRef", required: true)]
         public Input<Pulumi.Kubernetes.Types.Inputs.Capabilities.V1Alpha1.TenantSpecTenantSecretRefArgs> TenantSecretRef { get; set; } = null!;
 

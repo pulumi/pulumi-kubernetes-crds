@@ -10,6 +10,9 @@ using Pulumi.Serialization;
 namespace Pulumi.Kubernetes.Types.Inputs.Apps.V1Alpha1
 {
 
+    /// <summary>
+    /// APIManagerSpec defines the desired state of APIManager
+    /// </summary>
     public class APIManagerSpecArgs : Pulumi.ResourceArgs
     {
         [Input("apicast")]
@@ -27,6 +30,9 @@ namespace Pulumi.Kubernetes.Types.Inputs.Apps.V1Alpha1
         [Input("imageStreamTagImportInsecure")]
         public Input<bool>? ImageStreamTagImportInsecure { get; set; }
 
+        [Input("monitoring")]
+        public Input<Pulumi.Kubernetes.Types.Inputs.Apps.V1Alpha1.APIManagerSpecMonitoringArgs>? Monitoring { get; set; }
+
         [Input("podDisruptionBudget")]
         public Input<Pulumi.Kubernetes.Types.Inputs.Apps.V1Alpha1.APIManagerSpecPodDisruptionBudgetArgs>? PodDisruptionBudget { get; set; }
 
@@ -39,6 +45,9 @@ namespace Pulumi.Kubernetes.Types.Inputs.Apps.V1Alpha1
         [Input("tenantName")]
         public Input<string>? TenantName { get; set; }
 
+        /// <summary>
+        /// Wildcard domain as configured in the API Manager object
+        /// </summary>
         [Input("wildcardDomain", required: true)]
         public Input<string> WildcardDomain { get; set; } = null!;
 

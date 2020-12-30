@@ -69,6 +69,12 @@ namespace Pulumi.Kubernetes.Types.Inputs.Datadoghq.V1Alpha1
         [Input("image", required: true)]
         public Input<Pulumi.Kubernetes.Types.Inputs.Datadoghq.V1Alpha1.DatadogAgentSpecClusterChecksRunnerImageArgs> Image { get; set; } = null!;
 
+        /// <summary>
+        /// Provide Cluster Checks Runner Network Policy configuration
+        /// </summary>
+        [Input("networkPolicy")]
+        public Input<Pulumi.Kubernetes.Types.Inputs.Datadoghq.V1Alpha1.DatadogAgentSpecClusterChecksRunnerNetworkPolicyArgs>? NetworkPolicy { get; set; }
+
         [Input("nodeSelector")]
         private InputMap<string>? _nodeSelector;
 

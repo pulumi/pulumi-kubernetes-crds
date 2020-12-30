@@ -23,6 +23,9 @@ namespace Pulumi.Kubernetes.Types.Inputs.Pingcap.V1Alpha1
             set => _annotations = value;
         }
 
+        [Input("cluster")]
+        public Input<Pulumi.Kubernetes.Types.Inputs.Pingcap.V1Alpha1.TidbClusterSpecClusterArgs>? Cluster { get; set; }
+
         [Input("configUpdateStrategy")]
         public Input<string>? ConfigUpdateStrategy { get; set; }
 
@@ -63,8 +66,16 @@ namespace Pulumi.Kubernetes.Types.Inputs.Pingcap.V1Alpha1
         [Input("paused")]
         public Input<bool>? Paused { get; set; }
 
-        [Input("pd", required: true)]
-        public Input<Pulumi.Kubernetes.Types.Inputs.Pingcap.V1Alpha1.TidbClusterSpecPdArgs> Pd { get; set; } = null!;
+        [Input("pd")]
+        public Input<Pulumi.Kubernetes.Types.Inputs.Pingcap.V1Alpha1.TidbClusterSpecPdArgs>? Pd { get; set; }
+
+        [Input("pdAddresses")]
+        private InputList<string>? _pdAddresses;
+        public InputList<string> PdAddresses
+        {
+            get => _pdAddresses ?? (_pdAddresses = new InputList<string>());
+            set => _pdAddresses = value;
+        }
 
         [Input("priorityClassName")]
         public Input<string>? PriorityClassName { get; set; }
@@ -78,17 +89,23 @@ namespace Pulumi.Kubernetes.Types.Inputs.Pingcap.V1Alpha1
         [Input("schedulerName")]
         public Input<string>? SchedulerName { get; set; }
 
+        [Input("serviceAccount")]
+        public Input<string>? ServiceAccount { get; set; }
+
+        [Input("statefulSetUpdateStrategy")]
+        public Input<string>? StatefulSetUpdateStrategy { get; set; }
+
         [Input("ticdc")]
         public Input<Pulumi.Kubernetes.Types.Inputs.Pingcap.V1Alpha1.TidbClusterSpecTicdcArgs>? Ticdc { get; set; }
 
-        [Input("tidb", required: true)]
-        public Input<Pulumi.Kubernetes.Types.Inputs.Pingcap.V1Alpha1.TidbClusterSpecTidbArgs> Tidb { get; set; } = null!;
+        [Input("tidb")]
+        public Input<Pulumi.Kubernetes.Types.Inputs.Pingcap.V1Alpha1.TidbClusterSpecTidbArgs>? Tidb { get; set; }
 
         [Input("tiflash")]
         public Input<Pulumi.Kubernetes.Types.Inputs.Pingcap.V1Alpha1.TidbClusterSpecTiflashArgs>? Tiflash { get; set; }
 
-        [Input("tikv", required: true)]
-        public Input<Pulumi.Kubernetes.Types.Inputs.Pingcap.V1Alpha1.TidbClusterSpecTikvArgs> Tikv { get; set; } = null!;
+        [Input("tikv")]
+        public Input<Pulumi.Kubernetes.Types.Inputs.Pingcap.V1Alpha1.TidbClusterSpecTikvArgs>? Tikv { get; set; }
 
         [Input("timezone")]
         public Input<string>? Timezone { get; set; }

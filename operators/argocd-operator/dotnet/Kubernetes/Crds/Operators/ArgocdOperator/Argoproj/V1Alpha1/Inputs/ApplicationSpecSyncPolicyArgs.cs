@@ -21,6 +21,12 @@ namespace Pulumi.Kubernetes.Types.Inputs.Argoproj.V1Alpha1
         [Input("automated")]
         public Input<Pulumi.Kubernetes.Types.Inputs.Argoproj.V1Alpha1.ApplicationSpecSyncPolicyAutomatedArgs>? Automated { get; set; }
 
+        /// <summary>
+        /// Retry controls failed sync retry behavior
+        /// </summary>
+        [Input("retry")]
+        public Input<Pulumi.Kubernetes.Types.Inputs.Argoproj.V1Alpha1.ApplicationSpecSyncPolicyRetryArgs>? Retry { get; set; }
+
         [Input("syncOptions")]
         private InputList<string>? _syncOptions;
 

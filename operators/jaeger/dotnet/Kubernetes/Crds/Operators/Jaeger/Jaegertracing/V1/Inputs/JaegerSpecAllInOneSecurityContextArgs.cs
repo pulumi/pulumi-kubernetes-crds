@@ -15,6 +15,9 @@ namespace Pulumi.Kubernetes.Types.Inputs.Jaegertracing.V1
         [Input("fsGroup")]
         public Input<int>? FsGroup { get; set; }
 
+        [Input("fsGroupChangePolicy")]
+        public Input<string>? FsGroupChangePolicy { get; set; }
+
         [Input("runAsGroup")]
         public Input<int>? RunAsGroup { get; set; }
 

@@ -9,11 +9,81 @@ import {ObjectMeta} from "../meta/v1";
 
 export namespace migration {
     export namespace v1alpha1 {
+        export interface MigAnalyticSpec {
+            analyzeImageCount: pulumi.Input<boolean>;
+            analyzeK8SResources: pulumi.Input<boolean>;
+            analyzePVCapacity: pulumi.Input<boolean>;
+            listImages?: pulumi.Input<boolean>;
+            listImagesLimit?: pulumi.Input<number>;
+            migPlanRef: pulumi.Input<{[key: string]: any}>;
+        }
+
+        export interface MigAnalyticStatus {
+            analytics?: pulumi.Input<inputs.migration.v1alpha1.MigAnalyticStatusAnalytics>;
+            observedGeneration?: pulumi.Input<number>;
+        }
+
+        export interface MigAnalyticStatusAnalytics {
+            excludedk8sResourceTotal: pulumi.Input<number>;
+            imageCount: pulumi.Input<number>;
+            imageSizeTotal: pulumi.Input<string>;
+            incompatiblek8sResourceTotal: pulumi.Input<number>;
+            k8sResourceTotal: pulumi.Input<number>;
+            namespaces?: pulumi.Input<pulumi.Input<inputs.migration.v1alpha1.MigAnalyticStatusAnalyticsNamespaces>[]>;
+            percentComplete: pulumi.Input<number>;
+            plan: pulumi.Input<string>;
+            pvCapacity: pulumi.Input<string>;
+            pvCount: pulumi.Input<number>;
+        }
+
+        export interface MigAnalyticStatusAnalyticsNamespaces {
+            excludedK8SResourceTotal: pulumi.Input<number>;
+            excludedK8SResources?: pulumi.Input<pulumi.Input<inputs.migration.v1alpha1.MigAnalyticStatusAnalyticsNamespacesExcludedK8SResources>[]>;
+            imageCount: pulumi.Input<number>;
+            imageSizeTotal: pulumi.Input<string>;
+            images?: pulumi.Input<pulumi.Input<inputs.migration.v1alpha1.MigAnalyticStatusAnalyticsNamespacesImages>[]>;
+            incompatibleK8SResourceTotal: pulumi.Input<number>;
+            incompatibleK8SResources?: pulumi.Input<pulumi.Input<inputs.migration.v1alpha1.MigAnalyticStatusAnalyticsNamespacesIncompatibleK8SResources>[]>;
+            k8sResourceTotal: pulumi.Input<number>;
+            k8sResources?: pulumi.Input<pulumi.Input<inputs.migration.v1alpha1.MigAnalyticStatusAnalyticsNamespacesK8sResources>[]>;
+            namespace: pulumi.Input<string>;
+            pvCapacity: pulumi.Input<string>;
+            pvCount: pulumi.Input<number>;
+        }
+
+        export interface MigAnalyticStatusAnalyticsNamespacesExcludedK8SResources {
+            count: pulumi.Input<number>;
+            group: pulumi.Input<string>;
+            kind: pulumi.Input<string>;
+            version: pulumi.Input<string>;
+        }
+
+        export interface MigAnalyticStatusAnalyticsNamespacesImages {
+            name: pulumi.Input<string>;
+            reference: pulumi.Input<string>;
+            size: pulumi.Input<string>;
+        }
+
+        export interface MigAnalyticStatusAnalyticsNamespacesIncompatibleK8SResources {
+            count: pulumi.Input<number>;
+            group: pulumi.Input<string>;
+            kind: pulumi.Input<string>;
+            version: pulumi.Input<string>;
+        }
+
+        export interface MigAnalyticStatusAnalyticsNamespacesK8sResources {
+            count: pulumi.Input<number>;
+            group: pulumi.Input<string>;
+            kind: pulumi.Input<string>;
+            version: pulumi.Input<string>;
+        }
+
         export interface MigClusterSpec {
             azureResourceGroup?: pulumi.Input<string>;
             caBundle?: pulumi.Input<string>;
             insecure?: pulumi.Input<boolean>;
             isHostCluster: pulumi.Input<boolean>;
+            restartRestic?: pulumi.Input<boolean>;
             serviceAccountSecretRef?: pulumi.Input<{[key: string]: any}>;
             storageClasses?: pulumi.Input<pulumi.Input<inputs.migration.v1alpha1.MigClusterSpecStorageClasses>[]>;
             url?: pulumi.Input<string>;
@@ -53,7 +123,7 @@ export namespace migration {
 
         export interface MigMigrationStatus {
             errors?: pulumi.Input<pulumi.Input<string>[]>;
-            itenerary?: pulumi.Input<string>;
+            itinerary?: pulumi.Input<string>;
             observedDigest?: pulumi.Input<string>;
             phase?: pulumi.Input<string>;
             startTimestamp?: pulumi.Input<string>;
@@ -87,6 +157,7 @@ export namespace migration {
 
         export interface MigPlanSpecPersistentVolumesPvc {
             accessModes?: pulumi.Input<pulumi.Input<string>[]>;
+            hasReference?: pulumi.Input<boolean>;
             name?: pulumi.Input<string>;
             namespace?: pulumi.Input<string>;
         }
@@ -105,6 +176,7 @@ export namespace migration {
         }
 
         export interface MigPlanStatus {
+            excludedResources?: pulumi.Input<pulumi.Input<string>[]>;
             incompatibleNamespaces?: pulumi.Input<pulumi.Input<inputs.migration.v1alpha1.MigPlanStatusIncompatibleNamespaces>[]>;
             observedDigest?: pulumi.Input<string>;
         }
@@ -403,9 +475,17 @@ export namespace velero {
              */
             expiration?: pulumi.Input<string>;
             /**
+             * FormatVersion is the backup format version, including major, minor, and patch version.
+             */
+            formatVersion?: pulumi.Input<string>;
+            /**
              * Phase is the current state of the Backup.
              */
             phase?: pulumi.Input<string>;
+            /**
+             * Progress contains information about the backup's execution progress. Note that this information is best-effort only -- if Velero fails to update it during a backup for any reason, it may be inaccurate/stale.
+             */
+            progress?: pulumi.Input<inputs.velero.v1.BackupStatusProgress>;
             /**
              * StartTimestamp records the time a backup was started. Separate from CreationTimestamp, since that value changes on restores. The server's time is used for StartTimestamps
              */
@@ -415,7 +495,7 @@ export namespace velero {
              */
             validationErrors?: pulumi.Input<pulumi.Input<string>[]>;
             /**
-             * Version is the backup format version.
+             * Version is the backup format major version. Deprecated: Please see FormatVersion
              */
             version?: pulumi.Input<number>;
             /**
@@ -430,6 +510,20 @@ export namespace velero {
              * Warnings is a count of all warning messages that were generated during execution of the backup. The actual warnings are in the backup's log file in object storage.
              */
             warnings?: pulumi.Input<number>;
+        }
+
+        /**
+         * Progress contains information about the backup's execution progress. Note that this information is best-effort only -- if Velero fails to update it during a backup for any reason, it may be inaccurate/stale.
+         */
+        export interface BackupStatusProgress {
+            /**
+             * ItemsBackedUp is the number of items that have actually been written to the backup tarball so far.
+             */
+            itemsBackedUp?: pulumi.Input<number>;
+            /**
+             * TotalItems is the total number of items to be backed up. This number may change throughout the execution of the backup due to plugins that return additional related items to back up, the velero.io/exclude-from-backup label, and various other filters that happen as items are processed.
+             */
+            totalItems?: pulumi.Input<number>;
         }
 
         /**
@@ -466,6 +560,10 @@ export namespace velero {
              * Bucket is the bucket to use for object storage.
              */
             bucket: pulumi.Input<string>;
+            /**
+             * CACert defines a CA bundle to use when verifying TLS connections to the provider.
+             */
+            caCert?: pulumi.Input<string>;
             /**
              * Prefix is the path inside a bucket to use for Velero storage. Optional.
              */

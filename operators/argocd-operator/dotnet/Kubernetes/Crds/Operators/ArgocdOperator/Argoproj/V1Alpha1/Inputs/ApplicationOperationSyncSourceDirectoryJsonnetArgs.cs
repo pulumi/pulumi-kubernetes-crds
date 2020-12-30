@@ -27,6 +27,18 @@ namespace Pulumi.Kubernetes.Types.Inputs.Argoproj.V1Alpha1
             set => _extVars = value;
         }
 
+        [Input("libs")]
+        private InputList<string>? _libs;
+
+        /// <summary>
+        /// Additional library search dirs
+        /// </summary>
+        public InputList<string> Libs
+        {
+            get => _libs ?? (_libs = new InputList<string>());
+            set => _libs = value;
+        }
+
         [Input("tlas")]
         private InputList<Pulumi.Kubernetes.Types.Inputs.Argoproj.V1Alpha1.ApplicationOperationSyncSourceDirectoryJsonnetTlasArgs>? _tlas;
 

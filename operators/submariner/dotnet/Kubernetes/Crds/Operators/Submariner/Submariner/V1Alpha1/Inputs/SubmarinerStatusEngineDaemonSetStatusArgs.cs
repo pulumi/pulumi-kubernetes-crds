@@ -10,76 +10,27 @@ using Pulumi.Serialization;
 namespace Pulumi.Kubernetes.Types.Inputs.Submariner.V1Alpha1
 {
 
-    /// <summary>
-    /// DaemonSetStatus represents the current status of a daemon set.
-    /// </summary>
     public class SubmarinerStatusEngineDaemonSetStatusArgs : Pulumi.ResourceArgs
     {
-        /// <summary>
-        /// Count of hash collisions for the DaemonSet. The DaemonSet controller uses this field as a collision avoidance mechanism when it needs to create the name for the newest ControllerRevision.
-        /// </summary>
-        [Input("collisionCount")]
-        public Input<int>? CollisionCount { get; set; }
+        [Input("lastResourceVersion")]
+        public Input<string>? LastResourceVersion { get; set; }
 
-        [Input("conditions")]
-        private InputList<Pulumi.Kubernetes.Types.Inputs.Submariner.V1Alpha1.SubmarinerStatusEngineDaemonSetStatusConditionsArgs>? _conditions;
+        [Input("mismatchedContainerImages", required: true)]
+        public Input<bool> MismatchedContainerImages { get; set; } = null!;
 
-        /// <summary>
-        /// Represents the latest available observations of a DaemonSet's current state.
-        /// </summary>
-        public InputList<Pulumi.Kubernetes.Types.Inputs.Submariner.V1Alpha1.SubmarinerStatusEngineDaemonSetStatusConditionsArgs> Conditions
+        [Input("nonReadyContainerStates")]
+        private InputList<Pulumi.Kubernetes.Types.Inputs.Submariner.V1Alpha1.SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesArgs>? _nonReadyContainerStates;
+        public InputList<Pulumi.Kubernetes.Types.Inputs.Submariner.V1Alpha1.SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesArgs> NonReadyContainerStates
         {
-            get => _conditions ?? (_conditions = new InputList<Pulumi.Kubernetes.Types.Inputs.Submariner.V1Alpha1.SubmarinerStatusEngineDaemonSetStatusConditionsArgs>());
-            set => _conditions = value;
+            get => _nonReadyContainerStates ?? (_nonReadyContainerStates = new InputList<Pulumi.Kubernetes.Types.Inputs.Submariner.V1Alpha1.SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesArgs>());
+            set => _nonReadyContainerStates = value;
         }
 
         /// <summary>
-        /// The number of nodes that are running at least 1 daemon pod and are supposed to run the daemon pod. More info: https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/
+        /// DaemonSetStatus represents the current status of a daemon set.
         /// </summary>
-        [Input("currentNumberScheduled", required: true)]
-        public Input<int> CurrentNumberScheduled { get; set; } = null!;
-
-        /// <summary>
-        /// The total number of nodes that should be running the daemon pod (including nodes correctly running the daemon pod). More info: https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/
-        /// </summary>
-        [Input("desiredNumberScheduled", required: true)]
-        public Input<int> DesiredNumberScheduled { get; set; } = null!;
-
-        /// <summary>
-        /// The number of nodes that should be running the daemon pod and have one or more of the daemon pod running and available (ready for at least spec.minReadySeconds)
-        /// </summary>
-        [Input("numberAvailable")]
-        public Input<int>? NumberAvailable { get; set; }
-
-        /// <summary>
-        /// The number of nodes that are running the daemon pod, but are not supposed to run the daemon pod. More info: https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/
-        /// </summary>
-        [Input("numberMisscheduled", required: true)]
-        public Input<int> NumberMisscheduled { get; set; } = null!;
-
-        /// <summary>
-        /// The number of nodes that should be running the daemon pod and have one or more of the daemon pod running and ready.
-        /// </summary>
-        [Input("numberReady", required: true)]
-        public Input<int> NumberReady { get; set; } = null!;
-
-        /// <summary>
-        /// The number of nodes that should be running the daemon pod and have none of the daemon pod running and available (ready for at least spec.minReadySeconds)
-        /// </summary>
-        [Input("numberUnavailable")]
-        public Input<int>? NumberUnavailable { get; set; }
-
-        /// <summary>
-        /// The most recent generation observed by the daemon set controller.
-        /// </summary>
-        [Input("observedGeneration")]
-        public Input<int>? ObservedGeneration { get; set; }
-
-        /// <summary>
-        /// The total number of nodes that are running updated daemon pod
-        /// </summary>
-        [Input("updatedNumberScheduled")]
-        public Input<int>? UpdatedNumberScheduled { get; set; }
+        [Input("status")]
+        public Input<Pulumi.Kubernetes.Types.Inputs.Submariner.V1Alpha1.SubmarinerStatusEngineDaemonSetStatusStatusArgs>? Status { get; set; }
 
         public SubmarinerStatusEngineDaemonSetStatusArgs()
         {

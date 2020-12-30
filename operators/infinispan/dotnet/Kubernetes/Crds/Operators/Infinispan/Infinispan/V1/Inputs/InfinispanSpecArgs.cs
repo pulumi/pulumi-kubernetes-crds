@@ -16,6 +16,12 @@ namespace Pulumi.Kubernetes.Types.Inputs.Infinispan.V1
     public class InfinispanSpecArgs : Pulumi.ResourceArgs
     {
         /// <summary>
+        /// Affinity is a group of affinity scheduling rules.
+        /// </summary>
+        [Input("affinity")]
+        public Input<Pulumi.Kubernetes.Types.Inputs.Infinispan.V1.InfinispanSpecAffinityArgs>? Affinity { get; set; }
+
+        /// <summary>
         /// Autoscale describe autoscaling configuration for the cluster
         /// </summary>
         [Input("autoscale")]

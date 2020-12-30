@@ -68,7 +68,7 @@ namespace Pulumi.Kubernetes.Types.Outputs.Argoproj.V1Alpha1
         /// <summary>
         /// InitialSSHKnownHosts defines the SSH known hosts data upon creation of the cluster for connecting Git repositories via SSH.
         /// </summary>
-        public readonly string InitialSSHKnownHosts;
+        public readonly Pulumi.Kubernetes.Types.Outputs.Argoproj.V1Alpha1.ArgoCDSpecInitialSSHKnownHosts InitialSSHKnownHosts;
         /// <summary>
         /// KustomizeBuildOptions is used to specify build options/parameters to use with `kustomize build`.
         /// </summary>
@@ -105,6 +105,10 @@ namespace Pulumi.Kubernetes.Types.Outputs.Argoproj.V1Alpha1
         /// ResourceExclusions is used to completely ignore entire classes of resource group/kinds.
         /// </summary>
         public readonly string ResourceExclusions;
+        /// <summary>
+        /// ResourceInclusions is used to only include specific group/kinds in the reconciliation process.
+        /// </summary>
+        public readonly string ResourceInclusions;
         /// <summary>
         /// Server defines the options for the ArgoCD Server component.
         /// </summary>
@@ -154,7 +158,7 @@ namespace Pulumi.Kubernetes.Types.Outputs.Argoproj.V1Alpha1
 
             string initialRepositories,
 
-            string initialSSHKnownHosts,
+            Pulumi.Kubernetes.Types.Outputs.Argoproj.V1Alpha1.ArgoCDSpecInitialSSHKnownHosts initialSSHKnownHosts,
 
             string kustomizeBuildOptions,
 
@@ -173,6 +177,8 @@ namespace Pulumi.Kubernetes.Types.Outputs.Argoproj.V1Alpha1
             string resourceCustomizations,
 
             string resourceExclusions,
+
+            string resourceInclusions,
 
             Pulumi.Kubernetes.Types.Outputs.Argoproj.V1Alpha1.ArgoCDSpecServer server,
 
@@ -207,6 +213,7 @@ namespace Pulumi.Kubernetes.Types.Outputs.Argoproj.V1Alpha1
             RepositoryCredentials = repositoryCredentials;
             ResourceCustomizations = resourceCustomizations;
             ResourceExclusions = resourceExclusions;
+            ResourceInclusions = resourceInclusions;
             Server = server;
             StatusBadgeEnabled = statusBadgeEnabled;
             Tls = tls;

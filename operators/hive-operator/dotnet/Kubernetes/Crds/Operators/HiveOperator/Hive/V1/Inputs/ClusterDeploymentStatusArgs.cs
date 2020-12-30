@@ -39,12 +39,6 @@ namespace Pulumi.Kubernetes.Types.Inputs.Hive.V1
         [Input("cliImage")]
         public Input<string>? CliImage { get; set; }
 
-        /// <summary>
-        /// ClusterVersionStatus will hold a copy of the remote cluster's ClusterVersion.Status
-        /// </summary>
-        [Input("clusterVersionStatus")]
-        public Input<Pulumi.Kubernetes.Types.Inputs.Hive.V1.ClusterDeploymentStatusClusterVersionStatusArgs>? ClusterVersionStatus { get; set; }
-
         [Input("conditions")]
         private InputList<Pulumi.Kubernetes.Types.Inputs.Hive.V1.ClusterDeploymentStatusConditionsArgs>? _conditions;
 

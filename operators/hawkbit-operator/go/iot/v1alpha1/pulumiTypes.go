@@ -88,6 +88,7 @@ type HawkbitSpec struct {
 	Database       interface{}                          `pulumi:"database"`
 	ImageOverrides map[string]HawkbitSpecImageOverrides `pulumi:"imageOverrides"`
 	Rabbit         interface{}                          `pulumi:"rabbit"`
+	SignOn         *HawkbitSpecSignOn                   `pulumi:"signOn"`
 }
 
 // HawkbitSpecInput is an input type that accepts HawkbitSpecArgs and HawkbitSpecOutput values.
@@ -105,6 +106,7 @@ type HawkbitSpecArgs struct {
 	Database       pulumi.Input                      `pulumi:"database"`
 	ImageOverrides HawkbitSpecImageOverridesMapInput `pulumi:"imageOverrides"`
 	Rabbit         pulumi.Input                      `pulumi:"rabbit"`
+	SignOn         HawkbitSpecSignOnPtrInput         `pulumi:"signOn"`
 }
 
 func (HawkbitSpecArgs) ElementType() reflect.Type {
@@ -195,6 +197,10 @@ func (o HawkbitSpecOutput) Rabbit() pulumi.AnyOutput {
 	return o.ApplyT(func(v HawkbitSpec) interface{} { return v.Rabbit }).(pulumi.AnyOutput)
 }
 
+func (o HawkbitSpecOutput) SignOn() HawkbitSpecSignOnPtrOutput {
+	return o.ApplyT(func(v HawkbitSpec) *HawkbitSpecSignOn { return v.SignOn }).(HawkbitSpecSignOnPtrOutput)
+}
+
 type HawkbitSpecPtrOutput struct{ *pulumi.OutputState }
 
 func (HawkbitSpecPtrOutput) ElementType() reflect.Type {
@@ -238,6 +244,15 @@ func (o HawkbitSpecPtrOutput) Rabbit() pulumi.AnyOutput {
 		}
 		return v.Rabbit
 	}).(pulumi.AnyOutput)
+}
+
+func (o HawkbitSpecPtrOutput) SignOn() HawkbitSpecSignOnPtrOutput {
+	return o.ApplyT(func(v *HawkbitSpec) *HawkbitSpecSignOn {
+		if v == nil {
+			return nil
+		}
+		return v.SignOn
+	}).(HawkbitSpecSignOnPtrOutput)
 }
 
 type HawkbitSpecImageOverrides struct {
@@ -338,6 +353,600 @@ func (o HawkbitSpecImageOverridesMapOutput) MapIndex(k pulumi.StringInput) Hawkb
 	return pulumi.All(o, k).ApplyT(func(vs []interface{}) HawkbitSpecImageOverrides {
 		return vs[0].(map[string]HawkbitSpecImageOverrides)[vs[1].(string)]
 	}).(HawkbitSpecImageOverridesOutput)
+}
+
+type HawkbitSpecSignOn struct {
+	Keycloak *HawkbitSpecSignOnKeycloak `pulumi:"keycloak"`
+}
+
+// HawkbitSpecSignOnInput is an input type that accepts HawkbitSpecSignOnArgs and HawkbitSpecSignOnOutput values.
+// You can construct a concrete instance of `HawkbitSpecSignOnInput` via:
+//
+//          HawkbitSpecSignOnArgs{...}
+type HawkbitSpecSignOnInput interface {
+	pulumi.Input
+
+	ToHawkbitSpecSignOnOutput() HawkbitSpecSignOnOutput
+	ToHawkbitSpecSignOnOutputWithContext(context.Context) HawkbitSpecSignOnOutput
+}
+
+type HawkbitSpecSignOnArgs struct {
+	Keycloak HawkbitSpecSignOnKeycloakPtrInput `pulumi:"keycloak"`
+}
+
+func (HawkbitSpecSignOnArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*HawkbitSpecSignOn)(nil)).Elem()
+}
+
+func (i HawkbitSpecSignOnArgs) ToHawkbitSpecSignOnOutput() HawkbitSpecSignOnOutput {
+	return i.ToHawkbitSpecSignOnOutputWithContext(context.Background())
+}
+
+func (i HawkbitSpecSignOnArgs) ToHawkbitSpecSignOnOutputWithContext(ctx context.Context) HawkbitSpecSignOnOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(HawkbitSpecSignOnOutput)
+}
+
+func (i HawkbitSpecSignOnArgs) ToHawkbitSpecSignOnPtrOutput() HawkbitSpecSignOnPtrOutput {
+	return i.ToHawkbitSpecSignOnPtrOutputWithContext(context.Background())
+}
+
+func (i HawkbitSpecSignOnArgs) ToHawkbitSpecSignOnPtrOutputWithContext(ctx context.Context) HawkbitSpecSignOnPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(HawkbitSpecSignOnOutput).ToHawkbitSpecSignOnPtrOutputWithContext(ctx)
+}
+
+// HawkbitSpecSignOnPtrInput is an input type that accepts HawkbitSpecSignOnArgs, HawkbitSpecSignOnPtr and HawkbitSpecSignOnPtrOutput values.
+// You can construct a concrete instance of `HawkbitSpecSignOnPtrInput` via:
+//
+//          HawkbitSpecSignOnArgs{...}
+//
+//  or:
+//
+//          nil
+type HawkbitSpecSignOnPtrInput interface {
+	pulumi.Input
+
+	ToHawkbitSpecSignOnPtrOutput() HawkbitSpecSignOnPtrOutput
+	ToHawkbitSpecSignOnPtrOutputWithContext(context.Context) HawkbitSpecSignOnPtrOutput
+}
+
+type hawkbitSpecSignOnPtrType HawkbitSpecSignOnArgs
+
+func HawkbitSpecSignOnPtr(v *HawkbitSpecSignOnArgs) HawkbitSpecSignOnPtrInput {
+	return (*hawkbitSpecSignOnPtrType)(v)
+}
+
+func (*hawkbitSpecSignOnPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**HawkbitSpecSignOn)(nil)).Elem()
+}
+
+func (i *hawkbitSpecSignOnPtrType) ToHawkbitSpecSignOnPtrOutput() HawkbitSpecSignOnPtrOutput {
+	return i.ToHawkbitSpecSignOnPtrOutputWithContext(context.Background())
+}
+
+func (i *hawkbitSpecSignOnPtrType) ToHawkbitSpecSignOnPtrOutputWithContext(ctx context.Context) HawkbitSpecSignOnPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(HawkbitSpecSignOnPtrOutput)
+}
+
+type HawkbitSpecSignOnOutput struct{ *pulumi.OutputState }
+
+func (HawkbitSpecSignOnOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*HawkbitSpecSignOn)(nil)).Elem()
+}
+
+func (o HawkbitSpecSignOnOutput) ToHawkbitSpecSignOnOutput() HawkbitSpecSignOnOutput {
+	return o
+}
+
+func (o HawkbitSpecSignOnOutput) ToHawkbitSpecSignOnOutputWithContext(ctx context.Context) HawkbitSpecSignOnOutput {
+	return o
+}
+
+func (o HawkbitSpecSignOnOutput) ToHawkbitSpecSignOnPtrOutput() HawkbitSpecSignOnPtrOutput {
+	return o.ToHawkbitSpecSignOnPtrOutputWithContext(context.Background())
+}
+
+func (o HawkbitSpecSignOnOutput) ToHawkbitSpecSignOnPtrOutputWithContext(ctx context.Context) HawkbitSpecSignOnPtrOutput {
+	return o.ApplyT(func(v HawkbitSpecSignOn) *HawkbitSpecSignOn {
+		return &v
+	}).(HawkbitSpecSignOnPtrOutput)
+}
+func (o HawkbitSpecSignOnOutput) Keycloak() HawkbitSpecSignOnKeycloakPtrOutput {
+	return o.ApplyT(func(v HawkbitSpecSignOn) *HawkbitSpecSignOnKeycloak { return v.Keycloak }).(HawkbitSpecSignOnKeycloakPtrOutput)
+}
+
+type HawkbitSpecSignOnPtrOutput struct{ *pulumi.OutputState }
+
+func (HawkbitSpecSignOnPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**HawkbitSpecSignOn)(nil)).Elem()
+}
+
+func (o HawkbitSpecSignOnPtrOutput) ToHawkbitSpecSignOnPtrOutput() HawkbitSpecSignOnPtrOutput {
+	return o
+}
+
+func (o HawkbitSpecSignOnPtrOutput) ToHawkbitSpecSignOnPtrOutputWithContext(ctx context.Context) HawkbitSpecSignOnPtrOutput {
+	return o
+}
+
+func (o HawkbitSpecSignOnPtrOutput) Elem() HawkbitSpecSignOnOutput {
+	return o.ApplyT(func(v *HawkbitSpecSignOn) HawkbitSpecSignOn { return *v }).(HawkbitSpecSignOnOutput)
+}
+
+func (o HawkbitSpecSignOnPtrOutput) Keycloak() HawkbitSpecSignOnKeycloakPtrOutput {
+	return o.ApplyT(func(v *HawkbitSpecSignOn) *HawkbitSpecSignOnKeycloak {
+		if v == nil {
+			return nil
+		}
+		return v.Keycloak
+	}).(HawkbitSpecSignOnKeycloakPtrOutput)
+}
+
+type HawkbitSpecSignOnKeycloak struct {
+	HawkbitUrl *string `pulumi:"hawkbitUrl"`
+	// Selector for looking up Keycloak Custom Resources.
+	InstanceSelector *HawkbitSpecSignOnKeycloakInstanceSelector `pulumi:"instanceSelector"`
+}
+
+// HawkbitSpecSignOnKeycloakInput is an input type that accepts HawkbitSpecSignOnKeycloakArgs and HawkbitSpecSignOnKeycloakOutput values.
+// You can construct a concrete instance of `HawkbitSpecSignOnKeycloakInput` via:
+//
+//          HawkbitSpecSignOnKeycloakArgs{...}
+type HawkbitSpecSignOnKeycloakInput interface {
+	pulumi.Input
+
+	ToHawkbitSpecSignOnKeycloakOutput() HawkbitSpecSignOnKeycloakOutput
+	ToHawkbitSpecSignOnKeycloakOutputWithContext(context.Context) HawkbitSpecSignOnKeycloakOutput
+}
+
+type HawkbitSpecSignOnKeycloakArgs struct {
+	HawkbitUrl pulumi.StringPtrInput `pulumi:"hawkbitUrl"`
+	// Selector for looking up Keycloak Custom Resources.
+	InstanceSelector HawkbitSpecSignOnKeycloakInstanceSelectorPtrInput `pulumi:"instanceSelector"`
+}
+
+func (HawkbitSpecSignOnKeycloakArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*HawkbitSpecSignOnKeycloak)(nil)).Elem()
+}
+
+func (i HawkbitSpecSignOnKeycloakArgs) ToHawkbitSpecSignOnKeycloakOutput() HawkbitSpecSignOnKeycloakOutput {
+	return i.ToHawkbitSpecSignOnKeycloakOutputWithContext(context.Background())
+}
+
+func (i HawkbitSpecSignOnKeycloakArgs) ToHawkbitSpecSignOnKeycloakOutputWithContext(ctx context.Context) HawkbitSpecSignOnKeycloakOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(HawkbitSpecSignOnKeycloakOutput)
+}
+
+func (i HawkbitSpecSignOnKeycloakArgs) ToHawkbitSpecSignOnKeycloakPtrOutput() HawkbitSpecSignOnKeycloakPtrOutput {
+	return i.ToHawkbitSpecSignOnKeycloakPtrOutputWithContext(context.Background())
+}
+
+func (i HawkbitSpecSignOnKeycloakArgs) ToHawkbitSpecSignOnKeycloakPtrOutputWithContext(ctx context.Context) HawkbitSpecSignOnKeycloakPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(HawkbitSpecSignOnKeycloakOutput).ToHawkbitSpecSignOnKeycloakPtrOutputWithContext(ctx)
+}
+
+// HawkbitSpecSignOnKeycloakPtrInput is an input type that accepts HawkbitSpecSignOnKeycloakArgs, HawkbitSpecSignOnKeycloakPtr and HawkbitSpecSignOnKeycloakPtrOutput values.
+// You can construct a concrete instance of `HawkbitSpecSignOnKeycloakPtrInput` via:
+//
+//          HawkbitSpecSignOnKeycloakArgs{...}
+//
+//  or:
+//
+//          nil
+type HawkbitSpecSignOnKeycloakPtrInput interface {
+	pulumi.Input
+
+	ToHawkbitSpecSignOnKeycloakPtrOutput() HawkbitSpecSignOnKeycloakPtrOutput
+	ToHawkbitSpecSignOnKeycloakPtrOutputWithContext(context.Context) HawkbitSpecSignOnKeycloakPtrOutput
+}
+
+type hawkbitSpecSignOnKeycloakPtrType HawkbitSpecSignOnKeycloakArgs
+
+func HawkbitSpecSignOnKeycloakPtr(v *HawkbitSpecSignOnKeycloakArgs) HawkbitSpecSignOnKeycloakPtrInput {
+	return (*hawkbitSpecSignOnKeycloakPtrType)(v)
+}
+
+func (*hawkbitSpecSignOnKeycloakPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**HawkbitSpecSignOnKeycloak)(nil)).Elem()
+}
+
+func (i *hawkbitSpecSignOnKeycloakPtrType) ToHawkbitSpecSignOnKeycloakPtrOutput() HawkbitSpecSignOnKeycloakPtrOutput {
+	return i.ToHawkbitSpecSignOnKeycloakPtrOutputWithContext(context.Background())
+}
+
+func (i *hawkbitSpecSignOnKeycloakPtrType) ToHawkbitSpecSignOnKeycloakPtrOutputWithContext(ctx context.Context) HawkbitSpecSignOnKeycloakPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(HawkbitSpecSignOnKeycloakPtrOutput)
+}
+
+type HawkbitSpecSignOnKeycloakOutput struct{ *pulumi.OutputState }
+
+func (HawkbitSpecSignOnKeycloakOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*HawkbitSpecSignOnKeycloak)(nil)).Elem()
+}
+
+func (o HawkbitSpecSignOnKeycloakOutput) ToHawkbitSpecSignOnKeycloakOutput() HawkbitSpecSignOnKeycloakOutput {
+	return o
+}
+
+func (o HawkbitSpecSignOnKeycloakOutput) ToHawkbitSpecSignOnKeycloakOutputWithContext(ctx context.Context) HawkbitSpecSignOnKeycloakOutput {
+	return o
+}
+
+func (o HawkbitSpecSignOnKeycloakOutput) ToHawkbitSpecSignOnKeycloakPtrOutput() HawkbitSpecSignOnKeycloakPtrOutput {
+	return o.ToHawkbitSpecSignOnKeycloakPtrOutputWithContext(context.Background())
+}
+
+func (o HawkbitSpecSignOnKeycloakOutput) ToHawkbitSpecSignOnKeycloakPtrOutputWithContext(ctx context.Context) HawkbitSpecSignOnKeycloakPtrOutput {
+	return o.ApplyT(func(v HawkbitSpecSignOnKeycloak) *HawkbitSpecSignOnKeycloak {
+		return &v
+	}).(HawkbitSpecSignOnKeycloakPtrOutput)
+}
+func (o HawkbitSpecSignOnKeycloakOutput) HawkbitUrl() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v HawkbitSpecSignOnKeycloak) *string { return v.HawkbitUrl }).(pulumi.StringPtrOutput)
+}
+
+// Selector for looking up Keycloak Custom Resources.
+func (o HawkbitSpecSignOnKeycloakOutput) InstanceSelector() HawkbitSpecSignOnKeycloakInstanceSelectorPtrOutput {
+	return o.ApplyT(func(v HawkbitSpecSignOnKeycloak) *HawkbitSpecSignOnKeycloakInstanceSelector {
+		return v.InstanceSelector
+	}).(HawkbitSpecSignOnKeycloakInstanceSelectorPtrOutput)
+}
+
+type HawkbitSpecSignOnKeycloakPtrOutput struct{ *pulumi.OutputState }
+
+func (HawkbitSpecSignOnKeycloakPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**HawkbitSpecSignOnKeycloak)(nil)).Elem()
+}
+
+func (o HawkbitSpecSignOnKeycloakPtrOutput) ToHawkbitSpecSignOnKeycloakPtrOutput() HawkbitSpecSignOnKeycloakPtrOutput {
+	return o
+}
+
+func (o HawkbitSpecSignOnKeycloakPtrOutput) ToHawkbitSpecSignOnKeycloakPtrOutputWithContext(ctx context.Context) HawkbitSpecSignOnKeycloakPtrOutput {
+	return o
+}
+
+func (o HawkbitSpecSignOnKeycloakPtrOutput) Elem() HawkbitSpecSignOnKeycloakOutput {
+	return o.ApplyT(func(v *HawkbitSpecSignOnKeycloak) HawkbitSpecSignOnKeycloak { return *v }).(HawkbitSpecSignOnKeycloakOutput)
+}
+
+func (o HawkbitSpecSignOnKeycloakPtrOutput) HawkbitUrl() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *HawkbitSpecSignOnKeycloak) *string {
+		if v == nil {
+			return nil
+		}
+		return v.HawkbitUrl
+	}).(pulumi.StringPtrOutput)
+}
+
+// Selector for looking up Keycloak Custom Resources.
+func (o HawkbitSpecSignOnKeycloakPtrOutput) InstanceSelector() HawkbitSpecSignOnKeycloakInstanceSelectorPtrOutput {
+	return o.ApplyT(func(v *HawkbitSpecSignOnKeycloak) *HawkbitSpecSignOnKeycloakInstanceSelector {
+		if v == nil {
+			return nil
+		}
+		return v.InstanceSelector
+	}).(HawkbitSpecSignOnKeycloakInstanceSelectorPtrOutput)
+}
+
+// Selector for looking up Keycloak Custom Resources.
+type HawkbitSpecSignOnKeycloakInstanceSelector struct {
+	// matchExpressions is a list of label selector requirements. The requirements are ANDed.
+	MatchExpressions []HawkbitSpecSignOnKeycloakInstanceSelectorMatchExpressions `pulumi:"matchExpressions"`
+	// matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+	MatchLabels map[string]string `pulumi:"matchLabels"`
+}
+
+// HawkbitSpecSignOnKeycloakInstanceSelectorInput is an input type that accepts HawkbitSpecSignOnKeycloakInstanceSelectorArgs and HawkbitSpecSignOnKeycloakInstanceSelectorOutput values.
+// You can construct a concrete instance of `HawkbitSpecSignOnKeycloakInstanceSelectorInput` via:
+//
+//          HawkbitSpecSignOnKeycloakInstanceSelectorArgs{...}
+type HawkbitSpecSignOnKeycloakInstanceSelectorInput interface {
+	pulumi.Input
+
+	ToHawkbitSpecSignOnKeycloakInstanceSelectorOutput() HawkbitSpecSignOnKeycloakInstanceSelectorOutput
+	ToHawkbitSpecSignOnKeycloakInstanceSelectorOutputWithContext(context.Context) HawkbitSpecSignOnKeycloakInstanceSelectorOutput
+}
+
+// Selector for looking up Keycloak Custom Resources.
+type HawkbitSpecSignOnKeycloakInstanceSelectorArgs struct {
+	// matchExpressions is a list of label selector requirements. The requirements are ANDed.
+	MatchExpressions HawkbitSpecSignOnKeycloakInstanceSelectorMatchExpressionsArrayInput `pulumi:"matchExpressions"`
+	// matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+	MatchLabels pulumi.StringMapInput `pulumi:"matchLabels"`
+}
+
+func (HawkbitSpecSignOnKeycloakInstanceSelectorArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*HawkbitSpecSignOnKeycloakInstanceSelector)(nil)).Elem()
+}
+
+func (i HawkbitSpecSignOnKeycloakInstanceSelectorArgs) ToHawkbitSpecSignOnKeycloakInstanceSelectorOutput() HawkbitSpecSignOnKeycloakInstanceSelectorOutput {
+	return i.ToHawkbitSpecSignOnKeycloakInstanceSelectorOutputWithContext(context.Background())
+}
+
+func (i HawkbitSpecSignOnKeycloakInstanceSelectorArgs) ToHawkbitSpecSignOnKeycloakInstanceSelectorOutputWithContext(ctx context.Context) HawkbitSpecSignOnKeycloakInstanceSelectorOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(HawkbitSpecSignOnKeycloakInstanceSelectorOutput)
+}
+
+func (i HawkbitSpecSignOnKeycloakInstanceSelectorArgs) ToHawkbitSpecSignOnKeycloakInstanceSelectorPtrOutput() HawkbitSpecSignOnKeycloakInstanceSelectorPtrOutput {
+	return i.ToHawkbitSpecSignOnKeycloakInstanceSelectorPtrOutputWithContext(context.Background())
+}
+
+func (i HawkbitSpecSignOnKeycloakInstanceSelectorArgs) ToHawkbitSpecSignOnKeycloakInstanceSelectorPtrOutputWithContext(ctx context.Context) HawkbitSpecSignOnKeycloakInstanceSelectorPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(HawkbitSpecSignOnKeycloakInstanceSelectorOutput).ToHawkbitSpecSignOnKeycloakInstanceSelectorPtrOutputWithContext(ctx)
+}
+
+// HawkbitSpecSignOnKeycloakInstanceSelectorPtrInput is an input type that accepts HawkbitSpecSignOnKeycloakInstanceSelectorArgs, HawkbitSpecSignOnKeycloakInstanceSelectorPtr and HawkbitSpecSignOnKeycloakInstanceSelectorPtrOutput values.
+// You can construct a concrete instance of `HawkbitSpecSignOnKeycloakInstanceSelectorPtrInput` via:
+//
+//          HawkbitSpecSignOnKeycloakInstanceSelectorArgs{...}
+//
+//  or:
+//
+//          nil
+type HawkbitSpecSignOnKeycloakInstanceSelectorPtrInput interface {
+	pulumi.Input
+
+	ToHawkbitSpecSignOnKeycloakInstanceSelectorPtrOutput() HawkbitSpecSignOnKeycloakInstanceSelectorPtrOutput
+	ToHawkbitSpecSignOnKeycloakInstanceSelectorPtrOutputWithContext(context.Context) HawkbitSpecSignOnKeycloakInstanceSelectorPtrOutput
+}
+
+type hawkbitSpecSignOnKeycloakInstanceSelectorPtrType HawkbitSpecSignOnKeycloakInstanceSelectorArgs
+
+func HawkbitSpecSignOnKeycloakInstanceSelectorPtr(v *HawkbitSpecSignOnKeycloakInstanceSelectorArgs) HawkbitSpecSignOnKeycloakInstanceSelectorPtrInput {
+	return (*hawkbitSpecSignOnKeycloakInstanceSelectorPtrType)(v)
+}
+
+func (*hawkbitSpecSignOnKeycloakInstanceSelectorPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**HawkbitSpecSignOnKeycloakInstanceSelector)(nil)).Elem()
+}
+
+func (i *hawkbitSpecSignOnKeycloakInstanceSelectorPtrType) ToHawkbitSpecSignOnKeycloakInstanceSelectorPtrOutput() HawkbitSpecSignOnKeycloakInstanceSelectorPtrOutput {
+	return i.ToHawkbitSpecSignOnKeycloakInstanceSelectorPtrOutputWithContext(context.Background())
+}
+
+func (i *hawkbitSpecSignOnKeycloakInstanceSelectorPtrType) ToHawkbitSpecSignOnKeycloakInstanceSelectorPtrOutputWithContext(ctx context.Context) HawkbitSpecSignOnKeycloakInstanceSelectorPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(HawkbitSpecSignOnKeycloakInstanceSelectorPtrOutput)
+}
+
+// Selector for looking up Keycloak Custom Resources.
+type HawkbitSpecSignOnKeycloakInstanceSelectorOutput struct{ *pulumi.OutputState }
+
+func (HawkbitSpecSignOnKeycloakInstanceSelectorOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*HawkbitSpecSignOnKeycloakInstanceSelector)(nil)).Elem()
+}
+
+func (o HawkbitSpecSignOnKeycloakInstanceSelectorOutput) ToHawkbitSpecSignOnKeycloakInstanceSelectorOutput() HawkbitSpecSignOnKeycloakInstanceSelectorOutput {
+	return o
+}
+
+func (o HawkbitSpecSignOnKeycloakInstanceSelectorOutput) ToHawkbitSpecSignOnKeycloakInstanceSelectorOutputWithContext(ctx context.Context) HawkbitSpecSignOnKeycloakInstanceSelectorOutput {
+	return o
+}
+
+func (o HawkbitSpecSignOnKeycloakInstanceSelectorOutput) ToHawkbitSpecSignOnKeycloakInstanceSelectorPtrOutput() HawkbitSpecSignOnKeycloakInstanceSelectorPtrOutput {
+	return o.ToHawkbitSpecSignOnKeycloakInstanceSelectorPtrOutputWithContext(context.Background())
+}
+
+func (o HawkbitSpecSignOnKeycloakInstanceSelectorOutput) ToHawkbitSpecSignOnKeycloakInstanceSelectorPtrOutputWithContext(ctx context.Context) HawkbitSpecSignOnKeycloakInstanceSelectorPtrOutput {
+	return o.ApplyT(func(v HawkbitSpecSignOnKeycloakInstanceSelector) *HawkbitSpecSignOnKeycloakInstanceSelector {
+		return &v
+	}).(HawkbitSpecSignOnKeycloakInstanceSelectorPtrOutput)
+}
+
+// matchExpressions is a list of label selector requirements. The requirements are ANDed.
+func (o HawkbitSpecSignOnKeycloakInstanceSelectorOutput) MatchExpressions() HawkbitSpecSignOnKeycloakInstanceSelectorMatchExpressionsArrayOutput {
+	return o.ApplyT(func(v HawkbitSpecSignOnKeycloakInstanceSelector) []HawkbitSpecSignOnKeycloakInstanceSelectorMatchExpressions {
+		return v.MatchExpressions
+	}).(HawkbitSpecSignOnKeycloakInstanceSelectorMatchExpressionsArrayOutput)
+}
+
+// matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+func (o HawkbitSpecSignOnKeycloakInstanceSelectorOutput) MatchLabels() pulumi.StringMapOutput {
+	return o.ApplyT(func(v HawkbitSpecSignOnKeycloakInstanceSelector) map[string]string { return v.MatchLabels }).(pulumi.StringMapOutput)
+}
+
+type HawkbitSpecSignOnKeycloakInstanceSelectorPtrOutput struct{ *pulumi.OutputState }
+
+func (HawkbitSpecSignOnKeycloakInstanceSelectorPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**HawkbitSpecSignOnKeycloakInstanceSelector)(nil)).Elem()
+}
+
+func (o HawkbitSpecSignOnKeycloakInstanceSelectorPtrOutput) ToHawkbitSpecSignOnKeycloakInstanceSelectorPtrOutput() HawkbitSpecSignOnKeycloakInstanceSelectorPtrOutput {
+	return o
+}
+
+func (o HawkbitSpecSignOnKeycloakInstanceSelectorPtrOutput) ToHawkbitSpecSignOnKeycloakInstanceSelectorPtrOutputWithContext(ctx context.Context) HawkbitSpecSignOnKeycloakInstanceSelectorPtrOutput {
+	return o
+}
+
+func (o HawkbitSpecSignOnKeycloakInstanceSelectorPtrOutput) Elem() HawkbitSpecSignOnKeycloakInstanceSelectorOutput {
+	return o.ApplyT(func(v *HawkbitSpecSignOnKeycloakInstanceSelector) HawkbitSpecSignOnKeycloakInstanceSelector {
+		return *v
+	}).(HawkbitSpecSignOnKeycloakInstanceSelectorOutput)
+}
+
+// matchExpressions is a list of label selector requirements. The requirements are ANDed.
+func (o HawkbitSpecSignOnKeycloakInstanceSelectorPtrOutput) MatchExpressions() HawkbitSpecSignOnKeycloakInstanceSelectorMatchExpressionsArrayOutput {
+	return o.ApplyT(func(v *HawkbitSpecSignOnKeycloakInstanceSelector) []HawkbitSpecSignOnKeycloakInstanceSelectorMatchExpressions {
+		if v == nil {
+			return nil
+		}
+		return v.MatchExpressions
+	}).(HawkbitSpecSignOnKeycloakInstanceSelectorMatchExpressionsArrayOutput)
+}
+
+// matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+func (o HawkbitSpecSignOnKeycloakInstanceSelectorPtrOutput) MatchLabels() pulumi.StringMapOutput {
+	return o.ApplyT(func(v *HawkbitSpecSignOnKeycloakInstanceSelector) map[string]string {
+		if v == nil {
+			return nil
+		}
+		return v.MatchLabels
+	}).(pulumi.StringMapOutput)
+}
+
+// A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+type HawkbitSpecSignOnKeycloakInstanceSelectorMatchExpressions struct {
+	// key is the label key that the selector applies to.
+	Key string `pulumi:"key"`
+	// operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+	Operator string `pulumi:"operator"`
+	// values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+	Values []string `pulumi:"values"`
+}
+
+// HawkbitSpecSignOnKeycloakInstanceSelectorMatchExpressionsInput is an input type that accepts HawkbitSpecSignOnKeycloakInstanceSelectorMatchExpressionsArgs and HawkbitSpecSignOnKeycloakInstanceSelectorMatchExpressionsOutput values.
+// You can construct a concrete instance of `HawkbitSpecSignOnKeycloakInstanceSelectorMatchExpressionsInput` via:
+//
+//          HawkbitSpecSignOnKeycloakInstanceSelectorMatchExpressionsArgs{...}
+type HawkbitSpecSignOnKeycloakInstanceSelectorMatchExpressionsInput interface {
+	pulumi.Input
+
+	ToHawkbitSpecSignOnKeycloakInstanceSelectorMatchExpressionsOutput() HawkbitSpecSignOnKeycloakInstanceSelectorMatchExpressionsOutput
+	ToHawkbitSpecSignOnKeycloakInstanceSelectorMatchExpressionsOutputWithContext(context.Context) HawkbitSpecSignOnKeycloakInstanceSelectorMatchExpressionsOutput
+}
+
+// A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+type HawkbitSpecSignOnKeycloakInstanceSelectorMatchExpressionsArgs struct {
+	// key is the label key that the selector applies to.
+	Key pulumi.StringInput `pulumi:"key"`
+	// operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+	Operator pulumi.StringInput `pulumi:"operator"`
+	// values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+	Values pulumi.StringArrayInput `pulumi:"values"`
+}
+
+func (HawkbitSpecSignOnKeycloakInstanceSelectorMatchExpressionsArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*HawkbitSpecSignOnKeycloakInstanceSelectorMatchExpressions)(nil)).Elem()
+}
+
+func (i HawkbitSpecSignOnKeycloakInstanceSelectorMatchExpressionsArgs) ToHawkbitSpecSignOnKeycloakInstanceSelectorMatchExpressionsOutput() HawkbitSpecSignOnKeycloakInstanceSelectorMatchExpressionsOutput {
+	return i.ToHawkbitSpecSignOnKeycloakInstanceSelectorMatchExpressionsOutputWithContext(context.Background())
+}
+
+func (i HawkbitSpecSignOnKeycloakInstanceSelectorMatchExpressionsArgs) ToHawkbitSpecSignOnKeycloakInstanceSelectorMatchExpressionsOutputWithContext(ctx context.Context) HawkbitSpecSignOnKeycloakInstanceSelectorMatchExpressionsOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(HawkbitSpecSignOnKeycloakInstanceSelectorMatchExpressionsOutput)
+}
+
+// HawkbitSpecSignOnKeycloakInstanceSelectorMatchExpressionsArrayInput is an input type that accepts HawkbitSpecSignOnKeycloakInstanceSelectorMatchExpressionsArray and HawkbitSpecSignOnKeycloakInstanceSelectorMatchExpressionsArrayOutput values.
+// You can construct a concrete instance of `HawkbitSpecSignOnKeycloakInstanceSelectorMatchExpressionsArrayInput` via:
+//
+//          HawkbitSpecSignOnKeycloakInstanceSelectorMatchExpressionsArray{ HawkbitSpecSignOnKeycloakInstanceSelectorMatchExpressionsArgs{...} }
+type HawkbitSpecSignOnKeycloakInstanceSelectorMatchExpressionsArrayInput interface {
+	pulumi.Input
+
+	ToHawkbitSpecSignOnKeycloakInstanceSelectorMatchExpressionsArrayOutput() HawkbitSpecSignOnKeycloakInstanceSelectorMatchExpressionsArrayOutput
+	ToHawkbitSpecSignOnKeycloakInstanceSelectorMatchExpressionsArrayOutputWithContext(context.Context) HawkbitSpecSignOnKeycloakInstanceSelectorMatchExpressionsArrayOutput
+}
+
+type HawkbitSpecSignOnKeycloakInstanceSelectorMatchExpressionsArray []HawkbitSpecSignOnKeycloakInstanceSelectorMatchExpressionsInput
+
+func (HawkbitSpecSignOnKeycloakInstanceSelectorMatchExpressionsArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]HawkbitSpecSignOnKeycloakInstanceSelectorMatchExpressions)(nil)).Elem()
+}
+
+func (i HawkbitSpecSignOnKeycloakInstanceSelectorMatchExpressionsArray) ToHawkbitSpecSignOnKeycloakInstanceSelectorMatchExpressionsArrayOutput() HawkbitSpecSignOnKeycloakInstanceSelectorMatchExpressionsArrayOutput {
+	return i.ToHawkbitSpecSignOnKeycloakInstanceSelectorMatchExpressionsArrayOutputWithContext(context.Background())
+}
+
+func (i HawkbitSpecSignOnKeycloakInstanceSelectorMatchExpressionsArray) ToHawkbitSpecSignOnKeycloakInstanceSelectorMatchExpressionsArrayOutputWithContext(ctx context.Context) HawkbitSpecSignOnKeycloakInstanceSelectorMatchExpressionsArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(HawkbitSpecSignOnKeycloakInstanceSelectorMatchExpressionsArrayOutput)
+}
+
+// A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+type HawkbitSpecSignOnKeycloakInstanceSelectorMatchExpressionsOutput struct{ *pulumi.OutputState }
+
+func (HawkbitSpecSignOnKeycloakInstanceSelectorMatchExpressionsOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*HawkbitSpecSignOnKeycloakInstanceSelectorMatchExpressions)(nil)).Elem()
+}
+
+func (o HawkbitSpecSignOnKeycloakInstanceSelectorMatchExpressionsOutput) ToHawkbitSpecSignOnKeycloakInstanceSelectorMatchExpressionsOutput() HawkbitSpecSignOnKeycloakInstanceSelectorMatchExpressionsOutput {
+	return o
+}
+
+func (o HawkbitSpecSignOnKeycloakInstanceSelectorMatchExpressionsOutput) ToHawkbitSpecSignOnKeycloakInstanceSelectorMatchExpressionsOutputWithContext(ctx context.Context) HawkbitSpecSignOnKeycloakInstanceSelectorMatchExpressionsOutput {
+	return o
+}
+
+// key is the label key that the selector applies to.
+func (o HawkbitSpecSignOnKeycloakInstanceSelectorMatchExpressionsOutput) Key() pulumi.StringOutput {
+	return o.ApplyT(func(v HawkbitSpecSignOnKeycloakInstanceSelectorMatchExpressions) string { return v.Key }).(pulumi.StringOutput)
+}
+
+// operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+func (o HawkbitSpecSignOnKeycloakInstanceSelectorMatchExpressionsOutput) Operator() pulumi.StringOutput {
+	return o.ApplyT(func(v HawkbitSpecSignOnKeycloakInstanceSelectorMatchExpressions) string { return v.Operator }).(pulumi.StringOutput)
+}
+
+// values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+func (o HawkbitSpecSignOnKeycloakInstanceSelectorMatchExpressionsOutput) Values() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v HawkbitSpecSignOnKeycloakInstanceSelectorMatchExpressions) []string { return v.Values }).(pulumi.StringArrayOutput)
+}
+
+type HawkbitSpecSignOnKeycloakInstanceSelectorMatchExpressionsArrayOutput struct{ *pulumi.OutputState }
+
+func (HawkbitSpecSignOnKeycloakInstanceSelectorMatchExpressionsArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]HawkbitSpecSignOnKeycloakInstanceSelectorMatchExpressions)(nil)).Elem()
+}
+
+func (o HawkbitSpecSignOnKeycloakInstanceSelectorMatchExpressionsArrayOutput) ToHawkbitSpecSignOnKeycloakInstanceSelectorMatchExpressionsArrayOutput() HawkbitSpecSignOnKeycloakInstanceSelectorMatchExpressionsArrayOutput {
+	return o
+}
+
+func (o HawkbitSpecSignOnKeycloakInstanceSelectorMatchExpressionsArrayOutput) ToHawkbitSpecSignOnKeycloakInstanceSelectorMatchExpressionsArrayOutputWithContext(ctx context.Context) HawkbitSpecSignOnKeycloakInstanceSelectorMatchExpressionsArrayOutput {
+	return o
+}
+
+func (o HawkbitSpecSignOnKeycloakInstanceSelectorMatchExpressionsArrayOutput) Index(i pulumi.IntInput) HawkbitSpecSignOnKeycloakInstanceSelectorMatchExpressionsOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) HawkbitSpecSignOnKeycloakInstanceSelectorMatchExpressions {
+		return vs[0].([]HawkbitSpecSignOnKeycloakInstanceSelectorMatchExpressions)[vs[1].(int)]
+	}).(HawkbitSpecSignOnKeycloakInstanceSelectorMatchExpressionsOutput)
+}
+
+// matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+type HawkbitSpecSignOnKeycloakInstanceSelectorMatchLabels struct {
+}
+
+// HawkbitSpecSignOnKeycloakInstanceSelectorMatchLabelsInput is an input type that accepts HawkbitSpecSignOnKeycloakInstanceSelectorMatchLabelsArgs and HawkbitSpecSignOnKeycloakInstanceSelectorMatchLabelsOutput values.
+// You can construct a concrete instance of `HawkbitSpecSignOnKeycloakInstanceSelectorMatchLabelsInput` via:
+//
+//          HawkbitSpecSignOnKeycloakInstanceSelectorMatchLabelsArgs{...}
+type HawkbitSpecSignOnKeycloakInstanceSelectorMatchLabelsInput interface {
+	pulumi.Input
+
+	ToHawkbitSpecSignOnKeycloakInstanceSelectorMatchLabelsOutput() HawkbitSpecSignOnKeycloakInstanceSelectorMatchLabelsOutput
+	ToHawkbitSpecSignOnKeycloakInstanceSelectorMatchLabelsOutputWithContext(context.Context) HawkbitSpecSignOnKeycloakInstanceSelectorMatchLabelsOutput
+}
+
+// matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+type HawkbitSpecSignOnKeycloakInstanceSelectorMatchLabelsArgs struct {
+}
+
+func (HawkbitSpecSignOnKeycloakInstanceSelectorMatchLabelsArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*HawkbitSpecSignOnKeycloakInstanceSelectorMatchLabels)(nil)).Elem()
+}
+
+func (i HawkbitSpecSignOnKeycloakInstanceSelectorMatchLabelsArgs) ToHawkbitSpecSignOnKeycloakInstanceSelectorMatchLabelsOutput() HawkbitSpecSignOnKeycloakInstanceSelectorMatchLabelsOutput {
+	return i.ToHawkbitSpecSignOnKeycloakInstanceSelectorMatchLabelsOutputWithContext(context.Background())
+}
+
+func (i HawkbitSpecSignOnKeycloakInstanceSelectorMatchLabelsArgs) ToHawkbitSpecSignOnKeycloakInstanceSelectorMatchLabelsOutputWithContext(ctx context.Context) HawkbitSpecSignOnKeycloakInstanceSelectorMatchLabelsOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(HawkbitSpecSignOnKeycloakInstanceSelectorMatchLabelsOutput)
+}
+
+// matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+type HawkbitSpecSignOnKeycloakInstanceSelectorMatchLabelsOutput struct{ *pulumi.OutputState }
+
+func (HawkbitSpecSignOnKeycloakInstanceSelectorMatchLabelsOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*HawkbitSpecSignOnKeycloakInstanceSelectorMatchLabels)(nil)).Elem()
+}
+
+func (o HawkbitSpecSignOnKeycloakInstanceSelectorMatchLabelsOutput) ToHawkbitSpecSignOnKeycloakInstanceSelectorMatchLabelsOutput() HawkbitSpecSignOnKeycloakInstanceSelectorMatchLabelsOutput {
+	return o
+}
+
+func (o HawkbitSpecSignOnKeycloakInstanceSelectorMatchLabelsOutput) ToHawkbitSpecSignOnKeycloakInstanceSelectorMatchLabelsOutputWithContext(ctx context.Context) HawkbitSpecSignOnKeycloakInstanceSelectorMatchLabelsOutput {
+	return o
 }
 
 type HawkbitStatus struct {
@@ -487,6 +1096,15 @@ func init() {
 	pulumi.RegisterOutputType(HawkbitSpecPtrOutput{})
 	pulumi.RegisterOutputType(HawkbitSpecImageOverridesOutput{})
 	pulumi.RegisterOutputType(HawkbitSpecImageOverridesMapOutput{})
+	pulumi.RegisterOutputType(HawkbitSpecSignOnOutput{})
+	pulumi.RegisterOutputType(HawkbitSpecSignOnPtrOutput{})
+	pulumi.RegisterOutputType(HawkbitSpecSignOnKeycloakOutput{})
+	pulumi.RegisterOutputType(HawkbitSpecSignOnKeycloakPtrOutput{})
+	pulumi.RegisterOutputType(HawkbitSpecSignOnKeycloakInstanceSelectorOutput{})
+	pulumi.RegisterOutputType(HawkbitSpecSignOnKeycloakInstanceSelectorPtrOutput{})
+	pulumi.RegisterOutputType(HawkbitSpecSignOnKeycloakInstanceSelectorMatchExpressionsOutput{})
+	pulumi.RegisterOutputType(HawkbitSpecSignOnKeycloakInstanceSelectorMatchExpressionsArrayOutput{})
+	pulumi.RegisterOutputType(HawkbitSpecSignOnKeycloakInstanceSelectorMatchLabelsOutput{})
 	pulumi.RegisterOutputType(HawkbitStatusOutput{})
 	pulumi.RegisterOutputType(HawkbitStatusPtrOutput{})
 }

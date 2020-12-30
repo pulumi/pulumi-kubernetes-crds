@@ -14,6 +14,10 @@ __all__ = [
     'BeatSpecConfigRef',
     'BeatSpecDaemonSet',
     'BeatSpecDeployment',
+    'BeatSpecDeploymentStrategy',
+    'BeatSpecDeploymentStrategyRollingUpdate',
+    'BeatSpecDeploymentStrategyRollingUpdateMaxSurge',
+    'BeatSpecDeploymentStrategyRollingUpdateMaxUnavailable',
     'BeatSpecElasticsearchRef',
     'BeatSpecKibanaRef',
     'BeatSpecSecureSettings',
@@ -212,17 +216,123 @@ class BeatSpecDeployment(dict):
     Deployment specifies the Beat should be deployed as a Deployment, and allows providing its spec. Cannot be used along with `daemonSet`. If both are absent a default for the Type is used.
     """
     def __init__(__self__, *,
-                 replicas: Optional[int] = None):
+                 replicas: Optional[int] = None,
+                 strategy: Optional['outputs.BeatSpecDeploymentStrategy'] = None):
         """
         Deployment specifies the Beat should be deployed as a Deployment, and allows providing its spec. Cannot be used along with `daemonSet`. If both are absent a default for the Type is used.
+        :param 'BeatSpecDeploymentStrategyArgs' strategy: DeploymentStrategy describes how to replace existing pods with new ones.
         """
         if replicas is not None:
             pulumi.set(__self__, "replicas", replicas)
+        if strategy is not None:
+            pulumi.set(__self__, "strategy", strategy)
 
     @property
     @pulumi.getter
     def replicas(self) -> Optional[int]:
         return pulumi.get(self, "replicas")
+
+    @property
+    @pulumi.getter
+    def strategy(self) -> Optional['outputs.BeatSpecDeploymentStrategy']:
+        """
+        DeploymentStrategy describes how to replace existing pods with new ones.
+        """
+        return pulumi.get(self, "strategy")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class BeatSpecDeploymentStrategy(dict):
+    """
+    DeploymentStrategy describes how to replace existing pods with new ones.
+    """
+    def __init__(__self__, *,
+                 rolling_update: Optional['outputs.BeatSpecDeploymentStrategyRollingUpdate'] = None,
+                 type: Optional[str] = None):
+        """
+        DeploymentStrategy describes how to replace existing pods with new ones.
+        :param 'BeatSpecDeploymentStrategyRollingUpdateArgs' rolling_update: Rolling update config params. Present only if DeploymentStrategyType = RollingUpdate. --- TODO: Update this to follow our convention for oneOf, whatever we decide it to be.
+        :param str type: Type of deployment. Can be "Recreate" or "RollingUpdate". Default is RollingUpdate.
+        """
+        if rolling_update is not None:
+            pulumi.set(__self__, "rolling_update", rolling_update)
+        if type is not None:
+            pulumi.set(__self__, "type", type)
+
+    @property
+    @pulumi.getter(name="rollingUpdate")
+    def rolling_update(self) -> Optional['outputs.BeatSpecDeploymentStrategyRollingUpdate']:
+        """
+        Rolling update config params. Present only if DeploymentStrategyType = RollingUpdate. --- TODO: Update this to follow our convention for oneOf, whatever we decide it to be.
+        """
+        return pulumi.get(self, "rolling_update")
+
+    @property
+    @pulumi.getter
+    def type(self) -> Optional[str]:
+        """
+        Type of deployment. Can be "Recreate" or "RollingUpdate". Default is RollingUpdate.
+        """
+        return pulumi.get(self, "type")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class BeatSpecDeploymentStrategyRollingUpdate(dict):
+    """
+    Rolling update config params. Present only if DeploymentStrategyType = RollingUpdate. --- TODO: Update this to follow our convention for oneOf, whatever we decide it to be.
+    """
+    def __init__(__self__, *,
+                 max_surge: Optional['outputs.BeatSpecDeploymentStrategyRollingUpdateMaxSurge'] = None,
+                 max_unavailable: Optional['outputs.BeatSpecDeploymentStrategyRollingUpdateMaxUnavailable'] = None):
+        """
+        Rolling update config params. Present only if DeploymentStrategyType = RollingUpdate. --- TODO: Update this to follow our convention for oneOf, whatever we decide it to be.
+        :param 'BeatSpecDeploymentStrategyRollingUpdateMaxSurgeArgs' max_surge: The maximum number of pods that can be scheduled above the desired number of pods. Value can be an absolute number (ex: 5) or a percentage of desired pods (ex: 10%). This can not be 0 if MaxUnavailable is 0. Absolute number is calculated from percentage by rounding up. Defaults to 25%. Example: when this is set to 30%, the new ReplicaSet can be scaled up immediately when the rolling update starts, such that the total number of old and new pods do not exceed 130% of desired pods. Once old pods have been killed, new ReplicaSet can be scaled up further, ensuring that total number of pods running at any time during the update is at most 130% of desired pods.
+        :param 'BeatSpecDeploymentStrategyRollingUpdateMaxUnavailableArgs' max_unavailable: The maximum number of pods that can be unavailable during the update. Value can be an absolute number (ex: 5) or a percentage of desired pods (ex: 10%). Absolute number is calculated from percentage by rounding down. This can not be 0 if MaxSurge is 0. Defaults to 25%. Example: when this is set to 30%, the old ReplicaSet can be scaled down to 70% of desired pods immediately when the rolling update starts. Once new pods are ready, old ReplicaSet can be scaled down further, followed by scaling up the new ReplicaSet, ensuring that the total number of pods available at all times during the update is at least 70% of desired pods.
+        """
+        if max_surge is not None:
+            pulumi.set(__self__, "max_surge", max_surge)
+        if max_unavailable is not None:
+            pulumi.set(__self__, "max_unavailable", max_unavailable)
+
+    @property
+    @pulumi.getter(name="maxSurge")
+    def max_surge(self) -> Optional['outputs.BeatSpecDeploymentStrategyRollingUpdateMaxSurge']:
+        """
+        The maximum number of pods that can be scheduled above the desired number of pods. Value can be an absolute number (ex: 5) or a percentage of desired pods (ex: 10%). This can not be 0 if MaxUnavailable is 0. Absolute number is calculated from percentage by rounding up. Defaults to 25%. Example: when this is set to 30%, the new ReplicaSet can be scaled up immediately when the rolling update starts, such that the total number of old and new pods do not exceed 130% of desired pods. Once old pods have been killed, new ReplicaSet can be scaled up further, ensuring that total number of pods running at any time during the update is at most 130% of desired pods.
+        """
+        return pulumi.get(self, "max_surge")
+
+    @property
+    @pulumi.getter(name="maxUnavailable")
+    def max_unavailable(self) -> Optional['outputs.BeatSpecDeploymentStrategyRollingUpdateMaxUnavailable']:
+        """
+        The maximum number of pods that can be unavailable during the update. Value can be an absolute number (ex: 5) or a percentage of desired pods (ex: 10%). Absolute number is calculated from percentage by rounding down. This can not be 0 if MaxSurge is 0. Defaults to 25%. Example: when this is set to 30%, the old ReplicaSet can be scaled down to 70% of desired pods immediately when the rolling update starts. Once new pods are ready, old ReplicaSet can be scaled down further, followed by scaling up the new ReplicaSet, ensuring that the total number of pods available at all times during the update is at least 70% of desired pods.
+        """
+        return pulumi.get(self, "max_unavailable")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class BeatSpecDeploymentStrategyRollingUpdateMaxSurge(dict):
+    def __init__(__self__):
+        pass
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class BeatSpecDeploymentStrategyRollingUpdateMaxUnavailable(dict):
+    def __init__(__self__):
+        pass
 
     def _translate_property(self, prop):
         return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
@@ -386,11 +496,13 @@ class BeatStatus(dict):
                  elasticsearch_association_status: Optional[str] = None,
                  expected_nodes: Optional[int] = None,
                  health: Optional[str] = None,
-                 kibana_association_status: Optional[str] = None):
+                 kibana_association_status: Optional[str] = None,
+                 version: Optional[str] = None):
         """
         BeatStatus defines the observed state of a Beat.
         :param str elasticsearch_association_status: AssociationStatus is the status of an association resource.
         :param str kibana_association_status: AssociationStatus is the status of an association resource.
+        :param str version: Version of the stack resource currently running. During version upgrades, multiple versions may run in parallel: this value specifies the lowest version currently running.
         """
         if available_nodes is not None:
             pulumi.set(__self__, "available_nodes", available_nodes)
@@ -402,6 +514,8 @@ class BeatStatus(dict):
             pulumi.set(__self__, "health", health)
         if kibana_association_status is not None:
             pulumi.set(__self__, "kibana_association_status", kibana_association_status)
+        if version is not None:
+            pulumi.set(__self__, "version", version)
 
     @property
     @pulumi.getter(name="availableNodes")
@@ -433,6 +547,14 @@ class BeatStatus(dict):
         AssociationStatus is the status of an association resource.
         """
         return pulumi.get(self, "kibana_association_status")
+
+    @property
+    @pulumi.getter
+    def version(self) -> Optional[str]:
+        """
+        Version of the stack resource currently running. During version upgrades, multiple versions may run in parallel: this value specifies the lowest version currently running.
+        """
+        return pulumi.get(self, "version")
 
     def _translate_property(self, prop):
         return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop

@@ -10,6 +10,9 @@ using Pulumi.Serialization;
 namespace Pulumi.Kubernetes.Types.Inputs.Wso2.V1Alpha1
 {
 
+    /// <summary>
+    /// HeaderCondition is exported type in Ratelimiting Spec
+    /// </summary>
     public class RateLimitingSpecConditionsHeaderConditionArgs : Pulumi.ResourceArgs
     {
         [Input("headerName", required: true)]

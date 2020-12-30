@@ -10,6 +10,9 @@ using Pulumi.Serialization;
 namespace Pulumi.Kubernetes.Types.Inputs.Capabilities.V1Alpha1
 {
 
+    /// <summary>
+    /// TenantStatus defines the observed state of Tenant
+    /// </summary>
     public class TenantStatusArgs : Pulumi.ResourceArgs
     {
         [Input("adminId", required: true)]

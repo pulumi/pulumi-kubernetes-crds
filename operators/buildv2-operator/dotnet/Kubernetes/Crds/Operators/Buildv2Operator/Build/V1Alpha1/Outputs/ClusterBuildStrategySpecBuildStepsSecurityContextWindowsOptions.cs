@@ -22,7 +22,7 @@ namespace Pulumi.Kubernetes.Types.Outputs.Build.V1Alpha1
         /// </summary>
         public readonly string GmsaCredentialSpecName;
         /// <summary>
-        /// The UserName in Windows to run the entrypoint of the container process. Defaults to the user specified in image metadata if unspecified. May also be set in PodSecurityContext. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence. This field is alpha-level and it is only honored by servers that enable the WindowsRunAsUserName feature flag.
+        /// The UserName in Windows to run the entrypoint of the container process. Defaults to the user specified in image metadata if unspecified. May also be set in PodSecurityContext. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence. This field is beta-level and may be disabled with the WindowsRunAsUserName feature flag.
         /// </summary>
         public readonly string RunAsUserName;
 

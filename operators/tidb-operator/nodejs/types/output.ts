@@ -24,7 +24,7 @@ export namespace pingcap {
             affinity?: outputs.pingcap.v1alpha1.BackupScheduleSpecBackupTemplateAffinity;
             backupType?: string;
             br?: outputs.pingcap.v1alpha1.BackupScheduleSpecBackupTemplateBr;
-            cleanData?: boolean;
+            cleanPolicy?: string;
             dumpling?: outputs.pingcap.v1alpha1.BackupScheduleSpecBackupTemplateDumpling;
             from?: outputs.pingcap.v1alpha1.BackupScheduleSpecBackupTemplateFrom;
             gcs?: outputs.pingcap.v1alpha1.BackupScheduleSpecBackupTemplateGcs;
@@ -34,8 +34,10 @@ export namespace pingcap {
             serviceAccount?: string;
             storageClassName?: string;
             storageSize?: string;
+            tableFilter?: string[];
             tikvGCLifeTime?: string;
             tolerations?: outputs.pingcap.v1alpha1.BackupScheduleSpecBackupTemplateTolerations[];
+            toolImage?: string;
             useKMS?: boolean;
         }
 
@@ -189,6 +191,7 @@ export namespace pingcap {
             db?: string;
             logLevel?: string;
             onLine?: boolean;
+            options?: string[];
             rateLimit?: number;
             sendCredToTikv?: boolean;
             statusAddr?: string;
@@ -260,7 +263,7 @@ export namespace pingcap {
             affinity?: outputs.pingcap.v1alpha1.BackupSpecAffinity;
             backupType?: string;
             br?: outputs.pingcap.v1alpha1.BackupSpecBr;
-            cleanData?: boolean;
+            cleanPolicy?: string;
             dumpling?: outputs.pingcap.v1alpha1.BackupSpecDumpling;
             from?: outputs.pingcap.v1alpha1.BackupSpecFrom;
             gcs?: outputs.pingcap.v1alpha1.BackupSpecGcs;
@@ -270,8 +273,10 @@ export namespace pingcap {
             serviceAccount?: string;
             storageClassName?: string;
             storageSize?: string;
+            tableFilter?: string[];
             tikvGCLifeTime?: string;
             tolerations?: outputs.pingcap.v1alpha1.BackupSpecTolerations[];
+            toolImage?: string;
             useKMS?: boolean;
         }
 
@@ -425,6 +430,7 @@ export namespace pingcap {
             db?: string;
             logLevel?: string;
             onLine?: boolean;
+            options?: string[];
             rateLimit?: number;
             sendCredToTikv?: boolean;
             statusAddr?: string;
@@ -499,9 +505,11 @@ export namespace pingcap {
             serviceAccount?: string;
             storageClassName?: string;
             storageSize?: string;
+            tableFilter?: string[];
             tikvGCLifeTime?: string;
             to?: outputs.pingcap.v1alpha1.RestoreSpecTo;
             tolerations?: outputs.pingcap.v1alpha1.RestoreSpecTolerations[];
+            toolImage?: string;
             useKMS?: boolean;
         }
 
@@ -655,6 +663,7 @@ export namespace pingcap {
             db?: string;
             logLevel?: string;
             onLine?: boolean;
+            options?: string[];
             rateLimit?: number;
             sendCredToTikv?: boolean;
             statusAddr?: string;
@@ -820,6 +829,7 @@ export namespace pingcap {
         export interface TidbClusterSpec {
             affinity?: outputs.pingcap.v1alpha1.TidbClusterSpecAffinity;
             annotations?: {[key: string]: any};
+            cluster?: outputs.pingcap.v1alpha1.TidbClusterSpecCluster;
             configUpdateStrategy?: string;
             discovery?: outputs.pingcap.v1alpha1.TidbClusterSpecDiscovery;
             enableDynamicConfiguration?: boolean;
@@ -830,15 +840,18 @@ export namespace pingcap {
             imagePullSecrets?: outputs.pingcap.v1alpha1.TidbClusterSpecImagePullSecrets[];
             nodeSelector?: {[key: string]: any};
             paused?: boolean;
-            pd: outputs.pingcap.v1alpha1.TidbClusterSpecPd;
+            pd?: outputs.pingcap.v1alpha1.TidbClusterSpecPd;
+            pdAddresses?: string[];
             priorityClassName?: string;
             pump?: outputs.pingcap.v1alpha1.TidbClusterSpecPump;
             pvReclaimPolicy?: string;
             schedulerName?: string;
+            serviceAccount?: string;
+            statefulSetUpdateStrategy?: string;
             ticdc?: outputs.pingcap.v1alpha1.TidbClusterSpecTicdc;
-            tidb: outputs.pingcap.v1alpha1.TidbClusterSpecTidb;
+            tidb?: outputs.pingcap.v1alpha1.TidbClusterSpecTidb;
             tiflash?: outputs.pingcap.v1alpha1.TidbClusterSpecTiflash;
-            tikv: outputs.pingcap.v1alpha1.TidbClusterSpecTikv;
+            tikv?: outputs.pingcap.v1alpha1.TidbClusterSpecTikv;
             timezone?: string;
             tlsCluster?: any;
             tolerations?: outputs.pingcap.v1alpha1.TidbClusterSpecTolerations[];
@@ -987,6 +1000,11 @@ export namespace pingcap {
             values?: string[];
         }
 
+        export interface TidbClusterSpecCluster {
+            name: string;
+            namespace?: string;
+        }
+
         export interface TidbClusterSpecDiscovery {
             limits?: {[key: string]: any};
             requests?: {[key: string]: any};
@@ -1007,7 +1025,7 @@ export namespace pingcap {
             affinity?: outputs.pingcap.v1alpha1.TidbClusterSpecPdAffinity;
             annotations?: {[key: string]: any};
             baseImage?: string;
-            config?: outputs.pingcap.v1alpha1.TidbClusterSpecPdConfig;
+            config?: any;
             configUpdateStrategy?: string;
             dataSubDir?: string;
             enableDashboardInternalProxy?: boolean;
@@ -1017,6 +1035,7 @@ export namespace pingcap {
             imagePullSecrets?: outputs.pingcap.v1alpha1.TidbClusterSpecPdImagePullSecrets[];
             limits?: {[key: string]: any};
             maxFailoverCount?: number;
+            mountClusterClientSecret?: boolean;
             nodeSelector?: {[key: string]: any};
             podSecurityContext?: outputs.pingcap.v1alpha1.TidbClusterSpecPdPodSecurityContext;
             priorityClassName?: string;
@@ -1024,7 +1043,10 @@ export namespace pingcap {
             requests?: {[key: string]: any};
             schedulerName?: string;
             service?: outputs.pingcap.v1alpha1.TidbClusterSpecPdService;
+            serviceAccount?: string;
+            statefulSetUpdateStrategy?: string;
             storageClassName?: string;
+            storageVolumes?: any[];
             terminationGracePeriodSeconds?: number;
             tlsClientSecretName?: string;
             tolerations?: outputs.pingcap.v1alpha1.TidbClusterSpecPdTolerations[];
@@ -1855,119 +1877,6 @@ export namespace pingcap {
             values?: string[];
         }
 
-        export interface TidbClusterSpecPdConfig {
-            auto-compaction-mode?: string;
-            auto-compaction-retention-v2?: string;
-            cluster-version?: string;
-            dashboard?: outputs.pingcap.v1alpha1.TidbClusterSpecPdConfigDashboard;
-            election-interval?: string;
-            enable-grpc-gateway?: boolean;
-            enable-prevote?: boolean;
-            force-new-cluster?: boolean;
-            label-property?: {[key: string]: any};
-            lease?: number;
-            log?: outputs.pingcap.v1alpha1.TidbClusterSpecPdConfigLog;
-            log-file?: string;
-            log-level?: string;
-            metric?: outputs.pingcap.v1alpha1.TidbClusterSpecPdConfigMetric;
-            namespace?: {[key: string]: any};
-            namespace-classifier?: string;
-            pd-server?: outputs.pingcap.v1alpha1.TidbClusterSpecPdConfigPd-Server;
-            quota-backend-bytes?: string;
-            replication?: outputs.pingcap.v1alpha1.TidbClusterSpecPdConfigReplication;
-            schedule?: outputs.pingcap.v1alpha1.TidbClusterSpecPdConfigSchedule;
-            security?: outputs.pingcap.v1alpha1.TidbClusterSpecPdConfigSecurity;
-            tikv-interval?: string;
-            tso-save-interval?: string;
-        }
-
-        export interface TidbClusterSpecPdConfigDashboard {
-            disable-telemetry?: boolean;
-            internal-proxy?: boolean;
-            public-path-prefix?: string;
-            tidb-cacert-path?: string;
-            tidb-cert-path?: string;
-            tidb-key-path?: string;
-        }
-
-        export interface TidbClusterSpecPdConfigLog {
-            development?: boolean;
-            disable-caller?: boolean;
-            disable-error-verbose?: boolean;
-            disable-stacktrace?: boolean;
-            disable-timestamp?: boolean;
-            file?: outputs.pingcap.v1alpha1.TidbClusterSpecPdConfigLogFile;
-            format?: string;
-            level?: string;
-        }
-
-        export interface TidbClusterSpecPdConfigLogFile {
-            filename?: string;
-            log-rotate?: boolean;
-            max-backups?: number;
-            max-days?: number;
-            max-size?: number;
-        }
-
-        export interface TidbClusterSpecPdConfigMetric {
-            address?: string;
-            interval?: string;
-            job?: string;
-        }
-
-        export interface TidbClusterSpecPdConfigPd-Server {
-            metric-storage?: string;
-            use-region-storage?: string;
-        }
-
-        export interface TidbClusterSpecPdConfigReplication {
-            enable-placement-rules?: string;
-            max-replicas?: number;
-            strictly-match-label?: string;
-        }
-
-        export interface TidbClusterSpecPdConfigSchedule {
-            disable-location-replacement?: string;
-            disable-make-up-replica?: string;
-            disable-namespace-relocation?: string;
-            disable-raft-learner?: string;
-            disable-remove-down-replica?: string;
-            disable-remove-extra-replica?: string;
-            disable-replace-offline-replica?: string;
-            enable-cross-table-merge?: string;
-            enable-one-way-merge?: string;
-            high-space-ratio?: number;
-            hot-region-cache-hits-threshold?: number;
-            hot-region-schedule-limit?: number;
-            leader-schedule-limit?: number;
-            low-space-ratio?: number;
-            max-merge-region-keys?: number;
-            max-merge-region-size?: number;
-            max-pending-peer-count?: number;
-            max-snapshot-count?: number;
-            max-store-down-time?: string;
-            merge-schedule-limit?: number;
-            patrol-region-interval?: string;
-            region-schedule-limit?: number;
-            replica-schedule-limit?: number;
-            schedulers-payload?: {[key: string]: any};
-            schedulers-v2?: outputs.pingcap.v1alpha1.TidbClusterSpecPdConfigScheduleSchedulers-V2[];
-            split-merge-interval?: string;
-            tolerant-size-ratio?: number;
-        }
-
-        export interface TidbClusterSpecPdConfigScheduleSchedulers-V2 {
-            args?: string[];
-            disable?: boolean;
-            type?: string;
-        }
-
-        export interface TidbClusterSpecPdConfigSecurity {
-            cacert-path?: string;
-            cert-path?: string;
-            key-path?: string;
-        }
-
         export interface TidbClusterSpecPdEnv {
             name: string;
             value?: string;
@@ -2060,7 +1969,7 @@ export namespace pingcap {
             affinity?: outputs.pingcap.v1alpha1.TidbClusterSpecPumpAffinity;
             annotations?: {[key: string]: any};
             baseImage?: string;
-            config?: {[key: string]: any};
+            config?: any;
             configUpdateStrategy?: string;
             env?: outputs.pingcap.v1alpha1.TidbClusterSpecPumpEnv[];
             hostNetwork?: boolean;
@@ -2073,6 +1982,8 @@ export namespace pingcap {
             replicas: number;
             requests?: {[key: string]: any};
             schedulerName?: string;
+            serviceAccount?: string;
+            statefulSetUpdateStrategy?: string;
             storageClassName?: string;
             terminationGracePeriodSeconds?: number;
             tolerations?: outputs.pingcap.v1alpha1.TidbClusterSpecPumpTolerations[];
@@ -3000,6 +2911,7 @@ export namespace pingcap {
             requests?: {[key: string]: any};
             schedulerName?: string;
             serviceAccount?: string;
+            statefulSetUpdateStrategy?: string;
             terminationGracePeriodSeconds?: number;
             tolerations?: outputs.pingcap.v1alpha1.TidbClusterSpecTicdcTolerations[];
             version?: string;
@@ -3920,7 +3832,7 @@ export namespace pingcap {
             annotations?: {[key: string]: any};
             baseImage?: string;
             binlogEnabled?: boolean;
-            config?: outputs.pingcap.v1alpha1.TidbClusterSpecTidbConfig;
+            config?: any;
             configUpdateStrategy?: string;
             env?: outputs.pingcap.v1alpha1.TidbClusterSpecTidbEnv[];
             hostNetwork?: boolean;
@@ -3933,12 +3845,17 @@ export namespace pingcap {
             plugins?: string[];
             podSecurityContext?: outputs.pingcap.v1alpha1.TidbClusterSpecTidbPodSecurityContext;
             priorityClassName?: string;
+            readinessProbe?: outputs.pingcap.v1alpha1.TidbClusterSpecTidbReadinessProbe;
             replicas: number;
             requests?: {[key: string]: any};
             schedulerName?: string;
             separateSlowLog?: boolean;
             service?: outputs.pingcap.v1alpha1.TidbClusterSpecTidbService;
+            serviceAccount?: string;
             slowLogTailer?: outputs.pingcap.v1alpha1.TidbClusterSpecTidbSlowLogTailer;
+            statefulSetUpdateStrategy?: string;
+            storageClassName?: string;
+            storageVolumes?: any[];
             terminationGracePeriodSeconds?: number;
             tlsClient?: any;
             tolerations?: outputs.pingcap.v1alpha1.TidbClusterSpecTidbTolerations[];
@@ -4769,201 +4686,6 @@ export namespace pingcap {
             values?: string[];
         }
 
-        export interface TidbClusterSpecTidbConfig {
-            alter-primary-key?: boolean;
-            binlog?: outputs.pingcap.v1alpha1.TidbClusterSpecTidbConfigBinlog;
-            check-mb4-value-in-utf8?: boolean;
-            compatible-kill-query?: boolean;
-            cors?: string;
-            delay-clean-table-lock?: number;
-            enable-batch-dml?: boolean;
-            enable-dynamic-config?: boolean;
-            enable-streaming?: boolean;
-            enable-table-lock?: boolean;
-            enable-telemetry?: boolean;
-            experimental?: outputs.pingcap.v1alpha1.TidbClusterSpecTidbConfigExperimental;
-            isolation-read?: outputs.pingcap.v1alpha1.TidbClusterSpecTidbConfigIsolation-Read;
-            lease?: string;
-            log?: outputs.pingcap.v1alpha1.TidbClusterSpecTidbConfigLog;
-            lower-case-table-names?: number;
-            max-server-connections?: number;
-            mem-quota-query?: number;
-            new_collations_enabled_on_first_bootstrap?: boolean;
-            oom-action?: string;
-            oom-use-tmp-storage?: boolean;
-            opentracing?: outputs.pingcap.v1alpha1.TidbClusterSpecTidbConfigOpentracing;
-            performance?: outputs.pingcap.v1alpha1.TidbClusterSpecTidbConfigPerformance;
-            pessimistic-txn?: outputs.pingcap.v1alpha1.TidbClusterSpecTidbConfigPessimistic-Txn;
-            plugin?: outputs.pingcap.v1alpha1.TidbClusterSpecTidbConfigPlugin;
-            prepared-plan-cache?: outputs.pingcap.v1alpha1.TidbClusterSpecTidbConfigPrepared-Plan-Cache;
-            proxy-protocol?: outputs.pingcap.v1alpha1.TidbClusterSpecTidbConfigProxy-Protocol;
-            repair-mode?: boolean;
-            repair-table-list?: string[];
-            run-ddl?: boolean;
-            security?: outputs.pingcap.v1alpha1.TidbClusterSpecTidbConfigSecurity;
-            socket?: string;
-            split-region-max-num?: number;
-            split-table?: boolean;
-            status?: outputs.pingcap.v1alpha1.TidbClusterSpecTidbConfigStatus;
-            stmt-summary?: outputs.pingcap.v1alpha1.TidbClusterSpecTidbConfigStmt-Summary;
-            tikv-client?: outputs.pingcap.v1alpha1.TidbClusterSpecTidbConfigTikv-Client;
-            tmp-storage-path?: string;
-            tmp-storage-quota?: number;
-            token-limit?: number;
-            treat-old-version-utf8-as-utf8mb4?: boolean;
-            txn-local-latches?: outputs.pingcap.v1alpha1.TidbClusterSpecTidbConfigTxn-Local-Latches;
-        }
-
-        export interface TidbClusterSpecTidbConfigBinlog {
-            binlog-socket?: string;
-            enable?: boolean;
-            ignore-error?: boolean;
-            strategy?: string;
-            write-timeout?: string;
-        }
-
-        export interface TidbClusterSpecTidbConfigExperimental {
-            allow-auto-random?: boolean;
-            allow-expression-index?: boolean;
-        }
-
-        export interface TidbClusterSpecTidbConfigIsolation-Read {
-            engines?: string[];
-        }
-
-        export interface TidbClusterSpecTidbConfigLog {
-            disable-timestamp?: boolean;
-            enable-error-stack?: boolean;
-            enable-slow-log?: boolean;
-            enable-timestamp?: boolean;
-            expensive-threshold?: number;
-            file?: outputs.pingcap.v1alpha1.TidbClusterSpecTidbConfigLogFile;
-            format?: string;
-            level?: string;
-            query-log-max-len?: number;
-            record-plan-in-slow-log?: number;
-            slow-query-file?: string;
-            slow-threshold?: number;
-        }
-
-        export interface TidbClusterSpecTidbConfigLogFile {
-            filename?: string;
-            log-rotate?: boolean;
-            max-backups?: number;
-            max-days?: number;
-            max-size?: number;
-        }
-
-        export interface TidbClusterSpecTidbConfigOpentracing {
-            enable?: boolean;
-            reporter?: outputs.pingcap.v1alpha1.TidbClusterSpecTidbConfigOpentracingReporter;
-            rpc-metrics?: boolean;
-            sampler?: outputs.pingcap.v1alpha1.TidbClusterSpecTidbConfigOpentracingSampler;
-        }
-
-        export interface TidbClusterSpecTidbConfigOpentracingReporter {
-            buffer-flush-interval?: number;
-            local-agent-host-port?: string;
-            log-spans?: boolean;
-            queue-size?: number;
-        }
-
-        export interface TidbClusterSpecTidbConfigOpentracingSampler {
-            max-operations?: number;
-            param?: number;
-            sampling-refresh-interval?: number;
-            sampling-server-url?: string;
-            type?: string;
-        }
-
-        export interface TidbClusterSpecTidbConfigPerformance {
-            agg-push-down-join?: boolean;
-            bind-info-lease?: string;
-            committer-concurrency?: number;
-            cross-join?: boolean;
-            feedback-probability?: number;
-            force-priority?: string;
-            max-memory?: number;
-            max-procs?: number;
-            max-txn-ttl?: number;
-            pseudo-estimate-ratio?: number;
-            query-feedback-limit?: number;
-            run-auto-analyze?: boolean;
-            stats-lease?: string;
-            stmt-count-limit?: number;
-            tcp-keep-alive?: boolean;
-            txn-entry-count-limit?: number;
-            txn-total-size-limit?: number;
-        }
-
-        export interface TidbClusterSpecTidbConfigPessimistic-Txn {
-            enable?: boolean;
-            max-retry-count?: number;
-        }
-
-        export interface TidbClusterSpecTidbConfigPlugin {
-            dir?: string;
-            load?: string;
-        }
-
-        export interface TidbClusterSpecTidbConfigPrepared-Plan-Cache {
-            capacity?: number;
-            enabled?: boolean;
-            memory-guard-ratio?: number;
-        }
-
-        export interface TidbClusterSpecTidbConfigProxy-Protocol {
-            header-timeout?: number;
-            networks?: string;
-        }
-
-        export interface TidbClusterSpecTidbConfigSecurity {
-            cluster-ssl-ca?: string;
-            cluster-ssl-cert?: string;
-            cluster-ssl-key?: string;
-            skip-grant-table?: boolean;
-            ssl-ca?: string;
-            ssl-cert?: string;
-            ssl-key?: string;
-        }
-
-        export interface TidbClusterSpecTidbConfigStatus {
-            metrics-addr?: string;
-            metrics-interval?: number;
-            record-db-qps?: boolean;
-            report-status?: boolean;
-        }
-
-        export interface TidbClusterSpecTidbConfigStmt-Summary {
-            enable?: boolean;
-            enable-internal-query?: boolean;
-            history-size?: number;
-            max-sql-length?: number;
-            max-stmt-count?: number;
-            refresh-interval?: number;
-        }
-
-        export interface TidbClusterSpecTidbConfigTikv-Client {
-            batch-wait-size?: number;
-            commit-timeout?: string;
-            copr-cache?: any;
-            grpc-connection-count?: number;
-            grpc-keepalive-time?: number;
-            grpc-keepalive-timeout?: number;
-            max-batch-size?: number;
-            max-batch-wait-time?: number;
-            max-txn-time-use?: number;
-            overload-threshold?: number;
-            region-cache-ttl?: number;
-            store-limit?: number;
-            store-liveness-timeout?: string;
-        }
-
-        export interface TidbClusterSpecTidbConfigTxn-Local-Latches {
-            capacity?: number;
-            enabled?: boolean;
-        }
-
         export interface TidbClusterSpecTidbEnv {
             name: string;
             value?: string;
@@ -5106,9 +4828,15 @@ export namespace pingcap {
             runAsUserName?: string;
         }
 
+        export interface TidbClusterSpecTidbReadinessProbe {
+            type?: string;
+        }
+
         export interface TidbClusterSpecTidbService {
             exposeStatus?: boolean;
             externalTrafficPolicy?: string;
+            mysqlNodePort?: number;
+            statusNodePort?: number;
         }
 
         export interface TidbClusterSpecTidbSlowLogTailer {
@@ -5130,7 +4858,7 @@ export namespace pingcap {
             affinity?: outputs.pingcap.v1alpha1.TidbClusterSpecTiflashAffinity;
             annotations?: {[key: string]: any};
             baseImage?: string;
-            config?: outputs.pingcap.v1alpha1.TidbClusterSpecTiflashConfig;
+            config?: any;
             configUpdateStrategy?: string;
             env?: outputs.pingcap.v1alpha1.TidbClusterSpecTiflashEnv[];
             hostNetwork?: boolean;
@@ -5143,10 +4871,12 @@ export namespace pingcap {
             podSecurityContext?: outputs.pingcap.v1alpha1.TidbClusterSpecTiflashPodSecurityContext;
             priorityClassName?: string;
             privileged?: boolean;
+            recoverFailover?: boolean;
             replicas: number;
             requests?: {[key: string]: any};
             schedulerName?: string;
             serviceAccount?: string;
+            statefulSetUpdateStrategy?: string;
             storageClaims: outputs.pingcap.v1alpha1.TidbClusterSpecTiflashStorageClaims[];
             terminationGracePeriodSeconds?: number;
             tolerations?: outputs.pingcap.v1alpha1.TidbClusterSpecTiflashTolerations[];
@@ -5977,36 +5707,6 @@ export namespace pingcap {
             values?: string[];
         }
 
-        export interface TidbClusterSpecTiflashConfig {
-            config?: outputs.pingcap.v1alpha1.TidbClusterSpecTiflashConfigConfig;
-        }
-
-        export interface TidbClusterSpecTiflashConfigConfig {
-            flash?: outputs.pingcap.v1alpha1.TidbClusterSpecTiflashConfigConfigFlash;
-            logger?: outputs.pingcap.v1alpha1.TidbClusterSpecTiflashConfigConfigLogger;
-            mark_cache_size?: number;
-            minmax_index_cache_size?: number;
-            path_realtime_mode?: boolean;
-        }
-
-        export interface TidbClusterSpecTiflashConfigConfigFlash {
-            compact_log_min_period?: number;
-            flash_cluster?: outputs.pingcap.v1alpha1.TidbClusterSpecTiflashConfigConfigFlashFlash_cluster;
-            overlap_threshold?: number;
-        }
-
-        export interface TidbClusterSpecTiflashConfigConfigFlashFlash_cluster {
-            master_ttl?: number;
-            refresh_interval?: number;
-            update_rule_interval?: number;
-        }
-
-        export interface TidbClusterSpecTiflashConfigConfigLogger {
-            count?: number;
-            level?: string;
-            size?: string;
-        }
-
         export interface TidbClusterSpecTiflashEnv {
             name: string;
             value?: string;
@@ -6105,24 +5805,29 @@ export namespace pingcap {
             affinity?: outputs.pingcap.v1alpha1.TidbClusterSpecTikvAffinity;
             annotations?: {[key: string]: any};
             baseImage?: string;
-            config?: outputs.pingcap.v1alpha1.TidbClusterSpecTikvConfig;
+            config?: any;
             configUpdateStrategy?: string;
             dataSubDir?: string;
             env?: outputs.pingcap.v1alpha1.TidbClusterSpecTikvEnv[];
+            evictLeaderTimeout?: string;
             hostNetwork?: boolean;
             imagePullPolicy?: string;
             imagePullSecrets?: outputs.pingcap.v1alpha1.TidbClusterSpecTikvImagePullSecrets[];
             limits?: {[key: string]: any};
             maxFailoverCount?: number;
+            mountClusterClientSecret?: boolean;
             nodeSelector?: {[key: string]: any};
             podSecurityContext?: outputs.pingcap.v1alpha1.TidbClusterSpecTikvPodSecurityContext;
             priorityClassName?: string;
             privileged?: boolean;
+            recoverFailover?: boolean;
             replicas: number;
             requests?: {[key: string]: any};
             schedulerName?: string;
             serviceAccount?: string;
+            statefulSetUpdateStrategy?: string;
             storageClassName?: string;
+            storageVolumes?: any[];
             terminationGracePeriodSeconds?: number;
             tolerations?: outputs.pingcap.v1alpha1.TidbClusterSpecTikvTolerations[];
             version?: string;
@@ -6952,540 +6657,6 @@ export namespace pingcap {
             values?: string[];
         }
 
-        export interface TidbClusterSpecTikvConfig {
-            coprocessor?: outputs.pingcap.v1alpha1.TidbClusterSpecTikvConfigCoprocessor;
-            gc?: outputs.pingcap.v1alpha1.TidbClusterSpecTikvConfigGc;
-            import?: outputs.pingcap.v1alpha1.TidbClusterSpecTikvConfigImport;
-            log-file?: string;
-            log-level?: string;
-            log-rotation-size?: string;
-            log-rotation-timespan?: string;
-            panic-when-unexpected-key-or-data?: boolean;
-            pd?: outputs.pingcap.v1alpha1.TidbClusterSpecTikvConfigPd;
-            pessimistic-txn?: outputs.pingcap.v1alpha1.TidbClusterSpecTikvConfigPessimistic-Txn;
-            raftdb?: outputs.pingcap.v1alpha1.TidbClusterSpecTikvConfigRaftdb;
-            raftstore?: outputs.pingcap.v1alpha1.TidbClusterSpecTikvConfigRaftstore;
-            readpool?: outputs.pingcap.v1alpha1.TidbClusterSpecTikvConfigReadpool;
-            refresh-config-interval?: string;
-            rocksdb?: outputs.pingcap.v1alpha1.TidbClusterSpecTikvConfigRocksdb;
-            security?: outputs.pingcap.v1alpha1.TidbClusterSpecTikvConfigSecurity;
-            server?: outputs.pingcap.v1alpha1.TidbClusterSpecTikvConfigServer;
-            slow-log-file?: string;
-            slow-log-threshold?: string;
-            storage?: outputs.pingcap.v1alpha1.TidbClusterSpecTikvConfigStorage;
-        }
-
-        export interface TidbClusterSpecTikvConfigCoprocessor {
-            batch-split-limit?: number;
-            region-max-keys?: number;
-            region-max-size?: string;
-            region-split-keys?: number;
-            region-split-size?: string;
-            split-region-on-table?: boolean;
-        }
-
-        export interface TidbClusterSpecTikvConfigGc {
-            	batch-keys?: number;
-            	max-write-bytes-per-sec?: string;
-        }
-
-        export interface TidbClusterSpecTikvConfigImport {
-            import-dir?: string;
-            max-open-engines?: number;
-            max-prepare-duration?: string;
-            num-import-jobs?: number;
-            num-import-sst-jobs?: number;
-            num-threads?: number;
-            region-split-size?: string;
-            stream-channel-window?: number;
-            upload-speed-limit?: string;
-        }
-
-        export interface TidbClusterSpecTikvConfigPd {
-            endpoints?: string[];
-            retry-interval?: string;
-            retry-log-every?: number;
-            retry-max-count?: number;
-        }
-
-        export interface TidbClusterSpecTikvConfigPessimistic-Txn {
-            enabled?: boolean;
-            pipelined?: boolean;
-            wait-for-lock-timeout?: string;
-            wake-up-delay-duration?: string;
-        }
-
-        export interface TidbClusterSpecTikvConfigRaftdb {
-            allow-concurrent-memtable-write?: boolean;
-            bytes-per-sync?: string;
-            compaction-readahead-size?: string;
-            create-if-missing?: boolean;
-            defaultcf?: outputs.pingcap.v1alpha1.TidbClusterSpecTikvConfigRaftdbDefaultcf;
-            enable-pipelined-write?: boolean;
-            enable-statistics?: boolean;
-            info-log-dir?: string;
-            info-log-keep-log-file-num?: number;
-            info-log-max-size?: string;
-            info-log-roll-time?: string;
-            max-background-jobs?: number;
-            max-manifest-file-size?: string;
-            max-open-files?: number;
-            max-sub-compactions?: number;
-            max-total-wal-size?: string;
-            stats-dump-period?: string;
-            use-direct-io-for-flush-and-compaction?: boolean;
-            wal-bytes-per-sync?: string;
-            wal-dir?: string;
-            wal-recovery-mode?: string;
-            wal-size-limit?: string;
-            wal-ttl-seconds?: number;
-            writable-file-max-buffer-size?: string;
-        }
-
-        export interface TidbClusterSpecTikvConfigRaftdbDefaultcf {
-            block-based-bloom-filter?: boolean;
-            block-cache-size?: string;
-            block-size?: string;
-            bloom-filter-bits-per-key?: number;
-            cache-index-and-filter-blocks?: boolean;
-            compaction-pri?: number;
-            compaction-style?: number;
-            compression-per-level?: string[];
-            disable-auto-compactions?: boolean;
-            disable-block-cache?: boolean;
-            dynamic-level-bytes?: boolean;
-            enable-doubly-skiplist?: boolean;
-            force-consistency-checks?: boolean;
-            hard-pending-compaction-bytes-limit?: string;
-            level0-file-num-compaction-trigger?: number;
-            level0-slowdown-writes-trigger?: number;
-            level0-stop-writes-trigger?: number;
-            max-bytes-for-level-base?: string;
-            max-bytes-for-level-multiplier?: number;
-            max-compaction-bytes?: string;
-            max-write-buffer-number?: number;
-            min-write-buffer-number-to-merge?: number;
-            num-levels?: number;
-            optimize-filters-for-hits?: boolean;
-            pin-l0-filter-and-index-blocks?: boolean;
-            prop-keys-index-distance?: number;
-            prop-size-index-distance?: number;
-            read-amp-bytes-per-bit?: number;
-            soft-pending-compaction-bytes-limit?: string;
-            target-file-size-base?: string;
-            titan?: outputs.pingcap.v1alpha1.TidbClusterSpecTikvConfigRaftdbDefaultcfTitan;
-            use-bloom-filter?: boolean;
-            whole-key-filtering?: boolean;
-            write-buffer-size?: string;
-        }
-
-        export interface TidbClusterSpecTikvConfigRaftdbDefaultcfTitan {
-            blob-cache-size?: string;
-            blob-file-compression?: string;
-            blob-run-mode?: string;
-            discardable-ratio?: number;
-            gc-merge-rewrite?: boolean;
-            level_merge?: boolean;
-            max-gc-batch-size?: string;
-            merge-small-file-threshold?: string;
-            min-blob-size?: string;
-            min-gc-batch-size?: string;
-            sample-ratio?: number;
-        }
-
-        export interface TidbClusterSpecTikvConfigRaftstore {
-            abnormal-leader-missing-duration?: string;
-            allow-remove-leader?: boolean;
-            apply-early?: boolean;
-            apply-max-batch-size?: number;
-            apply-pool-size?: number;
-            apply-yield-duration?: string;
-            clean-stale-peer-delay?: string;
-            cleanup-import-sst-interval?: string;
-            consistency-check-interval?: string;
-            dev-assert?: boolean;
-            hibernate-regions?: boolean;
-            leader-transfer-max-log-lag?: number;
-            lock-cf-compact-bytes-threshold?: string;
-            lock-cf-compact-interval?: string;
-            max-leader-missing-duration?: string;
-            max-peer-down-duration?: string;
-            merge-check-tick-interval?: string;
-            merge-max-log-gap?: number;
-            messages-per-tick?: number;
-            notify-capacity?: number;
-            pd-heartbeat-tick-interval?: string;
-            pd-store-heartbeat-tick-interval?: string;
-            peer-stale-state-check-interval?: string;
-            perf-level?: number;
-            prevote?: boolean;
-            raft-base-tick-interval?: string;
-            raft-election-timeout-ticks?: number;
-            raft-entry-cache-life-time?: string;
-            raft-entry-max-size?: string;
-            raft-heartbeat-ticks?: number;
-            raft-log-gc-count-limit?: number;
-            raft-log-gc-size-limit?: string;
-            raft-log-gc-threshold?: number;
-            raft-log-gc-tick-interval?: string;
-            raft-max-inflight-msgs?: number;
-            raft-max-size-per-msg?: string;
-            raft-reject-transfer-leader-duration?: string;
-            raft-store-max-leader-lease?: string;
-            region-compact-check-interval?: string;
-            region-compact-check-step?: number;
-            region-compact-min-tombstones?: number;
-            region-compact-tombstones-percent?: number;
-            region-split-check-diff?: string;
-            report-region-flow-interval?: string;
-            right-derive-when-split?: boolean;
-            snap-apply-batch-size?: string;
-            snap-gc-timeout?: string;
-            snap-mgr-gc-tick-interval?: string;
-            split-region-check-tick-interval?: string;
-            store-max-batch-size?: number;
-            store-pool-size?: number;
-            store-reschedule-duration?: string;
-            sync-log?: boolean;
-            use-delete-range?: boolean;
-        }
-
-        export interface TidbClusterSpecTikvConfigReadpool {
-            coprocessor?: outputs.pingcap.v1alpha1.TidbClusterSpecTikvConfigReadpoolCoprocessor;
-            storage?: outputs.pingcap.v1alpha1.TidbClusterSpecTikvConfigReadpoolStorage;
-            unified?: outputs.pingcap.v1alpha1.TidbClusterSpecTikvConfigReadpoolUnified;
-        }
-
-        export interface TidbClusterSpecTikvConfigReadpoolCoprocessor {
-            high-concurrency?: number;
-            low-concurrency?: number;
-            max-tasks-per-worker-high?: number;
-            max-tasks-per-worker-low?: number;
-            max-tasks-per-worker-normal?: number;
-            normal-concurrency?: number;
-            stack-size?: string;
-            use-unified-pool?: boolean;
-        }
-
-        export interface TidbClusterSpecTikvConfigReadpoolStorage {
-            high-concurrency?: number;
-            low-concurrency?: number;
-            max-tasks-per-worker-high?: number;
-            max-tasks-per-worker-low?: number;
-            max-tasks-per-worker-normal?: number;
-            normal-concurrency?: number;
-            stack-size?: string;
-            use-unified-pool?: boolean;
-        }
-
-        export interface TidbClusterSpecTikvConfigReadpoolUnified {
-            max-tasks-per-worker?: number;
-            max-thread-count?: number;
-            min-thread-count?: number;
-            stack-size?: string;
-        }
-
-        export interface TidbClusterSpecTikvConfigRocksdb {
-            auto-tuned?: boolean;
-            bytes-per-sync?: string;
-            compaction-readahead-size?: string;
-            create-if-missing?: boolean;
-            defaultcf?: outputs.pingcap.v1alpha1.TidbClusterSpecTikvConfigRocksdbDefaultcf;
-            enable-pipelined-write?: boolean;
-            enable-statistics?: boolean;
-            info-log-dir?: string;
-            info-log-keep-log-file-num?: number;
-            info-log-max-size?: string;
-            info-log-roll-time?: string;
-            lockcf?: outputs.pingcap.v1alpha1.TidbClusterSpecTikvConfigRocksdbLockcf;
-            max-background-jobs?: number;
-            max-manifest-file-size?: string;
-            max-open-files?: number;
-            max-sub-compactions?: number;
-            max-total-wal-size?: string;
-            raftcf?: outputs.pingcap.v1alpha1.TidbClusterSpecTikvConfigRocksdbRaftcf;
-            rate-bytes-per-sec?: string;
-            rate-limiter-mode?: number;
-            stats-dump-period?: string;
-            titan?: outputs.pingcap.v1alpha1.TidbClusterSpecTikvConfigRocksdbTitan;
-            use-direct-io-for-flush-and-compaction?: boolean;
-            wal-bytes-per-sync?: string;
-            wal-recovery-mode?: number;
-            wal-size-limit?: string;
-            wal-ttl-seconds?: number;
-            writable-file-max-buffer-size?: string;
-            writecf?: outputs.pingcap.v1alpha1.TidbClusterSpecTikvConfigRocksdbWritecf;
-        }
-
-        export interface TidbClusterSpecTikvConfigRocksdbDefaultcf {
-            block-based-bloom-filter?: boolean;
-            block-cache-size?: string;
-            block-size?: string;
-            bloom-filter-bits-per-key?: number;
-            cache-index-and-filter-blocks?: boolean;
-            compaction-pri?: number;
-            compaction-style?: number;
-            compression-per-level?: string[];
-            disable-auto-compactions?: boolean;
-            disable-block-cache?: boolean;
-            dynamic-level-bytes?: boolean;
-            enable-doubly-skiplist?: boolean;
-            force-consistency-checks?: boolean;
-            hard-pending-compaction-bytes-limit?: string;
-            level0-file-num-compaction-trigger?: number;
-            level0-slowdown-writes-trigger?: number;
-            level0-stop-writes-trigger?: number;
-            max-bytes-for-level-base?: string;
-            max-bytes-for-level-multiplier?: number;
-            max-compaction-bytes?: string;
-            max-write-buffer-number?: number;
-            min-write-buffer-number-to-merge?: number;
-            num-levels?: number;
-            optimize-filters-for-hits?: boolean;
-            pin-l0-filter-and-index-blocks?: boolean;
-            prop-keys-index-distance?: number;
-            prop-size-index-distance?: number;
-            read-amp-bytes-per-bit?: number;
-            soft-pending-compaction-bytes-limit?: string;
-            target-file-size-base?: string;
-            titan?: outputs.pingcap.v1alpha1.TidbClusterSpecTikvConfigRocksdbDefaultcfTitan;
-            use-bloom-filter?: boolean;
-            whole-key-filtering?: boolean;
-            write-buffer-size?: string;
-        }
-
-        export interface TidbClusterSpecTikvConfigRocksdbDefaultcfTitan {
-            blob-cache-size?: string;
-            blob-file-compression?: string;
-            blob-run-mode?: string;
-            discardable-ratio?: number;
-            gc-merge-rewrite?: boolean;
-            level_merge?: boolean;
-            max-gc-batch-size?: string;
-            merge-small-file-threshold?: string;
-            min-blob-size?: string;
-            min-gc-batch-size?: string;
-            sample-ratio?: number;
-        }
-
-        export interface TidbClusterSpecTikvConfigRocksdbLockcf {
-            block-based-bloom-filter?: boolean;
-            block-cache-size?: string;
-            block-size?: string;
-            bloom-filter-bits-per-key?: number;
-            cache-index-and-filter-blocks?: boolean;
-            compaction-pri?: number;
-            compaction-style?: number;
-            compression-per-level?: string[];
-            disable-auto-compactions?: boolean;
-            disable-block-cache?: boolean;
-            dynamic-level-bytes?: boolean;
-            enable-doubly-skiplist?: boolean;
-            force-consistency-checks?: boolean;
-            hard-pending-compaction-bytes-limit?: string;
-            level0-file-num-compaction-trigger?: number;
-            level0-slowdown-writes-trigger?: number;
-            level0-stop-writes-trigger?: number;
-            max-bytes-for-level-base?: string;
-            max-bytes-for-level-multiplier?: number;
-            max-compaction-bytes?: string;
-            max-write-buffer-number?: number;
-            min-write-buffer-number-to-merge?: number;
-            num-levels?: number;
-            optimize-filters-for-hits?: boolean;
-            pin-l0-filter-and-index-blocks?: boolean;
-            prop-keys-index-distance?: number;
-            prop-size-index-distance?: number;
-            read-amp-bytes-per-bit?: number;
-            soft-pending-compaction-bytes-limit?: string;
-            target-file-size-base?: string;
-            titan?: outputs.pingcap.v1alpha1.TidbClusterSpecTikvConfigRocksdbLockcfTitan;
-            use-bloom-filter?: boolean;
-            whole-key-filtering?: boolean;
-            write-buffer-size?: string;
-        }
-
-        export interface TidbClusterSpecTikvConfigRocksdbLockcfTitan {
-            blob-cache-size?: string;
-            blob-file-compression?: string;
-            blob-run-mode?: string;
-            discardable-ratio?: number;
-            gc-merge-rewrite?: boolean;
-            level_merge?: boolean;
-            max-gc-batch-size?: string;
-            merge-small-file-threshold?: string;
-            min-blob-size?: string;
-            min-gc-batch-size?: string;
-            sample-ratio?: number;
-        }
-
-        export interface TidbClusterSpecTikvConfigRocksdbRaftcf {
-            block-based-bloom-filter?: boolean;
-            block-cache-size?: string;
-            block-size?: string;
-            bloom-filter-bits-per-key?: number;
-            cache-index-and-filter-blocks?: boolean;
-            compaction-pri?: number;
-            compaction-style?: number;
-            compression-per-level?: string[];
-            disable-auto-compactions?: boolean;
-            disable-block-cache?: boolean;
-            dynamic-level-bytes?: boolean;
-            enable-doubly-skiplist?: boolean;
-            force-consistency-checks?: boolean;
-            hard-pending-compaction-bytes-limit?: string;
-            level0-file-num-compaction-trigger?: number;
-            level0-slowdown-writes-trigger?: number;
-            level0-stop-writes-trigger?: number;
-            max-bytes-for-level-base?: string;
-            max-bytes-for-level-multiplier?: number;
-            max-compaction-bytes?: string;
-            max-write-buffer-number?: number;
-            min-write-buffer-number-to-merge?: number;
-            num-levels?: number;
-            optimize-filters-for-hits?: boolean;
-            pin-l0-filter-and-index-blocks?: boolean;
-            prop-keys-index-distance?: number;
-            prop-size-index-distance?: number;
-            read-amp-bytes-per-bit?: number;
-            soft-pending-compaction-bytes-limit?: string;
-            target-file-size-base?: string;
-            titan?: outputs.pingcap.v1alpha1.TidbClusterSpecTikvConfigRocksdbRaftcfTitan;
-            use-bloom-filter?: boolean;
-            whole-key-filtering?: boolean;
-            write-buffer-size?: string;
-        }
-
-        export interface TidbClusterSpecTikvConfigRocksdbRaftcfTitan {
-            blob-cache-size?: string;
-            blob-file-compression?: string;
-            blob-run-mode?: string;
-            discardable-ratio?: number;
-            gc-merge-rewrite?: boolean;
-            level_merge?: boolean;
-            max-gc-batch-size?: string;
-            merge-small-file-threshold?: string;
-            min-blob-size?: string;
-            min-gc-batch-size?: string;
-            sample-ratio?: number;
-        }
-
-        export interface TidbClusterSpecTikvConfigRocksdbTitan {
-            dirname?: string;
-            disable-gc?: boolean;
-            enabled?: boolean;
-            max-background-gc?: number;
-            purge-obsolete-files-period?: string;
-        }
-
-        export interface TidbClusterSpecTikvConfigRocksdbWritecf {
-            block-based-bloom-filter?: boolean;
-            block-cache-size?: string;
-            block-size?: string;
-            bloom-filter-bits-per-key?: number;
-            cache-index-and-filter-blocks?: boolean;
-            compaction-pri?: number;
-            compaction-style?: number;
-            compression-per-level?: string[];
-            disable-auto-compactions?: boolean;
-            disable-block-cache?: boolean;
-            dynamic-level-bytes?: boolean;
-            enable-doubly-skiplist?: boolean;
-            force-consistency-checks?: boolean;
-            hard-pending-compaction-bytes-limit?: string;
-            level0-file-num-compaction-trigger?: number;
-            level0-slowdown-writes-trigger?: number;
-            level0-stop-writes-trigger?: number;
-            max-bytes-for-level-base?: string;
-            max-bytes-for-level-multiplier?: number;
-            max-compaction-bytes?: string;
-            max-write-buffer-number?: number;
-            min-write-buffer-number-to-merge?: number;
-            num-levels?: number;
-            optimize-filters-for-hits?: boolean;
-            pin-l0-filter-and-index-blocks?: boolean;
-            prop-keys-index-distance?: number;
-            prop-size-index-distance?: number;
-            read-amp-bytes-per-bit?: number;
-            soft-pending-compaction-bytes-limit?: string;
-            target-file-size-base?: string;
-            titan?: outputs.pingcap.v1alpha1.TidbClusterSpecTikvConfigRocksdbWritecfTitan;
-            use-bloom-filter?: boolean;
-            whole-key-filtering?: boolean;
-            write-buffer-size?: string;
-        }
-
-        export interface TidbClusterSpecTikvConfigRocksdbWritecfTitan {
-            blob-cache-size?: string;
-            blob-file-compression?: string;
-            blob-run-mode?: string;
-            discardable-ratio?: number;
-            gc-merge-rewrite?: boolean;
-            level_merge?: boolean;
-            max-gc-batch-size?: string;
-            merge-small-file-threshold?: string;
-            min-blob-size?: string;
-            min-gc-batch-size?: string;
-            sample-ratio?: number;
-        }
-
-        export interface TidbClusterSpecTikvConfigSecurity {
-            ca-path?: string;
-            cert-path?: string;
-            cipher-file?: string;
-            encryption?: any;
-            key-path?: string;
-            override-ssl-target?: string;
-        }
-
-        export interface TidbClusterSpecTikvConfigServer {
-            concurrent-recv-snap-limit?: number;
-            concurrent-send-snap-limit?: number;
-            enable-request-batch?: boolean;
-            end-point-batch-row-limit?: number;
-            end-point-enable-batch-if-possible?: number;
-            end-point-recursion-limit?: number;
-            end-point-request-max-handle-duration?: string;
-            end-point-stream-batch-row-limit?: number;
-            end-point-stream-channel-size?: number;
-            grpc-compression-type?: string;
-            grpc-concurrency?: number;
-            grpc-concurrent-stream?: number;
-            grpc-keepalive-time?: string;
-            grpc-keepalive-timeout?: string;
-            grpc-memory-pool-quota?: string;
-            grpc-raft-conn-num?: number;
-            grpc-stream-initial-window-size?: string;
-            heavy-load-threshold?: number;
-            heavy-load-wait-duration?: string;
-            labels?: {[key: string]: any};
-            request-batch-enable-cross-command?: boolean;
-            request-batch-wait-duration?: string;
-            snap-max-total-size?: string;
-            snap-max-write-bytes-per-sec?: string;
-            stats-concurrency?: number;
-            status-thread-pool-size?: string;
-        }
-
-        export interface TidbClusterSpecTikvConfigStorage {
-            block-cache?: outputs.pingcap.v1alpha1.TidbClusterSpecTikvConfigStorageBlock-Cache;
-            max-key-size?: number;
-            reserve-space?: string;
-            scheduler-concurrency?: number;
-            scheduler-notify-capacity?: number;
-            scheduler-pending-write-threshold?: string;
-            scheduler-worker-pool-size?: number;
-        }
-
-        export interface TidbClusterSpecTikvConfigStorageBlock-Cache {
-            capacity?: string;
-            high-pri-pool-ratio?: number;
-            memory-allocator?: string;
-            num-shard-bits?: number;
-            shared?: boolean;
-            strict-capacity-limit?: boolean;
-        }
-
         export interface TidbClusterSpecTikvEnv {
             name: string;
             value?: string;
@@ -7604,6 +6775,7 @@ export namespace pingcap {
             alertManagerRulesVersion?: string;
             alertmanagerURL?: string;
             annotations?: {[key: string]: any};
+            clusterScoped?: boolean;
             clusters: outputs.pingcap.v1alpha1.TidbMonitorSpecClusters[];
             grafana?: any;
             imagePullPolicy?: string;

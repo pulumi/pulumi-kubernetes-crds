@@ -10,14 +10,17 @@ import (
 	"github.com/pulumi/pulumi/sdk/v2/go/pulumi"
 )
 
+// TargetEndpoint is the Schema for the targetendpoints API
 type TargetEndpoint struct {
 	pulumi.CustomResourceState
 
-	ApiVersion pulumi.StringPtrOutput      `pulumi:"apiVersion"`
-	Kind       pulumi.StringPtrOutput      `pulumi:"kind"`
-	Metadata   metav1.ObjectMetaPtrOutput  `pulumi:"metadata"`
-	Spec       TargetEndpointSpecPtrOutput `pulumi:"spec"`
-	Status     pulumi.MapOutput            `pulumi:"status"`
+	ApiVersion pulumi.StringPtrOutput     `pulumi:"apiVersion"`
+	Kind       pulumi.StringPtrOutput     `pulumi:"kind"`
+	Metadata   metav1.ObjectMetaPtrOutput `pulumi:"metadata"`
+	// TargetEndpointSpec defines the desired state of TargetEndpoint
+	Spec TargetEndpointSpecPtrOutput `pulumi:"spec"`
+	// TargetEndpointStatus defines the observed state of TargetEndpoint
+	Status pulumi.MapOutput `pulumi:"status"`
 }
 
 // NewTargetEndpoint registers a new resource with the given unique name, arguments, and options.
@@ -50,19 +53,23 @@ func GetTargetEndpoint(ctx *pulumi.Context,
 
 // Input properties used for looking up and filtering TargetEndpoint resources.
 type targetEndpointState struct {
-	ApiVersion *string                `pulumi:"apiVersion"`
-	Kind       *string                `pulumi:"kind"`
-	Metadata   *metav1.ObjectMeta     `pulumi:"metadata"`
-	Spec       *TargetEndpointSpec    `pulumi:"spec"`
-	Status     map[string]interface{} `pulumi:"status"`
+	ApiVersion *string            `pulumi:"apiVersion"`
+	Kind       *string            `pulumi:"kind"`
+	Metadata   *metav1.ObjectMeta `pulumi:"metadata"`
+	// TargetEndpointSpec defines the desired state of TargetEndpoint
+	Spec *TargetEndpointSpec `pulumi:"spec"`
+	// TargetEndpointStatus defines the observed state of TargetEndpoint
+	Status map[string]interface{} `pulumi:"status"`
 }
 
 type TargetEndpointState struct {
 	ApiVersion pulumi.StringPtrInput
 	Kind       pulumi.StringPtrInput
 	Metadata   metav1.ObjectMetaPtrInput
-	Spec       TargetEndpointSpecPtrInput
-	Status     pulumi.MapInput
+	// TargetEndpointSpec defines the desired state of TargetEndpoint
+	Spec TargetEndpointSpecPtrInput
+	// TargetEndpointStatus defines the observed state of TargetEndpoint
+	Status pulumi.MapInput
 }
 
 func (TargetEndpointState) ElementType() reflect.Type {
@@ -70,11 +77,13 @@ func (TargetEndpointState) ElementType() reflect.Type {
 }
 
 type targetEndpointArgs struct {
-	ApiVersion *string                `pulumi:"apiVersion"`
-	Kind       *string                `pulumi:"kind"`
-	Metadata   *metav1.ObjectMeta     `pulumi:"metadata"`
-	Spec       *TargetEndpointSpec    `pulumi:"spec"`
-	Status     map[string]interface{} `pulumi:"status"`
+	ApiVersion *string            `pulumi:"apiVersion"`
+	Kind       *string            `pulumi:"kind"`
+	Metadata   *metav1.ObjectMeta `pulumi:"metadata"`
+	// TargetEndpointSpec defines the desired state of TargetEndpoint
+	Spec *TargetEndpointSpec `pulumi:"spec"`
+	// TargetEndpointStatus defines the observed state of TargetEndpoint
+	Status map[string]interface{} `pulumi:"status"`
 }
 
 // The set of arguments for constructing a TargetEndpoint resource.
@@ -82,8 +91,10 @@ type TargetEndpointArgs struct {
 	ApiVersion pulumi.StringPtrInput
 	Kind       pulumi.StringPtrInput
 	Metadata   metav1.ObjectMetaPtrInput
-	Spec       TargetEndpointSpecPtrInput
-	Status     pulumi.MapInput
+	// TargetEndpointSpec defines the desired state of TargetEndpoint
+	Spec TargetEndpointSpecPtrInput
+	// TargetEndpointStatus defines the observed state of TargetEndpoint
+	Status pulumi.MapInput
 }
 
 func (TargetEndpointArgs) ElementType() reflect.Type {

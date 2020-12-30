@@ -38,9 +38,17 @@ namespace Pulumi.Kubernetes.Types.Outputs.Hive.V1
         /// </summary>
         public readonly Pulumi.Kubernetes.Types.Outputs.Hive.V1.ClusterDeploymentSpecControlPlaneConfig ControlPlaneConfig;
         /// <summary>
+        /// HibernateAfter will transition a cluster to hibernating power state after it has been running for the given duration. The time that a cluster has been running is the time since the cluster was installed or the time since the cluster last came out of hibernation.
+        /// </summary>
+        public readonly string HibernateAfter;
+        /// <summary>
         /// Ingress allows defining desired clusteringress/shards to be configured on the cluster.
         /// </summary>
         public readonly ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Hive.V1.ClusterDeploymentSpecIngress> Ingress;
+        /// <summary>
+        /// InstallAttemptsLimit is the maximum number of times Hive will attempt to install the cluster.
+        /// </summary>
+        public readonly int InstallAttemptsLimit;
         /// <summary>
         /// Installed is true if the cluster has been installed
         /// </summary>
@@ -84,7 +92,11 @@ namespace Pulumi.Kubernetes.Types.Outputs.Hive.V1
 
             Pulumi.Kubernetes.Types.Outputs.Hive.V1.ClusterDeploymentSpecControlPlaneConfig controlPlaneConfig,
 
+            string hibernateAfter,
+
             ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Hive.V1.ClusterDeploymentSpecIngress> ingress,
+
+            int installAttemptsLimit,
 
             bool installed,
 
@@ -106,7 +118,9 @@ namespace Pulumi.Kubernetes.Types.Outputs.Hive.V1
             ClusterName = clusterName;
             ClusterPoolRef = clusterPoolRef;
             ControlPlaneConfig = controlPlaneConfig;
+            HibernateAfter = hibernateAfter;
             Ingress = ingress;
+            InstallAttemptsLimit = installAttemptsLimit;
             Installed = installed;
             ManageDNS = manageDNS;
             Platform = platform;

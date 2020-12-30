@@ -22,14 +22,17 @@ class API(pulumi.CustomResource):
                  kind: Optional[pulumi.Input[str]] = None,
                  metadata: Optional[pulumi.Input[pulumi.InputType['_meta_v1.ObjectMetaArgs']]] = None,
                  spec: Optional[pulumi.Input[pulumi.InputType['APISpecArgs']]] = None,
-                 status: Optional[pulumi.Input[Mapping[str, Any]]] = None,
+                 status: Optional[pulumi.Input[pulumi.InputType['APIStatusArgs']]] = None,
                  __props__=None,
                  __name__=None,
                  __opts__=None):
         """
-        Create a API resource with the given unique name, props, and options.
+        API is the Schema for the apis API
+
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[pulumi.InputType['APISpecArgs']] spec: APISpec defines the desired state of API
+        :param pulumi.Input[pulumi.InputType['APIStatusArgs']] status: APIStatus defines the observed state of API
         """
         if __name__ is not None:
             warnings.warn("explicit use of __name__ is deprecated", DeprecationWarning)
@@ -95,11 +98,17 @@ class API(pulumi.CustomResource):
     @property
     @pulumi.getter
     def spec(self) -> pulumi.Output[Optional['outputs.APISpec']]:
+        """
+        APISpec defines the desired state of API
+        """
         return pulumi.get(self, "spec")
 
     @property
     @pulumi.getter
-    def status(self) -> pulumi.Output[Optional[Mapping[str, Any]]]:
+    def status(self) -> pulumi.Output[Optional['outputs.APIStatus']]:
+        """
+        APIStatus defines the observed state of API
+        """
         return pulumi.get(self, "status")
 
     def translate_output_property(self, prop):

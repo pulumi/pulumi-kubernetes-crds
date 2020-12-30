@@ -59,6 +59,7 @@ __all__ = [
     'KafkaConnectS2ISpecJvmOptionsJavaSystemProperties',
     'KafkaConnectS2ISpecLivenessProbe',
     'KafkaConnectS2ISpecLogging',
+    'KafkaConnectS2ISpecRack',
     'KafkaConnectS2ISpecReadinessProbe',
     'KafkaConnectS2ISpecResources',
     'KafkaConnectS2ISpecTemplate',
@@ -72,6 +73,12 @@ __all__ = [
     'KafkaConnectS2ISpecTemplateConnectContainerSecurityContextWindowsOptions',
     'KafkaConnectS2ISpecTemplateDeployment',
     'KafkaConnectS2ISpecTemplateDeploymentMetadata',
+    'KafkaConnectS2ISpecTemplateInitContainer',
+    'KafkaConnectS2ISpecTemplateInitContainerEnv',
+    'KafkaConnectS2ISpecTemplateInitContainerSecurityContext',
+    'KafkaConnectS2ISpecTemplateInitContainerSecurityContextCapabilities',
+    'KafkaConnectS2ISpecTemplateInitContainerSecurityContextSeLinuxOptions',
+    'KafkaConnectS2ISpecTemplateInitContainerSecurityContextWindowsOptions',
     'KafkaConnectS2ISpecTemplatePod',
     'KafkaConnectS2ISpecTemplatePodAffinity',
     'KafkaConnectS2ISpecTemplatePodAffinityNodeAffinity',
@@ -101,6 +108,7 @@ __all__ = [
     'KafkaConnectS2ISpecTemplatePodAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions',
     'KafkaConnectS2ISpecTemplatePodDisruptionBudget',
     'KafkaConnectS2ISpecTemplatePodDisruptionBudgetMetadata',
+    'KafkaConnectS2ISpecTemplatePodHostAliases',
     'KafkaConnectS2ISpecTemplatePodImagePullSecrets',
     'KafkaConnectS2ISpecTemplatePodMetadata',
     'KafkaConnectS2ISpecTemplatePodSecurityContext',
@@ -115,8 +123,6 @@ __all__ = [
     'KafkaConnectS2IStatus',
     'KafkaConnectS2IStatusConditions',
     'KafkaConnectS2IStatusConnectorPlugins',
-    'KafkaConnectS2IStatusPodSelector',
-    'KafkaConnectS2IStatusPodSelectorMatchExpressions',
     'KafkaConnectSpec',
     'KafkaConnectSpecAffinity',
     'KafkaConnectSpecAffinityNodeAffinity',
@@ -165,6 +171,7 @@ __all__ = [
     'KafkaConnectSpecJvmOptionsJavaSystemProperties',
     'KafkaConnectSpecLivenessProbe',
     'KafkaConnectSpecLogging',
+    'KafkaConnectSpecRack',
     'KafkaConnectSpecReadinessProbe',
     'KafkaConnectSpecResources',
     'KafkaConnectSpecTemplate',
@@ -178,6 +185,12 @@ __all__ = [
     'KafkaConnectSpecTemplateConnectContainerSecurityContextWindowsOptions',
     'KafkaConnectSpecTemplateDeployment',
     'KafkaConnectSpecTemplateDeploymentMetadata',
+    'KafkaConnectSpecTemplateInitContainer',
+    'KafkaConnectSpecTemplateInitContainerEnv',
+    'KafkaConnectSpecTemplateInitContainerSecurityContext',
+    'KafkaConnectSpecTemplateInitContainerSecurityContextCapabilities',
+    'KafkaConnectSpecTemplateInitContainerSecurityContextSeLinuxOptions',
+    'KafkaConnectSpecTemplateInitContainerSecurityContextWindowsOptions',
     'KafkaConnectSpecTemplatePod',
     'KafkaConnectSpecTemplatePodAffinity',
     'KafkaConnectSpecTemplatePodAffinityNodeAffinity',
@@ -207,6 +220,7 @@ __all__ = [
     'KafkaConnectSpecTemplatePodAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions',
     'KafkaConnectSpecTemplatePodDisruptionBudget',
     'KafkaConnectSpecTemplatePodDisruptionBudgetMetadata',
+    'KafkaConnectSpecTemplatePodHostAliases',
     'KafkaConnectSpecTemplatePodImagePullSecrets',
     'KafkaConnectSpecTemplatePodMetadata',
     'KafkaConnectSpecTemplatePodSecurityContext',
@@ -221,8 +235,6 @@ __all__ = [
     'KafkaConnectStatus',
     'KafkaConnectStatusConditions',
     'KafkaConnectStatusConnectorPlugins',
-    'KafkaConnectStatusPodSelector',
-    'KafkaConnectStatusPodSelectorMatchExpressions',
     'KafkaMirrorMakerSpec',
     'KafkaMirrorMakerSpecAffinity',
     'KafkaMirrorMakerSpecAffinityNodeAffinity',
@@ -314,6 +326,7 @@ __all__ = [
     'KafkaMirrorMakerSpecTemplatePodAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions',
     'KafkaMirrorMakerSpecTemplatePodDisruptionBudget',
     'KafkaMirrorMakerSpecTemplatePodDisruptionBudgetMetadata',
+    'KafkaMirrorMakerSpecTemplatePodHostAliases',
     'KafkaMirrorMakerSpecTemplatePodImagePullSecrets',
     'KafkaMirrorMakerSpecTemplatePodMetadata',
     'KafkaMirrorMakerSpecTemplatePodSecurityContext',
@@ -325,8 +338,6 @@ __all__ = [
     'KafkaMirrorMakerSpecTracing',
     'KafkaMirrorMakerStatus',
     'KafkaMirrorMakerStatusConditions',
-    'KafkaMirrorMakerStatusPodSelector',
-    'KafkaMirrorMakerStatusPodSelectorMatchExpressions',
     'KafkaSpec',
     'KafkaSpecClientsCa',
     'KafkaSpecClusterCa',
@@ -378,6 +389,7 @@ __all__ = [
     'KafkaSpecCruiseControlTemplatePodAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions',
     'KafkaSpecCruiseControlTemplatePodDisruptionBudget',
     'KafkaSpecCruiseControlTemplatePodDisruptionBudgetMetadata',
+    'KafkaSpecCruiseControlTemplatePodHostAliases',
     'KafkaSpecCruiseControlTemplatePodImagePullSecrets',
     'KafkaSpecCruiseControlTemplatePodMetadata',
     'KafkaSpecCruiseControlTemplatePodSecurityContext',
@@ -452,6 +464,7 @@ __all__ = [
     'KafkaSpecEntityOperatorTemplatePodAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecution',
     'KafkaSpecEntityOperatorTemplatePodAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector',
     'KafkaSpecEntityOperatorTemplatePodAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions',
+    'KafkaSpecEntityOperatorTemplatePodHostAliases',
     'KafkaSpecEntityOperatorTemplatePodImagePullSecrets',
     'KafkaSpecEntityOperatorTemplatePodMetadata',
     'KafkaSpecEntityOperatorTemplatePodSecurityContext',
@@ -536,6 +549,7 @@ __all__ = [
     'KafkaSpecJmxTransTemplatePodAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecution',
     'KafkaSpecJmxTransTemplatePodAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector',
     'KafkaSpecJmxTransTemplatePodAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions',
+    'KafkaSpecJmxTransTemplatePodHostAliases',
     'KafkaSpecJmxTransTemplatePodImagePullSecrets',
     'KafkaSpecJmxTransTemplatePodMetadata',
     'KafkaSpecJmxTransTemplatePodSecurityContext',
@@ -612,6 +626,7 @@ __all__ = [
     'KafkaSpecKafkaExporterTemplatePodAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecution',
     'KafkaSpecKafkaExporterTemplatePodAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector',
     'KafkaSpecKafkaExporterTemplatePodAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions',
+    'KafkaSpecKafkaExporterTemplatePodHostAliases',
     'KafkaSpecKafkaExporterTemplatePodImagePullSecrets',
     'KafkaSpecKafkaExporterTemplatePodMetadata',
     'KafkaSpecKafkaExporterTemplatePodSecurityContext',
@@ -625,46 +640,60 @@ __all__ = [
     'KafkaSpecKafkaJmxOptionsAuthentication',
     'KafkaSpecKafkaJvmOptions',
     'KafkaSpecKafkaJvmOptionsJavaSystemProperties',
-    'KafkaSpecKafkaListeners',
-    'KafkaSpecKafkaListenersExternal',
-    'KafkaSpecKafkaListenersExternalAuthentication',
-    'KafkaSpecKafkaListenersExternalAuthenticationClientSecret',
-    'KafkaSpecKafkaListenersExternalAuthenticationTlsTrustedCertificates',
-    'KafkaSpecKafkaListenersExternalConfiguration',
-    'KafkaSpecKafkaListenersExternalConfigurationBootstrap',
-    'KafkaSpecKafkaListenersExternalConfigurationBrokerCertChainAndKey',
-    'KafkaSpecKafkaListenersExternalConfigurationBrokers',
-    'KafkaSpecKafkaListenersExternalNetworkPolicyPeers',
-    'KafkaSpecKafkaListenersExternalNetworkPolicyPeersIpBlock',
-    'KafkaSpecKafkaListenersExternalNetworkPolicyPeersNamespaceSelector',
-    'KafkaSpecKafkaListenersExternalNetworkPolicyPeersNamespaceSelectorMatchExpressions',
-    'KafkaSpecKafkaListenersExternalNetworkPolicyPeersPodSelector',
-    'KafkaSpecKafkaListenersExternalNetworkPolicyPeersPodSelectorMatchExpressions',
-    'KafkaSpecKafkaListenersExternalOverrides',
-    'KafkaSpecKafkaListenersExternalOverridesBootstrap',
-    'KafkaSpecKafkaListenersExternalOverridesBrokers',
-    'KafkaSpecKafkaListenersPlain',
-    'KafkaSpecKafkaListenersPlainAuthentication',
-    'KafkaSpecKafkaListenersPlainAuthenticationClientSecret',
-    'KafkaSpecKafkaListenersPlainAuthenticationTlsTrustedCertificates',
-    'KafkaSpecKafkaListenersPlainNetworkPolicyPeers',
-    'KafkaSpecKafkaListenersPlainNetworkPolicyPeersIpBlock',
-    'KafkaSpecKafkaListenersPlainNetworkPolicyPeersNamespaceSelector',
-    'KafkaSpecKafkaListenersPlainNetworkPolicyPeersNamespaceSelectorMatchExpressions',
-    'KafkaSpecKafkaListenersPlainNetworkPolicyPeersPodSelector',
-    'KafkaSpecKafkaListenersPlainNetworkPolicyPeersPodSelectorMatchExpressions',
-    'KafkaSpecKafkaListenersTls',
-    'KafkaSpecKafkaListenersTlsAuthentication',
-    'KafkaSpecKafkaListenersTlsAuthenticationClientSecret',
-    'KafkaSpecKafkaListenersTlsAuthenticationTlsTrustedCertificates',
-    'KafkaSpecKafkaListenersTlsConfiguration',
-    'KafkaSpecKafkaListenersTlsConfigurationBrokerCertChainAndKey',
-    'KafkaSpecKafkaListenersTlsNetworkPolicyPeers',
-    'KafkaSpecKafkaListenersTlsNetworkPolicyPeersIpBlock',
-    'KafkaSpecKafkaListenersTlsNetworkPolicyPeersNamespaceSelector',
-    'KafkaSpecKafkaListenersTlsNetworkPolicyPeersNamespaceSelectorMatchExpressions',
-    'KafkaSpecKafkaListenersTlsNetworkPolicyPeersPodSelector',
-    'KafkaSpecKafkaListenersTlsNetworkPolicyPeersPodSelectorMatchExpressions',
+    'KafkaSpecKafkaListenersOneOf0',
+    'KafkaSpecKafkaListenersOneOf0Authentication',
+    'KafkaSpecKafkaListenersOneOf0AuthenticationClientSecret',
+    'KafkaSpecKafkaListenersOneOf0AuthenticationTlsTrustedCertificates',
+    'KafkaSpecKafkaListenersOneOf0Configuration',
+    'KafkaSpecKafkaListenersOneOf0ConfigurationBootstrap',
+    'KafkaSpecKafkaListenersOneOf0ConfigurationBrokerCertChainAndKey',
+    'KafkaSpecKafkaListenersOneOf0ConfigurationBrokers',
+    'KafkaSpecKafkaListenersOneOf0NetworkPolicyPeers',
+    'KafkaSpecKafkaListenersOneOf0NetworkPolicyPeersIpBlock',
+    'KafkaSpecKafkaListenersOneOf0NetworkPolicyPeersNamespaceSelector',
+    'KafkaSpecKafkaListenersOneOf0NetworkPolicyPeersNamespaceSelectorMatchExpressions',
+    'KafkaSpecKafkaListenersOneOf0NetworkPolicyPeersPodSelector',
+    'KafkaSpecKafkaListenersOneOf0NetworkPolicyPeersPodSelectorMatchExpressions',
+    'KafkaSpecKafkaListenersOneOf1',
+    'KafkaSpecKafkaListenersOneOf1External',
+    'KafkaSpecKafkaListenersOneOf1ExternalAuthentication',
+    'KafkaSpecKafkaListenersOneOf1ExternalAuthenticationClientSecret',
+    'KafkaSpecKafkaListenersOneOf1ExternalAuthenticationTlsTrustedCertificates',
+    'KafkaSpecKafkaListenersOneOf1ExternalConfiguration',
+    'KafkaSpecKafkaListenersOneOf1ExternalConfigurationBootstrap',
+    'KafkaSpecKafkaListenersOneOf1ExternalConfigurationBrokerCertChainAndKey',
+    'KafkaSpecKafkaListenersOneOf1ExternalConfigurationBrokers',
+    'KafkaSpecKafkaListenersOneOf1ExternalNetworkPolicyPeers',
+    'KafkaSpecKafkaListenersOneOf1ExternalNetworkPolicyPeersIpBlock',
+    'KafkaSpecKafkaListenersOneOf1ExternalNetworkPolicyPeersNamespaceSelector',
+    'KafkaSpecKafkaListenersOneOf1ExternalNetworkPolicyPeersNamespaceSelectorMatchExpressions',
+    'KafkaSpecKafkaListenersOneOf1ExternalNetworkPolicyPeersPodSelector',
+    'KafkaSpecKafkaListenersOneOf1ExternalNetworkPolicyPeersPodSelectorMatchExpressions',
+    'KafkaSpecKafkaListenersOneOf1ExternalOverrides',
+    'KafkaSpecKafkaListenersOneOf1ExternalOverridesBootstrap',
+    'KafkaSpecKafkaListenersOneOf1ExternalOverridesBrokers',
+    'KafkaSpecKafkaListenersOneOf1Plain',
+    'KafkaSpecKafkaListenersOneOf1PlainAuthentication',
+    'KafkaSpecKafkaListenersOneOf1PlainAuthenticationClientSecret',
+    'KafkaSpecKafkaListenersOneOf1PlainAuthenticationTlsTrustedCertificates',
+    'KafkaSpecKafkaListenersOneOf1PlainNetworkPolicyPeers',
+    'KafkaSpecKafkaListenersOneOf1PlainNetworkPolicyPeersIpBlock',
+    'KafkaSpecKafkaListenersOneOf1PlainNetworkPolicyPeersNamespaceSelector',
+    'KafkaSpecKafkaListenersOneOf1PlainNetworkPolicyPeersNamespaceSelectorMatchExpressions',
+    'KafkaSpecKafkaListenersOneOf1PlainNetworkPolicyPeersPodSelector',
+    'KafkaSpecKafkaListenersOneOf1PlainNetworkPolicyPeersPodSelectorMatchExpressions',
+    'KafkaSpecKafkaListenersOneOf1Tls',
+    'KafkaSpecKafkaListenersOneOf1TlsAuthentication',
+    'KafkaSpecKafkaListenersOneOf1TlsAuthenticationClientSecret',
+    'KafkaSpecKafkaListenersOneOf1TlsAuthenticationTlsTrustedCertificates',
+    'KafkaSpecKafkaListenersOneOf1TlsConfiguration',
+    'KafkaSpecKafkaListenersOneOf1TlsConfigurationBrokerCertChainAndKey',
+    'KafkaSpecKafkaListenersOneOf1TlsNetworkPolicyPeers',
+    'KafkaSpecKafkaListenersOneOf1TlsNetworkPolicyPeersIpBlock',
+    'KafkaSpecKafkaListenersOneOf1TlsNetworkPolicyPeersNamespaceSelector',
+    'KafkaSpecKafkaListenersOneOf1TlsNetworkPolicyPeersNamespaceSelectorMatchExpressions',
+    'KafkaSpecKafkaListenersOneOf1TlsNetworkPolicyPeersPodSelector',
+    'KafkaSpecKafkaListenersOneOf1TlsNetworkPolicyPeersPodSelectorMatchExpressions',
     'KafkaSpecKafkaLivenessProbe',
     'KafkaSpecKafkaLogging',
     'KafkaSpecKafkaRack',
@@ -734,6 +763,7 @@ __all__ = [
     'KafkaSpecKafkaTemplatePodAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions',
     'KafkaSpecKafkaTemplatePodDisruptionBudget',
     'KafkaSpecKafkaTemplatePodDisruptionBudgetMetadata',
+    'KafkaSpecKafkaTemplatePodHostAliases',
     'KafkaSpecKafkaTemplatePodImagePullSecrets',
     'KafkaSpecKafkaTemplatePodMetadata',
     'KafkaSpecKafkaTemplatePodSecurityContext',
@@ -862,6 +892,7 @@ __all__ = [
     'KafkaSpecZookeeperTemplatePodAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions',
     'KafkaSpecZookeeperTemplatePodDisruptionBudget',
     'KafkaSpecZookeeperTemplatePodDisruptionBudgetMetadata',
+    'KafkaSpecZookeeperTemplatePodHostAliases',
     'KafkaSpecZookeeperTemplatePodImagePullSecrets',
     'KafkaSpecZookeeperTemplatePodMetadata',
     'KafkaSpecZookeeperTemplatePodSecurityContext',
@@ -918,6 +949,7 @@ class KafkaConnectS2ISpec(dict):
                  affinity: Optional['outputs.KafkaConnectS2ISpecAffinity'] = None,
                  authentication: Optional['outputs.KafkaConnectS2ISpecAuthentication'] = None,
                  build_resources: Optional['outputs.KafkaConnectS2ISpecBuildResources'] = None,
+                 client_rack_init_image: Optional[str] = None,
                  config: Optional[Mapping[str, Any]] = None,
                  external_configuration: Optional['outputs.KafkaConnectS2ISpecExternalConfiguration'] = None,
                  image: Optional[str] = None,
@@ -926,6 +958,7 @@ class KafkaConnectS2ISpec(dict):
                  liveness_probe: Optional['outputs.KafkaConnectS2ISpecLivenessProbe'] = None,
                  logging: Optional['outputs.KafkaConnectS2ISpecLogging'] = None,
                  metrics: Optional[Mapping[str, Any]] = None,
+                 rack: Optional['outputs.KafkaConnectS2ISpecRack'] = None,
                  readiness_probe: Optional['outputs.KafkaConnectS2ISpecReadinessProbe'] = None,
                  replicas: Optional[int] = None,
                  resources: Optional['outputs.KafkaConnectS2ISpecResources'] = None,
@@ -940,6 +973,7 @@ class KafkaConnectS2ISpec(dict):
         :param 'KafkaConnectS2ISpecAffinityArgs' affinity: The pod's affinity rules.
         :param 'KafkaConnectS2ISpecAuthenticationArgs' authentication: Authentication configuration for Kafka Connect.
         :param 'KafkaConnectS2ISpecBuildResourcesArgs' build_resources: CPU and memory resources to reserve.
+        :param str client_rack_init_image: The image of the init container used for initializing the `client.rack`.
         :param Mapping[str, Any] config: The Kafka Connect configuration. Properties with the following prefixes cannot be set: ssl., sasl., security., listeners, plugin.path, rest., bootstrap.servers, consumer.interceptor.classes, producer.interceptor.classes (with the exception of: ssl.endpoint.identification.algorithm, ssl.cipher.suites, ssl.protocol, ssl.enabled.protocols).
         :param 'KafkaConnectS2ISpecExternalConfigurationArgs' external_configuration: Pass data from Secrets or ConfigMaps to the Kafka Connect pods and use them to configure connectors.
         :param str image: The docker image for the pods.
@@ -948,6 +982,7 @@ class KafkaConnectS2ISpec(dict):
         :param 'KafkaConnectS2ISpecLivenessProbeArgs' liveness_probe: Pod liveness checking.
         :param 'KafkaConnectS2ISpecLoggingArgs' logging: Logging configuration for Kafka Connect.
         :param Mapping[str, Any] metrics: The Prometheus JMX Exporter configuration. See https://github.com/prometheus/jmx_exporter for details of the structure of this configuration.
+        :param 'KafkaConnectS2ISpecRackArgs' rack: Configuration of the node label which will be used as the client.rack consumer configuration.
         :param 'KafkaConnectS2ISpecReadinessProbeArgs' readiness_probe: Pod readiness checking.
         :param int replicas: The number of pods in the Kafka Connect group.
         :param 'KafkaConnectS2ISpecResourcesArgs' resources: The maximum limits for CPU and memory resources and the requested initial resources.
@@ -964,6 +999,8 @@ class KafkaConnectS2ISpec(dict):
             pulumi.set(__self__, "authentication", authentication)
         if build_resources is not None:
             pulumi.set(__self__, "build_resources", build_resources)
+        if client_rack_init_image is not None:
+            pulumi.set(__self__, "client_rack_init_image", client_rack_init_image)
         if config is not None:
             pulumi.set(__self__, "config", config)
         if external_configuration is not None:
@@ -980,6 +1017,8 @@ class KafkaConnectS2ISpec(dict):
             pulumi.set(__self__, "logging", logging)
         if metrics is not None:
             pulumi.set(__self__, "metrics", metrics)
+        if rack is not None:
+            pulumi.set(__self__, "rack", rack)
         if readiness_probe is not None:
             pulumi.set(__self__, "readiness_probe", readiness_probe)
         if replicas is not None:
@@ -1028,6 +1067,14 @@ class KafkaConnectS2ISpec(dict):
         CPU and memory resources to reserve.
         """
         return pulumi.get(self, "build_resources")
+
+    @property
+    @pulumi.getter(name="clientRackInitImage")
+    def client_rack_init_image(self) -> Optional[str]:
+        """
+        The image of the init container used for initializing the `client.rack`.
+        """
+        return pulumi.get(self, "client_rack_init_image")
 
     @property
     @pulumi.getter
@@ -1092,6 +1139,14 @@ class KafkaConnectS2ISpec(dict):
         The Prometheus JMX Exporter configuration. See https://github.com/prometheus/jmx_exporter for details of the structure of this configuration.
         """
         return pulumi.get(self, "metrics")
+
+    @property
+    @pulumi.getter
+    def rack(self) -> Optional['outputs.KafkaConnectS2ISpecRack']:
+        """
+        Configuration of the node label which will be used as the client.rack consumer configuration.
+        """
+        return pulumi.get(self, "rack")
 
     @property
     @pulumi.getter(name="readinessProbe")
@@ -2938,6 +2993,31 @@ class KafkaConnectS2ISpecLogging(dict):
 
 
 @pulumi.output_type
+class KafkaConnectS2ISpecRack(dict):
+    """
+    Configuration of the node label which will be used as the client.rack consumer configuration.
+    """
+    def __init__(__self__, *,
+                 topology_key: str):
+        """
+        Configuration of the node label which will be used as the client.rack consumer configuration.
+        :param str topology_key: A key that matches labels assigned to the Kubernetes cluster nodes. The value of the label is used to set the broker's `broker.rack` config.
+        """
+        pulumi.set(__self__, "topology_key", topology_key)
+
+    @property
+    @pulumi.getter(name="topologyKey")
+    def topology_key(self) -> str:
+        """
+        A key that matches labels assigned to the Kubernetes cluster nodes. The value of the label is used to set the broker's `broker.rack` config.
+        """
+        return pulumi.get(self, "topology_key")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
 class KafkaConnectS2ISpecReadinessProbe(dict):
     """
     Pod readiness checking.
@@ -3050,6 +3130,7 @@ class KafkaConnectS2ISpecTemplate(dict):
                  api_service: Optional['outputs.KafkaConnectS2ISpecTemplateApiService'] = None,
                  connect_container: Optional['outputs.KafkaConnectS2ISpecTemplateConnectContainer'] = None,
                  deployment: Optional['outputs.KafkaConnectS2ISpecTemplateDeployment'] = None,
+                 init_container: Optional['outputs.KafkaConnectS2ISpecTemplateInitContainer'] = None,
                  pod: Optional['outputs.KafkaConnectS2ISpecTemplatePod'] = None,
                  pod_disruption_budget: Optional['outputs.KafkaConnectS2ISpecTemplatePodDisruptionBudget'] = None):
         """
@@ -3057,6 +3138,7 @@ class KafkaConnectS2ISpecTemplate(dict):
         :param 'KafkaConnectS2ISpecTemplateApiServiceArgs' api_service: Template for Kafka Connect API `Service`.
         :param 'KafkaConnectS2ISpecTemplateConnectContainerArgs' connect_container: Template for the Kafka Connect container.
         :param 'KafkaConnectS2ISpecTemplateDeploymentArgs' deployment: Template for Kafka Connect `Deployment`.
+        :param 'KafkaConnectS2ISpecTemplateInitContainerArgs' init_container: Template for the Kafka init container.
         :param 'KafkaConnectS2ISpecTemplatePodArgs' pod: Template for Kafka Connect `Pods`.
         :param 'KafkaConnectS2ISpecTemplatePodDisruptionBudgetArgs' pod_disruption_budget: Template for Kafka Connect `PodDisruptionBudget`.
         """
@@ -3066,6 +3148,8 @@ class KafkaConnectS2ISpecTemplate(dict):
             pulumi.set(__self__, "connect_container", connect_container)
         if deployment is not None:
             pulumi.set(__self__, "deployment", deployment)
+        if init_container is not None:
+            pulumi.set(__self__, "init_container", init_container)
         if pod is not None:
             pulumi.set(__self__, "pod", pod)
         if pod_disruption_budget is not None:
@@ -3094,6 +3178,14 @@ class KafkaConnectS2ISpecTemplate(dict):
         Template for Kafka Connect `Deployment`.
         """
         return pulumi.get(self, "deployment")
+
+    @property
+    @pulumi.getter(name="initContainer")
+    def init_container(self) -> Optional['outputs.KafkaConnectS2ISpecTemplateInitContainer']:
+        """
+        Template for the Kafka init container.
+        """
+        return pulumi.get(self, "init_container")
 
     @property
     @pulumi.getter
@@ -3413,11 +3505,14 @@ class KafkaConnectS2ISpecTemplateConnectContainerSecurityContextSeLinuxOptions(d
 class KafkaConnectS2ISpecTemplateConnectContainerSecurityContextWindowsOptions(dict):
     def __init__(__self__, *,
                  gmsa_credential_spec: Optional[str] = None,
-                 gmsa_credential_spec_name: Optional[str] = None):
+                 gmsa_credential_spec_name: Optional[str] = None,
+                 run_as_user_name: Optional[str] = None):
         if gmsa_credential_spec is not None:
             pulumi.set(__self__, "gmsa_credential_spec", gmsa_credential_spec)
         if gmsa_credential_spec_name is not None:
             pulumi.set(__self__, "gmsa_credential_spec_name", gmsa_credential_spec_name)
+        if run_as_user_name is not None:
+            pulumi.set(__self__, "run_as_user_name", run_as_user_name)
 
     @property
     @pulumi.getter(name="gmsaCredentialSpec")
@@ -3428,6 +3523,11 @@ class KafkaConnectS2ISpecTemplateConnectContainerSecurityContextWindowsOptions(d
     @pulumi.getter(name="gmsaCredentialSpecName")
     def gmsa_credential_spec_name(self) -> Optional[str]:
         return pulumi.get(self, "gmsa_credential_spec_name")
+
+    @property
+    @pulumi.getter(name="runAsUserName")
+    def run_as_user_name(self) -> Optional[str]:
+        return pulumi.get(self, "run_as_user_name")
 
     def _translate_property(self, prop):
         return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
@@ -3498,12 +3598,275 @@ class KafkaConnectS2ISpecTemplateDeploymentMetadata(dict):
 
 
 @pulumi.output_type
+class KafkaConnectS2ISpecTemplateInitContainer(dict):
+    """
+    Template for the Kafka init container.
+    """
+    def __init__(__self__, *,
+                 env: Optional[Sequence['outputs.KafkaConnectS2ISpecTemplateInitContainerEnv']] = None,
+                 security_context: Optional['outputs.KafkaConnectS2ISpecTemplateInitContainerSecurityContext'] = None):
+        """
+        Template for the Kafka init container.
+        :param Sequence['KafkaConnectS2ISpecTemplateInitContainerEnvArgs'] env: Environment variables which should be applied to the container.
+        :param 'KafkaConnectS2ISpecTemplateInitContainerSecurityContextArgs' security_context: Security context for the container.
+        """
+        if env is not None:
+            pulumi.set(__self__, "env", env)
+        if security_context is not None:
+            pulumi.set(__self__, "security_context", security_context)
+
+    @property
+    @pulumi.getter
+    def env(self) -> Optional[Sequence['outputs.KafkaConnectS2ISpecTemplateInitContainerEnv']]:
+        """
+        Environment variables which should be applied to the container.
+        """
+        return pulumi.get(self, "env")
+
+    @property
+    @pulumi.getter(name="securityContext")
+    def security_context(self) -> Optional['outputs.KafkaConnectS2ISpecTemplateInitContainerSecurityContext']:
+        """
+        Security context for the container.
+        """
+        return pulumi.get(self, "security_context")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class KafkaConnectS2ISpecTemplateInitContainerEnv(dict):
+    def __init__(__self__, *,
+                 name: Optional[str] = None,
+                 value: Optional[str] = None):
+        """
+        :param str name: The environment variable key.
+        :param str value: The environment variable value.
+        """
+        if name is not None:
+            pulumi.set(__self__, "name", name)
+        if value is not None:
+            pulumi.set(__self__, "value", value)
+
+    @property
+    @pulumi.getter
+    def name(self) -> Optional[str]:
+        """
+        The environment variable key.
+        """
+        return pulumi.get(self, "name")
+
+    @property
+    @pulumi.getter
+    def value(self) -> Optional[str]:
+        """
+        The environment variable value.
+        """
+        return pulumi.get(self, "value")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class KafkaConnectS2ISpecTemplateInitContainerSecurityContext(dict):
+    """
+    Security context for the container.
+    """
+    def __init__(__self__, *,
+                 allow_privilege_escalation: Optional[bool] = None,
+                 capabilities: Optional['outputs.KafkaConnectS2ISpecTemplateInitContainerSecurityContextCapabilities'] = None,
+                 privileged: Optional[bool] = None,
+                 proc_mount: Optional[str] = None,
+                 read_only_root_filesystem: Optional[bool] = None,
+                 run_as_group: Optional[int] = None,
+                 run_as_non_root: Optional[bool] = None,
+                 run_as_user: Optional[int] = None,
+                 se_linux_options: Optional['outputs.KafkaConnectS2ISpecTemplateInitContainerSecurityContextSeLinuxOptions'] = None,
+                 windows_options: Optional['outputs.KafkaConnectS2ISpecTemplateInitContainerSecurityContextWindowsOptions'] = None):
+        """
+        Security context for the container.
+        """
+        if allow_privilege_escalation is not None:
+            pulumi.set(__self__, "allow_privilege_escalation", allow_privilege_escalation)
+        if capabilities is not None:
+            pulumi.set(__self__, "capabilities", capabilities)
+        if privileged is not None:
+            pulumi.set(__self__, "privileged", privileged)
+        if proc_mount is not None:
+            pulumi.set(__self__, "proc_mount", proc_mount)
+        if read_only_root_filesystem is not None:
+            pulumi.set(__self__, "read_only_root_filesystem", read_only_root_filesystem)
+        if run_as_group is not None:
+            pulumi.set(__self__, "run_as_group", run_as_group)
+        if run_as_non_root is not None:
+            pulumi.set(__self__, "run_as_non_root", run_as_non_root)
+        if run_as_user is not None:
+            pulumi.set(__self__, "run_as_user", run_as_user)
+        if se_linux_options is not None:
+            pulumi.set(__self__, "se_linux_options", se_linux_options)
+        if windows_options is not None:
+            pulumi.set(__self__, "windows_options", windows_options)
+
+    @property
+    @pulumi.getter(name="allowPrivilegeEscalation")
+    def allow_privilege_escalation(self) -> Optional[bool]:
+        return pulumi.get(self, "allow_privilege_escalation")
+
+    @property
+    @pulumi.getter
+    def capabilities(self) -> Optional['outputs.KafkaConnectS2ISpecTemplateInitContainerSecurityContextCapabilities']:
+        return pulumi.get(self, "capabilities")
+
+    @property
+    @pulumi.getter
+    def privileged(self) -> Optional[bool]:
+        return pulumi.get(self, "privileged")
+
+    @property
+    @pulumi.getter(name="procMount")
+    def proc_mount(self) -> Optional[str]:
+        return pulumi.get(self, "proc_mount")
+
+    @property
+    @pulumi.getter(name="readOnlyRootFilesystem")
+    def read_only_root_filesystem(self) -> Optional[bool]:
+        return pulumi.get(self, "read_only_root_filesystem")
+
+    @property
+    @pulumi.getter(name="runAsGroup")
+    def run_as_group(self) -> Optional[int]:
+        return pulumi.get(self, "run_as_group")
+
+    @property
+    @pulumi.getter(name="runAsNonRoot")
+    def run_as_non_root(self) -> Optional[bool]:
+        return pulumi.get(self, "run_as_non_root")
+
+    @property
+    @pulumi.getter(name="runAsUser")
+    def run_as_user(self) -> Optional[int]:
+        return pulumi.get(self, "run_as_user")
+
+    @property
+    @pulumi.getter(name="seLinuxOptions")
+    def se_linux_options(self) -> Optional['outputs.KafkaConnectS2ISpecTemplateInitContainerSecurityContextSeLinuxOptions']:
+        return pulumi.get(self, "se_linux_options")
+
+    @property
+    @pulumi.getter(name="windowsOptions")
+    def windows_options(self) -> Optional['outputs.KafkaConnectS2ISpecTemplateInitContainerSecurityContextWindowsOptions']:
+        return pulumi.get(self, "windows_options")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class KafkaConnectS2ISpecTemplateInitContainerSecurityContextCapabilities(dict):
+    def __init__(__self__, *,
+                 add: Optional[Sequence[str]] = None,
+                 drop: Optional[Sequence[str]] = None):
+        if add is not None:
+            pulumi.set(__self__, "add", add)
+        if drop is not None:
+            pulumi.set(__self__, "drop", drop)
+
+    @property
+    @pulumi.getter
+    def add(self) -> Optional[Sequence[str]]:
+        return pulumi.get(self, "add")
+
+    @property
+    @pulumi.getter
+    def drop(self) -> Optional[Sequence[str]]:
+        return pulumi.get(self, "drop")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class KafkaConnectS2ISpecTemplateInitContainerSecurityContextSeLinuxOptions(dict):
+    def __init__(__self__, *,
+                 level: Optional[str] = None,
+                 role: Optional[str] = None,
+                 type: Optional[str] = None,
+                 user: Optional[str] = None):
+        if level is not None:
+            pulumi.set(__self__, "level", level)
+        if role is not None:
+            pulumi.set(__self__, "role", role)
+        if type is not None:
+            pulumi.set(__self__, "type", type)
+        if user is not None:
+            pulumi.set(__self__, "user", user)
+
+    @property
+    @pulumi.getter
+    def level(self) -> Optional[str]:
+        return pulumi.get(self, "level")
+
+    @property
+    @pulumi.getter
+    def role(self) -> Optional[str]:
+        return pulumi.get(self, "role")
+
+    @property
+    @pulumi.getter
+    def type(self) -> Optional[str]:
+        return pulumi.get(self, "type")
+
+    @property
+    @pulumi.getter
+    def user(self) -> Optional[str]:
+        return pulumi.get(self, "user")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class KafkaConnectS2ISpecTemplateInitContainerSecurityContextWindowsOptions(dict):
+    def __init__(__self__, *,
+                 gmsa_credential_spec: Optional[str] = None,
+                 gmsa_credential_spec_name: Optional[str] = None,
+                 run_as_user_name: Optional[str] = None):
+        if gmsa_credential_spec is not None:
+            pulumi.set(__self__, "gmsa_credential_spec", gmsa_credential_spec)
+        if gmsa_credential_spec_name is not None:
+            pulumi.set(__self__, "gmsa_credential_spec_name", gmsa_credential_spec_name)
+        if run_as_user_name is not None:
+            pulumi.set(__self__, "run_as_user_name", run_as_user_name)
+
+    @property
+    @pulumi.getter(name="gmsaCredentialSpec")
+    def gmsa_credential_spec(self) -> Optional[str]:
+        return pulumi.get(self, "gmsa_credential_spec")
+
+    @property
+    @pulumi.getter(name="gmsaCredentialSpecName")
+    def gmsa_credential_spec_name(self) -> Optional[str]:
+        return pulumi.get(self, "gmsa_credential_spec_name")
+
+    @property
+    @pulumi.getter(name="runAsUserName")
+    def run_as_user_name(self) -> Optional[str]:
+        return pulumi.get(self, "run_as_user_name")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
 class KafkaConnectS2ISpecTemplatePod(dict):
     """
     Template for Kafka Connect `Pods`.
     """
     def __init__(__self__, *,
                  affinity: Optional['outputs.KafkaConnectS2ISpecTemplatePodAffinity'] = None,
+                 host_aliases: Optional[Sequence['outputs.KafkaConnectS2ISpecTemplatePodHostAliases']] = None,
                  image_pull_secrets: Optional[Sequence['outputs.KafkaConnectS2ISpecTemplatePodImagePullSecrets']] = None,
                  metadata: Optional['outputs.KafkaConnectS2ISpecTemplatePodMetadata'] = None,
                  priority_class_name: Optional[str] = None,
@@ -3514,6 +3877,7 @@ class KafkaConnectS2ISpecTemplatePod(dict):
         """
         Template for Kafka Connect `Pods`.
         :param 'KafkaConnectS2ISpecTemplatePodAffinityArgs' affinity: The pod's affinity rules.
+        :param Sequence['KafkaConnectS2ISpecTemplatePodHostAliasesArgs'] host_aliases: The pod's HostAliases. HostAliases is an optional list of hosts and IPs that will be injected into the pod's hosts file if specified.
         :param Sequence['KafkaConnectS2ISpecTemplatePodImagePullSecretsArgs'] image_pull_secrets: List of references to secrets in the same namespace to use for pulling any of the images used by this Pod. When the `STRIMZI_IMAGE_PULL_SECRETS` environment variable in Cluster Operator and the `imagePullSecrets` option are specified, only the `imagePullSecrets` variable is used and the `STRIMZI_IMAGE_PULL_SECRETS` variable is ignored.
         :param 'KafkaConnectS2ISpecTemplatePodMetadataArgs' metadata: Metadata applied to the resource.
         :param str priority_class_name: The name of the priority class used to assign priority to the pods. For more information about priority classes, see {K8sPriorityClass}.
@@ -3524,6 +3888,8 @@ class KafkaConnectS2ISpecTemplatePod(dict):
         """
         if affinity is not None:
             pulumi.set(__self__, "affinity", affinity)
+        if host_aliases is not None:
+            pulumi.set(__self__, "host_aliases", host_aliases)
         if image_pull_secrets is not None:
             pulumi.set(__self__, "image_pull_secrets", image_pull_secrets)
         if metadata is not None:
@@ -3546,6 +3912,14 @@ class KafkaConnectS2ISpecTemplatePod(dict):
         The pod's affinity rules.
         """
         return pulumi.get(self, "affinity")
+
+    @property
+    @pulumi.getter(name="hostAliases")
+    def host_aliases(self) -> Optional[Sequence['outputs.KafkaConnectS2ISpecTemplatePodHostAliases']]:
+        """
+        The pod's HostAliases. HostAliases is an optional list of hosts and IPs that will be injected into the pod's hosts file if specified.
+        """
+        return pulumi.get(self, "host_aliases")
 
     @property
     @pulumi.getter(name="imagePullSecrets")
@@ -4410,6 +4784,30 @@ class KafkaConnectS2ISpecTemplatePodDisruptionBudgetMetadata(dict):
 
 
 @pulumi.output_type
+class KafkaConnectS2ISpecTemplatePodHostAliases(dict):
+    def __init__(__self__, *,
+                 hostnames: Optional[Sequence[str]] = None,
+                 ip: Optional[str] = None):
+        if hostnames is not None:
+            pulumi.set(__self__, "hostnames", hostnames)
+        if ip is not None:
+            pulumi.set(__self__, "ip", ip)
+
+    @property
+    @pulumi.getter
+    def hostnames(self) -> Optional[Sequence[str]]:
+        return pulumi.get(self, "hostnames")
+
+    @property
+    @pulumi.getter
+    def ip(self) -> Optional[str]:
+        return pulumi.get(self, "ip")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
 class KafkaConnectS2ISpecTemplatePodImagePullSecrets(dict):
     def __init__(__self__, *,
                  name: Optional[str] = None):
@@ -4470,6 +4868,7 @@ class KafkaConnectS2ISpecTemplatePodSecurityContext(dict):
     """
     def __init__(__self__, *,
                  fs_group: Optional[int] = None,
+                 fs_group_change_policy: Optional[str] = None,
                  run_as_group: Optional[int] = None,
                  run_as_non_root: Optional[bool] = None,
                  run_as_user: Optional[int] = None,
@@ -4482,6 +4881,8 @@ class KafkaConnectS2ISpecTemplatePodSecurityContext(dict):
         """
         if fs_group is not None:
             pulumi.set(__self__, "fs_group", fs_group)
+        if fs_group_change_policy is not None:
+            pulumi.set(__self__, "fs_group_change_policy", fs_group_change_policy)
         if run_as_group is not None:
             pulumi.set(__self__, "run_as_group", run_as_group)
         if run_as_non_root is not None:
@@ -4501,6 +4902,11 @@ class KafkaConnectS2ISpecTemplatePodSecurityContext(dict):
     @pulumi.getter(name="fsGroup")
     def fs_group(self) -> Optional[int]:
         return pulumi.get(self, "fs_group")
+
+    @property
+    @pulumi.getter(name="fsGroupChangePolicy")
+    def fs_group_change_policy(self) -> Optional[str]:
+        return pulumi.get(self, "fs_group_change_policy")
 
     @property
     @pulumi.getter(name="runAsGroup")
@@ -4609,11 +5015,14 @@ class KafkaConnectS2ISpecTemplatePodSecurityContextSysctls(dict):
 class KafkaConnectS2ISpecTemplatePodSecurityContextWindowsOptions(dict):
     def __init__(__self__, *,
                  gmsa_credential_spec: Optional[str] = None,
-                 gmsa_credential_spec_name: Optional[str] = None):
+                 gmsa_credential_spec_name: Optional[str] = None,
+                 run_as_user_name: Optional[str] = None):
         if gmsa_credential_spec is not None:
             pulumi.set(__self__, "gmsa_credential_spec", gmsa_credential_spec)
         if gmsa_credential_spec_name is not None:
             pulumi.set(__self__, "gmsa_credential_spec_name", gmsa_credential_spec_name)
+        if run_as_user_name is not None:
+            pulumi.set(__self__, "run_as_user_name", run_as_user_name)
 
     @property
     @pulumi.getter(name="gmsaCredentialSpec")
@@ -4624,6 +5033,11 @@ class KafkaConnectS2ISpecTemplatePodSecurityContextWindowsOptions(dict):
     @pulumi.getter(name="gmsaCredentialSpecName")
     def gmsa_credential_spec_name(self) -> Optional[str]:
         return pulumi.get(self, "gmsa_credential_spec_name")
+
+    @property
+    @pulumi.getter(name="runAsUserName")
+    def run_as_user_name(self) -> Optional[str]:
+        return pulumi.get(self, "run_as_user_name")
 
     def _translate_property(self, prop):
         return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
@@ -4817,8 +5231,8 @@ class KafkaConnectS2IStatus(dict):
                  build_config_name: Optional[str] = None,
                  conditions: Optional[Sequence['outputs.KafkaConnectS2IStatusConditions']] = None,
                  connector_plugins: Optional[Sequence['outputs.KafkaConnectS2IStatusConnectorPlugins']] = None,
+                 label_selector: Optional[str] = None,
                  observed_generation: Optional[int] = None,
-                 pod_selector: Optional['outputs.KafkaConnectS2IStatusPodSelector'] = None,
                  replicas: Optional[int] = None,
                  url: Optional[str] = None):
         """
@@ -4826,8 +5240,8 @@ class KafkaConnectS2IStatus(dict):
         :param str build_config_name: The name of the build configuration.
         :param Sequence['KafkaConnectS2IStatusConditionsArgs'] conditions: List of status conditions.
         :param Sequence['KafkaConnectS2IStatusConnectorPluginsArgs'] connector_plugins: The list of connector plugins available in this Kafka Connect deployment.
+        :param str label_selector: Label selector for pods providing this resource.
         :param int observed_generation: The generation of the CRD that was last reconciled by the operator.
-        :param 'KafkaConnectS2IStatusPodSelectorArgs' pod_selector: Label selector for pods providing this resource.
         :param int replicas: The current number of pods being used to provide this resource.
         :param str url: The URL of the REST API endpoint for managing and monitoring Kafka Connect connectors.
         """
@@ -4837,10 +5251,10 @@ class KafkaConnectS2IStatus(dict):
             pulumi.set(__self__, "conditions", conditions)
         if connector_plugins is not None:
             pulumi.set(__self__, "connector_plugins", connector_plugins)
+        if label_selector is not None:
+            pulumi.set(__self__, "label_selector", label_selector)
         if observed_generation is not None:
             pulumi.set(__self__, "observed_generation", observed_generation)
-        if pod_selector is not None:
-            pulumi.set(__self__, "pod_selector", pod_selector)
         if replicas is not None:
             pulumi.set(__self__, "replicas", replicas)
         if url is not None:
@@ -4871,20 +5285,20 @@ class KafkaConnectS2IStatus(dict):
         return pulumi.get(self, "connector_plugins")
 
     @property
+    @pulumi.getter(name="labelSelector")
+    def label_selector(self) -> Optional[str]:
+        """
+        Label selector for pods providing this resource.
+        """
+        return pulumi.get(self, "label_selector")
+
+    @property
     @pulumi.getter(name="observedGeneration")
     def observed_generation(self) -> Optional[int]:
         """
         The generation of the CRD that was last reconciled by the operator.
         """
         return pulumi.get(self, "observed_generation")
-
-    @property
-    @pulumi.getter(name="podSelector")
-    def pod_selector(self) -> Optional['outputs.KafkaConnectS2IStatusPodSelector']:
-        """
-        Label selector for pods providing this resource.
-        """
-        return pulumi.get(self, "pod_selector")
 
     @property
     @pulumi.getter
@@ -5023,68 +5437,6 @@ class KafkaConnectS2IStatusConnectorPlugins(dict):
 
 
 @pulumi.output_type
-class KafkaConnectS2IStatusPodSelector(dict):
-    """
-    Label selector for pods providing this resource.
-    """
-    def __init__(__self__, *,
-                 match_expressions: Optional[Sequence['outputs.KafkaConnectS2IStatusPodSelectorMatchExpressions']] = None,
-                 match_labels: Optional[Mapping[str, Any]] = None):
-        """
-        Label selector for pods providing this resource.
-        """
-        if match_expressions is not None:
-            pulumi.set(__self__, "match_expressions", match_expressions)
-        if match_labels is not None:
-            pulumi.set(__self__, "match_labels", match_labels)
-
-    @property
-    @pulumi.getter(name="matchExpressions")
-    def match_expressions(self) -> Optional[Sequence['outputs.KafkaConnectS2IStatusPodSelectorMatchExpressions']]:
-        return pulumi.get(self, "match_expressions")
-
-    @property
-    @pulumi.getter(name="matchLabels")
-    def match_labels(self) -> Optional[Mapping[str, Any]]:
-        return pulumi.get(self, "match_labels")
-
-    def _translate_property(self, prop):
-        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
-
-
-@pulumi.output_type
-class KafkaConnectS2IStatusPodSelectorMatchExpressions(dict):
-    def __init__(__self__, *,
-                 key: Optional[str] = None,
-                 operator: Optional[str] = None,
-                 values: Optional[Sequence[str]] = None):
-        if key is not None:
-            pulumi.set(__self__, "key", key)
-        if operator is not None:
-            pulumi.set(__self__, "operator", operator)
-        if values is not None:
-            pulumi.set(__self__, "values", values)
-
-    @property
-    @pulumi.getter
-    def key(self) -> Optional[str]:
-        return pulumi.get(self, "key")
-
-    @property
-    @pulumi.getter
-    def operator(self) -> Optional[str]:
-        return pulumi.get(self, "operator")
-
-    @property
-    @pulumi.getter
-    def values(self) -> Optional[Sequence[str]]:
-        return pulumi.get(self, "values")
-
-    def _translate_property(self, prop):
-        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
-
-
-@pulumi.output_type
 class KafkaConnectSpec(dict):
     """
     The specification of the Kafka Connect cluster.
@@ -5093,6 +5445,7 @@ class KafkaConnectSpec(dict):
                  bootstrap_servers: str,
                  affinity: Optional['outputs.KafkaConnectSpecAffinity'] = None,
                  authentication: Optional['outputs.KafkaConnectSpecAuthentication'] = None,
+                 client_rack_init_image: Optional[str] = None,
                  config: Optional[Mapping[str, Any]] = None,
                  external_configuration: Optional['outputs.KafkaConnectSpecExternalConfiguration'] = None,
                  image: Optional[str] = None,
@@ -5100,6 +5453,7 @@ class KafkaConnectSpec(dict):
                  liveness_probe: Optional['outputs.KafkaConnectSpecLivenessProbe'] = None,
                  logging: Optional['outputs.KafkaConnectSpecLogging'] = None,
                  metrics: Optional[Mapping[str, Any]] = None,
+                 rack: Optional['outputs.KafkaConnectSpecRack'] = None,
                  readiness_probe: Optional['outputs.KafkaConnectSpecReadinessProbe'] = None,
                  replicas: Optional[int] = None,
                  resources: Optional['outputs.KafkaConnectSpecResources'] = None,
@@ -5113,6 +5467,7 @@ class KafkaConnectSpec(dict):
         :param str bootstrap_servers: Bootstrap servers to connect to. This should be given as a comma separated list of _<hostname>_:‍_<port>_ pairs.
         :param 'KafkaConnectSpecAffinityArgs' affinity: The pod's affinity rules.
         :param 'KafkaConnectSpecAuthenticationArgs' authentication: Authentication configuration for Kafka Connect.
+        :param str client_rack_init_image: The image of the init container used for initializing the `client.rack`.
         :param Mapping[str, Any] config: The Kafka Connect configuration. Properties with the following prefixes cannot be set: ssl., sasl., security., listeners, plugin.path, rest., bootstrap.servers, consumer.interceptor.classes, producer.interceptor.classes (with the exception of: ssl.endpoint.identification.algorithm, ssl.cipher.suites, ssl.protocol, ssl.enabled.protocols).
         :param 'KafkaConnectSpecExternalConfigurationArgs' external_configuration: Pass data from Secrets or ConfigMaps to the Kafka Connect pods and use them to configure connectors.
         :param str image: The docker image for the pods.
@@ -5120,6 +5475,7 @@ class KafkaConnectSpec(dict):
         :param 'KafkaConnectSpecLivenessProbeArgs' liveness_probe: Pod liveness checking.
         :param 'KafkaConnectSpecLoggingArgs' logging: Logging configuration for Kafka Connect.
         :param Mapping[str, Any] metrics: The Prometheus JMX Exporter configuration. See https://github.com/prometheus/jmx_exporter for details of the structure of this configuration.
+        :param 'KafkaConnectSpecRackArgs' rack: Configuration of the node label which will be used as the client.rack consumer configuration.
         :param 'KafkaConnectSpecReadinessProbeArgs' readiness_probe: Pod readiness checking.
         :param int replicas: The number of pods in the Kafka Connect group.
         :param 'KafkaConnectSpecResourcesArgs' resources: The maximum limits for CPU and memory resources and the requested initial resources.
@@ -5134,6 +5490,8 @@ class KafkaConnectSpec(dict):
             pulumi.set(__self__, "affinity", affinity)
         if authentication is not None:
             pulumi.set(__self__, "authentication", authentication)
+        if client_rack_init_image is not None:
+            pulumi.set(__self__, "client_rack_init_image", client_rack_init_image)
         if config is not None:
             pulumi.set(__self__, "config", config)
         if external_configuration is not None:
@@ -5148,6 +5506,8 @@ class KafkaConnectSpec(dict):
             pulumi.set(__self__, "logging", logging)
         if metrics is not None:
             pulumi.set(__self__, "metrics", metrics)
+        if rack is not None:
+            pulumi.set(__self__, "rack", rack)
         if readiness_probe is not None:
             pulumi.set(__self__, "readiness_probe", readiness_probe)
         if replicas is not None:
@@ -5188,6 +5548,14 @@ class KafkaConnectSpec(dict):
         Authentication configuration for Kafka Connect.
         """
         return pulumi.get(self, "authentication")
+
+    @property
+    @pulumi.getter(name="clientRackInitImage")
+    def client_rack_init_image(self) -> Optional[str]:
+        """
+        The image of the init container used for initializing the `client.rack`.
+        """
+        return pulumi.get(self, "client_rack_init_image")
 
     @property
     @pulumi.getter
@@ -5244,6 +5612,14 @@ class KafkaConnectSpec(dict):
         The Prometheus JMX Exporter configuration. See https://github.com/prometheus/jmx_exporter for details of the structure of this configuration.
         """
         return pulumi.get(self, "metrics")
+
+    @property
+    @pulumi.getter
+    def rack(self) -> Optional['outputs.KafkaConnectSpecRack']:
+        """
+        Configuration of the node label which will be used as the client.rack consumer configuration.
+        """
+        return pulumi.get(self, "rack")
 
     @property
     @pulumi.getter(name="readinessProbe")
@@ -7060,6 +7436,31 @@ class KafkaConnectSpecLogging(dict):
 
 
 @pulumi.output_type
+class KafkaConnectSpecRack(dict):
+    """
+    Configuration of the node label which will be used as the client.rack consumer configuration.
+    """
+    def __init__(__self__, *,
+                 topology_key: str):
+        """
+        Configuration of the node label which will be used as the client.rack consumer configuration.
+        :param str topology_key: A key that matches labels assigned to the Kubernetes cluster nodes. The value of the label is used to set the broker's `broker.rack` config.
+        """
+        pulumi.set(__self__, "topology_key", topology_key)
+
+    @property
+    @pulumi.getter(name="topologyKey")
+    def topology_key(self) -> str:
+        """
+        A key that matches labels assigned to the Kubernetes cluster nodes. The value of the label is used to set the broker's `broker.rack` config.
+        """
+        return pulumi.get(self, "topology_key")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
 class KafkaConnectSpecReadinessProbe(dict):
     """
     Pod readiness checking.
@@ -7172,6 +7573,7 @@ class KafkaConnectSpecTemplate(dict):
                  api_service: Optional['outputs.KafkaConnectSpecTemplateApiService'] = None,
                  connect_container: Optional['outputs.KafkaConnectSpecTemplateConnectContainer'] = None,
                  deployment: Optional['outputs.KafkaConnectSpecTemplateDeployment'] = None,
+                 init_container: Optional['outputs.KafkaConnectSpecTemplateInitContainer'] = None,
                  pod: Optional['outputs.KafkaConnectSpecTemplatePod'] = None,
                  pod_disruption_budget: Optional['outputs.KafkaConnectSpecTemplatePodDisruptionBudget'] = None):
         """
@@ -7179,6 +7581,7 @@ class KafkaConnectSpecTemplate(dict):
         :param 'KafkaConnectSpecTemplateApiServiceArgs' api_service: Template for Kafka Connect API `Service`.
         :param 'KafkaConnectSpecTemplateConnectContainerArgs' connect_container: Template for the Kafka Connect container.
         :param 'KafkaConnectSpecTemplateDeploymentArgs' deployment: Template for Kafka Connect `Deployment`.
+        :param 'KafkaConnectSpecTemplateInitContainerArgs' init_container: Template for the Kafka init container.
         :param 'KafkaConnectSpecTemplatePodArgs' pod: Template for Kafka Connect `Pods`.
         :param 'KafkaConnectSpecTemplatePodDisruptionBudgetArgs' pod_disruption_budget: Template for Kafka Connect `PodDisruptionBudget`.
         """
@@ -7188,6 +7591,8 @@ class KafkaConnectSpecTemplate(dict):
             pulumi.set(__self__, "connect_container", connect_container)
         if deployment is not None:
             pulumi.set(__self__, "deployment", deployment)
+        if init_container is not None:
+            pulumi.set(__self__, "init_container", init_container)
         if pod is not None:
             pulumi.set(__self__, "pod", pod)
         if pod_disruption_budget is not None:
@@ -7216,6 +7621,14 @@ class KafkaConnectSpecTemplate(dict):
         Template for Kafka Connect `Deployment`.
         """
         return pulumi.get(self, "deployment")
+
+    @property
+    @pulumi.getter(name="initContainer")
+    def init_container(self) -> Optional['outputs.KafkaConnectSpecTemplateInitContainer']:
+        """
+        Template for the Kafka init container.
+        """
+        return pulumi.get(self, "init_container")
 
     @property
     @pulumi.getter
@@ -7535,11 +7948,14 @@ class KafkaConnectSpecTemplateConnectContainerSecurityContextSeLinuxOptions(dict
 class KafkaConnectSpecTemplateConnectContainerSecurityContextWindowsOptions(dict):
     def __init__(__self__, *,
                  gmsa_credential_spec: Optional[str] = None,
-                 gmsa_credential_spec_name: Optional[str] = None):
+                 gmsa_credential_spec_name: Optional[str] = None,
+                 run_as_user_name: Optional[str] = None):
         if gmsa_credential_spec is not None:
             pulumi.set(__self__, "gmsa_credential_spec", gmsa_credential_spec)
         if gmsa_credential_spec_name is not None:
             pulumi.set(__self__, "gmsa_credential_spec_name", gmsa_credential_spec_name)
+        if run_as_user_name is not None:
+            pulumi.set(__self__, "run_as_user_name", run_as_user_name)
 
     @property
     @pulumi.getter(name="gmsaCredentialSpec")
@@ -7550,6 +7966,11 @@ class KafkaConnectSpecTemplateConnectContainerSecurityContextWindowsOptions(dict
     @pulumi.getter(name="gmsaCredentialSpecName")
     def gmsa_credential_spec_name(self) -> Optional[str]:
         return pulumi.get(self, "gmsa_credential_spec_name")
+
+    @property
+    @pulumi.getter(name="runAsUserName")
+    def run_as_user_name(self) -> Optional[str]:
+        return pulumi.get(self, "run_as_user_name")
 
     def _translate_property(self, prop):
         return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
@@ -7620,12 +8041,275 @@ class KafkaConnectSpecTemplateDeploymentMetadata(dict):
 
 
 @pulumi.output_type
+class KafkaConnectSpecTemplateInitContainer(dict):
+    """
+    Template for the Kafka init container.
+    """
+    def __init__(__self__, *,
+                 env: Optional[Sequence['outputs.KafkaConnectSpecTemplateInitContainerEnv']] = None,
+                 security_context: Optional['outputs.KafkaConnectSpecTemplateInitContainerSecurityContext'] = None):
+        """
+        Template for the Kafka init container.
+        :param Sequence['KafkaConnectSpecTemplateInitContainerEnvArgs'] env: Environment variables which should be applied to the container.
+        :param 'KafkaConnectSpecTemplateInitContainerSecurityContextArgs' security_context: Security context for the container.
+        """
+        if env is not None:
+            pulumi.set(__self__, "env", env)
+        if security_context is not None:
+            pulumi.set(__self__, "security_context", security_context)
+
+    @property
+    @pulumi.getter
+    def env(self) -> Optional[Sequence['outputs.KafkaConnectSpecTemplateInitContainerEnv']]:
+        """
+        Environment variables which should be applied to the container.
+        """
+        return pulumi.get(self, "env")
+
+    @property
+    @pulumi.getter(name="securityContext")
+    def security_context(self) -> Optional['outputs.KafkaConnectSpecTemplateInitContainerSecurityContext']:
+        """
+        Security context for the container.
+        """
+        return pulumi.get(self, "security_context")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class KafkaConnectSpecTemplateInitContainerEnv(dict):
+    def __init__(__self__, *,
+                 name: Optional[str] = None,
+                 value: Optional[str] = None):
+        """
+        :param str name: The environment variable key.
+        :param str value: The environment variable value.
+        """
+        if name is not None:
+            pulumi.set(__self__, "name", name)
+        if value is not None:
+            pulumi.set(__self__, "value", value)
+
+    @property
+    @pulumi.getter
+    def name(self) -> Optional[str]:
+        """
+        The environment variable key.
+        """
+        return pulumi.get(self, "name")
+
+    @property
+    @pulumi.getter
+    def value(self) -> Optional[str]:
+        """
+        The environment variable value.
+        """
+        return pulumi.get(self, "value")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class KafkaConnectSpecTemplateInitContainerSecurityContext(dict):
+    """
+    Security context for the container.
+    """
+    def __init__(__self__, *,
+                 allow_privilege_escalation: Optional[bool] = None,
+                 capabilities: Optional['outputs.KafkaConnectSpecTemplateInitContainerSecurityContextCapabilities'] = None,
+                 privileged: Optional[bool] = None,
+                 proc_mount: Optional[str] = None,
+                 read_only_root_filesystem: Optional[bool] = None,
+                 run_as_group: Optional[int] = None,
+                 run_as_non_root: Optional[bool] = None,
+                 run_as_user: Optional[int] = None,
+                 se_linux_options: Optional['outputs.KafkaConnectSpecTemplateInitContainerSecurityContextSeLinuxOptions'] = None,
+                 windows_options: Optional['outputs.KafkaConnectSpecTemplateInitContainerSecurityContextWindowsOptions'] = None):
+        """
+        Security context for the container.
+        """
+        if allow_privilege_escalation is not None:
+            pulumi.set(__self__, "allow_privilege_escalation", allow_privilege_escalation)
+        if capabilities is not None:
+            pulumi.set(__self__, "capabilities", capabilities)
+        if privileged is not None:
+            pulumi.set(__self__, "privileged", privileged)
+        if proc_mount is not None:
+            pulumi.set(__self__, "proc_mount", proc_mount)
+        if read_only_root_filesystem is not None:
+            pulumi.set(__self__, "read_only_root_filesystem", read_only_root_filesystem)
+        if run_as_group is not None:
+            pulumi.set(__self__, "run_as_group", run_as_group)
+        if run_as_non_root is not None:
+            pulumi.set(__self__, "run_as_non_root", run_as_non_root)
+        if run_as_user is not None:
+            pulumi.set(__self__, "run_as_user", run_as_user)
+        if se_linux_options is not None:
+            pulumi.set(__self__, "se_linux_options", se_linux_options)
+        if windows_options is not None:
+            pulumi.set(__self__, "windows_options", windows_options)
+
+    @property
+    @pulumi.getter(name="allowPrivilegeEscalation")
+    def allow_privilege_escalation(self) -> Optional[bool]:
+        return pulumi.get(self, "allow_privilege_escalation")
+
+    @property
+    @pulumi.getter
+    def capabilities(self) -> Optional['outputs.KafkaConnectSpecTemplateInitContainerSecurityContextCapabilities']:
+        return pulumi.get(self, "capabilities")
+
+    @property
+    @pulumi.getter
+    def privileged(self) -> Optional[bool]:
+        return pulumi.get(self, "privileged")
+
+    @property
+    @pulumi.getter(name="procMount")
+    def proc_mount(self) -> Optional[str]:
+        return pulumi.get(self, "proc_mount")
+
+    @property
+    @pulumi.getter(name="readOnlyRootFilesystem")
+    def read_only_root_filesystem(self) -> Optional[bool]:
+        return pulumi.get(self, "read_only_root_filesystem")
+
+    @property
+    @pulumi.getter(name="runAsGroup")
+    def run_as_group(self) -> Optional[int]:
+        return pulumi.get(self, "run_as_group")
+
+    @property
+    @pulumi.getter(name="runAsNonRoot")
+    def run_as_non_root(self) -> Optional[bool]:
+        return pulumi.get(self, "run_as_non_root")
+
+    @property
+    @pulumi.getter(name="runAsUser")
+    def run_as_user(self) -> Optional[int]:
+        return pulumi.get(self, "run_as_user")
+
+    @property
+    @pulumi.getter(name="seLinuxOptions")
+    def se_linux_options(self) -> Optional['outputs.KafkaConnectSpecTemplateInitContainerSecurityContextSeLinuxOptions']:
+        return pulumi.get(self, "se_linux_options")
+
+    @property
+    @pulumi.getter(name="windowsOptions")
+    def windows_options(self) -> Optional['outputs.KafkaConnectSpecTemplateInitContainerSecurityContextWindowsOptions']:
+        return pulumi.get(self, "windows_options")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class KafkaConnectSpecTemplateInitContainerSecurityContextCapabilities(dict):
+    def __init__(__self__, *,
+                 add: Optional[Sequence[str]] = None,
+                 drop: Optional[Sequence[str]] = None):
+        if add is not None:
+            pulumi.set(__self__, "add", add)
+        if drop is not None:
+            pulumi.set(__self__, "drop", drop)
+
+    @property
+    @pulumi.getter
+    def add(self) -> Optional[Sequence[str]]:
+        return pulumi.get(self, "add")
+
+    @property
+    @pulumi.getter
+    def drop(self) -> Optional[Sequence[str]]:
+        return pulumi.get(self, "drop")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class KafkaConnectSpecTemplateInitContainerSecurityContextSeLinuxOptions(dict):
+    def __init__(__self__, *,
+                 level: Optional[str] = None,
+                 role: Optional[str] = None,
+                 type: Optional[str] = None,
+                 user: Optional[str] = None):
+        if level is not None:
+            pulumi.set(__self__, "level", level)
+        if role is not None:
+            pulumi.set(__self__, "role", role)
+        if type is not None:
+            pulumi.set(__self__, "type", type)
+        if user is not None:
+            pulumi.set(__self__, "user", user)
+
+    @property
+    @pulumi.getter
+    def level(self) -> Optional[str]:
+        return pulumi.get(self, "level")
+
+    @property
+    @pulumi.getter
+    def role(self) -> Optional[str]:
+        return pulumi.get(self, "role")
+
+    @property
+    @pulumi.getter
+    def type(self) -> Optional[str]:
+        return pulumi.get(self, "type")
+
+    @property
+    @pulumi.getter
+    def user(self) -> Optional[str]:
+        return pulumi.get(self, "user")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class KafkaConnectSpecTemplateInitContainerSecurityContextWindowsOptions(dict):
+    def __init__(__self__, *,
+                 gmsa_credential_spec: Optional[str] = None,
+                 gmsa_credential_spec_name: Optional[str] = None,
+                 run_as_user_name: Optional[str] = None):
+        if gmsa_credential_spec is not None:
+            pulumi.set(__self__, "gmsa_credential_spec", gmsa_credential_spec)
+        if gmsa_credential_spec_name is not None:
+            pulumi.set(__self__, "gmsa_credential_spec_name", gmsa_credential_spec_name)
+        if run_as_user_name is not None:
+            pulumi.set(__self__, "run_as_user_name", run_as_user_name)
+
+    @property
+    @pulumi.getter(name="gmsaCredentialSpec")
+    def gmsa_credential_spec(self) -> Optional[str]:
+        return pulumi.get(self, "gmsa_credential_spec")
+
+    @property
+    @pulumi.getter(name="gmsaCredentialSpecName")
+    def gmsa_credential_spec_name(self) -> Optional[str]:
+        return pulumi.get(self, "gmsa_credential_spec_name")
+
+    @property
+    @pulumi.getter(name="runAsUserName")
+    def run_as_user_name(self) -> Optional[str]:
+        return pulumi.get(self, "run_as_user_name")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
 class KafkaConnectSpecTemplatePod(dict):
     """
     Template for Kafka Connect `Pods`.
     """
     def __init__(__self__, *,
                  affinity: Optional['outputs.KafkaConnectSpecTemplatePodAffinity'] = None,
+                 host_aliases: Optional[Sequence['outputs.KafkaConnectSpecTemplatePodHostAliases']] = None,
                  image_pull_secrets: Optional[Sequence['outputs.KafkaConnectSpecTemplatePodImagePullSecrets']] = None,
                  metadata: Optional['outputs.KafkaConnectSpecTemplatePodMetadata'] = None,
                  priority_class_name: Optional[str] = None,
@@ -7636,6 +8320,7 @@ class KafkaConnectSpecTemplatePod(dict):
         """
         Template for Kafka Connect `Pods`.
         :param 'KafkaConnectSpecTemplatePodAffinityArgs' affinity: The pod's affinity rules.
+        :param Sequence['KafkaConnectSpecTemplatePodHostAliasesArgs'] host_aliases: The pod's HostAliases. HostAliases is an optional list of hosts and IPs that will be injected into the pod's hosts file if specified.
         :param Sequence['KafkaConnectSpecTemplatePodImagePullSecretsArgs'] image_pull_secrets: List of references to secrets in the same namespace to use for pulling any of the images used by this Pod. When the `STRIMZI_IMAGE_PULL_SECRETS` environment variable in Cluster Operator and the `imagePullSecrets` option are specified, only the `imagePullSecrets` variable is used and the `STRIMZI_IMAGE_PULL_SECRETS` variable is ignored.
         :param 'KafkaConnectSpecTemplatePodMetadataArgs' metadata: Metadata applied to the resource.
         :param str priority_class_name: The name of the priority class used to assign priority to the pods. For more information about priority classes, see {K8sPriorityClass}.
@@ -7646,6 +8331,8 @@ class KafkaConnectSpecTemplatePod(dict):
         """
         if affinity is not None:
             pulumi.set(__self__, "affinity", affinity)
+        if host_aliases is not None:
+            pulumi.set(__self__, "host_aliases", host_aliases)
         if image_pull_secrets is not None:
             pulumi.set(__self__, "image_pull_secrets", image_pull_secrets)
         if metadata is not None:
@@ -7668,6 +8355,14 @@ class KafkaConnectSpecTemplatePod(dict):
         The pod's affinity rules.
         """
         return pulumi.get(self, "affinity")
+
+    @property
+    @pulumi.getter(name="hostAliases")
+    def host_aliases(self) -> Optional[Sequence['outputs.KafkaConnectSpecTemplatePodHostAliases']]:
+        """
+        The pod's HostAliases. HostAliases is an optional list of hosts and IPs that will be injected into the pod's hosts file if specified.
+        """
+        return pulumi.get(self, "host_aliases")
 
     @property
     @pulumi.getter(name="imagePullSecrets")
@@ -8532,6 +9227,30 @@ class KafkaConnectSpecTemplatePodDisruptionBudgetMetadata(dict):
 
 
 @pulumi.output_type
+class KafkaConnectSpecTemplatePodHostAliases(dict):
+    def __init__(__self__, *,
+                 hostnames: Optional[Sequence[str]] = None,
+                 ip: Optional[str] = None):
+        if hostnames is not None:
+            pulumi.set(__self__, "hostnames", hostnames)
+        if ip is not None:
+            pulumi.set(__self__, "ip", ip)
+
+    @property
+    @pulumi.getter
+    def hostnames(self) -> Optional[Sequence[str]]:
+        return pulumi.get(self, "hostnames")
+
+    @property
+    @pulumi.getter
+    def ip(self) -> Optional[str]:
+        return pulumi.get(self, "ip")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
 class KafkaConnectSpecTemplatePodImagePullSecrets(dict):
     def __init__(__self__, *,
                  name: Optional[str] = None):
@@ -8592,6 +9311,7 @@ class KafkaConnectSpecTemplatePodSecurityContext(dict):
     """
     def __init__(__self__, *,
                  fs_group: Optional[int] = None,
+                 fs_group_change_policy: Optional[str] = None,
                  run_as_group: Optional[int] = None,
                  run_as_non_root: Optional[bool] = None,
                  run_as_user: Optional[int] = None,
@@ -8604,6 +9324,8 @@ class KafkaConnectSpecTemplatePodSecurityContext(dict):
         """
         if fs_group is not None:
             pulumi.set(__self__, "fs_group", fs_group)
+        if fs_group_change_policy is not None:
+            pulumi.set(__self__, "fs_group_change_policy", fs_group_change_policy)
         if run_as_group is not None:
             pulumi.set(__self__, "run_as_group", run_as_group)
         if run_as_non_root is not None:
@@ -8623,6 +9345,11 @@ class KafkaConnectSpecTemplatePodSecurityContext(dict):
     @pulumi.getter(name="fsGroup")
     def fs_group(self) -> Optional[int]:
         return pulumi.get(self, "fs_group")
+
+    @property
+    @pulumi.getter(name="fsGroupChangePolicy")
+    def fs_group_change_policy(self) -> Optional[str]:
+        return pulumi.get(self, "fs_group_change_policy")
 
     @property
     @pulumi.getter(name="runAsGroup")
@@ -8731,11 +9458,14 @@ class KafkaConnectSpecTemplatePodSecurityContextSysctls(dict):
 class KafkaConnectSpecTemplatePodSecurityContextWindowsOptions(dict):
     def __init__(__self__, *,
                  gmsa_credential_spec: Optional[str] = None,
-                 gmsa_credential_spec_name: Optional[str] = None):
+                 gmsa_credential_spec_name: Optional[str] = None,
+                 run_as_user_name: Optional[str] = None):
         if gmsa_credential_spec is not None:
             pulumi.set(__self__, "gmsa_credential_spec", gmsa_credential_spec)
         if gmsa_credential_spec_name is not None:
             pulumi.set(__self__, "gmsa_credential_spec_name", gmsa_credential_spec_name)
+        if run_as_user_name is not None:
+            pulumi.set(__self__, "run_as_user_name", run_as_user_name)
 
     @property
     @pulumi.getter(name="gmsaCredentialSpec")
@@ -8746,6 +9476,11 @@ class KafkaConnectSpecTemplatePodSecurityContextWindowsOptions(dict):
     @pulumi.getter(name="gmsaCredentialSpecName")
     def gmsa_credential_spec_name(self) -> Optional[str]:
         return pulumi.get(self, "gmsa_credential_spec_name")
+
+    @property
+    @pulumi.getter(name="runAsUserName")
+    def run_as_user_name(self) -> Optional[str]:
+        return pulumi.get(self, "run_as_user_name")
 
     def _translate_property(self, prop):
         return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
@@ -8938,16 +9673,16 @@ class KafkaConnectStatus(dict):
     def __init__(__self__, *,
                  conditions: Optional[Sequence['outputs.KafkaConnectStatusConditions']] = None,
                  connector_plugins: Optional[Sequence['outputs.KafkaConnectStatusConnectorPlugins']] = None,
+                 label_selector: Optional[str] = None,
                  observed_generation: Optional[int] = None,
-                 pod_selector: Optional['outputs.KafkaConnectStatusPodSelector'] = None,
                  replicas: Optional[int] = None,
                  url: Optional[str] = None):
         """
         The status of the Kafka Connect cluster.
         :param Sequence['KafkaConnectStatusConditionsArgs'] conditions: List of status conditions.
         :param Sequence['KafkaConnectStatusConnectorPluginsArgs'] connector_plugins: The list of connector plugins available in this Kafka Connect deployment.
+        :param str label_selector: Label selector for pods providing this resource.
         :param int observed_generation: The generation of the CRD that was last reconciled by the operator.
-        :param 'KafkaConnectStatusPodSelectorArgs' pod_selector: Label selector for pods providing this resource.
         :param int replicas: The current number of pods being used to provide this resource.
         :param str url: The URL of the REST API endpoint for managing and monitoring Kafka Connect connectors.
         """
@@ -8955,10 +9690,10 @@ class KafkaConnectStatus(dict):
             pulumi.set(__self__, "conditions", conditions)
         if connector_plugins is not None:
             pulumi.set(__self__, "connector_plugins", connector_plugins)
+        if label_selector is not None:
+            pulumi.set(__self__, "label_selector", label_selector)
         if observed_generation is not None:
             pulumi.set(__self__, "observed_generation", observed_generation)
-        if pod_selector is not None:
-            pulumi.set(__self__, "pod_selector", pod_selector)
         if replicas is not None:
             pulumi.set(__self__, "replicas", replicas)
         if url is not None:
@@ -8981,20 +9716,20 @@ class KafkaConnectStatus(dict):
         return pulumi.get(self, "connector_plugins")
 
     @property
+    @pulumi.getter(name="labelSelector")
+    def label_selector(self) -> Optional[str]:
+        """
+        Label selector for pods providing this resource.
+        """
+        return pulumi.get(self, "label_selector")
+
+    @property
     @pulumi.getter(name="observedGeneration")
     def observed_generation(self) -> Optional[int]:
         """
         The generation of the CRD that was last reconciled by the operator.
         """
         return pulumi.get(self, "observed_generation")
-
-    @property
-    @pulumi.getter(name="podSelector")
-    def pod_selector(self) -> Optional['outputs.KafkaConnectStatusPodSelector']:
-        """
-        Label selector for pods providing this resource.
-        """
-        return pulumi.get(self, "pod_selector")
 
     @property
     @pulumi.getter
@@ -9127,68 +9862,6 @@ class KafkaConnectStatusConnectorPlugins(dict):
         The version of the connector plugin.
         """
         return pulumi.get(self, "version")
-
-    def _translate_property(self, prop):
-        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
-
-
-@pulumi.output_type
-class KafkaConnectStatusPodSelector(dict):
-    """
-    Label selector for pods providing this resource.
-    """
-    def __init__(__self__, *,
-                 match_expressions: Optional[Sequence['outputs.KafkaConnectStatusPodSelectorMatchExpressions']] = None,
-                 match_labels: Optional[Mapping[str, Any]] = None):
-        """
-        Label selector for pods providing this resource.
-        """
-        if match_expressions is not None:
-            pulumi.set(__self__, "match_expressions", match_expressions)
-        if match_labels is not None:
-            pulumi.set(__self__, "match_labels", match_labels)
-
-    @property
-    @pulumi.getter(name="matchExpressions")
-    def match_expressions(self) -> Optional[Sequence['outputs.KafkaConnectStatusPodSelectorMatchExpressions']]:
-        return pulumi.get(self, "match_expressions")
-
-    @property
-    @pulumi.getter(name="matchLabels")
-    def match_labels(self) -> Optional[Mapping[str, Any]]:
-        return pulumi.get(self, "match_labels")
-
-    def _translate_property(self, prop):
-        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
-
-
-@pulumi.output_type
-class KafkaConnectStatusPodSelectorMatchExpressions(dict):
-    def __init__(__self__, *,
-                 key: Optional[str] = None,
-                 operator: Optional[str] = None,
-                 values: Optional[Sequence[str]] = None):
-        if key is not None:
-            pulumi.set(__self__, "key", key)
-        if operator is not None:
-            pulumi.set(__self__, "operator", operator)
-        if values is not None:
-            pulumi.set(__self__, "values", values)
-
-    @property
-    @pulumi.getter
-    def key(self) -> Optional[str]:
-        return pulumi.get(self, "key")
-
-    @property
-    @pulumi.getter
-    def operator(self) -> Optional[str]:
-        return pulumi.get(self, "operator")
-
-    @property
-    @pulumi.getter
-    def values(self) -> Optional[Sequence[str]]:
-        return pulumi.get(self, "values")
 
     def _translate_property(self, prop):
         return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
@@ -11910,11 +12583,14 @@ class KafkaMirrorMakerSpecTemplateMirrorMakerContainerSecurityContextSeLinuxOpti
 class KafkaMirrorMakerSpecTemplateMirrorMakerContainerSecurityContextWindowsOptions(dict):
     def __init__(__self__, *,
                  gmsa_credential_spec: Optional[str] = None,
-                 gmsa_credential_spec_name: Optional[str] = None):
+                 gmsa_credential_spec_name: Optional[str] = None,
+                 run_as_user_name: Optional[str] = None):
         if gmsa_credential_spec is not None:
             pulumi.set(__self__, "gmsa_credential_spec", gmsa_credential_spec)
         if gmsa_credential_spec_name is not None:
             pulumi.set(__self__, "gmsa_credential_spec_name", gmsa_credential_spec_name)
+        if run_as_user_name is not None:
+            pulumi.set(__self__, "run_as_user_name", run_as_user_name)
 
     @property
     @pulumi.getter(name="gmsaCredentialSpec")
@@ -11925,6 +12601,11 @@ class KafkaMirrorMakerSpecTemplateMirrorMakerContainerSecurityContextWindowsOpti
     @pulumi.getter(name="gmsaCredentialSpecName")
     def gmsa_credential_spec_name(self) -> Optional[str]:
         return pulumi.get(self, "gmsa_credential_spec_name")
+
+    @property
+    @pulumi.getter(name="runAsUserName")
+    def run_as_user_name(self) -> Optional[str]:
+        return pulumi.get(self, "run_as_user_name")
 
     def _translate_property(self, prop):
         return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
@@ -11937,6 +12618,7 @@ class KafkaMirrorMakerSpecTemplatePod(dict):
     """
     def __init__(__self__, *,
                  affinity: Optional['outputs.KafkaMirrorMakerSpecTemplatePodAffinity'] = None,
+                 host_aliases: Optional[Sequence['outputs.KafkaMirrorMakerSpecTemplatePodHostAliases']] = None,
                  image_pull_secrets: Optional[Sequence['outputs.KafkaMirrorMakerSpecTemplatePodImagePullSecrets']] = None,
                  metadata: Optional['outputs.KafkaMirrorMakerSpecTemplatePodMetadata'] = None,
                  priority_class_name: Optional[str] = None,
@@ -11947,6 +12629,7 @@ class KafkaMirrorMakerSpecTemplatePod(dict):
         """
         Template for Kafka MirrorMaker `Pods`.
         :param 'KafkaMirrorMakerSpecTemplatePodAffinityArgs' affinity: The pod's affinity rules.
+        :param Sequence['KafkaMirrorMakerSpecTemplatePodHostAliasesArgs'] host_aliases: The pod's HostAliases. HostAliases is an optional list of hosts and IPs that will be injected into the pod's hosts file if specified.
         :param Sequence['KafkaMirrorMakerSpecTemplatePodImagePullSecretsArgs'] image_pull_secrets: List of references to secrets in the same namespace to use for pulling any of the images used by this Pod. When the `STRIMZI_IMAGE_PULL_SECRETS` environment variable in Cluster Operator and the `imagePullSecrets` option are specified, only the `imagePullSecrets` variable is used and the `STRIMZI_IMAGE_PULL_SECRETS` variable is ignored.
         :param 'KafkaMirrorMakerSpecTemplatePodMetadataArgs' metadata: Metadata applied to the resource.
         :param str priority_class_name: The name of the priority class used to assign priority to the pods. For more information about priority classes, see {K8sPriorityClass}.
@@ -11957,6 +12640,8 @@ class KafkaMirrorMakerSpecTemplatePod(dict):
         """
         if affinity is not None:
             pulumi.set(__self__, "affinity", affinity)
+        if host_aliases is not None:
+            pulumi.set(__self__, "host_aliases", host_aliases)
         if image_pull_secrets is not None:
             pulumi.set(__self__, "image_pull_secrets", image_pull_secrets)
         if metadata is not None:
@@ -11979,6 +12664,14 @@ class KafkaMirrorMakerSpecTemplatePod(dict):
         The pod's affinity rules.
         """
         return pulumi.get(self, "affinity")
+
+    @property
+    @pulumi.getter(name="hostAliases")
+    def host_aliases(self) -> Optional[Sequence['outputs.KafkaMirrorMakerSpecTemplatePodHostAliases']]:
+        """
+        The pod's HostAliases. HostAliases is an optional list of hosts and IPs that will be injected into the pod's hosts file if specified.
+        """
+        return pulumi.get(self, "host_aliases")
 
     @property
     @pulumi.getter(name="imagePullSecrets")
@@ -12843,6 +13536,30 @@ class KafkaMirrorMakerSpecTemplatePodDisruptionBudgetMetadata(dict):
 
 
 @pulumi.output_type
+class KafkaMirrorMakerSpecTemplatePodHostAliases(dict):
+    def __init__(__self__, *,
+                 hostnames: Optional[Sequence[str]] = None,
+                 ip: Optional[str] = None):
+        if hostnames is not None:
+            pulumi.set(__self__, "hostnames", hostnames)
+        if ip is not None:
+            pulumi.set(__self__, "ip", ip)
+
+    @property
+    @pulumi.getter
+    def hostnames(self) -> Optional[Sequence[str]]:
+        return pulumi.get(self, "hostnames")
+
+    @property
+    @pulumi.getter
+    def ip(self) -> Optional[str]:
+        return pulumi.get(self, "ip")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
 class KafkaMirrorMakerSpecTemplatePodImagePullSecrets(dict):
     def __init__(__self__, *,
                  name: Optional[str] = None):
@@ -12903,6 +13620,7 @@ class KafkaMirrorMakerSpecTemplatePodSecurityContext(dict):
     """
     def __init__(__self__, *,
                  fs_group: Optional[int] = None,
+                 fs_group_change_policy: Optional[str] = None,
                  run_as_group: Optional[int] = None,
                  run_as_non_root: Optional[bool] = None,
                  run_as_user: Optional[int] = None,
@@ -12915,6 +13633,8 @@ class KafkaMirrorMakerSpecTemplatePodSecurityContext(dict):
         """
         if fs_group is not None:
             pulumi.set(__self__, "fs_group", fs_group)
+        if fs_group_change_policy is not None:
+            pulumi.set(__self__, "fs_group_change_policy", fs_group_change_policy)
         if run_as_group is not None:
             pulumi.set(__self__, "run_as_group", run_as_group)
         if run_as_non_root is not None:
@@ -12934,6 +13654,11 @@ class KafkaMirrorMakerSpecTemplatePodSecurityContext(dict):
     @pulumi.getter(name="fsGroup")
     def fs_group(self) -> Optional[int]:
         return pulumi.get(self, "fs_group")
+
+    @property
+    @pulumi.getter(name="fsGroupChangePolicy")
+    def fs_group_change_policy(self) -> Optional[str]:
+        return pulumi.get(self, "fs_group_change_policy")
 
     @property
     @pulumi.getter(name="runAsGroup")
@@ -13042,11 +13767,14 @@ class KafkaMirrorMakerSpecTemplatePodSecurityContextSysctls(dict):
 class KafkaMirrorMakerSpecTemplatePodSecurityContextWindowsOptions(dict):
     def __init__(__self__, *,
                  gmsa_credential_spec: Optional[str] = None,
-                 gmsa_credential_spec_name: Optional[str] = None):
+                 gmsa_credential_spec_name: Optional[str] = None,
+                 run_as_user_name: Optional[str] = None):
         if gmsa_credential_spec is not None:
             pulumi.set(__self__, "gmsa_credential_spec", gmsa_credential_spec)
         if gmsa_credential_spec_name is not None:
             pulumi.set(__self__, "gmsa_credential_spec_name", gmsa_credential_spec_name)
+        if run_as_user_name is not None:
+            pulumi.set(__self__, "run_as_user_name", run_as_user_name)
 
     @property
     @pulumi.getter(name="gmsaCredentialSpec")
@@ -13057,6 +13785,11 @@ class KafkaMirrorMakerSpecTemplatePodSecurityContextWindowsOptions(dict):
     @pulumi.getter(name="gmsaCredentialSpecName")
     def gmsa_credential_spec_name(self) -> Optional[str]:
         return pulumi.get(self, "gmsa_credential_spec_name")
+
+    @property
+    @pulumi.getter(name="runAsUserName")
+    def run_as_user_name(self) -> Optional[str]:
+        return pulumi.get(self, "run_as_user_name")
 
     def _translate_property(self, prop):
         return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
@@ -13190,22 +13923,22 @@ class KafkaMirrorMakerStatus(dict):
     """
     def __init__(__self__, *,
                  conditions: Optional[Sequence['outputs.KafkaMirrorMakerStatusConditions']] = None,
+                 label_selector: Optional[str] = None,
                  observed_generation: Optional[int] = None,
-                 pod_selector: Optional['outputs.KafkaMirrorMakerStatusPodSelector'] = None,
                  replicas: Optional[int] = None):
         """
         The status of Kafka MirrorMaker.
         :param Sequence['KafkaMirrorMakerStatusConditionsArgs'] conditions: List of status conditions.
+        :param str label_selector: Label selector for pods providing this resource.
         :param int observed_generation: The generation of the CRD that was last reconciled by the operator.
-        :param 'KafkaMirrorMakerStatusPodSelectorArgs' pod_selector: Label selector for pods providing this resource.
         :param int replicas: The current number of pods being used to provide this resource.
         """
         if conditions is not None:
             pulumi.set(__self__, "conditions", conditions)
+        if label_selector is not None:
+            pulumi.set(__self__, "label_selector", label_selector)
         if observed_generation is not None:
             pulumi.set(__self__, "observed_generation", observed_generation)
-        if pod_selector is not None:
-            pulumi.set(__self__, "pod_selector", pod_selector)
         if replicas is not None:
             pulumi.set(__self__, "replicas", replicas)
 
@@ -13218,20 +13951,20 @@ class KafkaMirrorMakerStatus(dict):
         return pulumi.get(self, "conditions")
 
     @property
+    @pulumi.getter(name="labelSelector")
+    def label_selector(self) -> Optional[str]:
+        """
+        Label selector for pods providing this resource.
+        """
+        return pulumi.get(self, "label_selector")
+
+    @property
     @pulumi.getter(name="observedGeneration")
     def observed_generation(self) -> Optional[int]:
         """
         The generation of the CRD that was last reconciled by the operator.
         """
         return pulumi.get(self, "observed_generation")
-
-    @property
-    @pulumi.getter(name="podSelector")
-    def pod_selector(self) -> Optional['outputs.KafkaMirrorMakerStatusPodSelector']:
-        """
-        Label selector for pods providing this resource.
-        """
-        return pulumi.get(self, "pod_selector")
 
     @property
     @pulumi.getter
@@ -13310,68 +14043,6 @@ class KafkaMirrorMakerStatusConditions(dict):
         The unique identifier of a condition, used to distinguish between other conditions in the resource.
         """
         return pulumi.get(self, "type")
-
-    def _translate_property(self, prop):
-        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
-
-
-@pulumi.output_type
-class KafkaMirrorMakerStatusPodSelector(dict):
-    """
-    Label selector for pods providing this resource.
-    """
-    def __init__(__self__, *,
-                 match_expressions: Optional[Sequence['outputs.KafkaMirrorMakerStatusPodSelectorMatchExpressions']] = None,
-                 match_labels: Optional[Mapping[str, Any]] = None):
-        """
-        Label selector for pods providing this resource.
-        """
-        if match_expressions is not None:
-            pulumi.set(__self__, "match_expressions", match_expressions)
-        if match_labels is not None:
-            pulumi.set(__self__, "match_labels", match_labels)
-
-    @property
-    @pulumi.getter(name="matchExpressions")
-    def match_expressions(self) -> Optional[Sequence['outputs.KafkaMirrorMakerStatusPodSelectorMatchExpressions']]:
-        return pulumi.get(self, "match_expressions")
-
-    @property
-    @pulumi.getter(name="matchLabels")
-    def match_labels(self) -> Optional[Mapping[str, Any]]:
-        return pulumi.get(self, "match_labels")
-
-    def _translate_property(self, prop):
-        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
-
-
-@pulumi.output_type
-class KafkaMirrorMakerStatusPodSelectorMatchExpressions(dict):
-    def __init__(__self__, *,
-                 key: Optional[str] = None,
-                 operator: Optional[str] = None,
-                 values: Optional[Sequence[str]] = None):
-        if key is not None:
-            pulumi.set(__self__, "key", key)
-        if operator is not None:
-            pulumi.set(__self__, "operator", operator)
-        if values is not None:
-            pulumi.set(__self__, "values", values)
-
-    @property
-    @pulumi.getter
-    def key(self) -> Optional[str]:
-        return pulumi.get(self, "key")
-
-    @property
-    @pulumi.getter
-    def operator(self) -> Optional[str]:
-        return pulumi.get(self, "operator")
-
-    @property
-    @pulumi.getter
-    def values(self) -> Optional[Sequence[str]]:
-        return pulumi.get(self, "values")
 
     def _translate_property(self, prop):
         return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
@@ -13645,6 +14316,7 @@ class KafkaSpecCruiseControl(dict):
                  jvm_options: Optional['outputs.KafkaSpecCruiseControlJvmOptions'] = None,
                  liveness_probe: Optional['outputs.KafkaSpecCruiseControlLivenessProbe'] = None,
                  logging: Optional['outputs.KafkaSpecCruiseControlLogging'] = None,
+                 metrics: Optional[Mapping[str, Any]] = None,
                  readiness_probe: Optional['outputs.KafkaSpecCruiseControlReadinessProbe'] = None,
                  resources: Optional['outputs.KafkaSpecCruiseControlResources'] = None,
                  template: Optional['outputs.KafkaSpecCruiseControlTemplate'] = None,
@@ -13657,6 +14329,7 @@ class KafkaSpecCruiseControl(dict):
         :param 'KafkaSpecCruiseControlJvmOptionsArgs' jvm_options: JVM Options for the Cruise Control container.
         :param 'KafkaSpecCruiseControlLivenessProbeArgs' liveness_probe: Pod liveness checking for the Cruise Control container.
         :param 'KafkaSpecCruiseControlLoggingArgs' logging: Logging configuration (log4j1) for Cruise Control.
+        :param Mapping[str, Any] metrics: The Prometheus JMX Exporter configuration. See https://github.com/prometheus/jmx_exporter for details of the structure of this configuration.
         :param 'KafkaSpecCruiseControlReadinessProbeArgs' readiness_probe: Pod readiness checking for the Cruise Control container.
         :param 'KafkaSpecCruiseControlResourcesArgs' resources: CPU and memory resources to reserve for the Cruise Control container.
         :param 'KafkaSpecCruiseControlTemplateArgs' template: Template to specify how Cruise Control resources, `Deployments` and `Pods`, are generated.
@@ -13674,6 +14347,8 @@ class KafkaSpecCruiseControl(dict):
             pulumi.set(__self__, "liveness_probe", liveness_probe)
         if logging is not None:
             pulumi.set(__self__, "logging", logging)
+        if metrics is not None:
+            pulumi.set(__self__, "metrics", metrics)
         if readiness_probe is not None:
             pulumi.set(__self__, "readiness_probe", readiness_probe)
         if resources is not None:
@@ -13730,6 +14405,14 @@ class KafkaSpecCruiseControl(dict):
         Logging configuration (log4j1) for Cruise Control.
         """
         return pulumi.get(self, "logging")
+
+    @property
+    @pulumi.getter
+    def metrics(self) -> Optional[Mapping[str, Any]]:
+        """
+        The Prometheus JMX Exporter configuration. See https://github.com/prometheus/jmx_exporter for details of the structure of this configuration.
+        """
+        return pulumi.get(self, "metrics")
 
     @property
     @pulumi.getter(name="readinessProbe")
@@ -14548,11 +15231,14 @@ class KafkaSpecCruiseControlTemplateCruiseControlContainerSecurityContextSeLinux
 class KafkaSpecCruiseControlTemplateCruiseControlContainerSecurityContextWindowsOptions(dict):
     def __init__(__self__, *,
                  gmsa_credential_spec: Optional[str] = None,
-                 gmsa_credential_spec_name: Optional[str] = None):
+                 gmsa_credential_spec_name: Optional[str] = None,
+                 run_as_user_name: Optional[str] = None):
         if gmsa_credential_spec is not None:
             pulumi.set(__self__, "gmsa_credential_spec", gmsa_credential_spec)
         if gmsa_credential_spec_name is not None:
             pulumi.set(__self__, "gmsa_credential_spec_name", gmsa_credential_spec_name)
+        if run_as_user_name is not None:
+            pulumi.set(__self__, "run_as_user_name", run_as_user_name)
 
     @property
     @pulumi.getter(name="gmsaCredentialSpec")
@@ -14563,6 +15249,11 @@ class KafkaSpecCruiseControlTemplateCruiseControlContainerSecurityContextWindows
     @pulumi.getter(name="gmsaCredentialSpecName")
     def gmsa_credential_spec_name(self) -> Optional[str]:
         return pulumi.get(self, "gmsa_credential_spec_name")
+
+    @property
+    @pulumi.getter(name="runAsUserName")
+    def run_as_user_name(self) -> Optional[str]:
+        return pulumi.get(self, "run_as_user_name")
 
     def _translate_property(self, prop):
         return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
@@ -14639,6 +15330,7 @@ class KafkaSpecCruiseControlTemplatePod(dict):
     """
     def __init__(__self__, *,
                  affinity: Optional['outputs.KafkaSpecCruiseControlTemplatePodAffinity'] = None,
+                 host_aliases: Optional[Sequence['outputs.KafkaSpecCruiseControlTemplatePodHostAliases']] = None,
                  image_pull_secrets: Optional[Sequence['outputs.KafkaSpecCruiseControlTemplatePodImagePullSecrets']] = None,
                  metadata: Optional['outputs.KafkaSpecCruiseControlTemplatePodMetadata'] = None,
                  priority_class_name: Optional[str] = None,
@@ -14649,6 +15341,7 @@ class KafkaSpecCruiseControlTemplatePod(dict):
         """
         Template for Cruise Control `Pods`.
         :param 'KafkaSpecCruiseControlTemplatePodAffinityArgs' affinity: The pod's affinity rules.
+        :param Sequence['KafkaSpecCruiseControlTemplatePodHostAliasesArgs'] host_aliases: The pod's HostAliases. HostAliases is an optional list of hosts and IPs that will be injected into the pod's hosts file if specified.
         :param Sequence['KafkaSpecCruiseControlTemplatePodImagePullSecretsArgs'] image_pull_secrets: List of references to secrets in the same namespace to use for pulling any of the images used by this Pod. When the `STRIMZI_IMAGE_PULL_SECRETS` environment variable in Cluster Operator and the `imagePullSecrets` option are specified, only the `imagePullSecrets` variable is used and the `STRIMZI_IMAGE_PULL_SECRETS` variable is ignored.
         :param 'KafkaSpecCruiseControlTemplatePodMetadataArgs' metadata: Metadata applied to the resource.
         :param str priority_class_name: The name of the priority class used to assign priority to the pods. For more information about priority classes, see {K8sPriorityClass}.
@@ -14659,6 +15352,8 @@ class KafkaSpecCruiseControlTemplatePod(dict):
         """
         if affinity is not None:
             pulumi.set(__self__, "affinity", affinity)
+        if host_aliases is not None:
+            pulumi.set(__self__, "host_aliases", host_aliases)
         if image_pull_secrets is not None:
             pulumi.set(__self__, "image_pull_secrets", image_pull_secrets)
         if metadata is not None:
@@ -14681,6 +15376,14 @@ class KafkaSpecCruiseControlTemplatePod(dict):
         The pod's affinity rules.
         """
         return pulumi.get(self, "affinity")
+
+    @property
+    @pulumi.getter(name="hostAliases")
+    def host_aliases(self) -> Optional[Sequence['outputs.KafkaSpecCruiseControlTemplatePodHostAliases']]:
+        """
+        The pod's HostAliases. HostAliases is an optional list of hosts and IPs that will be injected into the pod's hosts file if specified.
+        """
+        return pulumi.get(self, "host_aliases")
 
     @property
     @pulumi.getter(name="imagePullSecrets")
@@ -15545,6 +16248,30 @@ class KafkaSpecCruiseControlTemplatePodDisruptionBudgetMetadata(dict):
 
 
 @pulumi.output_type
+class KafkaSpecCruiseControlTemplatePodHostAliases(dict):
+    def __init__(__self__, *,
+                 hostnames: Optional[Sequence[str]] = None,
+                 ip: Optional[str] = None):
+        if hostnames is not None:
+            pulumi.set(__self__, "hostnames", hostnames)
+        if ip is not None:
+            pulumi.set(__self__, "ip", ip)
+
+    @property
+    @pulumi.getter
+    def hostnames(self) -> Optional[Sequence[str]]:
+        return pulumi.get(self, "hostnames")
+
+    @property
+    @pulumi.getter
+    def ip(self) -> Optional[str]:
+        return pulumi.get(self, "ip")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
 class KafkaSpecCruiseControlTemplatePodImagePullSecrets(dict):
     def __init__(__self__, *,
                  name: Optional[str] = None):
@@ -15605,6 +16332,7 @@ class KafkaSpecCruiseControlTemplatePodSecurityContext(dict):
     """
     def __init__(__self__, *,
                  fs_group: Optional[int] = None,
+                 fs_group_change_policy: Optional[str] = None,
                  run_as_group: Optional[int] = None,
                  run_as_non_root: Optional[bool] = None,
                  run_as_user: Optional[int] = None,
@@ -15617,6 +16345,8 @@ class KafkaSpecCruiseControlTemplatePodSecurityContext(dict):
         """
         if fs_group is not None:
             pulumi.set(__self__, "fs_group", fs_group)
+        if fs_group_change_policy is not None:
+            pulumi.set(__self__, "fs_group_change_policy", fs_group_change_policy)
         if run_as_group is not None:
             pulumi.set(__self__, "run_as_group", run_as_group)
         if run_as_non_root is not None:
@@ -15636,6 +16366,11 @@ class KafkaSpecCruiseControlTemplatePodSecurityContext(dict):
     @pulumi.getter(name="fsGroup")
     def fs_group(self) -> Optional[int]:
         return pulumi.get(self, "fs_group")
+
+    @property
+    @pulumi.getter(name="fsGroupChangePolicy")
+    def fs_group_change_policy(self) -> Optional[str]:
+        return pulumi.get(self, "fs_group_change_policy")
 
     @property
     @pulumi.getter(name="runAsGroup")
@@ -15744,11 +16479,14 @@ class KafkaSpecCruiseControlTemplatePodSecurityContextSysctls(dict):
 class KafkaSpecCruiseControlTemplatePodSecurityContextWindowsOptions(dict):
     def __init__(__self__, *,
                  gmsa_credential_spec: Optional[str] = None,
-                 gmsa_credential_spec_name: Optional[str] = None):
+                 gmsa_credential_spec_name: Optional[str] = None,
+                 run_as_user_name: Optional[str] = None):
         if gmsa_credential_spec is not None:
             pulumi.set(__self__, "gmsa_credential_spec", gmsa_credential_spec)
         if gmsa_credential_spec_name is not None:
             pulumi.set(__self__, "gmsa_credential_spec_name", gmsa_credential_spec_name)
+        if run_as_user_name is not None:
+            pulumi.set(__self__, "run_as_user_name", run_as_user_name)
 
     @property
     @pulumi.getter(name="gmsaCredentialSpec")
@@ -15759,6 +16497,11 @@ class KafkaSpecCruiseControlTemplatePodSecurityContextWindowsOptions(dict):
     @pulumi.getter(name="gmsaCredentialSpecName")
     def gmsa_credential_spec_name(self) -> Optional[str]:
         return pulumi.get(self, "gmsa_credential_spec_name")
+
+    @property
+    @pulumi.getter(name="runAsUserName")
+    def run_as_user_name(self) -> Optional[str]:
+        return pulumi.get(self, "run_as_user_name")
 
     def _translate_property(self, prop):
         return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
@@ -16046,11 +16789,14 @@ class KafkaSpecCruiseControlTemplateTlsSidecarContainerSecurityContextSeLinuxOpt
 class KafkaSpecCruiseControlTemplateTlsSidecarContainerSecurityContextWindowsOptions(dict):
     def __init__(__self__, *,
                  gmsa_credential_spec: Optional[str] = None,
-                 gmsa_credential_spec_name: Optional[str] = None):
+                 gmsa_credential_spec_name: Optional[str] = None,
+                 run_as_user_name: Optional[str] = None):
         if gmsa_credential_spec is not None:
             pulumi.set(__self__, "gmsa_credential_spec", gmsa_credential_spec)
         if gmsa_credential_spec_name is not None:
             pulumi.set(__self__, "gmsa_credential_spec_name", gmsa_credential_spec_name)
+        if run_as_user_name is not None:
+            pulumi.set(__self__, "run_as_user_name", run_as_user_name)
 
     @property
     @pulumi.getter(name="gmsaCredentialSpec")
@@ -16061,6 +16807,11 @@ class KafkaSpecCruiseControlTemplateTlsSidecarContainerSecurityContextWindowsOpt
     @pulumi.getter(name="gmsaCredentialSpecName")
     def gmsa_credential_spec_name(self) -> Optional[str]:
         return pulumi.get(self, "gmsa_credential_spec_name")
+
+    @property
+    @pulumi.getter(name="runAsUserName")
+    def run_as_user_name(self) -> Optional[str]:
+        return pulumi.get(self, "run_as_user_name")
 
     def _translate_property(self, prop):
         return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
@@ -17275,6 +18026,7 @@ class KafkaSpecEntityOperatorTemplatePod(dict):
     """
     def __init__(__self__, *,
                  affinity: Optional['outputs.KafkaSpecEntityOperatorTemplatePodAffinity'] = None,
+                 host_aliases: Optional[Sequence['outputs.KafkaSpecEntityOperatorTemplatePodHostAliases']] = None,
                  image_pull_secrets: Optional[Sequence['outputs.KafkaSpecEntityOperatorTemplatePodImagePullSecrets']] = None,
                  metadata: Optional['outputs.KafkaSpecEntityOperatorTemplatePodMetadata'] = None,
                  priority_class_name: Optional[str] = None,
@@ -17285,6 +18037,7 @@ class KafkaSpecEntityOperatorTemplatePod(dict):
         """
         Template for Entity Operator `Pods`.
         :param 'KafkaSpecEntityOperatorTemplatePodAffinityArgs' affinity: The pod's affinity rules.
+        :param Sequence['KafkaSpecEntityOperatorTemplatePodHostAliasesArgs'] host_aliases: The pod's HostAliases. HostAliases is an optional list of hosts and IPs that will be injected into the pod's hosts file if specified.
         :param Sequence['KafkaSpecEntityOperatorTemplatePodImagePullSecretsArgs'] image_pull_secrets: List of references to secrets in the same namespace to use for pulling any of the images used by this Pod. When the `STRIMZI_IMAGE_PULL_SECRETS` environment variable in Cluster Operator and the `imagePullSecrets` option are specified, only the `imagePullSecrets` variable is used and the `STRIMZI_IMAGE_PULL_SECRETS` variable is ignored.
         :param 'KafkaSpecEntityOperatorTemplatePodMetadataArgs' metadata: Metadata applied to the resource.
         :param str priority_class_name: The name of the priority class used to assign priority to the pods. For more information about priority classes, see {K8sPriorityClass}.
@@ -17295,6 +18048,8 @@ class KafkaSpecEntityOperatorTemplatePod(dict):
         """
         if affinity is not None:
             pulumi.set(__self__, "affinity", affinity)
+        if host_aliases is not None:
+            pulumi.set(__self__, "host_aliases", host_aliases)
         if image_pull_secrets is not None:
             pulumi.set(__self__, "image_pull_secrets", image_pull_secrets)
         if metadata is not None:
@@ -17317,6 +18072,14 @@ class KafkaSpecEntityOperatorTemplatePod(dict):
         The pod's affinity rules.
         """
         return pulumi.get(self, "affinity")
+
+    @property
+    @pulumi.getter(name="hostAliases")
+    def host_aliases(self) -> Optional[Sequence['outputs.KafkaSpecEntityOperatorTemplatePodHostAliases']]:
+        """
+        The pod's HostAliases. HostAliases is an optional list of hosts and IPs that will be injected into the pod's hosts file if specified.
+        """
+        return pulumi.get(self, "host_aliases")
 
     @property
     @pulumi.getter(name="imagePullSecrets")
@@ -18105,6 +18868,30 @@ class KafkaSpecEntityOperatorTemplatePodAffinityPodAntiAffinityRequiredDuringSch
 
 
 @pulumi.output_type
+class KafkaSpecEntityOperatorTemplatePodHostAliases(dict):
+    def __init__(__self__, *,
+                 hostnames: Optional[Sequence[str]] = None,
+                 ip: Optional[str] = None):
+        if hostnames is not None:
+            pulumi.set(__self__, "hostnames", hostnames)
+        if ip is not None:
+            pulumi.set(__self__, "ip", ip)
+
+    @property
+    @pulumi.getter
+    def hostnames(self) -> Optional[Sequence[str]]:
+        return pulumi.get(self, "hostnames")
+
+    @property
+    @pulumi.getter
+    def ip(self) -> Optional[str]:
+        return pulumi.get(self, "ip")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
 class KafkaSpecEntityOperatorTemplatePodImagePullSecrets(dict):
     def __init__(__self__, *,
                  name: Optional[str] = None):
@@ -18165,6 +18952,7 @@ class KafkaSpecEntityOperatorTemplatePodSecurityContext(dict):
     """
     def __init__(__self__, *,
                  fs_group: Optional[int] = None,
+                 fs_group_change_policy: Optional[str] = None,
                  run_as_group: Optional[int] = None,
                  run_as_non_root: Optional[bool] = None,
                  run_as_user: Optional[int] = None,
@@ -18177,6 +18965,8 @@ class KafkaSpecEntityOperatorTemplatePodSecurityContext(dict):
         """
         if fs_group is not None:
             pulumi.set(__self__, "fs_group", fs_group)
+        if fs_group_change_policy is not None:
+            pulumi.set(__self__, "fs_group_change_policy", fs_group_change_policy)
         if run_as_group is not None:
             pulumi.set(__self__, "run_as_group", run_as_group)
         if run_as_non_root is not None:
@@ -18196,6 +18986,11 @@ class KafkaSpecEntityOperatorTemplatePodSecurityContext(dict):
     @pulumi.getter(name="fsGroup")
     def fs_group(self) -> Optional[int]:
         return pulumi.get(self, "fs_group")
+
+    @property
+    @pulumi.getter(name="fsGroupChangePolicy")
+    def fs_group_change_policy(self) -> Optional[str]:
+        return pulumi.get(self, "fs_group_change_policy")
 
     @property
     @pulumi.getter(name="runAsGroup")
@@ -18304,11 +19099,14 @@ class KafkaSpecEntityOperatorTemplatePodSecurityContextSysctls(dict):
 class KafkaSpecEntityOperatorTemplatePodSecurityContextWindowsOptions(dict):
     def __init__(__self__, *,
                  gmsa_credential_spec: Optional[str] = None,
-                 gmsa_credential_spec_name: Optional[str] = None):
+                 gmsa_credential_spec_name: Optional[str] = None,
+                 run_as_user_name: Optional[str] = None):
         if gmsa_credential_spec is not None:
             pulumi.set(__self__, "gmsa_credential_spec", gmsa_credential_spec)
         if gmsa_credential_spec_name is not None:
             pulumi.set(__self__, "gmsa_credential_spec_name", gmsa_credential_spec_name)
+        if run_as_user_name is not None:
+            pulumi.set(__self__, "run_as_user_name", run_as_user_name)
 
     @property
     @pulumi.getter(name="gmsaCredentialSpec")
@@ -18319,6 +19117,11 @@ class KafkaSpecEntityOperatorTemplatePodSecurityContextWindowsOptions(dict):
     @pulumi.getter(name="gmsaCredentialSpecName")
     def gmsa_credential_spec_name(self) -> Optional[str]:
         return pulumi.get(self, "gmsa_credential_spec_name")
+
+    @property
+    @pulumi.getter(name="runAsUserName")
+    def run_as_user_name(self) -> Optional[str]:
+        return pulumi.get(self, "run_as_user_name")
 
     def _translate_property(self, prop):
         return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
@@ -18606,11 +19409,14 @@ class KafkaSpecEntityOperatorTemplateTlsSidecarContainerSecurityContextSeLinuxOp
 class KafkaSpecEntityOperatorTemplateTlsSidecarContainerSecurityContextWindowsOptions(dict):
     def __init__(__self__, *,
                  gmsa_credential_spec: Optional[str] = None,
-                 gmsa_credential_spec_name: Optional[str] = None):
+                 gmsa_credential_spec_name: Optional[str] = None,
+                 run_as_user_name: Optional[str] = None):
         if gmsa_credential_spec is not None:
             pulumi.set(__self__, "gmsa_credential_spec", gmsa_credential_spec)
         if gmsa_credential_spec_name is not None:
             pulumi.set(__self__, "gmsa_credential_spec_name", gmsa_credential_spec_name)
+        if run_as_user_name is not None:
+            pulumi.set(__self__, "run_as_user_name", run_as_user_name)
 
     @property
     @pulumi.getter(name="gmsaCredentialSpec")
@@ -18621,6 +19427,11 @@ class KafkaSpecEntityOperatorTemplateTlsSidecarContainerSecurityContextWindowsOp
     @pulumi.getter(name="gmsaCredentialSpecName")
     def gmsa_credential_spec_name(self) -> Optional[str]:
         return pulumi.get(self, "gmsa_credential_spec_name")
+
+    @property
+    @pulumi.getter(name="runAsUserName")
+    def run_as_user_name(self) -> Optional[str]:
+        return pulumi.get(self, "run_as_user_name")
 
     def _translate_property(self, prop):
         return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
@@ -18860,11 +19671,14 @@ class KafkaSpecEntityOperatorTemplateTopicOperatorContainerSecurityContextSeLinu
 class KafkaSpecEntityOperatorTemplateTopicOperatorContainerSecurityContextWindowsOptions(dict):
     def __init__(__self__, *,
                  gmsa_credential_spec: Optional[str] = None,
-                 gmsa_credential_spec_name: Optional[str] = None):
+                 gmsa_credential_spec_name: Optional[str] = None,
+                 run_as_user_name: Optional[str] = None):
         if gmsa_credential_spec is not None:
             pulumi.set(__self__, "gmsa_credential_spec", gmsa_credential_spec)
         if gmsa_credential_spec_name is not None:
             pulumi.set(__self__, "gmsa_credential_spec_name", gmsa_credential_spec_name)
+        if run_as_user_name is not None:
+            pulumi.set(__self__, "run_as_user_name", run_as_user_name)
 
     @property
     @pulumi.getter(name="gmsaCredentialSpec")
@@ -18875,6 +19689,11 @@ class KafkaSpecEntityOperatorTemplateTopicOperatorContainerSecurityContextWindow
     @pulumi.getter(name="gmsaCredentialSpecName")
     def gmsa_credential_spec_name(self) -> Optional[str]:
         return pulumi.get(self, "gmsa_credential_spec_name")
+
+    @property
+    @pulumi.getter(name="runAsUserName")
+    def run_as_user_name(self) -> Optional[str]:
+        return pulumi.get(self, "run_as_user_name")
 
     def _translate_property(self, prop):
         return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
@@ -19114,11 +19933,14 @@ class KafkaSpecEntityOperatorTemplateUserOperatorContainerSecurityContextSeLinux
 class KafkaSpecEntityOperatorTemplateUserOperatorContainerSecurityContextWindowsOptions(dict):
     def __init__(__self__, *,
                  gmsa_credential_spec: Optional[str] = None,
-                 gmsa_credential_spec_name: Optional[str] = None):
+                 gmsa_credential_spec_name: Optional[str] = None,
+                 run_as_user_name: Optional[str] = None):
         if gmsa_credential_spec is not None:
             pulumi.set(__self__, "gmsa_credential_spec", gmsa_credential_spec)
         if gmsa_credential_spec_name is not None:
             pulumi.set(__self__, "gmsa_credential_spec_name", gmsa_credential_spec_name)
+        if run_as_user_name is not None:
+            pulumi.set(__self__, "run_as_user_name", run_as_user_name)
 
     @property
     @pulumi.getter(name="gmsaCredentialSpec")
@@ -19129,6 +19951,11 @@ class KafkaSpecEntityOperatorTemplateUserOperatorContainerSecurityContextWindows
     @pulumi.getter(name="gmsaCredentialSpecName")
     def gmsa_credential_spec_name(self) -> Optional[str]:
         return pulumi.get(self, "gmsa_credential_spec_name")
+
+    @property
+    @pulumi.getter(name="runAsUserName")
+    def run_as_user_name(self) -> Optional[str]:
+        return pulumi.get(self, "run_as_user_name")
 
     def _translate_property(self, prop):
         return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
@@ -20881,11 +21708,14 @@ class KafkaSpecJmxTransTemplateContainerSecurityContextSeLinuxOptions(dict):
 class KafkaSpecJmxTransTemplateContainerSecurityContextWindowsOptions(dict):
     def __init__(__self__, *,
                  gmsa_credential_spec: Optional[str] = None,
-                 gmsa_credential_spec_name: Optional[str] = None):
+                 gmsa_credential_spec_name: Optional[str] = None,
+                 run_as_user_name: Optional[str] = None):
         if gmsa_credential_spec is not None:
             pulumi.set(__self__, "gmsa_credential_spec", gmsa_credential_spec)
         if gmsa_credential_spec_name is not None:
             pulumi.set(__self__, "gmsa_credential_spec_name", gmsa_credential_spec_name)
+        if run_as_user_name is not None:
+            pulumi.set(__self__, "run_as_user_name", run_as_user_name)
 
     @property
     @pulumi.getter(name="gmsaCredentialSpec")
@@ -20896,6 +21726,11 @@ class KafkaSpecJmxTransTemplateContainerSecurityContextWindowsOptions(dict):
     @pulumi.getter(name="gmsaCredentialSpecName")
     def gmsa_credential_spec_name(self) -> Optional[str]:
         return pulumi.get(self, "gmsa_credential_spec_name")
+
+    @property
+    @pulumi.getter(name="runAsUserName")
+    def run_as_user_name(self) -> Optional[str]:
+        return pulumi.get(self, "run_as_user_name")
 
     def _translate_property(self, prop):
         return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
@@ -20972,6 +21807,7 @@ class KafkaSpecJmxTransTemplatePod(dict):
     """
     def __init__(__self__, *,
                  affinity: Optional['outputs.KafkaSpecJmxTransTemplatePodAffinity'] = None,
+                 host_aliases: Optional[Sequence['outputs.KafkaSpecJmxTransTemplatePodHostAliases']] = None,
                  image_pull_secrets: Optional[Sequence['outputs.KafkaSpecJmxTransTemplatePodImagePullSecrets']] = None,
                  metadata: Optional['outputs.KafkaSpecJmxTransTemplatePodMetadata'] = None,
                  priority_class_name: Optional[str] = None,
@@ -20982,6 +21818,7 @@ class KafkaSpecJmxTransTemplatePod(dict):
         """
         Template for JmxTrans `Pods`.
         :param 'KafkaSpecJmxTransTemplatePodAffinityArgs' affinity: The pod's affinity rules.
+        :param Sequence['KafkaSpecJmxTransTemplatePodHostAliasesArgs'] host_aliases: The pod's HostAliases. HostAliases is an optional list of hosts and IPs that will be injected into the pod's hosts file if specified.
         :param Sequence['KafkaSpecJmxTransTemplatePodImagePullSecretsArgs'] image_pull_secrets: List of references to secrets in the same namespace to use for pulling any of the images used by this Pod. When the `STRIMZI_IMAGE_PULL_SECRETS` environment variable in Cluster Operator and the `imagePullSecrets` option are specified, only the `imagePullSecrets` variable is used and the `STRIMZI_IMAGE_PULL_SECRETS` variable is ignored.
         :param 'KafkaSpecJmxTransTemplatePodMetadataArgs' metadata: Metadata applied to the resource.
         :param str priority_class_name: The name of the priority class used to assign priority to the pods. For more information about priority classes, see {K8sPriorityClass}.
@@ -20992,6 +21829,8 @@ class KafkaSpecJmxTransTemplatePod(dict):
         """
         if affinity is not None:
             pulumi.set(__self__, "affinity", affinity)
+        if host_aliases is not None:
+            pulumi.set(__self__, "host_aliases", host_aliases)
         if image_pull_secrets is not None:
             pulumi.set(__self__, "image_pull_secrets", image_pull_secrets)
         if metadata is not None:
@@ -21014,6 +21853,14 @@ class KafkaSpecJmxTransTemplatePod(dict):
         The pod's affinity rules.
         """
         return pulumi.get(self, "affinity")
+
+    @property
+    @pulumi.getter(name="hostAliases")
+    def host_aliases(self) -> Optional[Sequence['outputs.KafkaSpecJmxTransTemplatePodHostAliases']]:
+        """
+        The pod's HostAliases. HostAliases is an optional list of hosts and IPs that will be injected into the pod's hosts file if specified.
+        """
+        return pulumi.get(self, "host_aliases")
 
     @property
     @pulumi.getter(name="imagePullSecrets")
@@ -21802,6 +22649,30 @@ class KafkaSpecJmxTransTemplatePodAffinityPodAntiAffinityRequiredDuringSchedulin
 
 
 @pulumi.output_type
+class KafkaSpecJmxTransTemplatePodHostAliases(dict):
+    def __init__(__self__, *,
+                 hostnames: Optional[Sequence[str]] = None,
+                 ip: Optional[str] = None):
+        if hostnames is not None:
+            pulumi.set(__self__, "hostnames", hostnames)
+        if ip is not None:
+            pulumi.set(__self__, "ip", ip)
+
+    @property
+    @pulumi.getter
+    def hostnames(self) -> Optional[Sequence[str]]:
+        return pulumi.get(self, "hostnames")
+
+    @property
+    @pulumi.getter
+    def ip(self) -> Optional[str]:
+        return pulumi.get(self, "ip")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
 class KafkaSpecJmxTransTemplatePodImagePullSecrets(dict):
     def __init__(__self__, *,
                  name: Optional[str] = None):
@@ -21862,6 +22733,7 @@ class KafkaSpecJmxTransTemplatePodSecurityContext(dict):
     """
     def __init__(__self__, *,
                  fs_group: Optional[int] = None,
+                 fs_group_change_policy: Optional[str] = None,
                  run_as_group: Optional[int] = None,
                  run_as_non_root: Optional[bool] = None,
                  run_as_user: Optional[int] = None,
@@ -21874,6 +22746,8 @@ class KafkaSpecJmxTransTemplatePodSecurityContext(dict):
         """
         if fs_group is not None:
             pulumi.set(__self__, "fs_group", fs_group)
+        if fs_group_change_policy is not None:
+            pulumi.set(__self__, "fs_group_change_policy", fs_group_change_policy)
         if run_as_group is not None:
             pulumi.set(__self__, "run_as_group", run_as_group)
         if run_as_non_root is not None:
@@ -21893,6 +22767,11 @@ class KafkaSpecJmxTransTemplatePodSecurityContext(dict):
     @pulumi.getter(name="fsGroup")
     def fs_group(self) -> Optional[int]:
         return pulumi.get(self, "fs_group")
+
+    @property
+    @pulumi.getter(name="fsGroupChangePolicy")
+    def fs_group_change_policy(self) -> Optional[str]:
+        return pulumi.get(self, "fs_group_change_policy")
 
     @property
     @pulumi.getter(name="runAsGroup")
@@ -22001,11 +22880,14 @@ class KafkaSpecJmxTransTemplatePodSecurityContextSysctls(dict):
 class KafkaSpecJmxTransTemplatePodSecurityContextWindowsOptions(dict):
     def __init__(__self__, *,
                  gmsa_credential_spec: Optional[str] = None,
-                 gmsa_credential_spec_name: Optional[str] = None):
+                 gmsa_credential_spec_name: Optional[str] = None,
+                 run_as_user_name: Optional[str] = None):
         if gmsa_credential_spec is not None:
             pulumi.set(__self__, "gmsa_credential_spec", gmsa_credential_spec)
         if gmsa_credential_spec_name is not None:
             pulumi.set(__self__, "gmsa_credential_spec_name", gmsa_credential_spec_name)
+        if run_as_user_name is not None:
+            pulumi.set(__self__, "run_as_user_name", run_as_user_name)
 
     @property
     @pulumi.getter(name="gmsaCredentialSpec")
@@ -22016,6 +22898,11 @@ class KafkaSpecJmxTransTemplatePodSecurityContextWindowsOptions(dict):
     @pulumi.getter(name="gmsaCredentialSpecName")
     def gmsa_credential_spec_name(self) -> Optional[str]:
         return pulumi.get(self, "gmsa_credential_spec_name")
+
+    @property
+    @pulumi.getter(name="runAsUserName")
+    def run_as_user_name(self) -> Optional[str]:
+        return pulumi.get(self, "run_as_user_name")
 
     def _translate_property(self, prop):
         return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
@@ -22075,7 +22962,7 @@ class KafkaSpecKafka(dict):
     Configuration of the Kafka cluster.
     """
     def __init__(__self__, *,
-                 listeners: 'outputs.KafkaSpecKafkaListeners',
+                 listeners: Any,
                  replicas: int,
                  storage: 'outputs.KafkaSpecKafkaStorage',
                  affinity: Optional['outputs.KafkaSpecKafkaAffinity'] = None,
@@ -22097,13 +22984,12 @@ class KafkaSpecKafka(dict):
                  version: Optional[str] = None):
         """
         Configuration of the Kafka cluster.
-        :param 'KafkaSpecKafkaListenersArgs' listeners: Configures listeners of Kafka brokers.
         :param int replicas: The number of pods in the cluster.
         :param 'KafkaSpecKafkaStorageArgs' storage: Storage configuration (disk). Cannot be updated.
         :param 'KafkaSpecKafkaAffinityArgs' affinity: The pod's affinity rules.
         :param 'KafkaSpecKafkaAuthorizationArgs' authorization: Authorization configuration for Kafka brokers.
         :param str broker_rack_init_image: The image of the init container used for initializing the `broker.rack`.
-        :param Mapping[str, Any] config: Kafka broker config properties with the following prefixes cannot be set: listeners, advertised., broker., listener., host.name, port, inter.broker.listener.name, sasl., ssl., security., password., principal.builder.class, log.dir, zookeeper.connect, zookeeper.set.acl, authorizer., super.user, cruise.control.metrics.topic, cruise.control.metrics.reporter.bootstrap.servers (with the exception of: zookeeper.connection.timeout.ms, ssl.cipher.suites, ssl.protocol, ssl.enabled.protocols,cruise.control.metrics.topic.num.partitions, cruise.control.metrics.topic.replication.factor, cruise.control.metrics.topic.retention.ms,cruise.control.metrics.topic.auto.create.retries, cruise.control.metrics.topic.auto.create.timeout.ms).
+        :param Mapping[str, Any] config: Kafka broker config properties with the following prefixes cannot be set: listeners, advertised., broker., listener., host.name, port, inter.broker.listener.name, sasl., ssl., security., password., principal.builder.class, log.dir, zookeeper.connect, zookeeper.set.acl, zookeeper.ssl, zookeeper.clientCnxnSocket, authorizer., super.user, cruise.control.metrics.topic, cruise.control.metrics.reporter.bootstrap.servers (with the exception of: zookeeper.connection.timeout.ms, ssl.cipher.suites, ssl.protocol, ssl.enabled.protocols,cruise.control.metrics.topic.num.partitions, cruise.control.metrics.topic.replication.factor, cruise.control.metrics.topic.retention.ms,cruise.control.metrics.topic.auto.create.retries, cruise.control.metrics.topic.auto.create.timeout.ms).
         :param str image: The docker image for the pods. The default value depends on the configured `Kafka.spec.kafka.version`.
         :param 'KafkaSpecKafkaJmxOptionsArgs' jmx_options: JMX Options for Kafka brokers.
         :param 'KafkaSpecKafkaJvmOptionsArgs' jvm_options: JVM Options for pods.
@@ -22158,10 +23044,7 @@ class KafkaSpecKafka(dict):
 
     @property
     @pulumi.getter
-    def listeners(self) -> 'outputs.KafkaSpecKafkaListeners':
-        """
-        Configures listeners of Kafka brokers.
-        """
+    def listeners(self) -> Any:
         return pulumi.get(self, "listeners")
 
     @property
@@ -22208,7 +23091,7 @@ class KafkaSpecKafka(dict):
     @pulumi.getter
     def config(self) -> Optional[Mapping[str, Any]]:
         """
-        Kafka broker config properties with the following prefixes cannot be set: listeners, advertised., broker., listener., host.name, port, inter.broker.listener.name, sasl., ssl., security., password., principal.builder.class, log.dir, zookeeper.connect, zookeeper.set.acl, authorizer., super.user, cruise.control.metrics.topic, cruise.control.metrics.reporter.bootstrap.servers (with the exception of: zookeeper.connection.timeout.ms, ssl.cipher.suites, ssl.protocol, ssl.enabled.protocols,cruise.control.metrics.topic.num.partitions, cruise.control.metrics.topic.replication.factor, cruise.control.metrics.topic.retention.ms,cruise.control.metrics.topic.auto.create.retries, cruise.control.metrics.topic.auto.create.timeout.ms).
+        Kafka broker config properties with the following prefixes cannot be set: listeners, advertised., broker., listener., host.name, port, inter.broker.listener.name, sasl., ssl., security., password., principal.builder.class, log.dir, zookeeper.connect, zookeeper.set.acl, zookeeper.ssl, zookeeper.clientCnxnSocket, authorizer., super.user, cruise.control.metrics.topic, cruise.control.metrics.reporter.bootstrap.servers (with the exception of: zookeeper.connection.timeout.ms, ssl.cipher.suites, ssl.protocol, ssl.enabled.protocols,cruise.control.metrics.topic.num.partitions, cruise.control.metrics.topic.replication.factor, cruise.control.metrics.topic.retention.ms,cruise.control.metrics.topic.auto.create.retries, cruise.control.metrics.topic.auto.create.timeout.ms).
         """
         return pulumi.get(self, "config")
 
@@ -23058,6 +23941,8 @@ class KafkaSpecKafkaAuthorization(dict):
                  delegate_to_kafka_acls: Optional[bool] = None,
                  disable_tls_hostname_verification: Optional[bool] = None,
                  expire_after_ms: Optional[int] = None,
+                 grants_refresh_period_seconds: Optional[int] = None,
+                 grants_refresh_pool_size: Optional[int] = None,
                  initial_cache_capacity: Optional[int] = None,
                  maximum_cache_size: Optional[int] = None,
                  super_users: Optional[Sequence[str]] = None,
@@ -23066,12 +23951,14 @@ class KafkaSpecKafkaAuthorization(dict):
                  url: Optional[str] = None):
         """
         Authorization configuration for Kafka brokers.
-        :param str type: Authorization type. Currently, the supported types are `simple`, `keycloak`, and `opa`. `simple` authorization type uses Kafka's `kafka.security.auth.SimpleAclAuthorizer` class for authorization. `keycloak` authorization type uses Keycloak Authorization Services for authorization. `opa` authorization type uses Open Policy Agent based authorization.
+        :param str type: Authorization type. Currently, the supported types are `simple`, `keycloak`, and `opa`. `simple` authorization type uses Kafka's `kafka.security.authorizer.AclAuthorizer` class for authorization. `keycloak` authorization type uses Keycloak Authorization Services for authorization. `opa` authorization type uses Open Policy Agent based authorization.
         :param bool allow_on_error: Defines whether a Kafka client should be allowed or denied by default when the authorizer fails to query the Open Policy Agent, for example, when it is temporarily unavailable). Defaults to `false` - all actions will be denied.
         :param str client_id: OAuth Client ID which the Kafka client can use to authenticate against the OAuth server and use the token endpoint URI.
-        :param bool delegate_to_kafka_acls: Whether authorization decision should be delegated to the 'Simple' authorizer if DENIED by Keycloak Authorization Services policies.Default value is `false`.
+        :param bool delegate_to_kafka_acls: Whether authorization decision should be delegated to the 'Simple' authorizer if DENIED by Keycloak Authorization Services policies. Default value is `false`.
         :param bool disable_tls_hostname_verification: Enable or disable TLS hostname verification. Default value is `false`.
         :param int expire_after_ms: The expiration of the records kept in the local cache to avoid querying the Open Policy Agent for every request. Defines how often the cached authorization decisions are reloaded from the Open Policy Agent server. In milliseconds. Defaults to `3600000`.
+        :param int grants_refresh_period_seconds: The time between two consecutive grants refresh runs in seconds. The default value is 60.
+        :param int grants_refresh_pool_size: The number of threads to use to refresh grants for active sessions. The more threads, the more parallelism, so the sooner the job completes. However, using more threads places a heavier load on the authorization server. The default value is 5.
         :param int initial_cache_capacity: Initial capacity of the local cache used by the authorizer to avoid querying the Open Policy Agent for every request Defaults to `5000`.
         :param int maximum_cache_size: Maximum capacity of the local cache used by the authorizer to avoid querying the Open Policy Agent for every request. Defaults to `50000`.
         :param Sequence[str] super_users: List of super users. Should contain list of user principals which should get unlimited access rights.
@@ -23090,6 +23977,10 @@ class KafkaSpecKafkaAuthorization(dict):
             pulumi.set(__self__, "disable_tls_hostname_verification", disable_tls_hostname_verification)
         if expire_after_ms is not None:
             pulumi.set(__self__, "expire_after_ms", expire_after_ms)
+        if grants_refresh_period_seconds is not None:
+            pulumi.set(__self__, "grants_refresh_period_seconds", grants_refresh_period_seconds)
+        if grants_refresh_pool_size is not None:
+            pulumi.set(__self__, "grants_refresh_pool_size", grants_refresh_pool_size)
         if initial_cache_capacity is not None:
             pulumi.set(__self__, "initial_cache_capacity", initial_cache_capacity)
         if maximum_cache_size is not None:
@@ -23107,7 +23998,7 @@ class KafkaSpecKafkaAuthorization(dict):
     @pulumi.getter
     def type(self) -> str:
         """
-        Authorization type. Currently, the supported types are `simple`, `keycloak`, and `opa`. `simple` authorization type uses Kafka's `kafka.security.auth.SimpleAclAuthorizer` class for authorization. `keycloak` authorization type uses Keycloak Authorization Services for authorization. `opa` authorization type uses Open Policy Agent based authorization.
+        Authorization type. Currently, the supported types are `simple`, `keycloak`, and `opa`. `simple` authorization type uses Kafka's `kafka.security.authorizer.AclAuthorizer` class for authorization. `keycloak` authorization type uses Keycloak Authorization Services for authorization. `opa` authorization type uses Open Policy Agent based authorization.
         """
         return pulumi.get(self, "type")
 
@@ -23131,7 +24022,7 @@ class KafkaSpecKafkaAuthorization(dict):
     @pulumi.getter(name="delegateToKafkaAcls")
     def delegate_to_kafka_acls(self) -> Optional[bool]:
         """
-        Whether authorization decision should be delegated to the 'Simple' authorizer if DENIED by Keycloak Authorization Services policies.Default value is `false`.
+        Whether authorization decision should be delegated to the 'Simple' authorizer if DENIED by Keycloak Authorization Services policies. Default value is `false`.
         """
         return pulumi.get(self, "delegate_to_kafka_acls")
 
@@ -23150,6 +24041,22 @@ class KafkaSpecKafkaAuthorization(dict):
         The expiration of the records kept in the local cache to avoid querying the Open Policy Agent for every request. Defines how often the cached authorization decisions are reloaded from the Open Policy Agent server. In milliseconds. Defaults to `3600000`.
         """
         return pulumi.get(self, "expire_after_ms")
+
+    @property
+    @pulumi.getter(name="grantsRefreshPeriodSeconds")
+    def grants_refresh_period_seconds(self) -> Optional[int]:
+        """
+        The time between two consecutive grants refresh runs in seconds. The default value is 60.
+        """
+        return pulumi.get(self, "grants_refresh_period_seconds")
+
+    @property
+    @pulumi.getter(name="grantsRefreshPoolSize")
+    def grants_refresh_pool_size(self) -> Optional[int]:
+        """
+        The number of threads to use to refresh grants for active sessions. The more threads, the more parallelism, so the sooner the job completes. However, using more threads places a heavier load on the authorization server. The default value is 5.
+        """
+        return pulumi.get(self, "grants_refresh_pool_size")
 
     @property
     @pulumi.getter(name="initialCacheCapacity")
@@ -23831,11 +24738,14 @@ class KafkaSpecKafkaExporterTemplateContainerSecurityContextSeLinuxOptions(dict)
 class KafkaSpecKafkaExporterTemplateContainerSecurityContextWindowsOptions(dict):
     def __init__(__self__, *,
                  gmsa_credential_spec: Optional[str] = None,
-                 gmsa_credential_spec_name: Optional[str] = None):
+                 gmsa_credential_spec_name: Optional[str] = None,
+                 run_as_user_name: Optional[str] = None):
         if gmsa_credential_spec is not None:
             pulumi.set(__self__, "gmsa_credential_spec", gmsa_credential_spec)
         if gmsa_credential_spec_name is not None:
             pulumi.set(__self__, "gmsa_credential_spec_name", gmsa_credential_spec_name)
+        if run_as_user_name is not None:
+            pulumi.set(__self__, "run_as_user_name", run_as_user_name)
 
     @property
     @pulumi.getter(name="gmsaCredentialSpec")
@@ -23846,6 +24756,11 @@ class KafkaSpecKafkaExporterTemplateContainerSecurityContextWindowsOptions(dict)
     @pulumi.getter(name="gmsaCredentialSpecName")
     def gmsa_credential_spec_name(self) -> Optional[str]:
         return pulumi.get(self, "gmsa_credential_spec_name")
+
+    @property
+    @pulumi.getter(name="runAsUserName")
+    def run_as_user_name(self) -> Optional[str]:
+        return pulumi.get(self, "run_as_user_name")
 
     def _translate_property(self, prop):
         return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
@@ -23922,6 +24837,7 @@ class KafkaSpecKafkaExporterTemplatePod(dict):
     """
     def __init__(__self__, *,
                  affinity: Optional['outputs.KafkaSpecKafkaExporterTemplatePodAffinity'] = None,
+                 host_aliases: Optional[Sequence['outputs.KafkaSpecKafkaExporterTemplatePodHostAliases']] = None,
                  image_pull_secrets: Optional[Sequence['outputs.KafkaSpecKafkaExporterTemplatePodImagePullSecrets']] = None,
                  metadata: Optional['outputs.KafkaSpecKafkaExporterTemplatePodMetadata'] = None,
                  priority_class_name: Optional[str] = None,
@@ -23932,6 +24848,7 @@ class KafkaSpecKafkaExporterTemplatePod(dict):
         """
         Template for Kafka Exporter `Pods`.
         :param 'KafkaSpecKafkaExporterTemplatePodAffinityArgs' affinity: The pod's affinity rules.
+        :param Sequence['KafkaSpecKafkaExporterTemplatePodHostAliasesArgs'] host_aliases: The pod's HostAliases. HostAliases is an optional list of hosts and IPs that will be injected into the pod's hosts file if specified.
         :param Sequence['KafkaSpecKafkaExporterTemplatePodImagePullSecretsArgs'] image_pull_secrets: List of references to secrets in the same namespace to use for pulling any of the images used by this Pod. When the `STRIMZI_IMAGE_PULL_SECRETS` environment variable in Cluster Operator and the `imagePullSecrets` option are specified, only the `imagePullSecrets` variable is used and the `STRIMZI_IMAGE_PULL_SECRETS` variable is ignored.
         :param 'KafkaSpecKafkaExporterTemplatePodMetadataArgs' metadata: Metadata applied to the resource.
         :param str priority_class_name: The name of the priority class used to assign priority to the pods. For more information about priority classes, see {K8sPriorityClass}.
@@ -23942,6 +24859,8 @@ class KafkaSpecKafkaExporterTemplatePod(dict):
         """
         if affinity is not None:
             pulumi.set(__self__, "affinity", affinity)
+        if host_aliases is not None:
+            pulumi.set(__self__, "host_aliases", host_aliases)
         if image_pull_secrets is not None:
             pulumi.set(__self__, "image_pull_secrets", image_pull_secrets)
         if metadata is not None:
@@ -23964,6 +24883,14 @@ class KafkaSpecKafkaExporterTemplatePod(dict):
         The pod's affinity rules.
         """
         return pulumi.get(self, "affinity")
+
+    @property
+    @pulumi.getter(name="hostAliases")
+    def host_aliases(self) -> Optional[Sequence['outputs.KafkaSpecKafkaExporterTemplatePodHostAliases']]:
+        """
+        The pod's HostAliases. HostAliases is an optional list of hosts and IPs that will be injected into the pod's hosts file if specified.
+        """
+        return pulumi.get(self, "host_aliases")
 
     @property
     @pulumi.getter(name="imagePullSecrets")
@@ -24752,6 +25679,30 @@ class KafkaSpecKafkaExporterTemplatePodAffinityPodAntiAffinityRequiredDuringSche
 
 
 @pulumi.output_type
+class KafkaSpecKafkaExporterTemplatePodHostAliases(dict):
+    def __init__(__self__, *,
+                 hostnames: Optional[Sequence[str]] = None,
+                 ip: Optional[str] = None):
+        if hostnames is not None:
+            pulumi.set(__self__, "hostnames", hostnames)
+        if ip is not None:
+            pulumi.set(__self__, "ip", ip)
+
+    @property
+    @pulumi.getter
+    def hostnames(self) -> Optional[Sequence[str]]:
+        return pulumi.get(self, "hostnames")
+
+    @property
+    @pulumi.getter
+    def ip(self) -> Optional[str]:
+        return pulumi.get(self, "ip")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
 class KafkaSpecKafkaExporterTemplatePodImagePullSecrets(dict):
     def __init__(__self__, *,
                  name: Optional[str] = None):
@@ -24812,6 +25763,7 @@ class KafkaSpecKafkaExporterTemplatePodSecurityContext(dict):
     """
     def __init__(__self__, *,
                  fs_group: Optional[int] = None,
+                 fs_group_change_policy: Optional[str] = None,
                  run_as_group: Optional[int] = None,
                  run_as_non_root: Optional[bool] = None,
                  run_as_user: Optional[int] = None,
@@ -24824,6 +25776,8 @@ class KafkaSpecKafkaExporterTemplatePodSecurityContext(dict):
         """
         if fs_group is not None:
             pulumi.set(__self__, "fs_group", fs_group)
+        if fs_group_change_policy is not None:
+            pulumi.set(__self__, "fs_group_change_policy", fs_group_change_policy)
         if run_as_group is not None:
             pulumi.set(__self__, "run_as_group", run_as_group)
         if run_as_non_root is not None:
@@ -24843,6 +25797,11 @@ class KafkaSpecKafkaExporterTemplatePodSecurityContext(dict):
     @pulumi.getter(name="fsGroup")
     def fs_group(self) -> Optional[int]:
         return pulumi.get(self, "fs_group")
+
+    @property
+    @pulumi.getter(name="fsGroupChangePolicy")
+    def fs_group_change_policy(self) -> Optional[str]:
+        return pulumi.get(self, "fs_group_change_policy")
 
     @property
     @pulumi.getter(name="runAsGroup")
@@ -24951,11 +25910,14 @@ class KafkaSpecKafkaExporterTemplatePodSecurityContextSysctls(dict):
 class KafkaSpecKafkaExporterTemplatePodSecurityContextWindowsOptions(dict):
     def __init__(__self__, *,
                  gmsa_credential_spec: Optional[str] = None,
-                 gmsa_credential_spec_name: Optional[str] = None):
+                 gmsa_credential_spec_name: Optional[str] = None,
+                 run_as_user_name: Optional[str] = None):
         if gmsa_credential_spec is not None:
             pulumi.set(__self__, "gmsa_credential_spec", gmsa_credential_spec)
         if gmsa_credential_spec_name is not None:
             pulumi.set(__self__, "gmsa_credential_spec_name", gmsa_credential_spec_name)
+        if run_as_user_name is not None:
+            pulumi.set(__self__, "run_as_user_name", run_as_user_name)
 
     @property
     @pulumi.getter(name="gmsaCredentialSpec")
@@ -24966,6 +25928,11 @@ class KafkaSpecKafkaExporterTemplatePodSecurityContextWindowsOptions(dict):
     @pulumi.getter(name="gmsaCredentialSpecName")
     def gmsa_credential_spec_name(self) -> Optional[str]:
         return pulumi.get(self, "gmsa_credential_spec_name")
+
+    @property
+    @pulumi.getter(name="runAsUserName")
+    def run_as_user_name(self) -> Optional[str]:
+        return pulumi.get(self, "run_as_user_name")
 
     def _translate_property(self, prop):
         return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
@@ -25243,160 +26210,113 @@ class KafkaSpecKafkaJvmOptionsJavaSystemProperties(dict):
 
 
 @pulumi.output_type
-class KafkaSpecKafkaListeners(dict):
-    """
-    Configures listeners of Kafka brokers.
-    """
+class KafkaSpecKafkaListenersOneOf0(dict):
     def __init__(__self__, *,
-                 external: Optional['outputs.KafkaSpecKafkaListenersExternal'] = None,
-                 plain: Optional['outputs.KafkaSpecKafkaListenersPlain'] = None,
-                 tls: Optional['outputs.KafkaSpecKafkaListenersTls'] = None):
-        """
-        Configures listeners of Kafka brokers.
-        :param 'KafkaSpecKafkaListenersExternalArgs' external: Configures external listener on port 9094.
-        :param 'KafkaSpecKafkaListenersPlainArgs' plain: Configures plain listener on port 9092.
-        :param 'KafkaSpecKafkaListenersTlsArgs' tls: Configures TLS listener on port 9093.
-        """
-        if external is not None:
-            pulumi.set(__self__, "external", external)
-        if plain is not None:
-            pulumi.set(__self__, "plain", plain)
-        if tls is not None:
-            pulumi.set(__self__, "tls", tls)
-
-    @property
-    @pulumi.getter
-    def external(self) -> Optional['outputs.KafkaSpecKafkaListenersExternal']:
-        """
-        Configures external listener on port 9094.
-        """
-        return pulumi.get(self, "external")
-
-    @property
-    @pulumi.getter
-    def plain(self) -> Optional['outputs.KafkaSpecKafkaListenersPlain']:
-        """
-        Configures plain listener on port 9092.
-        """
-        return pulumi.get(self, "plain")
-
-    @property
-    @pulumi.getter
-    def tls(self) -> Optional['outputs.KafkaSpecKafkaListenersTls']:
-        """
-        Configures TLS listener on port 9093.
-        """
-        return pulumi.get(self, "tls")
-
-    def _translate_property(self, prop):
-        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
-
-
-@pulumi.output_type
-class KafkaSpecKafkaListenersExternal(dict):
-    """
-    Configures external listener on port 9094.
-    """
-    def __init__(__self__, *,
+                 name: str,
+                 port: int,
+                 tls: bool,
                  type: str,
-                 authentication: Optional['outputs.KafkaSpecKafkaListenersExternalAuthentication'] = None,
-                 class_: Optional[str] = None,
-                 configuration: Optional['outputs.KafkaSpecKafkaListenersExternalConfiguration'] = None,
-                 network_policy_peers: Optional[Sequence['outputs.KafkaSpecKafkaListenersExternalNetworkPolicyPeers']] = None,
-                 overrides: Optional['outputs.KafkaSpecKafkaListenersExternalOverrides'] = None,
-                 tls: Optional[bool] = None):
+                 authentication: Optional['outputs.KafkaSpecKafkaListenersOneOf0Authentication'] = None,
+                 configuration: Optional['outputs.KafkaSpecKafkaListenersOneOf0Configuration'] = None,
+                 network_policy_peers: Optional[Sequence['outputs.KafkaSpecKafkaListenersOneOf0NetworkPolicyPeers']] = None):
         """
-        Configures external listener on port 9094.
-        :param str type: Type of the external listener. Currently the supported types are `route`, `loadbalancer`, and `nodeport`. 
+        :param str name: Name of the listener. The name will be used to identify the listener and the related Kubernetes objects. The name has to be unique within given a Kafka cluster. The name can consist of lowercase characters and numbers and be up to 11 characters long.
+        :param int port: Port number used by the listener inside Kafka. The port number has to be unique within a given Kafka cluster. Allowed port numbers are 9092 and higher with the exception of ports 9404 and 9999, which are already used for Prometheus and JMX. Depending on the listener type, the port number might not be the same as the port number that connects Kafka clients.
+        :param bool tls: Enables TLS encryption on the listener. This is a required property.
+        :param str type: Type of the listener. Currently the supported types are `internal`, `route`, `loadbalancer`, `nodeport` and `ingress`. 
                
-               * `route` type uses OpenShift Routes to expose Kafka.* `loadbalancer` type uses LoadBalancer type services to expose Kafka.* `nodeport` type uses NodePort type services to expose Kafka..
-        :param 'KafkaSpecKafkaListenersExternalAuthenticationArgs' authentication: Authentication configuration for Kafka brokers.
-        :param str class_: Configures the `Ingress` class that defines which `Ingress` controller will be used. If not set, the `Ingress` class is set to `nginx`.
-        :param 'KafkaSpecKafkaListenersExternalConfigurationArgs' configuration: External listener configuration.
-        :param Sequence['KafkaSpecKafkaListenersExternalNetworkPolicyPeersArgs'] network_policy_peers: List of peers which should be able to connect to this listener. Peers in this list are combined using a logical OR operation. If this field is empty or missing, all connections will be allowed for this listener. If this field is present and contains at least one item, the listener only allows the traffic which matches at least one item in this list.
-        :param 'KafkaSpecKafkaListenersExternalOverridesArgs' overrides: Overrides for external bootstrap and broker services and externally advertised addresses.
-        :param bool tls: Enables TLS encryption on the listener. By default set to `true` for enabled TLS encryption.
+               * `internal` type exposes Kafka internally only within the Kubernetes cluster.
+               * `route` type uses OpenShift Routes to expose Kafka.
+               * `loadbalancer` type uses LoadBalancer type services to expose Kafka.
+               * `nodeport` type uses NodePort type services to expose Kafka.
+               * `ingress` type uses Kubernetes Nginx Ingress to expose Kafka.
+               .
+        :param 'KafkaSpecKafkaListenersOneOf0AuthenticationArgs' authentication: Authentication configuration for this listener.
+        :param 'KafkaSpecKafkaListenersOneOf0ConfigurationArgs' configuration: Additional listener configuration.
+        :param Sequence['KafkaSpecKafkaListenersOneOf0NetworkPolicyPeersArgs'] network_policy_peers: List of peers which should be able to connect to this listener. Peers in this list are combined using a logical OR operation. If this field is empty or missing, all connections will be allowed for this listener. If this field is present and contains at least one item, the listener only allows the traffic which matches at least one item in this list.
         """
+        pulumi.set(__self__, "name", name)
+        pulumi.set(__self__, "port", port)
+        pulumi.set(__self__, "tls", tls)
         pulumi.set(__self__, "type", type)
         if authentication is not None:
             pulumi.set(__self__, "authentication", authentication)
-        if class_ is not None:
-            pulumi.set(__self__, "class_", class_)
         if configuration is not None:
             pulumi.set(__self__, "configuration", configuration)
         if network_policy_peers is not None:
             pulumi.set(__self__, "network_policy_peers", network_policy_peers)
-        if overrides is not None:
-            pulumi.set(__self__, "overrides", overrides)
-        if tls is not None:
-            pulumi.set(__self__, "tls", tls)
+
+    @property
+    @pulumi.getter
+    def name(self) -> str:
+        """
+        Name of the listener. The name will be used to identify the listener and the related Kubernetes objects. The name has to be unique within given a Kafka cluster. The name can consist of lowercase characters and numbers and be up to 11 characters long.
+        """
+        return pulumi.get(self, "name")
+
+    @property
+    @pulumi.getter
+    def port(self) -> int:
+        """
+        Port number used by the listener inside Kafka. The port number has to be unique within a given Kafka cluster. Allowed port numbers are 9092 and higher with the exception of ports 9404 and 9999, which are already used for Prometheus and JMX. Depending on the listener type, the port number might not be the same as the port number that connects Kafka clients.
+        """
+        return pulumi.get(self, "port")
+
+    @property
+    @pulumi.getter
+    def tls(self) -> bool:
+        """
+        Enables TLS encryption on the listener. This is a required property.
+        """
+        return pulumi.get(self, "tls")
 
     @property
     @pulumi.getter
     def type(self) -> str:
         """
-        Type of the external listener. Currently the supported types are `route`, `loadbalancer`, and `nodeport`. 
+        Type of the listener. Currently the supported types are `internal`, `route`, `loadbalancer`, `nodeport` and `ingress`. 
 
-        * `route` type uses OpenShift Routes to expose Kafka.* `loadbalancer` type uses LoadBalancer type services to expose Kafka.* `nodeport` type uses NodePort type services to expose Kafka..
+        * `internal` type exposes Kafka internally only within the Kubernetes cluster.
+        * `route` type uses OpenShift Routes to expose Kafka.
+        * `loadbalancer` type uses LoadBalancer type services to expose Kafka.
+        * `nodeport` type uses NodePort type services to expose Kafka.
+        * `ingress` type uses Kubernetes Nginx Ingress to expose Kafka.
+        .
         """
         return pulumi.get(self, "type")
 
     @property
     @pulumi.getter
-    def authentication(self) -> Optional['outputs.KafkaSpecKafkaListenersExternalAuthentication']:
+    def authentication(self) -> Optional['outputs.KafkaSpecKafkaListenersOneOf0Authentication']:
         """
-        Authentication configuration for Kafka brokers.
+        Authentication configuration for this listener.
         """
         return pulumi.get(self, "authentication")
 
     @property
-    @pulumi.getter(name="class")
-    def class_(self) -> Optional[str]:
-        """
-        Configures the `Ingress` class that defines which `Ingress` controller will be used. If not set, the `Ingress` class is set to `nginx`.
-        """
-        return pulumi.get(self, "class_")
-
-    @property
     @pulumi.getter
-    def configuration(self) -> Optional['outputs.KafkaSpecKafkaListenersExternalConfiguration']:
+    def configuration(self) -> Optional['outputs.KafkaSpecKafkaListenersOneOf0Configuration']:
         """
-        External listener configuration.
+        Additional listener configuration.
         """
         return pulumi.get(self, "configuration")
 
     @property
     @pulumi.getter(name="networkPolicyPeers")
-    def network_policy_peers(self) -> Optional[Sequence['outputs.KafkaSpecKafkaListenersExternalNetworkPolicyPeers']]:
+    def network_policy_peers(self) -> Optional[Sequence['outputs.KafkaSpecKafkaListenersOneOf0NetworkPolicyPeers']]:
         """
         List of peers which should be able to connect to this listener. Peers in this list are combined using a logical OR operation. If this field is empty or missing, all connections will be allowed for this listener. If this field is present and contains at least one item, the listener only allows the traffic which matches at least one item in this list.
         """
         return pulumi.get(self, "network_policy_peers")
-
-    @property
-    @pulumi.getter
-    def overrides(self) -> Optional['outputs.KafkaSpecKafkaListenersExternalOverrides']:
-        """
-        Overrides for external bootstrap and broker services and externally advertised addresses.
-        """
-        return pulumi.get(self, "overrides")
-
-    @property
-    @pulumi.getter
-    def tls(self) -> Optional[bool]:
-        """
-        Enables TLS encryption on the listener. By default set to `true` for enabled TLS encryption.
-        """
-        return pulumi.get(self, "tls")
 
     def _translate_property(self, prop):
         return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
 
 
 @pulumi.output_type
-class KafkaSpecKafkaListenersExternalAuthentication(dict):
+class KafkaSpecKafkaListenersOneOf0Authentication(dict):
     """
-    Authentication configuration for Kafka brokers.
+    Authentication configuration for this listener.
     """
     def __init__(__self__, *,
                  type: str,
@@ -25404,7 +26324,7 @@ class KafkaSpecKafkaListenersExternalAuthentication(dict):
                  check_access_token_type: Optional[bool] = None,
                  check_issuer: Optional[bool] = None,
                  client_id: Optional[str] = None,
-                 client_secret: Optional['outputs.KafkaSpecKafkaListenersExternalAuthenticationClientSecret'] = None,
+                 client_secret: Optional['outputs.KafkaSpecKafkaListenersOneOf0AuthenticationClientSecret'] = None,
                  disable_tls_hostname_verification: Optional[bool] = None,
                  enable_ecdsa: Optional[bool] = None,
                  fallback_user_name_claim: Optional[str] = None,
@@ -25412,20 +26332,22 @@ class KafkaSpecKafkaListenersExternalAuthentication(dict):
                  introspection_endpoint_uri: Optional[str] = None,
                  jwks_endpoint_uri: Optional[str] = None,
                  jwks_expiry_seconds: Optional[int] = None,
+                 jwks_min_refresh_pause_seconds: Optional[int] = None,
                  jwks_refresh_seconds: Optional[int] = None,
-                 tls_trusted_certificates: Optional[Sequence['outputs.KafkaSpecKafkaListenersExternalAuthenticationTlsTrustedCertificates']] = None,
+                 max_seconds_without_reauthentication: Optional[int] = None,
+                 tls_trusted_certificates: Optional[Sequence['outputs.KafkaSpecKafkaListenersOneOf0AuthenticationTlsTrustedCertificates']] = None,
                  user_info_endpoint_uri: Optional[str] = None,
                  user_name_claim: Optional[str] = None,
                  valid_issuer_uri: Optional[str] = None,
                  valid_token_type: Optional[str] = None):
         """
-        Authentication configuration for Kafka brokers.
+        Authentication configuration for this listener.
         :param str type: Authentication type. `oauth` type uses SASL OAUTHBEARER Authentication. `scram-sha-512` type uses SASL SCRAM-SHA-512 Authentication. `tls` type uses TLS Client Authentication. `tls` type is supported only on TLS listeners.
         :param bool access_token_is_jwt: Configure whether the access token is treated as JWT. This must be set to `false` if the authorization server returns opaque tokens. Defaults to `true`.
         :param bool check_access_token_type: Configure whether the access token type check is performed or not. This should be set to `false` if the authorization server does not include 'typ' claim in JWT token. Defaults to `true`.
         :param bool check_issuer: Enable or disable issuer checking. By default issuer is checked using the value configured by `validIssuerUri`. Default value is `true`.
         :param str client_id: OAuth Client ID which the Kafka broker can use to authenticate against the authorization server and use the introspect endpoint URI.
-        :param 'KafkaSpecKafkaListenersExternalAuthenticationClientSecretArgs' client_secret: Link to Kubernetes Secret containing the OAuth client secret which the Kafka broker can use to authenticate against the authorization server and use the introspect endpoint URI.
+        :param 'KafkaSpecKafkaListenersOneOf0AuthenticationClientSecretArgs' client_secret: Link to Kubernetes Secret containing the OAuth client secret which the Kafka broker can use to authenticate against the authorization server and use the introspect endpoint URI.
         :param bool disable_tls_hostname_verification: Enable or disable TLS hostname verification. Default value is `false`.
         :param bool enable_ecdsa: Enable or disable ECDSA support by installing BouncyCastle crypto provider. Default value is `false`.
         :param str fallback_user_name_claim: The fallback username claim to be used for the user id if the claim specified by `userNameClaim` is not present. This is useful when `client_credentials` authentication only results in the client id being provided in another claim. It only takes effect if `userNameClaim` is set.
@@ -25433,8 +26355,10 @@ class KafkaSpecKafkaListenersExternalAuthentication(dict):
         :param str introspection_endpoint_uri: URI of the token introspection endpoint which can be used to validate opaque non-JWT tokens.
         :param str jwks_endpoint_uri: URI of the JWKS certificate endpoint, which can be used for local JWT validation.
         :param int jwks_expiry_seconds: Configures how often are the JWKS certificates considered valid. The expiry interval has to be at least 60 seconds longer then the refresh interval specified in `jwksRefreshSeconds`. Defaults to 360 seconds.
+        :param int jwks_min_refresh_pause_seconds: The minimum pause between two consecutive refreshes. When an unknown signing key is encountered the refresh is scheduled immediately, but will always wait for this minimum pause. Defaults to 1 second.
         :param int jwks_refresh_seconds: Configures how often are the JWKS certificates refreshed. The refresh interval has to be at least 60 seconds shorter then the expiry interval specified in `jwksExpirySeconds`. Defaults to 300 seconds.
-        :param Sequence['KafkaSpecKafkaListenersExternalAuthenticationTlsTrustedCertificatesArgs'] tls_trusted_certificates: Trusted certificates for TLS connection to the OAuth server.
+        :param int max_seconds_without_reauthentication: Maximum number of seconds the authenticated session remains valid without re-authentication. This enables Apache Kafka re-authentication feature, and causes sessions to expire when the access token expires. If the access token expires before max time or if max time is reached, the client has to re-authenticate, otherwise the server will drop the connection. Not set by default - the authenticated session does not expire when the access token expires.
+        :param Sequence['KafkaSpecKafkaListenersOneOf0AuthenticationTlsTrustedCertificatesArgs'] tls_trusted_certificates: Trusted certificates for TLS connection to the OAuth server.
         :param str user_info_endpoint_uri: URI of the User Info Endpoint to use as a fallback to obtaining the user id when the Introspection Endpoint does not return information that can be used for the user id. 
         :param str user_name_claim: Name of the claim from the JWT authentication token, Introspection Endpoint response or User Info Endpoint response which will be used to extract the user id. Defaults to `sub`.
         :param str valid_issuer_uri: URI of the token issuer used for authentication.
@@ -25465,8 +26389,12 @@ class KafkaSpecKafkaListenersExternalAuthentication(dict):
             pulumi.set(__self__, "jwks_endpoint_uri", jwks_endpoint_uri)
         if jwks_expiry_seconds is not None:
             pulumi.set(__self__, "jwks_expiry_seconds", jwks_expiry_seconds)
+        if jwks_min_refresh_pause_seconds is not None:
+            pulumi.set(__self__, "jwks_min_refresh_pause_seconds", jwks_min_refresh_pause_seconds)
         if jwks_refresh_seconds is not None:
             pulumi.set(__self__, "jwks_refresh_seconds", jwks_refresh_seconds)
+        if max_seconds_without_reauthentication is not None:
+            pulumi.set(__self__, "max_seconds_without_reauthentication", max_seconds_without_reauthentication)
         if tls_trusted_certificates is not None:
             pulumi.set(__self__, "tls_trusted_certificates", tls_trusted_certificates)
         if user_info_endpoint_uri is not None:
@@ -25520,7 +26448,7 @@ class KafkaSpecKafkaListenersExternalAuthentication(dict):
 
     @property
     @pulumi.getter(name="clientSecret")
-    def client_secret(self) -> Optional['outputs.KafkaSpecKafkaListenersExternalAuthenticationClientSecret']:
+    def client_secret(self) -> Optional['outputs.KafkaSpecKafkaListenersOneOf0AuthenticationClientSecret']:
         """
         Link to Kubernetes Secret containing the OAuth client secret which the Kafka broker can use to authenticate against the authorization server and use the introspect endpoint URI.
         """
@@ -25583,6 +26511,14 @@ class KafkaSpecKafkaListenersExternalAuthentication(dict):
         return pulumi.get(self, "jwks_expiry_seconds")
 
     @property
+    @pulumi.getter(name="jwksMinRefreshPauseSeconds")
+    def jwks_min_refresh_pause_seconds(self) -> Optional[int]:
+        """
+        The minimum pause between two consecutive refreshes. When an unknown signing key is encountered the refresh is scheduled immediately, but will always wait for this minimum pause. Defaults to 1 second.
+        """
+        return pulumi.get(self, "jwks_min_refresh_pause_seconds")
+
+    @property
     @pulumi.getter(name="jwksRefreshSeconds")
     def jwks_refresh_seconds(self) -> Optional[int]:
         """
@@ -25591,8 +26527,16 @@ class KafkaSpecKafkaListenersExternalAuthentication(dict):
         return pulumi.get(self, "jwks_refresh_seconds")
 
     @property
+    @pulumi.getter(name="maxSecondsWithoutReauthentication")
+    def max_seconds_without_reauthentication(self) -> Optional[int]:
+        """
+        Maximum number of seconds the authenticated session remains valid without re-authentication. This enables Apache Kafka re-authentication feature, and causes sessions to expire when the access token expires. If the access token expires before max time or if max time is reached, the client has to re-authenticate, otherwise the server will drop the connection. Not set by default - the authenticated session does not expire when the access token expires.
+        """
+        return pulumi.get(self, "max_seconds_without_reauthentication")
+
+    @property
     @pulumi.getter(name="tlsTrustedCertificates")
-    def tls_trusted_certificates(self) -> Optional[Sequence['outputs.KafkaSpecKafkaListenersExternalAuthenticationTlsTrustedCertificates']]:
+    def tls_trusted_certificates(self) -> Optional[Sequence['outputs.KafkaSpecKafkaListenersOneOf0AuthenticationTlsTrustedCertificates']]:
         """
         Trusted certificates for TLS connection to the OAuth server.
         """
@@ -25635,7 +26579,7 @@ class KafkaSpecKafkaListenersExternalAuthentication(dict):
 
 
 @pulumi.output_type
-class KafkaSpecKafkaListenersExternalAuthenticationClientSecret(dict):
+class KafkaSpecKafkaListenersOneOf0AuthenticationClientSecret(dict):
     """
     Link to Kubernetes Secret containing the OAuth client secret which the Kafka broker can use to authenticate against the authorization server and use the introspect endpoint URI.
     """
@@ -25671,7 +26615,7 @@ class KafkaSpecKafkaListenersExternalAuthenticationClientSecret(dict):
 
 
 @pulumi.output_type
-class KafkaSpecKafkaListenersExternalAuthenticationTlsTrustedCertificates(dict):
+class KafkaSpecKafkaListenersOneOf0AuthenticationTlsTrustedCertificates(dict):
     def __init__(__self__, *,
                  certificate: str,
                  secret_name: str):
@@ -25703,19 +26647,1005 @@ class KafkaSpecKafkaListenersExternalAuthenticationTlsTrustedCertificates(dict):
 
 
 @pulumi.output_type
-class KafkaSpecKafkaListenersExternalConfiguration(dict):
+class KafkaSpecKafkaListenersOneOf0Configuration(dict):
+    """
+    Additional listener configuration.
+    """
+    def __init__(__self__, *,
+                 bootstrap: Optional['outputs.KafkaSpecKafkaListenersOneOf0ConfigurationBootstrap'] = None,
+                 broker_cert_chain_and_key: Optional['outputs.KafkaSpecKafkaListenersOneOf0ConfigurationBrokerCertChainAndKey'] = None,
+                 brokers: Optional[Sequence['outputs.KafkaSpecKafkaListenersOneOf0ConfigurationBrokers']] = None,
+                 class_: Optional[str] = None,
+                 external_traffic_policy: Optional[str] = None,
+                 load_balancer_source_ranges: Optional[Sequence[str]] = None,
+                 preferred_node_port_address_type: Optional[str] = None,
+                 use_service_dns_domain: Optional[bool] = None):
+        """
+        Additional listener configuration.
+        :param 'KafkaSpecKafkaListenersOneOf0ConfigurationBootstrapArgs' bootstrap: Bootstrap configuration.
+        :param 'KafkaSpecKafkaListenersOneOf0ConfigurationBrokerCertChainAndKeyArgs' broker_cert_chain_and_key: Reference to the `Secret` which holds the certificate and private key pair which will be used for this listener. The certificate can optionally contain the whole chain. This field can be used only with listeners with enabled TLS encryption.
+        :param Sequence['KafkaSpecKafkaListenersOneOf0ConfigurationBrokersArgs'] brokers: Per-broker configurations.
+        :param str class_: Configures the `Ingress` class that defines which `Ingress` controller will be used. If not set, the `Ingress` class is set to `nginx`. This field can be used only with `ingress` type listener.
+        :param str external_traffic_policy: Specifies whether the service routes external traffic to node-local or cluster-wide endpoints. `Cluster` may cause a second hop to another node and obscures the client source IP. `Local` avoids a second hop for LoadBalancer and Nodeport type services and preserves the client source IP (when supported by the infrastructure). If unspecified, Kubernetes will use `Cluster` as the default.This field can be used only with `loadbalancer` or `nodeport` type listener.
+        :param Sequence[str] load_balancer_source_ranges: A list of CIDR ranges (for example `10.0.0.0/8` or `130.211.204.1/32`) from which clients can connect to load balancer type listeners. If supported by the platform, traffic through the loadbalancer is restricted to the specified CIDR ranges. This field is applicable only for loadbalancer type services and is ignored if the cloud provider does not support the feature. For more information, see https://v1-17.docs.kubernetes.io/docs/tasks/access-application-cluster/configure-cloud-provider-firewall/. This field can be used only with `loadbalancer` type listener.
+        :param str preferred_node_port_address_type: Defines which address type should be used as the node address. Available types are: `ExternalDNS`, `ExternalIP`, `InternalDNS`, `InternalIP` and `Hostname`. By default, the addresses will be used in the following order (the first one found will be used):
+               * `ExternalDNS`
+               * `ExternalIP`
+               * `InternalDNS`
+               * `InternalIP`
+               * `Hostname`
+               
+               This field can be used to select the address type which will be used as the preferred type and checked first. In case no address will be found for this address type, the other types will be used in the default order.This field can be used only with `nodeport` type listener..
+        :param bool use_service_dns_domain: Configures whether the Kubernetes service DNS domain should be used or not. If set to `true`, the generated addresses with contain the service DNS domain suffix (by default `.cluster.local`, can be configured using environment variable `KUBERNETES_SERVICE_DNS_DOMAIN`). Defaults to `false`.This field can be used only with `internal` type listener.
+        """
+        if bootstrap is not None:
+            pulumi.set(__self__, "bootstrap", bootstrap)
+        if broker_cert_chain_and_key is not None:
+            pulumi.set(__self__, "broker_cert_chain_and_key", broker_cert_chain_and_key)
+        if brokers is not None:
+            pulumi.set(__self__, "brokers", brokers)
+        if class_ is not None:
+            pulumi.set(__self__, "class_", class_)
+        if external_traffic_policy is not None:
+            pulumi.set(__self__, "external_traffic_policy", external_traffic_policy)
+        if load_balancer_source_ranges is not None:
+            pulumi.set(__self__, "load_balancer_source_ranges", load_balancer_source_ranges)
+        if preferred_node_port_address_type is not None:
+            pulumi.set(__self__, "preferred_node_port_address_type", preferred_node_port_address_type)
+        if use_service_dns_domain is not None:
+            pulumi.set(__self__, "use_service_dns_domain", use_service_dns_domain)
+
+    @property
+    @pulumi.getter
+    def bootstrap(self) -> Optional['outputs.KafkaSpecKafkaListenersOneOf0ConfigurationBootstrap']:
+        """
+        Bootstrap configuration.
+        """
+        return pulumi.get(self, "bootstrap")
+
+    @property
+    @pulumi.getter(name="brokerCertChainAndKey")
+    def broker_cert_chain_and_key(self) -> Optional['outputs.KafkaSpecKafkaListenersOneOf0ConfigurationBrokerCertChainAndKey']:
+        """
+        Reference to the `Secret` which holds the certificate and private key pair which will be used for this listener. The certificate can optionally contain the whole chain. This field can be used only with listeners with enabled TLS encryption.
+        """
+        return pulumi.get(self, "broker_cert_chain_and_key")
+
+    @property
+    @pulumi.getter
+    def brokers(self) -> Optional[Sequence['outputs.KafkaSpecKafkaListenersOneOf0ConfigurationBrokers']]:
+        """
+        Per-broker configurations.
+        """
+        return pulumi.get(self, "brokers")
+
+    @property
+    @pulumi.getter(name="class")
+    def class_(self) -> Optional[str]:
+        """
+        Configures the `Ingress` class that defines which `Ingress` controller will be used. If not set, the `Ingress` class is set to `nginx`. This field can be used only with `ingress` type listener.
+        """
+        return pulumi.get(self, "class_")
+
+    @property
+    @pulumi.getter(name="externalTrafficPolicy")
+    def external_traffic_policy(self) -> Optional[str]:
+        """
+        Specifies whether the service routes external traffic to node-local or cluster-wide endpoints. `Cluster` may cause a second hop to another node and obscures the client source IP. `Local` avoids a second hop for LoadBalancer and Nodeport type services and preserves the client source IP (when supported by the infrastructure). If unspecified, Kubernetes will use `Cluster` as the default.This field can be used only with `loadbalancer` or `nodeport` type listener.
+        """
+        return pulumi.get(self, "external_traffic_policy")
+
+    @property
+    @pulumi.getter(name="loadBalancerSourceRanges")
+    def load_balancer_source_ranges(self) -> Optional[Sequence[str]]:
+        """
+        A list of CIDR ranges (for example `10.0.0.0/8` or `130.211.204.1/32`) from which clients can connect to load balancer type listeners. If supported by the platform, traffic through the loadbalancer is restricted to the specified CIDR ranges. This field is applicable only for loadbalancer type services and is ignored if the cloud provider does not support the feature. For more information, see https://v1-17.docs.kubernetes.io/docs/tasks/access-application-cluster/configure-cloud-provider-firewall/. This field can be used only with `loadbalancer` type listener.
+        """
+        return pulumi.get(self, "load_balancer_source_ranges")
+
+    @property
+    @pulumi.getter(name="preferredNodePortAddressType")
+    def preferred_node_port_address_type(self) -> Optional[str]:
+        """
+        Defines which address type should be used as the node address. Available types are: `ExternalDNS`, `ExternalIP`, `InternalDNS`, `InternalIP` and `Hostname`. By default, the addresses will be used in the following order (the first one found will be used):
+        * `ExternalDNS`
+        * `ExternalIP`
+        * `InternalDNS`
+        * `InternalIP`
+        * `Hostname`
+
+        This field can be used to select the address type which will be used as the preferred type and checked first. In case no address will be found for this address type, the other types will be used in the default order.This field can be used only with `nodeport` type listener..
+        """
+        return pulumi.get(self, "preferred_node_port_address_type")
+
+    @property
+    @pulumi.getter(name="useServiceDnsDomain")
+    def use_service_dns_domain(self) -> Optional[bool]:
+        """
+        Configures whether the Kubernetes service DNS domain should be used or not. If set to `true`, the generated addresses with contain the service DNS domain suffix (by default `.cluster.local`, can be configured using environment variable `KUBERNETES_SERVICE_DNS_DOMAIN`). Defaults to `false`.This field can be used only with `internal` type listener.
+        """
+        return pulumi.get(self, "use_service_dns_domain")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class KafkaSpecKafkaListenersOneOf0ConfigurationBootstrap(dict):
+    """
+    Bootstrap configuration.
+    """
+    def __init__(__self__, *,
+                 alternative_names: Optional[Sequence[str]] = None,
+                 annotations: Optional[Mapping[str, Any]] = None,
+                 host: Optional[str] = None,
+                 load_balancer_ip: Optional[str] = None,
+                 node_port: Optional[int] = None):
+        """
+        Bootstrap configuration.
+        :param Sequence[str] alternative_names: Additional alternative names for the bootstrap service. The alternative names will be added to the list of subject alternative names of the TLS certificates.
+        :param Mapping[str, Any] annotations: Annotations that will be added to the `Ingress` or `Service` resource. You can use this field to configure DNS providers such as External DNS. This field can be used only with `loadbalancer`, `nodeport`, or `ingress` type listeners.
+        :param str host: The bootstrap host. This field will be used in the Ingress resource or in the Route resource to specify the desired hostname. This field can be used only with `route` (optional) or `ingress` (required) type listeners.
+        :param str load_balancer_ip: The loadbalancer is requested with the IP address specified in this field. This feature depends on whether the underlying cloud provider supports specifying the `loadBalancerIP` when a load balancer is created. This field is ignored if the cloud provider does not support the feature.This field can be used only with `loadbalancer` type listener.
+        :param int node_port: Node port for the bootstrap service. This field can be used only with `nodeport` type listener.
+        """
+        if alternative_names is not None:
+            pulumi.set(__self__, "alternative_names", alternative_names)
+        if annotations is not None:
+            pulumi.set(__self__, "annotations", annotations)
+        if host is not None:
+            pulumi.set(__self__, "host", host)
+        if load_balancer_ip is not None:
+            pulumi.set(__self__, "load_balancer_ip", load_balancer_ip)
+        if node_port is not None:
+            pulumi.set(__self__, "node_port", node_port)
+
+    @property
+    @pulumi.getter(name="alternativeNames")
+    def alternative_names(self) -> Optional[Sequence[str]]:
+        """
+        Additional alternative names for the bootstrap service. The alternative names will be added to the list of subject alternative names of the TLS certificates.
+        """
+        return pulumi.get(self, "alternative_names")
+
+    @property
+    @pulumi.getter
+    def annotations(self) -> Optional[Mapping[str, Any]]:
+        """
+        Annotations that will be added to the `Ingress` or `Service` resource. You can use this field to configure DNS providers such as External DNS. This field can be used only with `loadbalancer`, `nodeport`, or `ingress` type listeners.
+        """
+        return pulumi.get(self, "annotations")
+
+    @property
+    @pulumi.getter
+    def host(self) -> Optional[str]:
+        """
+        The bootstrap host. This field will be used in the Ingress resource or in the Route resource to specify the desired hostname. This field can be used only with `route` (optional) or `ingress` (required) type listeners.
+        """
+        return pulumi.get(self, "host")
+
+    @property
+    @pulumi.getter(name="loadBalancerIP")
+    def load_balancer_ip(self) -> Optional[str]:
+        """
+        The loadbalancer is requested with the IP address specified in this field. This feature depends on whether the underlying cloud provider supports specifying the `loadBalancerIP` when a load balancer is created. This field is ignored if the cloud provider does not support the feature.This field can be used only with `loadbalancer` type listener.
+        """
+        return pulumi.get(self, "load_balancer_ip")
+
+    @property
+    @pulumi.getter(name="nodePort")
+    def node_port(self) -> Optional[int]:
+        """
+        Node port for the bootstrap service. This field can be used only with `nodeport` type listener.
+        """
+        return pulumi.get(self, "node_port")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class KafkaSpecKafkaListenersOneOf0ConfigurationBrokerCertChainAndKey(dict):
+    """
+    Reference to the `Secret` which holds the certificate and private key pair which will be used for this listener. The certificate can optionally contain the whole chain. This field can be used only with listeners with enabled TLS encryption.
+    """
+    def __init__(__self__, *,
+                 certificate: str,
+                 key: str,
+                 secret_name: str):
+        """
+        Reference to the `Secret` which holds the certificate and private key pair which will be used for this listener. The certificate can optionally contain the whole chain. This field can be used only with listeners with enabled TLS encryption.
+        :param str certificate: The name of the file certificate in the Secret.
+        :param str key: The name of the private key in the Secret.
+        :param str secret_name: The name of the Secret containing the certificate.
+        """
+        pulumi.set(__self__, "certificate", certificate)
+        pulumi.set(__self__, "key", key)
+        pulumi.set(__self__, "secret_name", secret_name)
+
+    @property
+    @pulumi.getter
+    def certificate(self) -> str:
+        """
+        The name of the file certificate in the Secret.
+        """
+        return pulumi.get(self, "certificate")
+
+    @property
+    @pulumi.getter
+    def key(self) -> str:
+        """
+        The name of the private key in the Secret.
+        """
+        return pulumi.get(self, "key")
+
+    @property
+    @pulumi.getter(name="secretName")
+    def secret_name(self) -> str:
+        """
+        The name of the Secret containing the certificate.
+        """
+        return pulumi.get(self, "secret_name")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class KafkaSpecKafkaListenersOneOf0ConfigurationBrokers(dict):
+    def __init__(__self__, *,
+                 broker: int,
+                 advertised_host: Optional[str] = None,
+                 advertised_port: Optional[int] = None,
+                 annotations: Optional[Mapping[str, Any]] = None,
+                 host: Optional[str] = None,
+                 load_balancer_ip: Optional[str] = None,
+                 node_port: Optional[int] = None):
+        """
+        :param int broker: ID of the kafka broker (broker identifier). Broker IDs start from 0 and correspond to the number of broker replicas.
+        :param str advertised_host: The host name which will be used in the brokers' `advertised.brokers`.
+        :param int advertised_port: The port number which will be used in the brokers' `advertised.brokers`.
+        :param Mapping[str, Any] annotations: Annotations that will be added to the `Ingress` or `Service` resource. You can use this field to configure DNS providers such as External DNS. This field can be used only with `loadbalancer`, `nodeport`, or `ingress` type listeners.
+        :param str host: The broker host. This field will be used in the Ingress resource or in the Route resource to specify the desired hostname. This field can be used only with `route` (optional) or `ingress` (required) type listeners.
+        :param str load_balancer_ip: The loadbalancer is requested with the IP address specified in this field. This feature depends on whether the underlying cloud provider supports specifying the `loadBalancerIP` when a load balancer is created. This field is ignored if the cloud provider does not support the feature.This field can be used only with `loadbalancer` type listener.
+        :param int node_port: Node port for the per-broker service. This field can be used only with `nodeport` type listener.
+        """
+        pulumi.set(__self__, "broker", broker)
+        if advertised_host is not None:
+            pulumi.set(__self__, "advertised_host", advertised_host)
+        if advertised_port is not None:
+            pulumi.set(__self__, "advertised_port", advertised_port)
+        if annotations is not None:
+            pulumi.set(__self__, "annotations", annotations)
+        if host is not None:
+            pulumi.set(__self__, "host", host)
+        if load_balancer_ip is not None:
+            pulumi.set(__self__, "load_balancer_ip", load_balancer_ip)
+        if node_port is not None:
+            pulumi.set(__self__, "node_port", node_port)
+
+    @property
+    @pulumi.getter
+    def broker(self) -> int:
+        """
+        ID of the kafka broker (broker identifier). Broker IDs start from 0 and correspond to the number of broker replicas.
+        """
+        return pulumi.get(self, "broker")
+
+    @property
+    @pulumi.getter(name="advertisedHost")
+    def advertised_host(self) -> Optional[str]:
+        """
+        The host name which will be used in the brokers' `advertised.brokers`.
+        """
+        return pulumi.get(self, "advertised_host")
+
+    @property
+    @pulumi.getter(name="advertisedPort")
+    def advertised_port(self) -> Optional[int]:
+        """
+        The port number which will be used in the brokers' `advertised.brokers`.
+        """
+        return pulumi.get(self, "advertised_port")
+
+    @property
+    @pulumi.getter
+    def annotations(self) -> Optional[Mapping[str, Any]]:
+        """
+        Annotations that will be added to the `Ingress` or `Service` resource. You can use this field to configure DNS providers such as External DNS. This field can be used only with `loadbalancer`, `nodeport`, or `ingress` type listeners.
+        """
+        return pulumi.get(self, "annotations")
+
+    @property
+    @pulumi.getter
+    def host(self) -> Optional[str]:
+        """
+        The broker host. This field will be used in the Ingress resource or in the Route resource to specify the desired hostname. This field can be used only with `route` (optional) or `ingress` (required) type listeners.
+        """
+        return pulumi.get(self, "host")
+
+    @property
+    @pulumi.getter(name="loadBalancerIP")
+    def load_balancer_ip(self) -> Optional[str]:
+        """
+        The loadbalancer is requested with the IP address specified in this field. This feature depends on whether the underlying cloud provider supports specifying the `loadBalancerIP` when a load balancer is created. This field is ignored if the cloud provider does not support the feature.This field can be used only with `loadbalancer` type listener.
+        """
+        return pulumi.get(self, "load_balancer_ip")
+
+    @property
+    @pulumi.getter(name="nodePort")
+    def node_port(self) -> Optional[int]:
+        """
+        Node port for the per-broker service. This field can be used only with `nodeport` type listener.
+        """
+        return pulumi.get(self, "node_port")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class KafkaSpecKafkaListenersOneOf0NetworkPolicyPeers(dict):
+    def __init__(__self__, *,
+                 ip_block: Optional['outputs.KafkaSpecKafkaListenersOneOf0NetworkPolicyPeersIpBlock'] = None,
+                 namespace_selector: Optional['outputs.KafkaSpecKafkaListenersOneOf0NetworkPolicyPeersNamespaceSelector'] = None,
+                 pod_selector: Optional['outputs.KafkaSpecKafkaListenersOneOf0NetworkPolicyPeersPodSelector'] = None):
+        if ip_block is not None:
+            pulumi.set(__self__, "ip_block", ip_block)
+        if namespace_selector is not None:
+            pulumi.set(__self__, "namespace_selector", namespace_selector)
+        if pod_selector is not None:
+            pulumi.set(__self__, "pod_selector", pod_selector)
+
+    @property
+    @pulumi.getter(name="ipBlock")
+    def ip_block(self) -> Optional['outputs.KafkaSpecKafkaListenersOneOf0NetworkPolicyPeersIpBlock']:
+        return pulumi.get(self, "ip_block")
+
+    @property
+    @pulumi.getter(name="namespaceSelector")
+    def namespace_selector(self) -> Optional['outputs.KafkaSpecKafkaListenersOneOf0NetworkPolicyPeersNamespaceSelector']:
+        return pulumi.get(self, "namespace_selector")
+
+    @property
+    @pulumi.getter(name="podSelector")
+    def pod_selector(self) -> Optional['outputs.KafkaSpecKafkaListenersOneOf0NetworkPolicyPeersPodSelector']:
+        return pulumi.get(self, "pod_selector")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class KafkaSpecKafkaListenersOneOf0NetworkPolicyPeersIpBlock(dict):
+    def __init__(__self__, *,
+                 cidr: Optional[str] = None,
+                 except_: Optional[Sequence[str]] = None):
+        if cidr is not None:
+            pulumi.set(__self__, "cidr", cidr)
+        if except_ is not None:
+            pulumi.set(__self__, "except_", except_)
+
+    @property
+    @pulumi.getter
+    def cidr(self) -> Optional[str]:
+        return pulumi.get(self, "cidr")
+
+    @property
+    @pulumi.getter(name="except")
+    def except_(self) -> Optional[Sequence[str]]:
+        return pulumi.get(self, "except_")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class KafkaSpecKafkaListenersOneOf0NetworkPolicyPeersNamespaceSelector(dict):
+    def __init__(__self__, *,
+                 match_expressions: Optional[Sequence['outputs.KafkaSpecKafkaListenersOneOf0NetworkPolicyPeersNamespaceSelectorMatchExpressions']] = None,
+                 match_labels: Optional[Mapping[str, Any]] = None):
+        if match_expressions is not None:
+            pulumi.set(__self__, "match_expressions", match_expressions)
+        if match_labels is not None:
+            pulumi.set(__self__, "match_labels", match_labels)
+
+    @property
+    @pulumi.getter(name="matchExpressions")
+    def match_expressions(self) -> Optional[Sequence['outputs.KafkaSpecKafkaListenersOneOf0NetworkPolicyPeersNamespaceSelectorMatchExpressions']]:
+        return pulumi.get(self, "match_expressions")
+
+    @property
+    @pulumi.getter(name="matchLabels")
+    def match_labels(self) -> Optional[Mapping[str, Any]]:
+        return pulumi.get(self, "match_labels")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class KafkaSpecKafkaListenersOneOf0NetworkPolicyPeersNamespaceSelectorMatchExpressions(dict):
+    def __init__(__self__, *,
+                 key: Optional[str] = None,
+                 operator: Optional[str] = None,
+                 values: Optional[Sequence[str]] = None):
+        if key is not None:
+            pulumi.set(__self__, "key", key)
+        if operator is not None:
+            pulumi.set(__self__, "operator", operator)
+        if values is not None:
+            pulumi.set(__self__, "values", values)
+
+    @property
+    @pulumi.getter
+    def key(self) -> Optional[str]:
+        return pulumi.get(self, "key")
+
+    @property
+    @pulumi.getter
+    def operator(self) -> Optional[str]:
+        return pulumi.get(self, "operator")
+
+    @property
+    @pulumi.getter
+    def values(self) -> Optional[Sequence[str]]:
+        return pulumi.get(self, "values")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class KafkaSpecKafkaListenersOneOf0NetworkPolicyPeersPodSelector(dict):
+    def __init__(__self__, *,
+                 match_expressions: Optional[Sequence['outputs.KafkaSpecKafkaListenersOneOf0NetworkPolicyPeersPodSelectorMatchExpressions']] = None,
+                 match_labels: Optional[Mapping[str, Any]] = None):
+        if match_expressions is not None:
+            pulumi.set(__self__, "match_expressions", match_expressions)
+        if match_labels is not None:
+            pulumi.set(__self__, "match_labels", match_labels)
+
+    @property
+    @pulumi.getter(name="matchExpressions")
+    def match_expressions(self) -> Optional[Sequence['outputs.KafkaSpecKafkaListenersOneOf0NetworkPolicyPeersPodSelectorMatchExpressions']]:
+        return pulumi.get(self, "match_expressions")
+
+    @property
+    @pulumi.getter(name="matchLabels")
+    def match_labels(self) -> Optional[Mapping[str, Any]]:
+        return pulumi.get(self, "match_labels")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class KafkaSpecKafkaListenersOneOf0NetworkPolicyPeersPodSelectorMatchExpressions(dict):
+    def __init__(__self__, *,
+                 key: Optional[str] = None,
+                 operator: Optional[str] = None,
+                 values: Optional[Sequence[str]] = None):
+        if key is not None:
+            pulumi.set(__self__, "key", key)
+        if operator is not None:
+            pulumi.set(__self__, "operator", operator)
+        if values is not None:
+            pulumi.set(__self__, "values", values)
+
+    @property
+    @pulumi.getter
+    def key(self) -> Optional[str]:
+        return pulumi.get(self, "key")
+
+    @property
+    @pulumi.getter
+    def operator(self) -> Optional[str]:
+        return pulumi.get(self, "operator")
+
+    @property
+    @pulumi.getter
+    def values(self) -> Optional[Sequence[str]]:
+        return pulumi.get(self, "values")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class KafkaSpecKafkaListenersOneOf1(dict):
+    def __init__(__self__, *,
+                 external: Optional['outputs.KafkaSpecKafkaListenersOneOf1External'] = None,
+                 plain: Optional['outputs.KafkaSpecKafkaListenersOneOf1Plain'] = None,
+                 tls: Optional['outputs.KafkaSpecKafkaListenersOneOf1Tls'] = None):
+        """
+        :param 'KafkaSpecKafkaListenersOneOf1ExternalArgs' external: Configures external listener on port 9094.
+        :param 'KafkaSpecKafkaListenersOneOf1PlainArgs' plain: Configures plain listener on port 9092.
+        :param 'KafkaSpecKafkaListenersOneOf1TlsArgs' tls: Configures TLS listener on port 9093.
+        """
+        if external is not None:
+            pulumi.set(__self__, "external", external)
+        if plain is not None:
+            pulumi.set(__self__, "plain", plain)
+        if tls is not None:
+            pulumi.set(__self__, "tls", tls)
+
+    @property
+    @pulumi.getter
+    def external(self) -> Optional['outputs.KafkaSpecKafkaListenersOneOf1External']:
+        """
+        Configures external listener on port 9094.
+        """
+        return pulumi.get(self, "external")
+
+    @property
+    @pulumi.getter
+    def plain(self) -> Optional['outputs.KafkaSpecKafkaListenersOneOf1Plain']:
+        """
+        Configures plain listener on port 9092.
+        """
+        return pulumi.get(self, "plain")
+
+    @property
+    @pulumi.getter
+    def tls(self) -> Optional['outputs.KafkaSpecKafkaListenersOneOf1Tls']:
+        """
+        Configures TLS listener on port 9093.
+        """
+        return pulumi.get(self, "tls")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class KafkaSpecKafkaListenersOneOf1External(dict):
+    """
+    Configures external listener on port 9094.
+    """
+    def __init__(__self__, *,
+                 type: str,
+                 authentication: Optional['outputs.KafkaSpecKafkaListenersOneOf1ExternalAuthentication'] = None,
+                 class_: Optional[str] = None,
+                 configuration: Optional['outputs.KafkaSpecKafkaListenersOneOf1ExternalConfiguration'] = None,
+                 network_policy_peers: Optional[Sequence['outputs.KafkaSpecKafkaListenersOneOf1ExternalNetworkPolicyPeers']] = None,
+                 overrides: Optional['outputs.KafkaSpecKafkaListenersOneOf1ExternalOverrides'] = None,
+                 tls: Optional[bool] = None):
+        """
+        Configures external listener on port 9094.
+        :param str type: Type of the external listener. Currently the supported types are `route`, `loadbalancer`, and `nodeport`. 
+               
+               * `route` type uses OpenShift Routes to expose Kafka.* `loadbalancer` type uses LoadBalancer type services to expose Kafka.* `nodeport` type uses NodePort type services to expose Kafka..
+        :param 'KafkaSpecKafkaListenersOneOf1ExternalAuthenticationArgs' authentication: Authentication configuration for Kafka brokers.
+        :param str class_: Configures the `Ingress` class that defines which `Ingress` controller will be used. If not set, the `Ingress` class is set to `nginx`.
+        :param 'KafkaSpecKafkaListenersOneOf1ExternalConfigurationArgs' configuration: External listener configuration.
+        :param Sequence['KafkaSpecKafkaListenersOneOf1ExternalNetworkPolicyPeersArgs'] network_policy_peers: List of peers which should be able to connect to this listener. Peers in this list are combined using a logical OR operation. If this field is empty or missing, all connections will be allowed for this listener. If this field is present and contains at least one item, the listener only allows the traffic which matches at least one item in this list.
+        :param 'KafkaSpecKafkaListenersOneOf1ExternalOverridesArgs' overrides: Overrides for external bootstrap and broker services and externally advertised addresses.
+        :param bool tls: Enables TLS encryption on the listener. By default set to `true` for enabled TLS encryption.
+        """
+        pulumi.set(__self__, "type", type)
+        if authentication is not None:
+            pulumi.set(__self__, "authentication", authentication)
+        if class_ is not None:
+            pulumi.set(__self__, "class_", class_)
+        if configuration is not None:
+            pulumi.set(__self__, "configuration", configuration)
+        if network_policy_peers is not None:
+            pulumi.set(__self__, "network_policy_peers", network_policy_peers)
+        if overrides is not None:
+            pulumi.set(__self__, "overrides", overrides)
+        if tls is not None:
+            pulumi.set(__self__, "tls", tls)
+
+    @property
+    @pulumi.getter
+    def type(self) -> str:
+        """
+        Type of the external listener. Currently the supported types are `route`, `loadbalancer`, and `nodeport`. 
+
+        * `route` type uses OpenShift Routes to expose Kafka.* `loadbalancer` type uses LoadBalancer type services to expose Kafka.* `nodeport` type uses NodePort type services to expose Kafka..
+        """
+        return pulumi.get(self, "type")
+
+    @property
+    @pulumi.getter
+    def authentication(self) -> Optional['outputs.KafkaSpecKafkaListenersOneOf1ExternalAuthentication']:
+        """
+        Authentication configuration for Kafka brokers.
+        """
+        return pulumi.get(self, "authentication")
+
+    @property
+    @pulumi.getter(name="class")
+    def class_(self) -> Optional[str]:
+        """
+        Configures the `Ingress` class that defines which `Ingress` controller will be used. If not set, the `Ingress` class is set to `nginx`.
+        """
+        return pulumi.get(self, "class_")
+
+    @property
+    @pulumi.getter
+    def configuration(self) -> Optional['outputs.KafkaSpecKafkaListenersOneOf1ExternalConfiguration']:
+        """
+        External listener configuration.
+        """
+        return pulumi.get(self, "configuration")
+
+    @property
+    @pulumi.getter(name="networkPolicyPeers")
+    def network_policy_peers(self) -> Optional[Sequence['outputs.KafkaSpecKafkaListenersOneOf1ExternalNetworkPolicyPeers']]:
+        """
+        List of peers which should be able to connect to this listener. Peers in this list are combined using a logical OR operation. If this field is empty or missing, all connections will be allowed for this listener. If this field is present and contains at least one item, the listener only allows the traffic which matches at least one item in this list.
+        """
+        return pulumi.get(self, "network_policy_peers")
+
+    @property
+    @pulumi.getter
+    def overrides(self) -> Optional['outputs.KafkaSpecKafkaListenersOneOf1ExternalOverrides']:
+        """
+        Overrides for external bootstrap and broker services and externally advertised addresses.
+        """
+        return pulumi.get(self, "overrides")
+
+    @property
+    @pulumi.getter
+    def tls(self) -> Optional[bool]:
+        """
+        Enables TLS encryption on the listener. By default set to `true` for enabled TLS encryption.
+        """
+        return pulumi.get(self, "tls")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class KafkaSpecKafkaListenersOneOf1ExternalAuthentication(dict):
+    """
+    Authentication configuration for Kafka brokers.
+    """
+    def __init__(__self__, *,
+                 type: str,
+                 access_token_is_jwt: Optional[bool] = None,
+                 check_access_token_type: Optional[bool] = None,
+                 check_issuer: Optional[bool] = None,
+                 client_id: Optional[str] = None,
+                 client_secret: Optional['outputs.KafkaSpecKafkaListenersOneOf1ExternalAuthenticationClientSecret'] = None,
+                 disable_tls_hostname_verification: Optional[bool] = None,
+                 enable_ecdsa: Optional[bool] = None,
+                 fallback_user_name_claim: Optional[str] = None,
+                 fallback_user_name_prefix: Optional[str] = None,
+                 introspection_endpoint_uri: Optional[str] = None,
+                 jwks_endpoint_uri: Optional[str] = None,
+                 jwks_expiry_seconds: Optional[int] = None,
+                 jwks_min_refresh_pause_seconds: Optional[int] = None,
+                 jwks_refresh_seconds: Optional[int] = None,
+                 max_seconds_without_reauthentication: Optional[int] = None,
+                 tls_trusted_certificates: Optional[Sequence['outputs.KafkaSpecKafkaListenersOneOf1ExternalAuthenticationTlsTrustedCertificates']] = None,
+                 user_info_endpoint_uri: Optional[str] = None,
+                 user_name_claim: Optional[str] = None,
+                 valid_issuer_uri: Optional[str] = None,
+                 valid_token_type: Optional[str] = None):
+        """
+        Authentication configuration for Kafka brokers.
+        :param str type: Authentication type. `oauth` type uses SASL OAUTHBEARER Authentication. `scram-sha-512` type uses SASL SCRAM-SHA-512 Authentication. `tls` type uses TLS Client Authentication. `tls` type is supported only on TLS listeners.
+        :param bool access_token_is_jwt: Configure whether the access token is treated as JWT. This must be set to `false` if the authorization server returns opaque tokens. Defaults to `true`.
+        :param bool check_access_token_type: Configure whether the access token type check is performed or not. This should be set to `false` if the authorization server does not include 'typ' claim in JWT token. Defaults to `true`.
+        :param bool check_issuer: Enable or disable issuer checking. By default issuer is checked using the value configured by `validIssuerUri`. Default value is `true`.
+        :param str client_id: OAuth Client ID which the Kafka broker can use to authenticate against the authorization server and use the introspect endpoint URI.
+        :param 'KafkaSpecKafkaListenersOneOf1ExternalAuthenticationClientSecretArgs' client_secret: Link to Kubernetes Secret containing the OAuth client secret which the Kafka broker can use to authenticate against the authorization server and use the introspect endpoint URI.
+        :param bool disable_tls_hostname_verification: Enable or disable TLS hostname verification. Default value is `false`.
+        :param bool enable_ecdsa: Enable or disable ECDSA support by installing BouncyCastle crypto provider. Default value is `false`.
+        :param str fallback_user_name_claim: The fallback username claim to be used for the user id if the claim specified by `userNameClaim` is not present. This is useful when `client_credentials` authentication only results in the client id being provided in another claim. It only takes effect if `userNameClaim` is set.
+        :param str fallback_user_name_prefix: The prefix to use with the value of `fallbackUserNameClaim` to construct the user id. This only takes effect if `fallbackUserNameClaim` is true, and the value is present for the claim. Mapping usernames and client ids into the same user id space is useful in preventing name collisions.
+        :param str introspection_endpoint_uri: URI of the token introspection endpoint which can be used to validate opaque non-JWT tokens.
+        :param str jwks_endpoint_uri: URI of the JWKS certificate endpoint, which can be used for local JWT validation.
+        :param int jwks_expiry_seconds: Configures how often are the JWKS certificates considered valid. The expiry interval has to be at least 60 seconds longer then the refresh interval specified in `jwksRefreshSeconds`. Defaults to 360 seconds.
+        :param int jwks_min_refresh_pause_seconds: The minimum pause between two consecutive refreshes. When an unknown signing key is encountered the refresh is scheduled immediately, but will always wait for this minimum pause. Defaults to 1 second.
+        :param int jwks_refresh_seconds: Configures how often are the JWKS certificates refreshed. The refresh interval has to be at least 60 seconds shorter then the expiry interval specified in `jwksExpirySeconds`. Defaults to 300 seconds.
+        :param int max_seconds_without_reauthentication: Maximum number of seconds the authenticated session remains valid without re-authentication. This enables Apache Kafka re-authentication feature, and causes sessions to expire when the access token expires. If the access token expires before max time or if max time is reached, the client has to re-authenticate, otherwise the server will drop the connection. Not set by default - the authenticated session does not expire when the access token expires.
+        :param Sequence['KafkaSpecKafkaListenersOneOf1ExternalAuthenticationTlsTrustedCertificatesArgs'] tls_trusted_certificates: Trusted certificates for TLS connection to the OAuth server.
+        :param str user_info_endpoint_uri: URI of the User Info Endpoint to use as a fallback to obtaining the user id when the Introspection Endpoint does not return information that can be used for the user id. 
+        :param str user_name_claim: Name of the claim from the JWT authentication token, Introspection Endpoint response or User Info Endpoint response which will be used to extract the user id. Defaults to `sub`.
+        :param str valid_issuer_uri: URI of the token issuer used for authentication.
+        :param str valid_token_type: Valid value for the `token_type` attribute returned by the Introspection Endpoint. No default value, and not checked by default.
+        """
+        pulumi.set(__self__, "type", type)
+        if access_token_is_jwt is not None:
+            pulumi.set(__self__, "access_token_is_jwt", access_token_is_jwt)
+        if check_access_token_type is not None:
+            pulumi.set(__self__, "check_access_token_type", check_access_token_type)
+        if check_issuer is not None:
+            pulumi.set(__self__, "check_issuer", check_issuer)
+        if client_id is not None:
+            pulumi.set(__self__, "client_id", client_id)
+        if client_secret is not None:
+            pulumi.set(__self__, "client_secret", client_secret)
+        if disable_tls_hostname_verification is not None:
+            pulumi.set(__self__, "disable_tls_hostname_verification", disable_tls_hostname_verification)
+        if enable_ecdsa is not None:
+            pulumi.set(__self__, "enable_ecdsa", enable_ecdsa)
+        if fallback_user_name_claim is not None:
+            pulumi.set(__self__, "fallback_user_name_claim", fallback_user_name_claim)
+        if fallback_user_name_prefix is not None:
+            pulumi.set(__self__, "fallback_user_name_prefix", fallback_user_name_prefix)
+        if introspection_endpoint_uri is not None:
+            pulumi.set(__self__, "introspection_endpoint_uri", introspection_endpoint_uri)
+        if jwks_endpoint_uri is not None:
+            pulumi.set(__self__, "jwks_endpoint_uri", jwks_endpoint_uri)
+        if jwks_expiry_seconds is not None:
+            pulumi.set(__self__, "jwks_expiry_seconds", jwks_expiry_seconds)
+        if jwks_min_refresh_pause_seconds is not None:
+            pulumi.set(__self__, "jwks_min_refresh_pause_seconds", jwks_min_refresh_pause_seconds)
+        if jwks_refresh_seconds is not None:
+            pulumi.set(__self__, "jwks_refresh_seconds", jwks_refresh_seconds)
+        if max_seconds_without_reauthentication is not None:
+            pulumi.set(__self__, "max_seconds_without_reauthentication", max_seconds_without_reauthentication)
+        if tls_trusted_certificates is not None:
+            pulumi.set(__self__, "tls_trusted_certificates", tls_trusted_certificates)
+        if user_info_endpoint_uri is not None:
+            pulumi.set(__self__, "user_info_endpoint_uri", user_info_endpoint_uri)
+        if user_name_claim is not None:
+            pulumi.set(__self__, "user_name_claim", user_name_claim)
+        if valid_issuer_uri is not None:
+            pulumi.set(__self__, "valid_issuer_uri", valid_issuer_uri)
+        if valid_token_type is not None:
+            pulumi.set(__self__, "valid_token_type", valid_token_type)
+
+    @property
+    @pulumi.getter
+    def type(self) -> str:
+        """
+        Authentication type. `oauth` type uses SASL OAUTHBEARER Authentication. `scram-sha-512` type uses SASL SCRAM-SHA-512 Authentication. `tls` type uses TLS Client Authentication. `tls` type is supported only on TLS listeners.
+        """
+        return pulumi.get(self, "type")
+
+    @property
+    @pulumi.getter(name="accessTokenIsJwt")
+    def access_token_is_jwt(self) -> Optional[bool]:
+        """
+        Configure whether the access token is treated as JWT. This must be set to `false` if the authorization server returns opaque tokens. Defaults to `true`.
+        """
+        return pulumi.get(self, "access_token_is_jwt")
+
+    @property
+    @pulumi.getter(name="checkAccessTokenType")
+    def check_access_token_type(self) -> Optional[bool]:
+        """
+        Configure whether the access token type check is performed or not. This should be set to `false` if the authorization server does not include 'typ' claim in JWT token. Defaults to `true`.
+        """
+        return pulumi.get(self, "check_access_token_type")
+
+    @property
+    @pulumi.getter(name="checkIssuer")
+    def check_issuer(self) -> Optional[bool]:
+        """
+        Enable or disable issuer checking. By default issuer is checked using the value configured by `validIssuerUri`. Default value is `true`.
+        """
+        return pulumi.get(self, "check_issuer")
+
+    @property
+    @pulumi.getter(name="clientId")
+    def client_id(self) -> Optional[str]:
+        """
+        OAuth Client ID which the Kafka broker can use to authenticate against the authorization server and use the introspect endpoint URI.
+        """
+        return pulumi.get(self, "client_id")
+
+    @property
+    @pulumi.getter(name="clientSecret")
+    def client_secret(self) -> Optional['outputs.KafkaSpecKafkaListenersOneOf1ExternalAuthenticationClientSecret']:
+        """
+        Link to Kubernetes Secret containing the OAuth client secret which the Kafka broker can use to authenticate against the authorization server and use the introspect endpoint URI.
+        """
+        return pulumi.get(self, "client_secret")
+
+    @property
+    @pulumi.getter(name="disableTlsHostnameVerification")
+    def disable_tls_hostname_verification(self) -> Optional[bool]:
+        """
+        Enable or disable TLS hostname verification. Default value is `false`.
+        """
+        return pulumi.get(self, "disable_tls_hostname_verification")
+
+    @property
+    @pulumi.getter(name="enableECDSA")
+    def enable_ecdsa(self) -> Optional[bool]:
+        """
+        Enable or disable ECDSA support by installing BouncyCastle crypto provider. Default value is `false`.
+        """
+        return pulumi.get(self, "enable_ecdsa")
+
+    @property
+    @pulumi.getter(name="fallbackUserNameClaim")
+    def fallback_user_name_claim(self) -> Optional[str]:
+        """
+        The fallback username claim to be used for the user id if the claim specified by `userNameClaim` is not present. This is useful when `client_credentials` authentication only results in the client id being provided in another claim. It only takes effect if `userNameClaim` is set.
+        """
+        return pulumi.get(self, "fallback_user_name_claim")
+
+    @property
+    @pulumi.getter(name="fallbackUserNamePrefix")
+    def fallback_user_name_prefix(self) -> Optional[str]:
+        """
+        The prefix to use with the value of `fallbackUserNameClaim` to construct the user id. This only takes effect if `fallbackUserNameClaim` is true, and the value is present for the claim. Mapping usernames and client ids into the same user id space is useful in preventing name collisions.
+        """
+        return pulumi.get(self, "fallback_user_name_prefix")
+
+    @property
+    @pulumi.getter(name="introspectionEndpointUri")
+    def introspection_endpoint_uri(self) -> Optional[str]:
+        """
+        URI of the token introspection endpoint which can be used to validate opaque non-JWT tokens.
+        """
+        return pulumi.get(self, "introspection_endpoint_uri")
+
+    @property
+    @pulumi.getter(name="jwksEndpointUri")
+    def jwks_endpoint_uri(self) -> Optional[str]:
+        """
+        URI of the JWKS certificate endpoint, which can be used for local JWT validation.
+        """
+        return pulumi.get(self, "jwks_endpoint_uri")
+
+    @property
+    @pulumi.getter(name="jwksExpirySeconds")
+    def jwks_expiry_seconds(self) -> Optional[int]:
+        """
+        Configures how often are the JWKS certificates considered valid. The expiry interval has to be at least 60 seconds longer then the refresh interval specified in `jwksRefreshSeconds`. Defaults to 360 seconds.
+        """
+        return pulumi.get(self, "jwks_expiry_seconds")
+
+    @property
+    @pulumi.getter(name="jwksMinRefreshPauseSeconds")
+    def jwks_min_refresh_pause_seconds(self) -> Optional[int]:
+        """
+        The minimum pause between two consecutive refreshes. When an unknown signing key is encountered the refresh is scheduled immediately, but will always wait for this minimum pause. Defaults to 1 second.
+        """
+        return pulumi.get(self, "jwks_min_refresh_pause_seconds")
+
+    @property
+    @pulumi.getter(name="jwksRefreshSeconds")
+    def jwks_refresh_seconds(self) -> Optional[int]:
+        """
+        Configures how often are the JWKS certificates refreshed. The refresh interval has to be at least 60 seconds shorter then the expiry interval specified in `jwksExpirySeconds`. Defaults to 300 seconds.
+        """
+        return pulumi.get(self, "jwks_refresh_seconds")
+
+    @property
+    @pulumi.getter(name="maxSecondsWithoutReauthentication")
+    def max_seconds_without_reauthentication(self) -> Optional[int]:
+        """
+        Maximum number of seconds the authenticated session remains valid without re-authentication. This enables Apache Kafka re-authentication feature, and causes sessions to expire when the access token expires. If the access token expires before max time or if max time is reached, the client has to re-authenticate, otherwise the server will drop the connection. Not set by default - the authenticated session does not expire when the access token expires.
+        """
+        return pulumi.get(self, "max_seconds_without_reauthentication")
+
+    @property
+    @pulumi.getter(name="tlsTrustedCertificates")
+    def tls_trusted_certificates(self) -> Optional[Sequence['outputs.KafkaSpecKafkaListenersOneOf1ExternalAuthenticationTlsTrustedCertificates']]:
+        """
+        Trusted certificates for TLS connection to the OAuth server.
+        """
+        return pulumi.get(self, "tls_trusted_certificates")
+
+    @property
+    @pulumi.getter(name="userInfoEndpointUri")
+    def user_info_endpoint_uri(self) -> Optional[str]:
+        """
+        URI of the User Info Endpoint to use as a fallback to obtaining the user id when the Introspection Endpoint does not return information that can be used for the user id. 
+        """
+        return pulumi.get(self, "user_info_endpoint_uri")
+
+    @property
+    @pulumi.getter(name="userNameClaim")
+    def user_name_claim(self) -> Optional[str]:
+        """
+        Name of the claim from the JWT authentication token, Introspection Endpoint response or User Info Endpoint response which will be used to extract the user id. Defaults to `sub`.
+        """
+        return pulumi.get(self, "user_name_claim")
+
+    @property
+    @pulumi.getter(name="validIssuerUri")
+    def valid_issuer_uri(self) -> Optional[str]:
+        """
+        URI of the token issuer used for authentication.
+        """
+        return pulumi.get(self, "valid_issuer_uri")
+
+    @property
+    @pulumi.getter(name="validTokenType")
+    def valid_token_type(self) -> Optional[str]:
+        """
+        Valid value for the `token_type` attribute returned by the Introspection Endpoint. No default value, and not checked by default.
+        """
+        return pulumi.get(self, "valid_token_type")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class KafkaSpecKafkaListenersOneOf1ExternalAuthenticationClientSecret(dict):
+    """
+    Link to Kubernetes Secret containing the OAuth client secret which the Kafka broker can use to authenticate against the authorization server and use the introspect endpoint URI.
+    """
+    def __init__(__self__, *,
+                 key: str,
+                 secret_name: str):
+        """
+        Link to Kubernetes Secret containing the OAuth client secret which the Kafka broker can use to authenticate against the authorization server and use the introspect endpoint URI.
+        :param str key: The key under which the secret value is stored in the Kubernetes Secret.
+        :param str secret_name: The name of the Kubernetes Secret containing the secret value.
+        """
+        pulumi.set(__self__, "key", key)
+        pulumi.set(__self__, "secret_name", secret_name)
+
+    @property
+    @pulumi.getter
+    def key(self) -> str:
+        """
+        The key under which the secret value is stored in the Kubernetes Secret.
+        """
+        return pulumi.get(self, "key")
+
+    @property
+    @pulumi.getter(name="secretName")
+    def secret_name(self) -> str:
+        """
+        The name of the Kubernetes Secret containing the secret value.
+        """
+        return pulumi.get(self, "secret_name")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class KafkaSpecKafkaListenersOneOf1ExternalAuthenticationTlsTrustedCertificates(dict):
+    def __init__(__self__, *,
+                 certificate: str,
+                 secret_name: str):
+        """
+        :param str certificate: The name of the file certificate in the Secret.
+        :param str secret_name: The name of the Secret containing the certificate.
+        """
+        pulumi.set(__self__, "certificate", certificate)
+        pulumi.set(__self__, "secret_name", secret_name)
+
+    @property
+    @pulumi.getter
+    def certificate(self) -> str:
+        """
+        The name of the file certificate in the Secret.
+        """
+        return pulumi.get(self, "certificate")
+
+    @property
+    @pulumi.getter(name="secretName")
+    def secret_name(self) -> str:
+        """
+        The name of the Secret containing the certificate.
+        """
+        return pulumi.get(self, "secret_name")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
+class KafkaSpecKafkaListenersOneOf1ExternalConfiguration(dict):
     """
     External listener configuration.
     """
     def __init__(__self__, *,
-                 bootstrap: Optional['outputs.KafkaSpecKafkaListenersExternalConfigurationBootstrap'] = None,
-                 broker_cert_chain_and_key: Optional['outputs.KafkaSpecKafkaListenersExternalConfigurationBrokerCertChainAndKey'] = None,
-                 brokers: Optional[Sequence['outputs.KafkaSpecKafkaListenersExternalConfigurationBrokers']] = None):
+                 bootstrap: Optional['outputs.KafkaSpecKafkaListenersOneOf1ExternalConfigurationBootstrap'] = None,
+                 broker_cert_chain_and_key: Optional['outputs.KafkaSpecKafkaListenersOneOf1ExternalConfigurationBrokerCertChainAndKey'] = None,
+                 brokers: Optional[Sequence['outputs.KafkaSpecKafkaListenersOneOf1ExternalConfigurationBrokers']] = None):
         """
         External listener configuration.
-        :param 'KafkaSpecKafkaListenersExternalConfigurationBootstrapArgs' bootstrap: External bootstrap ingress configuration.
-        :param 'KafkaSpecKafkaListenersExternalConfigurationBrokerCertChainAndKeyArgs' broker_cert_chain_and_key: Reference to the `Secret` which holds the certificate and private key pair. The certificate can optionally contain the whole chain.
-        :param Sequence['KafkaSpecKafkaListenersExternalConfigurationBrokersArgs'] brokers: External broker ingress configuration.
+        :param 'KafkaSpecKafkaListenersOneOf1ExternalConfigurationBootstrapArgs' bootstrap: External bootstrap ingress configuration.
+        :param 'KafkaSpecKafkaListenersOneOf1ExternalConfigurationBrokerCertChainAndKeyArgs' broker_cert_chain_and_key: Reference to the `Secret` which holds the certificate and private key pair. The certificate can optionally contain the whole chain.
+        :param Sequence['KafkaSpecKafkaListenersOneOf1ExternalConfigurationBrokersArgs'] brokers: External broker ingress configuration.
         """
         if bootstrap is not None:
             pulumi.set(__self__, "bootstrap", bootstrap)
@@ -25726,7 +27656,7 @@ class KafkaSpecKafkaListenersExternalConfiguration(dict):
 
     @property
     @pulumi.getter
-    def bootstrap(self) -> Optional['outputs.KafkaSpecKafkaListenersExternalConfigurationBootstrap']:
+    def bootstrap(self) -> Optional['outputs.KafkaSpecKafkaListenersOneOf1ExternalConfigurationBootstrap']:
         """
         External bootstrap ingress configuration.
         """
@@ -25734,7 +27664,7 @@ class KafkaSpecKafkaListenersExternalConfiguration(dict):
 
     @property
     @pulumi.getter(name="brokerCertChainAndKey")
-    def broker_cert_chain_and_key(self) -> Optional['outputs.KafkaSpecKafkaListenersExternalConfigurationBrokerCertChainAndKey']:
+    def broker_cert_chain_and_key(self) -> Optional['outputs.KafkaSpecKafkaListenersOneOf1ExternalConfigurationBrokerCertChainAndKey']:
         """
         Reference to the `Secret` which holds the certificate and private key pair. The certificate can optionally contain the whole chain.
         """
@@ -25742,7 +27672,7 @@ class KafkaSpecKafkaListenersExternalConfiguration(dict):
 
     @property
     @pulumi.getter
-    def brokers(self) -> Optional[Sequence['outputs.KafkaSpecKafkaListenersExternalConfigurationBrokers']]:
+    def brokers(self) -> Optional[Sequence['outputs.KafkaSpecKafkaListenersOneOf1ExternalConfigurationBrokers']]:
         """
         External broker ingress configuration.
         """
@@ -25753,7 +27683,7 @@ class KafkaSpecKafkaListenersExternalConfiguration(dict):
 
 
 @pulumi.output_type
-class KafkaSpecKafkaListenersExternalConfigurationBootstrap(dict):
+class KafkaSpecKafkaListenersOneOf1ExternalConfigurationBootstrap(dict):
     """
     External bootstrap ingress configuration.
     """
@@ -25802,7 +27732,7 @@ class KafkaSpecKafkaListenersExternalConfigurationBootstrap(dict):
 
 
 @pulumi.output_type
-class KafkaSpecKafkaListenersExternalConfigurationBrokerCertChainAndKey(dict):
+class KafkaSpecKafkaListenersOneOf1ExternalConfigurationBrokerCertChainAndKey(dict):
     """
     Reference to the `Secret` which holds the certificate and private key pair. The certificate can optionally contain the whole chain.
     """
@@ -25849,7 +27779,7 @@ class KafkaSpecKafkaListenersExternalConfigurationBrokerCertChainAndKey(dict):
 
 
 @pulumi.output_type
-class KafkaSpecKafkaListenersExternalConfigurationBrokers(dict):
+class KafkaSpecKafkaListenersOneOf1ExternalConfigurationBrokers(dict):
     def __init__(__self__, *,
                  host: str,
                  advertised_host: Optional[str] = None,
@@ -25918,11 +27848,11 @@ class KafkaSpecKafkaListenersExternalConfigurationBrokers(dict):
 
 
 @pulumi.output_type
-class KafkaSpecKafkaListenersExternalNetworkPolicyPeers(dict):
+class KafkaSpecKafkaListenersOneOf1ExternalNetworkPolicyPeers(dict):
     def __init__(__self__, *,
-                 ip_block: Optional['outputs.KafkaSpecKafkaListenersExternalNetworkPolicyPeersIpBlock'] = None,
-                 namespace_selector: Optional['outputs.KafkaSpecKafkaListenersExternalNetworkPolicyPeersNamespaceSelector'] = None,
-                 pod_selector: Optional['outputs.KafkaSpecKafkaListenersExternalNetworkPolicyPeersPodSelector'] = None):
+                 ip_block: Optional['outputs.KafkaSpecKafkaListenersOneOf1ExternalNetworkPolicyPeersIpBlock'] = None,
+                 namespace_selector: Optional['outputs.KafkaSpecKafkaListenersOneOf1ExternalNetworkPolicyPeersNamespaceSelector'] = None,
+                 pod_selector: Optional['outputs.KafkaSpecKafkaListenersOneOf1ExternalNetworkPolicyPeersPodSelector'] = None):
         if ip_block is not None:
             pulumi.set(__self__, "ip_block", ip_block)
         if namespace_selector is not None:
@@ -25932,17 +27862,17 @@ class KafkaSpecKafkaListenersExternalNetworkPolicyPeers(dict):
 
     @property
     @pulumi.getter(name="ipBlock")
-    def ip_block(self) -> Optional['outputs.KafkaSpecKafkaListenersExternalNetworkPolicyPeersIpBlock']:
+    def ip_block(self) -> Optional['outputs.KafkaSpecKafkaListenersOneOf1ExternalNetworkPolicyPeersIpBlock']:
         return pulumi.get(self, "ip_block")
 
     @property
     @pulumi.getter(name="namespaceSelector")
-    def namespace_selector(self) -> Optional['outputs.KafkaSpecKafkaListenersExternalNetworkPolicyPeersNamespaceSelector']:
+    def namespace_selector(self) -> Optional['outputs.KafkaSpecKafkaListenersOneOf1ExternalNetworkPolicyPeersNamespaceSelector']:
         return pulumi.get(self, "namespace_selector")
 
     @property
     @pulumi.getter(name="podSelector")
-    def pod_selector(self) -> Optional['outputs.KafkaSpecKafkaListenersExternalNetworkPolicyPeersPodSelector']:
+    def pod_selector(self) -> Optional['outputs.KafkaSpecKafkaListenersOneOf1ExternalNetworkPolicyPeersPodSelector']:
         return pulumi.get(self, "pod_selector")
 
     def _translate_property(self, prop):
@@ -25950,7 +27880,7 @@ class KafkaSpecKafkaListenersExternalNetworkPolicyPeers(dict):
 
 
 @pulumi.output_type
-class KafkaSpecKafkaListenersExternalNetworkPolicyPeersIpBlock(dict):
+class KafkaSpecKafkaListenersOneOf1ExternalNetworkPolicyPeersIpBlock(dict):
     def __init__(__self__, *,
                  cidr: Optional[str] = None,
                  except_: Optional[Sequence[str]] = None):
@@ -25974,9 +27904,9 @@ class KafkaSpecKafkaListenersExternalNetworkPolicyPeersIpBlock(dict):
 
 
 @pulumi.output_type
-class KafkaSpecKafkaListenersExternalNetworkPolicyPeersNamespaceSelector(dict):
+class KafkaSpecKafkaListenersOneOf1ExternalNetworkPolicyPeersNamespaceSelector(dict):
     def __init__(__self__, *,
-                 match_expressions: Optional[Sequence['outputs.KafkaSpecKafkaListenersExternalNetworkPolicyPeersNamespaceSelectorMatchExpressions']] = None,
+                 match_expressions: Optional[Sequence['outputs.KafkaSpecKafkaListenersOneOf1ExternalNetworkPolicyPeersNamespaceSelectorMatchExpressions']] = None,
                  match_labels: Optional[Mapping[str, Any]] = None):
         if match_expressions is not None:
             pulumi.set(__self__, "match_expressions", match_expressions)
@@ -25985,7 +27915,7 @@ class KafkaSpecKafkaListenersExternalNetworkPolicyPeersNamespaceSelector(dict):
 
     @property
     @pulumi.getter(name="matchExpressions")
-    def match_expressions(self) -> Optional[Sequence['outputs.KafkaSpecKafkaListenersExternalNetworkPolicyPeersNamespaceSelectorMatchExpressions']]:
+    def match_expressions(self) -> Optional[Sequence['outputs.KafkaSpecKafkaListenersOneOf1ExternalNetworkPolicyPeersNamespaceSelectorMatchExpressions']]:
         return pulumi.get(self, "match_expressions")
 
     @property
@@ -25998,7 +27928,7 @@ class KafkaSpecKafkaListenersExternalNetworkPolicyPeersNamespaceSelector(dict):
 
 
 @pulumi.output_type
-class KafkaSpecKafkaListenersExternalNetworkPolicyPeersNamespaceSelectorMatchExpressions(dict):
+class KafkaSpecKafkaListenersOneOf1ExternalNetworkPolicyPeersNamespaceSelectorMatchExpressions(dict):
     def __init__(__self__, *,
                  key: Optional[str] = None,
                  operator: Optional[str] = None,
@@ -26030,9 +27960,9 @@ class KafkaSpecKafkaListenersExternalNetworkPolicyPeersNamespaceSelectorMatchExp
 
 
 @pulumi.output_type
-class KafkaSpecKafkaListenersExternalNetworkPolicyPeersPodSelector(dict):
+class KafkaSpecKafkaListenersOneOf1ExternalNetworkPolicyPeersPodSelector(dict):
     def __init__(__self__, *,
-                 match_expressions: Optional[Sequence['outputs.KafkaSpecKafkaListenersExternalNetworkPolicyPeersPodSelectorMatchExpressions']] = None,
+                 match_expressions: Optional[Sequence['outputs.KafkaSpecKafkaListenersOneOf1ExternalNetworkPolicyPeersPodSelectorMatchExpressions']] = None,
                  match_labels: Optional[Mapping[str, Any]] = None):
         if match_expressions is not None:
             pulumi.set(__self__, "match_expressions", match_expressions)
@@ -26041,7 +27971,7 @@ class KafkaSpecKafkaListenersExternalNetworkPolicyPeersPodSelector(dict):
 
     @property
     @pulumi.getter(name="matchExpressions")
-    def match_expressions(self) -> Optional[Sequence['outputs.KafkaSpecKafkaListenersExternalNetworkPolicyPeersPodSelectorMatchExpressions']]:
+    def match_expressions(self) -> Optional[Sequence['outputs.KafkaSpecKafkaListenersOneOf1ExternalNetworkPolicyPeersPodSelectorMatchExpressions']]:
         return pulumi.get(self, "match_expressions")
 
     @property
@@ -26054,7 +27984,7 @@ class KafkaSpecKafkaListenersExternalNetworkPolicyPeersPodSelector(dict):
 
 
 @pulumi.output_type
-class KafkaSpecKafkaListenersExternalNetworkPolicyPeersPodSelectorMatchExpressions(dict):
+class KafkaSpecKafkaListenersOneOf1ExternalNetworkPolicyPeersPodSelectorMatchExpressions(dict):
     def __init__(__self__, *,
                  key: Optional[str] = None,
                  operator: Optional[str] = None,
@@ -26086,17 +28016,17 @@ class KafkaSpecKafkaListenersExternalNetworkPolicyPeersPodSelectorMatchExpressio
 
 
 @pulumi.output_type
-class KafkaSpecKafkaListenersExternalOverrides(dict):
+class KafkaSpecKafkaListenersOneOf1ExternalOverrides(dict):
     """
     Overrides for external bootstrap and broker services and externally advertised addresses.
     """
     def __init__(__self__, *,
-                 bootstrap: Optional['outputs.KafkaSpecKafkaListenersExternalOverridesBootstrap'] = None,
-                 brokers: Optional[Sequence['outputs.KafkaSpecKafkaListenersExternalOverridesBrokers']] = None):
+                 bootstrap: Optional['outputs.KafkaSpecKafkaListenersOneOf1ExternalOverridesBootstrap'] = None,
+                 brokers: Optional[Sequence['outputs.KafkaSpecKafkaListenersOneOf1ExternalOverridesBrokers']] = None):
         """
         Overrides for external bootstrap and broker services and externally advertised addresses.
-        :param 'KafkaSpecKafkaListenersExternalOverridesBootstrapArgs' bootstrap: External bootstrap service configuration.
-        :param Sequence['KafkaSpecKafkaListenersExternalOverridesBrokersArgs'] brokers: External broker services configuration.
+        :param 'KafkaSpecKafkaListenersOneOf1ExternalOverridesBootstrapArgs' bootstrap: External bootstrap service configuration.
+        :param Sequence['KafkaSpecKafkaListenersOneOf1ExternalOverridesBrokersArgs'] brokers: External broker services configuration.
         """
         if bootstrap is not None:
             pulumi.set(__self__, "bootstrap", bootstrap)
@@ -26105,7 +28035,7 @@ class KafkaSpecKafkaListenersExternalOverrides(dict):
 
     @property
     @pulumi.getter
-    def bootstrap(self) -> Optional['outputs.KafkaSpecKafkaListenersExternalOverridesBootstrap']:
+    def bootstrap(self) -> Optional['outputs.KafkaSpecKafkaListenersOneOf1ExternalOverridesBootstrap']:
         """
         External bootstrap service configuration.
         """
@@ -26113,7 +28043,7 @@ class KafkaSpecKafkaListenersExternalOverrides(dict):
 
     @property
     @pulumi.getter
-    def brokers(self) -> Optional[Sequence['outputs.KafkaSpecKafkaListenersExternalOverridesBrokers']]:
+    def brokers(self) -> Optional[Sequence['outputs.KafkaSpecKafkaListenersOneOf1ExternalOverridesBrokers']]:
         """
         External broker services configuration.
         """
@@ -26124,7 +28054,7 @@ class KafkaSpecKafkaListenersExternalOverrides(dict):
 
 
 @pulumi.output_type
-class KafkaSpecKafkaListenersExternalOverridesBootstrap(dict):
+class KafkaSpecKafkaListenersOneOf1ExternalOverridesBootstrap(dict):
     """
     External bootstrap service configuration.
     """
@@ -26174,7 +28104,7 @@ class KafkaSpecKafkaListenersExternalOverridesBootstrap(dict):
 
 
 @pulumi.output_type
-class KafkaSpecKafkaListenersExternalOverridesBrokers(dict):
+class KafkaSpecKafkaListenersOneOf1ExternalOverridesBrokers(dict):
     def __init__(__self__, *,
                  advertised_host: Optional[str] = None,
                  advertised_port: Optional[int] = None,
@@ -26244,17 +28174,17 @@ class KafkaSpecKafkaListenersExternalOverridesBrokers(dict):
 
 
 @pulumi.output_type
-class KafkaSpecKafkaListenersPlain(dict):
+class KafkaSpecKafkaListenersOneOf1Plain(dict):
     """
     Configures plain listener on port 9092.
     """
     def __init__(__self__, *,
-                 authentication: Optional['outputs.KafkaSpecKafkaListenersPlainAuthentication'] = None,
-                 network_policy_peers: Optional[Sequence['outputs.KafkaSpecKafkaListenersPlainNetworkPolicyPeers']] = None):
+                 authentication: Optional['outputs.KafkaSpecKafkaListenersOneOf1PlainAuthentication'] = None,
+                 network_policy_peers: Optional[Sequence['outputs.KafkaSpecKafkaListenersOneOf1PlainNetworkPolicyPeers']] = None):
         """
         Configures plain listener on port 9092.
-        :param 'KafkaSpecKafkaListenersPlainAuthenticationArgs' authentication: Authentication configuration for this listener. Since this listener does not use TLS transport you cannot configure an authentication with `type: tls`.
-        :param Sequence['KafkaSpecKafkaListenersPlainNetworkPolicyPeersArgs'] network_policy_peers: List of peers which should be able to connect to this listener. Peers in this list are combined using a logical OR operation. If this field is empty or missing, all connections will be allowed for this listener. If this field is present and contains at least one item, the listener only allows the traffic which matches at least one item in this list.
+        :param 'KafkaSpecKafkaListenersOneOf1PlainAuthenticationArgs' authentication: Authentication configuration for this listener. Since this listener does not use TLS transport you cannot configure an authentication with `type: tls`.
+        :param Sequence['KafkaSpecKafkaListenersOneOf1PlainNetworkPolicyPeersArgs'] network_policy_peers: List of peers which should be able to connect to this listener. Peers in this list are combined using a logical OR operation. If this field is empty or missing, all connections will be allowed for this listener. If this field is present and contains at least one item, the listener only allows the traffic which matches at least one item in this list.
         """
         if authentication is not None:
             pulumi.set(__self__, "authentication", authentication)
@@ -26263,7 +28193,7 @@ class KafkaSpecKafkaListenersPlain(dict):
 
     @property
     @pulumi.getter
-    def authentication(self) -> Optional['outputs.KafkaSpecKafkaListenersPlainAuthentication']:
+    def authentication(self) -> Optional['outputs.KafkaSpecKafkaListenersOneOf1PlainAuthentication']:
         """
         Authentication configuration for this listener. Since this listener does not use TLS transport you cannot configure an authentication with `type: tls`.
         """
@@ -26271,7 +28201,7 @@ class KafkaSpecKafkaListenersPlain(dict):
 
     @property
     @pulumi.getter(name="networkPolicyPeers")
-    def network_policy_peers(self) -> Optional[Sequence['outputs.KafkaSpecKafkaListenersPlainNetworkPolicyPeers']]:
+    def network_policy_peers(self) -> Optional[Sequence['outputs.KafkaSpecKafkaListenersOneOf1PlainNetworkPolicyPeers']]:
         """
         List of peers which should be able to connect to this listener. Peers in this list are combined using a logical OR operation. If this field is empty or missing, all connections will be allowed for this listener. If this field is present and contains at least one item, the listener only allows the traffic which matches at least one item in this list.
         """
@@ -26282,7 +28212,7 @@ class KafkaSpecKafkaListenersPlain(dict):
 
 
 @pulumi.output_type
-class KafkaSpecKafkaListenersPlainAuthentication(dict):
+class KafkaSpecKafkaListenersOneOf1PlainAuthentication(dict):
     """
     Authentication configuration for this listener. Since this listener does not use TLS transport you cannot configure an authentication with `type: tls`.
     """
@@ -26292,7 +28222,7 @@ class KafkaSpecKafkaListenersPlainAuthentication(dict):
                  check_access_token_type: Optional[bool] = None,
                  check_issuer: Optional[bool] = None,
                  client_id: Optional[str] = None,
-                 client_secret: Optional['outputs.KafkaSpecKafkaListenersPlainAuthenticationClientSecret'] = None,
+                 client_secret: Optional['outputs.KafkaSpecKafkaListenersOneOf1PlainAuthenticationClientSecret'] = None,
                  disable_tls_hostname_verification: Optional[bool] = None,
                  enable_ecdsa: Optional[bool] = None,
                  fallback_user_name_claim: Optional[str] = None,
@@ -26300,8 +28230,10 @@ class KafkaSpecKafkaListenersPlainAuthentication(dict):
                  introspection_endpoint_uri: Optional[str] = None,
                  jwks_endpoint_uri: Optional[str] = None,
                  jwks_expiry_seconds: Optional[int] = None,
+                 jwks_min_refresh_pause_seconds: Optional[int] = None,
                  jwks_refresh_seconds: Optional[int] = None,
-                 tls_trusted_certificates: Optional[Sequence['outputs.KafkaSpecKafkaListenersPlainAuthenticationTlsTrustedCertificates']] = None,
+                 max_seconds_without_reauthentication: Optional[int] = None,
+                 tls_trusted_certificates: Optional[Sequence['outputs.KafkaSpecKafkaListenersOneOf1PlainAuthenticationTlsTrustedCertificates']] = None,
                  user_info_endpoint_uri: Optional[str] = None,
                  user_name_claim: Optional[str] = None,
                  valid_issuer_uri: Optional[str] = None,
@@ -26313,7 +28245,7 @@ class KafkaSpecKafkaListenersPlainAuthentication(dict):
         :param bool check_access_token_type: Configure whether the access token type check is performed or not. This should be set to `false` if the authorization server does not include 'typ' claim in JWT token. Defaults to `true`.
         :param bool check_issuer: Enable or disable issuer checking. By default issuer is checked using the value configured by `validIssuerUri`. Default value is `true`.
         :param str client_id: OAuth Client ID which the Kafka broker can use to authenticate against the authorization server and use the introspect endpoint URI.
-        :param 'KafkaSpecKafkaListenersPlainAuthenticationClientSecretArgs' client_secret: Link to Kubernetes Secret containing the OAuth client secret which the Kafka broker can use to authenticate against the authorization server and use the introspect endpoint URI.
+        :param 'KafkaSpecKafkaListenersOneOf1PlainAuthenticationClientSecretArgs' client_secret: Link to Kubernetes Secret containing the OAuth client secret which the Kafka broker can use to authenticate against the authorization server and use the introspect endpoint URI.
         :param bool disable_tls_hostname_verification: Enable or disable TLS hostname verification. Default value is `false`.
         :param bool enable_ecdsa: Enable or disable ECDSA support by installing BouncyCastle crypto provider. Default value is `false`.
         :param str fallback_user_name_claim: The fallback username claim to be used for the user id if the claim specified by `userNameClaim` is not present. This is useful when `client_credentials` authentication only results in the client id being provided in another claim. It only takes effect if `userNameClaim` is set.
@@ -26321,8 +28253,10 @@ class KafkaSpecKafkaListenersPlainAuthentication(dict):
         :param str introspection_endpoint_uri: URI of the token introspection endpoint which can be used to validate opaque non-JWT tokens.
         :param str jwks_endpoint_uri: URI of the JWKS certificate endpoint, which can be used for local JWT validation.
         :param int jwks_expiry_seconds: Configures how often are the JWKS certificates considered valid. The expiry interval has to be at least 60 seconds longer then the refresh interval specified in `jwksRefreshSeconds`. Defaults to 360 seconds.
+        :param int jwks_min_refresh_pause_seconds: The minimum pause between two consecutive refreshes. When an unknown signing key is encountered the refresh is scheduled immediately, but will always wait for this minimum pause. Defaults to 1 second.
         :param int jwks_refresh_seconds: Configures how often are the JWKS certificates refreshed. The refresh interval has to be at least 60 seconds shorter then the expiry interval specified in `jwksExpirySeconds`. Defaults to 300 seconds.
-        :param Sequence['KafkaSpecKafkaListenersPlainAuthenticationTlsTrustedCertificatesArgs'] tls_trusted_certificates: Trusted certificates for TLS connection to the OAuth server.
+        :param int max_seconds_without_reauthentication: Maximum number of seconds the authenticated session remains valid without re-authentication. This enables Apache Kafka re-authentication feature, and causes sessions to expire when the access token expires. If the access token expires before max time or if max time is reached, the client has to re-authenticate, otherwise the server will drop the connection. Not set by default - the authenticated session does not expire when the access token expires.
+        :param Sequence['KafkaSpecKafkaListenersOneOf1PlainAuthenticationTlsTrustedCertificatesArgs'] tls_trusted_certificates: Trusted certificates for TLS connection to the OAuth server.
         :param str user_info_endpoint_uri: URI of the User Info Endpoint to use as a fallback to obtaining the user id when the Introspection Endpoint does not return information that can be used for the user id. 
         :param str user_name_claim: Name of the claim from the JWT authentication token, Introspection Endpoint response or User Info Endpoint response which will be used to extract the user id. Defaults to `sub`.
         :param str valid_issuer_uri: URI of the token issuer used for authentication.
@@ -26353,8 +28287,12 @@ class KafkaSpecKafkaListenersPlainAuthentication(dict):
             pulumi.set(__self__, "jwks_endpoint_uri", jwks_endpoint_uri)
         if jwks_expiry_seconds is not None:
             pulumi.set(__self__, "jwks_expiry_seconds", jwks_expiry_seconds)
+        if jwks_min_refresh_pause_seconds is not None:
+            pulumi.set(__self__, "jwks_min_refresh_pause_seconds", jwks_min_refresh_pause_seconds)
         if jwks_refresh_seconds is not None:
             pulumi.set(__self__, "jwks_refresh_seconds", jwks_refresh_seconds)
+        if max_seconds_without_reauthentication is not None:
+            pulumi.set(__self__, "max_seconds_without_reauthentication", max_seconds_without_reauthentication)
         if tls_trusted_certificates is not None:
             pulumi.set(__self__, "tls_trusted_certificates", tls_trusted_certificates)
         if user_info_endpoint_uri is not None:
@@ -26408,7 +28346,7 @@ class KafkaSpecKafkaListenersPlainAuthentication(dict):
 
     @property
     @pulumi.getter(name="clientSecret")
-    def client_secret(self) -> Optional['outputs.KafkaSpecKafkaListenersPlainAuthenticationClientSecret']:
+    def client_secret(self) -> Optional['outputs.KafkaSpecKafkaListenersOneOf1PlainAuthenticationClientSecret']:
         """
         Link to Kubernetes Secret containing the OAuth client secret which the Kafka broker can use to authenticate against the authorization server and use the introspect endpoint URI.
         """
@@ -26471,6 +28409,14 @@ class KafkaSpecKafkaListenersPlainAuthentication(dict):
         return pulumi.get(self, "jwks_expiry_seconds")
 
     @property
+    @pulumi.getter(name="jwksMinRefreshPauseSeconds")
+    def jwks_min_refresh_pause_seconds(self) -> Optional[int]:
+        """
+        The minimum pause between two consecutive refreshes. When an unknown signing key is encountered the refresh is scheduled immediately, but will always wait for this minimum pause. Defaults to 1 second.
+        """
+        return pulumi.get(self, "jwks_min_refresh_pause_seconds")
+
+    @property
     @pulumi.getter(name="jwksRefreshSeconds")
     def jwks_refresh_seconds(self) -> Optional[int]:
         """
@@ -26479,8 +28425,16 @@ class KafkaSpecKafkaListenersPlainAuthentication(dict):
         return pulumi.get(self, "jwks_refresh_seconds")
 
     @property
+    @pulumi.getter(name="maxSecondsWithoutReauthentication")
+    def max_seconds_without_reauthentication(self) -> Optional[int]:
+        """
+        Maximum number of seconds the authenticated session remains valid without re-authentication. This enables Apache Kafka re-authentication feature, and causes sessions to expire when the access token expires. If the access token expires before max time or if max time is reached, the client has to re-authenticate, otherwise the server will drop the connection. Not set by default - the authenticated session does not expire when the access token expires.
+        """
+        return pulumi.get(self, "max_seconds_without_reauthentication")
+
+    @property
     @pulumi.getter(name="tlsTrustedCertificates")
-    def tls_trusted_certificates(self) -> Optional[Sequence['outputs.KafkaSpecKafkaListenersPlainAuthenticationTlsTrustedCertificates']]:
+    def tls_trusted_certificates(self) -> Optional[Sequence['outputs.KafkaSpecKafkaListenersOneOf1PlainAuthenticationTlsTrustedCertificates']]:
         """
         Trusted certificates for TLS connection to the OAuth server.
         """
@@ -26523,7 +28477,7 @@ class KafkaSpecKafkaListenersPlainAuthentication(dict):
 
 
 @pulumi.output_type
-class KafkaSpecKafkaListenersPlainAuthenticationClientSecret(dict):
+class KafkaSpecKafkaListenersOneOf1PlainAuthenticationClientSecret(dict):
     """
     Link to Kubernetes Secret containing the OAuth client secret which the Kafka broker can use to authenticate against the authorization server and use the introspect endpoint URI.
     """
@@ -26559,7 +28513,7 @@ class KafkaSpecKafkaListenersPlainAuthenticationClientSecret(dict):
 
 
 @pulumi.output_type
-class KafkaSpecKafkaListenersPlainAuthenticationTlsTrustedCertificates(dict):
+class KafkaSpecKafkaListenersOneOf1PlainAuthenticationTlsTrustedCertificates(dict):
     def __init__(__self__, *,
                  certificate: str,
                  secret_name: str):
@@ -26591,11 +28545,11 @@ class KafkaSpecKafkaListenersPlainAuthenticationTlsTrustedCertificates(dict):
 
 
 @pulumi.output_type
-class KafkaSpecKafkaListenersPlainNetworkPolicyPeers(dict):
+class KafkaSpecKafkaListenersOneOf1PlainNetworkPolicyPeers(dict):
     def __init__(__self__, *,
-                 ip_block: Optional['outputs.KafkaSpecKafkaListenersPlainNetworkPolicyPeersIpBlock'] = None,
-                 namespace_selector: Optional['outputs.KafkaSpecKafkaListenersPlainNetworkPolicyPeersNamespaceSelector'] = None,
-                 pod_selector: Optional['outputs.KafkaSpecKafkaListenersPlainNetworkPolicyPeersPodSelector'] = None):
+                 ip_block: Optional['outputs.KafkaSpecKafkaListenersOneOf1PlainNetworkPolicyPeersIpBlock'] = None,
+                 namespace_selector: Optional['outputs.KafkaSpecKafkaListenersOneOf1PlainNetworkPolicyPeersNamespaceSelector'] = None,
+                 pod_selector: Optional['outputs.KafkaSpecKafkaListenersOneOf1PlainNetworkPolicyPeersPodSelector'] = None):
         if ip_block is not None:
             pulumi.set(__self__, "ip_block", ip_block)
         if namespace_selector is not None:
@@ -26605,17 +28559,17 @@ class KafkaSpecKafkaListenersPlainNetworkPolicyPeers(dict):
 
     @property
     @pulumi.getter(name="ipBlock")
-    def ip_block(self) -> Optional['outputs.KafkaSpecKafkaListenersPlainNetworkPolicyPeersIpBlock']:
+    def ip_block(self) -> Optional['outputs.KafkaSpecKafkaListenersOneOf1PlainNetworkPolicyPeersIpBlock']:
         return pulumi.get(self, "ip_block")
 
     @property
     @pulumi.getter(name="namespaceSelector")
-    def namespace_selector(self) -> Optional['outputs.KafkaSpecKafkaListenersPlainNetworkPolicyPeersNamespaceSelector']:
+    def namespace_selector(self) -> Optional['outputs.KafkaSpecKafkaListenersOneOf1PlainNetworkPolicyPeersNamespaceSelector']:
         return pulumi.get(self, "namespace_selector")
 
     @property
     @pulumi.getter(name="podSelector")
-    def pod_selector(self) -> Optional['outputs.KafkaSpecKafkaListenersPlainNetworkPolicyPeersPodSelector']:
+    def pod_selector(self) -> Optional['outputs.KafkaSpecKafkaListenersOneOf1PlainNetworkPolicyPeersPodSelector']:
         return pulumi.get(self, "pod_selector")
 
     def _translate_property(self, prop):
@@ -26623,7 +28577,7 @@ class KafkaSpecKafkaListenersPlainNetworkPolicyPeers(dict):
 
 
 @pulumi.output_type
-class KafkaSpecKafkaListenersPlainNetworkPolicyPeersIpBlock(dict):
+class KafkaSpecKafkaListenersOneOf1PlainNetworkPolicyPeersIpBlock(dict):
     def __init__(__self__, *,
                  cidr: Optional[str] = None,
                  except_: Optional[Sequence[str]] = None):
@@ -26647,9 +28601,9 @@ class KafkaSpecKafkaListenersPlainNetworkPolicyPeersIpBlock(dict):
 
 
 @pulumi.output_type
-class KafkaSpecKafkaListenersPlainNetworkPolicyPeersNamespaceSelector(dict):
+class KafkaSpecKafkaListenersOneOf1PlainNetworkPolicyPeersNamespaceSelector(dict):
     def __init__(__self__, *,
-                 match_expressions: Optional[Sequence['outputs.KafkaSpecKafkaListenersPlainNetworkPolicyPeersNamespaceSelectorMatchExpressions']] = None,
+                 match_expressions: Optional[Sequence['outputs.KafkaSpecKafkaListenersOneOf1PlainNetworkPolicyPeersNamespaceSelectorMatchExpressions']] = None,
                  match_labels: Optional[Mapping[str, Any]] = None):
         if match_expressions is not None:
             pulumi.set(__self__, "match_expressions", match_expressions)
@@ -26658,7 +28612,7 @@ class KafkaSpecKafkaListenersPlainNetworkPolicyPeersNamespaceSelector(dict):
 
     @property
     @pulumi.getter(name="matchExpressions")
-    def match_expressions(self) -> Optional[Sequence['outputs.KafkaSpecKafkaListenersPlainNetworkPolicyPeersNamespaceSelectorMatchExpressions']]:
+    def match_expressions(self) -> Optional[Sequence['outputs.KafkaSpecKafkaListenersOneOf1PlainNetworkPolicyPeersNamespaceSelectorMatchExpressions']]:
         return pulumi.get(self, "match_expressions")
 
     @property
@@ -26671,7 +28625,7 @@ class KafkaSpecKafkaListenersPlainNetworkPolicyPeersNamespaceSelector(dict):
 
 
 @pulumi.output_type
-class KafkaSpecKafkaListenersPlainNetworkPolicyPeersNamespaceSelectorMatchExpressions(dict):
+class KafkaSpecKafkaListenersOneOf1PlainNetworkPolicyPeersNamespaceSelectorMatchExpressions(dict):
     def __init__(__self__, *,
                  key: Optional[str] = None,
                  operator: Optional[str] = None,
@@ -26703,9 +28657,9 @@ class KafkaSpecKafkaListenersPlainNetworkPolicyPeersNamespaceSelectorMatchExpres
 
 
 @pulumi.output_type
-class KafkaSpecKafkaListenersPlainNetworkPolicyPeersPodSelector(dict):
+class KafkaSpecKafkaListenersOneOf1PlainNetworkPolicyPeersPodSelector(dict):
     def __init__(__self__, *,
-                 match_expressions: Optional[Sequence['outputs.KafkaSpecKafkaListenersPlainNetworkPolicyPeersPodSelectorMatchExpressions']] = None,
+                 match_expressions: Optional[Sequence['outputs.KafkaSpecKafkaListenersOneOf1PlainNetworkPolicyPeersPodSelectorMatchExpressions']] = None,
                  match_labels: Optional[Mapping[str, Any]] = None):
         if match_expressions is not None:
             pulumi.set(__self__, "match_expressions", match_expressions)
@@ -26714,7 +28668,7 @@ class KafkaSpecKafkaListenersPlainNetworkPolicyPeersPodSelector(dict):
 
     @property
     @pulumi.getter(name="matchExpressions")
-    def match_expressions(self) -> Optional[Sequence['outputs.KafkaSpecKafkaListenersPlainNetworkPolicyPeersPodSelectorMatchExpressions']]:
+    def match_expressions(self) -> Optional[Sequence['outputs.KafkaSpecKafkaListenersOneOf1PlainNetworkPolicyPeersPodSelectorMatchExpressions']]:
         return pulumi.get(self, "match_expressions")
 
     @property
@@ -26727,7 +28681,7 @@ class KafkaSpecKafkaListenersPlainNetworkPolicyPeersPodSelector(dict):
 
 
 @pulumi.output_type
-class KafkaSpecKafkaListenersPlainNetworkPolicyPeersPodSelectorMatchExpressions(dict):
+class KafkaSpecKafkaListenersOneOf1PlainNetworkPolicyPeersPodSelectorMatchExpressions(dict):
     def __init__(__self__, *,
                  key: Optional[str] = None,
                  operator: Optional[str] = None,
@@ -26759,19 +28713,19 @@ class KafkaSpecKafkaListenersPlainNetworkPolicyPeersPodSelectorMatchExpressions(
 
 
 @pulumi.output_type
-class KafkaSpecKafkaListenersTls(dict):
+class KafkaSpecKafkaListenersOneOf1Tls(dict):
     """
     Configures TLS listener on port 9093.
     """
     def __init__(__self__, *,
-                 authentication: Optional['outputs.KafkaSpecKafkaListenersTlsAuthentication'] = None,
-                 configuration: Optional['outputs.KafkaSpecKafkaListenersTlsConfiguration'] = None,
-                 network_policy_peers: Optional[Sequence['outputs.KafkaSpecKafkaListenersTlsNetworkPolicyPeers']] = None):
+                 authentication: Optional['outputs.KafkaSpecKafkaListenersOneOf1TlsAuthentication'] = None,
+                 configuration: Optional['outputs.KafkaSpecKafkaListenersOneOf1TlsConfiguration'] = None,
+                 network_policy_peers: Optional[Sequence['outputs.KafkaSpecKafkaListenersOneOf1TlsNetworkPolicyPeers']] = None):
         """
         Configures TLS listener on port 9093.
-        :param 'KafkaSpecKafkaListenersTlsAuthenticationArgs' authentication: Authentication configuration for this listener.
-        :param 'KafkaSpecKafkaListenersTlsConfigurationArgs' configuration: Configuration of TLS listener.
-        :param Sequence['KafkaSpecKafkaListenersTlsNetworkPolicyPeersArgs'] network_policy_peers: List of peers which should be able to connect to this listener. Peers in this list are combined using a logical OR operation. If this field is empty or missing, all connections will be allowed for this listener. If this field is present and contains at least one item, the listener only allows the traffic which matches at least one item in this list.
+        :param 'KafkaSpecKafkaListenersOneOf1TlsAuthenticationArgs' authentication: Authentication configuration for this listener.
+        :param 'KafkaSpecKafkaListenersOneOf1TlsConfigurationArgs' configuration: Configuration of TLS listener.
+        :param Sequence['KafkaSpecKafkaListenersOneOf1TlsNetworkPolicyPeersArgs'] network_policy_peers: List of peers which should be able to connect to this listener. Peers in this list are combined using a logical OR operation. If this field is empty or missing, all connections will be allowed for this listener. If this field is present and contains at least one item, the listener only allows the traffic which matches at least one item in this list.
         """
         if authentication is not None:
             pulumi.set(__self__, "authentication", authentication)
@@ -26782,7 +28736,7 @@ class KafkaSpecKafkaListenersTls(dict):
 
     @property
     @pulumi.getter
-    def authentication(self) -> Optional['outputs.KafkaSpecKafkaListenersTlsAuthentication']:
+    def authentication(self) -> Optional['outputs.KafkaSpecKafkaListenersOneOf1TlsAuthentication']:
         """
         Authentication configuration for this listener.
         """
@@ -26790,7 +28744,7 @@ class KafkaSpecKafkaListenersTls(dict):
 
     @property
     @pulumi.getter
-    def configuration(self) -> Optional['outputs.KafkaSpecKafkaListenersTlsConfiguration']:
+    def configuration(self) -> Optional['outputs.KafkaSpecKafkaListenersOneOf1TlsConfiguration']:
         """
         Configuration of TLS listener.
         """
@@ -26798,7 +28752,7 @@ class KafkaSpecKafkaListenersTls(dict):
 
     @property
     @pulumi.getter(name="networkPolicyPeers")
-    def network_policy_peers(self) -> Optional[Sequence['outputs.KafkaSpecKafkaListenersTlsNetworkPolicyPeers']]:
+    def network_policy_peers(self) -> Optional[Sequence['outputs.KafkaSpecKafkaListenersOneOf1TlsNetworkPolicyPeers']]:
         """
         List of peers which should be able to connect to this listener. Peers in this list are combined using a logical OR operation. If this field is empty or missing, all connections will be allowed for this listener. If this field is present and contains at least one item, the listener only allows the traffic which matches at least one item in this list.
         """
@@ -26809,7 +28763,7 @@ class KafkaSpecKafkaListenersTls(dict):
 
 
 @pulumi.output_type
-class KafkaSpecKafkaListenersTlsAuthentication(dict):
+class KafkaSpecKafkaListenersOneOf1TlsAuthentication(dict):
     """
     Authentication configuration for this listener.
     """
@@ -26819,7 +28773,7 @@ class KafkaSpecKafkaListenersTlsAuthentication(dict):
                  check_access_token_type: Optional[bool] = None,
                  check_issuer: Optional[bool] = None,
                  client_id: Optional[str] = None,
-                 client_secret: Optional['outputs.KafkaSpecKafkaListenersTlsAuthenticationClientSecret'] = None,
+                 client_secret: Optional['outputs.KafkaSpecKafkaListenersOneOf1TlsAuthenticationClientSecret'] = None,
                  disable_tls_hostname_verification: Optional[bool] = None,
                  enable_ecdsa: Optional[bool] = None,
                  fallback_user_name_claim: Optional[str] = None,
@@ -26827,8 +28781,10 @@ class KafkaSpecKafkaListenersTlsAuthentication(dict):
                  introspection_endpoint_uri: Optional[str] = None,
                  jwks_endpoint_uri: Optional[str] = None,
                  jwks_expiry_seconds: Optional[int] = None,
+                 jwks_min_refresh_pause_seconds: Optional[int] = None,
                  jwks_refresh_seconds: Optional[int] = None,
-                 tls_trusted_certificates: Optional[Sequence['outputs.KafkaSpecKafkaListenersTlsAuthenticationTlsTrustedCertificates']] = None,
+                 max_seconds_without_reauthentication: Optional[int] = None,
+                 tls_trusted_certificates: Optional[Sequence['outputs.KafkaSpecKafkaListenersOneOf1TlsAuthenticationTlsTrustedCertificates']] = None,
                  user_info_endpoint_uri: Optional[str] = None,
                  user_name_claim: Optional[str] = None,
                  valid_issuer_uri: Optional[str] = None,
@@ -26840,7 +28796,7 @@ class KafkaSpecKafkaListenersTlsAuthentication(dict):
         :param bool check_access_token_type: Configure whether the access token type check is performed or not. This should be set to `false` if the authorization server does not include 'typ' claim in JWT token. Defaults to `true`.
         :param bool check_issuer: Enable or disable issuer checking. By default issuer is checked using the value configured by `validIssuerUri`. Default value is `true`.
         :param str client_id: OAuth Client ID which the Kafka broker can use to authenticate against the authorization server and use the introspect endpoint URI.
-        :param 'KafkaSpecKafkaListenersTlsAuthenticationClientSecretArgs' client_secret: Link to Kubernetes Secret containing the OAuth client secret which the Kafka broker can use to authenticate against the authorization server and use the introspect endpoint URI.
+        :param 'KafkaSpecKafkaListenersOneOf1TlsAuthenticationClientSecretArgs' client_secret: Link to Kubernetes Secret containing the OAuth client secret which the Kafka broker can use to authenticate against the authorization server and use the introspect endpoint URI.
         :param bool disable_tls_hostname_verification: Enable or disable TLS hostname verification. Default value is `false`.
         :param bool enable_ecdsa: Enable or disable ECDSA support by installing BouncyCastle crypto provider. Default value is `false`.
         :param str fallback_user_name_claim: The fallback username claim to be used for the user id if the claim specified by `userNameClaim` is not present. This is useful when `client_credentials` authentication only results in the client id being provided in another claim. It only takes effect if `userNameClaim` is set.
@@ -26848,8 +28804,10 @@ class KafkaSpecKafkaListenersTlsAuthentication(dict):
         :param str introspection_endpoint_uri: URI of the token introspection endpoint which can be used to validate opaque non-JWT tokens.
         :param str jwks_endpoint_uri: URI of the JWKS certificate endpoint, which can be used for local JWT validation.
         :param int jwks_expiry_seconds: Configures how often are the JWKS certificates considered valid. The expiry interval has to be at least 60 seconds longer then the refresh interval specified in `jwksRefreshSeconds`. Defaults to 360 seconds.
+        :param int jwks_min_refresh_pause_seconds: The minimum pause between two consecutive refreshes. When an unknown signing key is encountered the refresh is scheduled immediately, but will always wait for this minimum pause. Defaults to 1 second.
         :param int jwks_refresh_seconds: Configures how often are the JWKS certificates refreshed. The refresh interval has to be at least 60 seconds shorter then the expiry interval specified in `jwksExpirySeconds`. Defaults to 300 seconds.
-        :param Sequence['KafkaSpecKafkaListenersTlsAuthenticationTlsTrustedCertificatesArgs'] tls_trusted_certificates: Trusted certificates for TLS connection to the OAuth server.
+        :param int max_seconds_without_reauthentication: Maximum number of seconds the authenticated session remains valid without re-authentication. This enables Apache Kafka re-authentication feature, and causes sessions to expire when the access token expires. If the access token expires before max time or if max time is reached, the client has to re-authenticate, otherwise the server will drop the connection. Not set by default - the authenticated session does not expire when the access token expires.
+        :param Sequence['KafkaSpecKafkaListenersOneOf1TlsAuthenticationTlsTrustedCertificatesArgs'] tls_trusted_certificates: Trusted certificates for TLS connection to the OAuth server.
         :param str user_info_endpoint_uri: URI of the User Info Endpoint to use as a fallback to obtaining the user id when the Introspection Endpoint does not return information that can be used for the user id. 
         :param str user_name_claim: Name of the claim from the JWT authentication token, Introspection Endpoint response or User Info Endpoint response which will be used to extract the user id. Defaults to `sub`.
         :param str valid_issuer_uri: URI of the token issuer used for authentication.
@@ -26880,8 +28838,12 @@ class KafkaSpecKafkaListenersTlsAuthentication(dict):
             pulumi.set(__self__, "jwks_endpoint_uri", jwks_endpoint_uri)
         if jwks_expiry_seconds is not None:
             pulumi.set(__self__, "jwks_expiry_seconds", jwks_expiry_seconds)
+        if jwks_min_refresh_pause_seconds is not None:
+            pulumi.set(__self__, "jwks_min_refresh_pause_seconds", jwks_min_refresh_pause_seconds)
         if jwks_refresh_seconds is not None:
             pulumi.set(__self__, "jwks_refresh_seconds", jwks_refresh_seconds)
+        if max_seconds_without_reauthentication is not None:
+            pulumi.set(__self__, "max_seconds_without_reauthentication", max_seconds_without_reauthentication)
         if tls_trusted_certificates is not None:
             pulumi.set(__self__, "tls_trusted_certificates", tls_trusted_certificates)
         if user_info_endpoint_uri is not None:
@@ -26935,7 +28897,7 @@ class KafkaSpecKafkaListenersTlsAuthentication(dict):
 
     @property
     @pulumi.getter(name="clientSecret")
-    def client_secret(self) -> Optional['outputs.KafkaSpecKafkaListenersTlsAuthenticationClientSecret']:
+    def client_secret(self) -> Optional['outputs.KafkaSpecKafkaListenersOneOf1TlsAuthenticationClientSecret']:
         """
         Link to Kubernetes Secret containing the OAuth client secret which the Kafka broker can use to authenticate against the authorization server and use the introspect endpoint URI.
         """
@@ -26998,6 +28960,14 @@ class KafkaSpecKafkaListenersTlsAuthentication(dict):
         return pulumi.get(self, "jwks_expiry_seconds")
 
     @property
+    @pulumi.getter(name="jwksMinRefreshPauseSeconds")
+    def jwks_min_refresh_pause_seconds(self) -> Optional[int]:
+        """
+        The minimum pause between two consecutive refreshes. When an unknown signing key is encountered the refresh is scheduled immediately, but will always wait for this minimum pause. Defaults to 1 second.
+        """
+        return pulumi.get(self, "jwks_min_refresh_pause_seconds")
+
+    @property
     @pulumi.getter(name="jwksRefreshSeconds")
     def jwks_refresh_seconds(self) -> Optional[int]:
         """
@@ -27006,8 +28976,16 @@ class KafkaSpecKafkaListenersTlsAuthentication(dict):
         return pulumi.get(self, "jwks_refresh_seconds")
 
     @property
+    @pulumi.getter(name="maxSecondsWithoutReauthentication")
+    def max_seconds_without_reauthentication(self) -> Optional[int]:
+        """
+        Maximum number of seconds the authenticated session remains valid without re-authentication. This enables Apache Kafka re-authentication feature, and causes sessions to expire when the access token expires. If the access token expires before max time or if max time is reached, the client has to re-authenticate, otherwise the server will drop the connection. Not set by default - the authenticated session does not expire when the access token expires.
+        """
+        return pulumi.get(self, "max_seconds_without_reauthentication")
+
+    @property
     @pulumi.getter(name="tlsTrustedCertificates")
-    def tls_trusted_certificates(self) -> Optional[Sequence['outputs.KafkaSpecKafkaListenersTlsAuthenticationTlsTrustedCertificates']]:
+    def tls_trusted_certificates(self) -> Optional[Sequence['outputs.KafkaSpecKafkaListenersOneOf1TlsAuthenticationTlsTrustedCertificates']]:
         """
         Trusted certificates for TLS connection to the OAuth server.
         """
@@ -27050,7 +29028,7 @@ class KafkaSpecKafkaListenersTlsAuthentication(dict):
 
 
 @pulumi.output_type
-class KafkaSpecKafkaListenersTlsAuthenticationClientSecret(dict):
+class KafkaSpecKafkaListenersOneOf1TlsAuthenticationClientSecret(dict):
     """
     Link to Kubernetes Secret containing the OAuth client secret which the Kafka broker can use to authenticate against the authorization server and use the introspect endpoint URI.
     """
@@ -27086,7 +29064,7 @@ class KafkaSpecKafkaListenersTlsAuthenticationClientSecret(dict):
 
 
 @pulumi.output_type
-class KafkaSpecKafkaListenersTlsAuthenticationTlsTrustedCertificates(dict):
+class KafkaSpecKafkaListenersOneOf1TlsAuthenticationTlsTrustedCertificates(dict):
     def __init__(__self__, *,
                  certificate: str,
                  secret_name: str):
@@ -27118,22 +29096,22 @@ class KafkaSpecKafkaListenersTlsAuthenticationTlsTrustedCertificates(dict):
 
 
 @pulumi.output_type
-class KafkaSpecKafkaListenersTlsConfiguration(dict):
+class KafkaSpecKafkaListenersOneOf1TlsConfiguration(dict):
     """
     Configuration of TLS listener.
     """
     def __init__(__self__, *,
-                 broker_cert_chain_and_key: Optional['outputs.KafkaSpecKafkaListenersTlsConfigurationBrokerCertChainAndKey'] = None):
+                 broker_cert_chain_and_key: Optional['outputs.KafkaSpecKafkaListenersOneOf1TlsConfigurationBrokerCertChainAndKey'] = None):
         """
         Configuration of TLS listener.
-        :param 'KafkaSpecKafkaListenersTlsConfigurationBrokerCertChainAndKeyArgs' broker_cert_chain_and_key: Reference to the `Secret` which holds the certificate and private key pair. The certificate can optionally contain the whole chain.
+        :param 'KafkaSpecKafkaListenersOneOf1TlsConfigurationBrokerCertChainAndKeyArgs' broker_cert_chain_and_key: Reference to the `Secret` which holds the certificate and private key pair. The certificate can optionally contain the whole chain.
         """
         if broker_cert_chain_and_key is not None:
             pulumi.set(__self__, "broker_cert_chain_and_key", broker_cert_chain_and_key)
 
     @property
     @pulumi.getter(name="brokerCertChainAndKey")
-    def broker_cert_chain_and_key(self) -> Optional['outputs.KafkaSpecKafkaListenersTlsConfigurationBrokerCertChainAndKey']:
+    def broker_cert_chain_and_key(self) -> Optional['outputs.KafkaSpecKafkaListenersOneOf1TlsConfigurationBrokerCertChainAndKey']:
         """
         Reference to the `Secret` which holds the certificate and private key pair. The certificate can optionally contain the whole chain.
         """
@@ -27144,7 +29122,7 @@ class KafkaSpecKafkaListenersTlsConfiguration(dict):
 
 
 @pulumi.output_type
-class KafkaSpecKafkaListenersTlsConfigurationBrokerCertChainAndKey(dict):
+class KafkaSpecKafkaListenersOneOf1TlsConfigurationBrokerCertChainAndKey(dict):
     """
     Reference to the `Secret` which holds the certificate and private key pair. The certificate can optionally contain the whole chain.
     """
@@ -27191,11 +29169,11 @@ class KafkaSpecKafkaListenersTlsConfigurationBrokerCertChainAndKey(dict):
 
 
 @pulumi.output_type
-class KafkaSpecKafkaListenersTlsNetworkPolicyPeers(dict):
+class KafkaSpecKafkaListenersOneOf1TlsNetworkPolicyPeers(dict):
     def __init__(__self__, *,
-                 ip_block: Optional['outputs.KafkaSpecKafkaListenersTlsNetworkPolicyPeersIpBlock'] = None,
-                 namespace_selector: Optional['outputs.KafkaSpecKafkaListenersTlsNetworkPolicyPeersNamespaceSelector'] = None,
-                 pod_selector: Optional['outputs.KafkaSpecKafkaListenersTlsNetworkPolicyPeersPodSelector'] = None):
+                 ip_block: Optional['outputs.KafkaSpecKafkaListenersOneOf1TlsNetworkPolicyPeersIpBlock'] = None,
+                 namespace_selector: Optional['outputs.KafkaSpecKafkaListenersOneOf1TlsNetworkPolicyPeersNamespaceSelector'] = None,
+                 pod_selector: Optional['outputs.KafkaSpecKafkaListenersOneOf1TlsNetworkPolicyPeersPodSelector'] = None):
         if ip_block is not None:
             pulumi.set(__self__, "ip_block", ip_block)
         if namespace_selector is not None:
@@ -27205,17 +29183,17 @@ class KafkaSpecKafkaListenersTlsNetworkPolicyPeers(dict):
 
     @property
     @pulumi.getter(name="ipBlock")
-    def ip_block(self) -> Optional['outputs.KafkaSpecKafkaListenersTlsNetworkPolicyPeersIpBlock']:
+    def ip_block(self) -> Optional['outputs.KafkaSpecKafkaListenersOneOf1TlsNetworkPolicyPeersIpBlock']:
         return pulumi.get(self, "ip_block")
 
     @property
     @pulumi.getter(name="namespaceSelector")
-    def namespace_selector(self) -> Optional['outputs.KafkaSpecKafkaListenersTlsNetworkPolicyPeersNamespaceSelector']:
+    def namespace_selector(self) -> Optional['outputs.KafkaSpecKafkaListenersOneOf1TlsNetworkPolicyPeersNamespaceSelector']:
         return pulumi.get(self, "namespace_selector")
 
     @property
     @pulumi.getter(name="podSelector")
-    def pod_selector(self) -> Optional['outputs.KafkaSpecKafkaListenersTlsNetworkPolicyPeersPodSelector']:
+    def pod_selector(self) -> Optional['outputs.KafkaSpecKafkaListenersOneOf1TlsNetworkPolicyPeersPodSelector']:
         return pulumi.get(self, "pod_selector")
 
     def _translate_property(self, prop):
@@ -27223,7 +29201,7 @@ class KafkaSpecKafkaListenersTlsNetworkPolicyPeers(dict):
 
 
 @pulumi.output_type
-class KafkaSpecKafkaListenersTlsNetworkPolicyPeersIpBlock(dict):
+class KafkaSpecKafkaListenersOneOf1TlsNetworkPolicyPeersIpBlock(dict):
     def __init__(__self__, *,
                  cidr: Optional[str] = None,
                  except_: Optional[Sequence[str]] = None):
@@ -27247,9 +29225,9 @@ class KafkaSpecKafkaListenersTlsNetworkPolicyPeersIpBlock(dict):
 
 
 @pulumi.output_type
-class KafkaSpecKafkaListenersTlsNetworkPolicyPeersNamespaceSelector(dict):
+class KafkaSpecKafkaListenersOneOf1TlsNetworkPolicyPeersNamespaceSelector(dict):
     def __init__(__self__, *,
-                 match_expressions: Optional[Sequence['outputs.KafkaSpecKafkaListenersTlsNetworkPolicyPeersNamespaceSelectorMatchExpressions']] = None,
+                 match_expressions: Optional[Sequence['outputs.KafkaSpecKafkaListenersOneOf1TlsNetworkPolicyPeersNamespaceSelectorMatchExpressions']] = None,
                  match_labels: Optional[Mapping[str, Any]] = None):
         if match_expressions is not None:
             pulumi.set(__self__, "match_expressions", match_expressions)
@@ -27258,7 +29236,7 @@ class KafkaSpecKafkaListenersTlsNetworkPolicyPeersNamespaceSelector(dict):
 
     @property
     @pulumi.getter(name="matchExpressions")
-    def match_expressions(self) -> Optional[Sequence['outputs.KafkaSpecKafkaListenersTlsNetworkPolicyPeersNamespaceSelectorMatchExpressions']]:
+    def match_expressions(self) -> Optional[Sequence['outputs.KafkaSpecKafkaListenersOneOf1TlsNetworkPolicyPeersNamespaceSelectorMatchExpressions']]:
         return pulumi.get(self, "match_expressions")
 
     @property
@@ -27271,7 +29249,7 @@ class KafkaSpecKafkaListenersTlsNetworkPolicyPeersNamespaceSelector(dict):
 
 
 @pulumi.output_type
-class KafkaSpecKafkaListenersTlsNetworkPolicyPeersNamespaceSelectorMatchExpressions(dict):
+class KafkaSpecKafkaListenersOneOf1TlsNetworkPolicyPeersNamespaceSelectorMatchExpressions(dict):
     def __init__(__self__, *,
                  key: Optional[str] = None,
                  operator: Optional[str] = None,
@@ -27303,9 +29281,9 @@ class KafkaSpecKafkaListenersTlsNetworkPolicyPeersNamespaceSelectorMatchExpressi
 
 
 @pulumi.output_type
-class KafkaSpecKafkaListenersTlsNetworkPolicyPeersPodSelector(dict):
+class KafkaSpecKafkaListenersOneOf1TlsNetworkPolicyPeersPodSelector(dict):
     def __init__(__self__, *,
-                 match_expressions: Optional[Sequence['outputs.KafkaSpecKafkaListenersTlsNetworkPolicyPeersPodSelectorMatchExpressions']] = None,
+                 match_expressions: Optional[Sequence['outputs.KafkaSpecKafkaListenersOneOf1TlsNetworkPolicyPeersPodSelectorMatchExpressions']] = None,
                  match_labels: Optional[Mapping[str, Any]] = None):
         if match_expressions is not None:
             pulumi.set(__self__, "match_expressions", match_expressions)
@@ -27314,7 +29292,7 @@ class KafkaSpecKafkaListenersTlsNetworkPolicyPeersPodSelector(dict):
 
     @property
     @pulumi.getter(name="matchExpressions")
-    def match_expressions(self) -> Optional[Sequence['outputs.KafkaSpecKafkaListenersTlsNetworkPolicyPeersPodSelectorMatchExpressions']]:
+    def match_expressions(self) -> Optional[Sequence['outputs.KafkaSpecKafkaListenersOneOf1TlsNetworkPolicyPeersPodSelectorMatchExpressions']]:
         return pulumi.get(self, "match_expressions")
 
     @property
@@ -27327,7 +29305,7 @@ class KafkaSpecKafkaListenersTlsNetworkPolicyPeersPodSelector(dict):
 
 
 @pulumi.output_type
-class KafkaSpecKafkaListenersTlsNetworkPolicyPeersPodSelectorMatchExpressions(dict):
+class KafkaSpecKafkaListenersOneOf1TlsNetworkPolicyPeersPodSelectorMatchExpressions(dict):
     def __init__(__self__, *,
                  key: Optional[str] = None,
                  operator: Optional[str] = None,
@@ -28366,7 +30344,7 @@ class KafkaSpecKafkaTemplateExternalBootstrapService(dict):
         """
         Template for Kafka external bootstrap `Service`.
         :param str external_traffic_policy: Specifies whether the service routes external traffic to node-local or cluster-wide endpoints. `Cluster` may cause a second hop to another node and obscures the client source IP. `Local` avoids a second hop for LoadBalancer and Nodeport type services and preserves the client source IP (when supported by the infrastructure). If unspecified, Kubernetes will use `Cluster` as the default.
-        :param Sequence[str] load_balancer_source_ranges: A list of CIDR ranges (for example `10.0.0.0/8` or `130.211.204.1/32`) from which clients can connect to load balancer type listeners. If supported by the platform, traffic through the loadbalancer is restricted to the specified CIDR ranges. This field is applicable only for loadbalancer type services and is ignored if the cloud provider does not support the feature. For more information, see https://kubernetes.io/docs/tasks/access-application-cluster/configure-cloud-provider-firewall/.
+        :param Sequence[str] load_balancer_source_ranges: A list of CIDR ranges (for example `10.0.0.0/8` or `130.211.204.1/32`) from which clients can connect to load balancer type listeners. If supported by the platform, traffic through the loadbalancer is restricted to the specified CIDR ranges. This field is applicable only for loadbalancer type services and is ignored if the cloud provider does not support the feature. For more information, see https://v1-17.docs.kubernetes.io/docs/tasks/access-application-cluster/configure-cloud-provider-firewall/. 
         :param 'KafkaSpecKafkaTemplateExternalBootstrapServiceMetadataArgs' metadata: Metadata applied to the resource.
         """
         if external_traffic_policy is not None:
@@ -28388,7 +30366,7 @@ class KafkaSpecKafkaTemplateExternalBootstrapService(dict):
     @pulumi.getter(name="loadBalancerSourceRanges")
     def load_balancer_source_ranges(self) -> Optional[Sequence[str]]:
         """
-        A list of CIDR ranges (for example `10.0.0.0/8` or `130.211.204.1/32`) from which clients can connect to load balancer type listeners. If supported by the platform, traffic through the loadbalancer is restricted to the specified CIDR ranges. This field is applicable only for loadbalancer type services and is ignored if the cloud provider does not support the feature. For more information, see https://kubernetes.io/docs/tasks/access-application-cluster/configure-cloud-provider-firewall/.
+        A list of CIDR ranges (for example `10.0.0.0/8` or `130.211.204.1/32`) from which clients can connect to load balancer type listeners. If supported by the platform, traffic through the loadbalancer is restricted to the specified CIDR ranges. This field is applicable only for loadbalancer type services and is ignored if the cloud provider does not support the feature. For more information, see https://v1-17.docs.kubernetes.io/docs/tasks/access-application-cluster/configure-cloud-provider-firewall/. 
         """
         return pulumi.get(self, "load_balancer_source_ranges")
 
@@ -28676,11 +30654,14 @@ class KafkaSpecKafkaTemplateInitContainerSecurityContextSeLinuxOptions(dict):
 class KafkaSpecKafkaTemplateInitContainerSecurityContextWindowsOptions(dict):
     def __init__(__self__, *,
                  gmsa_credential_spec: Optional[str] = None,
-                 gmsa_credential_spec_name: Optional[str] = None):
+                 gmsa_credential_spec_name: Optional[str] = None,
+                 run_as_user_name: Optional[str] = None):
         if gmsa_credential_spec is not None:
             pulumi.set(__self__, "gmsa_credential_spec", gmsa_credential_spec)
         if gmsa_credential_spec_name is not None:
             pulumi.set(__self__, "gmsa_credential_spec_name", gmsa_credential_spec_name)
+        if run_as_user_name is not None:
+            pulumi.set(__self__, "run_as_user_name", run_as_user_name)
 
     @property
     @pulumi.getter(name="gmsaCredentialSpec")
@@ -28691,6 +30672,11 @@ class KafkaSpecKafkaTemplateInitContainerSecurityContextWindowsOptions(dict):
     @pulumi.getter(name="gmsaCredentialSpecName")
     def gmsa_credential_spec_name(self) -> Optional[str]:
         return pulumi.get(self, "gmsa_credential_spec_name")
+
+    @property
+    @pulumi.getter(name="runAsUserName")
+    def run_as_user_name(self) -> Optional[str]:
+        return pulumi.get(self, "run_as_user_name")
 
     def _translate_property(self, prop):
         return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
@@ -28930,11 +30916,14 @@ class KafkaSpecKafkaTemplateKafkaContainerSecurityContextSeLinuxOptions(dict):
 class KafkaSpecKafkaTemplateKafkaContainerSecurityContextWindowsOptions(dict):
     def __init__(__self__, *,
                  gmsa_credential_spec: Optional[str] = None,
-                 gmsa_credential_spec_name: Optional[str] = None):
+                 gmsa_credential_spec_name: Optional[str] = None,
+                 run_as_user_name: Optional[str] = None):
         if gmsa_credential_spec is not None:
             pulumi.set(__self__, "gmsa_credential_spec", gmsa_credential_spec)
         if gmsa_credential_spec_name is not None:
             pulumi.set(__self__, "gmsa_credential_spec_name", gmsa_credential_spec_name)
+        if run_as_user_name is not None:
+            pulumi.set(__self__, "run_as_user_name", run_as_user_name)
 
     @property
     @pulumi.getter(name="gmsaCredentialSpec")
@@ -28945,6 +30934,11 @@ class KafkaSpecKafkaTemplateKafkaContainerSecurityContextWindowsOptions(dict):
     @pulumi.getter(name="gmsaCredentialSpecName")
     def gmsa_credential_spec_name(self) -> Optional[str]:
         return pulumi.get(self, "gmsa_credential_spec_name")
+
+    @property
+    @pulumi.getter(name="runAsUserName")
+    def run_as_user_name(self) -> Optional[str]:
+        return pulumi.get(self, "run_as_user_name")
 
     def _translate_property(self, prop):
         return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
@@ -29090,7 +31084,7 @@ class KafkaSpecKafkaTemplatePerPodService(dict):
         """
         Template for Kafka per-pod `Services` used for access from outside of Kubernetes.
         :param str external_traffic_policy: Specifies whether the service routes external traffic to node-local or cluster-wide endpoints. `Cluster` may cause a second hop to another node and obscures the client source IP. `Local` avoids a second hop for LoadBalancer and Nodeport type services and preserves the client source IP (when supported by the infrastructure). If unspecified, Kubernetes will use `Cluster` as the default.
-        :param Sequence[str] load_balancer_source_ranges: A list of CIDR ranges (for example `10.0.0.0/8` or `130.211.204.1/32`) from which clients can connect to load balancer type listeners. If supported by the platform, traffic through the loadbalancer is restricted to the specified CIDR ranges. This field is applicable only for loadbalancer type services and is ignored if the cloud provider does not support the feature. For more information, see https://kubernetes.io/docs/tasks/access-application-cluster/configure-cloud-provider-firewall/.
+        :param Sequence[str] load_balancer_source_ranges: A list of CIDR ranges (for example `10.0.0.0/8` or `130.211.204.1/32`) from which clients can connect to load balancer type listeners. If supported by the platform, traffic through the loadbalancer is restricted to the specified CIDR ranges. This field is applicable only for loadbalancer type services and is ignored if the cloud provider does not support the feature. For more information, see https://v1-17.docs.kubernetes.io/docs/tasks/access-application-cluster/configure-cloud-provider-firewall/. 
         :param 'KafkaSpecKafkaTemplatePerPodServiceMetadataArgs' metadata: Metadata applied to the resource.
         """
         if external_traffic_policy is not None:
@@ -29112,7 +31106,7 @@ class KafkaSpecKafkaTemplatePerPodService(dict):
     @pulumi.getter(name="loadBalancerSourceRanges")
     def load_balancer_source_ranges(self) -> Optional[Sequence[str]]:
         """
-        A list of CIDR ranges (for example `10.0.0.0/8` or `130.211.204.1/32`) from which clients can connect to load balancer type listeners. If supported by the platform, traffic through the loadbalancer is restricted to the specified CIDR ranges. This field is applicable only for loadbalancer type services and is ignored if the cloud provider does not support the feature. For more information, see https://kubernetes.io/docs/tasks/access-application-cluster/configure-cloud-provider-firewall/.
+        A list of CIDR ranges (for example `10.0.0.0/8` or `130.211.204.1/32`) from which clients can connect to load balancer type listeners. If supported by the platform, traffic through the loadbalancer is restricted to the specified CIDR ranges. This field is applicable only for loadbalancer type services and is ignored if the cloud provider does not support the feature. For more information, see https://v1-17.docs.kubernetes.io/docs/tasks/access-application-cluster/configure-cloud-provider-firewall/. 
         """
         return pulumi.get(self, "load_balancer_source_ranges")
 
@@ -29237,6 +31231,7 @@ class KafkaSpecKafkaTemplatePod(dict):
     """
     def __init__(__self__, *,
                  affinity: Optional['outputs.KafkaSpecKafkaTemplatePodAffinity'] = None,
+                 host_aliases: Optional[Sequence['outputs.KafkaSpecKafkaTemplatePodHostAliases']] = None,
                  image_pull_secrets: Optional[Sequence['outputs.KafkaSpecKafkaTemplatePodImagePullSecrets']] = None,
                  metadata: Optional['outputs.KafkaSpecKafkaTemplatePodMetadata'] = None,
                  priority_class_name: Optional[str] = None,
@@ -29247,6 +31242,7 @@ class KafkaSpecKafkaTemplatePod(dict):
         """
         Template for Kafka `Pods`.
         :param 'KafkaSpecKafkaTemplatePodAffinityArgs' affinity: The pod's affinity rules.
+        :param Sequence['KafkaSpecKafkaTemplatePodHostAliasesArgs'] host_aliases: The pod's HostAliases. HostAliases is an optional list of hosts and IPs that will be injected into the pod's hosts file if specified.
         :param Sequence['KafkaSpecKafkaTemplatePodImagePullSecretsArgs'] image_pull_secrets: List of references to secrets in the same namespace to use for pulling any of the images used by this Pod. When the `STRIMZI_IMAGE_PULL_SECRETS` environment variable in Cluster Operator and the `imagePullSecrets` option are specified, only the `imagePullSecrets` variable is used and the `STRIMZI_IMAGE_PULL_SECRETS` variable is ignored.
         :param 'KafkaSpecKafkaTemplatePodMetadataArgs' metadata: Metadata applied to the resource.
         :param str priority_class_name: The name of the priority class used to assign priority to the pods. For more information about priority classes, see {K8sPriorityClass}.
@@ -29257,6 +31253,8 @@ class KafkaSpecKafkaTemplatePod(dict):
         """
         if affinity is not None:
             pulumi.set(__self__, "affinity", affinity)
+        if host_aliases is not None:
+            pulumi.set(__self__, "host_aliases", host_aliases)
         if image_pull_secrets is not None:
             pulumi.set(__self__, "image_pull_secrets", image_pull_secrets)
         if metadata is not None:
@@ -29279,6 +31277,14 @@ class KafkaSpecKafkaTemplatePod(dict):
         The pod's affinity rules.
         """
         return pulumi.get(self, "affinity")
+
+    @property
+    @pulumi.getter(name="hostAliases")
+    def host_aliases(self) -> Optional[Sequence['outputs.KafkaSpecKafkaTemplatePodHostAliases']]:
+        """
+        The pod's HostAliases. HostAliases is an optional list of hosts and IPs that will be injected into the pod's hosts file if specified.
+        """
+        return pulumi.get(self, "host_aliases")
 
     @property
     @pulumi.getter(name="imagePullSecrets")
@@ -30143,6 +32149,30 @@ class KafkaSpecKafkaTemplatePodDisruptionBudgetMetadata(dict):
 
 
 @pulumi.output_type
+class KafkaSpecKafkaTemplatePodHostAliases(dict):
+    def __init__(__self__, *,
+                 hostnames: Optional[Sequence[str]] = None,
+                 ip: Optional[str] = None):
+        if hostnames is not None:
+            pulumi.set(__self__, "hostnames", hostnames)
+        if ip is not None:
+            pulumi.set(__self__, "ip", ip)
+
+    @property
+    @pulumi.getter
+    def hostnames(self) -> Optional[Sequence[str]]:
+        return pulumi.get(self, "hostnames")
+
+    @property
+    @pulumi.getter
+    def ip(self) -> Optional[str]:
+        return pulumi.get(self, "ip")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
 class KafkaSpecKafkaTemplatePodImagePullSecrets(dict):
     def __init__(__self__, *,
                  name: Optional[str] = None):
@@ -30203,6 +32233,7 @@ class KafkaSpecKafkaTemplatePodSecurityContext(dict):
     """
     def __init__(__self__, *,
                  fs_group: Optional[int] = None,
+                 fs_group_change_policy: Optional[str] = None,
                  run_as_group: Optional[int] = None,
                  run_as_non_root: Optional[bool] = None,
                  run_as_user: Optional[int] = None,
@@ -30215,6 +32246,8 @@ class KafkaSpecKafkaTemplatePodSecurityContext(dict):
         """
         if fs_group is not None:
             pulumi.set(__self__, "fs_group", fs_group)
+        if fs_group_change_policy is not None:
+            pulumi.set(__self__, "fs_group_change_policy", fs_group_change_policy)
         if run_as_group is not None:
             pulumi.set(__self__, "run_as_group", run_as_group)
         if run_as_non_root is not None:
@@ -30234,6 +32267,11 @@ class KafkaSpecKafkaTemplatePodSecurityContext(dict):
     @pulumi.getter(name="fsGroup")
     def fs_group(self) -> Optional[int]:
         return pulumi.get(self, "fs_group")
+
+    @property
+    @pulumi.getter(name="fsGroupChangePolicy")
+    def fs_group_change_policy(self) -> Optional[str]:
+        return pulumi.get(self, "fs_group_change_policy")
 
     @property
     @pulumi.getter(name="runAsGroup")
@@ -30342,11 +32380,14 @@ class KafkaSpecKafkaTemplatePodSecurityContextSysctls(dict):
 class KafkaSpecKafkaTemplatePodSecurityContextWindowsOptions(dict):
     def __init__(__self__, *,
                  gmsa_credential_spec: Optional[str] = None,
-                 gmsa_credential_spec_name: Optional[str] = None):
+                 gmsa_credential_spec_name: Optional[str] = None,
+                 run_as_user_name: Optional[str] = None):
         if gmsa_credential_spec is not None:
             pulumi.set(__self__, "gmsa_credential_spec", gmsa_credential_spec)
         if gmsa_credential_spec_name is not None:
             pulumi.set(__self__, "gmsa_credential_spec_name", gmsa_credential_spec_name)
+        if run_as_user_name is not None:
+            pulumi.set(__self__, "run_as_user_name", run_as_user_name)
 
     @property
     @pulumi.getter(name="gmsaCredentialSpec")
@@ -30357,6 +32398,11 @@ class KafkaSpecKafkaTemplatePodSecurityContextWindowsOptions(dict):
     @pulumi.getter(name="gmsaCredentialSpecName")
     def gmsa_credential_spec_name(self) -> Optional[str]:
         return pulumi.get(self, "gmsa_credential_spec_name")
+
+    @property
+    @pulumi.getter(name="runAsUserName")
+    def run_as_user_name(self) -> Optional[str]:
+        return pulumi.get(self, "run_as_user_name")
 
     def _translate_property(self, prop):
         return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
@@ -30720,11 +32766,14 @@ class KafkaSpecKafkaTemplateTlsSidecarContainerSecurityContextSeLinuxOptions(dic
 class KafkaSpecKafkaTemplateTlsSidecarContainerSecurityContextWindowsOptions(dict):
     def __init__(__self__, *,
                  gmsa_credential_spec: Optional[str] = None,
-                 gmsa_credential_spec_name: Optional[str] = None):
+                 gmsa_credential_spec_name: Optional[str] = None,
+                 run_as_user_name: Optional[str] = None):
         if gmsa_credential_spec is not None:
             pulumi.set(__self__, "gmsa_credential_spec", gmsa_credential_spec)
         if gmsa_credential_spec_name is not None:
             pulumi.set(__self__, "gmsa_credential_spec_name", gmsa_credential_spec_name)
+        if run_as_user_name is not None:
+            pulumi.set(__self__, "run_as_user_name", run_as_user_name)
 
     @property
     @pulumi.getter(name="gmsaCredentialSpec")
@@ -30735,6 +32784,11 @@ class KafkaSpecKafkaTemplateTlsSidecarContainerSecurityContextWindowsOptions(dic
     @pulumi.getter(name="gmsaCredentialSpecName")
     def gmsa_credential_spec_name(self) -> Optional[str]:
         return pulumi.get(self, "gmsa_credential_spec_name")
+
+    @property
+    @pulumi.getter(name="runAsUserName")
+    def run_as_user_name(self) -> Optional[str]:
+        return pulumi.get(self, "run_as_user_name")
 
     def _translate_property(self, prop):
         return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
@@ -34204,6 +36258,7 @@ class KafkaSpecZookeeperTemplatePod(dict):
     """
     def __init__(__self__, *,
                  affinity: Optional['outputs.KafkaSpecZookeeperTemplatePodAffinity'] = None,
+                 host_aliases: Optional[Sequence['outputs.KafkaSpecZookeeperTemplatePodHostAliases']] = None,
                  image_pull_secrets: Optional[Sequence['outputs.KafkaSpecZookeeperTemplatePodImagePullSecrets']] = None,
                  metadata: Optional['outputs.KafkaSpecZookeeperTemplatePodMetadata'] = None,
                  priority_class_name: Optional[str] = None,
@@ -34214,6 +36269,7 @@ class KafkaSpecZookeeperTemplatePod(dict):
         """
         Template for ZooKeeper `Pods`.
         :param 'KafkaSpecZookeeperTemplatePodAffinityArgs' affinity: The pod's affinity rules.
+        :param Sequence['KafkaSpecZookeeperTemplatePodHostAliasesArgs'] host_aliases: The pod's HostAliases. HostAliases is an optional list of hosts and IPs that will be injected into the pod's hosts file if specified.
         :param Sequence['KafkaSpecZookeeperTemplatePodImagePullSecretsArgs'] image_pull_secrets: List of references to secrets in the same namespace to use for pulling any of the images used by this Pod. When the `STRIMZI_IMAGE_PULL_SECRETS` environment variable in Cluster Operator and the `imagePullSecrets` option are specified, only the `imagePullSecrets` variable is used and the `STRIMZI_IMAGE_PULL_SECRETS` variable is ignored.
         :param 'KafkaSpecZookeeperTemplatePodMetadataArgs' metadata: Metadata applied to the resource.
         :param str priority_class_name: The name of the priority class used to assign priority to the pods. For more information about priority classes, see {K8sPriorityClass}.
@@ -34224,6 +36280,8 @@ class KafkaSpecZookeeperTemplatePod(dict):
         """
         if affinity is not None:
             pulumi.set(__self__, "affinity", affinity)
+        if host_aliases is not None:
+            pulumi.set(__self__, "host_aliases", host_aliases)
         if image_pull_secrets is not None:
             pulumi.set(__self__, "image_pull_secrets", image_pull_secrets)
         if metadata is not None:
@@ -34246,6 +36304,14 @@ class KafkaSpecZookeeperTemplatePod(dict):
         The pod's affinity rules.
         """
         return pulumi.get(self, "affinity")
+
+    @property
+    @pulumi.getter(name="hostAliases")
+    def host_aliases(self) -> Optional[Sequence['outputs.KafkaSpecZookeeperTemplatePodHostAliases']]:
+        """
+        The pod's HostAliases. HostAliases is an optional list of hosts and IPs that will be injected into the pod's hosts file if specified.
+        """
+        return pulumi.get(self, "host_aliases")
 
     @property
     @pulumi.getter(name="imagePullSecrets")
@@ -35110,6 +37176,30 @@ class KafkaSpecZookeeperTemplatePodDisruptionBudgetMetadata(dict):
 
 
 @pulumi.output_type
+class KafkaSpecZookeeperTemplatePodHostAliases(dict):
+    def __init__(__self__, *,
+                 hostnames: Optional[Sequence[str]] = None,
+                 ip: Optional[str] = None):
+        if hostnames is not None:
+            pulumi.set(__self__, "hostnames", hostnames)
+        if ip is not None:
+            pulumi.set(__self__, "ip", ip)
+
+    @property
+    @pulumi.getter
+    def hostnames(self) -> Optional[Sequence[str]]:
+        return pulumi.get(self, "hostnames")
+
+    @property
+    @pulumi.getter
+    def ip(self) -> Optional[str]:
+        return pulumi.get(self, "ip")
+
+    def _translate_property(self, prop):
+        return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
+
+
+@pulumi.output_type
 class KafkaSpecZookeeperTemplatePodImagePullSecrets(dict):
     def __init__(__self__, *,
                  name: Optional[str] = None):
@@ -35170,6 +37260,7 @@ class KafkaSpecZookeeperTemplatePodSecurityContext(dict):
     """
     def __init__(__self__, *,
                  fs_group: Optional[int] = None,
+                 fs_group_change_policy: Optional[str] = None,
                  run_as_group: Optional[int] = None,
                  run_as_non_root: Optional[bool] = None,
                  run_as_user: Optional[int] = None,
@@ -35182,6 +37273,8 @@ class KafkaSpecZookeeperTemplatePodSecurityContext(dict):
         """
         if fs_group is not None:
             pulumi.set(__self__, "fs_group", fs_group)
+        if fs_group_change_policy is not None:
+            pulumi.set(__self__, "fs_group_change_policy", fs_group_change_policy)
         if run_as_group is not None:
             pulumi.set(__self__, "run_as_group", run_as_group)
         if run_as_non_root is not None:
@@ -35201,6 +37294,11 @@ class KafkaSpecZookeeperTemplatePodSecurityContext(dict):
     @pulumi.getter(name="fsGroup")
     def fs_group(self) -> Optional[int]:
         return pulumi.get(self, "fs_group")
+
+    @property
+    @pulumi.getter(name="fsGroupChangePolicy")
+    def fs_group_change_policy(self) -> Optional[str]:
+        return pulumi.get(self, "fs_group_change_policy")
 
     @property
     @pulumi.getter(name="runAsGroup")
@@ -35309,11 +37407,14 @@ class KafkaSpecZookeeperTemplatePodSecurityContextSysctls(dict):
 class KafkaSpecZookeeperTemplatePodSecurityContextWindowsOptions(dict):
     def __init__(__self__, *,
                  gmsa_credential_spec: Optional[str] = None,
-                 gmsa_credential_spec_name: Optional[str] = None):
+                 gmsa_credential_spec_name: Optional[str] = None,
+                 run_as_user_name: Optional[str] = None):
         if gmsa_credential_spec is not None:
             pulumi.set(__self__, "gmsa_credential_spec", gmsa_credential_spec)
         if gmsa_credential_spec_name is not None:
             pulumi.set(__self__, "gmsa_credential_spec_name", gmsa_credential_spec_name)
+        if run_as_user_name is not None:
+            pulumi.set(__self__, "run_as_user_name", run_as_user_name)
 
     @property
     @pulumi.getter(name="gmsaCredentialSpec")
@@ -35324,6 +37425,11 @@ class KafkaSpecZookeeperTemplatePodSecurityContextWindowsOptions(dict):
     @pulumi.getter(name="gmsaCredentialSpecName")
     def gmsa_credential_spec_name(self) -> Optional[str]:
         return pulumi.get(self, "gmsa_credential_spec_name")
+
+    @property
+    @pulumi.getter(name="runAsUserName")
+    def run_as_user_name(self) -> Optional[str]:
+        return pulumi.get(self, "run_as_user_name")
 
     def _translate_property(self, prop):
         return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
@@ -35687,11 +37793,14 @@ class KafkaSpecZookeeperTemplateTlsSidecarContainerSecurityContextSeLinuxOptions
 class KafkaSpecZookeeperTemplateTlsSidecarContainerSecurityContextWindowsOptions(dict):
     def __init__(__self__, *,
                  gmsa_credential_spec: Optional[str] = None,
-                 gmsa_credential_spec_name: Optional[str] = None):
+                 gmsa_credential_spec_name: Optional[str] = None,
+                 run_as_user_name: Optional[str] = None):
         if gmsa_credential_spec is not None:
             pulumi.set(__self__, "gmsa_credential_spec", gmsa_credential_spec)
         if gmsa_credential_spec_name is not None:
             pulumi.set(__self__, "gmsa_credential_spec_name", gmsa_credential_spec_name)
+        if run_as_user_name is not None:
+            pulumi.set(__self__, "run_as_user_name", run_as_user_name)
 
     @property
     @pulumi.getter(name="gmsaCredentialSpec")
@@ -35702,6 +37811,11 @@ class KafkaSpecZookeeperTemplateTlsSidecarContainerSecurityContextWindowsOptions
     @pulumi.getter(name="gmsaCredentialSpecName")
     def gmsa_credential_spec_name(self) -> Optional[str]:
         return pulumi.get(self, "gmsa_credential_spec_name")
+
+    @property
+    @pulumi.getter(name="runAsUserName")
+    def run_as_user_name(self) -> Optional[str]:
+        return pulumi.get(self, "run_as_user_name")
 
     def _translate_property(self, prop):
         return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
@@ -35941,11 +38055,14 @@ class KafkaSpecZookeeperTemplateZookeeperContainerSecurityContextSeLinuxOptions(
 class KafkaSpecZookeeperTemplateZookeeperContainerSecurityContextWindowsOptions(dict):
     def __init__(__self__, *,
                  gmsa_credential_spec: Optional[str] = None,
-                 gmsa_credential_spec_name: Optional[str] = None):
+                 gmsa_credential_spec_name: Optional[str] = None,
+                 run_as_user_name: Optional[str] = None):
         if gmsa_credential_spec is not None:
             pulumi.set(__self__, "gmsa_credential_spec", gmsa_credential_spec)
         if gmsa_credential_spec_name is not None:
             pulumi.set(__self__, "gmsa_credential_spec_name", gmsa_credential_spec_name)
+        if run_as_user_name is not None:
+            pulumi.set(__self__, "run_as_user_name", run_as_user_name)
 
     @property
     @pulumi.getter(name="gmsaCredentialSpec")
@@ -35956,6 +38073,11 @@ class KafkaSpecZookeeperTemplateZookeeperContainerSecurityContextWindowsOptions(
     @pulumi.getter(name="gmsaCredentialSpecName")
     def gmsa_credential_spec_name(self) -> Optional[str]:
         return pulumi.get(self, "gmsa_credential_spec_name")
+
+    @property
+    @pulumi.getter(name="runAsUserName")
+    def run_as_user_name(self) -> Optional[str]:
+        return pulumi.get(self, "run_as_user_name")
 
     def _translate_property(self, prop):
         return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
@@ -36739,7 +38861,7 @@ class KafkaUserSpecAuthorization(dict):
         """
         Authorization rules for this Kafka user.
         :param Sequence['KafkaUserSpecAuthorizationAclsArgs'] acls: List of ACL rules which should be applied to this user.
-        :param str type: Authorization type. Currently the only supported type is `simple`. `simple` authorization type uses Kafka's `kafka.security.auth.SimpleAclAuthorizer` class for authorization.
+        :param str type: Authorization type. Currently the only supported type is `simple`. `simple` authorization type uses Kafka's `kafka.security.authorizer.AclAuthorizer` class for authorization.
         """
         pulumi.set(__self__, "acls", acls)
         pulumi.set(__self__, "type", type)
@@ -36756,7 +38878,7 @@ class KafkaUserSpecAuthorization(dict):
     @pulumi.getter
     def type(self) -> str:
         """
-        Authorization type. Currently the only supported type is `simple`. `simple` authorization type uses Kafka's `kafka.security.auth.SimpleAclAuthorizer` class for authorization.
+        Authorization type. Currently the only supported type is `simple`. `simple` authorization type uses Kafka's `kafka.security.authorizer.AclAuthorizer` class for authorization.
         """
         return pulumi.get(self, "type")
 

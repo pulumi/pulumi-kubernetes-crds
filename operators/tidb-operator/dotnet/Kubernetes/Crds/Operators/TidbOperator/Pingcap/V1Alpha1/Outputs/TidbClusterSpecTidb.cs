@@ -19,7 +19,7 @@ namespace Pulumi.Kubernetes.Types.Outputs.Pingcap.V1Alpha1
         public readonly ImmutableDictionary<string, object> Annotations;
         public readonly string BaseImage;
         public readonly bool BinlogEnabled;
-        public readonly Pulumi.Kubernetes.Types.Outputs.Pingcap.V1Alpha1.TidbClusterSpecTidbConfig Config;
+        public readonly object Config;
         public readonly string ConfigUpdateStrategy;
         public readonly ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Pingcap.V1Alpha1.TidbClusterSpecTidbEnv> Env;
         public readonly bool HostNetwork;
@@ -32,12 +32,17 @@ namespace Pulumi.Kubernetes.Types.Outputs.Pingcap.V1Alpha1
         public readonly ImmutableArray<string> Plugins;
         public readonly Pulumi.Kubernetes.Types.Outputs.Pingcap.V1Alpha1.TidbClusterSpecTidbPodSecurityContext PodSecurityContext;
         public readonly string PriorityClassName;
+        public readonly Pulumi.Kubernetes.Types.Outputs.Pingcap.V1Alpha1.TidbClusterSpecTidbReadinessProbe ReadinessProbe;
         public readonly int Replicas;
         public readonly ImmutableDictionary<string, object> Requests;
         public readonly string SchedulerName;
         public readonly bool SeparateSlowLog;
         public readonly Pulumi.Kubernetes.Types.Outputs.Pingcap.V1Alpha1.TidbClusterSpecTidbService Service;
+        public readonly string ServiceAccount;
         public readonly Pulumi.Kubernetes.Types.Outputs.Pingcap.V1Alpha1.TidbClusterSpecTidbSlowLogTailer SlowLogTailer;
+        public readonly string StatefulSetUpdateStrategy;
+        public readonly string StorageClassName;
+        public readonly ImmutableArray<object> StorageVolumes;
         public readonly int TerminationGracePeriodSeconds;
         public readonly object TlsClient;
         public readonly ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Pingcap.V1Alpha1.TidbClusterSpecTidbTolerations> Tolerations;
@@ -57,7 +62,7 @@ namespace Pulumi.Kubernetes.Types.Outputs.Pingcap.V1Alpha1
 
             bool binlogEnabled,
 
-            Pulumi.Kubernetes.Types.Outputs.Pingcap.V1Alpha1.TidbClusterSpecTidbConfig config,
+            object config,
 
             string configUpdateStrategy,
 
@@ -83,6 +88,8 @@ namespace Pulumi.Kubernetes.Types.Outputs.Pingcap.V1Alpha1
 
             string priorityClassName,
 
+            Pulumi.Kubernetes.Types.Outputs.Pingcap.V1Alpha1.TidbClusterSpecTidbReadinessProbe readinessProbe,
+
             int replicas,
 
             ImmutableDictionary<string, object> requests,
@@ -93,7 +100,15 @@ namespace Pulumi.Kubernetes.Types.Outputs.Pingcap.V1Alpha1
 
             Pulumi.Kubernetes.Types.Outputs.Pingcap.V1Alpha1.TidbClusterSpecTidbService service,
 
+            string serviceAccount,
+
             Pulumi.Kubernetes.Types.Outputs.Pingcap.V1Alpha1.TidbClusterSpecTidbSlowLogTailer slowLogTailer,
+
+            string statefulSetUpdateStrategy,
+
+            string storageClassName,
+
+            ImmutableArray<object> storageVolumes,
 
             int terminationGracePeriodSeconds,
 
@@ -122,12 +137,17 @@ namespace Pulumi.Kubernetes.Types.Outputs.Pingcap.V1Alpha1
             Plugins = plugins;
             PodSecurityContext = podSecurityContext;
             PriorityClassName = priorityClassName;
+            ReadinessProbe = readinessProbe;
             Replicas = replicas;
             Requests = requests;
             SchedulerName = schedulerName;
             SeparateSlowLog = separateSlowLog;
             Service = service;
+            ServiceAccount = serviceAccount;
             SlowLogTailer = slowLogTailer;
+            StatefulSetUpdateStrategy = statefulSetUpdateStrategy;
+            StorageClassName = storageClassName;
+            StorageVolumes = storageVolumes;
             TerminationGracePeriodSeconds = terminationGracePeriodSeconds;
             TlsClient = tlsClient;
             Tolerations = tolerations;

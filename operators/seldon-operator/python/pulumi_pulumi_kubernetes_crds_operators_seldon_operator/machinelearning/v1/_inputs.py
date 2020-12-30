@@ -17,14 +17,37 @@ __all__ = [
     'SeldonDeploymentSpecPredictorsComponentSpecsHpaSpecMetricsExternalArgs',
     'SeldonDeploymentSpecPredictorsComponentSpecsHpaSpecMetricsExternalMetricSelectorArgs',
     'SeldonDeploymentSpecPredictorsComponentSpecsHpaSpecMetricsExternalMetricSelectorMatchExpressionsArgs',
+    'SeldonDeploymentSpecPredictorsComponentSpecsHpaSpecMetricsExternalTargetAverageValueArgs',
+    'SeldonDeploymentSpecPredictorsComponentSpecsHpaSpecMetricsExternalTargetValueArgs',
     'SeldonDeploymentSpecPredictorsComponentSpecsHpaSpecMetricsObjectArgs',
+    'SeldonDeploymentSpecPredictorsComponentSpecsHpaSpecMetricsObjectAverageValueArgs',
     'SeldonDeploymentSpecPredictorsComponentSpecsHpaSpecMetricsObjectSelectorArgs',
     'SeldonDeploymentSpecPredictorsComponentSpecsHpaSpecMetricsObjectSelectorMatchExpressionsArgs',
     'SeldonDeploymentSpecPredictorsComponentSpecsHpaSpecMetricsObjectTargetArgs',
+    'SeldonDeploymentSpecPredictorsComponentSpecsHpaSpecMetricsObjectTargetValueArgs',
     'SeldonDeploymentSpecPredictorsComponentSpecsHpaSpecMetricsPodsArgs',
     'SeldonDeploymentSpecPredictorsComponentSpecsHpaSpecMetricsPodsSelectorArgs',
     'SeldonDeploymentSpecPredictorsComponentSpecsHpaSpecMetricsPodsSelectorMatchExpressionsArgs',
+    'SeldonDeploymentSpecPredictorsComponentSpecsHpaSpecMetricsPodsTargetAverageValueArgs',
     'SeldonDeploymentSpecPredictorsComponentSpecsHpaSpecMetricsResourceArgs',
+    'SeldonDeploymentSpecPredictorsComponentSpecsHpaSpecMetricsResourceTargetAverageValueArgs',
+    'SeldonDeploymentSpecPredictorsComponentSpecsKedaSpecArgs',
+    'SeldonDeploymentSpecPredictorsComponentSpecsKedaSpecAdvancedArgs',
+    'SeldonDeploymentSpecPredictorsComponentSpecsKedaSpecAdvancedHorizontalPodAutoscalerConfigArgs',
+    'SeldonDeploymentSpecPredictorsComponentSpecsKedaSpecAdvancedHorizontalPodAutoscalerConfigBehaviorArgs',
+    'SeldonDeploymentSpecPredictorsComponentSpecsKedaSpecAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArgs',
+    'SeldonDeploymentSpecPredictorsComponentSpecsKedaSpecAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPoliciesArgs',
+    'SeldonDeploymentSpecPredictorsComponentSpecsKedaSpecAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArgs',
+    'SeldonDeploymentSpecPredictorsComponentSpecsKedaSpecAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPoliciesArgs',
+    'SeldonDeploymentSpecPredictorsComponentSpecsKedaSpecAdvancedHorizontalPodAutoscalerConfigResourceMetricsArgs',
+    'SeldonDeploymentSpecPredictorsComponentSpecsKedaSpecAdvancedHorizontalPodAutoscalerConfigResourceMetricsTargetArgs',
+    'SeldonDeploymentSpecPredictorsComponentSpecsKedaSpecAdvancedHorizontalPodAutoscalerConfigResourceMetricsTargetAverageValueArgs',
+    'SeldonDeploymentSpecPredictorsComponentSpecsKedaSpecAdvancedHorizontalPodAutoscalerConfigResourceMetricsTargetValueArgs',
+    'SeldonDeploymentSpecPredictorsComponentSpecsKedaSpecTriggersArgs',
+    'SeldonDeploymentSpecPredictorsComponentSpecsKedaSpecTriggersAuthenticationRefArgs',
+    'SeldonDeploymentSpecPredictorsComponentSpecsPdbSpecArgs',
+    'SeldonDeploymentSpecPredictorsComponentSpecsPdbSpecMaxUnavailableArgs',
+    'SeldonDeploymentSpecPredictorsComponentSpecsPdbSpecMinAvailableArgs',
     'SeldonDeploymentSpecPredictorsComponentSpecsSpecArgs',
     'SeldonDeploymentSpecPredictorsComponentSpecsSpecAffinityArgs',
     'SeldonDeploymentSpecPredictorsComponentSpecsSpecAffinityNodeAffinityArgs',
@@ -61,6 +84,7 @@ __all__ = [
     'SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersEnvValueFromConfigMapKeyRefArgs',
     'SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersEnvValueFromFieldRefArgs',
     'SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersEnvValueFromResourceFieldRefArgs',
+    'SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersEnvValueFromResourceFieldRefDivisorArgs',
     'SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersEnvValueFromSecretKeyRefArgs',
     'SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersLifecycleArgs',
     'SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersLifecyclePostStartArgs',
@@ -85,13 +109,80 @@ __all__ = [
     'SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersReadinessProbeHttpGetHttpHeadersArgs',
     'SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersReadinessProbeTcpSocketArgs',
     'SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersResourcesArgs',
+    'SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersResourcesLimitsArgs',
+    'SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersResourcesRequestsArgs',
     'SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersSecurityContextArgs',
     'SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersSecurityContextCapabilitiesArgs',
     'SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersSecurityContextSeLinuxOptionsArgs',
+    'SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersSecurityContextWindowsOptionsArgs',
+    'SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersStartupProbeArgs',
+    'SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersStartupProbeExecArgs',
+    'SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersStartupProbeHttpGetArgs',
+    'SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersStartupProbeHttpGetHttpHeadersArgs',
+    'SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersStartupProbeHttpGetPortArgs',
+    'SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersStartupProbeTcpSocketArgs',
+    'SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersStartupProbeTcpSocketPortArgs',
     'SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersVolumeDevicesArgs',
     'SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersVolumeMountsArgs',
     'SeldonDeploymentSpecPredictorsComponentSpecsSpecDnsConfigArgs',
     'SeldonDeploymentSpecPredictorsComponentSpecsSpecDnsConfigOptionsArgs',
+    'SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersArgs',
+    'SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersEnvArgs',
+    'SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersEnvFromArgs',
+    'SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersEnvFromConfigMapRefArgs',
+    'SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersEnvFromSecretRefArgs',
+    'SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersEnvValueFromArgs',
+    'SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersEnvValueFromConfigMapKeyRefArgs',
+    'SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersEnvValueFromFieldRefArgs',
+    'SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersEnvValueFromResourceFieldRefArgs',
+    'SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersEnvValueFromResourceFieldRefDivisorArgs',
+    'SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersEnvValueFromSecretKeyRefArgs',
+    'SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecycleArgs',
+    'SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePostStartArgs',
+    'SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePostStartExecArgs',
+    'SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePostStartHttpGetArgs',
+    'SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePostStartHttpGetHttpHeadersArgs',
+    'SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePostStartHttpGetPortArgs',
+    'SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePostStartTcpSocketArgs',
+    'SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePostStartTcpSocketPortArgs',
+    'SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePreStopArgs',
+    'SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePreStopExecArgs',
+    'SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePreStopHttpGetArgs',
+    'SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePreStopHttpGetHttpHeadersArgs',
+    'SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePreStopHttpGetPortArgs',
+    'SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePreStopTcpSocketArgs',
+    'SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePreStopTcpSocketPortArgs',
+    'SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLivenessProbeArgs',
+    'SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLivenessProbeExecArgs',
+    'SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLivenessProbeHttpGetArgs',
+    'SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLivenessProbeHttpGetHttpHeadersArgs',
+    'SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLivenessProbeHttpGetPortArgs',
+    'SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLivenessProbeTcpSocketArgs',
+    'SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLivenessProbeTcpSocketPortArgs',
+    'SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersPortsArgs',
+    'SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersReadinessProbeArgs',
+    'SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersReadinessProbeExecArgs',
+    'SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersReadinessProbeHttpGetArgs',
+    'SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersReadinessProbeHttpGetHttpHeadersArgs',
+    'SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersReadinessProbeHttpGetPortArgs',
+    'SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersReadinessProbeTcpSocketArgs',
+    'SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersReadinessProbeTcpSocketPortArgs',
+    'SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersResourcesArgs',
+    'SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersResourcesLimitsArgs',
+    'SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersResourcesRequestsArgs',
+    'SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersSecurityContextArgs',
+    'SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersSecurityContextCapabilitiesArgs',
+    'SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersSecurityContextSeLinuxOptionsArgs',
+    'SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersSecurityContextWindowsOptionsArgs',
+    'SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersStartupProbeArgs',
+    'SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersStartupProbeExecArgs',
+    'SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersStartupProbeHttpGetArgs',
+    'SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersStartupProbeHttpGetHttpHeadersArgs',
+    'SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersStartupProbeHttpGetPortArgs',
+    'SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersStartupProbeTcpSocketArgs',
+    'SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersStartupProbeTcpSocketPortArgs',
+    'SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersVolumeDevicesArgs',
+    'SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersVolumeMountsArgs',
     'SeldonDeploymentSpecPredictorsComponentSpecsSpecHostAliasesArgs',
     'SeldonDeploymentSpecPredictorsComponentSpecsSpecImagePullSecretsArgs',
     'SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersArgs',
@@ -103,6 +194,7 @@ __all__ = [
     'SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersEnvValueFromConfigMapKeyRefArgs',
     'SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersEnvValueFromFieldRefArgs',
     'SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersEnvValueFromResourceFieldRefArgs',
+    'SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersEnvValueFromResourceFieldRefDivisorArgs',
     'SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersEnvValueFromSecretKeyRefArgs',
     'SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersLifecycleArgs',
     'SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersLifecyclePostStartArgs',
@@ -127,17 +219,34 @@ __all__ = [
     'SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersReadinessProbeHttpGetHttpHeadersArgs',
     'SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersReadinessProbeTcpSocketArgs',
     'SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersResourcesArgs',
+    'SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersResourcesLimitsArgs',
+    'SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersResourcesRequestsArgs',
     'SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersSecurityContextArgs',
     'SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersSecurityContextCapabilitiesArgs',
     'SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersSecurityContextSeLinuxOptionsArgs',
+    'SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersSecurityContextWindowsOptionsArgs',
+    'SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersStartupProbeArgs',
+    'SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersStartupProbeExecArgs',
+    'SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersStartupProbeHttpGetArgs',
+    'SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersStartupProbeHttpGetHttpHeadersArgs',
+    'SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersStartupProbeHttpGetPortArgs',
+    'SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersStartupProbeTcpSocketArgs',
+    'SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersStartupProbeTcpSocketPortArgs',
     'SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersVolumeDevicesArgs',
     'SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersVolumeMountsArgs',
+    'SeldonDeploymentSpecPredictorsComponentSpecsSpecOverheadArgs',
     'SeldonDeploymentSpecPredictorsComponentSpecsSpecReadinessGatesArgs',
     'SeldonDeploymentSpecPredictorsComponentSpecsSpecSecurityContextArgs',
     'SeldonDeploymentSpecPredictorsComponentSpecsSpecSecurityContextSeLinuxOptionsArgs',
     'SeldonDeploymentSpecPredictorsComponentSpecsSpecSecurityContextSysctlsArgs',
+    'SeldonDeploymentSpecPredictorsComponentSpecsSpecSecurityContextWindowsOptionsArgs',
     'SeldonDeploymentSpecPredictorsComponentSpecsSpecTolerationsArgs',
+    'SeldonDeploymentSpecPredictorsComponentSpecsSpecTopologySpreadConstraintsArgs',
+    'SeldonDeploymentSpecPredictorsComponentSpecsSpecTopologySpreadConstraintsLabelSelectorArgs',
+    'SeldonDeploymentSpecPredictorsComponentSpecsSpecTopologySpreadConstraintsLabelSelectorMatchExpressionsArgs',
     'SeldonDeploymentSpecPredictorsEngineResourcesArgs',
+    'SeldonDeploymentSpecPredictorsEngineResourcesLimitsArgs',
+    'SeldonDeploymentSpecPredictorsEngineResourcesRequestsArgs',
     'SeldonDeploymentSpecPredictorsExplainerArgs',
     'SeldonDeploymentSpecPredictorsExplainerContainerSpecArgs',
     'SeldonDeploymentSpecPredictorsExplainerContainerSpecEnvArgs',
@@ -148,6 +257,7 @@ __all__ = [
     'SeldonDeploymentSpecPredictorsExplainerContainerSpecEnvValueFromConfigMapKeyRefArgs',
     'SeldonDeploymentSpecPredictorsExplainerContainerSpecEnvValueFromFieldRefArgs',
     'SeldonDeploymentSpecPredictorsExplainerContainerSpecEnvValueFromResourceFieldRefArgs',
+    'SeldonDeploymentSpecPredictorsExplainerContainerSpecEnvValueFromResourceFieldRefDivisorArgs',
     'SeldonDeploymentSpecPredictorsExplainerContainerSpecEnvValueFromSecretKeyRefArgs',
     'SeldonDeploymentSpecPredictorsExplainerContainerSpecLifecycleArgs',
     'SeldonDeploymentSpecPredictorsExplainerContainerSpecLifecyclePostStartArgs',
@@ -172,9 +282,19 @@ __all__ = [
     'SeldonDeploymentSpecPredictorsExplainerContainerSpecReadinessProbeHttpGetHttpHeadersArgs',
     'SeldonDeploymentSpecPredictorsExplainerContainerSpecReadinessProbeTcpSocketArgs',
     'SeldonDeploymentSpecPredictorsExplainerContainerSpecResourcesArgs',
+    'SeldonDeploymentSpecPredictorsExplainerContainerSpecResourcesLimitsArgs',
+    'SeldonDeploymentSpecPredictorsExplainerContainerSpecResourcesRequestsArgs',
     'SeldonDeploymentSpecPredictorsExplainerContainerSpecSecurityContextArgs',
     'SeldonDeploymentSpecPredictorsExplainerContainerSpecSecurityContextCapabilitiesArgs',
     'SeldonDeploymentSpecPredictorsExplainerContainerSpecSecurityContextSeLinuxOptionsArgs',
+    'SeldonDeploymentSpecPredictorsExplainerContainerSpecSecurityContextWindowsOptionsArgs',
+    'SeldonDeploymentSpecPredictorsExplainerContainerSpecStartupProbeArgs',
+    'SeldonDeploymentSpecPredictorsExplainerContainerSpecStartupProbeExecArgs',
+    'SeldonDeploymentSpecPredictorsExplainerContainerSpecStartupProbeHttpGetArgs',
+    'SeldonDeploymentSpecPredictorsExplainerContainerSpecStartupProbeHttpGetHttpHeadersArgs',
+    'SeldonDeploymentSpecPredictorsExplainerContainerSpecStartupProbeHttpGetPortArgs',
+    'SeldonDeploymentSpecPredictorsExplainerContainerSpecStartupProbeTcpSocketArgs',
+    'SeldonDeploymentSpecPredictorsExplainerContainerSpecStartupProbeTcpSocketPortArgs',
     'SeldonDeploymentSpecPredictorsExplainerContainerSpecVolumeDevicesArgs',
     'SeldonDeploymentSpecPredictorsExplainerContainerSpecVolumeMountsArgs',
     'SeldonDeploymentSpecPredictorsExplainerEndpointArgs',
@@ -198,15 +318,20 @@ __all__ = [
     'SeldonDeploymentSpecPredictorsGraphEndpointArgs',
     'SeldonDeploymentSpecPredictorsGraphLoggerArgs',
     'SeldonDeploymentSpecPredictorsGraphParametersArgs',
+    'SeldonDeploymentSpecPredictorsSslArgs',
     'SeldonDeploymentSpecPredictorsSvcOrchSpecArgs',
     'SeldonDeploymentSpecPredictorsSvcOrchSpecEnvArgs',
     'SeldonDeploymentSpecPredictorsSvcOrchSpecEnvValueFromArgs',
     'SeldonDeploymentSpecPredictorsSvcOrchSpecEnvValueFromConfigMapKeyRefArgs',
     'SeldonDeploymentSpecPredictorsSvcOrchSpecEnvValueFromFieldRefArgs',
     'SeldonDeploymentSpecPredictorsSvcOrchSpecEnvValueFromResourceFieldRefArgs',
+    'SeldonDeploymentSpecPredictorsSvcOrchSpecEnvValueFromResourceFieldRefDivisorArgs',
     'SeldonDeploymentSpecPredictorsSvcOrchSpecEnvValueFromSecretKeyRefArgs',
     'SeldonDeploymentSpecPredictorsSvcOrchSpecResourcesArgs',
+    'SeldonDeploymentSpecPredictorsSvcOrchSpecResourcesLimitsArgs',
+    'SeldonDeploymentSpecPredictorsSvcOrchSpecResourcesRequestsArgs',
     'SeldonDeploymentStatusArgs',
+    'SeldonDeploymentStatusAddressArgs',
     'SeldonDeploymentStatusDeploymentStatusArgs',
     'SeldonDeploymentStatusServiceStatusArgs',
 ]
@@ -218,7 +343,11 @@ class SeldonDeploymentSpecArgs:
                  annotations: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  name: Optional[pulumi.Input[str]] = None,
                  oauth_key: Optional[pulumi.Input[str]] = None,
-                 oauth_secret: Optional[pulumi.Input[str]] = None):
+                 oauth_secret: Optional[pulumi.Input[str]] = None,
+                 protocol: Optional[pulumi.Input[str]] = None,
+                 replicas: Optional[pulumi.Input[int]] = None,
+                 server_type: Optional[pulumi.Input[str]] = None,
+                 transport: Optional[pulumi.Input[str]] = None):
         """
         SeldonDeploymentSpec defines the desired state of SeldonDeployment
         :param pulumi.Input[str] name: Name is Deprecated will be removed in future
@@ -232,6 +361,14 @@ class SeldonDeploymentSpecArgs:
             pulumi.set(__self__, "oauth_key", oauth_key)
         if oauth_secret is not None:
             pulumi.set(__self__, "oauth_secret", oauth_secret)
+        if protocol is not None:
+            pulumi.set(__self__, "protocol", protocol)
+        if replicas is not None:
+            pulumi.set(__self__, "replicas", replicas)
+        if server_type is not None:
+            pulumi.set(__self__, "server_type", server_type)
+        if transport is not None:
+            pulumi.set(__self__, "transport", transport)
 
     @property
     @pulumi.getter
@@ -281,6 +418,42 @@ class SeldonDeploymentSpecArgs:
     def oauth_secret(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "oauth_secret", value)
 
+    @property
+    @pulumi.getter
+    def protocol(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "protocol")
+
+    @protocol.setter
+    def protocol(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "protocol", value)
+
+    @property
+    @pulumi.getter
+    def replicas(self) -> Optional[pulumi.Input[int]]:
+        return pulumi.get(self, "replicas")
+
+    @replicas.setter
+    def replicas(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "replicas", value)
+
+    @property
+    @pulumi.getter(name="serverType")
+    def server_type(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "server_type")
+
+    @server_type.setter
+    def server_type(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "server_type", value)
+
+    @property
+    @pulumi.getter
+    def transport(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "transport")
+
+    @transport.setter
+    def transport(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "transport", value)
+
 
 @pulumi.input_type
 class SeldonDeploymentSpecPredictorsArgs:
@@ -292,12 +465,11 @@ class SeldonDeploymentSpecPredictorsArgs:
                  engine_resources: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsEngineResourcesArgs']] = None,
                  explainer: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsExplainerArgs']] = None,
                  labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-                 protocol: Optional[pulumi.Input[str]] = None,
                  replicas: Optional[pulumi.Input[int]] = None,
                  shadow: Optional[pulumi.Input[bool]] = None,
+                 ssl: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsSslArgs']] = None,
                  svc_orch_spec: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsSvcOrchSpecArgs']] = None,
-                 traffic: Optional[pulumi.Input[int]] = None,
-                 transport: Optional[pulumi.Input[str]] = None):
+                 traffic: Optional[pulumi.Input[int]] = None):
         """
         :param pulumi.Input['SeldonDeploymentSpecPredictorsEngineResourcesArgs'] engine_resources: ResourceRequirements describes the compute resource requirements.
         """
@@ -313,18 +485,16 @@ class SeldonDeploymentSpecPredictorsArgs:
             pulumi.set(__self__, "explainer", explainer)
         if labels is not None:
             pulumi.set(__self__, "labels", labels)
-        if protocol is not None:
-            pulumi.set(__self__, "protocol", protocol)
         if replicas is not None:
             pulumi.set(__self__, "replicas", replicas)
         if shadow is not None:
             pulumi.set(__self__, "shadow", shadow)
+        if ssl is not None:
+            pulumi.set(__self__, "ssl", ssl)
         if svc_orch_spec is not None:
             pulumi.set(__self__, "svc_orch_spec", svc_orch_spec)
         if traffic is not None:
             pulumi.set(__self__, "traffic", traffic)
-        if transport is not None:
-            pulumi.set(__self__, "transport", transport)
 
     @property
     @pulumi.getter
@@ -394,15 +564,6 @@ class SeldonDeploymentSpecPredictorsArgs:
 
     @property
     @pulumi.getter
-    def protocol(self) -> Optional[pulumi.Input[str]]:
-        return pulumi.get(self, "protocol")
-
-    @protocol.setter
-    def protocol(self, value: Optional[pulumi.Input[str]]):
-        pulumi.set(self, "protocol", value)
-
-    @property
-    @pulumi.getter
     def replicas(self) -> Optional[pulumi.Input[int]]:
         return pulumi.get(self, "replicas")
 
@@ -418,6 +579,15 @@ class SeldonDeploymentSpecPredictorsArgs:
     @shadow.setter
     def shadow(self, value: Optional[pulumi.Input[bool]]):
         pulumi.set(self, "shadow", value)
+
+    @property
+    @pulumi.getter
+    def ssl(self) -> Optional[pulumi.Input['SeldonDeploymentSpecPredictorsSslArgs']]:
+        return pulumi.get(self, "ssl")
+
+    @ssl.setter
+    def ssl(self, value: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsSslArgs']]):
+        pulumi.set(self, "ssl", value)
 
     @property
     @pulumi.getter(name="svcOrchSpec")
@@ -437,29 +607,30 @@ class SeldonDeploymentSpecPredictorsArgs:
     def traffic(self, value: Optional[pulumi.Input[int]]):
         pulumi.set(self, "traffic", value)
 
-    @property
-    @pulumi.getter
-    def transport(self) -> Optional[pulumi.Input[str]]:
-        return pulumi.get(self, "transport")
-
-    @transport.setter
-    def transport(self, value: Optional[pulumi.Input[str]]):
-        pulumi.set(self, "transport", value)
-
 
 @pulumi.input_type
 class SeldonDeploymentSpecPredictorsComponentSpecsArgs:
     def __init__(__self__, *,
                  hpa_spec: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsHpaSpecArgs']] = None,
+                 keda_spec: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsKedaSpecArgs']] = None,
                  metadata: Optional[pulumi.Input[Mapping[str, Any]]] = None,
+                 pdb_spec: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsPdbSpecArgs']] = None,
+                 replicas: Optional[pulumi.Input[int]] = None,
                  spec: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecArgs']] = None):
         """
+        :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsKedaSpecArgs'] keda_spec: SeldonScaledObjectSpec is the spec for a KEDA ScaledObject resource
         :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecArgs'] spec: PodSpec is a description of a pod.
         """
         if hpa_spec is not None:
             pulumi.set(__self__, "hpa_spec", hpa_spec)
+        if keda_spec is not None:
+            pulumi.set(__self__, "keda_spec", keda_spec)
         if metadata is not None:
             pulumi.set(__self__, "metadata", metadata)
+        if pdb_spec is not None:
+            pulumi.set(__self__, "pdb_spec", pdb_spec)
+        if replicas is not None:
+            pulumi.set(__self__, "replicas", replicas)
         if spec is not None:
             pulumi.set(__self__, "spec", spec)
 
@@ -473,6 +644,18 @@ class SeldonDeploymentSpecPredictorsComponentSpecsArgs:
         pulumi.set(self, "hpa_spec", value)
 
     @property
+    @pulumi.getter(name="kedaSpec")
+    def keda_spec(self) -> Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsKedaSpecArgs']]:
+        """
+        SeldonScaledObjectSpec is the spec for a KEDA ScaledObject resource
+        """
+        return pulumi.get(self, "keda_spec")
+
+    @keda_spec.setter
+    def keda_spec(self, value: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsKedaSpecArgs']]):
+        pulumi.set(self, "keda_spec", value)
+
+    @property
     @pulumi.getter
     def metadata(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
         return pulumi.get(self, "metadata")
@@ -480,6 +663,24 @@ class SeldonDeploymentSpecPredictorsComponentSpecsArgs:
     @metadata.setter
     def metadata(self, value: Optional[pulumi.Input[Mapping[str, Any]]]):
         pulumi.set(self, "metadata", value)
+
+    @property
+    @pulumi.getter(name="pdbSpec")
+    def pdb_spec(self) -> Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsPdbSpecArgs']]:
+        return pulumi.get(self, "pdb_spec")
+
+    @pdb_spec.setter
+    def pdb_spec(self, value: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsPdbSpecArgs']]):
+        pulumi.set(self, "pdb_spec", value)
+
+    @property
+    @pulumi.getter
+    def replicas(self) -> Optional[pulumi.Input[int]]:
+        return pulumi.get(self, "replicas")
+
+    @replicas.setter
+    def replicas(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "replicas", value)
 
     @property
     @pulumi.getter
@@ -626,14 +827,14 @@ class SeldonDeploymentSpecPredictorsComponentSpecsHpaSpecMetricsExternalArgs:
     def __init__(__self__, *,
                  metric_name: pulumi.Input[str],
                  metric_selector: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsHpaSpecMetricsExternalMetricSelectorArgs']] = None,
-                 target_average_value: Optional[pulumi.Input[str]] = None,
-                 target_value: Optional[pulumi.Input[str]] = None):
+                 target_average_value: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsHpaSpecMetricsExternalTargetAverageValueArgs']] = None,
+                 target_value: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsHpaSpecMetricsExternalTargetValueArgs']] = None):
         """
         external refers to a global metric that is not associated with any Kubernetes object. It allows autoscaling based on information coming from components running outside of cluster (for example length of queue in cloud messaging service, or QPS from loadbalancer running outside of cluster).
         :param pulumi.Input[str] metric_name: metricName is the name of the metric in question.
         :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsHpaSpecMetricsExternalMetricSelectorArgs'] metric_selector: metricSelector is used to identify a specific time series within a given metric.
-        :param pulumi.Input[str] target_average_value: targetAverageValue is the target per-pod value of global metric (as a quantity). Mutually exclusive with TargetValue.
-        :param pulumi.Input[str] target_value: targetValue is the target value of the metric (as a quantity). Mutually exclusive with TargetAverageValue.
+        :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsHpaSpecMetricsExternalTargetAverageValueArgs'] target_average_value: targetAverageValue is the target per-pod value of global metric (as a quantity). Mutually exclusive with TargetValue.
+        :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsHpaSpecMetricsExternalTargetValueArgs'] target_value: targetValue is the target value of the metric (as a quantity). Mutually exclusive with TargetAverageValue.
         """
         pulumi.set(__self__, "metric_name", metric_name)
         if metric_selector is not None:
@@ -669,26 +870,26 @@ class SeldonDeploymentSpecPredictorsComponentSpecsHpaSpecMetricsExternalArgs:
 
     @property
     @pulumi.getter(name="targetAverageValue")
-    def target_average_value(self) -> Optional[pulumi.Input[str]]:
+    def target_average_value(self) -> Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsHpaSpecMetricsExternalTargetAverageValueArgs']]:
         """
         targetAverageValue is the target per-pod value of global metric (as a quantity). Mutually exclusive with TargetValue.
         """
         return pulumi.get(self, "target_average_value")
 
     @target_average_value.setter
-    def target_average_value(self, value: Optional[pulumi.Input[str]]):
+    def target_average_value(self, value: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsHpaSpecMetricsExternalTargetAverageValueArgs']]):
         pulumi.set(self, "target_average_value", value)
 
     @property
     @pulumi.getter(name="targetValue")
-    def target_value(self) -> Optional[pulumi.Input[str]]:
+    def target_value(self) -> Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsHpaSpecMetricsExternalTargetValueArgs']]:
         """
         targetValue is the target value of the metric (as a quantity). Mutually exclusive with TargetAverageValue.
         """
         return pulumi.get(self, "target_value")
 
     @target_value.setter
-    def target_value(self, value: Optional[pulumi.Input[str]]):
+    def target_value(self, value: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsHpaSpecMetricsExternalTargetValueArgs']]):
         pulumi.set(self, "target_value", value)
 
 
@@ -787,19 +988,31 @@ class SeldonDeploymentSpecPredictorsComponentSpecsHpaSpecMetricsExternalMetricSe
 
 
 @pulumi.input_type
+class SeldonDeploymentSpecPredictorsComponentSpecsHpaSpecMetricsExternalTargetAverageValueArgs:
+    def __init__(__self__):
+        pass
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsComponentSpecsHpaSpecMetricsExternalTargetValueArgs:
+    def __init__(__self__):
+        pass
+
+
+@pulumi.input_type
 class SeldonDeploymentSpecPredictorsComponentSpecsHpaSpecMetricsObjectArgs:
     def __init__(__self__, *,
                  metric_name: pulumi.Input[str],
                  target: pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsHpaSpecMetricsObjectTargetArgs'],
-                 target_value: pulumi.Input[str],
-                 average_value: Optional[pulumi.Input[str]] = None,
+                 target_value: pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsHpaSpecMetricsObjectTargetValueArgs'],
+                 average_value: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsHpaSpecMetricsObjectAverageValueArgs']] = None,
                  selector: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsHpaSpecMetricsObjectSelectorArgs']] = None):
         """
         object refers to a metric describing a single kubernetes object (for example, hits-per-second on an Ingress object).
         :param pulumi.Input[str] metric_name: metricName is the name of the metric in question.
         :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsHpaSpecMetricsObjectTargetArgs'] target: target is the described Kubernetes object.
-        :param pulumi.Input[str] target_value: targetValue is the target value of the metric (as a quantity).
-        :param pulumi.Input[str] average_value: averageValue is the target value of the average of the metric across all relevant pods (as a quantity)
+        :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsHpaSpecMetricsObjectTargetValueArgs'] target_value: targetValue is the target value of the metric (as a quantity).
+        :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsHpaSpecMetricsObjectAverageValueArgs'] average_value: averageValue is the target value of the average of the metric across all relevant pods (as a quantity)
         :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsHpaSpecMetricsObjectSelectorArgs'] selector: selector is the string-encoded form of a standard kubernetes label selector for the given metric When set, it is passed as an additional parameter to the metrics server for more specific metrics scoping When unset, just the metricName will be used to gather metrics.
         """
         pulumi.set(__self__, "metric_name", metric_name)
@@ -836,26 +1049,26 @@ class SeldonDeploymentSpecPredictorsComponentSpecsHpaSpecMetricsObjectArgs:
 
     @property
     @pulumi.getter(name="targetValue")
-    def target_value(self) -> pulumi.Input[str]:
+    def target_value(self) -> pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsHpaSpecMetricsObjectTargetValueArgs']:
         """
         targetValue is the target value of the metric (as a quantity).
         """
         return pulumi.get(self, "target_value")
 
     @target_value.setter
-    def target_value(self, value: pulumi.Input[str]):
+    def target_value(self, value: pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsHpaSpecMetricsObjectTargetValueArgs']):
         pulumi.set(self, "target_value", value)
 
     @property
     @pulumi.getter(name="averageValue")
-    def average_value(self) -> Optional[pulumi.Input[str]]:
+    def average_value(self) -> Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsHpaSpecMetricsObjectAverageValueArgs']]:
         """
         averageValue is the target value of the average of the metric across all relevant pods (as a quantity)
         """
         return pulumi.get(self, "average_value")
 
     @average_value.setter
-    def average_value(self, value: Optional[pulumi.Input[str]]):
+    def average_value(self, value: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsHpaSpecMetricsObjectAverageValueArgs']]):
         pulumi.set(self, "average_value", value)
 
     @property
@@ -869,6 +1082,12 @@ class SeldonDeploymentSpecPredictorsComponentSpecsHpaSpecMetricsObjectArgs:
     @selector.setter
     def selector(self, value: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsHpaSpecMetricsObjectSelectorArgs']]):
         pulumi.set(self, "selector", value)
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsComponentSpecsHpaSpecMetricsObjectAverageValueArgs:
+    def __init__(__self__):
+        pass
 
 
 @pulumi.input_type
@@ -973,7 +1192,7 @@ class SeldonDeploymentSpecPredictorsComponentSpecsHpaSpecMetricsObjectTargetArgs
                  api_version: Optional[pulumi.Input[str]] = None):
         """
         target is the described Kubernetes object.
-        :param pulumi.Input[str] kind: Kind of the referent; More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds"
+        :param pulumi.Input[str] kind: Kind of the referent; More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds"
         :param pulumi.Input[str] name: Name of the referent; More info: http://kubernetes.io/docs/user-guide/identifiers#names
         :param pulumi.Input[str] api_version: API version of the referent
         """
@@ -986,7 +1205,7 @@ class SeldonDeploymentSpecPredictorsComponentSpecsHpaSpecMetricsObjectTargetArgs
     @pulumi.getter
     def kind(self) -> pulumi.Input[str]:
         """
-        Kind of the referent; More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds"
+        Kind of the referent; More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds"
         """
         return pulumi.get(self, "kind")
 
@@ -1020,15 +1239,21 @@ class SeldonDeploymentSpecPredictorsComponentSpecsHpaSpecMetricsObjectTargetArgs
 
 
 @pulumi.input_type
+class SeldonDeploymentSpecPredictorsComponentSpecsHpaSpecMetricsObjectTargetValueArgs:
+    def __init__(__self__):
+        pass
+
+
+@pulumi.input_type
 class SeldonDeploymentSpecPredictorsComponentSpecsHpaSpecMetricsPodsArgs:
     def __init__(__self__, *,
                  metric_name: pulumi.Input[str],
-                 target_average_value: pulumi.Input[str],
+                 target_average_value: pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsHpaSpecMetricsPodsTargetAverageValueArgs'],
                  selector: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsHpaSpecMetricsPodsSelectorArgs']] = None):
         """
         pods refers to a metric describing each pod in the current scale target (for example, transactions-processed-per-second).  The values will be averaged together before being compared to the target value.
         :param pulumi.Input[str] metric_name: metricName is the name of the metric in question
-        :param pulumi.Input[str] target_average_value: targetAverageValue is the target value of the average of the metric across all relevant pods (as a quantity)
+        :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsHpaSpecMetricsPodsTargetAverageValueArgs'] target_average_value: targetAverageValue is the target value of the average of the metric across all relevant pods (as a quantity)
         :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsHpaSpecMetricsPodsSelectorArgs'] selector: selector is the string-encoded form of a standard kubernetes label selector for the given metric When set, it is passed as an additional parameter to the metrics server for more specific metrics scoping When unset, just the metricName will be used to gather metrics.
         """
         pulumi.set(__self__, "metric_name", metric_name)
@@ -1050,14 +1275,14 @@ class SeldonDeploymentSpecPredictorsComponentSpecsHpaSpecMetricsPodsArgs:
 
     @property
     @pulumi.getter(name="targetAverageValue")
-    def target_average_value(self) -> pulumi.Input[str]:
+    def target_average_value(self) -> pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsHpaSpecMetricsPodsTargetAverageValueArgs']:
         """
         targetAverageValue is the target value of the average of the metric across all relevant pods (as a quantity)
         """
         return pulumi.get(self, "target_average_value")
 
     @target_average_value.setter
-    def target_average_value(self, value: pulumi.Input[str]):
+    def target_average_value(self, value: pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsHpaSpecMetricsPodsTargetAverageValueArgs']):
         pulumi.set(self, "target_average_value", value)
 
     @property
@@ -1168,16 +1393,22 @@ class SeldonDeploymentSpecPredictorsComponentSpecsHpaSpecMetricsPodsSelectorMatc
 
 
 @pulumi.input_type
+class SeldonDeploymentSpecPredictorsComponentSpecsHpaSpecMetricsPodsTargetAverageValueArgs:
+    def __init__(__self__):
+        pass
+
+
+@pulumi.input_type
 class SeldonDeploymentSpecPredictorsComponentSpecsHpaSpecMetricsResourceArgs:
     def __init__(__self__, *,
                  name: pulumi.Input[str],
                  target_average_utilization: Optional[pulumi.Input[int]] = None,
-                 target_average_value: Optional[pulumi.Input[str]] = None):
+                 target_average_value: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsHpaSpecMetricsResourceTargetAverageValueArgs']] = None):
         """
         resource refers to a resource metric (such as those specified in requests and limits) known to Kubernetes describing each pod in the current scale target (e.g. CPU or memory). Such metrics are built in to Kubernetes, and have special scaling options on top of those available to normal per-pod metrics using the "pods" source.
         :param pulumi.Input[str] name: name is the name of the resource in question.
         :param pulumi.Input[int] target_average_utilization: targetAverageUtilization is the target value of the average of the resource metric across all relevant pods, represented as a percentage of the requested value of the resource for the pods.
-        :param pulumi.Input[str] target_average_value: targetAverageValue is the target value of the average of the resource metric across all relevant pods, as a raw value (instead of as a percentage of the request), similar to the "pods" metric source type.
+        :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsHpaSpecMetricsResourceTargetAverageValueArgs'] target_average_value: targetAverageValue is the target value of the average of the resource metric across all relevant pods, as a raw value (instead of as a percentage of the request), similar to the "pods" metric source type.
         """
         pulumi.set(__self__, "name", name)
         if target_average_utilization is not None:
@@ -1211,15 +1442,683 @@ class SeldonDeploymentSpecPredictorsComponentSpecsHpaSpecMetricsResourceArgs:
 
     @property
     @pulumi.getter(name="targetAverageValue")
-    def target_average_value(self) -> Optional[pulumi.Input[str]]:
+    def target_average_value(self) -> Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsHpaSpecMetricsResourceTargetAverageValueArgs']]:
         """
         targetAverageValue is the target value of the average of the resource metric across all relevant pods, as a raw value (instead of as a percentage of the request), similar to the "pods" metric source type.
         """
         return pulumi.get(self, "target_average_value")
 
     @target_average_value.setter
-    def target_average_value(self, value: Optional[pulumi.Input[str]]):
+    def target_average_value(self, value: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsHpaSpecMetricsResourceTargetAverageValueArgs']]):
         pulumi.set(self, "target_average_value", value)
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsComponentSpecsHpaSpecMetricsResourceTargetAverageValueArgs:
+    def __init__(__self__):
+        pass
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsComponentSpecsKedaSpecArgs:
+    def __init__(__self__, *,
+                 triggers: pulumi.Input[Sequence[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsKedaSpecTriggersArgs']]],
+                 advanced: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsKedaSpecAdvancedArgs']] = None,
+                 cooldown_period: Optional[pulumi.Input[int]] = None,
+                 max_replica_count: Optional[pulumi.Input[int]] = None,
+                 min_replica_count: Optional[pulumi.Input[int]] = None,
+                 polling_interval: Optional[pulumi.Input[int]] = None):
+        """
+        SeldonScaledObjectSpec is the spec for a KEDA ScaledObject resource
+        :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsKedaSpecAdvancedArgs'] advanced: AdvancedConfig specifies advance scaling options
+        """
+        pulumi.set(__self__, "triggers", triggers)
+        if advanced is not None:
+            pulumi.set(__self__, "advanced", advanced)
+        if cooldown_period is not None:
+            pulumi.set(__self__, "cooldown_period", cooldown_period)
+        if max_replica_count is not None:
+            pulumi.set(__self__, "max_replica_count", max_replica_count)
+        if min_replica_count is not None:
+            pulumi.set(__self__, "min_replica_count", min_replica_count)
+        if polling_interval is not None:
+            pulumi.set(__self__, "polling_interval", polling_interval)
+
+    @property
+    @pulumi.getter
+    def triggers(self) -> pulumi.Input[Sequence[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsKedaSpecTriggersArgs']]]:
+        return pulumi.get(self, "triggers")
+
+    @triggers.setter
+    def triggers(self, value: pulumi.Input[Sequence[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsKedaSpecTriggersArgs']]]):
+        pulumi.set(self, "triggers", value)
+
+    @property
+    @pulumi.getter
+    def advanced(self) -> Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsKedaSpecAdvancedArgs']]:
+        """
+        AdvancedConfig specifies advance scaling options
+        """
+        return pulumi.get(self, "advanced")
+
+    @advanced.setter
+    def advanced(self, value: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsKedaSpecAdvancedArgs']]):
+        pulumi.set(self, "advanced", value)
+
+    @property
+    @pulumi.getter(name="cooldownPeriod")
+    def cooldown_period(self) -> Optional[pulumi.Input[int]]:
+        return pulumi.get(self, "cooldown_period")
+
+    @cooldown_period.setter
+    def cooldown_period(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "cooldown_period", value)
+
+    @property
+    @pulumi.getter(name="maxReplicaCount")
+    def max_replica_count(self) -> Optional[pulumi.Input[int]]:
+        return pulumi.get(self, "max_replica_count")
+
+    @max_replica_count.setter
+    def max_replica_count(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "max_replica_count", value)
+
+    @property
+    @pulumi.getter(name="minReplicaCount")
+    def min_replica_count(self) -> Optional[pulumi.Input[int]]:
+        return pulumi.get(self, "min_replica_count")
+
+    @min_replica_count.setter
+    def min_replica_count(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "min_replica_count", value)
+
+    @property
+    @pulumi.getter(name="pollingInterval")
+    def polling_interval(self) -> Optional[pulumi.Input[int]]:
+        return pulumi.get(self, "polling_interval")
+
+    @polling_interval.setter
+    def polling_interval(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "polling_interval", value)
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsComponentSpecsKedaSpecAdvancedArgs:
+    def __init__(__self__, *,
+                 horizontal_pod_autoscaler_config: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsKedaSpecAdvancedHorizontalPodAutoscalerConfigArgs']] = None,
+                 restore_to_original_replica_count: Optional[pulumi.Input[bool]] = None):
+        """
+        AdvancedConfig specifies advance scaling options
+        :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsKedaSpecAdvancedHorizontalPodAutoscalerConfigArgs'] horizontal_pod_autoscaler_config: HorizontalPodAutoscalerConfig specifies horizontal scale config
+        """
+        if horizontal_pod_autoscaler_config is not None:
+            pulumi.set(__self__, "horizontal_pod_autoscaler_config", horizontal_pod_autoscaler_config)
+        if restore_to_original_replica_count is not None:
+            pulumi.set(__self__, "restore_to_original_replica_count", restore_to_original_replica_count)
+
+    @property
+    @pulumi.getter(name="horizontalPodAutoscalerConfig")
+    def horizontal_pod_autoscaler_config(self) -> Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsKedaSpecAdvancedHorizontalPodAutoscalerConfigArgs']]:
+        """
+        HorizontalPodAutoscalerConfig specifies horizontal scale config
+        """
+        return pulumi.get(self, "horizontal_pod_autoscaler_config")
+
+    @horizontal_pod_autoscaler_config.setter
+    def horizontal_pod_autoscaler_config(self, value: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsKedaSpecAdvancedHorizontalPodAutoscalerConfigArgs']]):
+        pulumi.set(self, "horizontal_pod_autoscaler_config", value)
+
+    @property
+    @pulumi.getter(name="restoreToOriginalReplicaCount")
+    def restore_to_original_replica_count(self) -> Optional[pulumi.Input[bool]]:
+        return pulumi.get(self, "restore_to_original_replica_count")
+
+    @restore_to_original_replica_count.setter
+    def restore_to_original_replica_count(self, value: Optional[pulumi.Input[bool]]):
+        pulumi.set(self, "restore_to_original_replica_count", value)
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsComponentSpecsKedaSpecAdvancedHorizontalPodAutoscalerConfigArgs:
+    def __init__(__self__, *,
+                 behavior: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsKedaSpecAdvancedHorizontalPodAutoscalerConfigBehaviorArgs']] = None,
+                 resource_metrics: Optional[pulumi.Input[Sequence[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsKedaSpecAdvancedHorizontalPodAutoscalerConfigResourceMetricsArgs']]]] = None):
+        """
+        HorizontalPodAutoscalerConfig specifies horizontal scale config
+        :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsKedaSpecAdvancedHorizontalPodAutoscalerConfigBehaviorArgs'] behavior: HorizontalPodAutoscalerBehavior configures the scaling behavior of the target in both Up and Down directions (scaleUp and scaleDown fields respectively).
+        """
+        if behavior is not None:
+            pulumi.set(__self__, "behavior", behavior)
+        if resource_metrics is not None:
+            pulumi.set(__self__, "resource_metrics", resource_metrics)
+
+    @property
+    @pulumi.getter
+    def behavior(self) -> Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsKedaSpecAdvancedHorizontalPodAutoscalerConfigBehaviorArgs']]:
+        """
+        HorizontalPodAutoscalerBehavior configures the scaling behavior of the target in both Up and Down directions (scaleUp and scaleDown fields respectively).
+        """
+        return pulumi.get(self, "behavior")
+
+    @behavior.setter
+    def behavior(self, value: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsKedaSpecAdvancedHorizontalPodAutoscalerConfigBehaviorArgs']]):
+        pulumi.set(self, "behavior", value)
+
+    @property
+    @pulumi.getter(name="resourceMetrics")
+    def resource_metrics(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsKedaSpecAdvancedHorizontalPodAutoscalerConfigResourceMetricsArgs']]]]:
+        return pulumi.get(self, "resource_metrics")
+
+    @resource_metrics.setter
+    def resource_metrics(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsKedaSpecAdvancedHorizontalPodAutoscalerConfigResourceMetricsArgs']]]]):
+        pulumi.set(self, "resource_metrics", value)
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsComponentSpecsKedaSpecAdvancedHorizontalPodAutoscalerConfigBehaviorArgs:
+    def __init__(__self__, *,
+                 scale_down: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsKedaSpecAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArgs']] = None,
+                 scale_up: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsKedaSpecAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArgs']] = None):
+        """
+        HorizontalPodAutoscalerBehavior configures the scaling behavior of the target in both Up and Down directions (scaleUp and scaleDown fields respectively).
+        :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsKedaSpecAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArgs'] scale_down: scaleDown is scaling policy for scaling Down. If not set, the default value is to allow to scale down to minReplicas pods, with a 300 second stabilization window (i.e., the highest recommendation for the last 300sec is used).
+        :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsKedaSpecAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArgs'] scale_up: scaleUp is scaling policy for scaling Up. If not set, the default value is the higher of:   * increase no more than 4 pods per 60 seconds   * double the number of pods per 60 seconds No stabilization is used.
+        """
+        if scale_down is not None:
+            pulumi.set(__self__, "scale_down", scale_down)
+        if scale_up is not None:
+            pulumi.set(__self__, "scale_up", scale_up)
+
+    @property
+    @pulumi.getter(name="scaleDown")
+    def scale_down(self) -> Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsKedaSpecAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArgs']]:
+        """
+        scaleDown is scaling policy for scaling Down. If not set, the default value is to allow to scale down to minReplicas pods, with a 300 second stabilization window (i.e., the highest recommendation for the last 300sec is used).
+        """
+        return pulumi.get(self, "scale_down")
+
+    @scale_down.setter
+    def scale_down(self, value: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsKedaSpecAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArgs']]):
+        pulumi.set(self, "scale_down", value)
+
+    @property
+    @pulumi.getter(name="scaleUp")
+    def scale_up(self) -> Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsKedaSpecAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArgs']]:
+        """
+        scaleUp is scaling policy for scaling Up. If not set, the default value is the higher of:   * increase no more than 4 pods per 60 seconds   * double the number of pods per 60 seconds No stabilization is used.
+        """
+        return pulumi.get(self, "scale_up")
+
+    @scale_up.setter
+    def scale_up(self, value: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsKedaSpecAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArgs']]):
+        pulumi.set(self, "scale_up", value)
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsComponentSpecsKedaSpecAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArgs:
+    def __init__(__self__, *,
+                 policies: Optional[pulumi.Input[Sequence[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsKedaSpecAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPoliciesArgs']]]] = None,
+                 select_policy: Optional[pulumi.Input[str]] = None,
+                 stabilization_window_seconds: Optional[pulumi.Input[int]] = None):
+        """
+        scaleDown is scaling policy for scaling Down. If not set, the default value is to allow to scale down to minReplicas pods, with a 300 second stabilization window (i.e., the highest recommendation for the last 300sec is used).
+        :param pulumi.Input[Sequence[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsKedaSpecAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPoliciesArgs']]] policies: policies is a list of potential scaling polices which can be used during scaling. At least one policy must be specified, otherwise the HPAScalingRules will be discarded as invalid
+        :param pulumi.Input[str] select_policy: selectPolicy is used to specify which policy should be used. If not set, the default value MaxPolicySelect is used.
+        :param pulumi.Input[int] stabilization_window_seconds: StabilizationWindowSeconds is the number of seconds for which past recommendations should be considered while scaling up or scaling down. StabilizationWindowSeconds must be greater than or equal to zero and less than or equal to 3600 (one hour). If not set, use the default values: - For scale up: 0 (i.e. no stabilization is done). - For scale down: 300 (i.e. the stabilization window is 300 seconds long).
+        """
+        if policies is not None:
+            pulumi.set(__self__, "policies", policies)
+        if select_policy is not None:
+            pulumi.set(__self__, "select_policy", select_policy)
+        if stabilization_window_seconds is not None:
+            pulumi.set(__self__, "stabilization_window_seconds", stabilization_window_seconds)
+
+    @property
+    @pulumi.getter
+    def policies(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsKedaSpecAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPoliciesArgs']]]]:
+        """
+        policies is a list of potential scaling polices which can be used during scaling. At least one policy must be specified, otherwise the HPAScalingRules will be discarded as invalid
+        """
+        return pulumi.get(self, "policies")
+
+    @policies.setter
+    def policies(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsKedaSpecAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPoliciesArgs']]]]):
+        pulumi.set(self, "policies", value)
+
+    @property
+    @pulumi.getter(name="selectPolicy")
+    def select_policy(self) -> Optional[pulumi.Input[str]]:
+        """
+        selectPolicy is used to specify which policy should be used. If not set, the default value MaxPolicySelect is used.
+        """
+        return pulumi.get(self, "select_policy")
+
+    @select_policy.setter
+    def select_policy(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "select_policy", value)
+
+    @property
+    @pulumi.getter(name="stabilizationWindowSeconds")
+    def stabilization_window_seconds(self) -> Optional[pulumi.Input[int]]:
+        """
+        StabilizationWindowSeconds is the number of seconds for which past recommendations should be considered while scaling up or scaling down. StabilizationWindowSeconds must be greater than or equal to zero and less than or equal to 3600 (one hour). If not set, use the default values: - For scale up: 0 (i.e. no stabilization is done). - For scale down: 300 (i.e. the stabilization window is 300 seconds long).
+        """
+        return pulumi.get(self, "stabilization_window_seconds")
+
+    @stabilization_window_seconds.setter
+    def stabilization_window_seconds(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "stabilization_window_seconds", value)
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsComponentSpecsKedaSpecAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPoliciesArgs:
+    def __init__(__self__, *,
+                 period_seconds: pulumi.Input[int],
+                 type: pulumi.Input[str],
+                 value: pulumi.Input[int]):
+        """
+        HPAScalingPolicy is a single policy which must hold true for a specified past interval.
+        :param pulumi.Input[int] period_seconds: PeriodSeconds specifies the window of time for which the policy should hold true. PeriodSeconds must be greater than zero and less than or equal to 1800 (30 min).
+        :param pulumi.Input[str] type: Type is used to specify the scaling policy.
+        :param pulumi.Input[int] value: Value contains the amount of change which is permitted by the policy. It must be greater than zero
+        """
+        pulumi.set(__self__, "period_seconds", period_seconds)
+        pulumi.set(__self__, "type", type)
+        pulumi.set(__self__, "value", value)
+
+    @property
+    @pulumi.getter(name="periodSeconds")
+    def period_seconds(self) -> pulumi.Input[int]:
+        """
+        PeriodSeconds specifies the window of time for which the policy should hold true. PeriodSeconds must be greater than zero and less than or equal to 1800 (30 min).
+        """
+        return pulumi.get(self, "period_seconds")
+
+    @period_seconds.setter
+    def period_seconds(self, value: pulumi.Input[int]):
+        pulumi.set(self, "period_seconds", value)
+
+    @property
+    @pulumi.getter
+    def type(self) -> pulumi.Input[str]:
+        """
+        Type is used to specify the scaling policy.
+        """
+        return pulumi.get(self, "type")
+
+    @type.setter
+    def type(self, value: pulumi.Input[str]):
+        pulumi.set(self, "type", value)
+
+    @property
+    @pulumi.getter
+    def value(self) -> pulumi.Input[int]:
+        """
+        Value contains the amount of change which is permitted by the policy. It must be greater than zero
+        """
+        return pulumi.get(self, "value")
+
+    @value.setter
+    def value(self, value: pulumi.Input[int]):
+        pulumi.set(self, "value", value)
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsComponentSpecsKedaSpecAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArgs:
+    def __init__(__self__, *,
+                 policies: Optional[pulumi.Input[Sequence[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsKedaSpecAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPoliciesArgs']]]] = None,
+                 select_policy: Optional[pulumi.Input[str]] = None,
+                 stabilization_window_seconds: Optional[pulumi.Input[int]] = None):
+        """
+        scaleUp is scaling policy for scaling Up. If not set, the default value is the higher of:   * increase no more than 4 pods per 60 seconds   * double the number of pods per 60 seconds No stabilization is used.
+        :param pulumi.Input[Sequence[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsKedaSpecAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPoliciesArgs']]] policies: policies is a list of potential scaling polices which can be used during scaling. At least one policy must be specified, otherwise the HPAScalingRules will be discarded as invalid
+        :param pulumi.Input[str] select_policy: selectPolicy is used to specify which policy should be used. If not set, the default value MaxPolicySelect is used.
+        :param pulumi.Input[int] stabilization_window_seconds: StabilizationWindowSeconds is the number of seconds for which past recommendations should be considered while scaling up or scaling down. StabilizationWindowSeconds must be greater than or equal to zero and less than or equal to 3600 (one hour). If not set, use the default values: - For scale up: 0 (i.e. no stabilization is done). - For scale down: 300 (i.e. the stabilization window is 300 seconds long).
+        """
+        if policies is not None:
+            pulumi.set(__self__, "policies", policies)
+        if select_policy is not None:
+            pulumi.set(__self__, "select_policy", select_policy)
+        if stabilization_window_seconds is not None:
+            pulumi.set(__self__, "stabilization_window_seconds", stabilization_window_seconds)
+
+    @property
+    @pulumi.getter
+    def policies(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsKedaSpecAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPoliciesArgs']]]]:
+        """
+        policies is a list of potential scaling polices which can be used during scaling. At least one policy must be specified, otherwise the HPAScalingRules will be discarded as invalid
+        """
+        return pulumi.get(self, "policies")
+
+    @policies.setter
+    def policies(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsKedaSpecAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPoliciesArgs']]]]):
+        pulumi.set(self, "policies", value)
+
+    @property
+    @pulumi.getter(name="selectPolicy")
+    def select_policy(self) -> Optional[pulumi.Input[str]]:
+        """
+        selectPolicy is used to specify which policy should be used. If not set, the default value MaxPolicySelect is used.
+        """
+        return pulumi.get(self, "select_policy")
+
+    @select_policy.setter
+    def select_policy(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "select_policy", value)
+
+    @property
+    @pulumi.getter(name="stabilizationWindowSeconds")
+    def stabilization_window_seconds(self) -> Optional[pulumi.Input[int]]:
+        """
+        StabilizationWindowSeconds is the number of seconds for which past recommendations should be considered while scaling up or scaling down. StabilizationWindowSeconds must be greater than or equal to zero and less than or equal to 3600 (one hour). If not set, use the default values: - For scale up: 0 (i.e. no stabilization is done). - For scale down: 300 (i.e. the stabilization window is 300 seconds long).
+        """
+        return pulumi.get(self, "stabilization_window_seconds")
+
+    @stabilization_window_seconds.setter
+    def stabilization_window_seconds(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "stabilization_window_seconds", value)
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsComponentSpecsKedaSpecAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPoliciesArgs:
+    def __init__(__self__, *,
+                 period_seconds: pulumi.Input[int],
+                 type: pulumi.Input[str],
+                 value: pulumi.Input[int]):
+        """
+        HPAScalingPolicy is a single policy which must hold true for a specified past interval.
+        :param pulumi.Input[int] period_seconds: PeriodSeconds specifies the window of time for which the policy should hold true. PeriodSeconds must be greater than zero and less than or equal to 1800 (30 min).
+        :param pulumi.Input[str] type: Type is used to specify the scaling policy.
+        :param pulumi.Input[int] value: Value contains the amount of change which is permitted by the policy. It must be greater than zero
+        """
+        pulumi.set(__self__, "period_seconds", period_seconds)
+        pulumi.set(__self__, "type", type)
+        pulumi.set(__self__, "value", value)
+
+    @property
+    @pulumi.getter(name="periodSeconds")
+    def period_seconds(self) -> pulumi.Input[int]:
+        """
+        PeriodSeconds specifies the window of time for which the policy should hold true. PeriodSeconds must be greater than zero and less than or equal to 1800 (30 min).
+        """
+        return pulumi.get(self, "period_seconds")
+
+    @period_seconds.setter
+    def period_seconds(self, value: pulumi.Input[int]):
+        pulumi.set(self, "period_seconds", value)
+
+    @property
+    @pulumi.getter
+    def type(self) -> pulumi.Input[str]:
+        """
+        Type is used to specify the scaling policy.
+        """
+        return pulumi.get(self, "type")
+
+    @type.setter
+    def type(self, value: pulumi.Input[str]):
+        pulumi.set(self, "type", value)
+
+    @property
+    @pulumi.getter
+    def value(self) -> pulumi.Input[int]:
+        """
+        Value contains the amount of change which is permitted by the policy. It must be greater than zero
+        """
+        return pulumi.get(self, "value")
+
+    @value.setter
+    def value(self, value: pulumi.Input[int]):
+        pulumi.set(self, "value", value)
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsComponentSpecsKedaSpecAdvancedHorizontalPodAutoscalerConfigResourceMetricsArgs:
+    def __init__(__self__, *,
+                 name: pulumi.Input[str],
+                 target: pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsKedaSpecAdvancedHorizontalPodAutoscalerConfigResourceMetricsTargetArgs']):
+        """
+        ResourceMetricSource indicates how to scale on a resource metric known to Kubernetes, as specified in requests and limits, describing each pod in the current scale target (e.g. CPU or memory).  The values will be averaged together before being compared to the target.  Such metrics are built in to Kubernetes, and have special scaling options on top of those available to normal per-pod metrics using the "pods" source.  Only one "target" type should be set.
+        :param pulumi.Input[str] name: name is the name of the resource in question.
+        :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsKedaSpecAdvancedHorizontalPodAutoscalerConfigResourceMetricsTargetArgs'] target: target specifies the target value for the given metric
+        """
+        pulumi.set(__self__, "name", name)
+        pulumi.set(__self__, "target", target)
+
+    @property
+    @pulumi.getter
+    def name(self) -> pulumi.Input[str]:
+        """
+        name is the name of the resource in question.
+        """
+        return pulumi.get(self, "name")
+
+    @name.setter
+    def name(self, value: pulumi.Input[str]):
+        pulumi.set(self, "name", value)
+
+    @property
+    @pulumi.getter
+    def target(self) -> pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsKedaSpecAdvancedHorizontalPodAutoscalerConfigResourceMetricsTargetArgs']:
+        """
+        target specifies the target value for the given metric
+        """
+        return pulumi.get(self, "target")
+
+    @target.setter
+    def target(self, value: pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsKedaSpecAdvancedHorizontalPodAutoscalerConfigResourceMetricsTargetArgs']):
+        pulumi.set(self, "target", value)
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsComponentSpecsKedaSpecAdvancedHorizontalPodAutoscalerConfigResourceMetricsTargetArgs:
+    def __init__(__self__, *,
+                 type: pulumi.Input[str],
+                 average_utilization: Optional[pulumi.Input[int]] = None,
+                 average_value: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsKedaSpecAdvancedHorizontalPodAutoscalerConfigResourceMetricsTargetAverageValueArgs']] = None,
+                 value: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsKedaSpecAdvancedHorizontalPodAutoscalerConfigResourceMetricsTargetValueArgs']] = None):
+        """
+        target specifies the target value for the given metric
+        :param pulumi.Input[str] type: type represents whether the metric type is Utilization, Value, or AverageValue
+        :param pulumi.Input[int] average_utilization: averageUtilization is the target value of the average of the resource metric across all relevant pods, represented as a percentage of the requested value of the resource for the pods. Currently only valid for Resource metric source type
+        :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsKedaSpecAdvancedHorizontalPodAutoscalerConfigResourceMetricsTargetAverageValueArgs'] average_value: averageValue is the target value of the average of the metric across all relevant pods (as a quantity)
+        :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsKedaSpecAdvancedHorizontalPodAutoscalerConfigResourceMetricsTargetValueArgs'] value: value is the target value of the metric (as a quantity).
+        """
+        pulumi.set(__self__, "type", type)
+        if average_utilization is not None:
+            pulumi.set(__self__, "average_utilization", average_utilization)
+        if average_value is not None:
+            pulumi.set(__self__, "average_value", average_value)
+        if value is not None:
+            pulumi.set(__self__, "value", value)
+
+    @property
+    @pulumi.getter
+    def type(self) -> pulumi.Input[str]:
+        """
+        type represents whether the metric type is Utilization, Value, or AverageValue
+        """
+        return pulumi.get(self, "type")
+
+    @type.setter
+    def type(self, value: pulumi.Input[str]):
+        pulumi.set(self, "type", value)
+
+    @property
+    @pulumi.getter(name="averageUtilization")
+    def average_utilization(self) -> Optional[pulumi.Input[int]]:
+        """
+        averageUtilization is the target value of the average of the resource metric across all relevant pods, represented as a percentage of the requested value of the resource for the pods. Currently only valid for Resource metric source type
+        """
+        return pulumi.get(self, "average_utilization")
+
+    @average_utilization.setter
+    def average_utilization(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "average_utilization", value)
+
+    @property
+    @pulumi.getter(name="averageValue")
+    def average_value(self) -> Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsKedaSpecAdvancedHorizontalPodAutoscalerConfigResourceMetricsTargetAverageValueArgs']]:
+        """
+        averageValue is the target value of the average of the metric across all relevant pods (as a quantity)
+        """
+        return pulumi.get(self, "average_value")
+
+    @average_value.setter
+    def average_value(self, value: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsKedaSpecAdvancedHorizontalPodAutoscalerConfigResourceMetricsTargetAverageValueArgs']]):
+        pulumi.set(self, "average_value", value)
+
+    @property
+    @pulumi.getter
+    def value(self) -> Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsKedaSpecAdvancedHorizontalPodAutoscalerConfigResourceMetricsTargetValueArgs']]:
+        """
+        value is the target value of the metric (as a quantity).
+        """
+        return pulumi.get(self, "value")
+
+    @value.setter
+    def value(self, value: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsKedaSpecAdvancedHorizontalPodAutoscalerConfigResourceMetricsTargetValueArgs']]):
+        pulumi.set(self, "value", value)
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsComponentSpecsKedaSpecAdvancedHorizontalPodAutoscalerConfigResourceMetricsTargetAverageValueArgs:
+    def __init__(__self__):
+        pass
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsComponentSpecsKedaSpecAdvancedHorizontalPodAutoscalerConfigResourceMetricsTargetValueArgs:
+    def __init__(__self__):
+        pass
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsComponentSpecsKedaSpecTriggersArgs:
+    def __init__(__self__, *,
+                 metadata: pulumi.Input[Mapping[str, pulumi.Input[str]]],
+                 type: pulumi.Input[str],
+                 authentication_ref: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsKedaSpecTriggersAuthenticationRefArgs']] = None,
+                 name: Optional[pulumi.Input[str]] = None):
+        """
+        ScaleTriggers reference the scaler that will be used
+        :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsKedaSpecTriggersAuthenticationRefArgs'] authentication_ref: ScaledObjectAuthRef points to the TriggerAuthentication object that is used to authenticate the scaler with the environment
+        """
+        pulumi.set(__self__, "metadata", metadata)
+        pulumi.set(__self__, "type", type)
+        if authentication_ref is not None:
+            pulumi.set(__self__, "authentication_ref", authentication_ref)
+        if name is not None:
+            pulumi.set(__self__, "name", name)
+
+    @property
+    @pulumi.getter
+    def metadata(self) -> pulumi.Input[Mapping[str, pulumi.Input[str]]]:
+        return pulumi.get(self, "metadata")
+
+    @metadata.setter
+    def metadata(self, value: pulumi.Input[Mapping[str, pulumi.Input[str]]]):
+        pulumi.set(self, "metadata", value)
+
+    @property
+    @pulumi.getter
+    def type(self) -> pulumi.Input[str]:
+        return pulumi.get(self, "type")
+
+    @type.setter
+    def type(self, value: pulumi.Input[str]):
+        pulumi.set(self, "type", value)
+
+    @property
+    @pulumi.getter(name="authenticationRef")
+    def authentication_ref(self) -> Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsKedaSpecTriggersAuthenticationRefArgs']]:
+        """
+        ScaledObjectAuthRef points to the TriggerAuthentication object that is used to authenticate the scaler with the environment
+        """
+        return pulumi.get(self, "authentication_ref")
+
+    @authentication_ref.setter
+    def authentication_ref(self, value: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsKedaSpecTriggersAuthenticationRefArgs']]):
+        pulumi.set(self, "authentication_ref", value)
+
+    @property
+    @pulumi.getter
+    def name(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "name")
+
+    @name.setter
+    def name(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "name", value)
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsComponentSpecsKedaSpecTriggersAuthenticationRefArgs:
+    def __init__(__self__, *,
+                 name: pulumi.Input[str]):
+        """
+        ScaledObjectAuthRef points to the TriggerAuthentication object that is used to authenticate the scaler with the environment
+        """
+        pulumi.set(__self__, "name", name)
+
+    @property
+    @pulumi.getter
+    def name(self) -> pulumi.Input[str]:
+        return pulumi.get(self, "name")
+
+    @name.setter
+    def name(self, value: pulumi.Input[str]):
+        pulumi.set(self, "name", value)
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsComponentSpecsPdbSpecArgs:
+    def __init__(__self__, *,
+                 max_unavailable: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsPdbSpecMaxUnavailableArgs']] = None,
+                 min_available: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsPdbSpecMinAvailableArgs']] = None):
+        """
+        :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsPdbSpecMaxUnavailableArgs'] max_unavailable: An eviction is allowed if at most "maxUnavailable" pods in the deployment corresponding to a componentSpec are unavailable after the eviction, i.e. even in absence of the evicted pod. For example, one can prevent all voluntary evictions by specifying 0. MaxUnavailable and MinAvailable are mutually exclusive.
+        :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsPdbSpecMinAvailableArgs'] min_available: An eviction is allowed if at least "minAvailable" pods in the deployment corresponding to a componentSpec will still be available after the eviction, i.e. even in the absence of the evicted pod.  So for example you can prevent all voluntary evictions by specifying "100%".
+        """
+        if max_unavailable is not None:
+            pulumi.set(__self__, "max_unavailable", max_unavailable)
+        if min_available is not None:
+            pulumi.set(__self__, "min_available", min_available)
+
+    @property
+    @pulumi.getter(name="maxUnavailable")
+    def max_unavailable(self) -> Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsPdbSpecMaxUnavailableArgs']]:
+        """
+        An eviction is allowed if at most "maxUnavailable" pods in the deployment corresponding to a componentSpec are unavailable after the eviction, i.e. even in absence of the evicted pod. For example, one can prevent all voluntary evictions by specifying 0. MaxUnavailable and MinAvailable are mutually exclusive.
+        """
+        return pulumi.get(self, "max_unavailable")
+
+    @max_unavailable.setter
+    def max_unavailable(self, value: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsPdbSpecMaxUnavailableArgs']]):
+        pulumi.set(self, "max_unavailable", value)
+
+    @property
+    @pulumi.getter(name="minAvailable")
+    def min_available(self) -> Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsPdbSpecMinAvailableArgs']]:
+        """
+        An eviction is allowed if at least "minAvailable" pods in the deployment corresponding to a componentSpec will still be available after the eviction, i.e. even in the absence of the evicted pod.  So for example you can prevent all voluntary evictions by specifying "100%".
+        """
+        return pulumi.get(self, "min_available")
+
+    @min_available.setter
+    def min_available(self, value: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsPdbSpecMinAvailableArgs']]):
+        pulumi.set(self, "min_available", value)
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsComponentSpecsPdbSpecMaxUnavailableArgs:
+    def __init__(__self__):
+        pass
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsComponentSpecsPdbSpecMinAvailableArgs:
+    def __init__(__self__):
+        pass
 
 
 @pulumi.input_type
@@ -1232,6 +2131,7 @@ class SeldonDeploymentSpecPredictorsComponentSpecsSpecArgs:
                  dns_config: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecDnsConfigArgs']] = None,
                  dns_policy: Optional[pulumi.Input[str]] = None,
                  enable_service_links: Optional[pulumi.Input[bool]] = None,
+                 ephemeral_containers: Optional[pulumi.Input[Sequence[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersArgs']]]] = None,
                  host_aliases: Optional[pulumi.Input[Sequence[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecHostAliasesArgs']]]] = None,
                  host_ipc: Optional[pulumi.Input[bool]] = None,
                  host_network: Optional[pulumi.Input[bool]] = None,
@@ -1241,6 +2141,8 @@ class SeldonDeploymentSpecPredictorsComponentSpecsSpecArgs:
                  init_containers: Optional[pulumi.Input[Sequence[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersArgs']]]] = None,
                  node_name: Optional[pulumi.Input[str]] = None,
                  node_selector: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
+                 overhead: Optional[pulumi.Input[Mapping[str, pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecOverheadArgs']]]] = None,
+                 preemption_policy: Optional[pulumi.Input[str]] = None,
                  priority: Optional[pulumi.Input[int]] = None,
                  priority_class_name: Optional[pulumi.Input[str]] = None,
                  readiness_gates: Optional[pulumi.Input[Sequence[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecReadinessGatesArgs']]]] = None,
@@ -1254,6 +2156,7 @@ class SeldonDeploymentSpecPredictorsComponentSpecsSpecArgs:
                  subdomain: Optional[pulumi.Input[str]] = None,
                  termination_grace_period_seconds: Optional[pulumi.Input[int]] = None,
                  tolerations: Optional[pulumi.Input[Sequence[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecTolerationsArgs']]]] = None,
+                 topology_spread_constraints: Optional[pulumi.Input[Sequence[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecTopologySpreadConstraintsArgs']]]] = None,
                  volumes: Optional[pulumi.Input[Sequence[pulumi.Input[Mapping[str, Any]]]]] = None):
         """
         PodSpec is a description of a pod.
@@ -1264,28 +2167,32 @@ class SeldonDeploymentSpecPredictorsComponentSpecsSpecArgs:
         :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecDnsConfigArgs'] dns_config: Specifies the DNS parameters of a pod. Parameters specified here will be merged to the generated DNS configuration based on DNSPolicy.
         :param pulumi.Input[str] dns_policy: Set DNS policy for the pod. Defaults to "ClusterFirst". Valid values are 'ClusterFirstWithHostNet', 'ClusterFirst', 'Default' or 'None'. DNS parameters given in DNSConfig will be merged with the policy selected with DNSPolicy. To have DNS options set along with hostNetwork, you have to specify DNS policy explicitly to 'ClusterFirstWithHostNet'.
         :param pulumi.Input[bool] enable_service_links: EnableServiceLinks indicates whether information about services should be injected into pod's environment variables, matching the syntax of Docker links. Optional: Defaults to true.
+        :param pulumi.Input[Sequence[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersArgs']]] ephemeral_containers: List of ephemeral containers run in this pod. Ephemeral containers may be run in an existing pod to perform user-initiated actions such as debugging. This list cannot be specified when creating a pod, and it cannot be modified by updating the pod spec. In order to add an ephemeral container to an existing pod, use the pod's ephemeralcontainers subresource. This field is alpha-level and is only honored by servers that enable the EphemeralContainers feature.
         :param pulumi.Input[Sequence[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecHostAliasesArgs']]] host_aliases: HostAliases is an optional list of hosts and IPs that will be injected into the pod's hosts file if specified. This is only valid for non-hostNetwork pods.
         :param pulumi.Input[bool] host_ipc: Use the host's ipc namespace. Optional: Default to false.
         :param pulumi.Input[bool] host_network: Host networking requested for this pod. Use the host's network namespace. If this option is set, the ports that will be used must be specified. Default to false.
         :param pulumi.Input[bool] host_pid: Use the host's pid namespace. Optional: Default to false.
         :param pulumi.Input[str] hostname: Specifies the hostname of the Pod If not specified, the pod's hostname will be set to a system-defined value.
         :param pulumi.Input[Sequence[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecImagePullSecretsArgs']]] image_pull_secrets: ImagePullSecrets is an optional list of references to secrets in the same namespace to use for pulling any of the images used by this PodSpec. If specified, these secrets will be passed to individual puller implementations for them to use. For example, in the case of docker, only DockerConfig type secrets are honored. More info: https://kubernetes.io/docs/concepts/containers/images#specifying-imagepullsecrets-on-a-pod
-        :param pulumi.Input[Sequence[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersArgs']]] init_containers: List of initialization containers belonging to the pod. Init containers are executed in order prior to containers being started. If any init container fails, the pod is considered to have failed and is handled according to its restartPolicy. The name for an init container or normal container must be unique among all containers. Init containers may not have Lifecycle actions, Readiness probes, or Liveness probes. The resourceRequirements of an init container are taken into account during scheduling by finding the highest request/limit for each resource type, and then using the max of of that value or the sum of the normal containers. Limits are applied to init containers in a similar fashion. Init containers cannot currently be added or removed. Cannot be updated. More info: https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
+        :param pulumi.Input[Sequence[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersArgs']]] init_containers: List of initialization containers belonging to the pod. Init containers are executed in order prior to containers being started. If any init container fails, the pod is considered to have failed and is handled according to its restartPolicy. The name for an init container or normal container must be unique among all containers. Init containers may not have Lifecycle actions, Readiness probes, Liveness probes, or Startup probes. The resourceRequirements of an init container are taken into account during scheduling by finding the highest request/limit for each resource type, and then using the max of of that value or the sum of the normal containers. Limits are applied to init containers in a similar fashion. Init containers cannot currently be added or removed. Cannot be updated. More info: https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
         :param pulumi.Input[str] node_name: NodeName is a request to schedule this pod onto a specific node. If it is non-empty, the scheduler simply schedules this pod onto that node, assuming that it fits resource requirements.
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] node_selector: NodeSelector is a selector which must be true for the pod to fit on a node. Selector which must match a node's labels for the pod to be scheduled on that node. More info: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
+        :param pulumi.Input[Mapping[str, pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecOverheadArgs']]] overhead: Overhead represents the resource overhead associated with running a pod for a given RuntimeClass. This field will be autopopulated at admission time by the RuntimeClass admission controller. If the RuntimeClass admission controller is enabled, overhead must not be set in Pod create requests. The RuntimeClass admission controller will reject Pod create requests which have the overhead already set. If RuntimeClass is configured and selected in the PodSpec, Overhead will be set to the value defined in the corresponding RuntimeClass, otherwise it will remain unset and treated as zero. More info: https://git.k8s.io/enhancements/keps/sig-node/20190226-pod-overhead.md This field is alpha-level as of Kubernetes v1.16, and is only honored by servers that enable the PodOverhead feature.
+        :param pulumi.Input[str] preemption_policy: PreemptionPolicy is the Policy for preempting pods with lower priority. One of Never, PreemptLowerPriority. Defaults to PreemptLowerPriority if unset. This field is alpha-level and is only honored by servers that enable the NonPreemptingPriority feature.
         :param pulumi.Input[int] priority: The priority value. Various system components use this field to find the priority of the pod. When Priority Admission Controller is enabled, it prevents users from setting this field. The admission controller populates this field from PriorityClassName. The higher the value, the higher the priority.
         :param pulumi.Input[str] priority_class_name: If specified, indicates the pod's priority. "system-node-critical" and "system-cluster-critical" are two special keywords which indicate the highest priorities with the former being the highest priority. Any other name must be defined by creating a PriorityClass object with that name. If not specified, the pod priority will be default or zero if there is no default.
         :param pulumi.Input[Sequence[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecReadinessGatesArgs']]] readiness_gates: If specified, all readiness gates will be evaluated for pod readiness. A pod is ready when all its containers are ready AND all conditions specified in the readiness gates have status equal to "True" More info: https://git.k8s.io/enhancements/keps/sig-network/0007-pod-ready%2B%2B.md
         :param pulumi.Input[str] restart_policy: Restart policy for all containers within the pod. One of Always, OnFailure, Never. Default to Always. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#restart-policy
-        :param pulumi.Input[str] runtime_class_name: RuntimeClassName refers to a RuntimeClass object in the node.k8s.io group, which should be used to run this pod.  If no RuntimeClass resource matches the named class, the pod will not be run. If unset or empty, the "legacy" RuntimeClass will be used, which is an implicit class with an empty definition that uses the default runtime handler. More info: https://git.k8s.io/enhancements/keps/sig-node/runtime-class.md This is an alpha feature and may change in the future.
+        :param pulumi.Input[str] runtime_class_name: RuntimeClassName refers to a RuntimeClass object in the node.k8s.io group, which should be used to run this pod.  If no RuntimeClass resource matches the named class, the pod will not be run. If unset or empty, the "legacy" RuntimeClass will be used, which is an implicit class with an empty definition that uses the default runtime handler. More info: https://git.k8s.io/enhancements/keps/sig-node/runtime-class.md This is a beta feature as of Kubernetes v1.14.
         :param pulumi.Input[str] scheduler_name: If specified, the pod will be dispatched by specified scheduler. If not specified, the pod will be dispatched by default scheduler.
         :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecSecurityContextArgs'] security_context: SecurityContext holds pod-level security attributes and common container settings. Optional: Defaults to empty.  See type description for default values of each field.
         :param pulumi.Input[str] service_account: DeprecatedServiceAccount is a depreciated alias for ServiceAccountName. Deprecated: Use serviceAccountName instead.
         :param pulumi.Input[str] service_account_name: ServiceAccountName is the name of the ServiceAccount to use to run this pod. More info: https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
-        :param pulumi.Input[bool] share_process_namespace: Share a single process namespace between all of the containers in a pod. When this is set containers will be able to view and signal processes from other containers in the same pod, and the first process in each container will not be assigned PID 1. HostPID and ShareProcessNamespace cannot both be set. Optional: Default to false. This field is beta-level and may be disabled with the PodShareProcessNamespace feature.
+        :param pulumi.Input[bool] share_process_namespace: Share a single process namespace between all of the containers in a pod. When this is set containers will be able to view and signal processes from other containers in the same pod, and the first process in each container will not be assigned PID 1. HostPID and ShareProcessNamespace cannot both be set. Optional: Default to false.
         :param pulumi.Input[str] subdomain: If specified, the fully qualified Pod hostname will be "<hostname>.<subdomain>.<pod namespace>.svc.<cluster domain>". If not specified, the pod will not have a domainname at all.
         :param pulumi.Input[int] termination_grace_period_seconds: Optional duration in seconds the pod needs to terminate gracefully. May be decreased in delete request. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period will be used instead. The grace period is the duration in seconds after the processes running in the pod are sent a termination signal and the time when the processes are forcibly halted with a kill signal. Set this value longer than the expected cleanup time for your process. Defaults to 30 seconds.
         :param pulumi.Input[Sequence[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecTolerationsArgs']]] tolerations: If specified, the pod's tolerations.
+        :param pulumi.Input[Sequence[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecTopologySpreadConstraintsArgs']]] topology_spread_constraints: TopologySpreadConstraints describes how a group of pods ought to spread across topology domains. Scheduler will schedule pods in a way which abides by the constraints. This field is only honored by clusters that enable the EvenPodsSpread feature. All topologySpreadConstraints are ANDed.
         :param pulumi.Input[Sequence[pulumi.Input[Mapping[str, Any]]]] volumes: List of volumes that can be mounted by containers belonging to the pod. More info: https://kubernetes.io/docs/concepts/storage/volumes
         """
         pulumi.set(__self__, "containers", containers)
@@ -1301,6 +2208,8 @@ class SeldonDeploymentSpecPredictorsComponentSpecsSpecArgs:
             pulumi.set(__self__, "dns_policy", dns_policy)
         if enable_service_links is not None:
             pulumi.set(__self__, "enable_service_links", enable_service_links)
+        if ephemeral_containers is not None:
+            pulumi.set(__self__, "ephemeral_containers", ephemeral_containers)
         if host_aliases is not None:
             pulumi.set(__self__, "host_aliases", host_aliases)
         if host_ipc is not None:
@@ -1319,6 +2228,10 @@ class SeldonDeploymentSpecPredictorsComponentSpecsSpecArgs:
             pulumi.set(__self__, "node_name", node_name)
         if node_selector is not None:
             pulumi.set(__self__, "node_selector", node_selector)
+        if overhead is not None:
+            pulumi.set(__self__, "overhead", overhead)
+        if preemption_policy is not None:
+            pulumi.set(__self__, "preemption_policy", preemption_policy)
         if priority is not None:
             pulumi.set(__self__, "priority", priority)
         if priority_class_name is not None:
@@ -1345,6 +2258,8 @@ class SeldonDeploymentSpecPredictorsComponentSpecsSpecArgs:
             pulumi.set(__self__, "termination_grace_period_seconds", termination_grace_period_seconds)
         if tolerations is not None:
             pulumi.set(__self__, "tolerations", tolerations)
+        if topology_spread_constraints is not None:
+            pulumi.set(__self__, "topology_spread_constraints", topology_spread_constraints)
         if volumes is not None:
             pulumi.set(__self__, "volumes", volumes)
 
@@ -1433,6 +2348,18 @@ class SeldonDeploymentSpecPredictorsComponentSpecsSpecArgs:
         pulumi.set(self, "enable_service_links", value)
 
     @property
+    @pulumi.getter(name="ephemeralContainers")
+    def ephemeral_containers(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersArgs']]]]:
+        """
+        List of ephemeral containers run in this pod. Ephemeral containers may be run in an existing pod to perform user-initiated actions such as debugging. This list cannot be specified when creating a pod, and it cannot be modified by updating the pod spec. In order to add an ephemeral container to an existing pod, use the pod's ephemeralcontainers subresource. This field is alpha-level and is only honored by servers that enable the EphemeralContainers feature.
+        """
+        return pulumi.get(self, "ephemeral_containers")
+
+    @ephemeral_containers.setter
+    def ephemeral_containers(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersArgs']]]]):
+        pulumi.set(self, "ephemeral_containers", value)
+
+    @property
     @pulumi.getter(name="hostAliases")
     def host_aliases(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecHostAliasesArgs']]]]:
         """
@@ -1508,7 +2435,7 @@ class SeldonDeploymentSpecPredictorsComponentSpecsSpecArgs:
     @pulumi.getter(name="initContainers")
     def init_containers(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersArgs']]]]:
         """
-        List of initialization containers belonging to the pod. Init containers are executed in order prior to containers being started. If any init container fails, the pod is considered to have failed and is handled according to its restartPolicy. The name for an init container or normal container must be unique among all containers. Init containers may not have Lifecycle actions, Readiness probes, or Liveness probes. The resourceRequirements of an init container are taken into account during scheduling by finding the highest request/limit for each resource type, and then using the max of of that value or the sum of the normal containers. Limits are applied to init containers in a similar fashion. Init containers cannot currently be added or removed. Cannot be updated. More info: https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
+        List of initialization containers belonging to the pod. Init containers are executed in order prior to containers being started. If any init container fails, the pod is considered to have failed and is handled according to its restartPolicy. The name for an init container or normal container must be unique among all containers. Init containers may not have Lifecycle actions, Readiness probes, Liveness probes, or Startup probes. The resourceRequirements of an init container are taken into account during scheduling by finding the highest request/limit for each resource type, and then using the max of of that value or the sum of the normal containers. Limits are applied to init containers in a similar fashion. Init containers cannot currently be added or removed. Cannot be updated. More info: https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
         """
         return pulumi.get(self, "init_containers")
 
@@ -1539,6 +2466,30 @@ class SeldonDeploymentSpecPredictorsComponentSpecsSpecArgs:
     @node_selector.setter
     def node_selector(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
         pulumi.set(self, "node_selector", value)
+
+    @property
+    @pulumi.getter
+    def overhead(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecOverheadArgs']]]]:
+        """
+        Overhead represents the resource overhead associated with running a pod for a given RuntimeClass. This field will be autopopulated at admission time by the RuntimeClass admission controller. If the RuntimeClass admission controller is enabled, overhead must not be set in Pod create requests. The RuntimeClass admission controller will reject Pod create requests which have the overhead already set. If RuntimeClass is configured and selected in the PodSpec, Overhead will be set to the value defined in the corresponding RuntimeClass, otherwise it will remain unset and treated as zero. More info: https://git.k8s.io/enhancements/keps/sig-node/20190226-pod-overhead.md This field is alpha-level as of Kubernetes v1.16, and is only honored by servers that enable the PodOverhead feature.
+        """
+        return pulumi.get(self, "overhead")
+
+    @overhead.setter
+    def overhead(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecOverheadArgs']]]]):
+        pulumi.set(self, "overhead", value)
+
+    @property
+    @pulumi.getter(name="preemptionPolicy")
+    def preemption_policy(self) -> Optional[pulumi.Input[str]]:
+        """
+        PreemptionPolicy is the Policy for preempting pods with lower priority. One of Never, PreemptLowerPriority. Defaults to PreemptLowerPriority if unset. This field is alpha-level and is only honored by servers that enable the NonPreemptingPriority feature.
+        """
+        return pulumi.get(self, "preemption_policy")
+
+    @preemption_policy.setter
+    def preemption_policy(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "preemption_policy", value)
 
     @property
     @pulumi.getter
@@ -1592,7 +2543,7 @@ class SeldonDeploymentSpecPredictorsComponentSpecsSpecArgs:
     @pulumi.getter(name="runtimeClassName")
     def runtime_class_name(self) -> Optional[pulumi.Input[str]]:
         """
-        RuntimeClassName refers to a RuntimeClass object in the node.k8s.io group, which should be used to run this pod.  If no RuntimeClass resource matches the named class, the pod will not be run. If unset or empty, the "legacy" RuntimeClass will be used, which is an implicit class with an empty definition that uses the default runtime handler. More info: https://git.k8s.io/enhancements/keps/sig-node/runtime-class.md This is an alpha feature and may change in the future.
+        RuntimeClassName refers to a RuntimeClass object in the node.k8s.io group, which should be used to run this pod.  If no RuntimeClass resource matches the named class, the pod will not be run. If unset or empty, the "legacy" RuntimeClass will be used, which is an implicit class with an empty definition that uses the default runtime handler. More info: https://git.k8s.io/enhancements/keps/sig-node/runtime-class.md This is a beta feature as of Kubernetes v1.14.
         """
         return pulumi.get(self, "runtime_class_name")
 
@@ -1652,7 +2603,7 @@ class SeldonDeploymentSpecPredictorsComponentSpecsSpecArgs:
     @pulumi.getter(name="shareProcessNamespace")
     def share_process_namespace(self) -> Optional[pulumi.Input[bool]]:
         """
-        Share a single process namespace between all of the containers in a pod. When this is set containers will be able to view and signal processes from other containers in the same pod, and the first process in each container will not be assigned PID 1. HostPID and ShareProcessNamespace cannot both be set. Optional: Default to false. This field is beta-level and may be disabled with the PodShareProcessNamespace feature.
+        Share a single process namespace between all of the containers in a pod. When this is set containers will be able to view and signal processes from other containers in the same pod, and the first process in each container will not be assigned PID 1. HostPID and ShareProcessNamespace cannot both be set. Optional: Default to false.
         """
         return pulumi.get(self, "share_process_namespace")
 
@@ -1695,6 +2646,18 @@ class SeldonDeploymentSpecPredictorsComponentSpecsSpecArgs:
     @tolerations.setter
     def tolerations(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecTolerationsArgs']]]]):
         pulumi.set(self, "tolerations", value)
+
+    @property
+    @pulumi.getter(name="topologySpreadConstraints")
+    def topology_spread_constraints(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecTopologySpreadConstraintsArgs']]]]:
+        """
+        TopologySpreadConstraints describes how a group of pods ought to spread across topology domains. Scheduler will schedule pods in a way which abides by the constraints. This field is only honored by clusters that enable the EvenPodsSpread feature. All topologySpreadConstraints are ANDed.
+        """
+        return pulumi.get(self, "topology_spread_constraints")
+
+    @topology_spread_constraints.setter
+    def topology_spread_constraints(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecTopologySpreadConstraintsArgs']]]]):
+        pulumi.set(self, "topology_spread_constraints", value)
 
     @property
     @pulumi.getter
@@ -2930,6 +3893,7 @@ class SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersArgs:
                  readiness_probe: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersReadinessProbeArgs']] = None,
                  resources: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersResourcesArgs']] = None,
                  security_context: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersSecurityContextArgs']] = None,
+                 startup_probe: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersStartupProbeArgs']] = None,
                  stdin: Optional[pulumi.Input[bool]] = None,
                  stdin_once: Optional[pulumi.Input[bool]] = None,
                  termination_message_path: Optional[pulumi.Input[str]] = None,
@@ -2953,12 +3917,13 @@ class SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersArgs:
         :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersReadinessProbeArgs'] readiness_probe: Periodic probe of container service readiness. Container will be removed from service endpoints if the probe fails. Cannot be updated. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
         :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersResourcesArgs'] resources: Compute Resources required by this container. Cannot be updated. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
         :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersSecurityContextArgs'] security_context: Security options the pod should run with. More info: https://kubernetes.io/docs/concepts/policy/security-context/ More info: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
+        :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersStartupProbeArgs'] startup_probe: StartupProbe indicates that the Pod has successfully initialized. If specified, no other probes are executed until this completes successfully. If this probe fails, the Pod will be restarted, just as if the livenessProbe failed. This can be used to provide different probe parameters at the beginning of a Pod's lifecycle, when it might take a long time to load data or warm a cache, than during steady-state operation. This cannot be updated. This is a beta feature enabled by the StartupProbe feature flag. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
         :param pulumi.Input[bool] stdin: Whether this container should allocate a buffer for stdin in the container runtime. If this is not set, reads from stdin in the container will always result in EOF. Default is false.
         :param pulumi.Input[bool] stdin_once: Whether the container runtime should close the stdin channel after it has been opened by a single attach. When stdin is true the stdin stream will remain open across multiple attach sessions. If stdinOnce is set to true, stdin is opened on container start, is empty until the first client attaches to stdin, and then remains open and accepts data until the client disconnects, at which time stdin is closed and remains closed until the container is restarted. If this flag is false, a container processes that reads from stdin will never receive an EOF. Default is false
         :param pulumi.Input[str] termination_message_path: Optional: Path at which the file to which the container's termination message will be written is mounted into the container's filesystem. Message written is intended to be brief final status, such as an assertion failure message. Will be truncated by the node if greater than 4096 bytes. The total message length across all containers will be limited to 12kb. Defaults to /dev/termination-log. Cannot be updated.
         :param pulumi.Input[str] termination_message_policy: Indicate how the termination message should be populated. File will use the contents of terminationMessagePath to populate the container status message on both success and failure. FallbackToLogsOnError will use the last chunk of container log output if the termination message file is empty and the container exited with an error. The log output is limited to 2048 bytes or 80 lines, whichever is smaller. Defaults to File. Cannot be updated.
         :param pulumi.Input[bool] tty: Whether this container should allocate a TTY for itself, also requires 'stdin' to be true. Default is false.
-        :param pulumi.Input[Sequence[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersVolumeDevicesArgs']]] volume_devices: volumeDevices is the list of block devices to be used by the container. This is a beta feature.
+        :param pulumi.Input[Sequence[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersVolumeDevicesArgs']]] volume_devices: volumeDevices is the list of block devices to be used by the container.
         :param pulumi.Input[Sequence[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersVolumeMountsArgs']]] volume_mounts: Pod volumes to mount into the container's filesystem. Cannot be updated.
         :param pulumi.Input[str] working_dir: Container's working directory. If not specified, the container runtime's default will be used, which might be configured in the container image. Cannot be updated.
         """
@@ -2987,6 +3952,8 @@ class SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersArgs:
             pulumi.set(__self__, "resources", resources)
         if security_context is not None:
             pulumi.set(__self__, "security_context", security_context)
+        if startup_probe is not None:
+            pulumi.set(__self__, "startup_probe", startup_probe)
         if stdin is not None:
             pulumi.set(__self__, "stdin", stdin)
         if stdin_once is not None:
@@ -3161,6 +4128,18 @@ class SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersArgs:
         pulumi.set(self, "security_context", value)
 
     @property
+    @pulumi.getter(name="startupProbe")
+    def startup_probe(self) -> Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersStartupProbeArgs']]:
+        """
+        StartupProbe indicates that the Pod has successfully initialized. If specified, no other probes are executed until this completes successfully. If this probe fails, the Pod will be restarted, just as if the livenessProbe failed. This can be used to provide different probe parameters at the beginning of a Pod's lifecycle, when it might take a long time to load data or warm a cache, than during steady-state operation. This cannot be updated. This is a beta feature enabled by the StartupProbe feature flag. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
+        """
+        return pulumi.get(self, "startup_probe")
+
+    @startup_probe.setter
+    def startup_probe(self, value: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersStartupProbeArgs']]):
+        pulumi.set(self, "startup_probe", value)
+
+    @property
     @pulumi.getter
     def stdin(self) -> Optional[pulumi.Input[bool]]:
         """
@@ -3224,7 +4203,7 @@ class SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersArgs:
     @pulumi.getter(name="volumeDevices")
     def volume_devices(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersVolumeDevicesArgs']]]]:
         """
-        volumeDevices is the list of block devices to be used by the container. This is a beta feature.
+        volumeDevices is the list of block devices to be used by the container.
         """
         return pulumi.get(self, "volume_devices")
 
@@ -3458,7 +4437,7 @@ class SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersEnvValueFromArgs
         """
         Source for the environment variable's value. Cannot be used if value is not empty.
         :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersEnvValueFromConfigMapKeyRefArgs'] config_map_key_ref: Selects a key of a ConfigMap.
-        :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersEnvValueFromFieldRefArgs'] field_ref: Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+        :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersEnvValueFromFieldRefArgs'] field_ref: Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
         :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersEnvValueFromResourceFieldRefArgs'] resource_field_ref: Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
         :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersEnvValueFromSecretKeyRefArgs'] secret_key_ref: Selects a key of a secret in the pod's namespace
         """
@@ -3487,7 +4466,7 @@ class SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersEnvValueFromArgs
     @pulumi.getter(name="fieldRef")
     def field_ref(self) -> Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersEnvValueFromFieldRefArgs']]:
         """
-        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
         """
         return pulumi.get(self, "field_ref")
 
@@ -3530,7 +4509,7 @@ class SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersEnvValueFromConf
         Selects a key of a ConfigMap.
         :param pulumi.Input[str] key: The key to select.
         :param pulumi.Input[str] name: Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
-        :param pulumi.Input[bool] optional: Specify whether the ConfigMap or it's key must be defined
+        :param pulumi.Input[bool] optional: Specify whether the ConfigMap or its key must be defined
         """
         pulumi.set(__self__, "key", key)
         if name is not None:
@@ -3566,7 +4545,7 @@ class SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersEnvValueFromConf
     @pulumi.getter
     def optional(self) -> Optional[pulumi.Input[bool]]:
         """
-        Specify whether the ConfigMap or it's key must be defined
+        Specify whether the ConfigMap or its key must be defined
         """
         return pulumi.get(self, "optional")
 
@@ -3581,7 +4560,7 @@ class SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersEnvValueFromFiel
                  field_path: pulumi.Input[str],
                  api_version: Optional[pulumi.Input[str]] = None):
         """
-        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
         :param pulumi.Input[str] field_path: Path of the field to select in the specified API version.
         :param pulumi.Input[str] api_version: Version of the schema the FieldPath is written in terms of, defaults to "v1".
         """
@@ -3619,12 +4598,12 @@ class SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersEnvValueFromReso
     def __init__(__self__, *,
                  resource: pulumi.Input[str],
                  container_name: Optional[pulumi.Input[str]] = None,
-                 divisor: Optional[pulumi.Input[str]] = None):
+                 divisor: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersEnvValueFromResourceFieldRefDivisorArgs']] = None):
         """
         Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
         :param pulumi.Input[str] resource: Required: resource to select
         :param pulumi.Input[str] container_name: Container name: required for volumes, optional for env vars
-        :param pulumi.Input[str] divisor: Specifies the output format of the exposed resources, defaults to "1"
+        :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersEnvValueFromResourceFieldRefDivisorArgs'] divisor: Specifies the output format of the exposed resources, defaults to "1"
         """
         pulumi.set(__self__, "resource", resource)
         if container_name is not None:
@@ -3658,15 +4637,21 @@ class SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersEnvValueFromReso
 
     @property
     @pulumi.getter
-    def divisor(self) -> Optional[pulumi.Input[str]]:
+    def divisor(self) -> Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersEnvValueFromResourceFieldRefDivisorArgs']]:
         """
         Specifies the output format of the exposed resources, defaults to "1"
         """
         return pulumi.get(self, "divisor")
 
     @divisor.setter
-    def divisor(self, value: Optional[pulumi.Input[str]]):
+    def divisor(self, value: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersEnvValueFromResourceFieldRefDivisorArgs']]):
         pulumi.set(self, "divisor", value)
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersEnvValueFromResourceFieldRefDivisorArgs:
+    def __init__(__self__):
+        pass
 
 
 @pulumi.input_type
@@ -3679,7 +4664,7 @@ class SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersEnvValueFromSecr
         Selects a key of a secret in the pod's namespace
         :param pulumi.Input[str] key: The key of the secret to select from.  Must be a valid secret key.
         :param pulumi.Input[str] name: Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
-        :param pulumi.Input[bool] optional: Specify whether the Secret or it's key must be defined
+        :param pulumi.Input[bool] optional: Specify whether the Secret or its key must be defined
         """
         pulumi.set(__self__, "key", key)
         if name is not None:
@@ -3715,7 +4700,7 @@ class SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersEnvValueFromSecr
     @pulumi.getter
     def optional(self) -> Optional[pulumi.Input[bool]]:
         """
-        Specify whether the Secret or it's key must be defined
+        Specify whether the Secret or its key must be defined
         """
         return pulumi.get(self, "optional")
 
@@ -3732,7 +4717,7 @@ class SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersLifecycleArgs:
         """
         Actions that the management system should take in response to container lifecycle events. Cannot be updated.
         :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersLifecyclePostStartArgs'] post_start: PostStart is called immediately after a container is created. If the handler fails, the container is terminated and restarted according to its restart policy. Other management of the container blocks until the hook completes. More info: https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/#container-hooks
-        :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersLifecyclePreStopArgs'] pre_stop: PreStop is called immediately before a container is terminated due to an API request or management event such as liveness probe failure, preemption, resource contention, etc. The handler is not called if the container crashes or exits. The reason for termination is passed to the handler. The Pod's termination grace period countdown begins before the PreStop hooked is executed. Regardless of the outcome of the handler, the container will eventually terminate within the Pod's termination grace period. Other management of the container blocks until the hook completes or until the termination grace period is reached. More info: https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/#container-hooks
+        :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersLifecyclePreStopArgs'] pre_stop: PreStop is called immediately before a container is terminated due to an API request or management event such as liveness/startup probe failure, preemption, resource contention, etc. The handler is not called if the container crashes or exits. The reason for termination is passed to the handler. The Pod's termination grace period countdown begins before the PreStop hooked is executed. Regardless of the outcome of the handler, the container will eventually terminate within the Pod's termination grace period. Other management of the container blocks until the hook completes or until the termination grace period is reached. More info: https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/#container-hooks
         """
         if post_start is not None:
             pulumi.set(__self__, "post_start", post_start)
@@ -3755,7 +4740,7 @@ class SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersLifecycleArgs:
     @pulumi.getter(name="preStop")
     def pre_stop(self) -> Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersLifecyclePreStopArgs']]:
         """
-        PreStop is called immediately before a container is terminated due to an API request or management event such as liveness probe failure, preemption, resource contention, etc. The handler is not called if the container crashes or exits. The reason for termination is passed to the handler. The Pod's termination grace period countdown begins before the PreStop hooked is executed. Regardless of the outcome of the handler, the container will eventually terminate within the Pod's termination grace period. Other management of the container blocks until the hook completes or until the termination grace period is reached. More info: https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/#container-hooks
+        PreStop is called immediately before a container is terminated due to an API request or management event such as liveness/startup probe failure, preemption, resource contention, etc. The handler is not called if the container crashes or exits. The reason for termination is passed to the handler. The Pod's termination grace period countdown begins before the PreStop hooked is executed. Regardless of the outcome of the handler, the container will eventually terminate within the Pod's termination grace period. Other management of the container blocks until the hook completes or until the termination grace period is reached. More info: https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/#container-hooks
         """
         return pulumi.get(self, "pre_stop")
 
@@ -4015,7 +5000,7 @@ class SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersLifecyclePreStop
                  http_get: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersLifecyclePreStopHttpGetArgs']] = None,
                  tcp_socket: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersLifecyclePreStopTcpSocketArgs']] = None):
         """
-        PreStop is called immediately before a container is terminated due to an API request or management event such as liveness probe failure, preemption, resource contention, etc. The handler is not called if the container crashes or exits. The reason for termination is passed to the handler. The Pod's termination grace period countdown begins before the PreStop hooked is executed. Regardless of the outcome of the handler, the container will eventually terminate within the Pod's termination grace period. Other management of the container blocks until the hook completes or until the termination grace period is reached. More info: https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/#container-hooks
+        PreStop is called immediately before a container is terminated due to an API request or management event such as liveness/startup probe failure, preemption, resource contention, etc. The handler is not called if the container crashes or exits. The reason for termination is passed to the handler. The Pod's termination grace period countdown begins before the PreStop hooked is executed. Regardless of the outcome of the handler, the container will eventually terminate within the Pod's termination grace period. Other management of the container blocks until the hook completes or until the termination grace period is reached. More info: https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/#container-hooks
         :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersLifecyclePreStopExecArgs'] exec_: One and only one of the following should be specified. Exec specifies the action to take.
         :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersLifecyclePreStopHttpGetArgs'] http_get: HTTPGet specifies the http request to perform.
         :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersLifecyclePreStopTcpSocketArgs'] tcp_socket: TCPSocket specifies an action involving a TCP port. TCP hooks not yet supported TODO: implement a realistic TCP lifecycle hook
@@ -4270,7 +5255,7 @@ class SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersLivenessProbeArg
         :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersLivenessProbeHttpGetArgs'] http_get: HTTPGet specifies the http request to perform.
         :param pulumi.Input[int] initial_delay_seconds: Number of seconds after the container has started before liveness probes are initiated. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
         :param pulumi.Input[int] period_seconds: How often (in seconds) to perform the probe. Default to 10 seconds. Minimum value is 1.
-        :param pulumi.Input[int] success_threshold: Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1. Must be 1 for liveness. Minimum value is 1.
+        :param pulumi.Input[int] success_threshold: Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1. Must be 1 for liveness and startup. Minimum value is 1.
         :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersLivenessProbeTcpSocketArgs'] tcp_socket: TCPSocket specifies an action involving a TCP port. TCP hooks not yet supported TODO: implement a realistic TCP lifecycle hook
         :param pulumi.Input[int] timeout_seconds: Number of seconds after which the probe times out. Defaults to 1 second. Minimum value is 1. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
         """
@@ -4355,7 +5340,7 @@ class SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersLivenessProbeArg
     @pulumi.getter(name="successThreshold")
     def success_threshold(self) -> Optional[pulumi.Input[int]]:
         """
-        Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1. Must be 1 for liveness. Minimum value is 1.
+        Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1. Must be 1 for liveness and startup. Minimum value is 1.
         """
         return pulumi.get(self, "success_threshold")
 
@@ -4580,27 +5565,26 @@ class SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersLivenessProbeTcp
 class SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersPortsArgs:
     def __init__(__self__, *,
                  container_port: pulumi.Input[int],
+                 protocol: pulumi.Input[str],
                  host_ip: Optional[pulumi.Input[str]] = None,
                  host_port: Optional[pulumi.Input[int]] = None,
-                 name: Optional[pulumi.Input[str]] = None,
-                 protocol: Optional[pulumi.Input[str]] = None):
+                 name: Optional[pulumi.Input[str]] = None):
         """
         ContainerPort represents a network port in a single container.
         :param pulumi.Input[int] container_port: Number of port to expose on the pod's IP address. This must be a valid port number, 0 < x < 65536.
+        :param pulumi.Input[str] protocol: Protocol for port. Must be UDP, TCP, or SCTP. Defaults to "TCP".
         :param pulumi.Input[str] host_ip: What host IP to bind the external port to.
         :param pulumi.Input[int] host_port: Number of port to expose on the host. If specified, this must be a valid port number, 0 < x < 65536. If HostNetwork is specified, this must match ContainerPort. Most containers do not need this.
         :param pulumi.Input[str] name: If specified, this must be an IANA_SVC_NAME and unique within the pod. Each named port in a pod must have a unique name. Name for the port that can be referred to by services.
-        :param pulumi.Input[str] protocol: Protocol for port. Must be UDP, TCP, or SCTP. Defaults to "TCP".
         """
         pulumi.set(__self__, "container_port", container_port)
+        pulumi.set(__self__, "protocol", protocol)
         if host_ip is not None:
             pulumi.set(__self__, "host_ip", host_ip)
         if host_port is not None:
             pulumi.set(__self__, "host_port", host_port)
         if name is not None:
             pulumi.set(__self__, "name", name)
-        if protocol is not None:
-            pulumi.set(__self__, "protocol", protocol)
 
     @property
     @pulumi.getter(name="containerPort")
@@ -4613,6 +5597,18 @@ class SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersPortsArgs:
     @container_port.setter
     def container_port(self, value: pulumi.Input[int]):
         pulumi.set(self, "container_port", value)
+
+    @property
+    @pulumi.getter
+    def protocol(self) -> pulumi.Input[str]:
+        """
+        Protocol for port. Must be UDP, TCP, or SCTP. Defaults to "TCP".
+        """
+        return pulumi.get(self, "protocol")
+
+    @protocol.setter
+    def protocol(self, value: pulumi.Input[str]):
+        pulumi.set(self, "protocol", value)
 
     @property
     @pulumi.getter(name="hostIP")
@@ -4650,18 +5646,6 @@ class SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersPortsArgs:
     def name(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "name", value)
 
-    @property
-    @pulumi.getter
-    def protocol(self) -> Optional[pulumi.Input[str]]:
-        """
-        Protocol for port. Must be UDP, TCP, or SCTP. Defaults to "TCP".
-        """
-        return pulumi.get(self, "protocol")
-
-    @protocol.setter
-    def protocol(self, value: Optional[pulumi.Input[str]]):
-        pulumi.set(self, "protocol", value)
-
 
 @pulumi.input_type
 class SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersReadinessProbeArgs:
@@ -4681,7 +5665,7 @@ class SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersReadinessProbeAr
         :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersReadinessProbeHttpGetArgs'] http_get: HTTPGet specifies the http request to perform.
         :param pulumi.Input[int] initial_delay_seconds: Number of seconds after the container has started before liveness probes are initiated. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
         :param pulumi.Input[int] period_seconds: How often (in seconds) to perform the probe. Default to 10 seconds. Minimum value is 1.
-        :param pulumi.Input[int] success_threshold: Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1. Must be 1 for liveness. Minimum value is 1.
+        :param pulumi.Input[int] success_threshold: Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1. Must be 1 for liveness and startup. Minimum value is 1.
         :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersReadinessProbeTcpSocketArgs'] tcp_socket: TCPSocket specifies an action involving a TCP port. TCP hooks not yet supported TODO: implement a realistic TCP lifecycle hook
         :param pulumi.Input[int] timeout_seconds: Number of seconds after which the probe times out. Defaults to 1 second. Minimum value is 1. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
         """
@@ -4766,7 +5750,7 @@ class SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersReadinessProbeAr
     @pulumi.getter(name="successThreshold")
     def success_threshold(self) -> Optional[pulumi.Input[int]]:
         """
-        Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1. Must be 1 for liveness. Minimum value is 1.
+        Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1. Must be 1 for liveness and startup. Minimum value is 1.
         """
         return pulumi.get(self, "success_threshold")
 
@@ -4990,12 +5974,12 @@ class SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersReadinessProbeTc
 @pulumi.input_type
 class SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersResourcesArgs:
     def __init__(__self__, *,
-                 limits: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-                 requests: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None):
+                 limits: Optional[pulumi.Input[Mapping[str, pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersResourcesLimitsArgs']]]] = None,
+                 requests: Optional[pulumi.Input[Mapping[str, pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersResourcesRequestsArgs']]]] = None):
         """
         Compute Resources required by this container. Cannot be updated. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] limits: Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] requests: Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
+        :param pulumi.Input[Mapping[str, pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersResourcesLimitsArgs']]] limits: Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
+        :param pulumi.Input[Mapping[str, pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersResourcesRequestsArgs']]] requests: Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
         """
         if limits is not None:
             pulumi.set(__self__, "limits", limits)
@@ -5004,27 +5988,39 @@ class SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersResourcesArgs:
 
     @property
     @pulumi.getter
-    def limits(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+    def limits(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersResourcesLimitsArgs']]]]:
         """
         Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
         """
         return pulumi.get(self, "limits")
 
     @limits.setter
-    def limits(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
+    def limits(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersResourcesLimitsArgs']]]]):
         pulumi.set(self, "limits", value)
 
     @property
     @pulumi.getter
-    def requests(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+    def requests(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersResourcesRequestsArgs']]]]:
         """
         Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
         """
         return pulumi.get(self, "requests")
 
     @requests.setter
-    def requests(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
+    def requests(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersResourcesRequestsArgs']]]]):
         pulumi.set(self, "requests", value)
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersResourcesLimitsArgs:
+    def __init__(__self__):
+        pass
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersResourcesRequestsArgs:
+    def __init__(__self__):
+        pass
 
 
 @pulumi.input_type
@@ -5038,7 +6034,8 @@ class SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersSecurityContextA
                  run_as_group: Optional[pulumi.Input[int]] = None,
                  run_as_non_root: Optional[pulumi.Input[bool]] = None,
                  run_as_user: Optional[pulumi.Input[int]] = None,
-                 se_linux_options: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersSecurityContextSeLinuxOptionsArgs']] = None):
+                 se_linux_options: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersSecurityContextSeLinuxOptionsArgs']] = None,
+                 windows_options: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersSecurityContextWindowsOptionsArgs']] = None):
         """
         Security options the pod should run with. More info: https://kubernetes.io/docs/concepts/policy/security-context/ More info: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
         :param pulumi.Input[bool] allow_privilege_escalation: AllowPrivilegeEscalation controls whether a process can gain more privileges than its parent process. This bool directly controls if the no_new_privs flag will be set on the container process. AllowPrivilegeEscalation is true always when the container is: 1) run as Privileged 2) has CAP_SYS_ADMIN
@@ -5050,6 +6047,7 @@ class SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersSecurityContextA
         :param pulumi.Input[bool] run_as_non_root: Indicates that the container must run as a non-root user. If true, the Kubelet will validate the image at runtime to ensure that it does not run as UID 0 (root) and fail to start the container if it does. If unset or false, no such validation will be performed. May also be set in PodSecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
         :param pulumi.Input[int] run_as_user: The UID to run the entrypoint of the container process. Defaults to user specified in image metadata if unspecified. May also be set in PodSecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
         :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersSecurityContextSeLinuxOptionsArgs'] se_linux_options: The SELinux context to be applied to the container. If unspecified, the container runtime will allocate a random SELinux context for each container.  May also be set in PodSecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
+        :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersSecurityContextWindowsOptionsArgs'] windows_options: The Windows specific settings applied to all containers. If unspecified, the options from the PodSecurityContext will be used. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
         """
         if allow_privilege_escalation is not None:
             pulumi.set(__self__, "allow_privilege_escalation", allow_privilege_escalation)
@@ -5069,6 +6067,8 @@ class SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersSecurityContextA
             pulumi.set(__self__, "run_as_user", run_as_user)
         if se_linux_options is not None:
             pulumi.set(__self__, "se_linux_options", se_linux_options)
+        if windows_options is not None:
+            pulumi.set(__self__, "windows_options", windows_options)
 
     @property
     @pulumi.getter(name="allowPrivilegeEscalation")
@@ -5177,6 +6177,18 @@ class SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersSecurityContextA
     @se_linux_options.setter
     def se_linux_options(self, value: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersSecurityContextSeLinuxOptionsArgs']]):
         pulumi.set(self, "se_linux_options", value)
+
+    @property
+    @pulumi.getter(name="windowsOptions")
+    def windows_options(self) -> Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersSecurityContextWindowsOptionsArgs']]:
+        """
+        The Windows specific settings applied to all containers. If unspecified, the options from the PodSecurityContext will be used. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
+        """
+        return pulumi.get(self, "windows_options")
+
+    @windows_options.setter
+    def windows_options(self, value: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersSecurityContextWindowsOptionsArgs']]):
+        pulumi.set(self, "windows_options", value)
 
 
 @pulumi.input_type
@@ -5292,6 +6304,398 @@ class SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersSecurityContextS
 
 
 @pulumi.input_type
+class SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersSecurityContextWindowsOptionsArgs:
+    def __init__(__self__, *,
+                 gmsa_credential_spec: Optional[pulumi.Input[str]] = None,
+                 gmsa_credential_spec_name: Optional[pulumi.Input[str]] = None,
+                 run_as_user_name: Optional[pulumi.Input[str]] = None):
+        """
+        The Windows specific settings applied to all containers. If unspecified, the options from the PodSecurityContext will be used. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
+        :param pulumi.Input[str] gmsa_credential_spec: GMSACredentialSpec is where the GMSA admission webhook (https://github.com/kubernetes-sigs/windows-gmsa) inlines the contents of the GMSA credential spec named by the GMSACredentialSpecName field.
+        :param pulumi.Input[str] gmsa_credential_spec_name: GMSACredentialSpecName is the name of the GMSA credential spec to use.
+        :param pulumi.Input[str] run_as_user_name: The UserName in Windows to run the entrypoint of the container process. Defaults to the user specified in image metadata if unspecified. May also be set in PodSecurityContext. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
+        """
+        if gmsa_credential_spec is not None:
+            pulumi.set(__self__, "gmsa_credential_spec", gmsa_credential_spec)
+        if gmsa_credential_spec_name is not None:
+            pulumi.set(__self__, "gmsa_credential_spec_name", gmsa_credential_spec_name)
+        if run_as_user_name is not None:
+            pulumi.set(__self__, "run_as_user_name", run_as_user_name)
+
+    @property
+    @pulumi.getter(name="gmsaCredentialSpec")
+    def gmsa_credential_spec(self) -> Optional[pulumi.Input[str]]:
+        """
+        GMSACredentialSpec is where the GMSA admission webhook (https://github.com/kubernetes-sigs/windows-gmsa) inlines the contents of the GMSA credential spec named by the GMSACredentialSpecName field.
+        """
+        return pulumi.get(self, "gmsa_credential_spec")
+
+    @gmsa_credential_spec.setter
+    def gmsa_credential_spec(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "gmsa_credential_spec", value)
+
+    @property
+    @pulumi.getter(name="gmsaCredentialSpecName")
+    def gmsa_credential_spec_name(self) -> Optional[pulumi.Input[str]]:
+        """
+        GMSACredentialSpecName is the name of the GMSA credential spec to use.
+        """
+        return pulumi.get(self, "gmsa_credential_spec_name")
+
+    @gmsa_credential_spec_name.setter
+    def gmsa_credential_spec_name(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "gmsa_credential_spec_name", value)
+
+    @property
+    @pulumi.getter(name="runAsUserName")
+    def run_as_user_name(self) -> Optional[pulumi.Input[str]]:
+        """
+        The UserName in Windows to run the entrypoint of the container process. Defaults to the user specified in image metadata if unspecified. May also be set in PodSecurityContext. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
+        """
+        return pulumi.get(self, "run_as_user_name")
+
+    @run_as_user_name.setter
+    def run_as_user_name(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "run_as_user_name", value)
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersStartupProbeArgs:
+    def __init__(__self__, *,
+                 exec_: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersStartupProbeExecArgs']] = None,
+                 failure_threshold: Optional[pulumi.Input[int]] = None,
+                 http_get: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersStartupProbeHttpGetArgs']] = None,
+                 initial_delay_seconds: Optional[pulumi.Input[int]] = None,
+                 period_seconds: Optional[pulumi.Input[int]] = None,
+                 success_threshold: Optional[pulumi.Input[int]] = None,
+                 tcp_socket: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersStartupProbeTcpSocketArgs']] = None,
+                 timeout_seconds: Optional[pulumi.Input[int]] = None):
+        """
+        StartupProbe indicates that the Pod has successfully initialized. If specified, no other probes are executed until this completes successfully. If this probe fails, the Pod will be restarted, just as if the livenessProbe failed. This can be used to provide different probe parameters at the beginning of a Pod's lifecycle, when it might take a long time to load data or warm a cache, than during steady-state operation. This cannot be updated. This is a beta feature enabled by the StartupProbe feature flag. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
+        :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersStartupProbeExecArgs'] exec_: One and only one of the following should be specified. Exec specifies the action to take.
+        :param pulumi.Input[int] failure_threshold: Minimum consecutive failures for the probe to be considered failed after having succeeded. Defaults to 3. Minimum value is 1.
+        :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersStartupProbeHttpGetArgs'] http_get: HTTPGet specifies the http request to perform.
+        :param pulumi.Input[int] initial_delay_seconds: Number of seconds after the container has started before liveness probes are initiated. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
+        :param pulumi.Input[int] period_seconds: How often (in seconds) to perform the probe. Default to 10 seconds. Minimum value is 1.
+        :param pulumi.Input[int] success_threshold: Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1. Must be 1 for liveness and startup. Minimum value is 1.
+        :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersStartupProbeTcpSocketArgs'] tcp_socket: TCPSocket specifies an action involving a TCP port. TCP hooks not yet supported TODO: implement a realistic TCP lifecycle hook
+        :param pulumi.Input[int] timeout_seconds: Number of seconds after which the probe times out. Defaults to 1 second. Minimum value is 1. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
+        """
+        if exec_ is not None:
+            pulumi.set(__self__, "exec_", exec_)
+        if failure_threshold is not None:
+            pulumi.set(__self__, "failure_threshold", failure_threshold)
+        if http_get is not None:
+            pulumi.set(__self__, "http_get", http_get)
+        if initial_delay_seconds is not None:
+            pulumi.set(__self__, "initial_delay_seconds", initial_delay_seconds)
+        if period_seconds is not None:
+            pulumi.set(__self__, "period_seconds", period_seconds)
+        if success_threshold is not None:
+            pulumi.set(__self__, "success_threshold", success_threshold)
+        if tcp_socket is not None:
+            pulumi.set(__self__, "tcp_socket", tcp_socket)
+        if timeout_seconds is not None:
+            pulumi.set(__self__, "timeout_seconds", timeout_seconds)
+
+    @property
+    @pulumi.getter(name="exec")
+    def exec_(self) -> Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersStartupProbeExecArgs']]:
+        """
+        One and only one of the following should be specified. Exec specifies the action to take.
+        """
+        return pulumi.get(self, "exec_")
+
+    @exec_.setter
+    def exec_(self, value: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersStartupProbeExecArgs']]):
+        pulumi.set(self, "exec_", value)
+
+    @property
+    @pulumi.getter(name="failureThreshold")
+    def failure_threshold(self) -> Optional[pulumi.Input[int]]:
+        """
+        Minimum consecutive failures for the probe to be considered failed after having succeeded. Defaults to 3. Minimum value is 1.
+        """
+        return pulumi.get(self, "failure_threshold")
+
+    @failure_threshold.setter
+    def failure_threshold(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "failure_threshold", value)
+
+    @property
+    @pulumi.getter(name="httpGet")
+    def http_get(self) -> Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersStartupProbeHttpGetArgs']]:
+        """
+        HTTPGet specifies the http request to perform.
+        """
+        return pulumi.get(self, "http_get")
+
+    @http_get.setter
+    def http_get(self, value: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersStartupProbeHttpGetArgs']]):
+        pulumi.set(self, "http_get", value)
+
+    @property
+    @pulumi.getter(name="initialDelaySeconds")
+    def initial_delay_seconds(self) -> Optional[pulumi.Input[int]]:
+        """
+        Number of seconds after the container has started before liveness probes are initiated. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
+        """
+        return pulumi.get(self, "initial_delay_seconds")
+
+    @initial_delay_seconds.setter
+    def initial_delay_seconds(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "initial_delay_seconds", value)
+
+    @property
+    @pulumi.getter(name="periodSeconds")
+    def period_seconds(self) -> Optional[pulumi.Input[int]]:
+        """
+        How often (in seconds) to perform the probe. Default to 10 seconds. Minimum value is 1.
+        """
+        return pulumi.get(self, "period_seconds")
+
+    @period_seconds.setter
+    def period_seconds(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "period_seconds", value)
+
+    @property
+    @pulumi.getter(name="successThreshold")
+    def success_threshold(self) -> Optional[pulumi.Input[int]]:
+        """
+        Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1. Must be 1 for liveness and startup. Minimum value is 1.
+        """
+        return pulumi.get(self, "success_threshold")
+
+    @success_threshold.setter
+    def success_threshold(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "success_threshold", value)
+
+    @property
+    @pulumi.getter(name="tcpSocket")
+    def tcp_socket(self) -> Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersStartupProbeTcpSocketArgs']]:
+        """
+        TCPSocket specifies an action involving a TCP port. TCP hooks not yet supported TODO: implement a realistic TCP lifecycle hook
+        """
+        return pulumi.get(self, "tcp_socket")
+
+    @tcp_socket.setter
+    def tcp_socket(self, value: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersStartupProbeTcpSocketArgs']]):
+        pulumi.set(self, "tcp_socket", value)
+
+    @property
+    @pulumi.getter(name="timeoutSeconds")
+    def timeout_seconds(self) -> Optional[pulumi.Input[int]]:
+        """
+        Number of seconds after which the probe times out. Defaults to 1 second. Minimum value is 1. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
+        """
+        return pulumi.get(self, "timeout_seconds")
+
+    @timeout_seconds.setter
+    def timeout_seconds(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "timeout_seconds", value)
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersStartupProbeExecArgs:
+    def __init__(__self__, *,
+                 command: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None):
+        """
+        One and only one of the following should be specified. Exec specifies the action to take.
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] command: Command is the command line to execute inside the container, the working directory for the command  is root ('/') in the container's filesystem. The command is simply exec'd, it is not run inside a shell, so traditional shell instructions ('|', etc) won't work. To use a shell, you need to explicitly call out to that shell. Exit status of 0 is treated as live/healthy and non-zero is unhealthy.
+        """
+        if command is not None:
+            pulumi.set(__self__, "command", command)
+
+    @property
+    @pulumi.getter
+    def command(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
+        """
+        Command is the command line to execute inside the container, the working directory for the command  is root ('/') in the container's filesystem. The command is simply exec'd, it is not run inside a shell, so traditional shell instructions ('|', etc) won't work. To use a shell, you need to explicitly call out to that shell. Exit status of 0 is treated as live/healthy and non-zero is unhealthy.
+        """
+        return pulumi.get(self, "command")
+
+    @command.setter
+    def command(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]):
+        pulumi.set(self, "command", value)
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersStartupProbeHttpGetArgs:
+    def __init__(__self__, *,
+                 port: pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersStartupProbeHttpGetPortArgs'],
+                 host: Optional[pulumi.Input[str]] = None,
+                 http_headers: Optional[pulumi.Input[Sequence[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersStartupProbeHttpGetHttpHeadersArgs']]]] = None,
+                 path: Optional[pulumi.Input[str]] = None,
+                 scheme: Optional[pulumi.Input[str]] = None):
+        """
+        HTTPGet specifies the http request to perform.
+        :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersStartupProbeHttpGetPortArgs'] port: Name or number of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME.
+        :param pulumi.Input[str] host: Host name to connect to, defaults to the pod IP. You probably want to set "Host" in httpHeaders instead.
+        :param pulumi.Input[Sequence[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersStartupProbeHttpGetHttpHeadersArgs']]] http_headers: Custom headers to set in the request. HTTP allows repeated headers.
+        :param pulumi.Input[str] path: Path to access on the HTTP server.
+        :param pulumi.Input[str] scheme: Scheme to use for connecting to the host. Defaults to HTTP.
+        """
+        pulumi.set(__self__, "port", port)
+        if host is not None:
+            pulumi.set(__self__, "host", host)
+        if http_headers is not None:
+            pulumi.set(__self__, "http_headers", http_headers)
+        if path is not None:
+            pulumi.set(__self__, "path", path)
+        if scheme is not None:
+            pulumi.set(__self__, "scheme", scheme)
+
+    @property
+    @pulumi.getter
+    def port(self) -> pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersStartupProbeHttpGetPortArgs']:
+        """
+        Name or number of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME.
+        """
+        return pulumi.get(self, "port")
+
+    @port.setter
+    def port(self, value: pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersStartupProbeHttpGetPortArgs']):
+        pulumi.set(self, "port", value)
+
+    @property
+    @pulumi.getter
+    def host(self) -> Optional[pulumi.Input[str]]:
+        """
+        Host name to connect to, defaults to the pod IP. You probably want to set "Host" in httpHeaders instead.
+        """
+        return pulumi.get(self, "host")
+
+    @host.setter
+    def host(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "host", value)
+
+    @property
+    @pulumi.getter(name="httpHeaders")
+    def http_headers(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersStartupProbeHttpGetHttpHeadersArgs']]]]:
+        """
+        Custom headers to set in the request. HTTP allows repeated headers.
+        """
+        return pulumi.get(self, "http_headers")
+
+    @http_headers.setter
+    def http_headers(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersStartupProbeHttpGetHttpHeadersArgs']]]]):
+        pulumi.set(self, "http_headers", value)
+
+    @property
+    @pulumi.getter
+    def path(self) -> Optional[pulumi.Input[str]]:
+        """
+        Path to access on the HTTP server.
+        """
+        return pulumi.get(self, "path")
+
+    @path.setter
+    def path(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "path", value)
+
+    @property
+    @pulumi.getter
+    def scheme(self) -> Optional[pulumi.Input[str]]:
+        """
+        Scheme to use for connecting to the host. Defaults to HTTP.
+        """
+        return pulumi.get(self, "scheme")
+
+    @scheme.setter
+    def scheme(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "scheme", value)
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersStartupProbeHttpGetHttpHeadersArgs:
+    def __init__(__self__, *,
+                 name: pulumi.Input[str],
+                 value: pulumi.Input[str]):
+        """
+        HTTPHeader describes a custom header to be used in HTTP probes
+        :param pulumi.Input[str] name: The header field name
+        :param pulumi.Input[str] value: The header field value
+        """
+        pulumi.set(__self__, "name", name)
+        pulumi.set(__self__, "value", value)
+
+    @property
+    @pulumi.getter
+    def name(self) -> pulumi.Input[str]:
+        """
+        The header field name
+        """
+        return pulumi.get(self, "name")
+
+    @name.setter
+    def name(self, value: pulumi.Input[str]):
+        pulumi.set(self, "name", value)
+
+    @property
+    @pulumi.getter
+    def value(self) -> pulumi.Input[str]:
+        """
+        The header field value
+        """
+        return pulumi.get(self, "value")
+
+    @value.setter
+    def value(self, value: pulumi.Input[str]):
+        pulumi.set(self, "value", value)
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersStartupProbeHttpGetPortArgs:
+    def __init__(__self__):
+        pass
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersStartupProbeTcpSocketArgs:
+    def __init__(__self__, *,
+                 port: pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersStartupProbeTcpSocketPortArgs'],
+                 host: Optional[pulumi.Input[str]] = None):
+        """
+        TCPSocket specifies an action involving a TCP port. TCP hooks not yet supported TODO: implement a realistic TCP lifecycle hook
+        :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersStartupProbeTcpSocketPortArgs'] port: Number or name of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME.
+        :param pulumi.Input[str] host: Optional: Host name to connect to, defaults to the pod IP.
+        """
+        pulumi.set(__self__, "port", port)
+        if host is not None:
+            pulumi.set(__self__, "host", host)
+
+    @property
+    @pulumi.getter
+    def port(self) -> pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersStartupProbeTcpSocketPortArgs']:
+        """
+        Number or name of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME.
+        """
+        return pulumi.get(self, "port")
+
+    @port.setter
+    def port(self, value: pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersStartupProbeTcpSocketPortArgs']):
+        pulumi.set(self, "port", value)
+
+    @property
+    @pulumi.getter
+    def host(self) -> Optional[pulumi.Input[str]]:
+        """
+        Optional: Host name to connect to, defaults to the pod IP.
+        """
+        return pulumi.get(self, "host")
+
+    @host.setter
+    def host(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "host", value)
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersStartupProbeTcpSocketPortArgs:
+    def __init__(__self__):
+        pass
+
+
+@pulumi.input_type
 class SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersVolumeDevicesArgs:
     def __init__(__self__, *,
                  device_path: pulumi.Input[str],
@@ -5345,7 +6749,7 @@ class SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersVolumeMountsArgs
         :param pulumi.Input[str] mount_propagation: mountPropagation determines how mounts are propagated from the host to container and the other way around. When not set, MountPropagationNone is used. This field is beta in 1.10.
         :param pulumi.Input[bool] read_only: Mounted read-only if true, read-write otherwise (false or unspecified). Defaults to false.
         :param pulumi.Input[str] sub_path: Path within the volume from which the container's volume should be mounted. Defaults to "" (volume's root).
-        :param pulumi.Input[str] sub_path_expr: Expanded path within the volume from which the container's volume should be mounted. Behaves similarly to SubPath but environment variable references $(VAR_NAME) are expanded using the container's environment. Defaults to "" (volume's root). SubPathExpr and SubPath are mutually exclusive. This field is alpha in 1.14.
+        :param pulumi.Input[str] sub_path_expr: Expanded path within the volume from which the container's volume should be mounted. Behaves similarly to SubPath but environment variable references $(VAR_NAME) are expanded using the container's environment. Defaults to "" (volume's root). SubPathExpr and SubPath are mutually exclusive.
         """
         pulumi.set(__self__, "mount_path", mount_path)
         pulumi.set(__self__, "name", name)
@@ -5422,7 +6826,7 @@ class SeldonDeploymentSpecPredictorsComponentSpecsSpecContainersVolumeMountsArgs
     @pulumi.getter(name="subPathExpr")
     def sub_path_expr(self) -> Optional[pulumi.Input[str]]:
         """
-        Expanded path within the volume from which the container's volume should be mounted. Behaves similarly to SubPath but environment variable references $(VAR_NAME) are expanded using the container's environment. Defaults to "" (volume's root). SubPathExpr and SubPath are mutually exclusive. This field is alpha in 1.14.
+        Expanded path within the volume from which the container's volume should be mounted. Behaves similarly to SubPath but environment variable references $(VAR_NAME) are expanded using the container's environment. Defaults to "" (volume's root). SubPathExpr and SubPath are mutually exclusive.
         """
         return pulumi.get(self, "sub_path_expr")
 
@@ -5524,6 +6928,3029 @@ class SeldonDeploymentSpecPredictorsComponentSpecsSpecDnsConfigOptionsArgs:
 
 
 @pulumi.input_type
+class SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersArgs:
+    def __init__(__self__, *,
+                 name: pulumi.Input[str],
+                 args: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
+                 command: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
+                 env: Optional[pulumi.Input[Sequence[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersEnvArgs']]]] = None,
+                 env_from: Optional[pulumi.Input[Sequence[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersEnvFromArgs']]]] = None,
+                 image: Optional[pulumi.Input[str]] = None,
+                 image_pull_policy: Optional[pulumi.Input[str]] = None,
+                 lifecycle: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecycleArgs']] = None,
+                 liveness_probe: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLivenessProbeArgs']] = None,
+                 ports: Optional[pulumi.Input[Sequence[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersPortsArgs']]]] = None,
+                 readiness_probe: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersReadinessProbeArgs']] = None,
+                 resources: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersResourcesArgs']] = None,
+                 security_context: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersSecurityContextArgs']] = None,
+                 startup_probe: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersStartupProbeArgs']] = None,
+                 stdin: Optional[pulumi.Input[bool]] = None,
+                 stdin_once: Optional[pulumi.Input[bool]] = None,
+                 target_container_name: Optional[pulumi.Input[str]] = None,
+                 termination_message_path: Optional[pulumi.Input[str]] = None,
+                 termination_message_policy: Optional[pulumi.Input[str]] = None,
+                 tty: Optional[pulumi.Input[bool]] = None,
+                 volume_devices: Optional[pulumi.Input[Sequence[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersVolumeDevicesArgs']]]] = None,
+                 volume_mounts: Optional[pulumi.Input[Sequence[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersVolumeMountsArgs']]]] = None,
+                 working_dir: Optional[pulumi.Input[str]] = None):
+        """
+        An EphemeralContainer is a container that may be added temporarily to an existing pod for user-initiated activities such as debugging. Ephemeral containers have no resource or scheduling guarantees, and they will not be restarted when they exit or when a pod is removed or restarted. If an ephemeral container causes a pod to exceed its resource allocation, the pod may be evicted. Ephemeral containers may not be added by directly updating the pod spec. They must be added via the pod's ephemeralcontainers subresource, and they will appear in the pod spec once added. This is an alpha feature enabled by the EphemeralContainers feature flag.
+        :param pulumi.Input[str] name: Name of the ephemeral container specified as a DNS_LABEL. This name must be unique among all containers, init containers and ephemeral containers.
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] args: Arguments to the entrypoint. The docker image's CMD is used if this is not provided. Variable references $(VAR_NAME) are expanded using the container's environment. If a variable cannot be resolved, the reference in the input string will be unchanged. The $(VAR_NAME) syntax can be escaped with a double $$, ie: $$(VAR_NAME). Escaped references will never be expanded, regardless of whether the variable exists or not. Cannot be updated. More info: https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#running-a-command-in-a-shell
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] command: Entrypoint array. Not executed within a shell. The docker image's ENTRYPOINT is used if this is not provided. Variable references $(VAR_NAME) are expanded using the container's environment. If a variable cannot be resolved, the reference in the input string will be unchanged. The $(VAR_NAME) syntax can be escaped with a double $$, ie: $$(VAR_NAME). Escaped references will never be expanded, regardless of whether the variable exists or not. Cannot be updated. More info: https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#running-a-command-in-a-shell
+        :param pulumi.Input[Sequence[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersEnvArgs']]] env: List of environment variables to set in the container. Cannot be updated.
+        :param pulumi.Input[Sequence[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersEnvFromArgs']]] env_from: List of sources to populate environment variables in the container. The keys defined within a source must be a C_IDENTIFIER. All invalid keys will be reported as an event when the container is starting. When a key exists in multiple sources, the value associated with the last source will take precedence. Values defined by an Env with a duplicate key will take precedence. Cannot be updated.
+        :param pulumi.Input[str] image: Docker image name. More info: https://kubernetes.io/docs/concepts/containers/images
+        :param pulumi.Input[str] image_pull_policy: Image pull policy. One of Always, Never, IfNotPresent. Defaults to Always if :latest tag is specified, or IfNotPresent otherwise. Cannot be updated. More info: https://kubernetes.io/docs/concepts/containers/images#updating-images
+        :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecycleArgs'] lifecycle: Lifecycle is not allowed for ephemeral containers.
+        :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLivenessProbeArgs'] liveness_probe: Probes are not allowed for ephemeral containers.
+        :param pulumi.Input[Sequence[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersPortsArgs']]] ports: Ports are not allowed for ephemeral containers.
+        :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersReadinessProbeArgs'] readiness_probe: Probes are not allowed for ephemeral containers.
+        :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersResourcesArgs'] resources: Resources are not allowed for ephemeral containers. Ephemeral containers use spare resources already allocated to the pod.
+        :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersSecurityContextArgs'] security_context: SecurityContext is not allowed for ephemeral containers.
+        :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersStartupProbeArgs'] startup_probe: Probes are not allowed for ephemeral containers.
+        :param pulumi.Input[bool] stdin: Whether this container should allocate a buffer for stdin in the container runtime. If this is not set, reads from stdin in the container will always result in EOF. Default is false.
+        :param pulumi.Input[bool] stdin_once: Whether the container runtime should close the stdin channel after it has been opened by a single attach. When stdin is true the stdin stream will remain open across multiple attach sessions. If stdinOnce is set to true, stdin is opened on container start, is empty until the first client attaches to stdin, and then remains open and accepts data until the client disconnects, at which time stdin is closed and remains closed until the container is restarted. If this flag is false, a container processes that reads from stdin will never receive an EOF. Default is false
+        :param pulumi.Input[str] target_container_name: If set, the name of the container from PodSpec that this ephemeral container targets. The ephemeral container will be run in the namespaces (IPC, PID, etc) of this container. If not set then the ephemeral container is run in whatever namespaces are shared for the pod. Note that the container runtime must support this feature.
+        :param pulumi.Input[str] termination_message_path: Optional: Path at which the file to which the container's termination message will be written is mounted into the container's filesystem. Message written is intended to be brief final status, such as an assertion failure message. Will be truncated by the node if greater than 4096 bytes. The total message length across all containers will be limited to 12kb. Defaults to /dev/termination-log. Cannot be updated.
+        :param pulumi.Input[str] termination_message_policy: Indicate how the termination message should be populated. File will use the contents of terminationMessagePath to populate the container status message on both success and failure. FallbackToLogsOnError will use the last chunk of container log output if the termination message file is empty and the container exited with an error. The log output is limited to 2048 bytes or 80 lines, whichever is smaller. Defaults to File. Cannot be updated.
+        :param pulumi.Input[bool] tty: Whether this container should allocate a TTY for itself, also requires 'stdin' to be true. Default is false.
+        :param pulumi.Input[Sequence[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersVolumeDevicesArgs']]] volume_devices: volumeDevices is the list of block devices to be used by the container.
+        :param pulumi.Input[Sequence[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersVolumeMountsArgs']]] volume_mounts: Pod volumes to mount into the container's filesystem. Cannot be updated.
+        :param pulumi.Input[str] working_dir: Container's working directory. If not specified, the container runtime's default will be used, which might be configured in the container image. Cannot be updated.
+        """
+        pulumi.set(__self__, "name", name)
+        if args is not None:
+            pulumi.set(__self__, "args", args)
+        if command is not None:
+            pulumi.set(__self__, "command", command)
+        if env is not None:
+            pulumi.set(__self__, "env", env)
+        if env_from is not None:
+            pulumi.set(__self__, "env_from", env_from)
+        if image is not None:
+            pulumi.set(__self__, "image", image)
+        if image_pull_policy is not None:
+            pulumi.set(__self__, "image_pull_policy", image_pull_policy)
+        if lifecycle is not None:
+            pulumi.set(__self__, "lifecycle", lifecycle)
+        if liveness_probe is not None:
+            pulumi.set(__self__, "liveness_probe", liveness_probe)
+        if ports is not None:
+            pulumi.set(__self__, "ports", ports)
+        if readiness_probe is not None:
+            pulumi.set(__self__, "readiness_probe", readiness_probe)
+        if resources is not None:
+            pulumi.set(__self__, "resources", resources)
+        if security_context is not None:
+            pulumi.set(__self__, "security_context", security_context)
+        if startup_probe is not None:
+            pulumi.set(__self__, "startup_probe", startup_probe)
+        if stdin is not None:
+            pulumi.set(__self__, "stdin", stdin)
+        if stdin_once is not None:
+            pulumi.set(__self__, "stdin_once", stdin_once)
+        if target_container_name is not None:
+            pulumi.set(__self__, "target_container_name", target_container_name)
+        if termination_message_path is not None:
+            pulumi.set(__self__, "termination_message_path", termination_message_path)
+        if termination_message_policy is not None:
+            pulumi.set(__self__, "termination_message_policy", termination_message_policy)
+        if tty is not None:
+            pulumi.set(__self__, "tty", tty)
+        if volume_devices is not None:
+            pulumi.set(__self__, "volume_devices", volume_devices)
+        if volume_mounts is not None:
+            pulumi.set(__self__, "volume_mounts", volume_mounts)
+        if working_dir is not None:
+            pulumi.set(__self__, "working_dir", working_dir)
+
+    @property
+    @pulumi.getter
+    def name(self) -> pulumi.Input[str]:
+        """
+        Name of the ephemeral container specified as a DNS_LABEL. This name must be unique among all containers, init containers and ephemeral containers.
+        """
+        return pulumi.get(self, "name")
+
+    @name.setter
+    def name(self, value: pulumi.Input[str]):
+        pulumi.set(self, "name", value)
+
+    @property
+    @pulumi.getter
+    def args(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
+        """
+        Arguments to the entrypoint. The docker image's CMD is used if this is not provided. Variable references $(VAR_NAME) are expanded using the container's environment. If a variable cannot be resolved, the reference in the input string will be unchanged. The $(VAR_NAME) syntax can be escaped with a double $$, ie: $$(VAR_NAME). Escaped references will never be expanded, regardless of whether the variable exists or not. Cannot be updated. More info: https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#running-a-command-in-a-shell
+        """
+        return pulumi.get(self, "args")
+
+    @args.setter
+    def args(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]):
+        pulumi.set(self, "args", value)
+
+    @property
+    @pulumi.getter
+    def command(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
+        """
+        Entrypoint array. Not executed within a shell. The docker image's ENTRYPOINT is used if this is not provided. Variable references $(VAR_NAME) are expanded using the container's environment. If a variable cannot be resolved, the reference in the input string will be unchanged. The $(VAR_NAME) syntax can be escaped with a double $$, ie: $$(VAR_NAME). Escaped references will never be expanded, regardless of whether the variable exists or not. Cannot be updated. More info: https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#running-a-command-in-a-shell
+        """
+        return pulumi.get(self, "command")
+
+    @command.setter
+    def command(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]):
+        pulumi.set(self, "command", value)
+
+    @property
+    @pulumi.getter
+    def env(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersEnvArgs']]]]:
+        """
+        List of environment variables to set in the container. Cannot be updated.
+        """
+        return pulumi.get(self, "env")
+
+    @env.setter
+    def env(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersEnvArgs']]]]):
+        pulumi.set(self, "env", value)
+
+    @property
+    @pulumi.getter(name="envFrom")
+    def env_from(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersEnvFromArgs']]]]:
+        """
+        List of sources to populate environment variables in the container. The keys defined within a source must be a C_IDENTIFIER. All invalid keys will be reported as an event when the container is starting. When a key exists in multiple sources, the value associated with the last source will take precedence. Values defined by an Env with a duplicate key will take precedence. Cannot be updated.
+        """
+        return pulumi.get(self, "env_from")
+
+    @env_from.setter
+    def env_from(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersEnvFromArgs']]]]):
+        pulumi.set(self, "env_from", value)
+
+    @property
+    @pulumi.getter
+    def image(self) -> Optional[pulumi.Input[str]]:
+        """
+        Docker image name. More info: https://kubernetes.io/docs/concepts/containers/images
+        """
+        return pulumi.get(self, "image")
+
+    @image.setter
+    def image(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "image", value)
+
+    @property
+    @pulumi.getter(name="imagePullPolicy")
+    def image_pull_policy(self) -> Optional[pulumi.Input[str]]:
+        """
+        Image pull policy. One of Always, Never, IfNotPresent. Defaults to Always if :latest tag is specified, or IfNotPresent otherwise. Cannot be updated. More info: https://kubernetes.io/docs/concepts/containers/images#updating-images
+        """
+        return pulumi.get(self, "image_pull_policy")
+
+    @image_pull_policy.setter
+    def image_pull_policy(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "image_pull_policy", value)
+
+    @property
+    @pulumi.getter
+    def lifecycle(self) -> Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecycleArgs']]:
+        """
+        Lifecycle is not allowed for ephemeral containers.
+        """
+        return pulumi.get(self, "lifecycle")
+
+    @lifecycle.setter
+    def lifecycle(self, value: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecycleArgs']]):
+        pulumi.set(self, "lifecycle", value)
+
+    @property
+    @pulumi.getter(name="livenessProbe")
+    def liveness_probe(self) -> Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLivenessProbeArgs']]:
+        """
+        Probes are not allowed for ephemeral containers.
+        """
+        return pulumi.get(self, "liveness_probe")
+
+    @liveness_probe.setter
+    def liveness_probe(self, value: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLivenessProbeArgs']]):
+        pulumi.set(self, "liveness_probe", value)
+
+    @property
+    @pulumi.getter
+    def ports(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersPortsArgs']]]]:
+        """
+        Ports are not allowed for ephemeral containers.
+        """
+        return pulumi.get(self, "ports")
+
+    @ports.setter
+    def ports(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersPortsArgs']]]]):
+        pulumi.set(self, "ports", value)
+
+    @property
+    @pulumi.getter(name="readinessProbe")
+    def readiness_probe(self) -> Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersReadinessProbeArgs']]:
+        """
+        Probes are not allowed for ephemeral containers.
+        """
+        return pulumi.get(self, "readiness_probe")
+
+    @readiness_probe.setter
+    def readiness_probe(self, value: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersReadinessProbeArgs']]):
+        pulumi.set(self, "readiness_probe", value)
+
+    @property
+    @pulumi.getter
+    def resources(self) -> Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersResourcesArgs']]:
+        """
+        Resources are not allowed for ephemeral containers. Ephemeral containers use spare resources already allocated to the pod.
+        """
+        return pulumi.get(self, "resources")
+
+    @resources.setter
+    def resources(self, value: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersResourcesArgs']]):
+        pulumi.set(self, "resources", value)
+
+    @property
+    @pulumi.getter(name="securityContext")
+    def security_context(self) -> Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersSecurityContextArgs']]:
+        """
+        SecurityContext is not allowed for ephemeral containers.
+        """
+        return pulumi.get(self, "security_context")
+
+    @security_context.setter
+    def security_context(self, value: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersSecurityContextArgs']]):
+        pulumi.set(self, "security_context", value)
+
+    @property
+    @pulumi.getter(name="startupProbe")
+    def startup_probe(self) -> Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersStartupProbeArgs']]:
+        """
+        Probes are not allowed for ephemeral containers.
+        """
+        return pulumi.get(self, "startup_probe")
+
+    @startup_probe.setter
+    def startup_probe(self, value: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersStartupProbeArgs']]):
+        pulumi.set(self, "startup_probe", value)
+
+    @property
+    @pulumi.getter
+    def stdin(self) -> Optional[pulumi.Input[bool]]:
+        """
+        Whether this container should allocate a buffer for stdin in the container runtime. If this is not set, reads from stdin in the container will always result in EOF. Default is false.
+        """
+        return pulumi.get(self, "stdin")
+
+    @stdin.setter
+    def stdin(self, value: Optional[pulumi.Input[bool]]):
+        pulumi.set(self, "stdin", value)
+
+    @property
+    @pulumi.getter(name="stdinOnce")
+    def stdin_once(self) -> Optional[pulumi.Input[bool]]:
+        """
+        Whether the container runtime should close the stdin channel after it has been opened by a single attach. When stdin is true the stdin stream will remain open across multiple attach sessions. If stdinOnce is set to true, stdin is opened on container start, is empty until the first client attaches to stdin, and then remains open and accepts data until the client disconnects, at which time stdin is closed and remains closed until the container is restarted. If this flag is false, a container processes that reads from stdin will never receive an EOF. Default is false
+        """
+        return pulumi.get(self, "stdin_once")
+
+    @stdin_once.setter
+    def stdin_once(self, value: Optional[pulumi.Input[bool]]):
+        pulumi.set(self, "stdin_once", value)
+
+    @property
+    @pulumi.getter(name="targetContainerName")
+    def target_container_name(self) -> Optional[pulumi.Input[str]]:
+        """
+        If set, the name of the container from PodSpec that this ephemeral container targets. The ephemeral container will be run in the namespaces (IPC, PID, etc) of this container. If not set then the ephemeral container is run in whatever namespaces are shared for the pod. Note that the container runtime must support this feature.
+        """
+        return pulumi.get(self, "target_container_name")
+
+    @target_container_name.setter
+    def target_container_name(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "target_container_name", value)
+
+    @property
+    @pulumi.getter(name="terminationMessagePath")
+    def termination_message_path(self) -> Optional[pulumi.Input[str]]:
+        """
+        Optional: Path at which the file to which the container's termination message will be written is mounted into the container's filesystem. Message written is intended to be brief final status, such as an assertion failure message. Will be truncated by the node if greater than 4096 bytes. The total message length across all containers will be limited to 12kb. Defaults to /dev/termination-log. Cannot be updated.
+        """
+        return pulumi.get(self, "termination_message_path")
+
+    @termination_message_path.setter
+    def termination_message_path(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "termination_message_path", value)
+
+    @property
+    @pulumi.getter(name="terminationMessagePolicy")
+    def termination_message_policy(self) -> Optional[pulumi.Input[str]]:
+        """
+        Indicate how the termination message should be populated. File will use the contents of terminationMessagePath to populate the container status message on both success and failure. FallbackToLogsOnError will use the last chunk of container log output if the termination message file is empty and the container exited with an error. The log output is limited to 2048 bytes or 80 lines, whichever is smaller. Defaults to File. Cannot be updated.
+        """
+        return pulumi.get(self, "termination_message_policy")
+
+    @termination_message_policy.setter
+    def termination_message_policy(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "termination_message_policy", value)
+
+    @property
+    @pulumi.getter
+    def tty(self) -> Optional[pulumi.Input[bool]]:
+        """
+        Whether this container should allocate a TTY for itself, also requires 'stdin' to be true. Default is false.
+        """
+        return pulumi.get(self, "tty")
+
+    @tty.setter
+    def tty(self, value: Optional[pulumi.Input[bool]]):
+        pulumi.set(self, "tty", value)
+
+    @property
+    @pulumi.getter(name="volumeDevices")
+    def volume_devices(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersVolumeDevicesArgs']]]]:
+        """
+        volumeDevices is the list of block devices to be used by the container.
+        """
+        return pulumi.get(self, "volume_devices")
+
+    @volume_devices.setter
+    def volume_devices(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersVolumeDevicesArgs']]]]):
+        pulumi.set(self, "volume_devices", value)
+
+    @property
+    @pulumi.getter(name="volumeMounts")
+    def volume_mounts(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersVolumeMountsArgs']]]]:
+        """
+        Pod volumes to mount into the container's filesystem. Cannot be updated.
+        """
+        return pulumi.get(self, "volume_mounts")
+
+    @volume_mounts.setter
+    def volume_mounts(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersVolumeMountsArgs']]]]):
+        pulumi.set(self, "volume_mounts", value)
+
+    @property
+    @pulumi.getter(name="workingDir")
+    def working_dir(self) -> Optional[pulumi.Input[str]]:
+        """
+        Container's working directory. If not specified, the container runtime's default will be used, which might be configured in the container image. Cannot be updated.
+        """
+        return pulumi.get(self, "working_dir")
+
+    @working_dir.setter
+    def working_dir(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "working_dir", value)
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersEnvArgs:
+    def __init__(__self__, *,
+                 name: pulumi.Input[str],
+                 value: Optional[pulumi.Input[str]] = None,
+                 value_from: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersEnvValueFromArgs']] = None):
+        """
+        EnvVar represents an environment variable present in a Container.
+        :param pulumi.Input[str] name: Name of the environment variable. Must be a C_IDENTIFIER.
+        :param pulumi.Input[str] value: Variable references $(VAR_NAME) are expanded using the previous defined environment variables in the container and any service environment variables. If a variable cannot be resolved, the reference in the input string will be unchanged. The $(VAR_NAME) syntax can be escaped with a double $$, ie: $$(VAR_NAME). Escaped references will never be expanded, regardless of whether the variable exists or not. Defaults to "".
+        :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersEnvValueFromArgs'] value_from: Source for the environment variable's value. Cannot be used if value is not empty.
+        """
+        pulumi.set(__self__, "name", name)
+        if value is not None:
+            pulumi.set(__self__, "value", value)
+        if value_from is not None:
+            pulumi.set(__self__, "value_from", value_from)
+
+    @property
+    @pulumi.getter
+    def name(self) -> pulumi.Input[str]:
+        """
+        Name of the environment variable. Must be a C_IDENTIFIER.
+        """
+        return pulumi.get(self, "name")
+
+    @name.setter
+    def name(self, value: pulumi.Input[str]):
+        pulumi.set(self, "name", value)
+
+    @property
+    @pulumi.getter
+    def value(self) -> Optional[pulumi.Input[str]]:
+        """
+        Variable references $(VAR_NAME) are expanded using the previous defined environment variables in the container and any service environment variables. If a variable cannot be resolved, the reference in the input string will be unchanged. The $(VAR_NAME) syntax can be escaped with a double $$, ie: $$(VAR_NAME). Escaped references will never be expanded, regardless of whether the variable exists or not. Defaults to "".
+        """
+        return pulumi.get(self, "value")
+
+    @value.setter
+    def value(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "value", value)
+
+    @property
+    @pulumi.getter(name="valueFrom")
+    def value_from(self) -> Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersEnvValueFromArgs']]:
+        """
+        Source for the environment variable's value. Cannot be used if value is not empty.
+        """
+        return pulumi.get(self, "value_from")
+
+    @value_from.setter
+    def value_from(self, value: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersEnvValueFromArgs']]):
+        pulumi.set(self, "value_from", value)
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersEnvFromArgs:
+    def __init__(__self__, *,
+                 config_map_ref: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersEnvFromConfigMapRefArgs']] = None,
+                 prefix: Optional[pulumi.Input[str]] = None,
+                 secret_ref: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersEnvFromSecretRefArgs']] = None):
+        """
+        EnvFromSource represents the source of a set of ConfigMaps
+        :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersEnvFromConfigMapRefArgs'] config_map_ref: The ConfigMap to select from
+        :param pulumi.Input[str] prefix: An optional identifier to prepend to each key in the ConfigMap. Must be a C_IDENTIFIER.
+        :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersEnvFromSecretRefArgs'] secret_ref: The Secret to select from
+        """
+        if config_map_ref is not None:
+            pulumi.set(__self__, "config_map_ref", config_map_ref)
+        if prefix is not None:
+            pulumi.set(__self__, "prefix", prefix)
+        if secret_ref is not None:
+            pulumi.set(__self__, "secret_ref", secret_ref)
+
+    @property
+    @pulumi.getter(name="configMapRef")
+    def config_map_ref(self) -> Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersEnvFromConfigMapRefArgs']]:
+        """
+        The ConfigMap to select from
+        """
+        return pulumi.get(self, "config_map_ref")
+
+    @config_map_ref.setter
+    def config_map_ref(self, value: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersEnvFromConfigMapRefArgs']]):
+        pulumi.set(self, "config_map_ref", value)
+
+    @property
+    @pulumi.getter
+    def prefix(self) -> Optional[pulumi.Input[str]]:
+        """
+        An optional identifier to prepend to each key in the ConfigMap. Must be a C_IDENTIFIER.
+        """
+        return pulumi.get(self, "prefix")
+
+    @prefix.setter
+    def prefix(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "prefix", value)
+
+    @property
+    @pulumi.getter(name="secretRef")
+    def secret_ref(self) -> Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersEnvFromSecretRefArgs']]:
+        """
+        The Secret to select from
+        """
+        return pulumi.get(self, "secret_ref")
+
+    @secret_ref.setter
+    def secret_ref(self, value: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersEnvFromSecretRefArgs']]):
+        pulumi.set(self, "secret_ref", value)
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersEnvFromConfigMapRefArgs:
+    def __init__(__self__, *,
+                 name: Optional[pulumi.Input[str]] = None,
+                 optional: Optional[pulumi.Input[bool]] = None):
+        """
+        The ConfigMap to select from
+        :param pulumi.Input[str] name: Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+        :param pulumi.Input[bool] optional: Specify whether the ConfigMap must be defined
+        """
+        if name is not None:
+            pulumi.set(__self__, "name", name)
+        if optional is not None:
+            pulumi.set(__self__, "optional", optional)
+
+    @property
+    @pulumi.getter
+    def name(self) -> Optional[pulumi.Input[str]]:
+        """
+        Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+        """
+        return pulumi.get(self, "name")
+
+    @name.setter
+    def name(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "name", value)
+
+    @property
+    @pulumi.getter
+    def optional(self) -> Optional[pulumi.Input[bool]]:
+        """
+        Specify whether the ConfigMap must be defined
+        """
+        return pulumi.get(self, "optional")
+
+    @optional.setter
+    def optional(self, value: Optional[pulumi.Input[bool]]):
+        pulumi.set(self, "optional", value)
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersEnvFromSecretRefArgs:
+    def __init__(__self__, *,
+                 name: Optional[pulumi.Input[str]] = None,
+                 optional: Optional[pulumi.Input[bool]] = None):
+        """
+        The Secret to select from
+        :param pulumi.Input[str] name: Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+        :param pulumi.Input[bool] optional: Specify whether the Secret must be defined
+        """
+        if name is not None:
+            pulumi.set(__self__, "name", name)
+        if optional is not None:
+            pulumi.set(__self__, "optional", optional)
+
+    @property
+    @pulumi.getter
+    def name(self) -> Optional[pulumi.Input[str]]:
+        """
+        Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+        """
+        return pulumi.get(self, "name")
+
+    @name.setter
+    def name(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "name", value)
+
+    @property
+    @pulumi.getter
+    def optional(self) -> Optional[pulumi.Input[bool]]:
+        """
+        Specify whether the Secret must be defined
+        """
+        return pulumi.get(self, "optional")
+
+    @optional.setter
+    def optional(self, value: Optional[pulumi.Input[bool]]):
+        pulumi.set(self, "optional", value)
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersEnvValueFromArgs:
+    def __init__(__self__, *,
+                 config_map_key_ref: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersEnvValueFromConfigMapKeyRefArgs']] = None,
+                 field_ref: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersEnvValueFromFieldRefArgs']] = None,
+                 resource_field_ref: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersEnvValueFromResourceFieldRefArgs']] = None,
+                 secret_key_ref: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersEnvValueFromSecretKeyRefArgs']] = None):
+        """
+        Source for the environment variable's value. Cannot be used if value is not empty.
+        :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersEnvValueFromConfigMapKeyRefArgs'] config_map_key_ref: Selects a key of a ConfigMap.
+        :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersEnvValueFromFieldRefArgs'] field_ref: Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
+        :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersEnvValueFromResourceFieldRefArgs'] resource_field_ref: Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
+        :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersEnvValueFromSecretKeyRefArgs'] secret_key_ref: Selects a key of a secret in the pod's namespace
+        """
+        if config_map_key_ref is not None:
+            pulumi.set(__self__, "config_map_key_ref", config_map_key_ref)
+        if field_ref is not None:
+            pulumi.set(__self__, "field_ref", field_ref)
+        if resource_field_ref is not None:
+            pulumi.set(__self__, "resource_field_ref", resource_field_ref)
+        if secret_key_ref is not None:
+            pulumi.set(__self__, "secret_key_ref", secret_key_ref)
+
+    @property
+    @pulumi.getter(name="configMapKeyRef")
+    def config_map_key_ref(self) -> Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersEnvValueFromConfigMapKeyRefArgs']]:
+        """
+        Selects a key of a ConfigMap.
+        """
+        return pulumi.get(self, "config_map_key_ref")
+
+    @config_map_key_ref.setter
+    def config_map_key_ref(self, value: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersEnvValueFromConfigMapKeyRefArgs']]):
+        pulumi.set(self, "config_map_key_ref", value)
+
+    @property
+    @pulumi.getter(name="fieldRef")
+    def field_ref(self) -> Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersEnvValueFromFieldRefArgs']]:
+        """
+        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
+        """
+        return pulumi.get(self, "field_ref")
+
+    @field_ref.setter
+    def field_ref(self, value: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersEnvValueFromFieldRefArgs']]):
+        pulumi.set(self, "field_ref", value)
+
+    @property
+    @pulumi.getter(name="resourceFieldRef")
+    def resource_field_ref(self) -> Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersEnvValueFromResourceFieldRefArgs']]:
+        """
+        Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
+        """
+        return pulumi.get(self, "resource_field_ref")
+
+    @resource_field_ref.setter
+    def resource_field_ref(self, value: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersEnvValueFromResourceFieldRefArgs']]):
+        pulumi.set(self, "resource_field_ref", value)
+
+    @property
+    @pulumi.getter(name="secretKeyRef")
+    def secret_key_ref(self) -> Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersEnvValueFromSecretKeyRefArgs']]:
+        """
+        Selects a key of a secret in the pod's namespace
+        """
+        return pulumi.get(self, "secret_key_ref")
+
+    @secret_key_ref.setter
+    def secret_key_ref(self, value: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersEnvValueFromSecretKeyRefArgs']]):
+        pulumi.set(self, "secret_key_ref", value)
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersEnvValueFromConfigMapKeyRefArgs:
+    def __init__(__self__, *,
+                 key: pulumi.Input[str],
+                 name: Optional[pulumi.Input[str]] = None,
+                 optional: Optional[pulumi.Input[bool]] = None):
+        """
+        Selects a key of a ConfigMap.
+        :param pulumi.Input[str] key: The key to select.
+        :param pulumi.Input[str] name: Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+        :param pulumi.Input[bool] optional: Specify whether the ConfigMap or its key must be defined
+        """
+        pulumi.set(__self__, "key", key)
+        if name is not None:
+            pulumi.set(__self__, "name", name)
+        if optional is not None:
+            pulumi.set(__self__, "optional", optional)
+
+    @property
+    @pulumi.getter
+    def key(self) -> pulumi.Input[str]:
+        """
+        The key to select.
+        """
+        return pulumi.get(self, "key")
+
+    @key.setter
+    def key(self, value: pulumi.Input[str]):
+        pulumi.set(self, "key", value)
+
+    @property
+    @pulumi.getter
+    def name(self) -> Optional[pulumi.Input[str]]:
+        """
+        Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+        """
+        return pulumi.get(self, "name")
+
+    @name.setter
+    def name(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "name", value)
+
+    @property
+    @pulumi.getter
+    def optional(self) -> Optional[pulumi.Input[bool]]:
+        """
+        Specify whether the ConfigMap or its key must be defined
+        """
+        return pulumi.get(self, "optional")
+
+    @optional.setter
+    def optional(self, value: Optional[pulumi.Input[bool]]):
+        pulumi.set(self, "optional", value)
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersEnvValueFromFieldRefArgs:
+    def __init__(__self__, *,
+                 field_path: pulumi.Input[str],
+                 api_version: Optional[pulumi.Input[str]] = None):
+        """
+        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
+        :param pulumi.Input[str] field_path: Path of the field to select in the specified API version.
+        :param pulumi.Input[str] api_version: Version of the schema the FieldPath is written in terms of, defaults to "v1".
+        """
+        pulumi.set(__self__, "field_path", field_path)
+        if api_version is not None:
+            pulumi.set(__self__, "api_version", api_version)
+
+    @property
+    @pulumi.getter(name="fieldPath")
+    def field_path(self) -> pulumi.Input[str]:
+        """
+        Path of the field to select in the specified API version.
+        """
+        return pulumi.get(self, "field_path")
+
+    @field_path.setter
+    def field_path(self, value: pulumi.Input[str]):
+        pulumi.set(self, "field_path", value)
+
+    @property
+    @pulumi.getter(name="apiVersion")
+    def api_version(self) -> Optional[pulumi.Input[str]]:
+        """
+        Version of the schema the FieldPath is written in terms of, defaults to "v1".
+        """
+        return pulumi.get(self, "api_version")
+
+    @api_version.setter
+    def api_version(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "api_version", value)
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersEnvValueFromResourceFieldRefArgs:
+    def __init__(__self__, *,
+                 resource: pulumi.Input[str],
+                 container_name: Optional[pulumi.Input[str]] = None,
+                 divisor: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersEnvValueFromResourceFieldRefDivisorArgs']] = None):
+        """
+        Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
+        :param pulumi.Input[str] resource: Required: resource to select
+        :param pulumi.Input[str] container_name: Container name: required for volumes, optional for env vars
+        :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersEnvValueFromResourceFieldRefDivisorArgs'] divisor: Specifies the output format of the exposed resources, defaults to "1"
+        """
+        pulumi.set(__self__, "resource", resource)
+        if container_name is not None:
+            pulumi.set(__self__, "container_name", container_name)
+        if divisor is not None:
+            pulumi.set(__self__, "divisor", divisor)
+
+    @property
+    @pulumi.getter
+    def resource(self) -> pulumi.Input[str]:
+        """
+        Required: resource to select
+        """
+        return pulumi.get(self, "resource")
+
+    @resource.setter
+    def resource(self, value: pulumi.Input[str]):
+        pulumi.set(self, "resource", value)
+
+    @property
+    @pulumi.getter(name="containerName")
+    def container_name(self) -> Optional[pulumi.Input[str]]:
+        """
+        Container name: required for volumes, optional for env vars
+        """
+        return pulumi.get(self, "container_name")
+
+    @container_name.setter
+    def container_name(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "container_name", value)
+
+    @property
+    @pulumi.getter
+    def divisor(self) -> Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersEnvValueFromResourceFieldRefDivisorArgs']]:
+        """
+        Specifies the output format of the exposed resources, defaults to "1"
+        """
+        return pulumi.get(self, "divisor")
+
+    @divisor.setter
+    def divisor(self, value: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersEnvValueFromResourceFieldRefDivisorArgs']]):
+        pulumi.set(self, "divisor", value)
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersEnvValueFromResourceFieldRefDivisorArgs:
+    def __init__(__self__):
+        pass
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersEnvValueFromSecretKeyRefArgs:
+    def __init__(__self__, *,
+                 key: pulumi.Input[str],
+                 name: Optional[pulumi.Input[str]] = None,
+                 optional: Optional[pulumi.Input[bool]] = None):
+        """
+        Selects a key of a secret in the pod's namespace
+        :param pulumi.Input[str] key: The key of the secret to select from.  Must be a valid secret key.
+        :param pulumi.Input[str] name: Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+        :param pulumi.Input[bool] optional: Specify whether the Secret or its key must be defined
+        """
+        pulumi.set(__self__, "key", key)
+        if name is not None:
+            pulumi.set(__self__, "name", name)
+        if optional is not None:
+            pulumi.set(__self__, "optional", optional)
+
+    @property
+    @pulumi.getter
+    def key(self) -> pulumi.Input[str]:
+        """
+        The key of the secret to select from.  Must be a valid secret key.
+        """
+        return pulumi.get(self, "key")
+
+    @key.setter
+    def key(self, value: pulumi.Input[str]):
+        pulumi.set(self, "key", value)
+
+    @property
+    @pulumi.getter
+    def name(self) -> Optional[pulumi.Input[str]]:
+        """
+        Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
+        """
+        return pulumi.get(self, "name")
+
+    @name.setter
+    def name(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "name", value)
+
+    @property
+    @pulumi.getter
+    def optional(self) -> Optional[pulumi.Input[bool]]:
+        """
+        Specify whether the Secret or its key must be defined
+        """
+        return pulumi.get(self, "optional")
+
+    @optional.setter
+    def optional(self, value: Optional[pulumi.Input[bool]]):
+        pulumi.set(self, "optional", value)
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecycleArgs:
+    def __init__(__self__, *,
+                 post_start: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePostStartArgs']] = None,
+                 pre_stop: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePreStopArgs']] = None):
+        """
+        Lifecycle is not allowed for ephemeral containers.
+        :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePostStartArgs'] post_start: PostStart is called immediately after a container is created. If the handler fails, the container is terminated and restarted according to its restart policy. Other management of the container blocks until the hook completes. More info: https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/#container-hooks
+        :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePreStopArgs'] pre_stop: PreStop is called immediately before a container is terminated due to an API request or management event such as liveness/startup probe failure, preemption, resource contention, etc. The handler is not called if the container crashes or exits. The reason for termination is passed to the handler. The Pod's termination grace period countdown begins before the PreStop hooked is executed. Regardless of the outcome of the handler, the container will eventually terminate within the Pod's termination grace period. Other management of the container blocks until the hook completes or until the termination grace period is reached. More info: https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/#container-hooks
+        """
+        if post_start is not None:
+            pulumi.set(__self__, "post_start", post_start)
+        if pre_stop is not None:
+            pulumi.set(__self__, "pre_stop", pre_stop)
+
+    @property
+    @pulumi.getter(name="postStart")
+    def post_start(self) -> Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePostStartArgs']]:
+        """
+        PostStart is called immediately after a container is created. If the handler fails, the container is terminated and restarted according to its restart policy. Other management of the container blocks until the hook completes. More info: https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/#container-hooks
+        """
+        return pulumi.get(self, "post_start")
+
+    @post_start.setter
+    def post_start(self, value: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePostStartArgs']]):
+        pulumi.set(self, "post_start", value)
+
+    @property
+    @pulumi.getter(name="preStop")
+    def pre_stop(self) -> Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePreStopArgs']]:
+        """
+        PreStop is called immediately before a container is terminated due to an API request or management event such as liveness/startup probe failure, preemption, resource contention, etc. The handler is not called if the container crashes or exits. The reason for termination is passed to the handler. The Pod's termination grace period countdown begins before the PreStop hooked is executed. Regardless of the outcome of the handler, the container will eventually terminate within the Pod's termination grace period. Other management of the container blocks until the hook completes or until the termination grace period is reached. More info: https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/#container-hooks
+        """
+        return pulumi.get(self, "pre_stop")
+
+    @pre_stop.setter
+    def pre_stop(self, value: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePreStopArgs']]):
+        pulumi.set(self, "pre_stop", value)
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePostStartArgs:
+    def __init__(__self__, *,
+                 exec_: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePostStartExecArgs']] = None,
+                 http_get: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePostStartHttpGetArgs']] = None,
+                 tcp_socket: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePostStartTcpSocketArgs']] = None):
+        """
+        PostStart is called immediately after a container is created. If the handler fails, the container is terminated and restarted according to its restart policy. Other management of the container blocks until the hook completes. More info: https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/#container-hooks
+        :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePostStartExecArgs'] exec_: One and only one of the following should be specified. Exec specifies the action to take.
+        :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePostStartHttpGetArgs'] http_get: HTTPGet specifies the http request to perform.
+        :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePostStartTcpSocketArgs'] tcp_socket: TCPSocket specifies an action involving a TCP port. TCP hooks not yet supported TODO: implement a realistic TCP lifecycle hook
+        """
+        if exec_ is not None:
+            pulumi.set(__self__, "exec_", exec_)
+        if http_get is not None:
+            pulumi.set(__self__, "http_get", http_get)
+        if tcp_socket is not None:
+            pulumi.set(__self__, "tcp_socket", tcp_socket)
+
+    @property
+    @pulumi.getter(name="exec")
+    def exec_(self) -> Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePostStartExecArgs']]:
+        """
+        One and only one of the following should be specified. Exec specifies the action to take.
+        """
+        return pulumi.get(self, "exec_")
+
+    @exec_.setter
+    def exec_(self, value: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePostStartExecArgs']]):
+        pulumi.set(self, "exec_", value)
+
+    @property
+    @pulumi.getter(name="httpGet")
+    def http_get(self) -> Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePostStartHttpGetArgs']]:
+        """
+        HTTPGet specifies the http request to perform.
+        """
+        return pulumi.get(self, "http_get")
+
+    @http_get.setter
+    def http_get(self, value: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePostStartHttpGetArgs']]):
+        pulumi.set(self, "http_get", value)
+
+    @property
+    @pulumi.getter(name="tcpSocket")
+    def tcp_socket(self) -> Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePostStartTcpSocketArgs']]:
+        """
+        TCPSocket specifies an action involving a TCP port. TCP hooks not yet supported TODO: implement a realistic TCP lifecycle hook
+        """
+        return pulumi.get(self, "tcp_socket")
+
+    @tcp_socket.setter
+    def tcp_socket(self, value: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePostStartTcpSocketArgs']]):
+        pulumi.set(self, "tcp_socket", value)
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePostStartExecArgs:
+    def __init__(__self__, *,
+                 command: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None):
+        """
+        One and only one of the following should be specified. Exec specifies the action to take.
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] command: Command is the command line to execute inside the container, the working directory for the command  is root ('/') in the container's filesystem. The command is simply exec'd, it is not run inside a shell, so traditional shell instructions ('|', etc) won't work. To use a shell, you need to explicitly call out to that shell. Exit status of 0 is treated as live/healthy and non-zero is unhealthy.
+        """
+        if command is not None:
+            pulumi.set(__self__, "command", command)
+
+    @property
+    @pulumi.getter
+    def command(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
+        """
+        Command is the command line to execute inside the container, the working directory for the command  is root ('/') in the container's filesystem. The command is simply exec'd, it is not run inside a shell, so traditional shell instructions ('|', etc) won't work. To use a shell, you need to explicitly call out to that shell. Exit status of 0 is treated as live/healthy and non-zero is unhealthy.
+        """
+        return pulumi.get(self, "command")
+
+    @command.setter
+    def command(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]):
+        pulumi.set(self, "command", value)
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePostStartHttpGetArgs:
+    def __init__(__self__, *,
+                 port: pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePostStartHttpGetPortArgs'],
+                 host: Optional[pulumi.Input[str]] = None,
+                 http_headers: Optional[pulumi.Input[Sequence[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePostStartHttpGetHttpHeadersArgs']]]] = None,
+                 path: Optional[pulumi.Input[str]] = None,
+                 scheme: Optional[pulumi.Input[str]] = None):
+        """
+        HTTPGet specifies the http request to perform.
+        :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePostStartHttpGetPortArgs'] port: Name or number of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME.
+        :param pulumi.Input[str] host: Host name to connect to, defaults to the pod IP. You probably want to set "Host" in httpHeaders instead.
+        :param pulumi.Input[Sequence[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePostStartHttpGetHttpHeadersArgs']]] http_headers: Custom headers to set in the request. HTTP allows repeated headers.
+        :param pulumi.Input[str] path: Path to access on the HTTP server.
+        :param pulumi.Input[str] scheme: Scheme to use for connecting to the host. Defaults to HTTP.
+        """
+        pulumi.set(__self__, "port", port)
+        if host is not None:
+            pulumi.set(__self__, "host", host)
+        if http_headers is not None:
+            pulumi.set(__self__, "http_headers", http_headers)
+        if path is not None:
+            pulumi.set(__self__, "path", path)
+        if scheme is not None:
+            pulumi.set(__self__, "scheme", scheme)
+
+    @property
+    @pulumi.getter
+    def port(self) -> pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePostStartHttpGetPortArgs']:
+        """
+        Name or number of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME.
+        """
+        return pulumi.get(self, "port")
+
+    @port.setter
+    def port(self, value: pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePostStartHttpGetPortArgs']):
+        pulumi.set(self, "port", value)
+
+    @property
+    @pulumi.getter
+    def host(self) -> Optional[pulumi.Input[str]]:
+        """
+        Host name to connect to, defaults to the pod IP. You probably want to set "Host" in httpHeaders instead.
+        """
+        return pulumi.get(self, "host")
+
+    @host.setter
+    def host(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "host", value)
+
+    @property
+    @pulumi.getter(name="httpHeaders")
+    def http_headers(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePostStartHttpGetHttpHeadersArgs']]]]:
+        """
+        Custom headers to set in the request. HTTP allows repeated headers.
+        """
+        return pulumi.get(self, "http_headers")
+
+    @http_headers.setter
+    def http_headers(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePostStartHttpGetHttpHeadersArgs']]]]):
+        pulumi.set(self, "http_headers", value)
+
+    @property
+    @pulumi.getter
+    def path(self) -> Optional[pulumi.Input[str]]:
+        """
+        Path to access on the HTTP server.
+        """
+        return pulumi.get(self, "path")
+
+    @path.setter
+    def path(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "path", value)
+
+    @property
+    @pulumi.getter
+    def scheme(self) -> Optional[pulumi.Input[str]]:
+        """
+        Scheme to use for connecting to the host. Defaults to HTTP.
+        """
+        return pulumi.get(self, "scheme")
+
+    @scheme.setter
+    def scheme(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "scheme", value)
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePostStartHttpGetHttpHeadersArgs:
+    def __init__(__self__, *,
+                 name: pulumi.Input[str],
+                 value: pulumi.Input[str]):
+        """
+        HTTPHeader describes a custom header to be used in HTTP probes
+        :param pulumi.Input[str] name: The header field name
+        :param pulumi.Input[str] value: The header field value
+        """
+        pulumi.set(__self__, "name", name)
+        pulumi.set(__self__, "value", value)
+
+    @property
+    @pulumi.getter
+    def name(self) -> pulumi.Input[str]:
+        """
+        The header field name
+        """
+        return pulumi.get(self, "name")
+
+    @name.setter
+    def name(self, value: pulumi.Input[str]):
+        pulumi.set(self, "name", value)
+
+    @property
+    @pulumi.getter
+    def value(self) -> pulumi.Input[str]:
+        """
+        The header field value
+        """
+        return pulumi.get(self, "value")
+
+    @value.setter
+    def value(self, value: pulumi.Input[str]):
+        pulumi.set(self, "value", value)
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePostStartHttpGetPortArgs:
+    def __init__(__self__):
+        pass
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePostStartTcpSocketArgs:
+    def __init__(__self__, *,
+                 port: pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePostStartTcpSocketPortArgs'],
+                 host: Optional[pulumi.Input[str]] = None):
+        """
+        TCPSocket specifies an action involving a TCP port. TCP hooks not yet supported TODO: implement a realistic TCP lifecycle hook
+        :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePostStartTcpSocketPortArgs'] port: Number or name of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME.
+        :param pulumi.Input[str] host: Optional: Host name to connect to, defaults to the pod IP.
+        """
+        pulumi.set(__self__, "port", port)
+        if host is not None:
+            pulumi.set(__self__, "host", host)
+
+    @property
+    @pulumi.getter
+    def port(self) -> pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePostStartTcpSocketPortArgs']:
+        """
+        Number or name of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME.
+        """
+        return pulumi.get(self, "port")
+
+    @port.setter
+    def port(self, value: pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePostStartTcpSocketPortArgs']):
+        pulumi.set(self, "port", value)
+
+    @property
+    @pulumi.getter
+    def host(self) -> Optional[pulumi.Input[str]]:
+        """
+        Optional: Host name to connect to, defaults to the pod IP.
+        """
+        return pulumi.get(self, "host")
+
+    @host.setter
+    def host(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "host", value)
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePostStartTcpSocketPortArgs:
+    def __init__(__self__):
+        pass
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePreStopArgs:
+    def __init__(__self__, *,
+                 exec_: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePreStopExecArgs']] = None,
+                 http_get: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePreStopHttpGetArgs']] = None,
+                 tcp_socket: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePreStopTcpSocketArgs']] = None):
+        """
+        PreStop is called immediately before a container is terminated due to an API request or management event such as liveness/startup probe failure, preemption, resource contention, etc. The handler is not called if the container crashes or exits. The reason for termination is passed to the handler. The Pod's termination grace period countdown begins before the PreStop hooked is executed. Regardless of the outcome of the handler, the container will eventually terminate within the Pod's termination grace period. Other management of the container blocks until the hook completes or until the termination grace period is reached. More info: https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/#container-hooks
+        :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePreStopExecArgs'] exec_: One and only one of the following should be specified. Exec specifies the action to take.
+        :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePreStopHttpGetArgs'] http_get: HTTPGet specifies the http request to perform.
+        :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePreStopTcpSocketArgs'] tcp_socket: TCPSocket specifies an action involving a TCP port. TCP hooks not yet supported TODO: implement a realistic TCP lifecycle hook
+        """
+        if exec_ is not None:
+            pulumi.set(__self__, "exec_", exec_)
+        if http_get is not None:
+            pulumi.set(__self__, "http_get", http_get)
+        if tcp_socket is not None:
+            pulumi.set(__self__, "tcp_socket", tcp_socket)
+
+    @property
+    @pulumi.getter(name="exec")
+    def exec_(self) -> Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePreStopExecArgs']]:
+        """
+        One and only one of the following should be specified. Exec specifies the action to take.
+        """
+        return pulumi.get(self, "exec_")
+
+    @exec_.setter
+    def exec_(self, value: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePreStopExecArgs']]):
+        pulumi.set(self, "exec_", value)
+
+    @property
+    @pulumi.getter(name="httpGet")
+    def http_get(self) -> Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePreStopHttpGetArgs']]:
+        """
+        HTTPGet specifies the http request to perform.
+        """
+        return pulumi.get(self, "http_get")
+
+    @http_get.setter
+    def http_get(self, value: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePreStopHttpGetArgs']]):
+        pulumi.set(self, "http_get", value)
+
+    @property
+    @pulumi.getter(name="tcpSocket")
+    def tcp_socket(self) -> Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePreStopTcpSocketArgs']]:
+        """
+        TCPSocket specifies an action involving a TCP port. TCP hooks not yet supported TODO: implement a realistic TCP lifecycle hook
+        """
+        return pulumi.get(self, "tcp_socket")
+
+    @tcp_socket.setter
+    def tcp_socket(self, value: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePreStopTcpSocketArgs']]):
+        pulumi.set(self, "tcp_socket", value)
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePreStopExecArgs:
+    def __init__(__self__, *,
+                 command: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None):
+        """
+        One and only one of the following should be specified. Exec specifies the action to take.
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] command: Command is the command line to execute inside the container, the working directory for the command  is root ('/') in the container's filesystem. The command is simply exec'd, it is not run inside a shell, so traditional shell instructions ('|', etc) won't work. To use a shell, you need to explicitly call out to that shell. Exit status of 0 is treated as live/healthy and non-zero is unhealthy.
+        """
+        if command is not None:
+            pulumi.set(__self__, "command", command)
+
+    @property
+    @pulumi.getter
+    def command(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
+        """
+        Command is the command line to execute inside the container, the working directory for the command  is root ('/') in the container's filesystem. The command is simply exec'd, it is not run inside a shell, so traditional shell instructions ('|', etc) won't work. To use a shell, you need to explicitly call out to that shell. Exit status of 0 is treated as live/healthy and non-zero is unhealthy.
+        """
+        return pulumi.get(self, "command")
+
+    @command.setter
+    def command(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]):
+        pulumi.set(self, "command", value)
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePreStopHttpGetArgs:
+    def __init__(__self__, *,
+                 port: pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePreStopHttpGetPortArgs'],
+                 host: Optional[pulumi.Input[str]] = None,
+                 http_headers: Optional[pulumi.Input[Sequence[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePreStopHttpGetHttpHeadersArgs']]]] = None,
+                 path: Optional[pulumi.Input[str]] = None,
+                 scheme: Optional[pulumi.Input[str]] = None):
+        """
+        HTTPGet specifies the http request to perform.
+        :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePreStopHttpGetPortArgs'] port: Name or number of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME.
+        :param pulumi.Input[str] host: Host name to connect to, defaults to the pod IP. You probably want to set "Host" in httpHeaders instead.
+        :param pulumi.Input[Sequence[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePreStopHttpGetHttpHeadersArgs']]] http_headers: Custom headers to set in the request. HTTP allows repeated headers.
+        :param pulumi.Input[str] path: Path to access on the HTTP server.
+        :param pulumi.Input[str] scheme: Scheme to use for connecting to the host. Defaults to HTTP.
+        """
+        pulumi.set(__self__, "port", port)
+        if host is not None:
+            pulumi.set(__self__, "host", host)
+        if http_headers is not None:
+            pulumi.set(__self__, "http_headers", http_headers)
+        if path is not None:
+            pulumi.set(__self__, "path", path)
+        if scheme is not None:
+            pulumi.set(__self__, "scheme", scheme)
+
+    @property
+    @pulumi.getter
+    def port(self) -> pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePreStopHttpGetPortArgs']:
+        """
+        Name or number of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME.
+        """
+        return pulumi.get(self, "port")
+
+    @port.setter
+    def port(self, value: pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePreStopHttpGetPortArgs']):
+        pulumi.set(self, "port", value)
+
+    @property
+    @pulumi.getter
+    def host(self) -> Optional[pulumi.Input[str]]:
+        """
+        Host name to connect to, defaults to the pod IP. You probably want to set "Host" in httpHeaders instead.
+        """
+        return pulumi.get(self, "host")
+
+    @host.setter
+    def host(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "host", value)
+
+    @property
+    @pulumi.getter(name="httpHeaders")
+    def http_headers(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePreStopHttpGetHttpHeadersArgs']]]]:
+        """
+        Custom headers to set in the request. HTTP allows repeated headers.
+        """
+        return pulumi.get(self, "http_headers")
+
+    @http_headers.setter
+    def http_headers(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePreStopHttpGetHttpHeadersArgs']]]]):
+        pulumi.set(self, "http_headers", value)
+
+    @property
+    @pulumi.getter
+    def path(self) -> Optional[pulumi.Input[str]]:
+        """
+        Path to access on the HTTP server.
+        """
+        return pulumi.get(self, "path")
+
+    @path.setter
+    def path(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "path", value)
+
+    @property
+    @pulumi.getter
+    def scheme(self) -> Optional[pulumi.Input[str]]:
+        """
+        Scheme to use for connecting to the host. Defaults to HTTP.
+        """
+        return pulumi.get(self, "scheme")
+
+    @scheme.setter
+    def scheme(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "scheme", value)
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePreStopHttpGetHttpHeadersArgs:
+    def __init__(__self__, *,
+                 name: pulumi.Input[str],
+                 value: pulumi.Input[str]):
+        """
+        HTTPHeader describes a custom header to be used in HTTP probes
+        :param pulumi.Input[str] name: The header field name
+        :param pulumi.Input[str] value: The header field value
+        """
+        pulumi.set(__self__, "name", name)
+        pulumi.set(__self__, "value", value)
+
+    @property
+    @pulumi.getter
+    def name(self) -> pulumi.Input[str]:
+        """
+        The header field name
+        """
+        return pulumi.get(self, "name")
+
+    @name.setter
+    def name(self, value: pulumi.Input[str]):
+        pulumi.set(self, "name", value)
+
+    @property
+    @pulumi.getter
+    def value(self) -> pulumi.Input[str]:
+        """
+        The header field value
+        """
+        return pulumi.get(self, "value")
+
+    @value.setter
+    def value(self, value: pulumi.Input[str]):
+        pulumi.set(self, "value", value)
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePreStopHttpGetPortArgs:
+    def __init__(__self__):
+        pass
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePreStopTcpSocketArgs:
+    def __init__(__self__, *,
+                 port: pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePreStopTcpSocketPortArgs'],
+                 host: Optional[pulumi.Input[str]] = None):
+        """
+        TCPSocket specifies an action involving a TCP port. TCP hooks not yet supported TODO: implement a realistic TCP lifecycle hook
+        :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePreStopTcpSocketPortArgs'] port: Number or name of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME.
+        :param pulumi.Input[str] host: Optional: Host name to connect to, defaults to the pod IP.
+        """
+        pulumi.set(__self__, "port", port)
+        if host is not None:
+            pulumi.set(__self__, "host", host)
+
+    @property
+    @pulumi.getter
+    def port(self) -> pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePreStopTcpSocketPortArgs']:
+        """
+        Number or name of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME.
+        """
+        return pulumi.get(self, "port")
+
+    @port.setter
+    def port(self, value: pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePreStopTcpSocketPortArgs']):
+        pulumi.set(self, "port", value)
+
+    @property
+    @pulumi.getter
+    def host(self) -> Optional[pulumi.Input[str]]:
+        """
+        Optional: Host name to connect to, defaults to the pod IP.
+        """
+        return pulumi.get(self, "host")
+
+    @host.setter
+    def host(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "host", value)
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLifecyclePreStopTcpSocketPortArgs:
+    def __init__(__self__):
+        pass
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLivenessProbeArgs:
+    def __init__(__self__, *,
+                 exec_: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLivenessProbeExecArgs']] = None,
+                 failure_threshold: Optional[pulumi.Input[int]] = None,
+                 http_get: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLivenessProbeHttpGetArgs']] = None,
+                 initial_delay_seconds: Optional[pulumi.Input[int]] = None,
+                 period_seconds: Optional[pulumi.Input[int]] = None,
+                 success_threshold: Optional[pulumi.Input[int]] = None,
+                 tcp_socket: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLivenessProbeTcpSocketArgs']] = None,
+                 timeout_seconds: Optional[pulumi.Input[int]] = None):
+        """
+        Probes are not allowed for ephemeral containers.
+        :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLivenessProbeExecArgs'] exec_: One and only one of the following should be specified. Exec specifies the action to take.
+        :param pulumi.Input[int] failure_threshold: Minimum consecutive failures for the probe to be considered failed after having succeeded. Defaults to 3. Minimum value is 1.
+        :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLivenessProbeHttpGetArgs'] http_get: HTTPGet specifies the http request to perform.
+        :param pulumi.Input[int] initial_delay_seconds: Number of seconds after the container has started before liveness probes are initiated. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
+        :param pulumi.Input[int] period_seconds: How often (in seconds) to perform the probe. Default to 10 seconds. Minimum value is 1.
+        :param pulumi.Input[int] success_threshold: Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1. Must be 1 for liveness and startup. Minimum value is 1.
+        :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLivenessProbeTcpSocketArgs'] tcp_socket: TCPSocket specifies an action involving a TCP port. TCP hooks not yet supported TODO: implement a realistic TCP lifecycle hook
+        :param pulumi.Input[int] timeout_seconds: Number of seconds after which the probe times out. Defaults to 1 second. Minimum value is 1. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
+        """
+        if exec_ is not None:
+            pulumi.set(__self__, "exec_", exec_)
+        if failure_threshold is not None:
+            pulumi.set(__self__, "failure_threshold", failure_threshold)
+        if http_get is not None:
+            pulumi.set(__self__, "http_get", http_get)
+        if initial_delay_seconds is not None:
+            pulumi.set(__self__, "initial_delay_seconds", initial_delay_seconds)
+        if period_seconds is not None:
+            pulumi.set(__self__, "period_seconds", period_seconds)
+        if success_threshold is not None:
+            pulumi.set(__self__, "success_threshold", success_threshold)
+        if tcp_socket is not None:
+            pulumi.set(__self__, "tcp_socket", tcp_socket)
+        if timeout_seconds is not None:
+            pulumi.set(__self__, "timeout_seconds", timeout_seconds)
+
+    @property
+    @pulumi.getter(name="exec")
+    def exec_(self) -> Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLivenessProbeExecArgs']]:
+        """
+        One and only one of the following should be specified. Exec specifies the action to take.
+        """
+        return pulumi.get(self, "exec_")
+
+    @exec_.setter
+    def exec_(self, value: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLivenessProbeExecArgs']]):
+        pulumi.set(self, "exec_", value)
+
+    @property
+    @pulumi.getter(name="failureThreshold")
+    def failure_threshold(self) -> Optional[pulumi.Input[int]]:
+        """
+        Minimum consecutive failures for the probe to be considered failed after having succeeded. Defaults to 3. Minimum value is 1.
+        """
+        return pulumi.get(self, "failure_threshold")
+
+    @failure_threshold.setter
+    def failure_threshold(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "failure_threshold", value)
+
+    @property
+    @pulumi.getter(name="httpGet")
+    def http_get(self) -> Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLivenessProbeHttpGetArgs']]:
+        """
+        HTTPGet specifies the http request to perform.
+        """
+        return pulumi.get(self, "http_get")
+
+    @http_get.setter
+    def http_get(self, value: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLivenessProbeHttpGetArgs']]):
+        pulumi.set(self, "http_get", value)
+
+    @property
+    @pulumi.getter(name="initialDelaySeconds")
+    def initial_delay_seconds(self) -> Optional[pulumi.Input[int]]:
+        """
+        Number of seconds after the container has started before liveness probes are initiated. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
+        """
+        return pulumi.get(self, "initial_delay_seconds")
+
+    @initial_delay_seconds.setter
+    def initial_delay_seconds(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "initial_delay_seconds", value)
+
+    @property
+    @pulumi.getter(name="periodSeconds")
+    def period_seconds(self) -> Optional[pulumi.Input[int]]:
+        """
+        How often (in seconds) to perform the probe. Default to 10 seconds. Minimum value is 1.
+        """
+        return pulumi.get(self, "period_seconds")
+
+    @period_seconds.setter
+    def period_seconds(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "period_seconds", value)
+
+    @property
+    @pulumi.getter(name="successThreshold")
+    def success_threshold(self) -> Optional[pulumi.Input[int]]:
+        """
+        Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1. Must be 1 for liveness and startup. Minimum value is 1.
+        """
+        return pulumi.get(self, "success_threshold")
+
+    @success_threshold.setter
+    def success_threshold(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "success_threshold", value)
+
+    @property
+    @pulumi.getter(name="tcpSocket")
+    def tcp_socket(self) -> Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLivenessProbeTcpSocketArgs']]:
+        """
+        TCPSocket specifies an action involving a TCP port. TCP hooks not yet supported TODO: implement a realistic TCP lifecycle hook
+        """
+        return pulumi.get(self, "tcp_socket")
+
+    @tcp_socket.setter
+    def tcp_socket(self, value: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLivenessProbeTcpSocketArgs']]):
+        pulumi.set(self, "tcp_socket", value)
+
+    @property
+    @pulumi.getter(name="timeoutSeconds")
+    def timeout_seconds(self) -> Optional[pulumi.Input[int]]:
+        """
+        Number of seconds after which the probe times out. Defaults to 1 second. Minimum value is 1. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
+        """
+        return pulumi.get(self, "timeout_seconds")
+
+    @timeout_seconds.setter
+    def timeout_seconds(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "timeout_seconds", value)
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLivenessProbeExecArgs:
+    def __init__(__self__, *,
+                 command: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None):
+        """
+        One and only one of the following should be specified. Exec specifies the action to take.
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] command: Command is the command line to execute inside the container, the working directory for the command  is root ('/') in the container's filesystem. The command is simply exec'd, it is not run inside a shell, so traditional shell instructions ('|', etc) won't work. To use a shell, you need to explicitly call out to that shell. Exit status of 0 is treated as live/healthy and non-zero is unhealthy.
+        """
+        if command is not None:
+            pulumi.set(__self__, "command", command)
+
+    @property
+    @pulumi.getter
+    def command(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
+        """
+        Command is the command line to execute inside the container, the working directory for the command  is root ('/') in the container's filesystem. The command is simply exec'd, it is not run inside a shell, so traditional shell instructions ('|', etc) won't work. To use a shell, you need to explicitly call out to that shell. Exit status of 0 is treated as live/healthy and non-zero is unhealthy.
+        """
+        return pulumi.get(self, "command")
+
+    @command.setter
+    def command(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]):
+        pulumi.set(self, "command", value)
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLivenessProbeHttpGetArgs:
+    def __init__(__self__, *,
+                 port: pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLivenessProbeHttpGetPortArgs'],
+                 host: Optional[pulumi.Input[str]] = None,
+                 http_headers: Optional[pulumi.Input[Sequence[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLivenessProbeHttpGetHttpHeadersArgs']]]] = None,
+                 path: Optional[pulumi.Input[str]] = None,
+                 scheme: Optional[pulumi.Input[str]] = None):
+        """
+        HTTPGet specifies the http request to perform.
+        :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLivenessProbeHttpGetPortArgs'] port: Name or number of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME.
+        :param pulumi.Input[str] host: Host name to connect to, defaults to the pod IP. You probably want to set "Host" in httpHeaders instead.
+        :param pulumi.Input[Sequence[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLivenessProbeHttpGetHttpHeadersArgs']]] http_headers: Custom headers to set in the request. HTTP allows repeated headers.
+        :param pulumi.Input[str] path: Path to access on the HTTP server.
+        :param pulumi.Input[str] scheme: Scheme to use for connecting to the host. Defaults to HTTP.
+        """
+        pulumi.set(__self__, "port", port)
+        if host is not None:
+            pulumi.set(__self__, "host", host)
+        if http_headers is not None:
+            pulumi.set(__self__, "http_headers", http_headers)
+        if path is not None:
+            pulumi.set(__self__, "path", path)
+        if scheme is not None:
+            pulumi.set(__self__, "scheme", scheme)
+
+    @property
+    @pulumi.getter
+    def port(self) -> pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLivenessProbeHttpGetPortArgs']:
+        """
+        Name or number of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME.
+        """
+        return pulumi.get(self, "port")
+
+    @port.setter
+    def port(self, value: pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLivenessProbeHttpGetPortArgs']):
+        pulumi.set(self, "port", value)
+
+    @property
+    @pulumi.getter
+    def host(self) -> Optional[pulumi.Input[str]]:
+        """
+        Host name to connect to, defaults to the pod IP. You probably want to set "Host" in httpHeaders instead.
+        """
+        return pulumi.get(self, "host")
+
+    @host.setter
+    def host(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "host", value)
+
+    @property
+    @pulumi.getter(name="httpHeaders")
+    def http_headers(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLivenessProbeHttpGetHttpHeadersArgs']]]]:
+        """
+        Custom headers to set in the request. HTTP allows repeated headers.
+        """
+        return pulumi.get(self, "http_headers")
+
+    @http_headers.setter
+    def http_headers(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLivenessProbeHttpGetHttpHeadersArgs']]]]):
+        pulumi.set(self, "http_headers", value)
+
+    @property
+    @pulumi.getter
+    def path(self) -> Optional[pulumi.Input[str]]:
+        """
+        Path to access on the HTTP server.
+        """
+        return pulumi.get(self, "path")
+
+    @path.setter
+    def path(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "path", value)
+
+    @property
+    @pulumi.getter
+    def scheme(self) -> Optional[pulumi.Input[str]]:
+        """
+        Scheme to use for connecting to the host. Defaults to HTTP.
+        """
+        return pulumi.get(self, "scheme")
+
+    @scheme.setter
+    def scheme(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "scheme", value)
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLivenessProbeHttpGetHttpHeadersArgs:
+    def __init__(__self__, *,
+                 name: pulumi.Input[str],
+                 value: pulumi.Input[str]):
+        """
+        HTTPHeader describes a custom header to be used in HTTP probes
+        :param pulumi.Input[str] name: The header field name
+        :param pulumi.Input[str] value: The header field value
+        """
+        pulumi.set(__self__, "name", name)
+        pulumi.set(__self__, "value", value)
+
+    @property
+    @pulumi.getter
+    def name(self) -> pulumi.Input[str]:
+        """
+        The header field name
+        """
+        return pulumi.get(self, "name")
+
+    @name.setter
+    def name(self, value: pulumi.Input[str]):
+        pulumi.set(self, "name", value)
+
+    @property
+    @pulumi.getter
+    def value(self) -> pulumi.Input[str]:
+        """
+        The header field value
+        """
+        return pulumi.get(self, "value")
+
+    @value.setter
+    def value(self, value: pulumi.Input[str]):
+        pulumi.set(self, "value", value)
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLivenessProbeHttpGetPortArgs:
+    def __init__(__self__):
+        pass
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLivenessProbeTcpSocketArgs:
+    def __init__(__self__, *,
+                 port: pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLivenessProbeTcpSocketPortArgs'],
+                 host: Optional[pulumi.Input[str]] = None):
+        """
+        TCPSocket specifies an action involving a TCP port. TCP hooks not yet supported TODO: implement a realistic TCP lifecycle hook
+        :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLivenessProbeTcpSocketPortArgs'] port: Number or name of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME.
+        :param pulumi.Input[str] host: Optional: Host name to connect to, defaults to the pod IP.
+        """
+        pulumi.set(__self__, "port", port)
+        if host is not None:
+            pulumi.set(__self__, "host", host)
+
+    @property
+    @pulumi.getter
+    def port(self) -> pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLivenessProbeTcpSocketPortArgs']:
+        """
+        Number or name of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME.
+        """
+        return pulumi.get(self, "port")
+
+    @port.setter
+    def port(self, value: pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLivenessProbeTcpSocketPortArgs']):
+        pulumi.set(self, "port", value)
+
+    @property
+    @pulumi.getter
+    def host(self) -> Optional[pulumi.Input[str]]:
+        """
+        Optional: Host name to connect to, defaults to the pod IP.
+        """
+        return pulumi.get(self, "host")
+
+    @host.setter
+    def host(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "host", value)
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersLivenessProbeTcpSocketPortArgs:
+    def __init__(__self__):
+        pass
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersPortsArgs:
+    def __init__(__self__, *,
+                 container_port: pulumi.Input[int],
+                 host_ip: Optional[pulumi.Input[str]] = None,
+                 host_port: Optional[pulumi.Input[int]] = None,
+                 name: Optional[pulumi.Input[str]] = None,
+                 protocol: Optional[pulumi.Input[str]] = None):
+        """
+        ContainerPort represents a network port in a single container.
+        :param pulumi.Input[int] container_port: Number of port to expose on the pod's IP address. This must be a valid port number, 0 < x < 65536.
+        :param pulumi.Input[str] host_ip: What host IP to bind the external port to.
+        :param pulumi.Input[int] host_port: Number of port to expose on the host. If specified, this must be a valid port number, 0 < x < 65536. If HostNetwork is specified, this must match ContainerPort. Most containers do not need this.
+        :param pulumi.Input[str] name: If specified, this must be an IANA_SVC_NAME and unique within the pod. Each named port in a pod must have a unique name. Name for the port that can be referred to by services.
+        :param pulumi.Input[str] protocol: Protocol for port. Must be UDP, TCP, or SCTP. Defaults to "TCP".
+        """
+        pulumi.set(__self__, "container_port", container_port)
+        if host_ip is not None:
+            pulumi.set(__self__, "host_ip", host_ip)
+        if host_port is not None:
+            pulumi.set(__self__, "host_port", host_port)
+        if name is not None:
+            pulumi.set(__self__, "name", name)
+        if protocol is not None:
+            pulumi.set(__self__, "protocol", protocol)
+
+    @property
+    @pulumi.getter(name="containerPort")
+    def container_port(self) -> pulumi.Input[int]:
+        """
+        Number of port to expose on the pod's IP address. This must be a valid port number, 0 < x < 65536.
+        """
+        return pulumi.get(self, "container_port")
+
+    @container_port.setter
+    def container_port(self, value: pulumi.Input[int]):
+        pulumi.set(self, "container_port", value)
+
+    @property
+    @pulumi.getter(name="hostIP")
+    def host_ip(self) -> Optional[pulumi.Input[str]]:
+        """
+        What host IP to bind the external port to.
+        """
+        return pulumi.get(self, "host_ip")
+
+    @host_ip.setter
+    def host_ip(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "host_ip", value)
+
+    @property
+    @pulumi.getter(name="hostPort")
+    def host_port(self) -> Optional[pulumi.Input[int]]:
+        """
+        Number of port to expose on the host. If specified, this must be a valid port number, 0 < x < 65536. If HostNetwork is specified, this must match ContainerPort. Most containers do not need this.
+        """
+        return pulumi.get(self, "host_port")
+
+    @host_port.setter
+    def host_port(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "host_port", value)
+
+    @property
+    @pulumi.getter
+    def name(self) -> Optional[pulumi.Input[str]]:
+        """
+        If specified, this must be an IANA_SVC_NAME and unique within the pod. Each named port in a pod must have a unique name. Name for the port that can be referred to by services.
+        """
+        return pulumi.get(self, "name")
+
+    @name.setter
+    def name(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "name", value)
+
+    @property
+    @pulumi.getter
+    def protocol(self) -> Optional[pulumi.Input[str]]:
+        """
+        Protocol for port. Must be UDP, TCP, or SCTP. Defaults to "TCP".
+        """
+        return pulumi.get(self, "protocol")
+
+    @protocol.setter
+    def protocol(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "protocol", value)
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersReadinessProbeArgs:
+    def __init__(__self__, *,
+                 exec_: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersReadinessProbeExecArgs']] = None,
+                 failure_threshold: Optional[pulumi.Input[int]] = None,
+                 http_get: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersReadinessProbeHttpGetArgs']] = None,
+                 initial_delay_seconds: Optional[pulumi.Input[int]] = None,
+                 period_seconds: Optional[pulumi.Input[int]] = None,
+                 success_threshold: Optional[pulumi.Input[int]] = None,
+                 tcp_socket: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersReadinessProbeTcpSocketArgs']] = None,
+                 timeout_seconds: Optional[pulumi.Input[int]] = None):
+        """
+        Probes are not allowed for ephemeral containers.
+        :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersReadinessProbeExecArgs'] exec_: One and only one of the following should be specified. Exec specifies the action to take.
+        :param pulumi.Input[int] failure_threshold: Minimum consecutive failures for the probe to be considered failed after having succeeded. Defaults to 3. Minimum value is 1.
+        :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersReadinessProbeHttpGetArgs'] http_get: HTTPGet specifies the http request to perform.
+        :param pulumi.Input[int] initial_delay_seconds: Number of seconds after the container has started before liveness probes are initiated. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
+        :param pulumi.Input[int] period_seconds: How often (in seconds) to perform the probe. Default to 10 seconds. Minimum value is 1.
+        :param pulumi.Input[int] success_threshold: Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1. Must be 1 for liveness and startup. Minimum value is 1.
+        :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersReadinessProbeTcpSocketArgs'] tcp_socket: TCPSocket specifies an action involving a TCP port. TCP hooks not yet supported TODO: implement a realistic TCP lifecycle hook
+        :param pulumi.Input[int] timeout_seconds: Number of seconds after which the probe times out. Defaults to 1 second. Minimum value is 1. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
+        """
+        if exec_ is not None:
+            pulumi.set(__self__, "exec_", exec_)
+        if failure_threshold is not None:
+            pulumi.set(__self__, "failure_threshold", failure_threshold)
+        if http_get is not None:
+            pulumi.set(__self__, "http_get", http_get)
+        if initial_delay_seconds is not None:
+            pulumi.set(__self__, "initial_delay_seconds", initial_delay_seconds)
+        if period_seconds is not None:
+            pulumi.set(__self__, "period_seconds", period_seconds)
+        if success_threshold is not None:
+            pulumi.set(__self__, "success_threshold", success_threshold)
+        if tcp_socket is not None:
+            pulumi.set(__self__, "tcp_socket", tcp_socket)
+        if timeout_seconds is not None:
+            pulumi.set(__self__, "timeout_seconds", timeout_seconds)
+
+    @property
+    @pulumi.getter(name="exec")
+    def exec_(self) -> Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersReadinessProbeExecArgs']]:
+        """
+        One and only one of the following should be specified. Exec specifies the action to take.
+        """
+        return pulumi.get(self, "exec_")
+
+    @exec_.setter
+    def exec_(self, value: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersReadinessProbeExecArgs']]):
+        pulumi.set(self, "exec_", value)
+
+    @property
+    @pulumi.getter(name="failureThreshold")
+    def failure_threshold(self) -> Optional[pulumi.Input[int]]:
+        """
+        Minimum consecutive failures for the probe to be considered failed after having succeeded. Defaults to 3. Minimum value is 1.
+        """
+        return pulumi.get(self, "failure_threshold")
+
+    @failure_threshold.setter
+    def failure_threshold(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "failure_threshold", value)
+
+    @property
+    @pulumi.getter(name="httpGet")
+    def http_get(self) -> Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersReadinessProbeHttpGetArgs']]:
+        """
+        HTTPGet specifies the http request to perform.
+        """
+        return pulumi.get(self, "http_get")
+
+    @http_get.setter
+    def http_get(self, value: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersReadinessProbeHttpGetArgs']]):
+        pulumi.set(self, "http_get", value)
+
+    @property
+    @pulumi.getter(name="initialDelaySeconds")
+    def initial_delay_seconds(self) -> Optional[pulumi.Input[int]]:
+        """
+        Number of seconds after the container has started before liveness probes are initiated. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
+        """
+        return pulumi.get(self, "initial_delay_seconds")
+
+    @initial_delay_seconds.setter
+    def initial_delay_seconds(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "initial_delay_seconds", value)
+
+    @property
+    @pulumi.getter(name="periodSeconds")
+    def period_seconds(self) -> Optional[pulumi.Input[int]]:
+        """
+        How often (in seconds) to perform the probe. Default to 10 seconds. Minimum value is 1.
+        """
+        return pulumi.get(self, "period_seconds")
+
+    @period_seconds.setter
+    def period_seconds(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "period_seconds", value)
+
+    @property
+    @pulumi.getter(name="successThreshold")
+    def success_threshold(self) -> Optional[pulumi.Input[int]]:
+        """
+        Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1. Must be 1 for liveness and startup. Minimum value is 1.
+        """
+        return pulumi.get(self, "success_threshold")
+
+    @success_threshold.setter
+    def success_threshold(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "success_threshold", value)
+
+    @property
+    @pulumi.getter(name="tcpSocket")
+    def tcp_socket(self) -> Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersReadinessProbeTcpSocketArgs']]:
+        """
+        TCPSocket specifies an action involving a TCP port. TCP hooks not yet supported TODO: implement a realistic TCP lifecycle hook
+        """
+        return pulumi.get(self, "tcp_socket")
+
+    @tcp_socket.setter
+    def tcp_socket(self, value: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersReadinessProbeTcpSocketArgs']]):
+        pulumi.set(self, "tcp_socket", value)
+
+    @property
+    @pulumi.getter(name="timeoutSeconds")
+    def timeout_seconds(self) -> Optional[pulumi.Input[int]]:
+        """
+        Number of seconds after which the probe times out. Defaults to 1 second. Minimum value is 1. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
+        """
+        return pulumi.get(self, "timeout_seconds")
+
+    @timeout_seconds.setter
+    def timeout_seconds(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "timeout_seconds", value)
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersReadinessProbeExecArgs:
+    def __init__(__self__, *,
+                 command: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None):
+        """
+        One and only one of the following should be specified. Exec specifies the action to take.
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] command: Command is the command line to execute inside the container, the working directory for the command  is root ('/') in the container's filesystem. The command is simply exec'd, it is not run inside a shell, so traditional shell instructions ('|', etc) won't work. To use a shell, you need to explicitly call out to that shell. Exit status of 0 is treated as live/healthy and non-zero is unhealthy.
+        """
+        if command is not None:
+            pulumi.set(__self__, "command", command)
+
+    @property
+    @pulumi.getter
+    def command(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
+        """
+        Command is the command line to execute inside the container, the working directory for the command  is root ('/') in the container's filesystem. The command is simply exec'd, it is not run inside a shell, so traditional shell instructions ('|', etc) won't work. To use a shell, you need to explicitly call out to that shell. Exit status of 0 is treated as live/healthy and non-zero is unhealthy.
+        """
+        return pulumi.get(self, "command")
+
+    @command.setter
+    def command(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]):
+        pulumi.set(self, "command", value)
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersReadinessProbeHttpGetArgs:
+    def __init__(__self__, *,
+                 port: pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersReadinessProbeHttpGetPortArgs'],
+                 host: Optional[pulumi.Input[str]] = None,
+                 http_headers: Optional[pulumi.Input[Sequence[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersReadinessProbeHttpGetHttpHeadersArgs']]]] = None,
+                 path: Optional[pulumi.Input[str]] = None,
+                 scheme: Optional[pulumi.Input[str]] = None):
+        """
+        HTTPGet specifies the http request to perform.
+        :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersReadinessProbeHttpGetPortArgs'] port: Name or number of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME.
+        :param pulumi.Input[str] host: Host name to connect to, defaults to the pod IP. You probably want to set "Host" in httpHeaders instead.
+        :param pulumi.Input[Sequence[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersReadinessProbeHttpGetHttpHeadersArgs']]] http_headers: Custom headers to set in the request. HTTP allows repeated headers.
+        :param pulumi.Input[str] path: Path to access on the HTTP server.
+        :param pulumi.Input[str] scheme: Scheme to use for connecting to the host. Defaults to HTTP.
+        """
+        pulumi.set(__self__, "port", port)
+        if host is not None:
+            pulumi.set(__self__, "host", host)
+        if http_headers is not None:
+            pulumi.set(__self__, "http_headers", http_headers)
+        if path is not None:
+            pulumi.set(__self__, "path", path)
+        if scheme is not None:
+            pulumi.set(__self__, "scheme", scheme)
+
+    @property
+    @pulumi.getter
+    def port(self) -> pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersReadinessProbeHttpGetPortArgs']:
+        """
+        Name or number of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME.
+        """
+        return pulumi.get(self, "port")
+
+    @port.setter
+    def port(self, value: pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersReadinessProbeHttpGetPortArgs']):
+        pulumi.set(self, "port", value)
+
+    @property
+    @pulumi.getter
+    def host(self) -> Optional[pulumi.Input[str]]:
+        """
+        Host name to connect to, defaults to the pod IP. You probably want to set "Host" in httpHeaders instead.
+        """
+        return pulumi.get(self, "host")
+
+    @host.setter
+    def host(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "host", value)
+
+    @property
+    @pulumi.getter(name="httpHeaders")
+    def http_headers(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersReadinessProbeHttpGetHttpHeadersArgs']]]]:
+        """
+        Custom headers to set in the request. HTTP allows repeated headers.
+        """
+        return pulumi.get(self, "http_headers")
+
+    @http_headers.setter
+    def http_headers(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersReadinessProbeHttpGetHttpHeadersArgs']]]]):
+        pulumi.set(self, "http_headers", value)
+
+    @property
+    @pulumi.getter
+    def path(self) -> Optional[pulumi.Input[str]]:
+        """
+        Path to access on the HTTP server.
+        """
+        return pulumi.get(self, "path")
+
+    @path.setter
+    def path(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "path", value)
+
+    @property
+    @pulumi.getter
+    def scheme(self) -> Optional[pulumi.Input[str]]:
+        """
+        Scheme to use for connecting to the host. Defaults to HTTP.
+        """
+        return pulumi.get(self, "scheme")
+
+    @scheme.setter
+    def scheme(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "scheme", value)
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersReadinessProbeHttpGetHttpHeadersArgs:
+    def __init__(__self__, *,
+                 name: pulumi.Input[str],
+                 value: pulumi.Input[str]):
+        """
+        HTTPHeader describes a custom header to be used in HTTP probes
+        :param pulumi.Input[str] name: The header field name
+        :param pulumi.Input[str] value: The header field value
+        """
+        pulumi.set(__self__, "name", name)
+        pulumi.set(__self__, "value", value)
+
+    @property
+    @pulumi.getter
+    def name(self) -> pulumi.Input[str]:
+        """
+        The header field name
+        """
+        return pulumi.get(self, "name")
+
+    @name.setter
+    def name(self, value: pulumi.Input[str]):
+        pulumi.set(self, "name", value)
+
+    @property
+    @pulumi.getter
+    def value(self) -> pulumi.Input[str]:
+        """
+        The header field value
+        """
+        return pulumi.get(self, "value")
+
+    @value.setter
+    def value(self, value: pulumi.Input[str]):
+        pulumi.set(self, "value", value)
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersReadinessProbeHttpGetPortArgs:
+    def __init__(__self__):
+        pass
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersReadinessProbeTcpSocketArgs:
+    def __init__(__self__, *,
+                 port: pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersReadinessProbeTcpSocketPortArgs'],
+                 host: Optional[pulumi.Input[str]] = None):
+        """
+        TCPSocket specifies an action involving a TCP port. TCP hooks not yet supported TODO: implement a realistic TCP lifecycle hook
+        :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersReadinessProbeTcpSocketPortArgs'] port: Number or name of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME.
+        :param pulumi.Input[str] host: Optional: Host name to connect to, defaults to the pod IP.
+        """
+        pulumi.set(__self__, "port", port)
+        if host is not None:
+            pulumi.set(__self__, "host", host)
+
+    @property
+    @pulumi.getter
+    def port(self) -> pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersReadinessProbeTcpSocketPortArgs']:
+        """
+        Number or name of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME.
+        """
+        return pulumi.get(self, "port")
+
+    @port.setter
+    def port(self, value: pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersReadinessProbeTcpSocketPortArgs']):
+        pulumi.set(self, "port", value)
+
+    @property
+    @pulumi.getter
+    def host(self) -> Optional[pulumi.Input[str]]:
+        """
+        Optional: Host name to connect to, defaults to the pod IP.
+        """
+        return pulumi.get(self, "host")
+
+    @host.setter
+    def host(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "host", value)
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersReadinessProbeTcpSocketPortArgs:
+    def __init__(__self__):
+        pass
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersResourcesArgs:
+    def __init__(__self__, *,
+                 limits: Optional[pulumi.Input[Mapping[str, pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersResourcesLimitsArgs']]]] = None,
+                 requests: Optional[pulumi.Input[Mapping[str, pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersResourcesRequestsArgs']]]] = None):
+        """
+        Resources are not allowed for ephemeral containers. Ephemeral containers use spare resources already allocated to the pod.
+        :param pulumi.Input[Mapping[str, pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersResourcesLimitsArgs']]] limits: Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
+        :param pulumi.Input[Mapping[str, pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersResourcesRequestsArgs']]] requests: Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
+        """
+        if limits is not None:
+            pulumi.set(__self__, "limits", limits)
+        if requests is not None:
+            pulumi.set(__self__, "requests", requests)
+
+    @property
+    @pulumi.getter
+    def limits(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersResourcesLimitsArgs']]]]:
+        """
+        Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
+        """
+        return pulumi.get(self, "limits")
+
+    @limits.setter
+    def limits(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersResourcesLimitsArgs']]]]):
+        pulumi.set(self, "limits", value)
+
+    @property
+    @pulumi.getter
+    def requests(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersResourcesRequestsArgs']]]]:
+        """
+        Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
+        """
+        return pulumi.get(self, "requests")
+
+    @requests.setter
+    def requests(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersResourcesRequestsArgs']]]]):
+        pulumi.set(self, "requests", value)
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersResourcesLimitsArgs:
+    def __init__(__self__):
+        pass
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersResourcesRequestsArgs:
+    def __init__(__self__):
+        pass
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersSecurityContextArgs:
+    def __init__(__self__, *,
+                 allow_privilege_escalation: Optional[pulumi.Input[bool]] = None,
+                 capabilities: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersSecurityContextCapabilitiesArgs']] = None,
+                 privileged: Optional[pulumi.Input[bool]] = None,
+                 proc_mount: Optional[pulumi.Input[str]] = None,
+                 read_only_root_filesystem: Optional[pulumi.Input[bool]] = None,
+                 run_as_group: Optional[pulumi.Input[int]] = None,
+                 run_as_non_root: Optional[pulumi.Input[bool]] = None,
+                 run_as_user: Optional[pulumi.Input[int]] = None,
+                 se_linux_options: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersSecurityContextSeLinuxOptionsArgs']] = None,
+                 windows_options: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersSecurityContextWindowsOptionsArgs']] = None):
+        """
+        SecurityContext is not allowed for ephemeral containers.
+        :param pulumi.Input[bool] allow_privilege_escalation: AllowPrivilegeEscalation controls whether a process can gain more privileges than its parent process. This bool directly controls if the no_new_privs flag will be set on the container process. AllowPrivilegeEscalation is true always when the container is: 1) run as Privileged 2) has CAP_SYS_ADMIN
+        :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersSecurityContextCapabilitiesArgs'] capabilities: The capabilities to add/drop when running containers. Defaults to the default set of capabilities granted by the container runtime.
+        :param pulumi.Input[bool] privileged: Run container in privileged mode. Processes in privileged containers are essentially equivalent to root on the host. Defaults to false.
+        :param pulumi.Input[str] proc_mount: procMount denotes the type of proc mount to use for the containers. The default is DefaultProcMount which uses the container runtime defaults for readonly paths and masked paths. This requires the ProcMountType feature flag to be enabled.
+        :param pulumi.Input[bool] read_only_root_filesystem: Whether this container has a read-only root filesystem. Default is false.
+        :param pulumi.Input[int] run_as_group: The GID to run the entrypoint of the container process. Uses runtime default if unset. May also be set in PodSecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
+        :param pulumi.Input[bool] run_as_non_root: Indicates that the container must run as a non-root user. If true, the Kubelet will validate the image at runtime to ensure that it does not run as UID 0 (root) and fail to start the container if it does. If unset or false, no such validation will be performed. May also be set in PodSecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
+        :param pulumi.Input[int] run_as_user: The UID to run the entrypoint of the container process. Defaults to user specified in image metadata if unspecified. May also be set in PodSecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
+        :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersSecurityContextSeLinuxOptionsArgs'] se_linux_options: The SELinux context to be applied to the container. If unspecified, the container runtime will allocate a random SELinux context for each container.  May also be set in PodSecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
+        :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersSecurityContextWindowsOptionsArgs'] windows_options: The Windows specific settings applied to all containers. If unspecified, the options from the PodSecurityContext will be used. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
+        """
+        if allow_privilege_escalation is not None:
+            pulumi.set(__self__, "allow_privilege_escalation", allow_privilege_escalation)
+        if capabilities is not None:
+            pulumi.set(__self__, "capabilities", capabilities)
+        if privileged is not None:
+            pulumi.set(__self__, "privileged", privileged)
+        if proc_mount is not None:
+            pulumi.set(__self__, "proc_mount", proc_mount)
+        if read_only_root_filesystem is not None:
+            pulumi.set(__self__, "read_only_root_filesystem", read_only_root_filesystem)
+        if run_as_group is not None:
+            pulumi.set(__self__, "run_as_group", run_as_group)
+        if run_as_non_root is not None:
+            pulumi.set(__self__, "run_as_non_root", run_as_non_root)
+        if run_as_user is not None:
+            pulumi.set(__self__, "run_as_user", run_as_user)
+        if se_linux_options is not None:
+            pulumi.set(__self__, "se_linux_options", se_linux_options)
+        if windows_options is not None:
+            pulumi.set(__self__, "windows_options", windows_options)
+
+    @property
+    @pulumi.getter(name="allowPrivilegeEscalation")
+    def allow_privilege_escalation(self) -> Optional[pulumi.Input[bool]]:
+        """
+        AllowPrivilegeEscalation controls whether a process can gain more privileges than its parent process. This bool directly controls if the no_new_privs flag will be set on the container process. AllowPrivilegeEscalation is true always when the container is: 1) run as Privileged 2) has CAP_SYS_ADMIN
+        """
+        return pulumi.get(self, "allow_privilege_escalation")
+
+    @allow_privilege_escalation.setter
+    def allow_privilege_escalation(self, value: Optional[pulumi.Input[bool]]):
+        pulumi.set(self, "allow_privilege_escalation", value)
+
+    @property
+    @pulumi.getter
+    def capabilities(self) -> Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersSecurityContextCapabilitiesArgs']]:
+        """
+        The capabilities to add/drop when running containers. Defaults to the default set of capabilities granted by the container runtime.
+        """
+        return pulumi.get(self, "capabilities")
+
+    @capabilities.setter
+    def capabilities(self, value: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersSecurityContextCapabilitiesArgs']]):
+        pulumi.set(self, "capabilities", value)
+
+    @property
+    @pulumi.getter
+    def privileged(self) -> Optional[pulumi.Input[bool]]:
+        """
+        Run container in privileged mode. Processes in privileged containers are essentially equivalent to root on the host. Defaults to false.
+        """
+        return pulumi.get(self, "privileged")
+
+    @privileged.setter
+    def privileged(self, value: Optional[pulumi.Input[bool]]):
+        pulumi.set(self, "privileged", value)
+
+    @property
+    @pulumi.getter(name="procMount")
+    def proc_mount(self) -> Optional[pulumi.Input[str]]:
+        """
+        procMount denotes the type of proc mount to use for the containers. The default is DefaultProcMount which uses the container runtime defaults for readonly paths and masked paths. This requires the ProcMountType feature flag to be enabled.
+        """
+        return pulumi.get(self, "proc_mount")
+
+    @proc_mount.setter
+    def proc_mount(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "proc_mount", value)
+
+    @property
+    @pulumi.getter(name="readOnlyRootFilesystem")
+    def read_only_root_filesystem(self) -> Optional[pulumi.Input[bool]]:
+        """
+        Whether this container has a read-only root filesystem. Default is false.
+        """
+        return pulumi.get(self, "read_only_root_filesystem")
+
+    @read_only_root_filesystem.setter
+    def read_only_root_filesystem(self, value: Optional[pulumi.Input[bool]]):
+        pulumi.set(self, "read_only_root_filesystem", value)
+
+    @property
+    @pulumi.getter(name="runAsGroup")
+    def run_as_group(self) -> Optional[pulumi.Input[int]]:
+        """
+        The GID to run the entrypoint of the container process. Uses runtime default if unset. May also be set in PodSecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
+        """
+        return pulumi.get(self, "run_as_group")
+
+    @run_as_group.setter
+    def run_as_group(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "run_as_group", value)
+
+    @property
+    @pulumi.getter(name="runAsNonRoot")
+    def run_as_non_root(self) -> Optional[pulumi.Input[bool]]:
+        """
+        Indicates that the container must run as a non-root user. If true, the Kubelet will validate the image at runtime to ensure that it does not run as UID 0 (root) and fail to start the container if it does. If unset or false, no such validation will be performed. May also be set in PodSecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
+        """
+        return pulumi.get(self, "run_as_non_root")
+
+    @run_as_non_root.setter
+    def run_as_non_root(self, value: Optional[pulumi.Input[bool]]):
+        pulumi.set(self, "run_as_non_root", value)
+
+    @property
+    @pulumi.getter(name="runAsUser")
+    def run_as_user(self) -> Optional[pulumi.Input[int]]:
+        """
+        The UID to run the entrypoint of the container process. Defaults to user specified in image metadata if unspecified. May also be set in PodSecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
+        """
+        return pulumi.get(self, "run_as_user")
+
+    @run_as_user.setter
+    def run_as_user(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "run_as_user", value)
+
+    @property
+    @pulumi.getter(name="seLinuxOptions")
+    def se_linux_options(self) -> Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersSecurityContextSeLinuxOptionsArgs']]:
+        """
+        The SELinux context to be applied to the container. If unspecified, the container runtime will allocate a random SELinux context for each container.  May also be set in PodSecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
+        """
+        return pulumi.get(self, "se_linux_options")
+
+    @se_linux_options.setter
+    def se_linux_options(self, value: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersSecurityContextSeLinuxOptionsArgs']]):
+        pulumi.set(self, "se_linux_options", value)
+
+    @property
+    @pulumi.getter(name="windowsOptions")
+    def windows_options(self) -> Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersSecurityContextWindowsOptionsArgs']]:
+        """
+        The Windows specific settings applied to all containers. If unspecified, the options from the PodSecurityContext will be used. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
+        """
+        return pulumi.get(self, "windows_options")
+
+    @windows_options.setter
+    def windows_options(self, value: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersSecurityContextWindowsOptionsArgs']]):
+        pulumi.set(self, "windows_options", value)
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersSecurityContextCapabilitiesArgs:
+    def __init__(__self__, *,
+                 add: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
+                 drop: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None):
+        """
+        The capabilities to add/drop when running containers. Defaults to the default set of capabilities granted by the container runtime.
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] add: Added capabilities
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] drop: Removed capabilities
+        """
+        if add is not None:
+            pulumi.set(__self__, "add", add)
+        if drop is not None:
+            pulumi.set(__self__, "drop", drop)
+
+    @property
+    @pulumi.getter
+    def add(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
+        """
+        Added capabilities
+        """
+        return pulumi.get(self, "add")
+
+    @add.setter
+    def add(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]):
+        pulumi.set(self, "add", value)
+
+    @property
+    @pulumi.getter
+    def drop(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
+        """
+        Removed capabilities
+        """
+        return pulumi.get(self, "drop")
+
+    @drop.setter
+    def drop(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]):
+        pulumi.set(self, "drop", value)
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersSecurityContextSeLinuxOptionsArgs:
+    def __init__(__self__, *,
+                 level: Optional[pulumi.Input[str]] = None,
+                 role: Optional[pulumi.Input[str]] = None,
+                 type: Optional[pulumi.Input[str]] = None,
+                 user: Optional[pulumi.Input[str]] = None):
+        """
+        The SELinux context to be applied to the container. If unspecified, the container runtime will allocate a random SELinux context for each container.  May also be set in PodSecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
+        :param pulumi.Input[str] level: Level is SELinux level label that applies to the container.
+        :param pulumi.Input[str] role: Role is a SELinux role label that applies to the container.
+        :param pulumi.Input[str] type: Type is a SELinux type label that applies to the container.
+        :param pulumi.Input[str] user: User is a SELinux user label that applies to the container.
+        """
+        if level is not None:
+            pulumi.set(__self__, "level", level)
+        if role is not None:
+            pulumi.set(__self__, "role", role)
+        if type is not None:
+            pulumi.set(__self__, "type", type)
+        if user is not None:
+            pulumi.set(__self__, "user", user)
+
+    @property
+    @pulumi.getter
+    def level(self) -> Optional[pulumi.Input[str]]:
+        """
+        Level is SELinux level label that applies to the container.
+        """
+        return pulumi.get(self, "level")
+
+    @level.setter
+    def level(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "level", value)
+
+    @property
+    @pulumi.getter
+    def role(self) -> Optional[pulumi.Input[str]]:
+        """
+        Role is a SELinux role label that applies to the container.
+        """
+        return pulumi.get(self, "role")
+
+    @role.setter
+    def role(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "role", value)
+
+    @property
+    @pulumi.getter
+    def type(self) -> Optional[pulumi.Input[str]]:
+        """
+        Type is a SELinux type label that applies to the container.
+        """
+        return pulumi.get(self, "type")
+
+    @type.setter
+    def type(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "type", value)
+
+    @property
+    @pulumi.getter
+    def user(self) -> Optional[pulumi.Input[str]]:
+        """
+        User is a SELinux user label that applies to the container.
+        """
+        return pulumi.get(self, "user")
+
+    @user.setter
+    def user(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "user", value)
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersSecurityContextWindowsOptionsArgs:
+    def __init__(__self__, *,
+                 gmsa_credential_spec: Optional[pulumi.Input[str]] = None,
+                 gmsa_credential_spec_name: Optional[pulumi.Input[str]] = None,
+                 run_as_user_name: Optional[pulumi.Input[str]] = None):
+        """
+        The Windows specific settings applied to all containers. If unspecified, the options from the PodSecurityContext will be used. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
+        :param pulumi.Input[str] gmsa_credential_spec: GMSACredentialSpec is where the GMSA admission webhook (https://github.com/kubernetes-sigs/windows-gmsa) inlines the contents of the GMSA credential spec named by the GMSACredentialSpecName field.
+        :param pulumi.Input[str] gmsa_credential_spec_name: GMSACredentialSpecName is the name of the GMSA credential spec to use.
+        :param pulumi.Input[str] run_as_user_name: The UserName in Windows to run the entrypoint of the container process. Defaults to the user specified in image metadata if unspecified. May also be set in PodSecurityContext. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
+        """
+        if gmsa_credential_spec is not None:
+            pulumi.set(__self__, "gmsa_credential_spec", gmsa_credential_spec)
+        if gmsa_credential_spec_name is not None:
+            pulumi.set(__self__, "gmsa_credential_spec_name", gmsa_credential_spec_name)
+        if run_as_user_name is not None:
+            pulumi.set(__self__, "run_as_user_name", run_as_user_name)
+
+    @property
+    @pulumi.getter(name="gmsaCredentialSpec")
+    def gmsa_credential_spec(self) -> Optional[pulumi.Input[str]]:
+        """
+        GMSACredentialSpec is where the GMSA admission webhook (https://github.com/kubernetes-sigs/windows-gmsa) inlines the contents of the GMSA credential spec named by the GMSACredentialSpecName field.
+        """
+        return pulumi.get(self, "gmsa_credential_spec")
+
+    @gmsa_credential_spec.setter
+    def gmsa_credential_spec(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "gmsa_credential_spec", value)
+
+    @property
+    @pulumi.getter(name="gmsaCredentialSpecName")
+    def gmsa_credential_spec_name(self) -> Optional[pulumi.Input[str]]:
+        """
+        GMSACredentialSpecName is the name of the GMSA credential spec to use.
+        """
+        return pulumi.get(self, "gmsa_credential_spec_name")
+
+    @gmsa_credential_spec_name.setter
+    def gmsa_credential_spec_name(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "gmsa_credential_spec_name", value)
+
+    @property
+    @pulumi.getter(name="runAsUserName")
+    def run_as_user_name(self) -> Optional[pulumi.Input[str]]:
+        """
+        The UserName in Windows to run the entrypoint of the container process. Defaults to the user specified in image metadata if unspecified. May also be set in PodSecurityContext. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
+        """
+        return pulumi.get(self, "run_as_user_name")
+
+    @run_as_user_name.setter
+    def run_as_user_name(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "run_as_user_name", value)
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersStartupProbeArgs:
+    def __init__(__self__, *,
+                 exec_: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersStartupProbeExecArgs']] = None,
+                 failure_threshold: Optional[pulumi.Input[int]] = None,
+                 http_get: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersStartupProbeHttpGetArgs']] = None,
+                 initial_delay_seconds: Optional[pulumi.Input[int]] = None,
+                 period_seconds: Optional[pulumi.Input[int]] = None,
+                 success_threshold: Optional[pulumi.Input[int]] = None,
+                 tcp_socket: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersStartupProbeTcpSocketArgs']] = None,
+                 timeout_seconds: Optional[pulumi.Input[int]] = None):
+        """
+        Probes are not allowed for ephemeral containers.
+        :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersStartupProbeExecArgs'] exec_: One and only one of the following should be specified. Exec specifies the action to take.
+        :param pulumi.Input[int] failure_threshold: Minimum consecutive failures for the probe to be considered failed after having succeeded. Defaults to 3. Minimum value is 1.
+        :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersStartupProbeHttpGetArgs'] http_get: HTTPGet specifies the http request to perform.
+        :param pulumi.Input[int] initial_delay_seconds: Number of seconds after the container has started before liveness probes are initiated. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
+        :param pulumi.Input[int] period_seconds: How often (in seconds) to perform the probe. Default to 10 seconds. Minimum value is 1.
+        :param pulumi.Input[int] success_threshold: Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1. Must be 1 for liveness and startup. Minimum value is 1.
+        :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersStartupProbeTcpSocketArgs'] tcp_socket: TCPSocket specifies an action involving a TCP port. TCP hooks not yet supported TODO: implement a realistic TCP lifecycle hook
+        :param pulumi.Input[int] timeout_seconds: Number of seconds after which the probe times out. Defaults to 1 second. Minimum value is 1. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
+        """
+        if exec_ is not None:
+            pulumi.set(__self__, "exec_", exec_)
+        if failure_threshold is not None:
+            pulumi.set(__self__, "failure_threshold", failure_threshold)
+        if http_get is not None:
+            pulumi.set(__self__, "http_get", http_get)
+        if initial_delay_seconds is not None:
+            pulumi.set(__self__, "initial_delay_seconds", initial_delay_seconds)
+        if period_seconds is not None:
+            pulumi.set(__self__, "period_seconds", period_seconds)
+        if success_threshold is not None:
+            pulumi.set(__self__, "success_threshold", success_threshold)
+        if tcp_socket is not None:
+            pulumi.set(__self__, "tcp_socket", tcp_socket)
+        if timeout_seconds is not None:
+            pulumi.set(__self__, "timeout_seconds", timeout_seconds)
+
+    @property
+    @pulumi.getter(name="exec")
+    def exec_(self) -> Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersStartupProbeExecArgs']]:
+        """
+        One and only one of the following should be specified. Exec specifies the action to take.
+        """
+        return pulumi.get(self, "exec_")
+
+    @exec_.setter
+    def exec_(self, value: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersStartupProbeExecArgs']]):
+        pulumi.set(self, "exec_", value)
+
+    @property
+    @pulumi.getter(name="failureThreshold")
+    def failure_threshold(self) -> Optional[pulumi.Input[int]]:
+        """
+        Minimum consecutive failures for the probe to be considered failed after having succeeded. Defaults to 3. Minimum value is 1.
+        """
+        return pulumi.get(self, "failure_threshold")
+
+    @failure_threshold.setter
+    def failure_threshold(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "failure_threshold", value)
+
+    @property
+    @pulumi.getter(name="httpGet")
+    def http_get(self) -> Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersStartupProbeHttpGetArgs']]:
+        """
+        HTTPGet specifies the http request to perform.
+        """
+        return pulumi.get(self, "http_get")
+
+    @http_get.setter
+    def http_get(self, value: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersStartupProbeHttpGetArgs']]):
+        pulumi.set(self, "http_get", value)
+
+    @property
+    @pulumi.getter(name="initialDelaySeconds")
+    def initial_delay_seconds(self) -> Optional[pulumi.Input[int]]:
+        """
+        Number of seconds after the container has started before liveness probes are initiated. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
+        """
+        return pulumi.get(self, "initial_delay_seconds")
+
+    @initial_delay_seconds.setter
+    def initial_delay_seconds(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "initial_delay_seconds", value)
+
+    @property
+    @pulumi.getter(name="periodSeconds")
+    def period_seconds(self) -> Optional[pulumi.Input[int]]:
+        """
+        How often (in seconds) to perform the probe. Default to 10 seconds. Minimum value is 1.
+        """
+        return pulumi.get(self, "period_seconds")
+
+    @period_seconds.setter
+    def period_seconds(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "period_seconds", value)
+
+    @property
+    @pulumi.getter(name="successThreshold")
+    def success_threshold(self) -> Optional[pulumi.Input[int]]:
+        """
+        Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1. Must be 1 for liveness and startup. Minimum value is 1.
+        """
+        return pulumi.get(self, "success_threshold")
+
+    @success_threshold.setter
+    def success_threshold(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "success_threshold", value)
+
+    @property
+    @pulumi.getter(name="tcpSocket")
+    def tcp_socket(self) -> Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersStartupProbeTcpSocketArgs']]:
+        """
+        TCPSocket specifies an action involving a TCP port. TCP hooks not yet supported TODO: implement a realistic TCP lifecycle hook
+        """
+        return pulumi.get(self, "tcp_socket")
+
+    @tcp_socket.setter
+    def tcp_socket(self, value: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersStartupProbeTcpSocketArgs']]):
+        pulumi.set(self, "tcp_socket", value)
+
+    @property
+    @pulumi.getter(name="timeoutSeconds")
+    def timeout_seconds(self) -> Optional[pulumi.Input[int]]:
+        """
+        Number of seconds after which the probe times out. Defaults to 1 second. Minimum value is 1. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
+        """
+        return pulumi.get(self, "timeout_seconds")
+
+    @timeout_seconds.setter
+    def timeout_seconds(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "timeout_seconds", value)
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersStartupProbeExecArgs:
+    def __init__(__self__, *,
+                 command: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None):
+        """
+        One and only one of the following should be specified. Exec specifies the action to take.
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] command: Command is the command line to execute inside the container, the working directory for the command  is root ('/') in the container's filesystem. The command is simply exec'd, it is not run inside a shell, so traditional shell instructions ('|', etc) won't work. To use a shell, you need to explicitly call out to that shell. Exit status of 0 is treated as live/healthy and non-zero is unhealthy.
+        """
+        if command is not None:
+            pulumi.set(__self__, "command", command)
+
+    @property
+    @pulumi.getter
+    def command(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
+        """
+        Command is the command line to execute inside the container, the working directory for the command  is root ('/') in the container's filesystem. The command is simply exec'd, it is not run inside a shell, so traditional shell instructions ('|', etc) won't work. To use a shell, you need to explicitly call out to that shell. Exit status of 0 is treated as live/healthy and non-zero is unhealthy.
+        """
+        return pulumi.get(self, "command")
+
+    @command.setter
+    def command(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]):
+        pulumi.set(self, "command", value)
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersStartupProbeHttpGetArgs:
+    def __init__(__self__, *,
+                 port: pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersStartupProbeHttpGetPortArgs'],
+                 host: Optional[pulumi.Input[str]] = None,
+                 http_headers: Optional[pulumi.Input[Sequence[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersStartupProbeHttpGetHttpHeadersArgs']]]] = None,
+                 path: Optional[pulumi.Input[str]] = None,
+                 scheme: Optional[pulumi.Input[str]] = None):
+        """
+        HTTPGet specifies the http request to perform.
+        :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersStartupProbeHttpGetPortArgs'] port: Name or number of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME.
+        :param pulumi.Input[str] host: Host name to connect to, defaults to the pod IP. You probably want to set "Host" in httpHeaders instead.
+        :param pulumi.Input[Sequence[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersStartupProbeHttpGetHttpHeadersArgs']]] http_headers: Custom headers to set in the request. HTTP allows repeated headers.
+        :param pulumi.Input[str] path: Path to access on the HTTP server.
+        :param pulumi.Input[str] scheme: Scheme to use for connecting to the host. Defaults to HTTP.
+        """
+        pulumi.set(__self__, "port", port)
+        if host is not None:
+            pulumi.set(__self__, "host", host)
+        if http_headers is not None:
+            pulumi.set(__self__, "http_headers", http_headers)
+        if path is not None:
+            pulumi.set(__self__, "path", path)
+        if scheme is not None:
+            pulumi.set(__self__, "scheme", scheme)
+
+    @property
+    @pulumi.getter
+    def port(self) -> pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersStartupProbeHttpGetPortArgs']:
+        """
+        Name or number of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME.
+        """
+        return pulumi.get(self, "port")
+
+    @port.setter
+    def port(self, value: pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersStartupProbeHttpGetPortArgs']):
+        pulumi.set(self, "port", value)
+
+    @property
+    @pulumi.getter
+    def host(self) -> Optional[pulumi.Input[str]]:
+        """
+        Host name to connect to, defaults to the pod IP. You probably want to set "Host" in httpHeaders instead.
+        """
+        return pulumi.get(self, "host")
+
+    @host.setter
+    def host(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "host", value)
+
+    @property
+    @pulumi.getter(name="httpHeaders")
+    def http_headers(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersStartupProbeHttpGetHttpHeadersArgs']]]]:
+        """
+        Custom headers to set in the request. HTTP allows repeated headers.
+        """
+        return pulumi.get(self, "http_headers")
+
+    @http_headers.setter
+    def http_headers(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersStartupProbeHttpGetHttpHeadersArgs']]]]):
+        pulumi.set(self, "http_headers", value)
+
+    @property
+    @pulumi.getter
+    def path(self) -> Optional[pulumi.Input[str]]:
+        """
+        Path to access on the HTTP server.
+        """
+        return pulumi.get(self, "path")
+
+    @path.setter
+    def path(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "path", value)
+
+    @property
+    @pulumi.getter
+    def scheme(self) -> Optional[pulumi.Input[str]]:
+        """
+        Scheme to use for connecting to the host. Defaults to HTTP.
+        """
+        return pulumi.get(self, "scheme")
+
+    @scheme.setter
+    def scheme(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "scheme", value)
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersStartupProbeHttpGetHttpHeadersArgs:
+    def __init__(__self__, *,
+                 name: pulumi.Input[str],
+                 value: pulumi.Input[str]):
+        """
+        HTTPHeader describes a custom header to be used in HTTP probes
+        :param pulumi.Input[str] name: The header field name
+        :param pulumi.Input[str] value: The header field value
+        """
+        pulumi.set(__self__, "name", name)
+        pulumi.set(__self__, "value", value)
+
+    @property
+    @pulumi.getter
+    def name(self) -> pulumi.Input[str]:
+        """
+        The header field name
+        """
+        return pulumi.get(self, "name")
+
+    @name.setter
+    def name(self, value: pulumi.Input[str]):
+        pulumi.set(self, "name", value)
+
+    @property
+    @pulumi.getter
+    def value(self) -> pulumi.Input[str]:
+        """
+        The header field value
+        """
+        return pulumi.get(self, "value")
+
+    @value.setter
+    def value(self, value: pulumi.Input[str]):
+        pulumi.set(self, "value", value)
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersStartupProbeHttpGetPortArgs:
+    def __init__(__self__):
+        pass
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersStartupProbeTcpSocketArgs:
+    def __init__(__self__, *,
+                 port: pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersStartupProbeTcpSocketPortArgs'],
+                 host: Optional[pulumi.Input[str]] = None):
+        """
+        TCPSocket specifies an action involving a TCP port. TCP hooks not yet supported TODO: implement a realistic TCP lifecycle hook
+        :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersStartupProbeTcpSocketPortArgs'] port: Number or name of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME.
+        :param pulumi.Input[str] host: Optional: Host name to connect to, defaults to the pod IP.
+        """
+        pulumi.set(__self__, "port", port)
+        if host is not None:
+            pulumi.set(__self__, "host", host)
+
+    @property
+    @pulumi.getter
+    def port(self) -> pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersStartupProbeTcpSocketPortArgs']:
+        """
+        Number or name of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME.
+        """
+        return pulumi.get(self, "port")
+
+    @port.setter
+    def port(self, value: pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersStartupProbeTcpSocketPortArgs']):
+        pulumi.set(self, "port", value)
+
+    @property
+    @pulumi.getter
+    def host(self) -> Optional[pulumi.Input[str]]:
+        """
+        Optional: Host name to connect to, defaults to the pod IP.
+        """
+        return pulumi.get(self, "host")
+
+    @host.setter
+    def host(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "host", value)
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersStartupProbeTcpSocketPortArgs:
+    def __init__(__self__):
+        pass
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersVolumeDevicesArgs:
+    def __init__(__self__, *,
+                 device_path: pulumi.Input[str],
+                 name: pulumi.Input[str]):
+        """
+        volumeDevice describes a mapping of a raw block device within a container.
+        :param pulumi.Input[str] device_path: devicePath is the path inside of the container that the device will be mapped to.
+        :param pulumi.Input[str] name: name must match the name of a persistentVolumeClaim in the pod
+        """
+        pulumi.set(__self__, "device_path", device_path)
+        pulumi.set(__self__, "name", name)
+
+    @property
+    @pulumi.getter(name="devicePath")
+    def device_path(self) -> pulumi.Input[str]:
+        """
+        devicePath is the path inside of the container that the device will be mapped to.
+        """
+        return pulumi.get(self, "device_path")
+
+    @device_path.setter
+    def device_path(self, value: pulumi.Input[str]):
+        pulumi.set(self, "device_path", value)
+
+    @property
+    @pulumi.getter
+    def name(self) -> pulumi.Input[str]:
+        """
+        name must match the name of a persistentVolumeClaim in the pod
+        """
+        return pulumi.get(self, "name")
+
+    @name.setter
+    def name(self, value: pulumi.Input[str]):
+        pulumi.set(self, "name", value)
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainersVolumeMountsArgs:
+    def __init__(__self__, *,
+                 mount_path: pulumi.Input[str],
+                 name: pulumi.Input[str],
+                 mount_propagation: Optional[pulumi.Input[str]] = None,
+                 read_only: Optional[pulumi.Input[bool]] = None,
+                 sub_path: Optional[pulumi.Input[str]] = None,
+                 sub_path_expr: Optional[pulumi.Input[str]] = None):
+        """
+        VolumeMount describes a mounting of a Volume within a container.
+        :param pulumi.Input[str] mount_path: Path within the container at which the volume should be mounted.  Must not contain ':'.
+        :param pulumi.Input[str] name: This must match the Name of a Volume.
+        :param pulumi.Input[str] mount_propagation: mountPropagation determines how mounts are propagated from the host to container and the other way around. When not set, MountPropagationNone is used. This field is beta in 1.10.
+        :param pulumi.Input[bool] read_only: Mounted read-only if true, read-write otherwise (false or unspecified). Defaults to false.
+        :param pulumi.Input[str] sub_path: Path within the volume from which the container's volume should be mounted. Defaults to "" (volume's root).
+        :param pulumi.Input[str] sub_path_expr: Expanded path within the volume from which the container's volume should be mounted. Behaves similarly to SubPath but environment variable references $(VAR_NAME) are expanded using the container's environment. Defaults to "" (volume's root). SubPathExpr and SubPath are mutually exclusive.
+        """
+        pulumi.set(__self__, "mount_path", mount_path)
+        pulumi.set(__self__, "name", name)
+        if mount_propagation is not None:
+            pulumi.set(__self__, "mount_propagation", mount_propagation)
+        if read_only is not None:
+            pulumi.set(__self__, "read_only", read_only)
+        if sub_path is not None:
+            pulumi.set(__self__, "sub_path", sub_path)
+        if sub_path_expr is not None:
+            pulumi.set(__self__, "sub_path_expr", sub_path_expr)
+
+    @property
+    @pulumi.getter(name="mountPath")
+    def mount_path(self) -> pulumi.Input[str]:
+        """
+        Path within the container at which the volume should be mounted.  Must not contain ':'.
+        """
+        return pulumi.get(self, "mount_path")
+
+    @mount_path.setter
+    def mount_path(self, value: pulumi.Input[str]):
+        pulumi.set(self, "mount_path", value)
+
+    @property
+    @pulumi.getter
+    def name(self) -> pulumi.Input[str]:
+        """
+        This must match the Name of a Volume.
+        """
+        return pulumi.get(self, "name")
+
+    @name.setter
+    def name(self, value: pulumi.Input[str]):
+        pulumi.set(self, "name", value)
+
+    @property
+    @pulumi.getter(name="mountPropagation")
+    def mount_propagation(self) -> Optional[pulumi.Input[str]]:
+        """
+        mountPropagation determines how mounts are propagated from the host to container and the other way around. When not set, MountPropagationNone is used. This field is beta in 1.10.
+        """
+        return pulumi.get(self, "mount_propagation")
+
+    @mount_propagation.setter
+    def mount_propagation(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "mount_propagation", value)
+
+    @property
+    @pulumi.getter(name="readOnly")
+    def read_only(self) -> Optional[pulumi.Input[bool]]:
+        """
+        Mounted read-only if true, read-write otherwise (false or unspecified). Defaults to false.
+        """
+        return pulumi.get(self, "read_only")
+
+    @read_only.setter
+    def read_only(self, value: Optional[pulumi.Input[bool]]):
+        pulumi.set(self, "read_only", value)
+
+    @property
+    @pulumi.getter(name="subPath")
+    def sub_path(self) -> Optional[pulumi.Input[str]]:
+        """
+        Path within the volume from which the container's volume should be mounted. Defaults to "" (volume's root).
+        """
+        return pulumi.get(self, "sub_path")
+
+    @sub_path.setter
+    def sub_path(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "sub_path", value)
+
+    @property
+    @pulumi.getter(name="subPathExpr")
+    def sub_path_expr(self) -> Optional[pulumi.Input[str]]:
+        """
+        Expanded path within the volume from which the container's volume should be mounted. Behaves similarly to SubPath but environment variable references $(VAR_NAME) are expanded using the container's environment. Defaults to "" (volume's root). SubPathExpr and SubPath are mutually exclusive.
+        """
+        return pulumi.get(self, "sub_path_expr")
+
+    @sub_path_expr.setter
+    def sub_path_expr(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "sub_path_expr", value)
+
+
+@pulumi.input_type
 class SeldonDeploymentSpecPredictorsComponentSpecsSpecHostAliasesArgs:
     def __init__(__self__, *,
                  hostnames: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
@@ -5603,6 +10030,7 @@ class SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersArgs:
                  readiness_probe: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersReadinessProbeArgs']] = None,
                  resources: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersResourcesArgs']] = None,
                  security_context: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersSecurityContextArgs']] = None,
+                 startup_probe: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersStartupProbeArgs']] = None,
                  stdin: Optional[pulumi.Input[bool]] = None,
                  stdin_once: Optional[pulumi.Input[bool]] = None,
                  termination_message_path: Optional[pulumi.Input[str]] = None,
@@ -5626,12 +10054,13 @@ class SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersArgs:
         :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersReadinessProbeArgs'] readiness_probe: Periodic probe of container service readiness. Container will be removed from service endpoints if the probe fails. Cannot be updated. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
         :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersResourcesArgs'] resources: Compute Resources required by this container. Cannot be updated. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
         :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersSecurityContextArgs'] security_context: Security options the pod should run with. More info: https://kubernetes.io/docs/concepts/policy/security-context/ More info: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
+        :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersStartupProbeArgs'] startup_probe: StartupProbe indicates that the Pod has successfully initialized. If specified, no other probes are executed until this completes successfully. If this probe fails, the Pod will be restarted, just as if the livenessProbe failed. This can be used to provide different probe parameters at the beginning of a Pod's lifecycle, when it might take a long time to load data or warm a cache, than during steady-state operation. This cannot be updated. This is a beta feature enabled by the StartupProbe feature flag. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
         :param pulumi.Input[bool] stdin: Whether this container should allocate a buffer for stdin in the container runtime. If this is not set, reads from stdin in the container will always result in EOF. Default is false.
         :param pulumi.Input[bool] stdin_once: Whether the container runtime should close the stdin channel after it has been opened by a single attach. When stdin is true the stdin stream will remain open across multiple attach sessions. If stdinOnce is set to true, stdin is opened on container start, is empty until the first client attaches to stdin, and then remains open and accepts data until the client disconnects, at which time stdin is closed and remains closed until the container is restarted. If this flag is false, a container processes that reads from stdin will never receive an EOF. Default is false
         :param pulumi.Input[str] termination_message_path: Optional: Path at which the file to which the container's termination message will be written is mounted into the container's filesystem. Message written is intended to be brief final status, such as an assertion failure message. Will be truncated by the node if greater than 4096 bytes. The total message length across all containers will be limited to 12kb. Defaults to /dev/termination-log. Cannot be updated.
         :param pulumi.Input[str] termination_message_policy: Indicate how the termination message should be populated. File will use the contents of terminationMessagePath to populate the container status message on both success and failure. FallbackToLogsOnError will use the last chunk of container log output if the termination message file is empty and the container exited with an error. The log output is limited to 2048 bytes or 80 lines, whichever is smaller. Defaults to File. Cannot be updated.
         :param pulumi.Input[bool] tty: Whether this container should allocate a TTY for itself, also requires 'stdin' to be true. Default is false.
-        :param pulumi.Input[Sequence[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersVolumeDevicesArgs']]] volume_devices: volumeDevices is the list of block devices to be used by the container. This is a beta feature.
+        :param pulumi.Input[Sequence[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersVolumeDevicesArgs']]] volume_devices: volumeDevices is the list of block devices to be used by the container.
         :param pulumi.Input[Sequence[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersVolumeMountsArgs']]] volume_mounts: Pod volumes to mount into the container's filesystem. Cannot be updated.
         :param pulumi.Input[str] working_dir: Container's working directory. If not specified, the container runtime's default will be used, which might be configured in the container image. Cannot be updated.
         """
@@ -5660,6 +10089,8 @@ class SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersArgs:
             pulumi.set(__self__, "resources", resources)
         if security_context is not None:
             pulumi.set(__self__, "security_context", security_context)
+        if startup_probe is not None:
+            pulumi.set(__self__, "startup_probe", startup_probe)
         if stdin is not None:
             pulumi.set(__self__, "stdin", stdin)
         if stdin_once is not None:
@@ -5834,6 +10265,18 @@ class SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersArgs:
         pulumi.set(self, "security_context", value)
 
     @property
+    @pulumi.getter(name="startupProbe")
+    def startup_probe(self) -> Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersStartupProbeArgs']]:
+        """
+        StartupProbe indicates that the Pod has successfully initialized. If specified, no other probes are executed until this completes successfully. If this probe fails, the Pod will be restarted, just as if the livenessProbe failed. This can be used to provide different probe parameters at the beginning of a Pod's lifecycle, when it might take a long time to load data or warm a cache, than during steady-state operation. This cannot be updated. This is a beta feature enabled by the StartupProbe feature flag. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
+        """
+        return pulumi.get(self, "startup_probe")
+
+    @startup_probe.setter
+    def startup_probe(self, value: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersStartupProbeArgs']]):
+        pulumi.set(self, "startup_probe", value)
+
+    @property
     @pulumi.getter
     def stdin(self) -> Optional[pulumi.Input[bool]]:
         """
@@ -5897,7 +10340,7 @@ class SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersArgs:
     @pulumi.getter(name="volumeDevices")
     def volume_devices(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersVolumeDevicesArgs']]]]:
         """
-        volumeDevices is the list of block devices to be used by the container. This is a beta feature.
+        volumeDevices is the list of block devices to be used by the container.
         """
         return pulumi.get(self, "volume_devices")
 
@@ -6131,7 +10574,7 @@ class SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersEnvValueFrom
         """
         Source for the environment variable's value. Cannot be used if value is not empty.
         :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersEnvValueFromConfigMapKeyRefArgs'] config_map_key_ref: Selects a key of a ConfigMap.
-        :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersEnvValueFromFieldRefArgs'] field_ref: Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+        :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersEnvValueFromFieldRefArgs'] field_ref: Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
         :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersEnvValueFromResourceFieldRefArgs'] resource_field_ref: Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
         :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersEnvValueFromSecretKeyRefArgs'] secret_key_ref: Selects a key of a secret in the pod's namespace
         """
@@ -6160,7 +10603,7 @@ class SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersEnvValueFrom
     @pulumi.getter(name="fieldRef")
     def field_ref(self) -> Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersEnvValueFromFieldRefArgs']]:
         """
-        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
         """
         return pulumi.get(self, "field_ref")
 
@@ -6203,7 +10646,7 @@ class SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersEnvValueFrom
         Selects a key of a ConfigMap.
         :param pulumi.Input[str] key: The key to select.
         :param pulumi.Input[str] name: Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
-        :param pulumi.Input[bool] optional: Specify whether the ConfigMap or it's key must be defined
+        :param pulumi.Input[bool] optional: Specify whether the ConfigMap or its key must be defined
         """
         pulumi.set(__self__, "key", key)
         if name is not None:
@@ -6239,7 +10682,7 @@ class SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersEnvValueFrom
     @pulumi.getter
     def optional(self) -> Optional[pulumi.Input[bool]]:
         """
-        Specify whether the ConfigMap or it's key must be defined
+        Specify whether the ConfigMap or its key must be defined
         """
         return pulumi.get(self, "optional")
 
@@ -6254,7 +10697,7 @@ class SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersEnvValueFrom
                  field_path: pulumi.Input[str],
                  api_version: Optional[pulumi.Input[str]] = None):
         """
-        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
         :param pulumi.Input[str] field_path: Path of the field to select in the specified API version.
         :param pulumi.Input[str] api_version: Version of the schema the FieldPath is written in terms of, defaults to "v1".
         """
@@ -6292,12 +10735,12 @@ class SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersEnvValueFrom
     def __init__(__self__, *,
                  resource: pulumi.Input[str],
                  container_name: Optional[pulumi.Input[str]] = None,
-                 divisor: Optional[pulumi.Input[str]] = None):
+                 divisor: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersEnvValueFromResourceFieldRefDivisorArgs']] = None):
         """
         Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
         :param pulumi.Input[str] resource: Required: resource to select
         :param pulumi.Input[str] container_name: Container name: required for volumes, optional for env vars
-        :param pulumi.Input[str] divisor: Specifies the output format of the exposed resources, defaults to "1"
+        :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersEnvValueFromResourceFieldRefDivisorArgs'] divisor: Specifies the output format of the exposed resources, defaults to "1"
         """
         pulumi.set(__self__, "resource", resource)
         if container_name is not None:
@@ -6331,15 +10774,21 @@ class SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersEnvValueFrom
 
     @property
     @pulumi.getter
-    def divisor(self) -> Optional[pulumi.Input[str]]:
+    def divisor(self) -> Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersEnvValueFromResourceFieldRefDivisorArgs']]:
         """
         Specifies the output format of the exposed resources, defaults to "1"
         """
         return pulumi.get(self, "divisor")
 
     @divisor.setter
-    def divisor(self, value: Optional[pulumi.Input[str]]):
+    def divisor(self, value: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersEnvValueFromResourceFieldRefDivisorArgs']]):
         pulumi.set(self, "divisor", value)
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersEnvValueFromResourceFieldRefDivisorArgs:
+    def __init__(__self__):
+        pass
 
 
 @pulumi.input_type
@@ -6352,7 +10801,7 @@ class SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersEnvValueFrom
         Selects a key of a secret in the pod's namespace
         :param pulumi.Input[str] key: The key of the secret to select from.  Must be a valid secret key.
         :param pulumi.Input[str] name: Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
-        :param pulumi.Input[bool] optional: Specify whether the Secret or it's key must be defined
+        :param pulumi.Input[bool] optional: Specify whether the Secret or its key must be defined
         """
         pulumi.set(__self__, "key", key)
         if name is not None:
@@ -6388,7 +10837,7 @@ class SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersEnvValueFrom
     @pulumi.getter
     def optional(self) -> Optional[pulumi.Input[bool]]:
         """
-        Specify whether the Secret or it's key must be defined
+        Specify whether the Secret or its key must be defined
         """
         return pulumi.get(self, "optional")
 
@@ -6405,7 +10854,7 @@ class SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersLifecycleArg
         """
         Actions that the management system should take in response to container lifecycle events. Cannot be updated.
         :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersLifecyclePostStartArgs'] post_start: PostStart is called immediately after a container is created. If the handler fails, the container is terminated and restarted according to its restart policy. Other management of the container blocks until the hook completes. More info: https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/#container-hooks
-        :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersLifecyclePreStopArgs'] pre_stop: PreStop is called immediately before a container is terminated due to an API request or management event such as liveness probe failure, preemption, resource contention, etc. The handler is not called if the container crashes or exits. The reason for termination is passed to the handler. The Pod's termination grace period countdown begins before the PreStop hooked is executed. Regardless of the outcome of the handler, the container will eventually terminate within the Pod's termination grace period. Other management of the container blocks until the hook completes or until the termination grace period is reached. More info: https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/#container-hooks
+        :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersLifecyclePreStopArgs'] pre_stop: PreStop is called immediately before a container is terminated due to an API request or management event such as liveness/startup probe failure, preemption, resource contention, etc. The handler is not called if the container crashes or exits. The reason for termination is passed to the handler. The Pod's termination grace period countdown begins before the PreStop hooked is executed. Regardless of the outcome of the handler, the container will eventually terminate within the Pod's termination grace period. Other management of the container blocks until the hook completes or until the termination grace period is reached. More info: https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/#container-hooks
         """
         if post_start is not None:
             pulumi.set(__self__, "post_start", post_start)
@@ -6428,7 +10877,7 @@ class SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersLifecycleArg
     @pulumi.getter(name="preStop")
     def pre_stop(self) -> Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersLifecyclePreStopArgs']]:
         """
-        PreStop is called immediately before a container is terminated due to an API request or management event such as liveness probe failure, preemption, resource contention, etc. The handler is not called if the container crashes or exits. The reason for termination is passed to the handler. The Pod's termination grace period countdown begins before the PreStop hooked is executed. Regardless of the outcome of the handler, the container will eventually terminate within the Pod's termination grace period. Other management of the container blocks until the hook completes or until the termination grace period is reached. More info: https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/#container-hooks
+        PreStop is called immediately before a container is terminated due to an API request or management event such as liveness/startup probe failure, preemption, resource contention, etc. The handler is not called if the container crashes or exits. The reason for termination is passed to the handler. The Pod's termination grace period countdown begins before the PreStop hooked is executed. Regardless of the outcome of the handler, the container will eventually terminate within the Pod's termination grace period. Other management of the container blocks until the hook completes or until the termination grace period is reached. More info: https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/#container-hooks
         """
         return pulumi.get(self, "pre_stop")
 
@@ -6688,7 +11137,7 @@ class SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersLifecyclePre
                  http_get: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersLifecyclePreStopHttpGetArgs']] = None,
                  tcp_socket: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersLifecyclePreStopTcpSocketArgs']] = None):
         """
-        PreStop is called immediately before a container is terminated due to an API request or management event such as liveness probe failure, preemption, resource contention, etc. The handler is not called if the container crashes or exits. The reason for termination is passed to the handler. The Pod's termination grace period countdown begins before the PreStop hooked is executed. Regardless of the outcome of the handler, the container will eventually terminate within the Pod's termination grace period. Other management of the container blocks until the hook completes or until the termination grace period is reached. More info: https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/#container-hooks
+        PreStop is called immediately before a container is terminated due to an API request or management event such as liveness/startup probe failure, preemption, resource contention, etc. The handler is not called if the container crashes or exits. The reason for termination is passed to the handler. The Pod's termination grace period countdown begins before the PreStop hooked is executed. Regardless of the outcome of the handler, the container will eventually terminate within the Pod's termination grace period. Other management of the container blocks until the hook completes or until the termination grace period is reached. More info: https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/#container-hooks
         :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersLifecyclePreStopExecArgs'] exec_: One and only one of the following should be specified. Exec specifies the action to take.
         :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersLifecyclePreStopHttpGetArgs'] http_get: HTTPGet specifies the http request to perform.
         :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersLifecyclePreStopTcpSocketArgs'] tcp_socket: TCPSocket specifies an action involving a TCP port. TCP hooks not yet supported TODO: implement a realistic TCP lifecycle hook
@@ -6943,7 +11392,7 @@ class SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersLivenessProb
         :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersLivenessProbeHttpGetArgs'] http_get: HTTPGet specifies the http request to perform.
         :param pulumi.Input[int] initial_delay_seconds: Number of seconds after the container has started before liveness probes are initiated. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
         :param pulumi.Input[int] period_seconds: How often (in seconds) to perform the probe. Default to 10 seconds. Minimum value is 1.
-        :param pulumi.Input[int] success_threshold: Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1. Must be 1 for liveness. Minimum value is 1.
+        :param pulumi.Input[int] success_threshold: Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1. Must be 1 for liveness and startup. Minimum value is 1.
         :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersLivenessProbeTcpSocketArgs'] tcp_socket: TCPSocket specifies an action involving a TCP port. TCP hooks not yet supported TODO: implement a realistic TCP lifecycle hook
         :param pulumi.Input[int] timeout_seconds: Number of seconds after which the probe times out. Defaults to 1 second. Minimum value is 1. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
         """
@@ -7028,7 +11477,7 @@ class SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersLivenessProb
     @pulumi.getter(name="successThreshold")
     def success_threshold(self) -> Optional[pulumi.Input[int]]:
         """
-        Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1. Must be 1 for liveness. Minimum value is 1.
+        Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1. Must be 1 for liveness and startup. Minimum value is 1.
         """
         return pulumi.get(self, "success_threshold")
 
@@ -7253,27 +11702,26 @@ class SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersLivenessProb
 class SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersPortsArgs:
     def __init__(__self__, *,
                  container_port: pulumi.Input[int],
+                 protocol: pulumi.Input[str],
                  host_ip: Optional[pulumi.Input[str]] = None,
                  host_port: Optional[pulumi.Input[int]] = None,
-                 name: Optional[pulumi.Input[str]] = None,
-                 protocol: Optional[pulumi.Input[str]] = None):
+                 name: Optional[pulumi.Input[str]] = None):
         """
         ContainerPort represents a network port in a single container.
         :param pulumi.Input[int] container_port: Number of port to expose on the pod's IP address. This must be a valid port number, 0 < x < 65536.
+        :param pulumi.Input[str] protocol: Protocol for port. Must be UDP, TCP, or SCTP. Defaults to "TCP".
         :param pulumi.Input[str] host_ip: What host IP to bind the external port to.
         :param pulumi.Input[int] host_port: Number of port to expose on the host. If specified, this must be a valid port number, 0 < x < 65536. If HostNetwork is specified, this must match ContainerPort. Most containers do not need this.
         :param pulumi.Input[str] name: If specified, this must be an IANA_SVC_NAME and unique within the pod. Each named port in a pod must have a unique name. Name for the port that can be referred to by services.
-        :param pulumi.Input[str] protocol: Protocol for port. Must be UDP, TCP, or SCTP. Defaults to "TCP".
         """
         pulumi.set(__self__, "container_port", container_port)
+        pulumi.set(__self__, "protocol", protocol)
         if host_ip is not None:
             pulumi.set(__self__, "host_ip", host_ip)
         if host_port is not None:
             pulumi.set(__self__, "host_port", host_port)
         if name is not None:
             pulumi.set(__self__, "name", name)
-        if protocol is not None:
-            pulumi.set(__self__, "protocol", protocol)
 
     @property
     @pulumi.getter(name="containerPort")
@@ -7286,6 +11734,18 @@ class SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersPortsArgs:
     @container_port.setter
     def container_port(self, value: pulumi.Input[int]):
         pulumi.set(self, "container_port", value)
+
+    @property
+    @pulumi.getter
+    def protocol(self) -> pulumi.Input[str]:
+        """
+        Protocol for port. Must be UDP, TCP, or SCTP. Defaults to "TCP".
+        """
+        return pulumi.get(self, "protocol")
+
+    @protocol.setter
+    def protocol(self, value: pulumi.Input[str]):
+        pulumi.set(self, "protocol", value)
 
     @property
     @pulumi.getter(name="hostIP")
@@ -7323,18 +11783,6 @@ class SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersPortsArgs:
     def name(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "name", value)
 
-    @property
-    @pulumi.getter
-    def protocol(self) -> Optional[pulumi.Input[str]]:
-        """
-        Protocol for port. Must be UDP, TCP, or SCTP. Defaults to "TCP".
-        """
-        return pulumi.get(self, "protocol")
-
-    @protocol.setter
-    def protocol(self, value: Optional[pulumi.Input[str]]):
-        pulumi.set(self, "protocol", value)
-
 
 @pulumi.input_type
 class SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersReadinessProbeArgs:
@@ -7354,7 +11802,7 @@ class SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersReadinessPro
         :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersReadinessProbeHttpGetArgs'] http_get: HTTPGet specifies the http request to perform.
         :param pulumi.Input[int] initial_delay_seconds: Number of seconds after the container has started before liveness probes are initiated. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
         :param pulumi.Input[int] period_seconds: How often (in seconds) to perform the probe. Default to 10 seconds. Minimum value is 1.
-        :param pulumi.Input[int] success_threshold: Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1. Must be 1 for liveness. Minimum value is 1.
+        :param pulumi.Input[int] success_threshold: Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1. Must be 1 for liveness and startup. Minimum value is 1.
         :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersReadinessProbeTcpSocketArgs'] tcp_socket: TCPSocket specifies an action involving a TCP port. TCP hooks not yet supported TODO: implement a realistic TCP lifecycle hook
         :param pulumi.Input[int] timeout_seconds: Number of seconds after which the probe times out. Defaults to 1 second. Minimum value is 1. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
         """
@@ -7439,7 +11887,7 @@ class SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersReadinessPro
     @pulumi.getter(name="successThreshold")
     def success_threshold(self) -> Optional[pulumi.Input[int]]:
         """
-        Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1. Must be 1 for liveness. Minimum value is 1.
+        Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1. Must be 1 for liveness and startup. Minimum value is 1.
         """
         return pulumi.get(self, "success_threshold")
 
@@ -7663,12 +12111,12 @@ class SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersReadinessPro
 @pulumi.input_type
 class SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersResourcesArgs:
     def __init__(__self__, *,
-                 limits: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-                 requests: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None):
+                 limits: Optional[pulumi.Input[Mapping[str, pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersResourcesLimitsArgs']]]] = None,
+                 requests: Optional[pulumi.Input[Mapping[str, pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersResourcesRequestsArgs']]]] = None):
         """
         Compute Resources required by this container. Cannot be updated. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] limits: Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] requests: Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
+        :param pulumi.Input[Mapping[str, pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersResourcesLimitsArgs']]] limits: Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
+        :param pulumi.Input[Mapping[str, pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersResourcesRequestsArgs']]] requests: Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
         """
         if limits is not None:
             pulumi.set(__self__, "limits", limits)
@@ -7677,27 +12125,39 @@ class SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersResourcesArg
 
     @property
     @pulumi.getter
-    def limits(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+    def limits(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersResourcesLimitsArgs']]]]:
         """
         Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
         """
         return pulumi.get(self, "limits")
 
     @limits.setter
-    def limits(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
+    def limits(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersResourcesLimitsArgs']]]]):
         pulumi.set(self, "limits", value)
 
     @property
     @pulumi.getter
-    def requests(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+    def requests(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersResourcesRequestsArgs']]]]:
         """
         Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
         """
         return pulumi.get(self, "requests")
 
     @requests.setter
-    def requests(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
+    def requests(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersResourcesRequestsArgs']]]]):
         pulumi.set(self, "requests", value)
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersResourcesLimitsArgs:
+    def __init__(__self__):
+        pass
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersResourcesRequestsArgs:
+    def __init__(__self__):
+        pass
 
 
 @pulumi.input_type
@@ -7711,7 +12171,8 @@ class SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersSecurityCont
                  run_as_group: Optional[pulumi.Input[int]] = None,
                  run_as_non_root: Optional[pulumi.Input[bool]] = None,
                  run_as_user: Optional[pulumi.Input[int]] = None,
-                 se_linux_options: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersSecurityContextSeLinuxOptionsArgs']] = None):
+                 se_linux_options: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersSecurityContextSeLinuxOptionsArgs']] = None,
+                 windows_options: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersSecurityContextWindowsOptionsArgs']] = None):
         """
         Security options the pod should run with. More info: https://kubernetes.io/docs/concepts/policy/security-context/ More info: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
         :param pulumi.Input[bool] allow_privilege_escalation: AllowPrivilegeEscalation controls whether a process can gain more privileges than its parent process. This bool directly controls if the no_new_privs flag will be set on the container process. AllowPrivilegeEscalation is true always when the container is: 1) run as Privileged 2) has CAP_SYS_ADMIN
@@ -7723,6 +12184,7 @@ class SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersSecurityCont
         :param pulumi.Input[bool] run_as_non_root: Indicates that the container must run as a non-root user. If true, the Kubelet will validate the image at runtime to ensure that it does not run as UID 0 (root) and fail to start the container if it does. If unset or false, no such validation will be performed. May also be set in PodSecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
         :param pulumi.Input[int] run_as_user: The UID to run the entrypoint of the container process. Defaults to user specified in image metadata if unspecified. May also be set in PodSecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
         :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersSecurityContextSeLinuxOptionsArgs'] se_linux_options: The SELinux context to be applied to the container. If unspecified, the container runtime will allocate a random SELinux context for each container.  May also be set in PodSecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
+        :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersSecurityContextWindowsOptionsArgs'] windows_options: The Windows specific settings applied to all containers. If unspecified, the options from the PodSecurityContext will be used. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
         """
         if allow_privilege_escalation is not None:
             pulumi.set(__self__, "allow_privilege_escalation", allow_privilege_escalation)
@@ -7742,6 +12204,8 @@ class SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersSecurityCont
             pulumi.set(__self__, "run_as_user", run_as_user)
         if se_linux_options is not None:
             pulumi.set(__self__, "se_linux_options", se_linux_options)
+        if windows_options is not None:
+            pulumi.set(__self__, "windows_options", windows_options)
 
     @property
     @pulumi.getter(name="allowPrivilegeEscalation")
@@ -7850,6 +12314,18 @@ class SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersSecurityCont
     @se_linux_options.setter
     def se_linux_options(self, value: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersSecurityContextSeLinuxOptionsArgs']]):
         pulumi.set(self, "se_linux_options", value)
+
+    @property
+    @pulumi.getter(name="windowsOptions")
+    def windows_options(self) -> Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersSecurityContextWindowsOptionsArgs']]:
+        """
+        The Windows specific settings applied to all containers. If unspecified, the options from the PodSecurityContext will be used. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
+        """
+        return pulumi.get(self, "windows_options")
+
+    @windows_options.setter
+    def windows_options(self, value: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersSecurityContextWindowsOptionsArgs']]):
+        pulumi.set(self, "windows_options", value)
 
 
 @pulumi.input_type
@@ -7965,6 +12441,398 @@ class SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersSecurityCont
 
 
 @pulumi.input_type
+class SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersSecurityContextWindowsOptionsArgs:
+    def __init__(__self__, *,
+                 gmsa_credential_spec: Optional[pulumi.Input[str]] = None,
+                 gmsa_credential_spec_name: Optional[pulumi.Input[str]] = None,
+                 run_as_user_name: Optional[pulumi.Input[str]] = None):
+        """
+        The Windows specific settings applied to all containers. If unspecified, the options from the PodSecurityContext will be used. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
+        :param pulumi.Input[str] gmsa_credential_spec: GMSACredentialSpec is where the GMSA admission webhook (https://github.com/kubernetes-sigs/windows-gmsa) inlines the contents of the GMSA credential spec named by the GMSACredentialSpecName field.
+        :param pulumi.Input[str] gmsa_credential_spec_name: GMSACredentialSpecName is the name of the GMSA credential spec to use.
+        :param pulumi.Input[str] run_as_user_name: The UserName in Windows to run the entrypoint of the container process. Defaults to the user specified in image metadata if unspecified. May also be set in PodSecurityContext. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
+        """
+        if gmsa_credential_spec is not None:
+            pulumi.set(__self__, "gmsa_credential_spec", gmsa_credential_spec)
+        if gmsa_credential_spec_name is not None:
+            pulumi.set(__self__, "gmsa_credential_spec_name", gmsa_credential_spec_name)
+        if run_as_user_name is not None:
+            pulumi.set(__self__, "run_as_user_name", run_as_user_name)
+
+    @property
+    @pulumi.getter(name="gmsaCredentialSpec")
+    def gmsa_credential_spec(self) -> Optional[pulumi.Input[str]]:
+        """
+        GMSACredentialSpec is where the GMSA admission webhook (https://github.com/kubernetes-sigs/windows-gmsa) inlines the contents of the GMSA credential spec named by the GMSACredentialSpecName field.
+        """
+        return pulumi.get(self, "gmsa_credential_spec")
+
+    @gmsa_credential_spec.setter
+    def gmsa_credential_spec(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "gmsa_credential_spec", value)
+
+    @property
+    @pulumi.getter(name="gmsaCredentialSpecName")
+    def gmsa_credential_spec_name(self) -> Optional[pulumi.Input[str]]:
+        """
+        GMSACredentialSpecName is the name of the GMSA credential spec to use.
+        """
+        return pulumi.get(self, "gmsa_credential_spec_name")
+
+    @gmsa_credential_spec_name.setter
+    def gmsa_credential_spec_name(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "gmsa_credential_spec_name", value)
+
+    @property
+    @pulumi.getter(name="runAsUserName")
+    def run_as_user_name(self) -> Optional[pulumi.Input[str]]:
+        """
+        The UserName in Windows to run the entrypoint of the container process. Defaults to the user specified in image metadata if unspecified. May also be set in PodSecurityContext. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
+        """
+        return pulumi.get(self, "run_as_user_name")
+
+    @run_as_user_name.setter
+    def run_as_user_name(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "run_as_user_name", value)
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersStartupProbeArgs:
+    def __init__(__self__, *,
+                 exec_: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersStartupProbeExecArgs']] = None,
+                 failure_threshold: Optional[pulumi.Input[int]] = None,
+                 http_get: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersStartupProbeHttpGetArgs']] = None,
+                 initial_delay_seconds: Optional[pulumi.Input[int]] = None,
+                 period_seconds: Optional[pulumi.Input[int]] = None,
+                 success_threshold: Optional[pulumi.Input[int]] = None,
+                 tcp_socket: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersStartupProbeTcpSocketArgs']] = None,
+                 timeout_seconds: Optional[pulumi.Input[int]] = None):
+        """
+        StartupProbe indicates that the Pod has successfully initialized. If specified, no other probes are executed until this completes successfully. If this probe fails, the Pod will be restarted, just as if the livenessProbe failed. This can be used to provide different probe parameters at the beginning of a Pod's lifecycle, when it might take a long time to load data or warm a cache, than during steady-state operation. This cannot be updated. This is a beta feature enabled by the StartupProbe feature flag. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
+        :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersStartupProbeExecArgs'] exec_: One and only one of the following should be specified. Exec specifies the action to take.
+        :param pulumi.Input[int] failure_threshold: Minimum consecutive failures for the probe to be considered failed after having succeeded. Defaults to 3. Minimum value is 1.
+        :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersStartupProbeHttpGetArgs'] http_get: HTTPGet specifies the http request to perform.
+        :param pulumi.Input[int] initial_delay_seconds: Number of seconds after the container has started before liveness probes are initiated. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
+        :param pulumi.Input[int] period_seconds: How often (in seconds) to perform the probe. Default to 10 seconds. Minimum value is 1.
+        :param pulumi.Input[int] success_threshold: Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1. Must be 1 for liveness and startup. Minimum value is 1.
+        :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersStartupProbeTcpSocketArgs'] tcp_socket: TCPSocket specifies an action involving a TCP port. TCP hooks not yet supported TODO: implement a realistic TCP lifecycle hook
+        :param pulumi.Input[int] timeout_seconds: Number of seconds after which the probe times out. Defaults to 1 second. Minimum value is 1. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
+        """
+        if exec_ is not None:
+            pulumi.set(__self__, "exec_", exec_)
+        if failure_threshold is not None:
+            pulumi.set(__self__, "failure_threshold", failure_threshold)
+        if http_get is not None:
+            pulumi.set(__self__, "http_get", http_get)
+        if initial_delay_seconds is not None:
+            pulumi.set(__self__, "initial_delay_seconds", initial_delay_seconds)
+        if period_seconds is not None:
+            pulumi.set(__self__, "period_seconds", period_seconds)
+        if success_threshold is not None:
+            pulumi.set(__self__, "success_threshold", success_threshold)
+        if tcp_socket is not None:
+            pulumi.set(__self__, "tcp_socket", tcp_socket)
+        if timeout_seconds is not None:
+            pulumi.set(__self__, "timeout_seconds", timeout_seconds)
+
+    @property
+    @pulumi.getter(name="exec")
+    def exec_(self) -> Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersStartupProbeExecArgs']]:
+        """
+        One and only one of the following should be specified. Exec specifies the action to take.
+        """
+        return pulumi.get(self, "exec_")
+
+    @exec_.setter
+    def exec_(self, value: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersStartupProbeExecArgs']]):
+        pulumi.set(self, "exec_", value)
+
+    @property
+    @pulumi.getter(name="failureThreshold")
+    def failure_threshold(self) -> Optional[pulumi.Input[int]]:
+        """
+        Minimum consecutive failures for the probe to be considered failed after having succeeded. Defaults to 3. Minimum value is 1.
+        """
+        return pulumi.get(self, "failure_threshold")
+
+    @failure_threshold.setter
+    def failure_threshold(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "failure_threshold", value)
+
+    @property
+    @pulumi.getter(name="httpGet")
+    def http_get(self) -> Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersStartupProbeHttpGetArgs']]:
+        """
+        HTTPGet specifies the http request to perform.
+        """
+        return pulumi.get(self, "http_get")
+
+    @http_get.setter
+    def http_get(self, value: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersStartupProbeHttpGetArgs']]):
+        pulumi.set(self, "http_get", value)
+
+    @property
+    @pulumi.getter(name="initialDelaySeconds")
+    def initial_delay_seconds(self) -> Optional[pulumi.Input[int]]:
+        """
+        Number of seconds after the container has started before liveness probes are initiated. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
+        """
+        return pulumi.get(self, "initial_delay_seconds")
+
+    @initial_delay_seconds.setter
+    def initial_delay_seconds(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "initial_delay_seconds", value)
+
+    @property
+    @pulumi.getter(name="periodSeconds")
+    def period_seconds(self) -> Optional[pulumi.Input[int]]:
+        """
+        How often (in seconds) to perform the probe. Default to 10 seconds. Minimum value is 1.
+        """
+        return pulumi.get(self, "period_seconds")
+
+    @period_seconds.setter
+    def period_seconds(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "period_seconds", value)
+
+    @property
+    @pulumi.getter(name="successThreshold")
+    def success_threshold(self) -> Optional[pulumi.Input[int]]:
+        """
+        Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1. Must be 1 for liveness and startup. Minimum value is 1.
+        """
+        return pulumi.get(self, "success_threshold")
+
+    @success_threshold.setter
+    def success_threshold(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "success_threshold", value)
+
+    @property
+    @pulumi.getter(name="tcpSocket")
+    def tcp_socket(self) -> Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersStartupProbeTcpSocketArgs']]:
+        """
+        TCPSocket specifies an action involving a TCP port. TCP hooks not yet supported TODO: implement a realistic TCP lifecycle hook
+        """
+        return pulumi.get(self, "tcp_socket")
+
+    @tcp_socket.setter
+    def tcp_socket(self, value: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersStartupProbeTcpSocketArgs']]):
+        pulumi.set(self, "tcp_socket", value)
+
+    @property
+    @pulumi.getter(name="timeoutSeconds")
+    def timeout_seconds(self) -> Optional[pulumi.Input[int]]:
+        """
+        Number of seconds after which the probe times out. Defaults to 1 second. Minimum value is 1. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
+        """
+        return pulumi.get(self, "timeout_seconds")
+
+    @timeout_seconds.setter
+    def timeout_seconds(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "timeout_seconds", value)
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersStartupProbeExecArgs:
+    def __init__(__self__, *,
+                 command: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None):
+        """
+        One and only one of the following should be specified. Exec specifies the action to take.
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] command: Command is the command line to execute inside the container, the working directory for the command  is root ('/') in the container's filesystem. The command is simply exec'd, it is not run inside a shell, so traditional shell instructions ('|', etc) won't work. To use a shell, you need to explicitly call out to that shell. Exit status of 0 is treated as live/healthy and non-zero is unhealthy.
+        """
+        if command is not None:
+            pulumi.set(__self__, "command", command)
+
+    @property
+    @pulumi.getter
+    def command(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
+        """
+        Command is the command line to execute inside the container, the working directory for the command  is root ('/') in the container's filesystem. The command is simply exec'd, it is not run inside a shell, so traditional shell instructions ('|', etc) won't work. To use a shell, you need to explicitly call out to that shell. Exit status of 0 is treated as live/healthy and non-zero is unhealthy.
+        """
+        return pulumi.get(self, "command")
+
+    @command.setter
+    def command(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]):
+        pulumi.set(self, "command", value)
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersStartupProbeHttpGetArgs:
+    def __init__(__self__, *,
+                 port: pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersStartupProbeHttpGetPortArgs'],
+                 host: Optional[pulumi.Input[str]] = None,
+                 http_headers: Optional[pulumi.Input[Sequence[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersStartupProbeHttpGetHttpHeadersArgs']]]] = None,
+                 path: Optional[pulumi.Input[str]] = None,
+                 scheme: Optional[pulumi.Input[str]] = None):
+        """
+        HTTPGet specifies the http request to perform.
+        :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersStartupProbeHttpGetPortArgs'] port: Name or number of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME.
+        :param pulumi.Input[str] host: Host name to connect to, defaults to the pod IP. You probably want to set "Host" in httpHeaders instead.
+        :param pulumi.Input[Sequence[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersStartupProbeHttpGetHttpHeadersArgs']]] http_headers: Custom headers to set in the request. HTTP allows repeated headers.
+        :param pulumi.Input[str] path: Path to access on the HTTP server.
+        :param pulumi.Input[str] scheme: Scheme to use for connecting to the host. Defaults to HTTP.
+        """
+        pulumi.set(__self__, "port", port)
+        if host is not None:
+            pulumi.set(__self__, "host", host)
+        if http_headers is not None:
+            pulumi.set(__self__, "http_headers", http_headers)
+        if path is not None:
+            pulumi.set(__self__, "path", path)
+        if scheme is not None:
+            pulumi.set(__self__, "scheme", scheme)
+
+    @property
+    @pulumi.getter
+    def port(self) -> pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersStartupProbeHttpGetPortArgs']:
+        """
+        Name or number of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME.
+        """
+        return pulumi.get(self, "port")
+
+    @port.setter
+    def port(self, value: pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersStartupProbeHttpGetPortArgs']):
+        pulumi.set(self, "port", value)
+
+    @property
+    @pulumi.getter
+    def host(self) -> Optional[pulumi.Input[str]]:
+        """
+        Host name to connect to, defaults to the pod IP. You probably want to set "Host" in httpHeaders instead.
+        """
+        return pulumi.get(self, "host")
+
+    @host.setter
+    def host(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "host", value)
+
+    @property
+    @pulumi.getter(name="httpHeaders")
+    def http_headers(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersStartupProbeHttpGetHttpHeadersArgs']]]]:
+        """
+        Custom headers to set in the request. HTTP allows repeated headers.
+        """
+        return pulumi.get(self, "http_headers")
+
+    @http_headers.setter
+    def http_headers(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersStartupProbeHttpGetHttpHeadersArgs']]]]):
+        pulumi.set(self, "http_headers", value)
+
+    @property
+    @pulumi.getter
+    def path(self) -> Optional[pulumi.Input[str]]:
+        """
+        Path to access on the HTTP server.
+        """
+        return pulumi.get(self, "path")
+
+    @path.setter
+    def path(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "path", value)
+
+    @property
+    @pulumi.getter
+    def scheme(self) -> Optional[pulumi.Input[str]]:
+        """
+        Scheme to use for connecting to the host. Defaults to HTTP.
+        """
+        return pulumi.get(self, "scheme")
+
+    @scheme.setter
+    def scheme(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "scheme", value)
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersStartupProbeHttpGetHttpHeadersArgs:
+    def __init__(__self__, *,
+                 name: pulumi.Input[str],
+                 value: pulumi.Input[str]):
+        """
+        HTTPHeader describes a custom header to be used in HTTP probes
+        :param pulumi.Input[str] name: The header field name
+        :param pulumi.Input[str] value: The header field value
+        """
+        pulumi.set(__self__, "name", name)
+        pulumi.set(__self__, "value", value)
+
+    @property
+    @pulumi.getter
+    def name(self) -> pulumi.Input[str]:
+        """
+        The header field name
+        """
+        return pulumi.get(self, "name")
+
+    @name.setter
+    def name(self, value: pulumi.Input[str]):
+        pulumi.set(self, "name", value)
+
+    @property
+    @pulumi.getter
+    def value(self) -> pulumi.Input[str]:
+        """
+        The header field value
+        """
+        return pulumi.get(self, "value")
+
+    @value.setter
+    def value(self, value: pulumi.Input[str]):
+        pulumi.set(self, "value", value)
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersStartupProbeHttpGetPortArgs:
+    def __init__(__self__):
+        pass
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersStartupProbeTcpSocketArgs:
+    def __init__(__self__, *,
+                 port: pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersStartupProbeTcpSocketPortArgs'],
+                 host: Optional[pulumi.Input[str]] = None):
+        """
+        TCPSocket specifies an action involving a TCP port. TCP hooks not yet supported TODO: implement a realistic TCP lifecycle hook
+        :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersStartupProbeTcpSocketPortArgs'] port: Number or name of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME.
+        :param pulumi.Input[str] host: Optional: Host name to connect to, defaults to the pod IP.
+        """
+        pulumi.set(__self__, "port", port)
+        if host is not None:
+            pulumi.set(__self__, "host", host)
+
+    @property
+    @pulumi.getter
+    def port(self) -> pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersStartupProbeTcpSocketPortArgs']:
+        """
+        Number or name of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME.
+        """
+        return pulumi.get(self, "port")
+
+    @port.setter
+    def port(self, value: pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersStartupProbeTcpSocketPortArgs']):
+        pulumi.set(self, "port", value)
+
+    @property
+    @pulumi.getter
+    def host(self) -> Optional[pulumi.Input[str]]:
+        """
+        Optional: Host name to connect to, defaults to the pod IP.
+        """
+        return pulumi.get(self, "host")
+
+    @host.setter
+    def host(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "host", value)
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersStartupProbeTcpSocketPortArgs:
+    def __init__(__self__):
+        pass
+
+
+@pulumi.input_type
 class SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersVolumeDevicesArgs:
     def __init__(__self__, *,
                  device_path: pulumi.Input[str],
@@ -8018,7 +12886,7 @@ class SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersVolumeMounts
         :param pulumi.Input[str] mount_propagation: mountPropagation determines how mounts are propagated from the host to container and the other way around. When not set, MountPropagationNone is used. This field is beta in 1.10.
         :param pulumi.Input[bool] read_only: Mounted read-only if true, read-write otherwise (false or unspecified). Defaults to false.
         :param pulumi.Input[str] sub_path: Path within the volume from which the container's volume should be mounted. Defaults to "" (volume's root).
-        :param pulumi.Input[str] sub_path_expr: Expanded path within the volume from which the container's volume should be mounted. Behaves similarly to SubPath but environment variable references $(VAR_NAME) are expanded using the container's environment. Defaults to "" (volume's root). SubPathExpr and SubPath are mutually exclusive. This field is alpha in 1.14.
+        :param pulumi.Input[str] sub_path_expr: Expanded path within the volume from which the container's volume should be mounted. Behaves similarly to SubPath but environment variable references $(VAR_NAME) are expanded using the container's environment. Defaults to "" (volume's root). SubPathExpr and SubPath are mutually exclusive.
         """
         pulumi.set(__self__, "mount_path", mount_path)
         pulumi.set(__self__, "name", name)
@@ -8095,13 +12963,19 @@ class SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainersVolumeMounts
     @pulumi.getter(name="subPathExpr")
     def sub_path_expr(self) -> Optional[pulumi.Input[str]]:
         """
-        Expanded path within the volume from which the container's volume should be mounted. Behaves similarly to SubPath but environment variable references $(VAR_NAME) are expanded using the container's environment. Defaults to "" (volume's root). SubPathExpr and SubPath are mutually exclusive. This field is alpha in 1.14.
+        Expanded path within the volume from which the container's volume should be mounted. Behaves similarly to SubPath but environment variable references $(VAR_NAME) are expanded using the container's environment. Defaults to "" (volume's root). SubPathExpr and SubPath are mutually exclusive.
         """
         return pulumi.get(self, "sub_path_expr")
 
     @sub_path_expr.setter
     def sub_path_expr(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "sub_path_expr", value)
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsComponentSpecsSpecOverheadArgs:
+    def __init__(__self__):
+        pass
 
 
 @pulumi.input_type
@@ -8131,26 +13005,32 @@ class SeldonDeploymentSpecPredictorsComponentSpecsSpecReadinessGatesArgs:
 class SeldonDeploymentSpecPredictorsComponentSpecsSpecSecurityContextArgs:
     def __init__(__self__, *,
                  fs_group: Optional[pulumi.Input[int]] = None,
+                 fs_group_change_policy: Optional[pulumi.Input[str]] = None,
                  run_as_group: Optional[pulumi.Input[int]] = None,
                  run_as_non_root: Optional[pulumi.Input[bool]] = None,
                  run_as_user: Optional[pulumi.Input[int]] = None,
                  se_linux_options: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecSecurityContextSeLinuxOptionsArgs']] = None,
                  supplemental_groups: Optional[pulumi.Input[Sequence[pulumi.Input[int]]]] = None,
-                 sysctls: Optional[pulumi.Input[Sequence[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecSecurityContextSysctlsArgs']]]] = None):
+                 sysctls: Optional[pulumi.Input[Sequence[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecSecurityContextSysctlsArgs']]]] = None,
+                 windows_options: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecSecurityContextWindowsOptionsArgs']] = None):
         """
         SecurityContext holds pod-level security attributes and common container settings. Optional: Defaults to empty.  See type description for default values of each field.
         :param pulumi.Input[int] fs_group: A special supplemental group that applies to all containers in a pod. Some volume types allow the Kubelet to change the ownership of that volume to be owned by the pod: 
                 1. The owning GID will be the FSGroup 2. The setgid bit is set (new files created in the volume will be owned by FSGroup) 3. The permission bits are OR'd with rw-rw---- 
                 If unset, the Kubelet will not modify the ownership and permissions of any volume.
+        :param pulumi.Input[str] fs_group_change_policy: fsGroupChangePolicy defines behavior of changing ownership and permission of the volume before being exposed inside Pod. This field will only apply to volume types which support fsGroup based ownership(and permissions). It will have no effect on ephemeral volume types such as: secret, configmaps and emptydir. Valid values are "OnRootMismatch" and "Always". If not specified defaults to "Always".
         :param pulumi.Input[int] run_as_group: The GID to run the entrypoint of the container process. Uses runtime default if unset. May also be set in SecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence for that container.
         :param pulumi.Input[bool] run_as_non_root: Indicates that the container must run as a non-root user. If true, the Kubelet will validate the image at runtime to ensure that it does not run as UID 0 (root) and fail to start the container if it does. If unset or false, no such validation will be performed. May also be set in SecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
         :param pulumi.Input[int] run_as_user: The UID to run the entrypoint of the container process. Defaults to user specified in image metadata if unspecified. May also be set in SecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence for that container.
         :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecSecurityContextSeLinuxOptionsArgs'] se_linux_options: The SELinux context to be applied to all containers. If unspecified, the container runtime will allocate a random SELinux context for each container.  May also be set in SecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence for that container.
         :param pulumi.Input[Sequence[pulumi.Input[int]]] supplemental_groups: A list of groups applied to the first process run in each container, in addition to the container's primary GID.  If unspecified, no groups will be added to any container.
         :param pulumi.Input[Sequence[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecSecurityContextSysctlsArgs']]] sysctls: Sysctls hold a list of namespaced sysctls used for the pod. Pods with unsupported sysctls (by the container runtime) might fail to launch.
+        :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecSecurityContextWindowsOptionsArgs'] windows_options: The Windows specific settings applied to all containers. If unspecified, the options within a container's SecurityContext will be used. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
         """
         if fs_group is not None:
             pulumi.set(__self__, "fs_group", fs_group)
+        if fs_group_change_policy is not None:
+            pulumi.set(__self__, "fs_group_change_policy", fs_group_change_policy)
         if run_as_group is not None:
             pulumi.set(__self__, "run_as_group", run_as_group)
         if run_as_non_root is not None:
@@ -8163,6 +13043,8 @@ class SeldonDeploymentSpecPredictorsComponentSpecsSpecSecurityContextArgs:
             pulumi.set(__self__, "supplemental_groups", supplemental_groups)
         if sysctls is not None:
             pulumi.set(__self__, "sysctls", sysctls)
+        if windows_options is not None:
+            pulumi.set(__self__, "windows_options", windows_options)
 
     @property
     @pulumi.getter(name="fsGroup")
@@ -8177,6 +13059,18 @@ class SeldonDeploymentSpecPredictorsComponentSpecsSpecSecurityContextArgs:
     @fs_group.setter
     def fs_group(self, value: Optional[pulumi.Input[int]]):
         pulumi.set(self, "fs_group", value)
+
+    @property
+    @pulumi.getter(name="fsGroupChangePolicy")
+    def fs_group_change_policy(self) -> Optional[pulumi.Input[str]]:
+        """
+        fsGroupChangePolicy defines behavior of changing ownership and permission of the volume before being exposed inside Pod. This field will only apply to volume types which support fsGroup based ownership(and permissions). It will have no effect on ephemeral volume types such as: secret, configmaps and emptydir. Valid values are "OnRootMismatch" and "Always". If not specified defaults to "Always".
+        """
+        return pulumi.get(self, "fs_group_change_policy")
+
+    @fs_group_change_policy.setter
+    def fs_group_change_policy(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "fs_group_change_policy", value)
 
     @property
     @pulumi.getter(name="runAsGroup")
@@ -8249,6 +13143,18 @@ class SeldonDeploymentSpecPredictorsComponentSpecsSpecSecurityContextArgs:
     @sysctls.setter
     def sysctls(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecSecurityContextSysctlsArgs']]]]):
         pulumi.set(self, "sysctls", value)
+
+    @property
+    @pulumi.getter(name="windowsOptions")
+    def windows_options(self) -> Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecSecurityContextWindowsOptionsArgs']]:
+        """
+        The Windows specific settings applied to all containers. If unspecified, the options within a container's SecurityContext will be used. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
+        """
+        return pulumi.get(self, "windows_options")
+
+    @windows_options.setter
+    def windows_options(self, value: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecSecurityContextWindowsOptionsArgs']]):
+        pulumi.set(self, "windows_options", value)
 
 
 @pulumi.input_type
@@ -8362,6 +13268,62 @@ class SeldonDeploymentSpecPredictorsComponentSpecsSpecSecurityContextSysctlsArgs
 
 
 @pulumi.input_type
+class SeldonDeploymentSpecPredictorsComponentSpecsSpecSecurityContextWindowsOptionsArgs:
+    def __init__(__self__, *,
+                 gmsa_credential_spec: Optional[pulumi.Input[str]] = None,
+                 gmsa_credential_spec_name: Optional[pulumi.Input[str]] = None,
+                 run_as_user_name: Optional[pulumi.Input[str]] = None):
+        """
+        The Windows specific settings applied to all containers. If unspecified, the options within a container's SecurityContext will be used. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
+        :param pulumi.Input[str] gmsa_credential_spec: GMSACredentialSpec is where the GMSA admission webhook (https://github.com/kubernetes-sigs/windows-gmsa) inlines the contents of the GMSA credential spec named by the GMSACredentialSpecName field.
+        :param pulumi.Input[str] gmsa_credential_spec_name: GMSACredentialSpecName is the name of the GMSA credential spec to use.
+        :param pulumi.Input[str] run_as_user_name: The UserName in Windows to run the entrypoint of the container process. Defaults to the user specified in image metadata if unspecified. May also be set in PodSecurityContext. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
+        """
+        if gmsa_credential_spec is not None:
+            pulumi.set(__self__, "gmsa_credential_spec", gmsa_credential_spec)
+        if gmsa_credential_spec_name is not None:
+            pulumi.set(__self__, "gmsa_credential_spec_name", gmsa_credential_spec_name)
+        if run_as_user_name is not None:
+            pulumi.set(__self__, "run_as_user_name", run_as_user_name)
+
+    @property
+    @pulumi.getter(name="gmsaCredentialSpec")
+    def gmsa_credential_spec(self) -> Optional[pulumi.Input[str]]:
+        """
+        GMSACredentialSpec is where the GMSA admission webhook (https://github.com/kubernetes-sigs/windows-gmsa) inlines the contents of the GMSA credential spec named by the GMSACredentialSpecName field.
+        """
+        return pulumi.get(self, "gmsa_credential_spec")
+
+    @gmsa_credential_spec.setter
+    def gmsa_credential_spec(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "gmsa_credential_spec", value)
+
+    @property
+    @pulumi.getter(name="gmsaCredentialSpecName")
+    def gmsa_credential_spec_name(self) -> Optional[pulumi.Input[str]]:
+        """
+        GMSACredentialSpecName is the name of the GMSA credential spec to use.
+        """
+        return pulumi.get(self, "gmsa_credential_spec_name")
+
+    @gmsa_credential_spec_name.setter
+    def gmsa_credential_spec_name(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "gmsa_credential_spec_name", value)
+
+    @property
+    @pulumi.getter(name="runAsUserName")
+    def run_as_user_name(self) -> Optional[pulumi.Input[str]]:
+        """
+        The UserName in Windows to run the entrypoint of the container process. Defaults to the user specified in image metadata if unspecified. May also be set in PodSecurityContext. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
+        """
+        return pulumi.get(self, "run_as_user_name")
+
+    @run_as_user_name.setter
+    def run_as_user_name(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "run_as_user_name", value)
+
+
+@pulumi.input_type
 class SeldonDeploymentSpecPredictorsComponentSpecsSpecTolerationsArgs:
     def __init__(__self__, *,
                  effect: Optional[pulumi.Input[str]] = None,
@@ -8450,14 +13412,177 @@ class SeldonDeploymentSpecPredictorsComponentSpecsSpecTolerationsArgs:
 
 
 @pulumi.input_type
+class SeldonDeploymentSpecPredictorsComponentSpecsSpecTopologySpreadConstraintsArgs:
+    def __init__(__self__, *,
+                 max_skew: pulumi.Input[int],
+                 topology_key: pulumi.Input[str],
+                 when_unsatisfiable: pulumi.Input[str],
+                 label_selector: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecTopologySpreadConstraintsLabelSelectorArgs']] = None):
+        """
+        TopologySpreadConstraint specifies how to spread matching pods among the given topology.
+        :param pulumi.Input[int] max_skew: MaxSkew describes the degree to which pods may be unevenly distributed. It's the maximum permitted difference between the number of matching pods in any two topology domains of a given topology type. For example, in a 3-zone cluster, MaxSkew is set to 1, and pods with the same labelSelector spread as 1/1/0: | zone1 | zone2 | zone3 | |   P   |   P   |       | - if MaxSkew is 1, incoming pod can only be scheduled to zone3 to become 1/1/1; scheduling it onto zone1(zone2) would make the ActualSkew(2-0) on zone1(zone2) violate MaxSkew(1). - if MaxSkew is 2, incoming pod can be scheduled onto any zone. It's a required field. Default value is 1 and 0 is not allowed.
+        :param pulumi.Input[str] topology_key: TopologyKey is the key of node labels. Nodes that have a label with this key and identical values are considered to be in the same topology. We consider each <key, value> as a "bucket", and try to put balanced number of pods into each bucket. It's a required field.
+        :param pulumi.Input[str] when_unsatisfiable: WhenUnsatisfiable indicates how to deal with a pod if it doesn't satisfy the spread constraint. - DoNotSchedule (default) tells the scheduler not to schedule it - ScheduleAnyway tells the scheduler to still schedule it It's considered as "Unsatisfiable" if and only if placing incoming pod on any topology violates "MaxSkew". For example, in a 3-zone cluster, MaxSkew is set to 1, and pods with the same labelSelector spread as 3/1/1: | zone1 | zone2 | zone3 | | P P P |   P   |   P   | If WhenUnsatisfiable is set to DoNotSchedule, incoming pod can only be scheduled to zone2(zone3) to become 3/2/1(3/1/2) as ActualSkew(2-1) on zone2(zone3) satisfies MaxSkew(1). In other words, the cluster can still be imbalanced, but scheduler won't make it *more* imbalanced. It's a required field.
+        :param pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecTopologySpreadConstraintsLabelSelectorArgs'] label_selector: LabelSelector is used to find matching pods. Pods that match this label selector are counted to determine the number of pods in their corresponding topology domain.
+        """
+        pulumi.set(__self__, "max_skew", max_skew)
+        pulumi.set(__self__, "topology_key", topology_key)
+        pulumi.set(__self__, "when_unsatisfiable", when_unsatisfiable)
+        if label_selector is not None:
+            pulumi.set(__self__, "label_selector", label_selector)
+
+    @property
+    @pulumi.getter(name="maxSkew")
+    def max_skew(self) -> pulumi.Input[int]:
+        """
+        MaxSkew describes the degree to which pods may be unevenly distributed. It's the maximum permitted difference between the number of matching pods in any two topology domains of a given topology type. For example, in a 3-zone cluster, MaxSkew is set to 1, and pods with the same labelSelector spread as 1/1/0: | zone1 | zone2 | zone3 | |   P   |   P   |       | - if MaxSkew is 1, incoming pod can only be scheduled to zone3 to become 1/1/1; scheduling it onto zone1(zone2) would make the ActualSkew(2-0) on zone1(zone2) violate MaxSkew(1). - if MaxSkew is 2, incoming pod can be scheduled onto any zone. It's a required field. Default value is 1 and 0 is not allowed.
+        """
+        return pulumi.get(self, "max_skew")
+
+    @max_skew.setter
+    def max_skew(self, value: pulumi.Input[int]):
+        pulumi.set(self, "max_skew", value)
+
+    @property
+    @pulumi.getter(name="topologyKey")
+    def topology_key(self) -> pulumi.Input[str]:
+        """
+        TopologyKey is the key of node labels. Nodes that have a label with this key and identical values are considered to be in the same topology. We consider each <key, value> as a "bucket", and try to put balanced number of pods into each bucket. It's a required field.
+        """
+        return pulumi.get(self, "topology_key")
+
+    @topology_key.setter
+    def topology_key(self, value: pulumi.Input[str]):
+        pulumi.set(self, "topology_key", value)
+
+    @property
+    @pulumi.getter(name="whenUnsatisfiable")
+    def when_unsatisfiable(self) -> pulumi.Input[str]:
+        """
+        WhenUnsatisfiable indicates how to deal with a pod if it doesn't satisfy the spread constraint. - DoNotSchedule (default) tells the scheduler not to schedule it - ScheduleAnyway tells the scheduler to still schedule it It's considered as "Unsatisfiable" if and only if placing incoming pod on any topology violates "MaxSkew". For example, in a 3-zone cluster, MaxSkew is set to 1, and pods with the same labelSelector spread as 3/1/1: | zone1 | zone2 | zone3 | | P P P |   P   |   P   | If WhenUnsatisfiable is set to DoNotSchedule, incoming pod can only be scheduled to zone2(zone3) to become 3/2/1(3/1/2) as ActualSkew(2-1) on zone2(zone3) satisfies MaxSkew(1). In other words, the cluster can still be imbalanced, but scheduler won't make it *more* imbalanced. It's a required field.
+        """
+        return pulumi.get(self, "when_unsatisfiable")
+
+    @when_unsatisfiable.setter
+    def when_unsatisfiable(self, value: pulumi.Input[str]):
+        pulumi.set(self, "when_unsatisfiable", value)
+
+    @property
+    @pulumi.getter(name="labelSelector")
+    def label_selector(self) -> Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecTopologySpreadConstraintsLabelSelectorArgs']]:
+        """
+        LabelSelector is used to find matching pods. Pods that match this label selector are counted to determine the number of pods in their corresponding topology domain.
+        """
+        return pulumi.get(self, "label_selector")
+
+    @label_selector.setter
+    def label_selector(self, value: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecTopologySpreadConstraintsLabelSelectorArgs']]):
+        pulumi.set(self, "label_selector", value)
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsComponentSpecsSpecTopologySpreadConstraintsLabelSelectorArgs:
+    def __init__(__self__, *,
+                 match_expressions: Optional[pulumi.Input[Sequence[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecTopologySpreadConstraintsLabelSelectorMatchExpressionsArgs']]]] = None,
+                 match_labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None):
+        """
+        LabelSelector is used to find matching pods. Pods that match this label selector are counted to determine the number of pods in their corresponding topology domain.
+        :param pulumi.Input[Sequence[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecTopologySpreadConstraintsLabelSelectorMatchExpressionsArgs']]] match_expressions: matchExpressions is a list of label selector requirements. The requirements are ANDed.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] match_labels: matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+        """
+        if match_expressions is not None:
+            pulumi.set(__self__, "match_expressions", match_expressions)
+        if match_labels is not None:
+            pulumi.set(__self__, "match_labels", match_labels)
+
+    @property
+    @pulumi.getter(name="matchExpressions")
+    def match_expressions(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecTopologySpreadConstraintsLabelSelectorMatchExpressionsArgs']]]]:
+        """
+        matchExpressions is a list of label selector requirements. The requirements are ANDed.
+        """
+        return pulumi.get(self, "match_expressions")
+
+    @match_expressions.setter
+    def match_expressions(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['SeldonDeploymentSpecPredictorsComponentSpecsSpecTopologySpreadConstraintsLabelSelectorMatchExpressionsArgs']]]]):
+        pulumi.set(self, "match_expressions", value)
+
+    @property
+    @pulumi.getter(name="matchLabels")
+    def match_labels(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+        """
+        matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+        """
+        return pulumi.get(self, "match_labels")
+
+    @match_labels.setter
+    def match_labels(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
+        pulumi.set(self, "match_labels", value)
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsComponentSpecsSpecTopologySpreadConstraintsLabelSelectorMatchExpressionsArgs:
+    def __init__(__self__, *,
+                 key: pulumi.Input[str],
+                 operator: pulumi.Input[str],
+                 values: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None):
+        """
+        A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+        :param pulumi.Input[str] key: key is the label key that the selector applies to.
+        :param pulumi.Input[str] operator: operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] values: values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+        """
+        pulumi.set(__self__, "key", key)
+        pulumi.set(__self__, "operator", operator)
+        if values is not None:
+            pulumi.set(__self__, "values", values)
+
+    @property
+    @pulumi.getter
+    def key(self) -> pulumi.Input[str]:
+        """
+        key is the label key that the selector applies to.
+        """
+        return pulumi.get(self, "key")
+
+    @key.setter
+    def key(self, value: pulumi.Input[str]):
+        pulumi.set(self, "key", value)
+
+    @property
+    @pulumi.getter
+    def operator(self) -> pulumi.Input[str]:
+        """
+        operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+        """
+        return pulumi.get(self, "operator")
+
+    @operator.setter
+    def operator(self, value: pulumi.Input[str]):
+        pulumi.set(self, "operator", value)
+
+    @property
+    @pulumi.getter
+    def values(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
+        """
+        values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+        """
+        return pulumi.get(self, "values")
+
+    @values.setter
+    def values(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]):
+        pulumi.set(self, "values", value)
+
+
+@pulumi.input_type
 class SeldonDeploymentSpecPredictorsEngineResourcesArgs:
     def __init__(__self__, *,
-                 limits: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-                 requests: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None):
+                 limits: Optional[pulumi.Input[Mapping[str, pulumi.Input['SeldonDeploymentSpecPredictorsEngineResourcesLimitsArgs']]]] = None,
+                 requests: Optional[pulumi.Input[Mapping[str, pulumi.Input['SeldonDeploymentSpecPredictorsEngineResourcesRequestsArgs']]]] = None):
         """
         ResourceRequirements describes the compute resource requirements.
-        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] limits: Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] requests: Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
+        :param pulumi.Input[Mapping[str, pulumi.Input['SeldonDeploymentSpecPredictorsEngineResourcesLimitsArgs']]] limits: Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
+        :param pulumi.Input[Mapping[str, pulumi.Input['SeldonDeploymentSpecPredictorsEngineResourcesRequestsArgs']]] requests: Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
         """
         if limits is not None:
             pulumi.set(__self__, "limits", limits)
@@ -8466,27 +13591,39 @@ class SeldonDeploymentSpecPredictorsEngineResourcesArgs:
 
     @property
     @pulumi.getter
-    def limits(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+    def limits(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input['SeldonDeploymentSpecPredictorsEngineResourcesLimitsArgs']]]]:
         """
         Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
         """
         return pulumi.get(self, "limits")
 
     @limits.setter
-    def limits(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
+    def limits(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input['SeldonDeploymentSpecPredictorsEngineResourcesLimitsArgs']]]]):
         pulumi.set(self, "limits", value)
 
     @property
     @pulumi.getter
-    def requests(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+    def requests(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input['SeldonDeploymentSpecPredictorsEngineResourcesRequestsArgs']]]]:
         """
         Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
         """
         return pulumi.get(self, "requests")
 
     @requests.setter
-    def requests(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
+    def requests(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input['SeldonDeploymentSpecPredictorsEngineResourcesRequestsArgs']]]]):
         pulumi.set(self, "requests", value)
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsEngineResourcesLimitsArgs:
+    def __init__(__self__):
+        pass
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsEngineResourcesRequestsArgs:
+    def __init__(__self__):
+        pass
 
 
 @pulumi.input_type
@@ -8600,6 +13737,7 @@ class SeldonDeploymentSpecPredictorsExplainerContainerSpecArgs:
                  readiness_probe: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsExplainerContainerSpecReadinessProbeArgs']] = None,
                  resources: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsExplainerContainerSpecResourcesArgs']] = None,
                  security_context: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsExplainerContainerSpecSecurityContextArgs']] = None,
+                 startup_probe: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsExplainerContainerSpecStartupProbeArgs']] = None,
                  stdin: Optional[pulumi.Input[bool]] = None,
                  stdin_once: Optional[pulumi.Input[bool]] = None,
                  termination_message_path: Optional[pulumi.Input[str]] = None,
@@ -8623,12 +13761,13 @@ class SeldonDeploymentSpecPredictorsExplainerContainerSpecArgs:
         :param pulumi.Input['SeldonDeploymentSpecPredictorsExplainerContainerSpecReadinessProbeArgs'] readiness_probe: Periodic probe of container service readiness. Container will be removed from service endpoints if the probe fails. Cannot be updated. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
         :param pulumi.Input['SeldonDeploymentSpecPredictorsExplainerContainerSpecResourcesArgs'] resources: Compute Resources required by this container. Cannot be updated. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
         :param pulumi.Input['SeldonDeploymentSpecPredictorsExplainerContainerSpecSecurityContextArgs'] security_context: Security options the pod should run with. More info: https://kubernetes.io/docs/concepts/policy/security-context/ More info: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
+        :param pulumi.Input['SeldonDeploymentSpecPredictorsExplainerContainerSpecStartupProbeArgs'] startup_probe: StartupProbe indicates that the Pod has successfully initialized. If specified, no other probes are executed until this completes successfully. If this probe fails, the Pod will be restarted, just as if the livenessProbe failed. This can be used to provide different probe parameters at the beginning of a Pod's lifecycle, when it might take a long time to load data or warm a cache, than during steady-state operation. This cannot be updated. This is a beta feature enabled by the StartupProbe feature flag. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
         :param pulumi.Input[bool] stdin: Whether this container should allocate a buffer for stdin in the container runtime. If this is not set, reads from stdin in the container will always result in EOF. Default is false.
         :param pulumi.Input[bool] stdin_once: Whether the container runtime should close the stdin channel after it has been opened by a single attach. When stdin is true the stdin stream will remain open across multiple attach sessions. If stdinOnce is set to true, stdin is opened on container start, is empty until the first client attaches to stdin, and then remains open and accepts data until the client disconnects, at which time stdin is closed and remains closed until the container is restarted. If this flag is false, a container processes that reads from stdin will never receive an EOF. Default is false
         :param pulumi.Input[str] termination_message_path: Optional: Path at which the file to which the container's termination message will be written is mounted into the container's filesystem. Message written is intended to be brief final status, such as an assertion failure message. Will be truncated by the node if greater than 4096 bytes. The total message length across all containers will be limited to 12kb. Defaults to /dev/termination-log. Cannot be updated.
         :param pulumi.Input[str] termination_message_policy: Indicate how the termination message should be populated. File will use the contents of terminationMessagePath to populate the container status message on both success and failure. FallbackToLogsOnError will use the last chunk of container log output if the termination message file is empty and the container exited with an error. The log output is limited to 2048 bytes or 80 lines, whichever is smaller. Defaults to File. Cannot be updated.
         :param pulumi.Input[bool] tty: Whether this container should allocate a TTY for itself, also requires 'stdin' to be true. Default is false.
-        :param pulumi.Input[Sequence[pulumi.Input['SeldonDeploymentSpecPredictorsExplainerContainerSpecVolumeDevicesArgs']]] volume_devices: volumeDevices is the list of block devices to be used by the container. This is a beta feature.
+        :param pulumi.Input[Sequence[pulumi.Input['SeldonDeploymentSpecPredictorsExplainerContainerSpecVolumeDevicesArgs']]] volume_devices: volumeDevices is the list of block devices to be used by the container.
         :param pulumi.Input[Sequence[pulumi.Input['SeldonDeploymentSpecPredictorsExplainerContainerSpecVolumeMountsArgs']]] volume_mounts: Pod volumes to mount into the container's filesystem. Cannot be updated.
         :param pulumi.Input[str] working_dir: Container's working directory. If not specified, the container runtime's default will be used, which might be configured in the container image. Cannot be updated.
         """
@@ -8657,6 +13796,8 @@ class SeldonDeploymentSpecPredictorsExplainerContainerSpecArgs:
             pulumi.set(__self__, "resources", resources)
         if security_context is not None:
             pulumi.set(__self__, "security_context", security_context)
+        if startup_probe is not None:
+            pulumi.set(__self__, "startup_probe", startup_probe)
         if stdin is not None:
             pulumi.set(__self__, "stdin", stdin)
         if stdin_once is not None:
@@ -8831,6 +13972,18 @@ class SeldonDeploymentSpecPredictorsExplainerContainerSpecArgs:
         pulumi.set(self, "security_context", value)
 
     @property
+    @pulumi.getter(name="startupProbe")
+    def startup_probe(self) -> Optional[pulumi.Input['SeldonDeploymentSpecPredictorsExplainerContainerSpecStartupProbeArgs']]:
+        """
+        StartupProbe indicates that the Pod has successfully initialized. If specified, no other probes are executed until this completes successfully. If this probe fails, the Pod will be restarted, just as if the livenessProbe failed. This can be used to provide different probe parameters at the beginning of a Pod's lifecycle, when it might take a long time to load data or warm a cache, than during steady-state operation. This cannot be updated. This is a beta feature enabled by the StartupProbe feature flag. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
+        """
+        return pulumi.get(self, "startup_probe")
+
+    @startup_probe.setter
+    def startup_probe(self, value: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsExplainerContainerSpecStartupProbeArgs']]):
+        pulumi.set(self, "startup_probe", value)
+
+    @property
     @pulumi.getter
     def stdin(self) -> Optional[pulumi.Input[bool]]:
         """
@@ -8894,7 +14047,7 @@ class SeldonDeploymentSpecPredictorsExplainerContainerSpecArgs:
     @pulumi.getter(name="volumeDevices")
     def volume_devices(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['SeldonDeploymentSpecPredictorsExplainerContainerSpecVolumeDevicesArgs']]]]:
         """
-        volumeDevices is the list of block devices to be used by the container. This is a beta feature.
+        volumeDevices is the list of block devices to be used by the container.
         """
         return pulumi.get(self, "volume_devices")
 
@@ -9128,7 +14281,7 @@ class SeldonDeploymentSpecPredictorsExplainerContainerSpecEnvValueFromArgs:
         """
         Source for the environment variable's value. Cannot be used if value is not empty.
         :param pulumi.Input['SeldonDeploymentSpecPredictorsExplainerContainerSpecEnvValueFromConfigMapKeyRefArgs'] config_map_key_ref: Selects a key of a ConfigMap.
-        :param pulumi.Input['SeldonDeploymentSpecPredictorsExplainerContainerSpecEnvValueFromFieldRefArgs'] field_ref: Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+        :param pulumi.Input['SeldonDeploymentSpecPredictorsExplainerContainerSpecEnvValueFromFieldRefArgs'] field_ref: Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
         :param pulumi.Input['SeldonDeploymentSpecPredictorsExplainerContainerSpecEnvValueFromResourceFieldRefArgs'] resource_field_ref: Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
         :param pulumi.Input['SeldonDeploymentSpecPredictorsExplainerContainerSpecEnvValueFromSecretKeyRefArgs'] secret_key_ref: Selects a key of a secret in the pod's namespace
         """
@@ -9157,7 +14310,7 @@ class SeldonDeploymentSpecPredictorsExplainerContainerSpecEnvValueFromArgs:
     @pulumi.getter(name="fieldRef")
     def field_ref(self) -> Optional[pulumi.Input['SeldonDeploymentSpecPredictorsExplainerContainerSpecEnvValueFromFieldRefArgs']]:
         """
-        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
         """
         return pulumi.get(self, "field_ref")
 
@@ -9200,7 +14353,7 @@ class SeldonDeploymentSpecPredictorsExplainerContainerSpecEnvValueFromConfigMapK
         Selects a key of a ConfigMap.
         :param pulumi.Input[str] key: The key to select.
         :param pulumi.Input[str] name: Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
-        :param pulumi.Input[bool] optional: Specify whether the ConfigMap or it's key must be defined
+        :param pulumi.Input[bool] optional: Specify whether the ConfigMap or its key must be defined
         """
         pulumi.set(__self__, "key", key)
         if name is not None:
@@ -9236,7 +14389,7 @@ class SeldonDeploymentSpecPredictorsExplainerContainerSpecEnvValueFromConfigMapK
     @pulumi.getter
     def optional(self) -> Optional[pulumi.Input[bool]]:
         """
-        Specify whether the ConfigMap or it's key must be defined
+        Specify whether the ConfigMap or its key must be defined
         """
         return pulumi.get(self, "optional")
 
@@ -9251,7 +14404,7 @@ class SeldonDeploymentSpecPredictorsExplainerContainerSpecEnvValueFromFieldRefAr
                  field_path: pulumi.Input[str],
                  api_version: Optional[pulumi.Input[str]] = None):
         """
-        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
         :param pulumi.Input[str] field_path: Path of the field to select in the specified API version.
         :param pulumi.Input[str] api_version: Version of the schema the FieldPath is written in terms of, defaults to "v1".
         """
@@ -9289,12 +14442,12 @@ class SeldonDeploymentSpecPredictorsExplainerContainerSpecEnvValueFromResourceFi
     def __init__(__self__, *,
                  resource: pulumi.Input[str],
                  container_name: Optional[pulumi.Input[str]] = None,
-                 divisor: Optional[pulumi.Input[str]] = None):
+                 divisor: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsExplainerContainerSpecEnvValueFromResourceFieldRefDivisorArgs']] = None):
         """
         Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
         :param pulumi.Input[str] resource: Required: resource to select
         :param pulumi.Input[str] container_name: Container name: required for volumes, optional for env vars
-        :param pulumi.Input[str] divisor: Specifies the output format of the exposed resources, defaults to "1"
+        :param pulumi.Input['SeldonDeploymentSpecPredictorsExplainerContainerSpecEnvValueFromResourceFieldRefDivisorArgs'] divisor: Specifies the output format of the exposed resources, defaults to "1"
         """
         pulumi.set(__self__, "resource", resource)
         if container_name is not None:
@@ -9328,15 +14481,21 @@ class SeldonDeploymentSpecPredictorsExplainerContainerSpecEnvValueFromResourceFi
 
     @property
     @pulumi.getter
-    def divisor(self) -> Optional[pulumi.Input[str]]:
+    def divisor(self) -> Optional[pulumi.Input['SeldonDeploymentSpecPredictorsExplainerContainerSpecEnvValueFromResourceFieldRefDivisorArgs']]:
         """
         Specifies the output format of the exposed resources, defaults to "1"
         """
         return pulumi.get(self, "divisor")
 
     @divisor.setter
-    def divisor(self, value: Optional[pulumi.Input[str]]):
+    def divisor(self, value: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsExplainerContainerSpecEnvValueFromResourceFieldRefDivisorArgs']]):
         pulumi.set(self, "divisor", value)
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsExplainerContainerSpecEnvValueFromResourceFieldRefDivisorArgs:
+    def __init__(__self__):
+        pass
 
 
 @pulumi.input_type
@@ -9349,7 +14508,7 @@ class SeldonDeploymentSpecPredictorsExplainerContainerSpecEnvValueFromSecretKeyR
         Selects a key of a secret in the pod's namespace
         :param pulumi.Input[str] key: The key of the secret to select from.  Must be a valid secret key.
         :param pulumi.Input[str] name: Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
-        :param pulumi.Input[bool] optional: Specify whether the Secret or it's key must be defined
+        :param pulumi.Input[bool] optional: Specify whether the Secret or its key must be defined
         """
         pulumi.set(__self__, "key", key)
         if name is not None:
@@ -9385,7 +14544,7 @@ class SeldonDeploymentSpecPredictorsExplainerContainerSpecEnvValueFromSecretKeyR
     @pulumi.getter
     def optional(self) -> Optional[pulumi.Input[bool]]:
         """
-        Specify whether the Secret or it's key must be defined
+        Specify whether the Secret or its key must be defined
         """
         return pulumi.get(self, "optional")
 
@@ -9402,7 +14561,7 @@ class SeldonDeploymentSpecPredictorsExplainerContainerSpecLifecycleArgs:
         """
         Actions that the management system should take in response to container lifecycle events. Cannot be updated.
         :param pulumi.Input['SeldonDeploymentSpecPredictorsExplainerContainerSpecLifecyclePostStartArgs'] post_start: PostStart is called immediately after a container is created. If the handler fails, the container is terminated and restarted according to its restart policy. Other management of the container blocks until the hook completes. More info: https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/#container-hooks
-        :param pulumi.Input['SeldonDeploymentSpecPredictorsExplainerContainerSpecLifecyclePreStopArgs'] pre_stop: PreStop is called immediately before a container is terminated due to an API request or management event such as liveness probe failure, preemption, resource contention, etc. The handler is not called if the container crashes or exits. The reason for termination is passed to the handler. The Pod's termination grace period countdown begins before the PreStop hooked is executed. Regardless of the outcome of the handler, the container will eventually terminate within the Pod's termination grace period. Other management of the container blocks until the hook completes or until the termination grace period is reached. More info: https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/#container-hooks
+        :param pulumi.Input['SeldonDeploymentSpecPredictorsExplainerContainerSpecLifecyclePreStopArgs'] pre_stop: PreStop is called immediately before a container is terminated due to an API request or management event such as liveness/startup probe failure, preemption, resource contention, etc. The handler is not called if the container crashes or exits. The reason for termination is passed to the handler. The Pod's termination grace period countdown begins before the PreStop hooked is executed. Regardless of the outcome of the handler, the container will eventually terminate within the Pod's termination grace period. Other management of the container blocks until the hook completes or until the termination grace period is reached. More info: https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/#container-hooks
         """
         if post_start is not None:
             pulumi.set(__self__, "post_start", post_start)
@@ -9425,7 +14584,7 @@ class SeldonDeploymentSpecPredictorsExplainerContainerSpecLifecycleArgs:
     @pulumi.getter(name="preStop")
     def pre_stop(self) -> Optional[pulumi.Input['SeldonDeploymentSpecPredictorsExplainerContainerSpecLifecyclePreStopArgs']]:
         """
-        PreStop is called immediately before a container is terminated due to an API request or management event such as liveness probe failure, preemption, resource contention, etc. The handler is not called if the container crashes or exits. The reason for termination is passed to the handler. The Pod's termination grace period countdown begins before the PreStop hooked is executed. Regardless of the outcome of the handler, the container will eventually terminate within the Pod's termination grace period. Other management of the container blocks until the hook completes or until the termination grace period is reached. More info: https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/#container-hooks
+        PreStop is called immediately before a container is terminated due to an API request or management event such as liveness/startup probe failure, preemption, resource contention, etc. The handler is not called if the container crashes or exits. The reason for termination is passed to the handler. The Pod's termination grace period countdown begins before the PreStop hooked is executed. Regardless of the outcome of the handler, the container will eventually terminate within the Pod's termination grace period. Other management of the container blocks until the hook completes or until the termination grace period is reached. More info: https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/#container-hooks
         """
         return pulumi.get(self, "pre_stop")
 
@@ -9685,7 +14844,7 @@ class SeldonDeploymentSpecPredictorsExplainerContainerSpecLifecyclePreStopArgs:
                  http_get: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsExplainerContainerSpecLifecyclePreStopHttpGetArgs']] = None,
                  tcp_socket: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsExplainerContainerSpecLifecyclePreStopTcpSocketArgs']] = None):
         """
-        PreStop is called immediately before a container is terminated due to an API request or management event such as liveness probe failure, preemption, resource contention, etc. The handler is not called if the container crashes or exits. The reason for termination is passed to the handler. The Pod's termination grace period countdown begins before the PreStop hooked is executed. Regardless of the outcome of the handler, the container will eventually terminate within the Pod's termination grace period. Other management of the container blocks until the hook completes or until the termination grace period is reached. More info: https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/#container-hooks
+        PreStop is called immediately before a container is terminated due to an API request or management event such as liveness/startup probe failure, preemption, resource contention, etc. The handler is not called if the container crashes or exits. The reason for termination is passed to the handler. The Pod's termination grace period countdown begins before the PreStop hooked is executed. Regardless of the outcome of the handler, the container will eventually terminate within the Pod's termination grace period. Other management of the container blocks until the hook completes or until the termination grace period is reached. More info: https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/#container-hooks
         :param pulumi.Input['SeldonDeploymentSpecPredictorsExplainerContainerSpecLifecyclePreStopExecArgs'] exec_: One and only one of the following should be specified. Exec specifies the action to take.
         :param pulumi.Input['SeldonDeploymentSpecPredictorsExplainerContainerSpecLifecyclePreStopHttpGetArgs'] http_get: HTTPGet specifies the http request to perform.
         :param pulumi.Input['SeldonDeploymentSpecPredictorsExplainerContainerSpecLifecyclePreStopTcpSocketArgs'] tcp_socket: TCPSocket specifies an action involving a TCP port. TCP hooks not yet supported TODO: implement a realistic TCP lifecycle hook
@@ -9940,7 +15099,7 @@ class SeldonDeploymentSpecPredictorsExplainerContainerSpecLivenessProbeArgs:
         :param pulumi.Input['SeldonDeploymentSpecPredictorsExplainerContainerSpecLivenessProbeHttpGetArgs'] http_get: HTTPGet specifies the http request to perform.
         :param pulumi.Input[int] initial_delay_seconds: Number of seconds after the container has started before liveness probes are initiated. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
         :param pulumi.Input[int] period_seconds: How often (in seconds) to perform the probe. Default to 10 seconds. Minimum value is 1.
-        :param pulumi.Input[int] success_threshold: Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1. Must be 1 for liveness. Minimum value is 1.
+        :param pulumi.Input[int] success_threshold: Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1. Must be 1 for liveness and startup. Minimum value is 1.
         :param pulumi.Input['SeldonDeploymentSpecPredictorsExplainerContainerSpecLivenessProbeTcpSocketArgs'] tcp_socket: TCPSocket specifies an action involving a TCP port. TCP hooks not yet supported TODO: implement a realistic TCP lifecycle hook
         :param pulumi.Input[int] timeout_seconds: Number of seconds after which the probe times out. Defaults to 1 second. Minimum value is 1. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
         """
@@ -10025,7 +15184,7 @@ class SeldonDeploymentSpecPredictorsExplainerContainerSpecLivenessProbeArgs:
     @pulumi.getter(name="successThreshold")
     def success_threshold(self) -> Optional[pulumi.Input[int]]:
         """
-        Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1. Must be 1 for liveness. Minimum value is 1.
+        Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1. Must be 1 for liveness and startup. Minimum value is 1.
         """
         return pulumi.get(self, "success_threshold")
 
@@ -10250,27 +15409,26 @@ class SeldonDeploymentSpecPredictorsExplainerContainerSpecLivenessProbeTcpSocket
 class SeldonDeploymentSpecPredictorsExplainerContainerSpecPortsArgs:
     def __init__(__self__, *,
                  container_port: pulumi.Input[int],
+                 protocol: pulumi.Input[str],
                  host_ip: Optional[pulumi.Input[str]] = None,
                  host_port: Optional[pulumi.Input[int]] = None,
-                 name: Optional[pulumi.Input[str]] = None,
-                 protocol: Optional[pulumi.Input[str]] = None):
+                 name: Optional[pulumi.Input[str]] = None):
         """
         ContainerPort represents a network port in a single container.
         :param pulumi.Input[int] container_port: Number of port to expose on the pod's IP address. This must be a valid port number, 0 < x < 65536.
+        :param pulumi.Input[str] protocol: Protocol for port. Must be UDP, TCP, or SCTP. Defaults to "TCP".
         :param pulumi.Input[str] host_ip: What host IP to bind the external port to.
         :param pulumi.Input[int] host_port: Number of port to expose on the host. If specified, this must be a valid port number, 0 < x < 65536. If HostNetwork is specified, this must match ContainerPort. Most containers do not need this.
         :param pulumi.Input[str] name: If specified, this must be an IANA_SVC_NAME and unique within the pod. Each named port in a pod must have a unique name. Name for the port that can be referred to by services.
-        :param pulumi.Input[str] protocol: Protocol for port. Must be UDP, TCP, or SCTP. Defaults to "TCP".
         """
         pulumi.set(__self__, "container_port", container_port)
+        pulumi.set(__self__, "protocol", protocol)
         if host_ip is not None:
             pulumi.set(__self__, "host_ip", host_ip)
         if host_port is not None:
             pulumi.set(__self__, "host_port", host_port)
         if name is not None:
             pulumi.set(__self__, "name", name)
-        if protocol is not None:
-            pulumi.set(__self__, "protocol", protocol)
 
     @property
     @pulumi.getter(name="containerPort")
@@ -10283,6 +15441,18 @@ class SeldonDeploymentSpecPredictorsExplainerContainerSpecPortsArgs:
     @container_port.setter
     def container_port(self, value: pulumi.Input[int]):
         pulumi.set(self, "container_port", value)
+
+    @property
+    @pulumi.getter
+    def protocol(self) -> pulumi.Input[str]:
+        """
+        Protocol for port. Must be UDP, TCP, or SCTP. Defaults to "TCP".
+        """
+        return pulumi.get(self, "protocol")
+
+    @protocol.setter
+    def protocol(self, value: pulumi.Input[str]):
+        pulumi.set(self, "protocol", value)
 
     @property
     @pulumi.getter(name="hostIP")
@@ -10320,18 +15490,6 @@ class SeldonDeploymentSpecPredictorsExplainerContainerSpecPortsArgs:
     def name(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "name", value)
 
-    @property
-    @pulumi.getter
-    def protocol(self) -> Optional[pulumi.Input[str]]:
-        """
-        Protocol for port. Must be UDP, TCP, or SCTP. Defaults to "TCP".
-        """
-        return pulumi.get(self, "protocol")
-
-    @protocol.setter
-    def protocol(self, value: Optional[pulumi.Input[str]]):
-        pulumi.set(self, "protocol", value)
-
 
 @pulumi.input_type
 class SeldonDeploymentSpecPredictorsExplainerContainerSpecReadinessProbeArgs:
@@ -10351,7 +15509,7 @@ class SeldonDeploymentSpecPredictorsExplainerContainerSpecReadinessProbeArgs:
         :param pulumi.Input['SeldonDeploymentSpecPredictorsExplainerContainerSpecReadinessProbeHttpGetArgs'] http_get: HTTPGet specifies the http request to perform.
         :param pulumi.Input[int] initial_delay_seconds: Number of seconds after the container has started before liveness probes are initiated. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
         :param pulumi.Input[int] period_seconds: How often (in seconds) to perform the probe. Default to 10 seconds. Minimum value is 1.
-        :param pulumi.Input[int] success_threshold: Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1. Must be 1 for liveness. Minimum value is 1.
+        :param pulumi.Input[int] success_threshold: Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1. Must be 1 for liveness and startup. Minimum value is 1.
         :param pulumi.Input['SeldonDeploymentSpecPredictorsExplainerContainerSpecReadinessProbeTcpSocketArgs'] tcp_socket: TCPSocket specifies an action involving a TCP port. TCP hooks not yet supported TODO: implement a realistic TCP lifecycle hook
         :param pulumi.Input[int] timeout_seconds: Number of seconds after which the probe times out. Defaults to 1 second. Minimum value is 1. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
         """
@@ -10436,7 +15594,7 @@ class SeldonDeploymentSpecPredictorsExplainerContainerSpecReadinessProbeArgs:
     @pulumi.getter(name="successThreshold")
     def success_threshold(self) -> Optional[pulumi.Input[int]]:
         """
-        Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1. Must be 1 for liveness. Minimum value is 1.
+        Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1. Must be 1 for liveness and startup. Minimum value is 1.
         """
         return pulumi.get(self, "success_threshold")
 
@@ -10660,12 +15818,12 @@ class SeldonDeploymentSpecPredictorsExplainerContainerSpecReadinessProbeTcpSocke
 @pulumi.input_type
 class SeldonDeploymentSpecPredictorsExplainerContainerSpecResourcesArgs:
     def __init__(__self__, *,
-                 limits: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-                 requests: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None):
+                 limits: Optional[pulumi.Input[Mapping[str, pulumi.Input['SeldonDeploymentSpecPredictorsExplainerContainerSpecResourcesLimitsArgs']]]] = None,
+                 requests: Optional[pulumi.Input[Mapping[str, pulumi.Input['SeldonDeploymentSpecPredictorsExplainerContainerSpecResourcesRequestsArgs']]]] = None):
         """
         Compute Resources required by this container. Cannot be updated. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] limits: Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] requests: Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
+        :param pulumi.Input[Mapping[str, pulumi.Input['SeldonDeploymentSpecPredictorsExplainerContainerSpecResourcesLimitsArgs']]] limits: Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
+        :param pulumi.Input[Mapping[str, pulumi.Input['SeldonDeploymentSpecPredictorsExplainerContainerSpecResourcesRequestsArgs']]] requests: Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
         """
         if limits is not None:
             pulumi.set(__self__, "limits", limits)
@@ -10674,27 +15832,39 @@ class SeldonDeploymentSpecPredictorsExplainerContainerSpecResourcesArgs:
 
     @property
     @pulumi.getter
-    def limits(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+    def limits(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input['SeldonDeploymentSpecPredictorsExplainerContainerSpecResourcesLimitsArgs']]]]:
         """
         Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
         """
         return pulumi.get(self, "limits")
 
     @limits.setter
-    def limits(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
+    def limits(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input['SeldonDeploymentSpecPredictorsExplainerContainerSpecResourcesLimitsArgs']]]]):
         pulumi.set(self, "limits", value)
 
     @property
     @pulumi.getter
-    def requests(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+    def requests(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input['SeldonDeploymentSpecPredictorsExplainerContainerSpecResourcesRequestsArgs']]]]:
         """
         Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
         """
         return pulumi.get(self, "requests")
 
     @requests.setter
-    def requests(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
+    def requests(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input['SeldonDeploymentSpecPredictorsExplainerContainerSpecResourcesRequestsArgs']]]]):
         pulumi.set(self, "requests", value)
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsExplainerContainerSpecResourcesLimitsArgs:
+    def __init__(__self__):
+        pass
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsExplainerContainerSpecResourcesRequestsArgs:
+    def __init__(__self__):
+        pass
 
 
 @pulumi.input_type
@@ -10708,7 +15878,8 @@ class SeldonDeploymentSpecPredictorsExplainerContainerSpecSecurityContextArgs:
                  run_as_group: Optional[pulumi.Input[int]] = None,
                  run_as_non_root: Optional[pulumi.Input[bool]] = None,
                  run_as_user: Optional[pulumi.Input[int]] = None,
-                 se_linux_options: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsExplainerContainerSpecSecurityContextSeLinuxOptionsArgs']] = None):
+                 se_linux_options: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsExplainerContainerSpecSecurityContextSeLinuxOptionsArgs']] = None,
+                 windows_options: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsExplainerContainerSpecSecurityContextWindowsOptionsArgs']] = None):
         """
         Security options the pod should run with. More info: https://kubernetes.io/docs/concepts/policy/security-context/ More info: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
         :param pulumi.Input[bool] allow_privilege_escalation: AllowPrivilegeEscalation controls whether a process can gain more privileges than its parent process. This bool directly controls if the no_new_privs flag will be set on the container process. AllowPrivilegeEscalation is true always when the container is: 1) run as Privileged 2) has CAP_SYS_ADMIN
@@ -10720,6 +15891,7 @@ class SeldonDeploymentSpecPredictorsExplainerContainerSpecSecurityContextArgs:
         :param pulumi.Input[bool] run_as_non_root: Indicates that the container must run as a non-root user. If true, the Kubelet will validate the image at runtime to ensure that it does not run as UID 0 (root) and fail to start the container if it does. If unset or false, no such validation will be performed. May also be set in PodSecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
         :param pulumi.Input[int] run_as_user: The UID to run the entrypoint of the container process. Defaults to user specified in image metadata if unspecified. May also be set in PodSecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
         :param pulumi.Input['SeldonDeploymentSpecPredictorsExplainerContainerSpecSecurityContextSeLinuxOptionsArgs'] se_linux_options: The SELinux context to be applied to the container. If unspecified, the container runtime will allocate a random SELinux context for each container.  May also be set in PodSecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
+        :param pulumi.Input['SeldonDeploymentSpecPredictorsExplainerContainerSpecSecurityContextWindowsOptionsArgs'] windows_options: The Windows specific settings applied to all containers. If unspecified, the options from the PodSecurityContext will be used. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
         """
         if allow_privilege_escalation is not None:
             pulumi.set(__self__, "allow_privilege_escalation", allow_privilege_escalation)
@@ -10739,6 +15911,8 @@ class SeldonDeploymentSpecPredictorsExplainerContainerSpecSecurityContextArgs:
             pulumi.set(__self__, "run_as_user", run_as_user)
         if se_linux_options is not None:
             pulumi.set(__self__, "se_linux_options", se_linux_options)
+        if windows_options is not None:
+            pulumi.set(__self__, "windows_options", windows_options)
 
     @property
     @pulumi.getter(name="allowPrivilegeEscalation")
@@ -10847,6 +16021,18 @@ class SeldonDeploymentSpecPredictorsExplainerContainerSpecSecurityContextArgs:
     @se_linux_options.setter
     def se_linux_options(self, value: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsExplainerContainerSpecSecurityContextSeLinuxOptionsArgs']]):
         pulumi.set(self, "se_linux_options", value)
+
+    @property
+    @pulumi.getter(name="windowsOptions")
+    def windows_options(self) -> Optional[pulumi.Input['SeldonDeploymentSpecPredictorsExplainerContainerSpecSecurityContextWindowsOptionsArgs']]:
+        """
+        The Windows specific settings applied to all containers. If unspecified, the options from the PodSecurityContext will be used. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
+        """
+        return pulumi.get(self, "windows_options")
+
+    @windows_options.setter
+    def windows_options(self, value: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsExplainerContainerSpecSecurityContextWindowsOptionsArgs']]):
+        pulumi.set(self, "windows_options", value)
 
 
 @pulumi.input_type
@@ -10962,6 +16148,398 @@ class SeldonDeploymentSpecPredictorsExplainerContainerSpecSecurityContextSeLinux
 
 
 @pulumi.input_type
+class SeldonDeploymentSpecPredictorsExplainerContainerSpecSecurityContextWindowsOptionsArgs:
+    def __init__(__self__, *,
+                 gmsa_credential_spec: Optional[pulumi.Input[str]] = None,
+                 gmsa_credential_spec_name: Optional[pulumi.Input[str]] = None,
+                 run_as_user_name: Optional[pulumi.Input[str]] = None):
+        """
+        The Windows specific settings applied to all containers. If unspecified, the options from the PodSecurityContext will be used. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
+        :param pulumi.Input[str] gmsa_credential_spec: GMSACredentialSpec is where the GMSA admission webhook (https://github.com/kubernetes-sigs/windows-gmsa) inlines the contents of the GMSA credential spec named by the GMSACredentialSpecName field.
+        :param pulumi.Input[str] gmsa_credential_spec_name: GMSACredentialSpecName is the name of the GMSA credential spec to use.
+        :param pulumi.Input[str] run_as_user_name: The UserName in Windows to run the entrypoint of the container process. Defaults to the user specified in image metadata if unspecified. May also be set in PodSecurityContext. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
+        """
+        if gmsa_credential_spec is not None:
+            pulumi.set(__self__, "gmsa_credential_spec", gmsa_credential_spec)
+        if gmsa_credential_spec_name is not None:
+            pulumi.set(__self__, "gmsa_credential_spec_name", gmsa_credential_spec_name)
+        if run_as_user_name is not None:
+            pulumi.set(__self__, "run_as_user_name", run_as_user_name)
+
+    @property
+    @pulumi.getter(name="gmsaCredentialSpec")
+    def gmsa_credential_spec(self) -> Optional[pulumi.Input[str]]:
+        """
+        GMSACredentialSpec is where the GMSA admission webhook (https://github.com/kubernetes-sigs/windows-gmsa) inlines the contents of the GMSA credential spec named by the GMSACredentialSpecName field.
+        """
+        return pulumi.get(self, "gmsa_credential_spec")
+
+    @gmsa_credential_spec.setter
+    def gmsa_credential_spec(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "gmsa_credential_spec", value)
+
+    @property
+    @pulumi.getter(name="gmsaCredentialSpecName")
+    def gmsa_credential_spec_name(self) -> Optional[pulumi.Input[str]]:
+        """
+        GMSACredentialSpecName is the name of the GMSA credential spec to use.
+        """
+        return pulumi.get(self, "gmsa_credential_spec_name")
+
+    @gmsa_credential_spec_name.setter
+    def gmsa_credential_spec_name(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "gmsa_credential_spec_name", value)
+
+    @property
+    @pulumi.getter(name="runAsUserName")
+    def run_as_user_name(self) -> Optional[pulumi.Input[str]]:
+        """
+        The UserName in Windows to run the entrypoint of the container process. Defaults to the user specified in image metadata if unspecified. May also be set in PodSecurityContext. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
+        """
+        return pulumi.get(self, "run_as_user_name")
+
+    @run_as_user_name.setter
+    def run_as_user_name(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "run_as_user_name", value)
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsExplainerContainerSpecStartupProbeArgs:
+    def __init__(__self__, *,
+                 exec_: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsExplainerContainerSpecStartupProbeExecArgs']] = None,
+                 failure_threshold: Optional[pulumi.Input[int]] = None,
+                 http_get: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsExplainerContainerSpecStartupProbeHttpGetArgs']] = None,
+                 initial_delay_seconds: Optional[pulumi.Input[int]] = None,
+                 period_seconds: Optional[pulumi.Input[int]] = None,
+                 success_threshold: Optional[pulumi.Input[int]] = None,
+                 tcp_socket: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsExplainerContainerSpecStartupProbeTcpSocketArgs']] = None,
+                 timeout_seconds: Optional[pulumi.Input[int]] = None):
+        """
+        StartupProbe indicates that the Pod has successfully initialized. If specified, no other probes are executed until this completes successfully. If this probe fails, the Pod will be restarted, just as if the livenessProbe failed. This can be used to provide different probe parameters at the beginning of a Pod's lifecycle, when it might take a long time to load data or warm a cache, than during steady-state operation. This cannot be updated. This is a beta feature enabled by the StartupProbe feature flag. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
+        :param pulumi.Input['SeldonDeploymentSpecPredictorsExplainerContainerSpecStartupProbeExecArgs'] exec_: One and only one of the following should be specified. Exec specifies the action to take.
+        :param pulumi.Input[int] failure_threshold: Minimum consecutive failures for the probe to be considered failed after having succeeded. Defaults to 3. Minimum value is 1.
+        :param pulumi.Input['SeldonDeploymentSpecPredictorsExplainerContainerSpecStartupProbeHttpGetArgs'] http_get: HTTPGet specifies the http request to perform.
+        :param pulumi.Input[int] initial_delay_seconds: Number of seconds after the container has started before liveness probes are initiated. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
+        :param pulumi.Input[int] period_seconds: How often (in seconds) to perform the probe. Default to 10 seconds. Minimum value is 1.
+        :param pulumi.Input[int] success_threshold: Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1. Must be 1 for liveness and startup. Minimum value is 1.
+        :param pulumi.Input['SeldonDeploymentSpecPredictorsExplainerContainerSpecStartupProbeTcpSocketArgs'] tcp_socket: TCPSocket specifies an action involving a TCP port. TCP hooks not yet supported TODO: implement a realistic TCP lifecycle hook
+        :param pulumi.Input[int] timeout_seconds: Number of seconds after which the probe times out. Defaults to 1 second. Minimum value is 1. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
+        """
+        if exec_ is not None:
+            pulumi.set(__self__, "exec_", exec_)
+        if failure_threshold is not None:
+            pulumi.set(__self__, "failure_threshold", failure_threshold)
+        if http_get is not None:
+            pulumi.set(__self__, "http_get", http_get)
+        if initial_delay_seconds is not None:
+            pulumi.set(__self__, "initial_delay_seconds", initial_delay_seconds)
+        if period_seconds is not None:
+            pulumi.set(__self__, "period_seconds", period_seconds)
+        if success_threshold is not None:
+            pulumi.set(__self__, "success_threshold", success_threshold)
+        if tcp_socket is not None:
+            pulumi.set(__self__, "tcp_socket", tcp_socket)
+        if timeout_seconds is not None:
+            pulumi.set(__self__, "timeout_seconds", timeout_seconds)
+
+    @property
+    @pulumi.getter(name="exec")
+    def exec_(self) -> Optional[pulumi.Input['SeldonDeploymentSpecPredictorsExplainerContainerSpecStartupProbeExecArgs']]:
+        """
+        One and only one of the following should be specified. Exec specifies the action to take.
+        """
+        return pulumi.get(self, "exec_")
+
+    @exec_.setter
+    def exec_(self, value: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsExplainerContainerSpecStartupProbeExecArgs']]):
+        pulumi.set(self, "exec_", value)
+
+    @property
+    @pulumi.getter(name="failureThreshold")
+    def failure_threshold(self) -> Optional[pulumi.Input[int]]:
+        """
+        Minimum consecutive failures for the probe to be considered failed after having succeeded. Defaults to 3. Minimum value is 1.
+        """
+        return pulumi.get(self, "failure_threshold")
+
+    @failure_threshold.setter
+    def failure_threshold(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "failure_threshold", value)
+
+    @property
+    @pulumi.getter(name="httpGet")
+    def http_get(self) -> Optional[pulumi.Input['SeldonDeploymentSpecPredictorsExplainerContainerSpecStartupProbeHttpGetArgs']]:
+        """
+        HTTPGet specifies the http request to perform.
+        """
+        return pulumi.get(self, "http_get")
+
+    @http_get.setter
+    def http_get(self, value: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsExplainerContainerSpecStartupProbeHttpGetArgs']]):
+        pulumi.set(self, "http_get", value)
+
+    @property
+    @pulumi.getter(name="initialDelaySeconds")
+    def initial_delay_seconds(self) -> Optional[pulumi.Input[int]]:
+        """
+        Number of seconds after the container has started before liveness probes are initiated. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
+        """
+        return pulumi.get(self, "initial_delay_seconds")
+
+    @initial_delay_seconds.setter
+    def initial_delay_seconds(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "initial_delay_seconds", value)
+
+    @property
+    @pulumi.getter(name="periodSeconds")
+    def period_seconds(self) -> Optional[pulumi.Input[int]]:
+        """
+        How often (in seconds) to perform the probe. Default to 10 seconds. Minimum value is 1.
+        """
+        return pulumi.get(self, "period_seconds")
+
+    @period_seconds.setter
+    def period_seconds(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "period_seconds", value)
+
+    @property
+    @pulumi.getter(name="successThreshold")
+    def success_threshold(self) -> Optional[pulumi.Input[int]]:
+        """
+        Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1. Must be 1 for liveness and startup. Minimum value is 1.
+        """
+        return pulumi.get(self, "success_threshold")
+
+    @success_threshold.setter
+    def success_threshold(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "success_threshold", value)
+
+    @property
+    @pulumi.getter(name="tcpSocket")
+    def tcp_socket(self) -> Optional[pulumi.Input['SeldonDeploymentSpecPredictorsExplainerContainerSpecStartupProbeTcpSocketArgs']]:
+        """
+        TCPSocket specifies an action involving a TCP port. TCP hooks not yet supported TODO: implement a realistic TCP lifecycle hook
+        """
+        return pulumi.get(self, "tcp_socket")
+
+    @tcp_socket.setter
+    def tcp_socket(self, value: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsExplainerContainerSpecStartupProbeTcpSocketArgs']]):
+        pulumi.set(self, "tcp_socket", value)
+
+    @property
+    @pulumi.getter(name="timeoutSeconds")
+    def timeout_seconds(self) -> Optional[pulumi.Input[int]]:
+        """
+        Number of seconds after which the probe times out. Defaults to 1 second. Minimum value is 1. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
+        """
+        return pulumi.get(self, "timeout_seconds")
+
+    @timeout_seconds.setter
+    def timeout_seconds(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "timeout_seconds", value)
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsExplainerContainerSpecStartupProbeExecArgs:
+    def __init__(__self__, *,
+                 command: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None):
+        """
+        One and only one of the following should be specified. Exec specifies the action to take.
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] command: Command is the command line to execute inside the container, the working directory for the command  is root ('/') in the container's filesystem. The command is simply exec'd, it is not run inside a shell, so traditional shell instructions ('|', etc) won't work. To use a shell, you need to explicitly call out to that shell. Exit status of 0 is treated as live/healthy and non-zero is unhealthy.
+        """
+        if command is not None:
+            pulumi.set(__self__, "command", command)
+
+    @property
+    @pulumi.getter
+    def command(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
+        """
+        Command is the command line to execute inside the container, the working directory for the command  is root ('/') in the container's filesystem. The command is simply exec'd, it is not run inside a shell, so traditional shell instructions ('|', etc) won't work. To use a shell, you need to explicitly call out to that shell. Exit status of 0 is treated as live/healthy and non-zero is unhealthy.
+        """
+        return pulumi.get(self, "command")
+
+    @command.setter
+    def command(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]):
+        pulumi.set(self, "command", value)
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsExplainerContainerSpecStartupProbeHttpGetArgs:
+    def __init__(__self__, *,
+                 port: pulumi.Input['SeldonDeploymentSpecPredictorsExplainerContainerSpecStartupProbeHttpGetPortArgs'],
+                 host: Optional[pulumi.Input[str]] = None,
+                 http_headers: Optional[pulumi.Input[Sequence[pulumi.Input['SeldonDeploymentSpecPredictorsExplainerContainerSpecStartupProbeHttpGetHttpHeadersArgs']]]] = None,
+                 path: Optional[pulumi.Input[str]] = None,
+                 scheme: Optional[pulumi.Input[str]] = None):
+        """
+        HTTPGet specifies the http request to perform.
+        :param pulumi.Input['SeldonDeploymentSpecPredictorsExplainerContainerSpecStartupProbeHttpGetPortArgs'] port: Name or number of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME.
+        :param pulumi.Input[str] host: Host name to connect to, defaults to the pod IP. You probably want to set "Host" in httpHeaders instead.
+        :param pulumi.Input[Sequence[pulumi.Input['SeldonDeploymentSpecPredictorsExplainerContainerSpecStartupProbeHttpGetHttpHeadersArgs']]] http_headers: Custom headers to set in the request. HTTP allows repeated headers.
+        :param pulumi.Input[str] path: Path to access on the HTTP server.
+        :param pulumi.Input[str] scheme: Scheme to use for connecting to the host. Defaults to HTTP.
+        """
+        pulumi.set(__self__, "port", port)
+        if host is not None:
+            pulumi.set(__self__, "host", host)
+        if http_headers is not None:
+            pulumi.set(__self__, "http_headers", http_headers)
+        if path is not None:
+            pulumi.set(__self__, "path", path)
+        if scheme is not None:
+            pulumi.set(__self__, "scheme", scheme)
+
+    @property
+    @pulumi.getter
+    def port(self) -> pulumi.Input['SeldonDeploymentSpecPredictorsExplainerContainerSpecStartupProbeHttpGetPortArgs']:
+        """
+        Name or number of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME.
+        """
+        return pulumi.get(self, "port")
+
+    @port.setter
+    def port(self, value: pulumi.Input['SeldonDeploymentSpecPredictorsExplainerContainerSpecStartupProbeHttpGetPortArgs']):
+        pulumi.set(self, "port", value)
+
+    @property
+    @pulumi.getter
+    def host(self) -> Optional[pulumi.Input[str]]:
+        """
+        Host name to connect to, defaults to the pod IP. You probably want to set "Host" in httpHeaders instead.
+        """
+        return pulumi.get(self, "host")
+
+    @host.setter
+    def host(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "host", value)
+
+    @property
+    @pulumi.getter(name="httpHeaders")
+    def http_headers(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['SeldonDeploymentSpecPredictorsExplainerContainerSpecStartupProbeHttpGetHttpHeadersArgs']]]]:
+        """
+        Custom headers to set in the request. HTTP allows repeated headers.
+        """
+        return pulumi.get(self, "http_headers")
+
+    @http_headers.setter
+    def http_headers(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['SeldonDeploymentSpecPredictorsExplainerContainerSpecStartupProbeHttpGetHttpHeadersArgs']]]]):
+        pulumi.set(self, "http_headers", value)
+
+    @property
+    @pulumi.getter
+    def path(self) -> Optional[pulumi.Input[str]]:
+        """
+        Path to access on the HTTP server.
+        """
+        return pulumi.get(self, "path")
+
+    @path.setter
+    def path(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "path", value)
+
+    @property
+    @pulumi.getter
+    def scheme(self) -> Optional[pulumi.Input[str]]:
+        """
+        Scheme to use for connecting to the host. Defaults to HTTP.
+        """
+        return pulumi.get(self, "scheme")
+
+    @scheme.setter
+    def scheme(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "scheme", value)
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsExplainerContainerSpecStartupProbeHttpGetHttpHeadersArgs:
+    def __init__(__self__, *,
+                 name: pulumi.Input[str],
+                 value: pulumi.Input[str]):
+        """
+        HTTPHeader describes a custom header to be used in HTTP probes
+        :param pulumi.Input[str] name: The header field name
+        :param pulumi.Input[str] value: The header field value
+        """
+        pulumi.set(__self__, "name", name)
+        pulumi.set(__self__, "value", value)
+
+    @property
+    @pulumi.getter
+    def name(self) -> pulumi.Input[str]:
+        """
+        The header field name
+        """
+        return pulumi.get(self, "name")
+
+    @name.setter
+    def name(self, value: pulumi.Input[str]):
+        pulumi.set(self, "name", value)
+
+    @property
+    @pulumi.getter
+    def value(self) -> pulumi.Input[str]:
+        """
+        The header field value
+        """
+        return pulumi.get(self, "value")
+
+    @value.setter
+    def value(self, value: pulumi.Input[str]):
+        pulumi.set(self, "value", value)
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsExplainerContainerSpecStartupProbeHttpGetPortArgs:
+    def __init__(__self__):
+        pass
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsExplainerContainerSpecStartupProbeTcpSocketArgs:
+    def __init__(__self__, *,
+                 port: pulumi.Input['SeldonDeploymentSpecPredictorsExplainerContainerSpecStartupProbeTcpSocketPortArgs'],
+                 host: Optional[pulumi.Input[str]] = None):
+        """
+        TCPSocket specifies an action involving a TCP port. TCP hooks not yet supported TODO: implement a realistic TCP lifecycle hook
+        :param pulumi.Input['SeldonDeploymentSpecPredictorsExplainerContainerSpecStartupProbeTcpSocketPortArgs'] port: Number or name of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME.
+        :param pulumi.Input[str] host: Optional: Host name to connect to, defaults to the pod IP.
+        """
+        pulumi.set(__self__, "port", port)
+        if host is not None:
+            pulumi.set(__self__, "host", host)
+
+    @property
+    @pulumi.getter
+    def port(self) -> pulumi.Input['SeldonDeploymentSpecPredictorsExplainerContainerSpecStartupProbeTcpSocketPortArgs']:
+        """
+        Number or name of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME.
+        """
+        return pulumi.get(self, "port")
+
+    @port.setter
+    def port(self, value: pulumi.Input['SeldonDeploymentSpecPredictorsExplainerContainerSpecStartupProbeTcpSocketPortArgs']):
+        pulumi.set(self, "port", value)
+
+    @property
+    @pulumi.getter
+    def host(self) -> Optional[pulumi.Input[str]]:
+        """
+        Optional: Host name to connect to, defaults to the pod IP.
+        """
+        return pulumi.get(self, "host")
+
+    @host.setter
+    def host(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "host", value)
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsExplainerContainerSpecStartupProbeTcpSocketPortArgs:
+    def __init__(__self__):
+        pass
+
+
+@pulumi.input_type
 class SeldonDeploymentSpecPredictorsExplainerContainerSpecVolumeDevicesArgs:
     def __init__(__self__, *,
                  device_path: pulumi.Input[str],
@@ -11015,7 +16593,7 @@ class SeldonDeploymentSpecPredictorsExplainerContainerSpecVolumeMountsArgs:
         :param pulumi.Input[str] mount_propagation: mountPropagation determines how mounts are propagated from the host to container and the other way around. When not set, MountPropagationNone is used. This field is beta in 1.10.
         :param pulumi.Input[bool] read_only: Mounted read-only if true, read-write otherwise (false or unspecified). Defaults to false.
         :param pulumi.Input[str] sub_path: Path within the volume from which the container's volume should be mounted. Defaults to "" (volume's root).
-        :param pulumi.Input[str] sub_path_expr: Expanded path within the volume from which the container's volume should be mounted. Behaves similarly to SubPath but environment variable references $(VAR_NAME) are expanded using the container's environment. Defaults to "" (volume's root). SubPathExpr and SubPath are mutually exclusive. This field is alpha in 1.14.
+        :param pulumi.Input[str] sub_path_expr: Expanded path within the volume from which the container's volume should be mounted. Behaves similarly to SubPath but environment variable references $(VAR_NAME) are expanded using the container's environment. Defaults to "" (volume's root). SubPathExpr and SubPath are mutually exclusive.
         """
         pulumi.set(__self__, "mount_path", mount_path)
         pulumi.set(__self__, "name", name)
@@ -11092,7 +16670,7 @@ class SeldonDeploymentSpecPredictorsExplainerContainerSpecVolumeMountsArgs:
     @pulumi.getter(name="subPathExpr")
     def sub_path_expr(self) -> Optional[pulumi.Input[str]]:
         """
-        Expanded path within the volume from which the container's volume should be mounted. Behaves similarly to SubPath but environment variable references $(VAR_NAME) are expanded using the container's environment. Defaults to "" (volume's root). SubPathExpr and SubPath are mutually exclusive. This field is alpha in 1.14.
+        Expanded path within the volume from which the container's volume should be mounted. Behaves similarly to SubPath but environment variable references $(VAR_NAME) are expanded using the container's environment. Defaults to "" (volume's root). SubPathExpr and SubPath are mutually exclusive.
         """
         return pulumi.get(self, "sub_path_expr")
 
@@ -11104,15 +16682,39 @@ class SeldonDeploymentSpecPredictorsExplainerContainerSpecVolumeMountsArgs:
 @pulumi.input_type
 class SeldonDeploymentSpecPredictorsExplainerEndpointArgs:
     def __init__(__self__, *,
+                 grpc_port: Optional[pulumi.Input[int]] = None,
+                 http_port: Optional[pulumi.Input[int]] = None,
                  service_host: Optional[pulumi.Input[str]] = None,
                  service_port: Optional[pulumi.Input[int]] = None,
                  type: Optional[pulumi.Input[str]] = None):
+        if grpc_port is not None:
+            pulumi.set(__self__, "grpc_port", grpc_port)
+        if http_port is not None:
+            pulumi.set(__self__, "http_port", http_port)
         if service_host is not None:
             pulumi.set(__self__, "service_host", service_host)
         if service_port is not None:
             pulumi.set(__self__, "service_port", service_port)
         if type is not None:
             pulumi.set(__self__, "type", type)
+
+    @property
+    @pulumi.getter(name="grpcPort")
+    def grpc_port(self) -> Optional[pulumi.Input[int]]:
+        return pulumi.get(self, "grpc_port")
+
+    @grpc_port.setter
+    def grpc_port(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "grpc_port", value)
+
+    @property
+    @pulumi.getter(name="httpPort")
+    def http_port(self) -> Optional[pulumi.Input[int]]:
+        return pulumi.get(self, "http_port")
+
+    @http_port.setter
+    def http_port(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "http_port", value)
 
     @property
     @pulumi.getter
@@ -12335,15 +17937,39 @@ class SeldonDeploymentSpecPredictorsGraphChildrenParametersArgs:
 @pulumi.input_type
 class SeldonDeploymentSpecPredictorsGraphEndpointArgs:
     def __init__(__self__, *,
+                 grpc_port: Optional[pulumi.Input[int]] = None,
+                 http_port: Optional[pulumi.Input[int]] = None,
                  service_host: Optional[pulumi.Input[str]] = None,
                  service_port: Optional[pulumi.Input[int]] = None,
                  type: Optional[pulumi.Input[str]] = None):
+        if grpc_port is not None:
+            pulumi.set(__self__, "grpc_port", grpc_port)
+        if http_port is not None:
+            pulumi.set(__self__, "http_port", http_port)
         if service_host is not None:
             pulumi.set(__self__, "service_host", service_host)
         if service_port is not None:
             pulumi.set(__self__, "service_port", service_port)
         if type is not None:
             pulumi.set(__self__, "type", type)
+
+    @property
+    @pulumi.getter(name="grpcPort")
+    def grpc_port(self) -> Optional[pulumi.Input[int]]:
+        return pulumi.get(self, "grpc_port")
+
+    @grpc_port.setter
+    def grpc_port(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "grpc_port", value)
+
+    @property
+    @pulumi.getter(name="httpPort")
+    def http_port(self) -> Optional[pulumi.Input[int]]:
+        return pulumi.get(self, "http_port")
+
+    @http_port.setter
+    def http_port(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "http_port", value)
 
     @property
     @pulumi.getter
@@ -12452,15 +18078,35 @@ class SeldonDeploymentSpecPredictorsGraphParametersArgs:
 
 
 @pulumi.input_type
+class SeldonDeploymentSpecPredictorsSslArgs:
+    def __init__(__self__, *,
+                 cert_secret_name: Optional[pulumi.Input[str]] = None):
+        if cert_secret_name is not None:
+            pulumi.set(__self__, "cert_secret_name", cert_secret_name)
+
+    @property
+    @pulumi.getter(name="certSecretName")
+    def cert_secret_name(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "cert_secret_name")
+
+    @cert_secret_name.setter
+    def cert_secret_name(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "cert_secret_name", value)
+
+
+@pulumi.input_type
 class SeldonDeploymentSpecPredictorsSvcOrchSpecArgs:
     def __init__(__self__, *,
                  env: Optional[pulumi.Input[Sequence[pulumi.Input['SeldonDeploymentSpecPredictorsSvcOrchSpecEnvArgs']]]] = None,
+                 replicas: Optional[pulumi.Input[int]] = None,
                  resources: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsSvcOrchSpecResourcesArgs']] = None):
         """
         :param pulumi.Input['SeldonDeploymentSpecPredictorsSvcOrchSpecResourcesArgs'] resources: ResourceRequirements describes the compute resource requirements.
         """
         if env is not None:
             pulumi.set(__self__, "env", env)
+        if replicas is not None:
+            pulumi.set(__self__, "replicas", replicas)
         if resources is not None:
             pulumi.set(__self__, "resources", resources)
 
@@ -12472,6 +18118,15 @@ class SeldonDeploymentSpecPredictorsSvcOrchSpecArgs:
     @env.setter
     def env(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['SeldonDeploymentSpecPredictorsSvcOrchSpecEnvArgs']]]]):
         pulumi.set(self, "env", value)
+
+    @property
+    @pulumi.getter
+    def replicas(self) -> Optional[pulumi.Input[int]]:
+        return pulumi.get(self, "replicas")
+
+    @replicas.setter
+    def replicas(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "replicas", value)
 
     @property
     @pulumi.getter
@@ -12551,7 +18206,7 @@ class SeldonDeploymentSpecPredictorsSvcOrchSpecEnvValueFromArgs:
         """
         Source for the environment variable's value. Cannot be used if value is not empty.
         :param pulumi.Input['SeldonDeploymentSpecPredictorsSvcOrchSpecEnvValueFromConfigMapKeyRefArgs'] config_map_key_ref: Selects a key of a ConfigMap.
-        :param pulumi.Input['SeldonDeploymentSpecPredictorsSvcOrchSpecEnvValueFromFieldRefArgs'] field_ref: Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+        :param pulumi.Input['SeldonDeploymentSpecPredictorsSvcOrchSpecEnvValueFromFieldRefArgs'] field_ref: Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
         :param pulumi.Input['SeldonDeploymentSpecPredictorsSvcOrchSpecEnvValueFromResourceFieldRefArgs'] resource_field_ref: Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
         :param pulumi.Input['SeldonDeploymentSpecPredictorsSvcOrchSpecEnvValueFromSecretKeyRefArgs'] secret_key_ref: Selects a key of a secret in the pod's namespace
         """
@@ -12580,7 +18235,7 @@ class SeldonDeploymentSpecPredictorsSvcOrchSpecEnvValueFromArgs:
     @pulumi.getter(name="fieldRef")
     def field_ref(self) -> Optional[pulumi.Input['SeldonDeploymentSpecPredictorsSvcOrchSpecEnvValueFromFieldRefArgs']]:
         """
-        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
         """
         return pulumi.get(self, "field_ref")
 
@@ -12623,7 +18278,7 @@ class SeldonDeploymentSpecPredictorsSvcOrchSpecEnvValueFromConfigMapKeyRefArgs:
         Selects a key of a ConfigMap.
         :param pulumi.Input[str] key: The key to select.
         :param pulumi.Input[str] name: Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
-        :param pulumi.Input[bool] optional: Specify whether the ConfigMap or it's key must be defined
+        :param pulumi.Input[bool] optional: Specify whether the ConfigMap or its key must be defined
         """
         pulumi.set(__self__, "key", key)
         if name is not None:
@@ -12659,7 +18314,7 @@ class SeldonDeploymentSpecPredictorsSvcOrchSpecEnvValueFromConfigMapKeyRefArgs:
     @pulumi.getter
     def optional(self) -> Optional[pulumi.Input[bool]]:
         """
-        Specify whether the ConfigMap or it's key must be defined
+        Specify whether the ConfigMap or its key must be defined
         """
         return pulumi.get(self, "optional")
 
@@ -12674,7 +18329,7 @@ class SeldonDeploymentSpecPredictorsSvcOrchSpecEnvValueFromFieldRefArgs:
                  field_path: pulumi.Input[str],
                  api_version: Optional[pulumi.Input[str]] = None):
         """
-        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
+        Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
         :param pulumi.Input[str] field_path: Path of the field to select in the specified API version.
         :param pulumi.Input[str] api_version: Version of the schema the FieldPath is written in terms of, defaults to "v1".
         """
@@ -12712,12 +18367,12 @@ class SeldonDeploymentSpecPredictorsSvcOrchSpecEnvValueFromResourceFieldRefArgs:
     def __init__(__self__, *,
                  resource: pulumi.Input[str],
                  container_name: Optional[pulumi.Input[str]] = None,
-                 divisor: Optional[pulumi.Input[str]] = None):
+                 divisor: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsSvcOrchSpecEnvValueFromResourceFieldRefDivisorArgs']] = None):
         """
         Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
         :param pulumi.Input[str] resource: Required: resource to select
         :param pulumi.Input[str] container_name: Container name: required for volumes, optional for env vars
-        :param pulumi.Input[str] divisor: Specifies the output format of the exposed resources, defaults to "1"
+        :param pulumi.Input['SeldonDeploymentSpecPredictorsSvcOrchSpecEnvValueFromResourceFieldRefDivisorArgs'] divisor: Specifies the output format of the exposed resources, defaults to "1"
         """
         pulumi.set(__self__, "resource", resource)
         if container_name is not None:
@@ -12751,15 +18406,21 @@ class SeldonDeploymentSpecPredictorsSvcOrchSpecEnvValueFromResourceFieldRefArgs:
 
     @property
     @pulumi.getter
-    def divisor(self) -> Optional[pulumi.Input[str]]:
+    def divisor(self) -> Optional[pulumi.Input['SeldonDeploymentSpecPredictorsSvcOrchSpecEnvValueFromResourceFieldRefDivisorArgs']]:
         """
         Specifies the output format of the exposed resources, defaults to "1"
         """
         return pulumi.get(self, "divisor")
 
     @divisor.setter
-    def divisor(self, value: Optional[pulumi.Input[str]]):
+    def divisor(self, value: Optional[pulumi.Input['SeldonDeploymentSpecPredictorsSvcOrchSpecEnvValueFromResourceFieldRefDivisorArgs']]):
         pulumi.set(self, "divisor", value)
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsSvcOrchSpecEnvValueFromResourceFieldRefDivisorArgs:
+    def __init__(__self__):
+        pass
 
 
 @pulumi.input_type
@@ -12772,7 +18433,7 @@ class SeldonDeploymentSpecPredictorsSvcOrchSpecEnvValueFromSecretKeyRefArgs:
         Selects a key of a secret in the pod's namespace
         :param pulumi.Input[str] key: The key of the secret to select from.  Must be a valid secret key.
         :param pulumi.Input[str] name: Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?
-        :param pulumi.Input[bool] optional: Specify whether the Secret or it's key must be defined
+        :param pulumi.Input[bool] optional: Specify whether the Secret or its key must be defined
         """
         pulumi.set(__self__, "key", key)
         if name is not None:
@@ -12808,7 +18469,7 @@ class SeldonDeploymentSpecPredictorsSvcOrchSpecEnvValueFromSecretKeyRefArgs:
     @pulumi.getter
     def optional(self) -> Optional[pulumi.Input[bool]]:
         """
-        Specify whether the Secret or it's key must be defined
+        Specify whether the Secret or its key must be defined
         """
         return pulumi.get(self, "optional")
 
@@ -12820,12 +18481,12 @@ class SeldonDeploymentSpecPredictorsSvcOrchSpecEnvValueFromSecretKeyRefArgs:
 @pulumi.input_type
 class SeldonDeploymentSpecPredictorsSvcOrchSpecResourcesArgs:
     def __init__(__self__, *,
-                 limits: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-                 requests: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None):
+                 limits: Optional[pulumi.Input[Mapping[str, pulumi.Input['SeldonDeploymentSpecPredictorsSvcOrchSpecResourcesLimitsArgs']]]] = None,
+                 requests: Optional[pulumi.Input[Mapping[str, pulumi.Input['SeldonDeploymentSpecPredictorsSvcOrchSpecResourcesRequestsArgs']]]] = None):
         """
         ResourceRequirements describes the compute resource requirements.
-        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] limits: Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] requests: Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
+        :param pulumi.Input[Mapping[str, pulumi.Input['SeldonDeploymentSpecPredictorsSvcOrchSpecResourcesLimitsArgs']]] limits: Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
+        :param pulumi.Input[Mapping[str, pulumi.Input['SeldonDeploymentSpecPredictorsSvcOrchSpecResourcesRequestsArgs']]] requests: Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
         """
         if limits is not None:
             pulumi.set(__self__, "limits", limits)
@@ -12834,47 +18495,78 @@ class SeldonDeploymentSpecPredictorsSvcOrchSpecResourcesArgs:
 
     @property
     @pulumi.getter
-    def limits(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+    def limits(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input['SeldonDeploymentSpecPredictorsSvcOrchSpecResourcesLimitsArgs']]]]:
         """
         Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
         """
         return pulumi.get(self, "limits")
 
     @limits.setter
-    def limits(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
+    def limits(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input['SeldonDeploymentSpecPredictorsSvcOrchSpecResourcesLimitsArgs']]]]):
         pulumi.set(self, "limits", value)
 
     @property
     @pulumi.getter
-    def requests(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+    def requests(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input['SeldonDeploymentSpecPredictorsSvcOrchSpecResourcesRequestsArgs']]]]:
         """
         Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
         """
         return pulumi.get(self, "requests")
 
     @requests.setter
-    def requests(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
+    def requests(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input['SeldonDeploymentSpecPredictorsSvcOrchSpecResourcesRequestsArgs']]]]):
         pulumi.set(self, "requests", value)
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsSvcOrchSpecResourcesLimitsArgs:
+    def __init__(__self__):
+        pass
+
+
+@pulumi.input_type
+class SeldonDeploymentSpecPredictorsSvcOrchSpecResourcesRequestsArgs:
+    def __init__(__self__):
+        pass
 
 
 @pulumi.input_type
 class SeldonDeploymentStatusArgs:
     def __init__(__self__, *,
+                 address: Optional[pulumi.Input['SeldonDeploymentStatusAddressArgs']] = None,
                  deployment_status: Optional[pulumi.Input[Mapping[str, pulumi.Input['SeldonDeploymentStatusDeploymentStatusArgs']]]] = None,
                  description: Optional[pulumi.Input[str]] = None,
+                 replicas: Optional[pulumi.Input[int]] = None,
                  service_status: Optional[pulumi.Input[Mapping[str, pulumi.Input['SeldonDeploymentStatusServiceStatusArgs']]]] = None,
                  state: Optional[pulumi.Input[str]] = None):
         """
         SeldonDeploymentStatus defines the observed state of SeldonDeployment
+        :param pulumi.Input['SeldonDeploymentStatusAddressArgs'] address: Addressable placeholder until duckv1 issue is fixed:    https://github.com/kubernetes-sigs/controller-tools/issues/391
         """
+        if address is not None:
+            pulumi.set(__self__, "address", address)
         if deployment_status is not None:
             pulumi.set(__self__, "deployment_status", deployment_status)
         if description is not None:
             pulumi.set(__self__, "description", description)
+        if replicas is not None:
+            pulumi.set(__self__, "replicas", replicas)
         if service_status is not None:
             pulumi.set(__self__, "service_status", service_status)
         if state is not None:
             pulumi.set(__self__, "state", state)
+
+    @property
+    @pulumi.getter
+    def address(self) -> Optional[pulumi.Input['SeldonDeploymentStatusAddressArgs']]:
+        """
+        Addressable placeholder until duckv1 issue is fixed:    https://github.com/kubernetes-sigs/controller-tools/issues/391
+        """
+        return pulumi.get(self, "address")
+
+    @address.setter
+    def address(self, value: Optional[pulumi.Input['SeldonDeploymentStatusAddressArgs']]):
+        pulumi.set(self, "address", value)
 
     @property
     @pulumi.getter(name="deploymentStatus")
@@ -12895,6 +18587,15 @@ class SeldonDeploymentStatusArgs:
         pulumi.set(self, "description", value)
 
     @property
+    @pulumi.getter
+    def replicas(self) -> Optional[pulumi.Input[int]]:
+        return pulumi.get(self, "replicas")
+
+    @replicas.setter
+    def replicas(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "replicas", value)
+
+    @property
     @pulumi.getter(name="serviceStatus")
     def service_status(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input['SeldonDeploymentStatusServiceStatusArgs']]]]:
         return pulumi.get(self, "service_status")
@@ -12911,6 +18612,26 @@ class SeldonDeploymentStatusArgs:
     @state.setter
     def state(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "state", value)
+
+
+@pulumi.input_type
+class SeldonDeploymentStatusAddressArgs:
+    def __init__(__self__, *,
+                 url: Optional[pulumi.Input[str]] = None):
+        """
+        Addressable placeholder until duckv1 issue is fixed:    https://github.com/kubernetes-sigs/controller-tools/issues/391
+        """
+        if url is not None:
+            pulumi.set(__self__, "url", url)
+
+    @property
+    @pulumi.getter
+    def url(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "url")
+
+    @url.setter
+    def url(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "url", value)
 
 
 @pulumi.input_type

@@ -109,6 +109,9 @@ namespace Pulumi.Kubernetes.Types.Inputs.Pingcap.V1Alpha1
         [Input("serviceAccount")]
         public Input<string>? ServiceAccount { get; set; }
 
+        [Input("statefulSetUpdateStrategy")]
+        public Input<string>? StatefulSetUpdateStrategy { get; set; }
+
         [Input("terminationGracePeriodSeconds")]
         public Input<int>? TerminationGracePeriodSeconds { get; set; }
 

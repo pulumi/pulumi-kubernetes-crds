@@ -46,6 +46,12 @@ namespace Pulumi.Kubernetes.Types.Inputs.Org.V1
         public Input<string>? IdentityProviderImagePullPolicy { get; set; }
 
         /// <summary>
+        /// Ingress custom settings
+        /// </summary>
+        [Input("identityProviderIngress")]
+        public Input<Pulumi.Kubernetes.Types.Inputs.Org.V1.CheClusterSpecAuthIdentityProviderIngressArgs>? IdentityProviderIngress { get; set; }
+
+        /// <summary>
         /// Overrides the password of Keycloak admin user. This is useful to override it ONLY if you use an external Identity Provider (see the `externalIdentityProvider` field). If omitted or left blank, it will be set to an auto-generated password.
         /// </summary>
         [Input("identityProviderPassword")]
@@ -68,6 +74,12 @@ namespace Pulumi.Kubernetes.Types.Inputs.Org.V1
         /// </summary>
         [Input("identityProviderRealm")]
         public Input<string>? IdentityProviderRealm { get; set; }
+
+        /// <summary>
+        /// Route custom settings
+        /// </summary>
+        [Input("identityProviderRoute")]
+        public Input<Pulumi.Kubernetes.Types.Inputs.Org.V1.CheClusterSpecAuthIdentityProviderRouteArgs>? IdentityProviderRoute { get; set; }
 
         /// <summary>
         /// The secret that contains `user` and `password` for Identity Provider. If the secret is defined then `identityProviderAdminUserName` and `identityProviderPassword` are ignored. If the value is omitted or left blank then there are two scenarios: 1. `identityProviderAdminUserName` and `identityProviderPassword` are defined, then they will be used. 2. `identityProviderAdminUserName` or `identityProviderPassword` are not defined, then a new secret with the name `che-identity-secret` will be created with default value `admin` for `user` and with an auto-generated value for `password`.

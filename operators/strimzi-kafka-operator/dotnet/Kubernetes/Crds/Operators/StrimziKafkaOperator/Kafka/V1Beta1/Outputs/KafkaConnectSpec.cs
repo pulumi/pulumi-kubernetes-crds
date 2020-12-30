@@ -26,6 +26,10 @@ namespace Pulumi.Kubernetes.Types.Outputs.Kafka.V1Beta1
         /// </summary>
         public readonly string BootstrapServers;
         /// <summary>
+        /// The image of the init container used for initializing the `client.rack`.
+        /// </summary>
+        public readonly string ClientRackInitImage;
+        /// <summary>
         /// The Kafka Connect configuration. Properties with the following prefixes cannot be set: ssl., sasl., security., listeners, plugin.path, rest., bootstrap.servers, consumer.interceptor.classes, producer.interceptor.classes (with the exception of: ssl.endpoint.identification.algorithm, ssl.cipher.suites, ssl.protocol, ssl.enabled.protocols).
         /// </summary>
         public readonly ImmutableDictionary<string, object> Config;
@@ -53,6 +57,10 @@ namespace Pulumi.Kubernetes.Types.Outputs.Kafka.V1Beta1
         /// The Prometheus JMX Exporter configuration. See https://github.com/prometheus/jmx_exporter for details of the structure of this configuration.
         /// </summary>
         public readonly ImmutableDictionary<string, object> Metrics;
+        /// <summary>
+        /// Configuration of the node label which will be used as the client.rack consumer configuration.
+        /// </summary>
+        public readonly Pulumi.Kubernetes.Types.Outputs.Kafka.V1Beta1.KafkaConnectSpecRack Rack;
         /// <summary>
         /// Pod readiness checking.
         /// </summary>
@@ -94,6 +102,8 @@ namespace Pulumi.Kubernetes.Types.Outputs.Kafka.V1Beta1
 
             string bootstrapServers,
 
+            string clientRackInitImage,
+
             ImmutableDictionary<string, object> config,
 
             Pulumi.Kubernetes.Types.Outputs.Kafka.V1Beta1.KafkaConnectSpecExternalConfiguration externalConfiguration,
@@ -107,6 +117,8 @@ namespace Pulumi.Kubernetes.Types.Outputs.Kafka.V1Beta1
             Pulumi.Kubernetes.Types.Outputs.Kafka.V1Beta1.KafkaConnectSpecLogging logging,
 
             ImmutableDictionary<string, object> metrics,
+
+            Pulumi.Kubernetes.Types.Outputs.Kafka.V1Beta1.KafkaConnectSpecRack rack,
 
             Pulumi.Kubernetes.Types.Outputs.Kafka.V1Beta1.KafkaConnectSpecReadinessProbe readinessProbe,
 
@@ -127,6 +139,7 @@ namespace Pulumi.Kubernetes.Types.Outputs.Kafka.V1Beta1
             Affinity = affinity;
             Authentication = authentication;
             BootstrapServers = bootstrapServers;
+            ClientRackInitImage = clientRackInitImage;
             Config = config;
             ExternalConfiguration = externalConfiguration;
             Image = image;
@@ -134,6 +147,7 @@ namespace Pulumi.Kubernetes.Types.Outputs.Kafka.V1Beta1
             LivenessProbe = livenessProbe;
             Logging = logging;
             Metrics = metrics;
+            Rack = rack;
             ReadinessProbe = readinessProbe;
             Replicas = replicas;
             Resources = resources;

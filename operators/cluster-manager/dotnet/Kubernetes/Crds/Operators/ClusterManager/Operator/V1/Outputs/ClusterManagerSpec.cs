@@ -14,14 +14,22 @@ namespace Pulumi.Kubernetes.Types.Outputs.Operator.V1
     public sealed class ClusterManagerSpec
     {
         /// <summary>
-        /// RegistrationImagePullSpec represents the desired image of registration controller installed on hub.
+        /// RegistrationImagePullSpec represents the desired image of registration controller/webhook installed on hub.
         /// </summary>
         public readonly string RegistrationImagePullSpec;
+        /// <summary>
+        /// WorkImagePullSpec represents the desired image configuration of work controller/webhook installed on hub.
+        /// </summary>
+        public readonly string WorkImagePullSpec;
 
         [OutputConstructor]
-        private ClusterManagerSpec(string registrationImagePullSpec)
+        private ClusterManagerSpec(
+            string registrationImagePullSpec,
+
+            string workImagePullSpec)
         {
             RegistrationImagePullSpec = registrationImagePullSpec;
+            WorkImagePullSpec = workImagePullSpec;
         }
     }
 }

@@ -18,6 +18,9 @@ namespace Pulumi.Kubernetes.Types.Inputs.Kafka.V1Alpha1
         [Input("fsGroup")]
         public Input<int>? FsGroup { get; set; }
 
+        [Input("fsGroupChangePolicy")]
+        public Input<string>? FsGroupChangePolicy { get; set; }
+
         [Input("runAsGroup")]
         public Input<int>? RunAsGroup { get; set; }
 

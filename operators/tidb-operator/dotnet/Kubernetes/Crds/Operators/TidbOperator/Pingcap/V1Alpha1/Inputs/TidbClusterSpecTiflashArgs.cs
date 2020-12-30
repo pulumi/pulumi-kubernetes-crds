@@ -43,7 +43,7 @@ namespace Pulumi.Kubernetes.Types.Inputs.Pingcap.V1Alpha1
         public Input<string>? BaseImage { get; set; }
 
         [Input("config")]
-        public Input<Pulumi.Kubernetes.Types.Inputs.Pingcap.V1Alpha1.TidbClusterSpecTiflashConfigArgs>? Config { get; set; }
+        public Input<object>? Config { get; set; }
 
         [Input("configUpdateStrategy")]
         public Input<string>? ConfigUpdateStrategy { get; set; }
@@ -101,6 +101,9 @@ namespace Pulumi.Kubernetes.Types.Inputs.Pingcap.V1Alpha1
         [Input("privileged")]
         public Input<bool>? Privileged { get; set; }
 
+        [Input("recoverFailover")]
+        public Input<bool>? RecoverFailover { get; set; }
+
         [Input("replicas", required: true)]
         public Input<int> Replicas { get; set; } = null!;
 
@@ -117,6 +120,9 @@ namespace Pulumi.Kubernetes.Types.Inputs.Pingcap.V1Alpha1
 
         [Input("serviceAccount")]
         public Input<string>? ServiceAccount { get; set; }
+
+        [Input("statefulSetUpdateStrategy")]
+        public Input<string>? StatefulSetUpdateStrategy { get; set; }
 
         [Input("storageClaims", required: true)]
         private InputList<Pulumi.Kubernetes.Types.Inputs.Pingcap.V1Alpha1.TidbClusterSpecTiflashStorageClaimsArgs>? _storageClaims;

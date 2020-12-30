@@ -11,39 +11,46 @@ namespace Pulumi.Kubernetes.Types.Inputs.Operator.V1
 {
 
     /// <summary>
-    /// StatusCondition contains condition information.
+    /// Condition contains details for one aspect of the current state of this API Resource. --- This struct is intended for direct use as an array at the field path .status.conditions.  For example, type FooStatus struct{     // Represents the observations of a foo's current state.     // Known .status.conditions.type are: "Available", "Progressing", and "Degraded"     // +patchMergeKey=type     // +patchStrategy=merge     // +listType=map     // +listMapKey=type     Conditions []metav1.Condition `json:"conditions,omitempty" patchStrategy:"merge" patchMergeKey:"type" protobuf:"bytes,1,rep,name=conditions"` 
+    ///      // other fields }
     /// </summary>
     public class KlusterletStatusConditionsArgs : Pulumi.ResourceArgs
     {
         /// <summary>
-        /// LastTransitionTime is the last time the condition changed from one status to another.
+        /// lastTransitionTime is the last time the condition transitioned from one status to another. This should be when the underlying condition changed.  If that is not known, then using the time when the API field changed is acceptable.
         /// </summary>
-        [Input("lastTransitionTime")]
-        public Input<string>? LastTransitionTime { get; set; }
+        [Input("lastTransitionTime", required: true)]
+        public Input<string> LastTransitionTime { get; set; } = null!;
 
         /// <summary>
-        /// Message is a human-readable message indicating details about the last status change.
+        /// message is a human readable message indicating details about the transition. This may be an empty string.
         /// </summary>
-        [Input("message")]
-        public Input<string>? Message { get; set; }
+        [Input("message", required: true)]
+        public Input<string> Message { get; set; } = null!;
 
         /// <summary>
-        /// Reason is a (brief) reason for the condition's last status change.
+        /// observedGeneration represents the .metadata.generation that the condition was set based upon. For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date with respect to the current state of the instance.
         /// </summary>
-        [Input("reason")]
-        public Input<string>? Reason { get; set; }
+        [Input("observedGeneration")]
+        public Input<int>? ObservedGeneration { get; set; }
 
         /// <summary>
-        /// Status is the status of the condition. One of True, False, Unknown.
+        /// reason contains a programmatic identifier indicating the reason for the condition's last transition. Producers of specific condition types may define expected values and meanings for this field, and whether the values are considered a guaranteed API. The value should be a CamelCase string. This field may not be empty.
         /// </summary>
-        [Input("status")]
-        public Input<string>? Status { get; set; }
+        [Input("reason", required: true)]
+        public Input<string> Reason { get; set; } = null!;
 
         /// <summary>
-        /// Type is the type of the cluster condition.
+        /// status of the condition, one of True, False, Unknown.
         /// </summary>
-        [Input("type")]
-        public Input<string>? Type { get; set; }
+        [Input("status", required: true)]
+        public Input<string> Status { get; set; } = null!;
+
+        /// <summary>
+        /// type of condition in CamelCase or in foo.example.com/CamelCase. --- Many .condition.type values are consistent across resources like Available, but because arbitrary conditions can be useful (see .node.status.conditions), the ability to deconflict is important. The regex it matches is (dns1123SubdomainFmt/)?(qualifiedNameFmt)
+        /// </summary>
+        [Input("type", required: true)]
+        public Input<string> Type { get; set; } = null!;
 
         public KlusterletStatusConditionsArgs()
         {

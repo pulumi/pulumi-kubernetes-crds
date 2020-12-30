@@ -489,6 +489,7 @@ class EnterpriseSearchSpecHttpServiceSpecPorts(dict):
     """
     def __init__(__self__, *,
                  port: int,
+                 app_protocol: Optional[str] = None,
                  name: Optional[str] = None,
                  node_port: Optional[int] = None,
                  protocol: Optional[str] = None,
@@ -496,12 +497,15 @@ class EnterpriseSearchSpecHttpServiceSpecPorts(dict):
         """
         ServicePort contains information on service's port.
         :param int port: The port that will be exposed by this service.
+        :param str app_protocol: The application protocol for this port. This field follows standard Kubernetes label syntax. Un-prefixed names are reserved for IANA standard service names (as per RFC-6335 and http://www.iana.org/assignments/service-names). Non-standard protocols should use prefixed names such as mycompany.com/my-custom-protocol. Field can be enabled with ServiceAppProtocol feature gate.
         :param str name: The name of this port within the service. This must be a DNS_LABEL. All ports within a ServiceSpec must have unique names. When considering the endpoints for a Service, this must match the 'name' field in the EndpointPort. Optional if only one ServicePort is defined on this service.
         :param int node_port: The port on each node on which this service is exposed when type=NodePort or LoadBalancer. Usually assigned by the system. If specified, it will be allocated to the service if unused or else creation of the service will fail. Default is to auto-allocate a port if the ServiceType of this Service requires one. More info: https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport
         :param str protocol: The IP protocol for this port. Supports "TCP", "UDP", and "SCTP". Default is TCP.
         :param 'EnterpriseSearchSpecHttpServiceSpecPortsTargetPortArgs' target_port: Number or name of the port to access on the pods targeted by the service. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME. If this is a string, it will be looked up as a named port in the target Pod's container ports. If this is not specified, the value of the 'port' field is used (an identity map). This field is ignored for services with clusterIP=None, and should be omitted or set equal to the 'port' field. More info: https://kubernetes.io/docs/concepts/services-networking/service/#defining-a-service
         """
         pulumi.set(__self__, "port", port)
+        if app_protocol is not None:
+            pulumi.set(__self__, "app_protocol", app_protocol)
         if name is not None:
             pulumi.set(__self__, "name", name)
         if node_port is not None:
@@ -518,6 +522,14 @@ class EnterpriseSearchSpecHttpServiceSpecPorts(dict):
         The port that will be exposed by this service.
         """
         return pulumi.get(self, "port")
+
+    @property
+    @pulumi.getter(name="appProtocol")
+    def app_protocol(self) -> Optional[str]:
+        """
+        The application protocol for this port. This field follows standard Kubernetes label syntax. Un-prefixed names are reserved for IANA standard service names (as per RFC-6335 and http://www.iana.org/assignments/service-names). Non-standard protocols should use prefixed names such as mycompany.com/my-custom-protocol. Field can be enabled with ServiceAppProtocol feature gate.
+        """
+        return pulumi.get(self, "app_protocol")
 
     @property
     @pulumi.getter
@@ -769,12 +781,15 @@ class EnterpriseSearchStatus(dict):
                  association_status: Optional[str] = None,
                  available_nodes: Optional[int] = None,
                  health: Optional[str] = None,
-                 service: Optional[str] = None):
+                 service: Optional[str] = None,
+                 version: Optional[str] = None):
         """
         EnterpriseSearchStatus defines the observed state of EnterpriseSearch
         :param str association_status: Association is the status of any auto-linking to Elasticsearch clusters.
-        :param str health: EnterpriseSearchHealth expresses the health of the Enterprise Search instances.
+        :param int available_nodes: AvailableNodes is the number of available replicas in the deployment.
+        :param str health: Health of the deployment.
         :param str service: ExternalService is the name of the service associated to the Enterprise Search Pods.
+        :param str version: Version of the stack resource currently running. During version upgrades, multiple versions may run in parallel: this value specifies the lowest version currently running.
         """
         if association_status is not None:
             pulumi.set(__self__, "association_status", association_status)
@@ -784,6 +799,8 @@ class EnterpriseSearchStatus(dict):
             pulumi.set(__self__, "health", health)
         if service is not None:
             pulumi.set(__self__, "service", service)
+        if version is not None:
+            pulumi.set(__self__, "version", version)
 
     @property
     @pulumi.getter(name="associationStatus")
@@ -796,13 +813,16 @@ class EnterpriseSearchStatus(dict):
     @property
     @pulumi.getter(name="availableNodes")
     def available_nodes(self) -> Optional[int]:
+        """
+        AvailableNodes is the number of available replicas in the deployment.
+        """
         return pulumi.get(self, "available_nodes")
 
     @property
     @pulumi.getter
     def health(self) -> Optional[str]:
         """
-        EnterpriseSearchHealth expresses the health of the Enterprise Search instances.
+        Health of the deployment.
         """
         return pulumi.get(self, "health")
 
@@ -813,6 +833,14 @@ class EnterpriseSearchStatus(dict):
         ExternalService is the name of the service associated to the Enterprise Search Pods.
         """
         return pulumi.get(self, "service")
+
+    @property
+    @pulumi.getter
+    def version(self) -> Optional[str]:
+        """
+        Version of the stack resource currently running. During version upgrades, multiple versions may run in parallel: this value specifies the lowest version currently running.
+        """
+        return pulumi.get(self, "version")
 
     def _translate_property(self, prop):
         return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop

@@ -16,7 +16,13 @@ namespace Pulumi.Kubernetes.Types.Outputs.Apps.V1Alpha1
         public readonly Pulumi.Kubernetes.Types.Outputs.Apps.V1Alpha1.APIManagerSpecBackendCronSpec CronSpec;
         public readonly string Image;
         public readonly Pulumi.Kubernetes.Types.Outputs.Apps.V1Alpha1.APIManagerSpecBackendListenerSpec ListenerSpec;
+        /// <summary>
+        /// Affinity is a group of affinity scheduling rules.
+        /// </summary>
+        public readonly Pulumi.Kubernetes.Types.Outputs.Apps.V1Alpha1.APIManagerSpecBackendRedisAffinity RedisAffinity;
         public readonly string RedisImage;
+        public readonly Pulumi.Kubernetes.Types.Outputs.Apps.V1Alpha1.APIManagerSpecBackendRedisPersistentVolumeClaim RedisPersistentVolumeClaim;
+        public readonly ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Apps.V1Alpha1.APIManagerSpecBackendRedisTolerations> RedisTolerations;
         public readonly Pulumi.Kubernetes.Types.Outputs.Apps.V1Alpha1.APIManagerSpecBackendWorkerSpec WorkerSpec;
 
         [OutputConstructor]
@@ -27,14 +33,23 @@ namespace Pulumi.Kubernetes.Types.Outputs.Apps.V1Alpha1
 
             Pulumi.Kubernetes.Types.Outputs.Apps.V1Alpha1.APIManagerSpecBackendListenerSpec listenerSpec,
 
+            Pulumi.Kubernetes.Types.Outputs.Apps.V1Alpha1.APIManagerSpecBackendRedisAffinity redisAffinity,
+
             string redisImage,
+
+            Pulumi.Kubernetes.Types.Outputs.Apps.V1Alpha1.APIManagerSpecBackendRedisPersistentVolumeClaim redisPersistentVolumeClaim,
+
+            ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Apps.V1Alpha1.APIManagerSpecBackendRedisTolerations> redisTolerations,
 
             Pulumi.Kubernetes.Types.Outputs.Apps.V1Alpha1.APIManagerSpecBackendWorkerSpec workerSpec)
         {
             CronSpec = cronSpec;
             Image = image;
             ListenerSpec = listenerSpec;
+            RedisAffinity = redisAffinity;
             RedisImage = redisImage;
+            RedisPersistentVolumeClaim = redisPersistentVolumeClaim;
+            RedisTolerations = redisTolerations;
             WorkerSpec = workerSpec;
         }
     }

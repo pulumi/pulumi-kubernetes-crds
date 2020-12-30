@@ -13,12 +13,28 @@ namespace Pulumi.Kubernetes.Types.Outputs.Apps.V1Alpha1
     [OutputType]
     public sealed class APIManagerSpecSystemDatabasePostgresql
     {
+        /// <summary>
+        /// Affinity is a group of affinity scheduling rules.
+        /// </summary>
+        public readonly Pulumi.Kubernetes.Types.Outputs.Apps.V1Alpha1.APIManagerSpecSystemDatabasePostgresqlAffinity Affinity;
         public readonly string Image;
+        public readonly Pulumi.Kubernetes.Types.Outputs.Apps.V1Alpha1.APIManagerSpecSystemDatabasePostgresqlPersistentVolumeClaim PersistentVolumeClaim;
+        public readonly ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Apps.V1Alpha1.APIManagerSpecSystemDatabasePostgresqlTolerations> Tolerations;
 
         [OutputConstructor]
-        private APIManagerSpecSystemDatabasePostgresql(string image)
+        private APIManagerSpecSystemDatabasePostgresql(
+            Pulumi.Kubernetes.Types.Outputs.Apps.V1Alpha1.APIManagerSpecSystemDatabasePostgresqlAffinity affinity,
+
+            string image,
+
+            Pulumi.Kubernetes.Types.Outputs.Apps.V1Alpha1.APIManagerSpecSystemDatabasePostgresqlPersistentVolumeClaim persistentVolumeClaim,
+
+            ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Apps.V1Alpha1.APIManagerSpecSystemDatabasePostgresqlTolerations> tolerations)
         {
+            Affinity = affinity;
             Image = image;
+            PersistentVolumeClaim = persistentVolumeClaim;
+            Tolerations = tolerations;
         }
     }
 }

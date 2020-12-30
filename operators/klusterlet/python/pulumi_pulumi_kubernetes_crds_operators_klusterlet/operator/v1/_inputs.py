@@ -220,89 +220,101 @@ class KlusterletStatusArgs:
 @pulumi.input_type
 class KlusterletStatusConditionsArgs:
     def __init__(__self__, *,
-                 last_transition_time: Optional[pulumi.Input[str]] = None,
-                 message: Optional[pulumi.Input[str]] = None,
-                 reason: Optional[pulumi.Input[str]] = None,
-                 status: Optional[pulumi.Input[str]] = None,
-                 type: Optional[pulumi.Input[str]] = None):
+                 last_transition_time: pulumi.Input[str],
+                 message: pulumi.Input[str],
+                 reason: pulumi.Input[str],
+                 status: pulumi.Input[str],
+                 type: pulumi.Input[str],
+                 observed_generation: Optional[pulumi.Input[int]] = None):
         """
-        StatusCondition contains condition information.
-        :param pulumi.Input[str] last_transition_time: LastTransitionTime is the last time the condition changed from one status to another.
-        :param pulumi.Input[str] message: Message is a human-readable message indicating details about the last status change.
-        :param pulumi.Input[str] reason: Reason is a (brief) reason for the condition's last status change.
-        :param pulumi.Input[str] status: Status is the status of the condition. One of True, False, Unknown.
-        :param pulumi.Input[str] type: Type is the type of the cluster condition.
+        Condition contains details for one aspect of the current state of this API Resource. --- This struct is intended for direct use as an array at the field path .status.conditions.  For example, type FooStatus struct{     // Represents the observations of a foo's current state.     // Known .status.conditions.type are: "Available", "Progressing", and "Degraded"     // +patchMergeKey=type     // +patchStrategy=merge     // +listType=map     // +listMapKey=type     Conditions []metav1.Condition `json:"conditions,omitempty" patchStrategy:"merge" patchMergeKey:"type" protobuf:"bytes,1,rep,name=conditions"` 
+             // other fields }
+        :param pulumi.Input[str] last_transition_time: lastTransitionTime is the last time the condition transitioned from one status to another. This should be when the underlying condition changed.  If that is not known, then using the time when the API field changed is acceptable.
+        :param pulumi.Input[str] message: message is a human readable message indicating details about the transition. This may be an empty string.
+        :param pulumi.Input[str] reason: reason contains a programmatic identifier indicating the reason for the condition's last transition. Producers of specific condition types may define expected values and meanings for this field, and whether the values are considered a guaranteed API. The value should be a CamelCase string. This field may not be empty.
+        :param pulumi.Input[str] status: status of the condition, one of True, False, Unknown.
+        :param pulumi.Input[str] type: type of condition in CamelCase or in foo.example.com/CamelCase. --- Many .condition.type values are consistent across resources like Available, but because arbitrary conditions can be useful (see .node.status.conditions), the ability to deconflict is important. The regex it matches is (dns1123SubdomainFmt/)?(qualifiedNameFmt)
+        :param pulumi.Input[int] observed_generation: observedGeneration represents the .metadata.generation that the condition was set based upon. For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date with respect to the current state of the instance.
         """
-        if last_transition_time is not None:
-            pulumi.set(__self__, "last_transition_time", last_transition_time)
-        if message is not None:
-            pulumi.set(__self__, "message", message)
-        if reason is not None:
-            pulumi.set(__self__, "reason", reason)
-        if status is not None:
-            pulumi.set(__self__, "status", status)
-        if type is not None:
-            pulumi.set(__self__, "type", type)
+        pulumi.set(__self__, "last_transition_time", last_transition_time)
+        pulumi.set(__self__, "message", message)
+        pulumi.set(__self__, "reason", reason)
+        pulumi.set(__self__, "status", status)
+        pulumi.set(__self__, "type", type)
+        if observed_generation is not None:
+            pulumi.set(__self__, "observed_generation", observed_generation)
 
     @property
     @pulumi.getter(name="lastTransitionTime")
-    def last_transition_time(self) -> Optional[pulumi.Input[str]]:
+    def last_transition_time(self) -> pulumi.Input[str]:
         """
-        LastTransitionTime is the last time the condition changed from one status to another.
+        lastTransitionTime is the last time the condition transitioned from one status to another. This should be when the underlying condition changed.  If that is not known, then using the time when the API field changed is acceptable.
         """
         return pulumi.get(self, "last_transition_time")
 
     @last_transition_time.setter
-    def last_transition_time(self, value: Optional[pulumi.Input[str]]):
+    def last_transition_time(self, value: pulumi.Input[str]):
         pulumi.set(self, "last_transition_time", value)
 
     @property
     @pulumi.getter
-    def message(self) -> Optional[pulumi.Input[str]]:
+    def message(self) -> pulumi.Input[str]:
         """
-        Message is a human-readable message indicating details about the last status change.
+        message is a human readable message indicating details about the transition. This may be an empty string.
         """
         return pulumi.get(self, "message")
 
     @message.setter
-    def message(self, value: Optional[pulumi.Input[str]]):
+    def message(self, value: pulumi.Input[str]):
         pulumi.set(self, "message", value)
 
     @property
     @pulumi.getter
-    def reason(self) -> Optional[pulumi.Input[str]]:
+    def reason(self) -> pulumi.Input[str]:
         """
-        Reason is a (brief) reason for the condition's last status change.
+        reason contains a programmatic identifier indicating the reason for the condition's last transition. Producers of specific condition types may define expected values and meanings for this field, and whether the values are considered a guaranteed API. The value should be a CamelCase string. This field may not be empty.
         """
         return pulumi.get(self, "reason")
 
     @reason.setter
-    def reason(self, value: Optional[pulumi.Input[str]]):
+    def reason(self, value: pulumi.Input[str]):
         pulumi.set(self, "reason", value)
 
     @property
     @pulumi.getter
-    def status(self) -> Optional[pulumi.Input[str]]:
+    def status(self) -> pulumi.Input[str]:
         """
-        Status is the status of the condition. One of True, False, Unknown.
+        status of the condition, one of True, False, Unknown.
         """
         return pulumi.get(self, "status")
 
     @status.setter
-    def status(self, value: Optional[pulumi.Input[str]]):
+    def status(self, value: pulumi.Input[str]):
         pulumi.set(self, "status", value)
 
     @property
     @pulumi.getter
-    def type(self) -> Optional[pulumi.Input[str]]:
+    def type(self) -> pulumi.Input[str]:
         """
-        Type is the type of the cluster condition.
+        type of condition in CamelCase or in foo.example.com/CamelCase. --- Many .condition.type values are consistent across resources like Available, but because arbitrary conditions can be useful (see .node.status.conditions), the ability to deconflict is important. The regex it matches is (dns1123SubdomainFmt/)?(qualifiedNameFmt)
         """
         return pulumi.get(self, "type")
 
     @type.setter
-    def type(self, value: Optional[pulumi.Input[str]]):
+    def type(self, value: pulumi.Input[str]):
         pulumi.set(self, "type", value)
+
+    @property
+    @pulumi.getter(name="observedGeneration")
+    def observed_generation(self) -> Optional[pulumi.Input[int]]:
+        """
+        observedGeneration represents the .metadata.generation that the condition was set based upon. For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date with respect to the current state of the instance.
+        """
+        return pulumi.get(self, "observed_generation")
+
+    @observed_generation.setter
+    def observed_generation(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "observed_generation", value)
 
 
 @pulumi.input_type

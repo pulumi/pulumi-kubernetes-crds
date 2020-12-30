@@ -23,21 +23,33 @@ class ClusterManagerSpec(dict):
     Spec represents a desired deployment configuration of controllers that govern registration and work distribution for attached Klusterlets.
     """
     def __init__(__self__, *,
-                 registration_image_pull_spec: Optional[str] = None):
+                 registration_image_pull_spec: Optional[str] = None,
+                 work_image_pull_spec: Optional[str] = None):
         """
         Spec represents a desired deployment configuration of controllers that govern registration and work distribution for attached Klusterlets.
-        :param str registration_image_pull_spec: RegistrationImagePullSpec represents the desired image of registration controller installed on hub.
+        :param str registration_image_pull_spec: RegistrationImagePullSpec represents the desired image of registration controller/webhook installed on hub.
+        :param str work_image_pull_spec: WorkImagePullSpec represents the desired image configuration of work controller/webhook installed on hub.
         """
         if registration_image_pull_spec is not None:
             pulumi.set(__self__, "registration_image_pull_spec", registration_image_pull_spec)
+        if work_image_pull_spec is not None:
+            pulumi.set(__self__, "work_image_pull_spec", work_image_pull_spec)
 
     @property
     @pulumi.getter(name="registrationImagePullSpec")
     def registration_image_pull_spec(self) -> Optional[str]:
         """
-        RegistrationImagePullSpec represents the desired image of registration controller installed on hub.
+        RegistrationImagePullSpec represents the desired image of registration controller/webhook installed on hub.
         """
         return pulumi.get(self, "registration_image_pull_spec")
+
+    @property
+    @pulumi.getter(name="workImagePullSpec")
+    def work_image_pull_spec(self) -> Optional[str]:
+        """
+        WorkImagePullSpec represents the desired image configuration of work controller/webhook installed on hub.
+        """
+        return pulumi.get(self, "work_image_pull_spec")
 
     def _translate_property(self, prop):
         return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop
@@ -108,72 +120,81 @@ class ClusterManagerStatus(dict):
 @pulumi.output_type
 class ClusterManagerStatusConditions(dict):
     """
-    StatusCondition contains condition information.
+    Condition contains details for one aspect of the current state of this API Resource. --- This struct is intended for direct use as an array at the field path .status.conditions.  For example, type FooStatus struct{     // Represents the observations of a foo's current state.     // Known .status.conditions.type are: "Available", "Progressing", and "Degraded"     // +patchMergeKey=type     // +patchStrategy=merge     // +listType=map     // +listMapKey=type     Conditions []metav1.Condition `json:"conditions,omitempty" patchStrategy:"merge" patchMergeKey:"type" protobuf:"bytes,1,rep,name=conditions"` 
+         // other fields }
     """
     def __init__(__self__, *,
-                 last_transition_time: Optional[str] = None,
-                 message: Optional[str] = None,
-                 reason: Optional[str] = None,
-                 status: Optional[str] = None,
-                 type: Optional[str] = None):
+                 last_transition_time: str,
+                 message: str,
+                 reason: str,
+                 status: str,
+                 type: str,
+                 observed_generation: Optional[int] = None):
         """
-        StatusCondition contains condition information.
-        :param str last_transition_time: LastTransitionTime is the last time the condition changed from one status to another.
-        :param str message: Message is a human-readable message indicating details about the last status change.
-        :param str reason: Reason is a (brief) reason for the condition's last status change.
-        :param str status: Status is the status of the condition. One of True, False, Unknown.
-        :param str type: Type is the type of the cluster condition.
+        Condition contains details for one aspect of the current state of this API Resource. --- This struct is intended for direct use as an array at the field path .status.conditions.  For example, type FooStatus struct{     // Represents the observations of a foo's current state.     // Known .status.conditions.type are: "Available", "Progressing", and "Degraded"     // +patchMergeKey=type     // +patchStrategy=merge     // +listType=map     // +listMapKey=type     Conditions []metav1.Condition `json:"conditions,omitempty" patchStrategy:"merge" patchMergeKey:"type" protobuf:"bytes,1,rep,name=conditions"` 
+             // other fields }
+        :param str last_transition_time: lastTransitionTime is the last time the condition transitioned from one status to another. This should be when the underlying condition changed.  If that is not known, then using the time when the API field changed is acceptable.
+        :param str message: message is a human readable message indicating details about the transition. This may be an empty string.
+        :param str reason: reason contains a programmatic identifier indicating the reason for the condition's last transition. Producers of specific condition types may define expected values and meanings for this field, and whether the values are considered a guaranteed API. The value should be a CamelCase string. This field may not be empty.
+        :param str status: status of the condition, one of True, False, Unknown.
+        :param str type: type of condition in CamelCase or in foo.example.com/CamelCase. --- Many .condition.type values are consistent across resources like Available, but because arbitrary conditions can be useful (see .node.status.conditions), the ability to deconflict is important. The regex it matches is (dns1123SubdomainFmt/)?(qualifiedNameFmt)
+        :param int observed_generation: observedGeneration represents the .metadata.generation that the condition was set based upon. For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date with respect to the current state of the instance.
         """
-        if last_transition_time is not None:
-            pulumi.set(__self__, "last_transition_time", last_transition_time)
-        if message is not None:
-            pulumi.set(__self__, "message", message)
-        if reason is not None:
-            pulumi.set(__self__, "reason", reason)
-        if status is not None:
-            pulumi.set(__self__, "status", status)
-        if type is not None:
-            pulumi.set(__self__, "type", type)
+        pulumi.set(__self__, "last_transition_time", last_transition_time)
+        pulumi.set(__self__, "message", message)
+        pulumi.set(__self__, "reason", reason)
+        pulumi.set(__self__, "status", status)
+        pulumi.set(__self__, "type", type)
+        if observed_generation is not None:
+            pulumi.set(__self__, "observed_generation", observed_generation)
 
     @property
     @pulumi.getter(name="lastTransitionTime")
-    def last_transition_time(self) -> Optional[str]:
+    def last_transition_time(self) -> str:
         """
-        LastTransitionTime is the last time the condition changed from one status to another.
+        lastTransitionTime is the last time the condition transitioned from one status to another. This should be when the underlying condition changed.  If that is not known, then using the time when the API field changed is acceptable.
         """
         return pulumi.get(self, "last_transition_time")
 
     @property
     @pulumi.getter
-    def message(self) -> Optional[str]:
+    def message(self) -> str:
         """
-        Message is a human-readable message indicating details about the last status change.
+        message is a human readable message indicating details about the transition. This may be an empty string.
         """
         return pulumi.get(self, "message")
 
     @property
     @pulumi.getter
-    def reason(self) -> Optional[str]:
+    def reason(self) -> str:
         """
-        Reason is a (brief) reason for the condition's last status change.
+        reason contains a programmatic identifier indicating the reason for the condition's last transition. Producers of specific condition types may define expected values and meanings for this field, and whether the values are considered a guaranteed API. The value should be a CamelCase string. This field may not be empty.
         """
         return pulumi.get(self, "reason")
 
     @property
     @pulumi.getter
-    def status(self) -> Optional[str]:
+    def status(self) -> str:
         """
-        Status is the status of the condition. One of True, False, Unknown.
+        status of the condition, one of True, False, Unknown.
         """
         return pulumi.get(self, "status")
 
     @property
     @pulumi.getter
-    def type(self) -> Optional[str]:
+    def type(self) -> str:
         """
-        Type is the type of the cluster condition.
+        type of condition in CamelCase or in foo.example.com/CamelCase. --- Many .condition.type values are consistent across resources like Available, but because arbitrary conditions can be useful (see .node.status.conditions), the ability to deconflict is important. The regex it matches is (dns1123SubdomainFmt/)?(qualifiedNameFmt)
         """
         return pulumi.get(self, "type")
+
+    @property
+    @pulumi.getter(name="observedGeneration")
+    def observed_generation(self) -> Optional[int]:
+        """
+        observedGeneration represents the .metadata.generation that the condition was set based upon. For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date with respect to the current state of the instance.
+        """
+        return pulumi.get(self, "observed_generation")
 
     def _translate_property(self, prop):
         return _tables.CAMEL_TO_SNAKE_CASE_TABLE.get(prop) or prop

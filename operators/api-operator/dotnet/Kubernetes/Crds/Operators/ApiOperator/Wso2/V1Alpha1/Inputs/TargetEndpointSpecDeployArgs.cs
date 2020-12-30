@@ -10,6 +10,9 @@ using Pulumi.Serialization;
 namespace Pulumi.Kubernetes.Types.Inputs.Wso2.V1Alpha1
 {
 
+    /// <summary>
+    /// Deployment details.
+    /// </summary>
     public class TargetEndpointSpecDeployArgs : Pulumi.ResourceArgs
     {
         [Input("cpuLimit")]

@@ -47,6 +47,14 @@ namespace Pulumi.Kubernetes.Types.Inputs.Pingcap.V1Alpha1
         [Input("storageSize")]
         public Input<string>? StorageSize { get; set; }
 
+        [Input("tableFilter")]
+        private InputList<string>? _tableFilter;
+        public InputList<string> TableFilter
+        {
+            get => _tableFilter ?? (_tableFilter = new InputList<string>());
+            set => _tableFilter = value;
+        }
+
         [Input("tikvGCLifeTime")]
         public Input<string>? TikvGCLifeTime { get; set; }
 
@@ -60,6 +68,9 @@ namespace Pulumi.Kubernetes.Types.Inputs.Pingcap.V1Alpha1
             get => _tolerations ?? (_tolerations = new InputList<Pulumi.Kubernetes.Types.Inputs.Pingcap.V1Alpha1.RestoreSpecTolerationsArgs>());
             set => _tolerations = value;
         }
+
+        [Input("toolImage")]
+        public Input<string>? ToolImage { get; set; }
 
         [Input("useKMS")]
         public Input<bool>? UseKMS { get; set; }

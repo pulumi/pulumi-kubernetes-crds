@@ -84,6 +84,140 @@ func (o PgclusterTypeOutput) Status() pulumi.AnyOutput {
 	return o.ApplyT(func(v PgclusterType) interface{} { return v.Status }).(pulumi.AnyOutput)
 }
 
+type PgpolicyType struct {
+	ApiVersion *string            `pulumi:"apiVersion"`
+	Kind       *string            `pulumi:"kind"`
+	Metadata   *metav1.ObjectMeta `pulumi:"metadata"`
+	Status     interface{}        `pulumi:"status"`
+}
+
+// PgpolicyTypeInput is an input type that accepts PgpolicyTypeArgs and PgpolicyTypeOutput values.
+// You can construct a concrete instance of `PgpolicyTypeInput` via:
+//
+//          PgpolicyTypeArgs{...}
+type PgpolicyTypeInput interface {
+	pulumi.Input
+
+	ToPgpolicyTypeOutput() PgpolicyTypeOutput
+	ToPgpolicyTypeOutputWithContext(context.Context) PgpolicyTypeOutput
+}
+
+type PgpolicyTypeArgs struct {
+	ApiVersion pulumi.StringPtrInput     `pulumi:"apiVersion"`
+	Kind       pulumi.StringPtrInput     `pulumi:"kind"`
+	Metadata   metav1.ObjectMetaPtrInput `pulumi:"metadata"`
+	Status     pulumi.Input              `pulumi:"status"`
+}
+
+func (PgpolicyTypeArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*PgpolicyType)(nil)).Elem()
+}
+
+func (i PgpolicyTypeArgs) ToPgpolicyTypeOutput() PgpolicyTypeOutput {
+	return i.ToPgpolicyTypeOutputWithContext(context.Background())
+}
+
+func (i PgpolicyTypeArgs) ToPgpolicyTypeOutputWithContext(ctx context.Context) PgpolicyTypeOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(PgpolicyTypeOutput)
+}
+
+type PgpolicyTypeOutput struct{ *pulumi.OutputState }
+
+func (PgpolicyTypeOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*PgpolicyType)(nil)).Elem()
+}
+
+func (o PgpolicyTypeOutput) ToPgpolicyTypeOutput() PgpolicyTypeOutput {
+	return o
+}
+
+func (o PgpolicyTypeOutput) ToPgpolicyTypeOutputWithContext(ctx context.Context) PgpolicyTypeOutput {
+	return o
+}
+
+func (o PgpolicyTypeOutput) ApiVersion() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v PgpolicyType) *string { return v.ApiVersion }).(pulumi.StringPtrOutput)
+}
+
+func (o PgpolicyTypeOutput) Kind() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v PgpolicyType) *string { return v.Kind }).(pulumi.StringPtrOutput)
+}
+
+func (o PgpolicyTypeOutput) Metadata() metav1.ObjectMetaPtrOutput {
+	return o.ApplyT(func(v PgpolicyType) *metav1.ObjectMeta { return v.Metadata }).(metav1.ObjectMetaPtrOutput)
+}
+
+func (o PgpolicyTypeOutput) Status() pulumi.AnyOutput {
+	return o.ApplyT(func(v PgpolicyType) interface{} { return v.Status }).(pulumi.AnyOutput)
+}
+
+type PgreplicaType struct {
+	ApiVersion *string            `pulumi:"apiVersion"`
+	Kind       *string            `pulumi:"kind"`
+	Metadata   *metav1.ObjectMeta `pulumi:"metadata"`
+	Status     interface{}        `pulumi:"status"`
+}
+
+// PgreplicaTypeInput is an input type that accepts PgreplicaTypeArgs and PgreplicaTypeOutput values.
+// You can construct a concrete instance of `PgreplicaTypeInput` via:
+//
+//          PgreplicaTypeArgs{...}
+type PgreplicaTypeInput interface {
+	pulumi.Input
+
+	ToPgreplicaTypeOutput() PgreplicaTypeOutput
+	ToPgreplicaTypeOutputWithContext(context.Context) PgreplicaTypeOutput
+}
+
+type PgreplicaTypeArgs struct {
+	ApiVersion pulumi.StringPtrInput     `pulumi:"apiVersion"`
+	Kind       pulumi.StringPtrInput     `pulumi:"kind"`
+	Metadata   metav1.ObjectMetaPtrInput `pulumi:"metadata"`
+	Status     pulumi.Input              `pulumi:"status"`
+}
+
+func (PgreplicaTypeArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*PgreplicaType)(nil)).Elem()
+}
+
+func (i PgreplicaTypeArgs) ToPgreplicaTypeOutput() PgreplicaTypeOutput {
+	return i.ToPgreplicaTypeOutputWithContext(context.Background())
+}
+
+func (i PgreplicaTypeArgs) ToPgreplicaTypeOutputWithContext(ctx context.Context) PgreplicaTypeOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(PgreplicaTypeOutput)
+}
+
+type PgreplicaTypeOutput struct{ *pulumi.OutputState }
+
+func (PgreplicaTypeOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*PgreplicaType)(nil)).Elem()
+}
+
+func (o PgreplicaTypeOutput) ToPgreplicaTypeOutput() PgreplicaTypeOutput {
+	return o
+}
+
+func (o PgreplicaTypeOutput) ToPgreplicaTypeOutputWithContext(ctx context.Context) PgreplicaTypeOutput {
+	return o
+}
+
+func (o PgreplicaTypeOutput) ApiVersion() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v PgreplicaType) *string { return v.ApiVersion }).(pulumi.StringPtrOutput)
+}
+
+func (o PgreplicaTypeOutput) Kind() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v PgreplicaType) *string { return v.Kind }).(pulumi.StringPtrOutput)
+}
+
+func (o PgreplicaTypeOutput) Metadata() metav1.ObjectMetaPtrOutput {
+	return o.ApplyT(func(v PgreplicaType) *metav1.ObjectMeta { return v.Metadata }).(metav1.ObjectMetaPtrOutput)
+}
+
+func (o PgreplicaTypeOutput) Status() pulumi.AnyOutput {
+	return o.ApplyT(func(v PgreplicaType) interface{} { return v.Status }).(pulumi.AnyOutput)
+}
+
 type PgtaskType struct {
 	ApiVersion *string            `pulumi:"apiVersion"`
 	Kind       *string            `pulumi:"kind"`
@@ -153,5 +287,7 @@ func (o PgtaskTypeOutput) Status() pulumi.AnyOutput {
 
 func init() {
 	pulumi.RegisterOutputType(PgclusterTypeOutput{})
+	pulumi.RegisterOutputType(PgpolicyTypeOutput{})
+	pulumi.RegisterOutputType(PgreplicaTypeOutput{})
 	pulumi.RegisterOutputType(PgtaskTypeOutput{})
 }

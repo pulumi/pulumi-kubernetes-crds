@@ -57,6 +57,30 @@ namespace Pulumi.Kubernetes.Types.Inputs.Storage.V1
         [Input("name")]
         public Input<string>? Name { get; set; }
 
+        [Input("nodeSelector")]
+        private InputMap<string>? _nodeSelector;
+
+        /// <summary>
+        /// NodeSelector is a selector which must be true for the pod to fit on a node. Selector which must match a node's labels for the pod to be scheduled on that node.
+        /// </summary>
+        public InputMap<string> NodeSelector
+        {
+            get => _nodeSelector ?? (_nodeSelector = new InputMap<string>());
+            set => _nodeSelector = value;
+        }
+
+        [Input("tolerations")]
+        private InputList<Pulumi.Kubernetes.Types.Inputs.Storage.V1.CSIUnitySpecDriverSideCarsTolerationsArgs>? _tolerations;
+
+        /// <summary>
+        /// Tolerations is the list of tolerations for the driver pods
+        /// </summary>
+        public InputList<Pulumi.Kubernetes.Types.Inputs.Storage.V1.CSIUnitySpecDriverSideCarsTolerationsArgs> Tolerations
+        {
+            get => _tolerations ?? (_tolerations = new InputList<Pulumi.Kubernetes.Types.Inputs.Storage.V1.CSIUnitySpecDriverSideCarsTolerationsArgs>());
+            set => _tolerations = value;
+        }
+
         public CSIUnitySpecDriverSideCarsArgs()
         {
         }

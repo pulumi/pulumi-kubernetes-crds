@@ -8,6 +8,9 @@ import * as utilities from "../../utilities";
 
 import {ObjectMeta} from "../../meta/v1";
 
+/**
+ * TargetEndpoint is the Schema for the targetendpoints API
+ */
 export class TargetEndpoint extends pulumi.CustomResource {
     /**
      * Get an existing TargetEndpoint resource's state with the given name, ID, and optional extra
@@ -38,7 +41,13 @@ export class TargetEndpoint extends pulumi.CustomResource {
     public readonly apiVersion!: pulumi.Output<"wso2.com/v1alpha1" | undefined>;
     public readonly kind!: pulumi.Output<"TargetEndpoint" | undefined>;
     public readonly metadata!: pulumi.Output<ObjectMeta | undefined>;
+    /**
+     * TargetEndpointSpec defines the desired state of TargetEndpoint
+     */
     public readonly spec!: pulumi.Output<outputs.wso2.v1alpha1.TargetEndpointSpec | undefined>;
+    /**
+     * TargetEndpointStatus defines the observed state of TargetEndpoint
+     */
     public readonly status!: pulumi.Output<{[key: string]: any} | undefined>;
 
     /**
@@ -81,6 +90,12 @@ export interface TargetEndpointArgs {
     readonly apiVersion?: pulumi.Input<"wso2.com/v1alpha1">;
     readonly kind?: pulumi.Input<"TargetEndpoint">;
     readonly metadata?: pulumi.Input<ObjectMeta>;
+    /**
+     * TargetEndpointSpec defines the desired state of TargetEndpoint
+     */
     readonly spec?: pulumi.Input<inputs.wso2.v1alpha1.TargetEndpointSpec>;
+    /**
+     * TargetEndpointStatus defines the observed state of TargetEndpoint
+     */
     readonly status?: pulumi.Input<{[key: string]: any}>;
 }

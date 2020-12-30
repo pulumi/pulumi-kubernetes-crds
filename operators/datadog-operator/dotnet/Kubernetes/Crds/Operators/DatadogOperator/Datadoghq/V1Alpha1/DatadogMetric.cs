@@ -10,7 +10,7 @@ using Pulumi.Serialization;
 namespace Pulumi.Pulumi.Kubernetes.Crds.Operators.DatadogOperator.Datadoghq.V1Alpha1
 {
     /// <summary>
-    /// DatadogMetric is the Schema for the datadogmetrics API
+    /// DatadogMetric allows autoscaling on arbitrary Datadog query
     /// </summary>
     public partial class DatadogMetric : KubernetesResource
     {

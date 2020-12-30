@@ -8,6 +8,9 @@ import * as utilities from "../../utilities";
 
 import {ObjectMeta} from "../../meta/v1";
 
+/**
+ * APIManager is the Schema for the apimanagers API
+ */
 export class APIManager extends pulumi.CustomResource {
     /**
      * Get an existing APIManager resource's state with the given name, ID, and optional extra
@@ -38,7 +41,13 @@ export class APIManager extends pulumi.CustomResource {
     public readonly apiVersion!: pulumi.Output<"apps.3scale.net/v1alpha1" | undefined>;
     public readonly kind!: pulumi.Output<"APIManager" | undefined>;
     public readonly metadata!: pulumi.Output<ObjectMeta | undefined>;
+    /**
+     * APIManagerSpec defines the desired state of APIManager
+     */
     public readonly spec!: pulumi.Output<outputs.apps.v1alpha1.APIManagerSpec | undefined>;
+    /**
+     * APIManagerStatus defines the observed state of APIManager
+     */
     public readonly status!: pulumi.Output<outputs.apps.v1alpha1.APIManagerStatus | undefined>;
 
     /**
@@ -81,6 +90,12 @@ export interface APIManagerArgs {
     readonly apiVersion?: pulumi.Input<"apps.3scale.net/v1alpha1">;
     readonly kind?: pulumi.Input<"APIManager">;
     readonly metadata?: pulumi.Input<ObjectMeta>;
+    /**
+     * APIManagerSpec defines the desired state of APIManager
+     */
     readonly spec?: pulumi.Input<inputs.apps.v1alpha1.APIManagerSpec>;
+    /**
+     * APIManagerStatus defines the observed state of APIManager
+     */
     readonly status?: pulumi.Input<inputs.apps.v1alpha1.APIManagerStatus>;
 }

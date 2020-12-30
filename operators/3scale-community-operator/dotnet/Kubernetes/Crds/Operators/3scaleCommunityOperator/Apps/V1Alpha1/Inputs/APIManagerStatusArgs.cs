@@ -10,6 +10,9 @@ using Pulumi.Serialization;
 namespace Pulumi.Kubernetes.Types.Inputs.Apps.V1Alpha1
 {
 
+    /// <summary>
+    /// APIManagerStatus defines the observed state of APIManager
+    /// </summary>
     public class APIManagerStatusArgs : Pulumi.ResourceArgs
     {
         [Input("conditions")]
@@ -20,6 +23,9 @@ namespace Pulumi.Kubernetes.Types.Inputs.Apps.V1Alpha1
             set => _conditions = value;
         }
 
+        /// <summary>
+        /// APIManager Deployment Configs
+        /// </summary>
         [Input("deployments", required: true)]
         public Input<Pulumi.Kubernetes.Types.Inputs.Apps.V1Alpha1.APIManagerStatusDeploymentsArgs> Deployments { get; set; } = null!;
 

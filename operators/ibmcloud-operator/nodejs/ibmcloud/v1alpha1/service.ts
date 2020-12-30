@@ -8,6 +8,9 @@ import * as utilities from "../../utilities";
 
 import {ObjectMeta} from "../../meta/v1";
 
+/**
+ * Service is the Schema for the services API
+ */
 export class Service extends pulumi.CustomResource {
     /**
      * Get an existing Service resource's state with the given name, ID, and optional extra
@@ -38,7 +41,13 @@ export class Service extends pulumi.CustomResource {
     public readonly apiVersion!: pulumi.Output<"ibmcloud.ibm.com/v1alpha1" | undefined>;
     public readonly kind!: pulumi.Output<"Service" | undefined>;
     public readonly metadata!: pulumi.Output<ObjectMeta | undefined>;
+    /**
+     * ServiceSpec defines the desired state of Service
+     */
     public readonly spec!: pulumi.Output<outputs.ibmcloud.v1alpha1.ServiceSpec | undefined>;
+    /**
+     * ServiceStatus defines the observed state of Service
+     */
     public readonly status!: pulumi.Output<outputs.ibmcloud.v1alpha1.ServiceStatus | undefined>;
 
     /**
@@ -81,6 +90,12 @@ export interface ServiceArgs {
     readonly apiVersion?: pulumi.Input<"ibmcloud.ibm.com/v1alpha1">;
     readonly kind?: pulumi.Input<"Service">;
     readonly metadata?: pulumi.Input<ObjectMeta>;
+    /**
+     * ServiceSpec defines the desired state of Service
+     */
     readonly spec?: pulumi.Input<inputs.ibmcloud.v1alpha1.ServiceSpec>;
+    /**
+     * ServiceStatus defines the observed state of Service
+     */
     readonly status?: pulumi.Input<inputs.ibmcloud.v1alpha1.ServiceStatus>;
 }

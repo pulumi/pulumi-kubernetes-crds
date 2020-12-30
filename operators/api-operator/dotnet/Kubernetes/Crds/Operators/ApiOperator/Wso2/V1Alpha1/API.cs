@@ -9,6 +9,9 @@ using Pulumi.Serialization;
 
 namespace Pulumi.Pulumi.Kubernetes.Crds.Operators.ApiOperator.Wso2.V1Alpha1
 {
+    /// <summary>
+    /// API is the Schema for the apis API
+    /// </summary>
     public partial class API : KubernetesResource
     {
         [Output("apiVersion")]
@@ -20,11 +23,17 @@ namespace Pulumi.Pulumi.Kubernetes.Crds.Operators.ApiOperator.Wso2.V1Alpha1
         [Output("metadata")]
         public Output<Pulumi.Kubernetes.Types.Outputs.Meta.V1.ObjectMeta> Metadata { get; private set; } = null!;
 
+        /// <summary>
+        /// APISpec defines the desired state of API
+        /// </summary>
         [Output("spec")]
         public Output<Pulumi.Kubernetes.Types.Outputs.Wso2.V1Alpha1.APISpec> Spec { get; private set; } = null!;
 
+        /// <summary>
+        /// APIStatus defines the observed state of API
+        /// </summary>
         [Output("status")]
-        public Output<ImmutableDictionary<string, object>> Status { get; private set; } = null!;
+        public Output<Pulumi.Kubernetes.Types.Outputs.Wso2.V1Alpha1.APIStatus> Status { get; private set; } = null!;
 
 
         /// <summary>
@@ -95,16 +104,17 @@ namespace Pulumi.Kubernetes.Types.Inputs.Wso2.V1Alpha1
         [Input("metadata")]
         public Input<Pulumi.Kubernetes.Types.Inputs.Meta.V1.ObjectMetaArgs>? Metadata { get; set; }
 
+        /// <summary>
+        /// APISpec defines the desired state of API
+        /// </summary>
         [Input("spec")]
         public Input<Pulumi.Kubernetes.Types.Inputs.Wso2.V1Alpha1.APISpecArgs>? Spec { get; set; }
 
+        /// <summary>
+        /// APIStatus defines the observed state of API
+        /// </summary>
         [Input("status")]
-        private InputMap<object>? _status;
-        public InputMap<object> Status
-        {
-            get => _status ?? (_status = new InputMap<object>());
-            set => _status = value;
-        }
+        public Input<Pulumi.Kubernetes.Types.Inputs.Wso2.V1Alpha1.APIStatusArgs>? Status { get; set; }
 
         public APIArgs()
         {

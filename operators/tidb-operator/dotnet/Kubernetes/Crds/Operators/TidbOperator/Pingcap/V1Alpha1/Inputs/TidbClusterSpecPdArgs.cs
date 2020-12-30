@@ -43,7 +43,7 @@ namespace Pulumi.Kubernetes.Types.Inputs.Pingcap.V1Alpha1
         public Input<string>? BaseImage { get; set; }
 
         [Input("config")]
-        public Input<Pulumi.Kubernetes.Types.Inputs.Pingcap.V1Alpha1.TidbClusterSpecPdConfigArgs>? Config { get; set; }
+        public Input<object>? Config { get; set; }
 
         [Input("configUpdateStrategy")]
         public Input<string>? ConfigUpdateStrategy { get; set; }
@@ -87,6 +87,9 @@ namespace Pulumi.Kubernetes.Types.Inputs.Pingcap.V1Alpha1
         [Input("maxFailoverCount")]
         public Input<int>? MaxFailoverCount { get; set; }
 
+        [Input("mountClusterClientSecret")]
+        public Input<bool>? MountClusterClientSecret { get; set; }
+
         [Input("nodeSelector")]
         private InputMap<object>? _nodeSelector;
         public InputMap<object> NodeSelector
@@ -118,8 +121,22 @@ namespace Pulumi.Kubernetes.Types.Inputs.Pingcap.V1Alpha1
         [Input("service")]
         public Input<Pulumi.Kubernetes.Types.Inputs.Pingcap.V1Alpha1.TidbClusterSpecPdServiceArgs>? Service { get; set; }
 
+        [Input("serviceAccount")]
+        public Input<string>? ServiceAccount { get; set; }
+
+        [Input("statefulSetUpdateStrategy")]
+        public Input<string>? StatefulSetUpdateStrategy { get; set; }
+
         [Input("storageClassName")]
         public Input<string>? StorageClassName { get; set; }
+
+        [Input("storageVolumes")]
+        private InputList<object>? _storageVolumes;
+        public InputList<object> StorageVolumes
+        {
+            get => _storageVolumes ?? (_storageVolumes = new InputList<object>());
+            set => _storageVolumes = value;
+        }
 
         [Input("terminationGracePeriodSeconds")]
         public Input<int>? TerminationGracePeriodSeconds { get; set; }

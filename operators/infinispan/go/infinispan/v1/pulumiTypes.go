@@ -138,6 +138,8 @@ func (o InfinispanMetadataOutput) ToInfinispanMetadataOutputWithContext(ctx cont
 
 // InfinispanSpec defines the desired state of Infinispan
 type InfinispanSpec struct {
+	// Affinity is a group of affinity scheduling rules.
+	Affinity *InfinispanSpecAffinity `pulumi:"affinity"`
 	// Autoscale describe autoscaling configuration for the cluster
 	Autoscale *InfinispanSpecAutoscale `pulumi:"autoscale"`
 	// InfinispanContainerSpec specify resource requirements per container
@@ -166,6 +168,8 @@ type InfinispanSpecInput interface {
 
 // InfinispanSpec defines the desired state of Infinispan
 type InfinispanSpecArgs struct {
+	// Affinity is a group of affinity scheduling rules.
+	Affinity InfinispanSpecAffinityPtrInput `pulumi:"affinity"`
 	// Autoscale describe autoscaling configuration for the cluster
 	Autoscale InfinispanSpecAutoscalePtrInput `pulumi:"autoscale"`
 	// InfinispanContainerSpec specify resource requirements per container
@@ -259,6 +263,11 @@ func (o InfinispanSpecOutput) ToInfinispanSpecPtrOutputWithContext(ctx context.C
 	}).(InfinispanSpecPtrOutput)
 }
 
+// Affinity is a group of affinity scheduling rules.
+func (o InfinispanSpecOutput) Affinity() InfinispanSpecAffinityPtrOutput {
+	return o.ApplyT(func(v InfinispanSpec) *InfinispanSpecAffinity { return v.Affinity }).(InfinispanSpecAffinityPtrOutput)
+}
+
 // Autoscale describe autoscaling configuration for the cluster
 func (o InfinispanSpecOutput) Autoscale() InfinispanSpecAutoscalePtrOutput {
 	return o.ApplyT(func(v InfinispanSpec) *InfinispanSpecAutoscale { return v.Autoscale }).(InfinispanSpecAutoscalePtrOutput)
@@ -312,6 +321,16 @@ func (o InfinispanSpecPtrOutput) ToInfinispanSpecPtrOutputWithContext(ctx contex
 
 func (o InfinispanSpecPtrOutput) Elem() InfinispanSpecOutput {
 	return o.ApplyT(func(v *InfinispanSpec) InfinispanSpec { return *v }).(InfinispanSpecOutput)
+}
+
+// Affinity is a group of affinity scheduling rules.
+func (o InfinispanSpecPtrOutput) Affinity() InfinispanSpecAffinityPtrOutput {
+	return o.ApplyT(func(v *InfinispanSpec) *InfinispanSpecAffinity {
+		if v == nil {
+			return nil
+		}
+		return v.Affinity
+	}).(InfinispanSpecAffinityPtrOutput)
 }
 
 // Autoscale describe autoscaling configuration for the cluster
@@ -391,12 +410,3532 @@ func (o InfinispanSpecPtrOutput) Service() InfinispanSpecServicePtrOutput {
 	}).(InfinispanSpecServicePtrOutput)
 }
 
+// Affinity is a group of affinity scheduling rules.
+type InfinispanSpecAffinity struct {
+	// Describes node affinity scheduling rules for the pod.
+	NodeAffinity *InfinispanSpecAffinityNodeAffinity `pulumi:"nodeAffinity"`
+	// Describes pod affinity scheduling rules (e.g. co-locate this pod in the same node, zone, etc. as some other pod(s)).
+	PodAffinity *InfinispanSpecAffinityPodAffinity `pulumi:"podAffinity"`
+	// Describes pod anti-affinity scheduling rules (e.g. avoid putting this pod in the same node, zone, etc. as some other pod(s)).
+	PodAntiAffinity *InfinispanSpecAffinityPodAntiAffinity `pulumi:"podAntiAffinity"`
+}
+
+// InfinispanSpecAffinityInput is an input type that accepts InfinispanSpecAffinityArgs and InfinispanSpecAffinityOutput values.
+// You can construct a concrete instance of `InfinispanSpecAffinityInput` via:
+//
+//          InfinispanSpecAffinityArgs{...}
+type InfinispanSpecAffinityInput interface {
+	pulumi.Input
+
+	ToInfinispanSpecAffinityOutput() InfinispanSpecAffinityOutput
+	ToInfinispanSpecAffinityOutputWithContext(context.Context) InfinispanSpecAffinityOutput
+}
+
+// Affinity is a group of affinity scheduling rules.
+type InfinispanSpecAffinityArgs struct {
+	// Describes node affinity scheduling rules for the pod.
+	NodeAffinity InfinispanSpecAffinityNodeAffinityPtrInput `pulumi:"nodeAffinity"`
+	// Describes pod affinity scheduling rules (e.g. co-locate this pod in the same node, zone, etc. as some other pod(s)).
+	PodAffinity InfinispanSpecAffinityPodAffinityPtrInput `pulumi:"podAffinity"`
+	// Describes pod anti-affinity scheduling rules (e.g. avoid putting this pod in the same node, zone, etc. as some other pod(s)).
+	PodAntiAffinity InfinispanSpecAffinityPodAntiAffinityPtrInput `pulumi:"podAntiAffinity"`
+}
+
+func (InfinispanSpecAffinityArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*InfinispanSpecAffinity)(nil)).Elem()
+}
+
+func (i InfinispanSpecAffinityArgs) ToInfinispanSpecAffinityOutput() InfinispanSpecAffinityOutput {
+	return i.ToInfinispanSpecAffinityOutputWithContext(context.Background())
+}
+
+func (i InfinispanSpecAffinityArgs) ToInfinispanSpecAffinityOutputWithContext(ctx context.Context) InfinispanSpecAffinityOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(InfinispanSpecAffinityOutput)
+}
+
+func (i InfinispanSpecAffinityArgs) ToInfinispanSpecAffinityPtrOutput() InfinispanSpecAffinityPtrOutput {
+	return i.ToInfinispanSpecAffinityPtrOutputWithContext(context.Background())
+}
+
+func (i InfinispanSpecAffinityArgs) ToInfinispanSpecAffinityPtrOutputWithContext(ctx context.Context) InfinispanSpecAffinityPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(InfinispanSpecAffinityOutput).ToInfinispanSpecAffinityPtrOutputWithContext(ctx)
+}
+
+// InfinispanSpecAffinityPtrInput is an input type that accepts InfinispanSpecAffinityArgs, InfinispanSpecAffinityPtr and InfinispanSpecAffinityPtrOutput values.
+// You can construct a concrete instance of `InfinispanSpecAffinityPtrInput` via:
+//
+//          InfinispanSpecAffinityArgs{...}
+//
+//  or:
+//
+//          nil
+type InfinispanSpecAffinityPtrInput interface {
+	pulumi.Input
+
+	ToInfinispanSpecAffinityPtrOutput() InfinispanSpecAffinityPtrOutput
+	ToInfinispanSpecAffinityPtrOutputWithContext(context.Context) InfinispanSpecAffinityPtrOutput
+}
+
+type infinispanSpecAffinityPtrType InfinispanSpecAffinityArgs
+
+func InfinispanSpecAffinityPtr(v *InfinispanSpecAffinityArgs) InfinispanSpecAffinityPtrInput {
+	return (*infinispanSpecAffinityPtrType)(v)
+}
+
+func (*infinispanSpecAffinityPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**InfinispanSpecAffinity)(nil)).Elem()
+}
+
+func (i *infinispanSpecAffinityPtrType) ToInfinispanSpecAffinityPtrOutput() InfinispanSpecAffinityPtrOutput {
+	return i.ToInfinispanSpecAffinityPtrOutputWithContext(context.Background())
+}
+
+func (i *infinispanSpecAffinityPtrType) ToInfinispanSpecAffinityPtrOutputWithContext(ctx context.Context) InfinispanSpecAffinityPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(InfinispanSpecAffinityPtrOutput)
+}
+
+// Affinity is a group of affinity scheduling rules.
+type InfinispanSpecAffinityOutput struct{ *pulumi.OutputState }
+
+func (InfinispanSpecAffinityOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*InfinispanSpecAffinity)(nil)).Elem()
+}
+
+func (o InfinispanSpecAffinityOutput) ToInfinispanSpecAffinityOutput() InfinispanSpecAffinityOutput {
+	return o
+}
+
+func (o InfinispanSpecAffinityOutput) ToInfinispanSpecAffinityOutputWithContext(ctx context.Context) InfinispanSpecAffinityOutput {
+	return o
+}
+
+func (o InfinispanSpecAffinityOutput) ToInfinispanSpecAffinityPtrOutput() InfinispanSpecAffinityPtrOutput {
+	return o.ToInfinispanSpecAffinityPtrOutputWithContext(context.Background())
+}
+
+func (o InfinispanSpecAffinityOutput) ToInfinispanSpecAffinityPtrOutputWithContext(ctx context.Context) InfinispanSpecAffinityPtrOutput {
+	return o.ApplyT(func(v InfinispanSpecAffinity) *InfinispanSpecAffinity {
+		return &v
+	}).(InfinispanSpecAffinityPtrOutput)
+}
+
+// Describes node affinity scheduling rules for the pod.
+func (o InfinispanSpecAffinityOutput) NodeAffinity() InfinispanSpecAffinityNodeAffinityPtrOutput {
+	return o.ApplyT(func(v InfinispanSpecAffinity) *InfinispanSpecAffinityNodeAffinity { return v.NodeAffinity }).(InfinispanSpecAffinityNodeAffinityPtrOutput)
+}
+
+// Describes pod affinity scheduling rules (e.g. co-locate this pod in the same node, zone, etc. as some other pod(s)).
+func (o InfinispanSpecAffinityOutput) PodAffinity() InfinispanSpecAffinityPodAffinityPtrOutput {
+	return o.ApplyT(func(v InfinispanSpecAffinity) *InfinispanSpecAffinityPodAffinity { return v.PodAffinity }).(InfinispanSpecAffinityPodAffinityPtrOutput)
+}
+
+// Describes pod anti-affinity scheduling rules (e.g. avoid putting this pod in the same node, zone, etc. as some other pod(s)).
+func (o InfinispanSpecAffinityOutput) PodAntiAffinity() InfinispanSpecAffinityPodAntiAffinityPtrOutput {
+	return o.ApplyT(func(v InfinispanSpecAffinity) *InfinispanSpecAffinityPodAntiAffinity { return v.PodAntiAffinity }).(InfinispanSpecAffinityPodAntiAffinityPtrOutput)
+}
+
+type InfinispanSpecAffinityPtrOutput struct{ *pulumi.OutputState }
+
+func (InfinispanSpecAffinityPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**InfinispanSpecAffinity)(nil)).Elem()
+}
+
+func (o InfinispanSpecAffinityPtrOutput) ToInfinispanSpecAffinityPtrOutput() InfinispanSpecAffinityPtrOutput {
+	return o
+}
+
+func (o InfinispanSpecAffinityPtrOutput) ToInfinispanSpecAffinityPtrOutputWithContext(ctx context.Context) InfinispanSpecAffinityPtrOutput {
+	return o
+}
+
+func (o InfinispanSpecAffinityPtrOutput) Elem() InfinispanSpecAffinityOutput {
+	return o.ApplyT(func(v *InfinispanSpecAffinity) InfinispanSpecAffinity { return *v }).(InfinispanSpecAffinityOutput)
+}
+
+// Describes node affinity scheduling rules for the pod.
+func (o InfinispanSpecAffinityPtrOutput) NodeAffinity() InfinispanSpecAffinityNodeAffinityPtrOutput {
+	return o.ApplyT(func(v *InfinispanSpecAffinity) *InfinispanSpecAffinityNodeAffinity {
+		if v == nil {
+			return nil
+		}
+		return v.NodeAffinity
+	}).(InfinispanSpecAffinityNodeAffinityPtrOutput)
+}
+
+// Describes pod affinity scheduling rules (e.g. co-locate this pod in the same node, zone, etc. as some other pod(s)).
+func (o InfinispanSpecAffinityPtrOutput) PodAffinity() InfinispanSpecAffinityPodAffinityPtrOutput {
+	return o.ApplyT(func(v *InfinispanSpecAffinity) *InfinispanSpecAffinityPodAffinity {
+		if v == nil {
+			return nil
+		}
+		return v.PodAffinity
+	}).(InfinispanSpecAffinityPodAffinityPtrOutput)
+}
+
+// Describes pod anti-affinity scheduling rules (e.g. avoid putting this pod in the same node, zone, etc. as some other pod(s)).
+func (o InfinispanSpecAffinityPtrOutput) PodAntiAffinity() InfinispanSpecAffinityPodAntiAffinityPtrOutput {
+	return o.ApplyT(func(v *InfinispanSpecAffinity) *InfinispanSpecAffinityPodAntiAffinity {
+		if v == nil {
+			return nil
+		}
+		return v.PodAntiAffinity
+	}).(InfinispanSpecAffinityPodAntiAffinityPtrOutput)
+}
+
+// Describes node affinity scheduling rules for the pod.
+type InfinispanSpecAffinityNodeAffinity struct {
+	// The scheduler will prefer to schedule pods to nodes that satisfy the affinity expressions specified by this field, but it may choose a node that violates one or more of the expressions. The node that is most preferred is the one with the greatest sum of weights, i.e. for each node that meets all of the scheduling requirements (resource request, requiredDuringScheduling affinity expressions, etc.), compute a sum by iterating through the elements of this field and adding "weight" to the sum if the node matches the corresponding matchExpressions; the node(s) with the highest sum are the most preferred.
+	PreferredDuringSchedulingIgnoredDuringExecution []InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecution `pulumi:"preferredDuringSchedulingIgnoredDuringExecution"`
+	// If the affinity requirements specified by this field are not met at scheduling time, the pod will not be scheduled onto the node. If the affinity requirements specified by this field cease to be met at some point during pod execution (e.g. due to an update), the system may or may not try to eventually evict the pod from its node.
+	RequiredDuringSchedulingIgnoredDuringExecution *InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecution `pulumi:"requiredDuringSchedulingIgnoredDuringExecution"`
+}
+
+// InfinispanSpecAffinityNodeAffinityInput is an input type that accepts InfinispanSpecAffinityNodeAffinityArgs and InfinispanSpecAffinityNodeAffinityOutput values.
+// You can construct a concrete instance of `InfinispanSpecAffinityNodeAffinityInput` via:
+//
+//          InfinispanSpecAffinityNodeAffinityArgs{...}
+type InfinispanSpecAffinityNodeAffinityInput interface {
+	pulumi.Input
+
+	ToInfinispanSpecAffinityNodeAffinityOutput() InfinispanSpecAffinityNodeAffinityOutput
+	ToInfinispanSpecAffinityNodeAffinityOutputWithContext(context.Context) InfinispanSpecAffinityNodeAffinityOutput
+}
+
+// Describes node affinity scheduling rules for the pod.
+type InfinispanSpecAffinityNodeAffinityArgs struct {
+	// The scheduler will prefer to schedule pods to nodes that satisfy the affinity expressions specified by this field, but it may choose a node that violates one or more of the expressions. The node that is most preferred is the one with the greatest sum of weights, i.e. for each node that meets all of the scheduling requirements (resource request, requiredDuringScheduling affinity expressions, etc.), compute a sum by iterating through the elements of this field and adding "weight" to the sum if the node matches the corresponding matchExpressions; the node(s) with the highest sum are the most preferred.
+	PreferredDuringSchedulingIgnoredDuringExecution InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionArrayInput `pulumi:"preferredDuringSchedulingIgnoredDuringExecution"`
+	// If the affinity requirements specified by this field are not met at scheduling time, the pod will not be scheduled onto the node. If the affinity requirements specified by this field cease to be met at some point during pod execution (e.g. due to an update), the system may or may not try to eventually evict the pod from its node.
+	RequiredDuringSchedulingIgnoredDuringExecution InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionPtrInput `pulumi:"requiredDuringSchedulingIgnoredDuringExecution"`
+}
+
+func (InfinispanSpecAffinityNodeAffinityArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*InfinispanSpecAffinityNodeAffinity)(nil)).Elem()
+}
+
+func (i InfinispanSpecAffinityNodeAffinityArgs) ToInfinispanSpecAffinityNodeAffinityOutput() InfinispanSpecAffinityNodeAffinityOutput {
+	return i.ToInfinispanSpecAffinityNodeAffinityOutputWithContext(context.Background())
+}
+
+func (i InfinispanSpecAffinityNodeAffinityArgs) ToInfinispanSpecAffinityNodeAffinityOutputWithContext(ctx context.Context) InfinispanSpecAffinityNodeAffinityOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(InfinispanSpecAffinityNodeAffinityOutput)
+}
+
+func (i InfinispanSpecAffinityNodeAffinityArgs) ToInfinispanSpecAffinityNodeAffinityPtrOutput() InfinispanSpecAffinityNodeAffinityPtrOutput {
+	return i.ToInfinispanSpecAffinityNodeAffinityPtrOutputWithContext(context.Background())
+}
+
+func (i InfinispanSpecAffinityNodeAffinityArgs) ToInfinispanSpecAffinityNodeAffinityPtrOutputWithContext(ctx context.Context) InfinispanSpecAffinityNodeAffinityPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(InfinispanSpecAffinityNodeAffinityOutput).ToInfinispanSpecAffinityNodeAffinityPtrOutputWithContext(ctx)
+}
+
+// InfinispanSpecAffinityNodeAffinityPtrInput is an input type that accepts InfinispanSpecAffinityNodeAffinityArgs, InfinispanSpecAffinityNodeAffinityPtr and InfinispanSpecAffinityNodeAffinityPtrOutput values.
+// You can construct a concrete instance of `InfinispanSpecAffinityNodeAffinityPtrInput` via:
+//
+//          InfinispanSpecAffinityNodeAffinityArgs{...}
+//
+//  or:
+//
+//          nil
+type InfinispanSpecAffinityNodeAffinityPtrInput interface {
+	pulumi.Input
+
+	ToInfinispanSpecAffinityNodeAffinityPtrOutput() InfinispanSpecAffinityNodeAffinityPtrOutput
+	ToInfinispanSpecAffinityNodeAffinityPtrOutputWithContext(context.Context) InfinispanSpecAffinityNodeAffinityPtrOutput
+}
+
+type infinispanSpecAffinityNodeAffinityPtrType InfinispanSpecAffinityNodeAffinityArgs
+
+func InfinispanSpecAffinityNodeAffinityPtr(v *InfinispanSpecAffinityNodeAffinityArgs) InfinispanSpecAffinityNodeAffinityPtrInput {
+	return (*infinispanSpecAffinityNodeAffinityPtrType)(v)
+}
+
+func (*infinispanSpecAffinityNodeAffinityPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**InfinispanSpecAffinityNodeAffinity)(nil)).Elem()
+}
+
+func (i *infinispanSpecAffinityNodeAffinityPtrType) ToInfinispanSpecAffinityNodeAffinityPtrOutput() InfinispanSpecAffinityNodeAffinityPtrOutput {
+	return i.ToInfinispanSpecAffinityNodeAffinityPtrOutputWithContext(context.Background())
+}
+
+func (i *infinispanSpecAffinityNodeAffinityPtrType) ToInfinispanSpecAffinityNodeAffinityPtrOutputWithContext(ctx context.Context) InfinispanSpecAffinityNodeAffinityPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(InfinispanSpecAffinityNodeAffinityPtrOutput)
+}
+
+// Describes node affinity scheduling rules for the pod.
+type InfinispanSpecAffinityNodeAffinityOutput struct{ *pulumi.OutputState }
+
+func (InfinispanSpecAffinityNodeAffinityOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*InfinispanSpecAffinityNodeAffinity)(nil)).Elem()
+}
+
+func (o InfinispanSpecAffinityNodeAffinityOutput) ToInfinispanSpecAffinityNodeAffinityOutput() InfinispanSpecAffinityNodeAffinityOutput {
+	return o
+}
+
+func (o InfinispanSpecAffinityNodeAffinityOutput) ToInfinispanSpecAffinityNodeAffinityOutputWithContext(ctx context.Context) InfinispanSpecAffinityNodeAffinityOutput {
+	return o
+}
+
+func (o InfinispanSpecAffinityNodeAffinityOutput) ToInfinispanSpecAffinityNodeAffinityPtrOutput() InfinispanSpecAffinityNodeAffinityPtrOutput {
+	return o.ToInfinispanSpecAffinityNodeAffinityPtrOutputWithContext(context.Background())
+}
+
+func (o InfinispanSpecAffinityNodeAffinityOutput) ToInfinispanSpecAffinityNodeAffinityPtrOutputWithContext(ctx context.Context) InfinispanSpecAffinityNodeAffinityPtrOutput {
+	return o.ApplyT(func(v InfinispanSpecAffinityNodeAffinity) *InfinispanSpecAffinityNodeAffinity {
+		return &v
+	}).(InfinispanSpecAffinityNodeAffinityPtrOutput)
+}
+
+// The scheduler will prefer to schedule pods to nodes that satisfy the affinity expressions specified by this field, but it may choose a node that violates one or more of the expressions. The node that is most preferred is the one with the greatest sum of weights, i.e. for each node that meets all of the scheduling requirements (resource request, requiredDuringScheduling affinity expressions, etc.), compute a sum by iterating through the elements of this field and adding "weight" to the sum if the node matches the corresponding matchExpressions; the node(s) with the highest sum are the most preferred.
+func (o InfinispanSpecAffinityNodeAffinityOutput) PreferredDuringSchedulingIgnoredDuringExecution() InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionArrayOutput {
+	return o.ApplyT(func(v InfinispanSpecAffinityNodeAffinity) []InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecution {
+		return v.PreferredDuringSchedulingIgnoredDuringExecution
+	}).(InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionArrayOutput)
+}
+
+// If the affinity requirements specified by this field are not met at scheduling time, the pod will not be scheduled onto the node. If the affinity requirements specified by this field cease to be met at some point during pod execution (e.g. due to an update), the system may or may not try to eventually evict the pod from its node.
+func (o InfinispanSpecAffinityNodeAffinityOutput) RequiredDuringSchedulingIgnoredDuringExecution() InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionPtrOutput {
+	return o.ApplyT(func(v InfinispanSpecAffinityNodeAffinity) *InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecution {
+		return v.RequiredDuringSchedulingIgnoredDuringExecution
+	}).(InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionPtrOutput)
+}
+
+type InfinispanSpecAffinityNodeAffinityPtrOutput struct{ *pulumi.OutputState }
+
+func (InfinispanSpecAffinityNodeAffinityPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**InfinispanSpecAffinityNodeAffinity)(nil)).Elem()
+}
+
+func (o InfinispanSpecAffinityNodeAffinityPtrOutput) ToInfinispanSpecAffinityNodeAffinityPtrOutput() InfinispanSpecAffinityNodeAffinityPtrOutput {
+	return o
+}
+
+func (o InfinispanSpecAffinityNodeAffinityPtrOutput) ToInfinispanSpecAffinityNodeAffinityPtrOutputWithContext(ctx context.Context) InfinispanSpecAffinityNodeAffinityPtrOutput {
+	return o
+}
+
+func (o InfinispanSpecAffinityNodeAffinityPtrOutput) Elem() InfinispanSpecAffinityNodeAffinityOutput {
+	return o.ApplyT(func(v *InfinispanSpecAffinityNodeAffinity) InfinispanSpecAffinityNodeAffinity { return *v }).(InfinispanSpecAffinityNodeAffinityOutput)
+}
+
+// The scheduler will prefer to schedule pods to nodes that satisfy the affinity expressions specified by this field, but it may choose a node that violates one or more of the expressions. The node that is most preferred is the one with the greatest sum of weights, i.e. for each node that meets all of the scheduling requirements (resource request, requiredDuringScheduling affinity expressions, etc.), compute a sum by iterating through the elements of this field and adding "weight" to the sum if the node matches the corresponding matchExpressions; the node(s) with the highest sum are the most preferred.
+func (o InfinispanSpecAffinityNodeAffinityPtrOutput) PreferredDuringSchedulingIgnoredDuringExecution() InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionArrayOutput {
+	return o.ApplyT(func(v *InfinispanSpecAffinityNodeAffinity) []InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecution {
+		if v == nil {
+			return nil
+		}
+		return v.PreferredDuringSchedulingIgnoredDuringExecution
+	}).(InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionArrayOutput)
+}
+
+// If the affinity requirements specified by this field are not met at scheduling time, the pod will not be scheduled onto the node. If the affinity requirements specified by this field cease to be met at some point during pod execution (e.g. due to an update), the system may or may not try to eventually evict the pod from its node.
+func (o InfinispanSpecAffinityNodeAffinityPtrOutput) RequiredDuringSchedulingIgnoredDuringExecution() InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionPtrOutput {
+	return o.ApplyT(func(v *InfinispanSpecAffinityNodeAffinity) *InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecution {
+		if v == nil {
+			return nil
+		}
+		return v.RequiredDuringSchedulingIgnoredDuringExecution
+	}).(InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionPtrOutput)
+}
+
+// An empty preferred scheduling term matches all objects with implicit weight 0 (i.e. it's a no-op). A null preferred scheduling term matches no objects (i.e. is also a no-op).
+type InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecution struct {
+	// A node selector term, associated with the corresponding weight.
+	Preference InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreference `pulumi:"preference"`
+	// Weight associated with matching the corresponding nodeSelectorTerm, in the range 1-100.
+	Weight int `pulumi:"weight"`
+}
+
+// InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionInput is an input type that accepts InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionArgs and InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionOutput values.
+// You can construct a concrete instance of `InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionInput` via:
+//
+//          InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionArgs{...}
+type InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionInput interface {
+	pulumi.Input
+
+	ToInfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionOutput() InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionOutput
+	ToInfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionOutputWithContext(context.Context) InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionOutput
+}
+
+// An empty preferred scheduling term matches all objects with implicit weight 0 (i.e. it's a no-op). A null preferred scheduling term matches no objects (i.e. is also a no-op).
+type InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionArgs struct {
+	// A node selector term, associated with the corresponding weight.
+	Preference InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceInput `pulumi:"preference"`
+	// Weight associated with matching the corresponding nodeSelectorTerm, in the range 1-100.
+	Weight pulumi.IntInput `pulumi:"weight"`
+}
+
+func (InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecution)(nil)).Elem()
+}
+
+func (i InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionArgs) ToInfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionOutput() InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionOutput {
+	return i.ToInfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionOutputWithContext(context.Background())
+}
+
+func (i InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionArgs) ToInfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionOutputWithContext(ctx context.Context) InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionOutput)
+}
+
+// InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionArrayInput is an input type that accepts InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionArray and InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionArrayOutput values.
+// You can construct a concrete instance of `InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionArrayInput` via:
+//
+//          InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionArray{ InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionArgs{...} }
+type InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionArrayInput interface {
+	pulumi.Input
+
+	ToInfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionArrayOutput() InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionArrayOutput
+	ToInfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionArrayOutputWithContext(context.Context) InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionArrayOutput
+}
+
+type InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionArray []InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionInput
+
+func (InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecution)(nil)).Elem()
+}
+
+func (i InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionArray) ToInfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionArrayOutput() InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionArrayOutput {
+	return i.ToInfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionArrayOutputWithContext(context.Background())
+}
+
+func (i InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionArray) ToInfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionArrayOutputWithContext(ctx context.Context) InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionArrayOutput)
+}
+
+// An empty preferred scheduling term matches all objects with implicit weight 0 (i.e. it's a no-op). A null preferred scheduling term matches no objects (i.e. is also a no-op).
+type InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionOutput struct{ *pulumi.OutputState }
+
+func (InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecution)(nil)).Elem()
+}
+
+func (o InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionOutput) ToInfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionOutput() InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionOutput {
+	return o
+}
+
+func (o InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionOutput) ToInfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionOutputWithContext(ctx context.Context) InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionOutput {
+	return o
+}
+
+// A node selector term, associated with the corresponding weight.
+func (o InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionOutput) Preference() InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceOutput {
+	return o.ApplyT(func(v InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecution) InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreference {
+		return v.Preference
+	}).(InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceOutput)
+}
+
+// Weight associated with matching the corresponding nodeSelectorTerm, in the range 1-100.
+func (o InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionOutput) Weight() pulumi.IntOutput {
+	return o.ApplyT(func(v InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecution) int {
+		return v.Weight
+	}).(pulumi.IntOutput)
+}
+
+type InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionArrayOutput struct{ *pulumi.OutputState }
+
+func (InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecution)(nil)).Elem()
+}
+
+func (o InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionArrayOutput) ToInfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionArrayOutput() InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionArrayOutput {
+	return o
+}
+
+func (o InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionArrayOutput) ToInfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionArrayOutputWithContext(ctx context.Context) InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionArrayOutput {
+	return o
+}
+
+func (o InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionArrayOutput) Index(i pulumi.IntInput) InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecution {
+		return vs[0].([]InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecution)[vs[1].(int)]
+	}).(InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionOutput)
+}
+
+// A node selector term, associated with the corresponding weight.
+type InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreference struct {
+	// A list of node selector requirements by node's labels.
+	MatchExpressions []InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressions `pulumi:"matchExpressions"`
+	// A list of node selector requirements by node's fields.
+	MatchFields []InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFields `pulumi:"matchFields"`
+}
+
+// InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceInput is an input type that accepts InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceArgs and InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceOutput values.
+// You can construct a concrete instance of `InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceInput` via:
+//
+//          InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceArgs{...}
+type InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceInput interface {
+	pulumi.Input
+
+	ToInfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceOutput() InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceOutput
+	ToInfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceOutputWithContext(context.Context) InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceOutput
+}
+
+// A node selector term, associated with the corresponding weight.
+type InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceArgs struct {
+	// A list of node selector requirements by node's labels.
+	MatchExpressions InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressionsArrayInput `pulumi:"matchExpressions"`
+	// A list of node selector requirements by node's fields.
+	MatchFields InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFieldsArrayInput `pulumi:"matchFields"`
+}
+
+func (InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreference)(nil)).Elem()
+}
+
+func (i InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceArgs) ToInfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceOutput() InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceOutput {
+	return i.ToInfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceOutputWithContext(context.Background())
+}
+
+func (i InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceArgs) ToInfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceOutputWithContext(ctx context.Context) InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceOutput)
+}
+
+// A node selector term, associated with the corresponding weight.
+type InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceOutput struct{ *pulumi.OutputState }
+
+func (InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreference)(nil)).Elem()
+}
+
+func (o InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceOutput) ToInfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceOutput() InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceOutput {
+	return o
+}
+
+func (o InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceOutput) ToInfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceOutputWithContext(ctx context.Context) InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceOutput {
+	return o
+}
+
+// A list of node selector requirements by node's labels.
+func (o InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceOutput) MatchExpressions() InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressionsArrayOutput {
+	return o.ApplyT(func(v InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreference) []InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressions {
+		return v.MatchExpressions
+	}).(InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressionsArrayOutput)
+}
+
+// A list of node selector requirements by node's fields.
+func (o InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceOutput) MatchFields() InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFieldsArrayOutput {
+	return o.ApplyT(func(v InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreference) []InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFields {
+		return v.MatchFields
+	}).(InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFieldsArrayOutput)
+}
+
+// A node selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+type InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressions struct {
+	// The label key that the selector applies to.
+	Key string `pulumi:"key"`
+	// Represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt.
+	Operator string `pulumi:"operator"`
+	// An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. If the operator is Gt or Lt, the values array must have a single element, which will be interpreted as an integer. This array is replaced during a strategic merge patch.
+	Values []string `pulumi:"values"`
+}
+
+// InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressionsInput is an input type that accepts InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressionsArgs and InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressionsOutput values.
+// You can construct a concrete instance of `InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressionsInput` via:
+//
+//          InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressionsArgs{...}
+type InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressionsInput interface {
+	pulumi.Input
+
+	ToInfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressionsOutput() InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressionsOutput
+	ToInfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressionsOutputWithContext(context.Context) InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressionsOutput
+}
+
+// A node selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+type InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressionsArgs struct {
+	// The label key that the selector applies to.
+	Key pulumi.StringInput `pulumi:"key"`
+	// Represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt.
+	Operator pulumi.StringInput `pulumi:"operator"`
+	// An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. If the operator is Gt or Lt, the values array must have a single element, which will be interpreted as an integer. This array is replaced during a strategic merge patch.
+	Values pulumi.StringArrayInput `pulumi:"values"`
+}
+
+func (InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressionsArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressions)(nil)).Elem()
+}
+
+func (i InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressionsArgs) ToInfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressionsOutput() InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressionsOutput {
+	return i.ToInfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressionsOutputWithContext(context.Background())
+}
+
+func (i InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressionsArgs) ToInfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressionsOutputWithContext(ctx context.Context) InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressionsOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressionsOutput)
+}
+
+// InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressionsArrayInput is an input type that accepts InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressionsArray and InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressionsArrayOutput values.
+// You can construct a concrete instance of `InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressionsArrayInput` via:
+//
+//          InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressionsArray{ InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressionsArgs{...} }
+type InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressionsArrayInput interface {
+	pulumi.Input
+
+	ToInfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressionsArrayOutput() InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressionsArrayOutput
+	ToInfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressionsArrayOutputWithContext(context.Context) InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressionsArrayOutput
+}
+
+type InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressionsArray []InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressionsInput
+
+func (InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressionsArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressions)(nil)).Elem()
+}
+
+func (i InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressionsArray) ToInfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressionsArrayOutput() InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressionsArrayOutput {
+	return i.ToInfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressionsArrayOutputWithContext(context.Background())
+}
+
+func (i InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressionsArray) ToInfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressionsArrayOutputWithContext(ctx context.Context) InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressionsArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressionsArrayOutput)
+}
+
+// A node selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+type InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressionsOutput struct{ *pulumi.OutputState }
+
+func (InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressionsOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressions)(nil)).Elem()
+}
+
+func (o InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressionsOutput) ToInfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressionsOutput() InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressionsOutput {
+	return o
+}
+
+func (o InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressionsOutput) ToInfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressionsOutputWithContext(ctx context.Context) InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressionsOutput {
+	return o
+}
+
+// The label key that the selector applies to.
+func (o InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressionsOutput) Key() pulumi.StringOutput {
+	return o.ApplyT(func(v InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressions) string {
+		return v.Key
+	}).(pulumi.StringOutput)
+}
+
+// Represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt.
+func (o InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressionsOutput) Operator() pulumi.StringOutput {
+	return o.ApplyT(func(v InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressions) string {
+		return v.Operator
+	}).(pulumi.StringOutput)
+}
+
+// An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. If the operator is Gt or Lt, the values array must have a single element, which will be interpreted as an integer. This array is replaced during a strategic merge patch.
+func (o InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressionsOutput) Values() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressions) []string {
+		return v.Values
+	}).(pulumi.StringArrayOutput)
+}
+
+type InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressionsArrayOutput struct{ *pulumi.OutputState }
+
+func (InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressionsArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressions)(nil)).Elem()
+}
+
+func (o InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressionsArrayOutput) ToInfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressionsArrayOutput() InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressionsArrayOutput {
+	return o
+}
+
+func (o InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressionsArrayOutput) ToInfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressionsArrayOutputWithContext(ctx context.Context) InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressionsArrayOutput {
+	return o
+}
+
+func (o InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressionsArrayOutput) Index(i pulumi.IntInput) InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressionsOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressions {
+		return vs[0].([]InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressions)[vs[1].(int)]
+	}).(InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressionsOutput)
+}
+
+// A node selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+type InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFields struct {
+	// The label key that the selector applies to.
+	Key string `pulumi:"key"`
+	// Represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt.
+	Operator string `pulumi:"operator"`
+	// An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. If the operator is Gt or Lt, the values array must have a single element, which will be interpreted as an integer. This array is replaced during a strategic merge patch.
+	Values []string `pulumi:"values"`
+}
+
+// InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFieldsInput is an input type that accepts InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFieldsArgs and InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFieldsOutput values.
+// You can construct a concrete instance of `InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFieldsInput` via:
+//
+//          InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFieldsArgs{...}
+type InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFieldsInput interface {
+	pulumi.Input
+
+	ToInfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFieldsOutput() InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFieldsOutput
+	ToInfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFieldsOutputWithContext(context.Context) InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFieldsOutput
+}
+
+// A node selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+type InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFieldsArgs struct {
+	// The label key that the selector applies to.
+	Key pulumi.StringInput `pulumi:"key"`
+	// Represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt.
+	Operator pulumi.StringInput `pulumi:"operator"`
+	// An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. If the operator is Gt or Lt, the values array must have a single element, which will be interpreted as an integer. This array is replaced during a strategic merge patch.
+	Values pulumi.StringArrayInput `pulumi:"values"`
+}
+
+func (InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFieldsArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFields)(nil)).Elem()
+}
+
+func (i InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFieldsArgs) ToInfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFieldsOutput() InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFieldsOutput {
+	return i.ToInfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFieldsOutputWithContext(context.Background())
+}
+
+func (i InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFieldsArgs) ToInfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFieldsOutputWithContext(ctx context.Context) InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFieldsOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFieldsOutput)
+}
+
+// InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFieldsArrayInput is an input type that accepts InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFieldsArray and InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFieldsArrayOutput values.
+// You can construct a concrete instance of `InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFieldsArrayInput` via:
+//
+//          InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFieldsArray{ InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFieldsArgs{...} }
+type InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFieldsArrayInput interface {
+	pulumi.Input
+
+	ToInfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFieldsArrayOutput() InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFieldsArrayOutput
+	ToInfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFieldsArrayOutputWithContext(context.Context) InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFieldsArrayOutput
+}
+
+type InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFieldsArray []InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFieldsInput
+
+func (InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFieldsArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFields)(nil)).Elem()
+}
+
+func (i InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFieldsArray) ToInfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFieldsArrayOutput() InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFieldsArrayOutput {
+	return i.ToInfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFieldsArrayOutputWithContext(context.Background())
+}
+
+func (i InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFieldsArray) ToInfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFieldsArrayOutputWithContext(ctx context.Context) InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFieldsArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFieldsArrayOutput)
+}
+
+// A node selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+type InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFieldsOutput struct{ *pulumi.OutputState }
+
+func (InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFieldsOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFields)(nil)).Elem()
+}
+
+func (o InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFieldsOutput) ToInfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFieldsOutput() InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFieldsOutput {
+	return o
+}
+
+func (o InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFieldsOutput) ToInfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFieldsOutputWithContext(ctx context.Context) InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFieldsOutput {
+	return o
+}
+
+// The label key that the selector applies to.
+func (o InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFieldsOutput) Key() pulumi.StringOutput {
+	return o.ApplyT(func(v InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFields) string {
+		return v.Key
+	}).(pulumi.StringOutput)
+}
+
+// Represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt.
+func (o InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFieldsOutput) Operator() pulumi.StringOutput {
+	return o.ApplyT(func(v InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFields) string {
+		return v.Operator
+	}).(pulumi.StringOutput)
+}
+
+// An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. If the operator is Gt or Lt, the values array must have a single element, which will be interpreted as an integer. This array is replaced during a strategic merge patch.
+func (o InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFieldsOutput) Values() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFields) []string {
+		return v.Values
+	}).(pulumi.StringArrayOutput)
+}
+
+type InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFieldsArrayOutput struct{ *pulumi.OutputState }
+
+func (InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFieldsArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFields)(nil)).Elem()
+}
+
+func (o InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFieldsArrayOutput) ToInfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFieldsArrayOutput() InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFieldsArrayOutput {
+	return o
+}
+
+func (o InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFieldsArrayOutput) ToInfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFieldsArrayOutputWithContext(ctx context.Context) InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFieldsArrayOutput {
+	return o
+}
+
+func (o InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFieldsArrayOutput) Index(i pulumi.IntInput) InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFieldsOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFields {
+		return vs[0].([]InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFields)[vs[1].(int)]
+	}).(InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFieldsOutput)
+}
+
+// If the affinity requirements specified by this field are not met at scheduling time, the pod will not be scheduled onto the node. If the affinity requirements specified by this field cease to be met at some point during pod execution (e.g. due to an update), the system may or may not try to eventually evict the pod from its node.
+type InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecution struct {
+	// Required. A list of node selector terms. The terms are ORed.
+	NodeSelectorTerms []InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTerms `pulumi:"nodeSelectorTerms"`
+}
+
+// InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionInput is an input type that accepts InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionArgs and InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionOutput values.
+// You can construct a concrete instance of `InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionInput` via:
+//
+//          InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionArgs{...}
+type InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionInput interface {
+	pulumi.Input
+
+	ToInfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionOutput() InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionOutput
+	ToInfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionOutputWithContext(context.Context) InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionOutput
+}
+
+// If the affinity requirements specified by this field are not met at scheduling time, the pod will not be scheduled onto the node. If the affinity requirements specified by this field cease to be met at some point during pod execution (e.g. due to an update), the system may or may not try to eventually evict the pod from its node.
+type InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionArgs struct {
+	// Required. A list of node selector terms. The terms are ORed.
+	NodeSelectorTerms InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsArrayInput `pulumi:"nodeSelectorTerms"`
+}
+
+func (InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecution)(nil)).Elem()
+}
+
+func (i InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionArgs) ToInfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionOutput() InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionOutput {
+	return i.ToInfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionOutputWithContext(context.Background())
+}
+
+func (i InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionArgs) ToInfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionOutputWithContext(ctx context.Context) InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionOutput)
+}
+
+func (i InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionArgs) ToInfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionPtrOutput() InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionPtrOutput {
+	return i.ToInfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionPtrOutputWithContext(context.Background())
+}
+
+func (i InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionArgs) ToInfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionPtrOutputWithContext(ctx context.Context) InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionOutput).ToInfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionPtrOutputWithContext(ctx)
+}
+
+// InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionPtrInput is an input type that accepts InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionArgs, InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionPtr and InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionPtrOutput values.
+// You can construct a concrete instance of `InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionPtrInput` via:
+//
+//          InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionArgs{...}
+//
+//  or:
+//
+//          nil
+type InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionPtrInput interface {
+	pulumi.Input
+
+	ToInfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionPtrOutput() InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionPtrOutput
+	ToInfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionPtrOutputWithContext(context.Context) InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionPtrOutput
+}
+
+type infinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionPtrType InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionArgs
+
+func InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionPtr(v *InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionArgs) InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionPtrInput {
+	return (*infinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionPtrType)(v)
+}
+
+func (*infinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecution)(nil)).Elem()
+}
+
+func (i *infinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionPtrType) ToInfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionPtrOutput() InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionPtrOutput {
+	return i.ToInfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionPtrOutputWithContext(context.Background())
+}
+
+func (i *infinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionPtrType) ToInfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionPtrOutputWithContext(ctx context.Context) InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionPtrOutput)
+}
+
+// If the affinity requirements specified by this field are not met at scheduling time, the pod will not be scheduled onto the node. If the affinity requirements specified by this field cease to be met at some point during pod execution (e.g. due to an update), the system may or may not try to eventually evict the pod from its node.
+type InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionOutput struct{ *pulumi.OutputState }
+
+func (InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecution)(nil)).Elem()
+}
+
+func (o InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionOutput) ToInfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionOutput() InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionOutput {
+	return o
+}
+
+func (o InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionOutput) ToInfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionOutputWithContext(ctx context.Context) InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionOutput {
+	return o
+}
+
+func (o InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionOutput) ToInfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionPtrOutput() InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionPtrOutput {
+	return o.ToInfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionPtrOutputWithContext(context.Background())
+}
+
+func (o InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionOutput) ToInfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionPtrOutputWithContext(ctx context.Context) InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionPtrOutput {
+	return o.ApplyT(func(v InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecution) *InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecution {
+		return &v
+	}).(InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionPtrOutput)
+}
+
+// Required. A list of node selector terms. The terms are ORed.
+func (o InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionOutput) NodeSelectorTerms() InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsArrayOutput {
+	return o.ApplyT(func(v InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecution) []InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTerms {
+		return v.NodeSelectorTerms
+	}).(InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsArrayOutput)
+}
+
+type InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionPtrOutput struct{ *pulumi.OutputState }
+
+func (InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecution)(nil)).Elem()
+}
+
+func (o InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionPtrOutput) ToInfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionPtrOutput() InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionPtrOutput {
+	return o
+}
+
+func (o InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionPtrOutput) ToInfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionPtrOutputWithContext(ctx context.Context) InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionPtrOutput {
+	return o
+}
+
+func (o InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionPtrOutput) Elem() InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionOutput {
+	return o.ApplyT(func(v *InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecution) InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecution {
+		return *v
+	}).(InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionOutput)
+}
+
+// Required. A list of node selector terms. The terms are ORed.
+func (o InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionPtrOutput) NodeSelectorTerms() InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsArrayOutput {
+	return o.ApplyT(func(v *InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecution) []InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTerms {
+		if v == nil {
+			return nil
+		}
+		return v.NodeSelectorTerms
+	}).(InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsArrayOutput)
+}
+
+// A null or empty node selector term matches no objects. The requirements of them are ANDed. The TopologySelectorTerm type implements a subset of the NodeSelectorTerm.
+type InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTerms struct {
+	// A list of node selector requirements by node's labels.
+	MatchExpressions []InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressions `pulumi:"matchExpressions"`
+	// A list of node selector requirements by node's fields.
+	MatchFields []InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFields `pulumi:"matchFields"`
+}
+
+// InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsInput is an input type that accepts InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsArgs and InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsOutput values.
+// You can construct a concrete instance of `InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsInput` via:
+//
+//          InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsArgs{...}
+type InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsInput interface {
+	pulumi.Input
+
+	ToInfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsOutput() InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsOutput
+	ToInfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsOutputWithContext(context.Context) InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsOutput
+}
+
+// A null or empty node selector term matches no objects. The requirements of them are ANDed. The TopologySelectorTerm type implements a subset of the NodeSelectorTerm.
+type InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsArgs struct {
+	// A list of node selector requirements by node's labels.
+	MatchExpressions InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressionsArrayInput `pulumi:"matchExpressions"`
+	// A list of node selector requirements by node's fields.
+	MatchFields InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFieldsArrayInput `pulumi:"matchFields"`
+}
+
+func (InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTerms)(nil)).Elem()
+}
+
+func (i InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsArgs) ToInfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsOutput() InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsOutput {
+	return i.ToInfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsOutputWithContext(context.Background())
+}
+
+func (i InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsArgs) ToInfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsOutputWithContext(ctx context.Context) InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsOutput)
+}
+
+// InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsArrayInput is an input type that accepts InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsArray and InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsArrayOutput values.
+// You can construct a concrete instance of `InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsArrayInput` via:
+//
+//          InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsArray{ InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsArgs{...} }
+type InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsArrayInput interface {
+	pulumi.Input
+
+	ToInfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsArrayOutput() InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsArrayOutput
+	ToInfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsArrayOutputWithContext(context.Context) InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsArrayOutput
+}
+
+type InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsArray []InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsInput
+
+func (InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTerms)(nil)).Elem()
+}
+
+func (i InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsArray) ToInfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsArrayOutput() InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsArrayOutput {
+	return i.ToInfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsArrayOutputWithContext(context.Background())
+}
+
+func (i InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsArray) ToInfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsArrayOutputWithContext(ctx context.Context) InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsArrayOutput)
+}
+
+// A null or empty node selector term matches no objects. The requirements of them are ANDed. The TopologySelectorTerm type implements a subset of the NodeSelectorTerm.
+type InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsOutput struct{ *pulumi.OutputState }
+
+func (InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTerms)(nil)).Elem()
+}
+
+func (o InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsOutput) ToInfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsOutput() InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsOutput {
+	return o
+}
+
+func (o InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsOutput) ToInfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsOutputWithContext(ctx context.Context) InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsOutput {
+	return o
+}
+
+// A list of node selector requirements by node's labels.
+func (o InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsOutput) MatchExpressions() InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressionsArrayOutput {
+	return o.ApplyT(func(v InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTerms) []InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressions {
+		return v.MatchExpressions
+	}).(InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressionsArrayOutput)
+}
+
+// A list of node selector requirements by node's fields.
+func (o InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsOutput) MatchFields() InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFieldsArrayOutput {
+	return o.ApplyT(func(v InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTerms) []InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFields {
+		return v.MatchFields
+	}).(InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFieldsArrayOutput)
+}
+
+type InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsArrayOutput struct{ *pulumi.OutputState }
+
+func (InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTerms)(nil)).Elem()
+}
+
+func (o InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsArrayOutput) ToInfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsArrayOutput() InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsArrayOutput {
+	return o
+}
+
+func (o InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsArrayOutput) ToInfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsArrayOutputWithContext(ctx context.Context) InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsArrayOutput {
+	return o
+}
+
+func (o InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsArrayOutput) Index(i pulumi.IntInput) InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTerms {
+		return vs[0].([]InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTerms)[vs[1].(int)]
+	}).(InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsOutput)
+}
+
+// A node selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+type InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressions struct {
+	// The label key that the selector applies to.
+	Key string `pulumi:"key"`
+	// Represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt.
+	Operator string `pulumi:"operator"`
+	// An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. If the operator is Gt or Lt, the values array must have a single element, which will be interpreted as an integer. This array is replaced during a strategic merge patch.
+	Values []string `pulumi:"values"`
+}
+
+// InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressionsInput is an input type that accepts InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressionsArgs and InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressionsOutput values.
+// You can construct a concrete instance of `InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressionsInput` via:
+//
+//          InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressionsArgs{...}
+type InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressionsInput interface {
+	pulumi.Input
+
+	ToInfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressionsOutput() InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressionsOutput
+	ToInfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressionsOutputWithContext(context.Context) InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressionsOutput
+}
+
+// A node selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+type InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressionsArgs struct {
+	// The label key that the selector applies to.
+	Key pulumi.StringInput `pulumi:"key"`
+	// Represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt.
+	Operator pulumi.StringInput `pulumi:"operator"`
+	// An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. If the operator is Gt or Lt, the values array must have a single element, which will be interpreted as an integer. This array is replaced during a strategic merge patch.
+	Values pulumi.StringArrayInput `pulumi:"values"`
+}
+
+func (InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressionsArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressions)(nil)).Elem()
+}
+
+func (i InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressionsArgs) ToInfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressionsOutput() InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressionsOutput {
+	return i.ToInfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressionsOutputWithContext(context.Background())
+}
+
+func (i InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressionsArgs) ToInfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressionsOutputWithContext(ctx context.Context) InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressionsOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressionsOutput)
+}
+
+// InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressionsArrayInput is an input type that accepts InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressionsArray and InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressionsArrayOutput values.
+// You can construct a concrete instance of `InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressionsArrayInput` via:
+//
+//          InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressionsArray{ InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressionsArgs{...} }
+type InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressionsArrayInput interface {
+	pulumi.Input
+
+	ToInfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressionsArrayOutput() InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressionsArrayOutput
+	ToInfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressionsArrayOutputWithContext(context.Context) InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressionsArrayOutput
+}
+
+type InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressionsArray []InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressionsInput
+
+func (InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressionsArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressions)(nil)).Elem()
+}
+
+func (i InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressionsArray) ToInfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressionsArrayOutput() InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressionsArrayOutput {
+	return i.ToInfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressionsArrayOutputWithContext(context.Background())
+}
+
+func (i InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressionsArray) ToInfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressionsArrayOutputWithContext(ctx context.Context) InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressionsArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressionsArrayOutput)
+}
+
+// A node selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+type InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressionsOutput struct{ *pulumi.OutputState }
+
+func (InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressionsOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressions)(nil)).Elem()
+}
+
+func (o InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressionsOutput) ToInfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressionsOutput() InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressionsOutput {
+	return o
+}
+
+func (o InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressionsOutput) ToInfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressionsOutputWithContext(ctx context.Context) InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressionsOutput {
+	return o
+}
+
+// The label key that the selector applies to.
+func (o InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressionsOutput) Key() pulumi.StringOutput {
+	return o.ApplyT(func(v InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressions) string {
+		return v.Key
+	}).(pulumi.StringOutput)
+}
+
+// Represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt.
+func (o InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressionsOutput) Operator() pulumi.StringOutput {
+	return o.ApplyT(func(v InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressions) string {
+		return v.Operator
+	}).(pulumi.StringOutput)
+}
+
+// An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. If the operator is Gt or Lt, the values array must have a single element, which will be interpreted as an integer. This array is replaced during a strategic merge patch.
+func (o InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressionsOutput) Values() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressions) []string {
+		return v.Values
+	}).(pulumi.StringArrayOutput)
+}
+
+type InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressionsArrayOutput struct{ *pulumi.OutputState }
+
+func (InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressionsArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressions)(nil)).Elem()
+}
+
+func (o InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressionsArrayOutput) ToInfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressionsArrayOutput() InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressionsArrayOutput {
+	return o
+}
+
+func (o InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressionsArrayOutput) ToInfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressionsArrayOutputWithContext(ctx context.Context) InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressionsArrayOutput {
+	return o
+}
+
+func (o InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressionsArrayOutput) Index(i pulumi.IntInput) InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressionsOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressions {
+		return vs[0].([]InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressions)[vs[1].(int)]
+	}).(InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressionsOutput)
+}
+
+// A node selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+type InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFields struct {
+	// The label key that the selector applies to.
+	Key string `pulumi:"key"`
+	// Represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt.
+	Operator string `pulumi:"operator"`
+	// An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. If the operator is Gt or Lt, the values array must have a single element, which will be interpreted as an integer. This array is replaced during a strategic merge patch.
+	Values []string `pulumi:"values"`
+}
+
+// InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFieldsInput is an input type that accepts InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFieldsArgs and InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFieldsOutput values.
+// You can construct a concrete instance of `InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFieldsInput` via:
+//
+//          InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFieldsArgs{...}
+type InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFieldsInput interface {
+	pulumi.Input
+
+	ToInfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFieldsOutput() InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFieldsOutput
+	ToInfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFieldsOutputWithContext(context.Context) InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFieldsOutput
+}
+
+// A node selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+type InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFieldsArgs struct {
+	// The label key that the selector applies to.
+	Key pulumi.StringInput `pulumi:"key"`
+	// Represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt.
+	Operator pulumi.StringInput `pulumi:"operator"`
+	// An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. If the operator is Gt or Lt, the values array must have a single element, which will be interpreted as an integer. This array is replaced during a strategic merge patch.
+	Values pulumi.StringArrayInput `pulumi:"values"`
+}
+
+func (InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFieldsArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFields)(nil)).Elem()
+}
+
+func (i InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFieldsArgs) ToInfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFieldsOutput() InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFieldsOutput {
+	return i.ToInfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFieldsOutputWithContext(context.Background())
+}
+
+func (i InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFieldsArgs) ToInfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFieldsOutputWithContext(ctx context.Context) InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFieldsOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFieldsOutput)
+}
+
+// InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFieldsArrayInput is an input type that accepts InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFieldsArray and InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFieldsArrayOutput values.
+// You can construct a concrete instance of `InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFieldsArrayInput` via:
+//
+//          InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFieldsArray{ InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFieldsArgs{...} }
+type InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFieldsArrayInput interface {
+	pulumi.Input
+
+	ToInfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFieldsArrayOutput() InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFieldsArrayOutput
+	ToInfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFieldsArrayOutputWithContext(context.Context) InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFieldsArrayOutput
+}
+
+type InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFieldsArray []InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFieldsInput
+
+func (InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFieldsArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFields)(nil)).Elem()
+}
+
+func (i InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFieldsArray) ToInfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFieldsArrayOutput() InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFieldsArrayOutput {
+	return i.ToInfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFieldsArrayOutputWithContext(context.Background())
+}
+
+func (i InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFieldsArray) ToInfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFieldsArrayOutputWithContext(ctx context.Context) InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFieldsArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFieldsArrayOutput)
+}
+
+// A node selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+type InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFieldsOutput struct{ *pulumi.OutputState }
+
+func (InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFieldsOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFields)(nil)).Elem()
+}
+
+func (o InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFieldsOutput) ToInfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFieldsOutput() InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFieldsOutput {
+	return o
+}
+
+func (o InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFieldsOutput) ToInfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFieldsOutputWithContext(ctx context.Context) InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFieldsOutput {
+	return o
+}
+
+// The label key that the selector applies to.
+func (o InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFieldsOutput) Key() pulumi.StringOutput {
+	return o.ApplyT(func(v InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFields) string {
+		return v.Key
+	}).(pulumi.StringOutput)
+}
+
+// Represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt.
+func (o InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFieldsOutput) Operator() pulumi.StringOutput {
+	return o.ApplyT(func(v InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFields) string {
+		return v.Operator
+	}).(pulumi.StringOutput)
+}
+
+// An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. If the operator is Gt or Lt, the values array must have a single element, which will be interpreted as an integer. This array is replaced during a strategic merge patch.
+func (o InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFieldsOutput) Values() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFields) []string {
+		return v.Values
+	}).(pulumi.StringArrayOutput)
+}
+
+type InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFieldsArrayOutput struct{ *pulumi.OutputState }
+
+func (InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFieldsArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFields)(nil)).Elem()
+}
+
+func (o InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFieldsArrayOutput) ToInfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFieldsArrayOutput() InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFieldsArrayOutput {
+	return o
+}
+
+func (o InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFieldsArrayOutput) ToInfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFieldsArrayOutputWithContext(ctx context.Context) InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFieldsArrayOutput {
+	return o
+}
+
+func (o InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFieldsArrayOutput) Index(i pulumi.IntInput) InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFieldsOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFields {
+		return vs[0].([]InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFields)[vs[1].(int)]
+	}).(InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFieldsOutput)
+}
+
+// Describes pod affinity scheduling rules (e.g. co-locate this pod in the same node, zone, etc. as some other pod(s)).
+type InfinispanSpecAffinityPodAffinity struct {
+	// The scheduler will prefer to schedule pods to nodes that satisfy the affinity expressions specified by this field, but it may choose a node that violates one or more of the expressions. The node that is most preferred is the one with the greatest sum of weights, i.e. for each node that meets all of the scheduling requirements (resource request, requiredDuringScheduling affinity expressions, etc.), compute a sum by iterating through the elements of this field and adding "weight" to the sum if the node has pods which matches the corresponding podAffinityTerm; the node(s) with the highest sum are the most preferred.
+	PreferredDuringSchedulingIgnoredDuringExecution []InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecution `pulumi:"preferredDuringSchedulingIgnoredDuringExecution"`
+	// If the affinity requirements specified by this field are not met at scheduling time, the pod will not be scheduled onto the node. If the affinity requirements specified by this field cease to be met at some point during pod execution (e.g. due to a pod label update), the system may or may not try to eventually evict the pod from its node. When there are multiple elements, the lists of nodes corresponding to each podAffinityTerm are intersected, i.e. all terms must be satisfied.
+	RequiredDuringSchedulingIgnoredDuringExecution []InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecution `pulumi:"requiredDuringSchedulingIgnoredDuringExecution"`
+}
+
+// InfinispanSpecAffinityPodAffinityInput is an input type that accepts InfinispanSpecAffinityPodAffinityArgs and InfinispanSpecAffinityPodAffinityOutput values.
+// You can construct a concrete instance of `InfinispanSpecAffinityPodAffinityInput` via:
+//
+//          InfinispanSpecAffinityPodAffinityArgs{...}
+type InfinispanSpecAffinityPodAffinityInput interface {
+	pulumi.Input
+
+	ToInfinispanSpecAffinityPodAffinityOutput() InfinispanSpecAffinityPodAffinityOutput
+	ToInfinispanSpecAffinityPodAffinityOutputWithContext(context.Context) InfinispanSpecAffinityPodAffinityOutput
+}
+
+// Describes pod affinity scheduling rules (e.g. co-locate this pod in the same node, zone, etc. as some other pod(s)).
+type InfinispanSpecAffinityPodAffinityArgs struct {
+	// The scheduler will prefer to schedule pods to nodes that satisfy the affinity expressions specified by this field, but it may choose a node that violates one or more of the expressions. The node that is most preferred is the one with the greatest sum of weights, i.e. for each node that meets all of the scheduling requirements (resource request, requiredDuringScheduling affinity expressions, etc.), compute a sum by iterating through the elements of this field and adding "weight" to the sum if the node has pods which matches the corresponding podAffinityTerm; the node(s) with the highest sum are the most preferred.
+	PreferredDuringSchedulingIgnoredDuringExecution InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionArrayInput `pulumi:"preferredDuringSchedulingIgnoredDuringExecution"`
+	// If the affinity requirements specified by this field are not met at scheduling time, the pod will not be scheduled onto the node. If the affinity requirements specified by this field cease to be met at some point during pod execution (e.g. due to a pod label update), the system may or may not try to eventually evict the pod from its node. When there are multiple elements, the lists of nodes corresponding to each podAffinityTerm are intersected, i.e. all terms must be satisfied.
+	RequiredDuringSchedulingIgnoredDuringExecution InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionArrayInput `pulumi:"requiredDuringSchedulingIgnoredDuringExecution"`
+}
+
+func (InfinispanSpecAffinityPodAffinityArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*InfinispanSpecAffinityPodAffinity)(nil)).Elem()
+}
+
+func (i InfinispanSpecAffinityPodAffinityArgs) ToInfinispanSpecAffinityPodAffinityOutput() InfinispanSpecAffinityPodAffinityOutput {
+	return i.ToInfinispanSpecAffinityPodAffinityOutputWithContext(context.Background())
+}
+
+func (i InfinispanSpecAffinityPodAffinityArgs) ToInfinispanSpecAffinityPodAffinityOutputWithContext(ctx context.Context) InfinispanSpecAffinityPodAffinityOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(InfinispanSpecAffinityPodAffinityOutput)
+}
+
+func (i InfinispanSpecAffinityPodAffinityArgs) ToInfinispanSpecAffinityPodAffinityPtrOutput() InfinispanSpecAffinityPodAffinityPtrOutput {
+	return i.ToInfinispanSpecAffinityPodAffinityPtrOutputWithContext(context.Background())
+}
+
+func (i InfinispanSpecAffinityPodAffinityArgs) ToInfinispanSpecAffinityPodAffinityPtrOutputWithContext(ctx context.Context) InfinispanSpecAffinityPodAffinityPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(InfinispanSpecAffinityPodAffinityOutput).ToInfinispanSpecAffinityPodAffinityPtrOutputWithContext(ctx)
+}
+
+// InfinispanSpecAffinityPodAffinityPtrInput is an input type that accepts InfinispanSpecAffinityPodAffinityArgs, InfinispanSpecAffinityPodAffinityPtr and InfinispanSpecAffinityPodAffinityPtrOutput values.
+// You can construct a concrete instance of `InfinispanSpecAffinityPodAffinityPtrInput` via:
+//
+//          InfinispanSpecAffinityPodAffinityArgs{...}
+//
+//  or:
+//
+//          nil
+type InfinispanSpecAffinityPodAffinityPtrInput interface {
+	pulumi.Input
+
+	ToInfinispanSpecAffinityPodAffinityPtrOutput() InfinispanSpecAffinityPodAffinityPtrOutput
+	ToInfinispanSpecAffinityPodAffinityPtrOutputWithContext(context.Context) InfinispanSpecAffinityPodAffinityPtrOutput
+}
+
+type infinispanSpecAffinityPodAffinityPtrType InfinispanSpecAffinityPodAffinityArgs
+
+func InfinispanSpecAffinityPodAffinityPtr(v *InfinispanSpecAffinityPodAffinityArgs) InfinispanSpecAffinityPodAffinityPtrInput {
+	return (*infinispanSpecAffinityPodAffinityPtrType)(v)
+}
+
+func (*infinispanSpecAffinityPodAffinityPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**InfinispanSpecAffinityPodAffinity)(nil)).Elem()
+}
+
+func (i *infinispanSpecAffinityPodAffinityPtrType) ToInfinispanSpecAffinityPodAffinityPtrOutput() InfinispanSpecAffinityPodAffinityPtrOutput {
+	return i.ToInfinispanSpecAffinityPodAffinityPtrOutputWithContext(context.Background())
+}
+
+func (i *infinispanSpecAffinityPodAffinityPtrType) ToInfinispanSpecAffinityPodAffinityPtrOutputWithContext(ctx context.Context) InfinispanSpecAffinityPodAffinityPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(InfinispanSpecAffinityPodAffinityPtrOutput)
+}
+
+// Describes pod affinity scheduling rules (e.g. co-locate this pod in the same node, zone, etc. as some other pod(s)).
+type InfinispanSpecAffinityPodAffinityOutput struct{ *pulumi.OutputState }
+
+func (InfinispanSpecAffinityPodAffinityOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*InfinispanSpecAffinityPodAffinity)(nil)).Elem()
+}
+
+func (o InfinispanSpecAffinityPodAffinityOutput) ToInfinispanSpecAffinityPodAffinityOutput() InfinispanSpecAffinityPodAffinityOutput {
+	return o
+}
+
+func (o InfinispanSpecAffinityPodAffinityOutput) ToInfinispanSpecAffinityPodAffinityOutputWithContext(ctx context.Context) InfinispanSpecAffinityPodAffinityOutput {
+	return o
+}
+
+func (o InfinispanSpecAffinityPodAffinityOutput) ToInfinispanSpecAffinityPodAffinityPtrOutput() InfinispanSpecAffinityPodAffinityPtrOutput {
+	return o.ToInfinispanSpecAffinityPodAffinityPtrOutputWithContext(context.Background())
+}
+
+func (o InfinispanSpecAffinityPodAffinityOutput) ToInfinispanSpecAffinityPodAffinityPtrOutputWithContext(ctx context.Context) InfinispanSpecAffinityPodAffinityPtrOutput {
+	return o.ApplyT(func(v InfinispanSpecAffinityPodAffinity) *InfinispanSpecAffinityPodAffinity {
+		return &v
+	}).(InfinispanSpecAffinityPodAffinityPtrOutput)
+}
+
+// The scheduler will prefer to schedule pods to nodes that satisfy the affinity expressions specified by this field, but it may choose a node that violates one or more of the expressions. The node that is most preferred is the one with the greatest sum of weights, i.e. for each node that meets all of the scheduling requirements (resource request, requiredDuringScheduling affinity expressions, etc.), compute a sum by iterating through the elements of this field and adding "weight" to the sum if the node has pods which matches the corresponding podAffinityTerm; the node(s) with the highest sum are the most preferred.
+func (o InfinispanSpecAffinityPodAffinityOutput) PreferredDuringSchedulingIgnoredDuringExecution() InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionArrayOutput {
+	return o.ApplyT(func(v InfinispanSpecAffinityPodAffinity) []InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecution {
+		return v.PreferredDuringSchedulingIgnoredDuringExecution
+	}).(InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionArrayOutput)
+}
+
+// If the affinity requirements specified by this field are not met at scheduling time, the pod will not be scheduled onto the node. If the affinity requirements specified by this field cease to be met at some point during pod execution (e.g. due to a pod label update), the system may or may not try to eventually evict the pod from its node. When there are multiple elements, the lists of nodes corresponding to each podAffinityTerm are intersected, i.e. all terms must be satisfied.
+func (o InfinispanSpecAffinityPodAffinityOutput) RequiredDuringSchedulingIgnoredDuringExecution() InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionArrayOutput {
+	return o.ApplyT(func(v InfinispanSpecAffinityPodAffinity) []InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecution {
+		return v.RequiredDuringSchedulingIgnoredDuringExecution
+	}).(InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionArrayOutput)
+}
+
+type InfinispanSpecAffinityPodAffinityPtrOutput struct{ *pulumi.OutputState }
+
+func (InfinispanSpecAffinityPodAffinityPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**InfinispanSpecAffinityPodAffinity)(nil)).Elem()
+}
+
+func (o InfinispanSpecAffinityPodAffinityPtrOutput) ToInfinispanSpecAffinityPodAffinityPtrOutput() InfinispanSpecAffinityPodAffinityPtrOutput {
+	return o
+}
+
+func (o InfinispanSpecAffinityPodAffinityPtrOutput) ToInfinispanSpecAffinityPodAffinityPtrOutputWithContext(ctx context.Context) InfinispanSpecAffinityPodAffinityPtrOutput {
+	return o
+}
+
+func (o InfinispanSpecAffinityPodAffinityPtrOutput) Elem() InfinispanSpecAffinityPodAffinityOutput {
+	return o.ApplyT(func(v *InfinispanSpecAffinityPodAffinity) InfinispanSpecAffinityPodAffinity { return *v }).(InfinispanSpecAffinityPodAffinityOutput)
+}
+
+// The scheduler will prefer to schedule pods to nodes that satisfy the affinity expressions specified by this field, but it may choose a node that violates one or more of the expressions. The node that is most preferred is the one with the greatest sum of weights, i.e. for each node that meets all of the scheduling requirements (resource request, requiredDuringScheduling affinity expressions, etc.), compute a sum by iterating through the elements of this field and adding "weight" to the sum if the node has pods which matches the corresponding podAffinityTerm; the node(s) with the highest sum are the most preferred.
+func (o InfinispanSpecAffinityPodAffinityPtrOutput) PreferredDuringSchedulingIgnoredDuringExecution() InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionArrayOutput {
+	return o.ApplyT(func(v *InfinispanSpecAffinityPodAffinity) []InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecution {
+		if v == nil {
+			return nil
+		}
+		return v.PreferredDuringSchedulingIgnoredDuringExecution
+	}).(InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionArrayOutput)
+}
+
+// If the affinity requirements specified by this field are not met at scheduling time, the pod will not be scheduled onto the node. If the affinity requirements specified by this field cease to be met at some point during pod execution (e.g. due to a pod label update), the system may or may not try to eventually evict the pod from its node. When there are multiple elements, the lists of nodes corresponding to each podAffinityTerm are intersected, i.e. all terms must be satisfied.
+func (o InfinispanSpecAffinityPodAffinityPtrOutput) RequiredDuringSchedulingIgnoredDuringExecution() InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionArrayOutput {
+	return o.ApplyT(func(v *InfinispanSpecAffinityPodAffinity) []InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecution {
+		if v == nil {
+			return nil
+		}
+		return v.RequiredDuringSchedulingIgnoredDuringExecution
+	}).(InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionArrayOutput)
+}
+
+// The weights of all of the matched WeightedPodAffinityTerm fields are added per-node to find the most preferred node(s)
+type InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecution struct {
+	// Required. A pod affinity term, associated with the corresponding weight.
+	PodAffinityTerm InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTerm `pulumi:"podAffinityTerm"`
+	// weight associated with matching the corresponding podAffinityTerm, in the range 1-100.
+	Weight int `pulumi:"weight"`
+}
+
+// InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionInput is an input type that accepts InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionArgs and InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionOutput values.
+// You can construct a concrete instance of `InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionInput` via:
+//
+//          InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionArgs{...}
+type InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionInput interface {
+	pulumi.Input
+
+	ToInfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionOutput() InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionOutput
+	ToInfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionOutputWithContext(context.Context) InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionOutput
+}
+
+// The weights of all of the matched WeightedPodAffinityTerm fields are added per-node to find the most preferred node(s)
+type InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionArgs struct {
+	// Required. A pod affinity term, associated with the corresponding weight.
+	PodAffinityTerm InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermInput `pulumi:"podAffinityTerm"`
+	// weight associated with matching the corresponding podAffinityTerm, in the range 1-100.
+	Weight pulumi.IntInput `pulumi:"weight"`
+}
+
+func (InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecution)(nil)).Elem()
+}
+
+func (i InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionArgs) ToInfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionOutput() InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionOutput {
+	return i.ToInfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionOutputWithContext(context.Background())
+}
+
+func (i InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionArgs) ToInfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionOutputWithContext(ctx context.Context) InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionOutput)
+}
+
+// InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionArrayInput is an input type that accepts InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionArray and InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionArrayOutput values.
+// You can construct a concrete instance of `InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionArrayInput` via:
+//
+//          InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionArray{ InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionArgs{...} }
+type InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionArrayInput interface {
+	pulumi.Input
+
+	ToInfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionArrayOutput() InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionArrayOutput
+	ToInfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionArrayOutputWithContext(context.Context) InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionArrayOutput
+}
+
+type InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionArray []InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionInput
+
+func (InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecution)(nil)).Elem()
+}
+
+func (i InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionArray) ToInfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionArrayOutput() InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionArrayOutput {
+	return i.ToInfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionArrayOutputWithContext(context.Background())
+}
+
+func (i InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionArray) ToInfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionArrayOutputWithContext(ctx context.Context) InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionArrayOutput)
+}
+
+// The weights of all of the matched WeightedPodAffinityTerm fields are added per-node to find the most preferred node(s)
+type InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionOutput struct{ *pulumi.OutputState }
+
+func (InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecution)(nil)).Elem()
+}
+
+func (o InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionOutput) ToInfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionOutput() InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionOutput {
+	return o
+}
+
+func (o InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionOutput) ToInfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionOutputWithContext(ctx context.Context) InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionOutput {
+	return o
+}
+
+// Required. A pod affinity term, associated with the corresponding weight.
+func (o InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionOutput) PodAffinityTerm() InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermOutput {
+	return o.ApplyT(func(v InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecution) InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTerm {
+		return v.PodAffinityTerm
+	}).(InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermOutput)
+}
+
+// weight associated with matching the corresponding podAffinityTerm, in the range 1-100.
+func (o InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionOutput) Weight() pulumi.IntOutput {
+	return o.ApplyT(func(v InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecution) int {
+		return v.Weight
+	}).(pulumi.IntOutput)
+}
+
+type InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionArrayOutput struct{ *pulumi.OutputState }
+
+func (InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecution)(nil)).Elem()
+}
+
+func (o InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionArrayOutput) ToInfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionArrayOutput() InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionArrayOutput {
+	return o
+}
+
+func (o InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionArrayOutput) ToInfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionArrayOutputWithContext(ctx context.Context) InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionArrayOutput {
+	return o
+}
+
+func (o InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionArrayOutput) Index(i pulumi.IntInput) InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecution {
+		return vs[0].([]InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecution)[vs[1].(int)]
+	}).(InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionOutput)
+}
+
+// Required. A pod affinity term, associated with the corresponding weight.
+type InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTerm struct {
+	// A label query over a set of resources, in this case pods.
+	LabelSelector *InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelector `pulumi:"labelSelector"`
+	// namespaces specifies which namespaces the labelSelector applies to (matches against); null or empty list means "this pod's namespace"
+	Namespaces []string `pulumi:"namespaces"`
+	// This pod should be co-located (affinity) or not co-located (anti-affinity) with the pods matching the labelSelector in the specified namespaces, where co-located is defined as running on a node whose value of the label with key topologyKey matches that of any node on which any of the selected pods is running. Empty topologyKey is not allowed.
+	TopologyKey string `pulumi:"topologyKey"`
+}
+
+// InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermInput is an input type that accepts InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermArgs and InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermOutput values.
+// You can construct a concrete instance of `InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermInput` via:
+//
+//          InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermArgs{...}
+type InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermInput interface {
+	pulumi.Input
+
+	ToInfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermOutput() InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermOutput
+	ToInfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermOutputWithContext(context.Context) InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermOutput
+}
+
+// Required. A pod affinity term, associated with the corresponding weight.
+type InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermArgs struct {
+	// A label query over a set of resources, in this case pods.
+	LabelSelector InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorPtrInput `pulumi:"labelSelector"`
+	// namespaces specifies which namespaces the labelSelector applies to (matches against); null or empty list means "this pod's namespace"
+	Namespaces pulumi.StringArrayInput `pulumi:"namespaces"`
+	// This pod should be co-located (affinity) or not co-located (anti-affinity) with the pods matching the labelSelector in the specified namespaces, where co-located is defined as running on a node whose value of the label with key topologyKey matches that of any node on which any of the selected pods is running. Empty topologyKey is not allowed.
+	TopologyKey pulumi.StringInput `pulumi:"topologyKey"`
+}
+
+func (InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTerm)(nil)).Elem()
+}
+
+func (i InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermArgs) ToInfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermOutput() InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermOutput {
+	return i.ToInfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermOutputWithContext(context.Background())
+}
+
+func (i InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermArgs) ToInfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermOutputWithContext(ctx context.Context) InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermOutput)
+}
+
+// Required. A pod affinity term, associated with the corresponding weight.
+type InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermOutput struct{ *pulumi.OutputState }
+
+func (InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTerm)(nil)).Elem()
+}
+
+func (o InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermOutput) ToInfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermOutput() InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermOutput {
+	return o
+}
+
+func (o InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermOutput) ToInfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermOutputWithContext(ctx context.Context) InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermOutput {
+	return o
+}
+
+// A label query over a set of resources, in this case pods.
+func (o InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermOutput) LabelSelector() InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorPtrOutput {
+	return o.ApplyT(func(v InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTerm) *InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelector {
+		return v.LabelSelector
+	}).(InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorPtrOutput)
+}
+
+// namespaces specifies which namespaces the labelSelector applies to (matches against); null or empty list means "this pod's namespace"
+func (o InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermOutput) Namespaces() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTerm) []string {
+		return v.Namespaces
+	}).(pulumi.StringArrayOutput)
+}
+
+// This pod should be co-located (affinity) or not co-located (anti-affinity) with the pods matching the labelSelector in the specified namespaces, where co-located is defined as running on a node whose value of the label with key topologyKey matches that of any node on which any of the selected pods is running. Empty topologyKey is not allowed.
+func (o InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermOutput) TopologyKey() pulumi.StringOutput {
+	return o.ApplyT(func(v InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTerm) string {
+		return v.TopologyKey
+	}).(pulumi.StringOutput)
+}
+
+// A label query over a set of resources, in this case pods.
+type InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelector struct {
+	// matchExpressions is a list of label selector requirements. The requirements are ANDed.
+	MatchExpressions []InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressions `pulumi:"matchExpressions"`
+	// matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+	MatchLabels map[string]string `pulumi:"matchLabels"`
+}
+
+// InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorInput is an input type that accepts InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorArgs and InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorOutput values.
+// You can construct a concrete instance of `InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorInput` via:
+//
+//          InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorArgs{...}
+type InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorInput interface {
+	pulumi.Input
+
+	ToInfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorOutput() InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorOutput
+	ToInfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorOutputWithContext(context.Context) InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorOutput
+}
+
+// A label query over a set of resources, in this case pods.
+type InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorArgs struct {
+	// matchExpressions is a list of label selector requirements. The requirements are ANDed.
+	MatchExpressions InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsArrayInput `pulumi:"matchExpressions"`
+	// matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+	MatchLabels pulumi.StringMapInput `pulumi:"matchLabels"`
+}
+
+func (InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelector)(nil)).Elem()
+}
+
+func (i InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorArgs) ToInfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorOutput() InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorOutput {
+	return i.ToInfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorOutputWithContext(context.Background())
+}
+
+func (i InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorArgs) ToInfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorOutputWithContext(ctx context.Context) InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorOutput)
+}
+
+func (i InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorArgs) ToInfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorPtrOutput() InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorPtrOutput {
+	return i.ToInfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorPtrOutputWithContext(context.Background())
+}
+
+func (i InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorArgs) ToInfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorPtrOutputWithContext(ctx context.Context) InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorOutput).ToInfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorPtrOutputWithContext(ctx)
+}
+
+// InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorPtrInput is an input type that accepts InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorArgs, InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorPtr and InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorPtrOutput values.
+// You can construct a concrete instance of `InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorPtrInput` via:
+//
+//          InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorArgs{...}
+//
+//  or:
+//
+//          nil
+type InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorPtrInput interface {
+	pulumi.Input
+
+	ToInfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorPtrOutput() InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorPtrOutput
+	ToInfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorPtrOutputWithContext(context.Context) InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorPtrOutput
+}
+
+type infinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorPtrType InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorArgs
+
+func InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorPtr(v *InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorArgs) InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorPtrInput {
+	return (*infinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorPtrType)(v)
+}
+
+func (*infinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelector)(nil)).Elem()
+}
+
+func (i *infinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorPtrType) ToInfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorPtrOutput() InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorPtrOutput {
+	return i.ToInfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorPtrOutputWithContext(context.Background())
+}
+
+func (i *infinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorPtrType) ToInfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorPtrOutputWithContext(ctx context.Context) InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorPtrOutput)
+}
+
+// A label query over a set of resources, in this case pods.
+type InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorOutput struct{ *pulumi.OutputState }
+
+func (InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelector)(nil)).Elem()
+}
+
+func (o InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorOutput) ToInfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorOutput() InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorOutput {
+	return o
+}
+
+func (o InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorOutput) ToInfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorOutputWithContext(ctx context.Context) InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorOutput {
+	return o
+}
+
+func (o InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorOutput) ToInfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorPtrOutput() InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorPtrOutput {
+	return o.ToInfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorPtrOutputWithContext(context.Background())
+}
+
+func (o InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorOutput) ToInfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorPtrOutputWithContext(ctx context.Context) InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorPtrOutput {
+	return o.ApplyT(func(v InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelector) *InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelector {
+		return &v
+	}).(InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorPtrOutput)
+}
+
+// matchExpressions is a list of label selector requirements. The requirements are ANDed.
+func (o InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorOutput) MatchExpressions() InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsArrayOutput {
+	return o.ApplyT(func(v InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelector) []InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressions {
+		return v.MatchExpressions
+	}).(InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsArrayOutput)
+}
+
+// matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+func (o InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorOutput) MatchLabels() pulumi.StringMapOutput {
+	return o.ApplyT(func(v InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelector) map[string]string {
+		return v.MatchLabels
+	}).(pulumi.StringMapOutput)
+}
+
+type InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorPtrOutput struct{ *pulumi.OutputState }
+
+func (InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelector)(nil)).Elem()
+}
+
+func (o InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorPtrOutput) ToInfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorPtrOutput() InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorPtrOutput {
+	return o
+}
+
+func (o InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorPtrOutput) ToInfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorPtrOutputWithContext(ctx context.Context) InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorPtrOutput {
+	return o
+}
+
+func (o InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorPtrOutput) Elem() InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorOutput {
+	return o.ApplyT(func(v *InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelector) InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelector {
+		return *v
+	}).(InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorOutput)
+}
+
+// matchExpressions is a list of label selector requirements. The requirements are ANDed.
+func (o InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorPtrOutput) MatchExpressions() InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsArrayOutput {
+	return o.ApplyT(func(v *InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelector) []InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressions {
+		if v == nil {
+			return nil
+		}
+		return v.MatchExpressions
+	}).(InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsArrayOutput)
+}
+
+// matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+func (o InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorPtrOutput) MatchLabels() pulumi.StringMapOutput {
+	return o.ApplyT(func(v *InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelector) map[string]string {
+		if v == nil {
+			return nil
+		}
+		return v.MatchLabels
+	}).(pulumi.StringMapOutput)
+}
+
+// A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+type InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressions struct {
+	// key is the label key that the selector applies to.
+	Key string `pulumi:"key"`
+	// operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+	Operator string `pulumi:"operator"`
+	// values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+	Values []string `pulumi:"values"`
+}
+
+// InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsInput is an input type that accepts InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsArgs and InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsOutput values.
+// You can construct a concrete instance of `InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsInput` via:
+//
+//          InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsArgs{...}
+type InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsInput interface {
+	pulumi.Input
+
+	ToInfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsOutput() InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsOutput
+	ToInfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsOutputWithContext(context.Context) InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsOutput
+}
+
+// A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+type InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsArgs struct {
+	// key is the label key that the selector applies to.
+	Key pulumi.StringInput `pulumi:"key"`
+	// operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+	Operator pulumi.StringInput `pulumi:"operator"`
+	// values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+	Values pulumi.StringArrayInput `pulumi:"values"`
+}
+
+func (InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressions)(nil)).Elem()
+}
+
+func (i InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsArgs) ToInfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsOutput() InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsOutput {
+	return i.ToInfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsOutputWithContext(context.Background())
+}
+
+func (i InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsArgs) ToInfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsOutputWithContext(ctx context.Context) InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsOutput)
+}
+
+// InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsArrayInput is an input type that accepts InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsArray and InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsArrayOutput values.
+// You can construct a concrete instance of `InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsArrayInput` via:
+//
+//          InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsArray{ InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsArgs{...} }
+type InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsArrayInput interface {
+	pulumi.Input
+
+	ToInfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsArrayOutput() InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsArrayOutput
+	ToInfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsArrayOutputWithContext(context.Context) InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsArrayOutput
+}
+
+type InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsArray []InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsInput
+
+func (InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressions)(nil)).Elem()
+}
+
+func (i InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsArray) ToInfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsArrayOutput() InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsArrayOutput {
+	return i.ToInfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsArrayOutputWithContext(context.Background())
+}
+
+func (i InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsArray) ToInfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsArrayOutputWithContext(ctx context.Context) InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsArrayOutput)
+}
+
+// A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+type InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsOutput struct{ *pulumi.OutputState }
+
+func (InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressions)(nil)).Elem()
+}
+
+func (o InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsOutput) ToInfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsOutput() InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsOutput {
+	return o
+}
+
+func (o InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsOutput) ToInfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsOutputWithContext(ctx context.Context) InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsOutput {
+	return o
+}
+
+// key is the label key that the selector applies to.
+func (o InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsOutput) Key() pulumi.StringOutput {
+	return o.ApplyT(func(v InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressions) string {
+		return v.Key
+	}).(pulumi.StringOutput)
+}
+
+// operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+func (o InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsOutput) Operator() pulumi.StringOutput {
+	return o.ApplyT(func(v InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressions) string {
+		return v.Operator
+	}).(pulumi.StringOutput)
+}
+
+// values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+func (o InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsOutput) Values() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressions) []string {
+		return v.Values
+	}).(pulumi.StringArrayOutput)
+}
+
+type InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsArrayOutput struct{ *pulumi.OutputState }
+
+func (InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressions)(nil)).Elem()
+}
+
+func (o InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsArrayOutput) ToInfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsArrayOutput() InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsArrayOutput {
+	return o
+}
+
+func (o InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsArrayOutput) ToInfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsArrayOutputWithContext(ctx context.Context) InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsArrayOutput {
+	return o
+}
+
+func (o InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsArrayOutput) Index(i pulumi.IntInput) InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressions {
+		return vs[0].([]InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressions)[vs[1].(int)]
+	}).(InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsOutput)
+}
+
+// matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+type InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchLabels struct {
+}
+
+// InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchLabelsInput is an input type that accepts InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchLabelsArgs and InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchLabelsOutput values.
+// You can construct a concrete instance of `InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchLabelsInput` via:
+//
+//          InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchLabelsArgs{...}
+type InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchLabelsInput interface {
+	pulumi.Input
+
+	ToInfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchLabelsOutput() InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchLabelsOutput
+	ToInfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchLabelsOutputWithContext(context.Context) InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchLabelsOutput
+}
+
+// matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+type InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchLabelsArgs struct {
+}
+
+func (InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchLabelsArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchLabels)(nil)).Elem()
+}
+
+func (i InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchLabelsArgs) ToInfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchLabelsOutput() InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchLabelsOutput {
+	return i.ToInfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchLabelsOutputWithContext(context.Background())
+}
+
+func (i InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchLabelsArgs) ToInfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchLabelsOutputWithContext(ctx context.Context) InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchLabelsOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchLabelsOutput)
+}
+
+// matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+type InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchLabelsOutput struct{ *pulumi.OutputState }
+
+func (InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchLabelsOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchLabels)(nil)).Elem()
+}
+
+func (o InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchLabelsOutput) ToInfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchLabelsOutput() InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchLabelsOutput {
+	return o
+}
+
+func (o InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchLabelsOutput) ToInfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchLabelsOutputWithContext(ctx context.Context) InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchLabelsOutput {
+	return o
+}
+
+// Defines a set of pods (namely those matching the labelSelector relative to the given namespace(s)) that this pod should be co-located (affinity) or not co-located (anti-affinity) with, where co-located is defined as running on a node whose value of the label with key <topologyKey> matches that of any node on which a pod of the set of pods is running
+type InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecution struct {
+	// A label query over a set of resources, in this case pods.
+	LabelSelector *InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector `pulumi:"labelSelector"`
+	// namespaces specifies which namespaces the labelSelector applies to (matches against); null or empty list means "this pod's namespace"
+	Namespaces []string `pulumi:"namespaces"`
+	// This pod should be co-located (affinity) or not co-located (anti-affinity) with the pods matching the labelSelector in the specified namespaces, where co-located is defined as running on a node whose value of the label with key topologyKey matches that of any node on which any of the selected pods is running. Empty topologyKey is not allowed.
+	TopologyKey string `pulumi:"topologyKey"`
+}
+
+// InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionInput is an input type that accepts InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionArgs and InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionOutput values.
+// You can construct a concrete instance of `InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionInput` via:
+//
+//          InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionArgs{...}
+type InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionInput interface {
+	pulumi.Input
+
+	ToInfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionOutput() InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionOutput
+	ToInfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionOutputWithContext(context.Context) InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionOutput
+}
+
+// Defines a set of pods (namely those matching the labelSelector relative to the given namespace(s)) that this pod should be co-located (affinity) or not co-located (anti-affinity) with, where co-located is defined as running on a node whose value of the label with key <topologyKey> matches that of any node on which a pod of the set of pods is running
+type InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionArgs struct {
+	// A label query over a set of resources, in this case pods.
+	LabelSelector InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorPtrInput `pulumi:"labelSelector"`
+	// namespaces specifies which namespaces the labelSelector applies to (matches against); null or empty list means "this pod's namespace"
+	Namespaces pulumi.StringArrayInput `pulumi:"namespaces"`
+	// This pod should be co-located (affinity) or not co-located (anti-affinity) with the pods matching the labelSelector in the specified namespaces, where co-located is defined as running on a node whose value of the label with key topologyKey matches that of any node on which any of the selected pods is running. Empty topologyKey is not allowed.
+	TopologyKey pulumi.StringInput `pulumi:"topologyKey"`
+}
+
+func (InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecution)(nil)).Elem()
+}
+
+func (i InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionArgs) ToInfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionOutput() InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionOutput {
+	return i.ToInfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionOutputWithContext(context.Background())
+}
+
+func (i InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionArgs) ToInfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionOutputWithContext(ctx context.Context) InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionOutput)
+}
+
+// InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionArrayInput is an input type that accepts InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionArray and InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionArrayOutput values.
+// You can construct a concrete instance of `InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionArrayInput` via:
+//
+//          InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionArray{ InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionArgs{...} }
+type InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionArrayInput interface {
+	pulumi.Input
+
+	ToInfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionArrayOutput() InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionArrayOutput
+	ToInfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionArrayOutputWithContext(context.Context) InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionArrayOutput
+}
+
+type InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionArray []InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionInput
+
+func (InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecution)(nil)).Elem()
+}
+
+func (i InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionArray) ToInfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionArrayOutput() InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionArrayOutput {
+	return i.ToInfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionArrayOutputWithContext(context.Background())
+}
+
+func (i InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionArray) ToInfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionArrayOutputWithContext(ctx context.Context) InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionArrayOutput)
+}
+
+// Defines a set of pods (namely those matching the labelSelector relative to the given namespace(s)) that this pod should be co-located (affinity) or not co-located (anti-affinity) with, where co-located is defined as running on a node whose value of the label with key <topologyKey> matches that of any node on which a pod of the set of pods is running
+type InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionOutput struct{ *pulumi.OutputState }
+
+func (InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecution)(nil)).Elem()
+}
+
+func (o InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionOutput) ToInfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionOutput() InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionOutput {
+	return o
+}
+
+func (o InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionOutput) ToInfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionOutputWithContext(ctx context.Context) InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionOutput {
+	return o
+}
+
+// A label query over a set of resources, in this case pods.
+func (o InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionOutput) LabelSelector() InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorPtrOutput {
+	return o.ApplyT(func(v InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecution) *InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector {
+		return v.LabelSelector
+	}).(InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorPtrOutput)
+}
+
+// namespaces specifies which namespaces the labelSelector applies to (matches against); null or empty list means "this pod's namespace"
+func (o InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionOutput) Namespaces() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecution) []string {
+		return v.Namespaces
+	}).(pulumi.StringArrayOutput)
+}
+
+// This pod should be co-located (affinity) or not co-located (anti-affinity) with the pods matching the labelSelector in the specified namespaces, where co-located is defined as running on a node whose value of the label with key topologyKey matches that of any node on which any of the selected pods is running. Empty topologyKey is not allowed.
+func (o InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionOutput) TopologyKey() pulumi.StringOutput {
+	return o.ApplyT(func(v InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecution) string {
+		return v.TopologyKey
+	}).(pulumi.StringOutput)
+}
+
+type InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionArrayOutput struct{ *pulumi.OutputState }
+
+func (InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecution)(nil)).Elem()
+}
+
+func (o InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionArrayOutput) ToInfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionArrayOutput() InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionArrayOutput {
+	return o
+}
+
+func (o InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionArrayOutput) ToInfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionArrayOutputWithContext(ctx context.Context) InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionArrayOutput {
+	return o
+}
+
+func (o InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionArrayOutput) Index(i pulumi.IntInput) InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecution {
+		return vs[0].([]InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecution)[vs[1].(int)]
+	}).(InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionOutput)
+}
+
+// A label query over a set of resources, in this case pods.
+type InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector struct {
+	// matchExpressions is a list of label selector requirements. The requirements are ANDed.
+	MatchExpressions []InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions `pulumi:"matchExpressions"`
+	// matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+	MatchLabels map[string]string `pulumi:"matchLabels"`
+}
+
+// InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorInput is an input type that accepts InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorArgs and InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorOutput values.
+// You can construct a concrete instance of `InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorInput` via:
+//
+//          InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorArgs{...}
+type InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorInput interface {
+	pulumi.Input
+
+	ToInfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorOutput() InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorOutput
+	ToInfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorOutputWithContext(context.Context) InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorOutput
+}
+
+// A label query over a set of resources, in this case pods.
+type InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorArgs struct {
+	// matchExpressions is a list of label selector requirements. The requirements are ANDed.
+	MatchExpressions InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsArrayInput `pulumi:"matchExpressions"`
+	// matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+	MatchLabels pulumi.StringMapInput `pulumi:"matchLabels"`
+}
+
+func (InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector)(nil)).Elem()
+}
+
+func (i InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorArgs) ToInfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorOutput() InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorOutput {
+	return i.ToInfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorOutputWithContext(context.Background())
+}
+
+func (i InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorArgs) ToInfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorOutputWithContext(ctx context.Context) InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorOutput)
+}
+
+func (i InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorArgs) ToInfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorPtrOutput() InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorPtrOutput {
+	return i.ToInfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorPtrOutputWithContext(context.Background())
+}
+
+func (i InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorArgs) ToInfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorPtrOutputWithContext(ctx context.Context) InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorOutput).ToInfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorPtrOutputWithContext(ctx)
+}
+
+// InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorPtrInput is an input type that accepts InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorArgs, InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorPtr and InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorPtrOutput values.
+// You can construct a concrete instance of `InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorPtrInput` via:
+//
+//          InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorArgs{...}
+//
+//  or:
+//
+//          nil
+type InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorPtrInput interface {
+	pulumi.Input
+
+	ToInfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorPtrOutput() InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorPtrOutput
+	ToInfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorPtrOutputWithContext(context.Context) InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorPtrOutput
+}
+
+type infinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorPtrType InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorArgs
+
+func InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorPtr(v *InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorArgs) InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorPtrInput {
+	return (*infinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorPtrType)(v)
+}
+
+func (*infinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector)(nil)).Elem()
+}
+
+func (i *infinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorPtrType) ToInfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorPtrOutput() InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorPtrOutput {
+	return i.ToInfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorPtrOutputWithContext(context.Background())
+}
+
+func (i *infinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorPtrType) ToInfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorPtrOutputWithContext(ctx context.Context) InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorPtrOutput)
+}
+
+// A label query over a set of resources, in this case pods.
+type InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorOutput struct{ *pulumi.OutputState }
+
+func (InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector)(nil)).Elem()
+}
+
+func (o InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorOutput) ToInfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorOutput() InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorOutput {
+	return o
+}
+
+func (o InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorOutput) ToInfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorOutputWithContext(ctx context.Context) InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorOutput {
+	return o
+}
+
+func (o InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorOutput) ToInfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorPtrOutput() InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorPtrOutput {
+	return o.ToInfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorPtrOutputWithContext(context.Background())
+}
+
+func (o InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorOutput) ToInfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorPtrOutputWithContext(ctx context.Context) InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorPtrOutput {
+	return o.ApplyT(func(v InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector) *InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector {
+		return &v
+	}).(InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorPtrOutput)
+}
+
+// matchExpressions is a list of label selector requirements. The requirements are ANDed.
+func (o InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorOutput) MatchExpressions() InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsArrayOutput {
+	return o.ApplyT(func(v InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector) []InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions {
+		return v.MatchExpressions
+	}).(InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsArrayOutput)
+}
+
+// matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+func (o InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorOutput) MatchLabels() pulumi.StringMapOutput {
+	return o.ApplyT(func(v InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector) map[string]string {
+		return v.MatchLabels
+	}).(pulumi.StringMapOutput)
+}
+
+type InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorPtrOutput struct{ *pulumi.OutputState }
+
+func (InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector)(nil)).Elem()
+}
+
+func (o InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorPtrOutput) ToInfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorPtrOutput() InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorPtrOutput {
+	return o
+}
+
+func (o InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorPtrOutput) ToInfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorPtrOutputWithContext(ctx context.Context) InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorPtrOutput {
+	return o
+}
+
+func (o InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorPtrOutput) Elem() InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorOutput {
+	return o.ApplyT(func(v *InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector) InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector {
+		return *v
+	}).(InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorOutput)
+}
+
+// matchExpressions is a list of label selector requirements. The requirements are ANDed.
+func (o InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorPtrOutput) MatchExpressions() InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsArrayOutput {
+	return o.ApplyT(func(v *InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector) []InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions {
+		if v == nil {
+			return nil
+		}
+		return v.MatchExpressions
+	}).(InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsArrayOutput)
+}
+
+// matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+func (o InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorPtrOutput) MatchLabels() pulumi.StringMapOutput {
+	return o.ApplyT(func(v *InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector) map[string]string {
+		if v == nil {
+			return nil
+		}
+		return v.MatchLabels
+	}).(pulumi.StringMapOutput)
+}
+
+// A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+type InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions struct {
+	// key is the label key that the selector applies to.
+	Key string `pulumi:"key"`
+	// operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+	Operator string `pulumi:"operator"`
+	// values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+	Values []string `pulumi:"values"`
+}
+
+// InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsInput is an input type that accepts InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsArgs and InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsOutput values.
+// You can construct a concrete instance of `InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsInput` via:
+//
+//          InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsArgs{...}
+type InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsInput interface {
+	pulumi.Input
+
+	ToInfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsOutput() InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsOutput
+	ToInfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsOutputWithContext(context.Context) InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsOutput
+}
+
+// A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+type InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsArgs struct {
+	// key is the label key that the selector applies to.
+	Key pulumi.StringInput `pulumi:"key"`
+	// operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+	Operator pulumi.StringInput `pulumi:"operator"`
+	// values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+	Values pulumi.StringArrayInput `pulumi:"values"`
+}
+
+func (InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions)(nil)).Elem()
+}
+
+func (i InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsArgs) ToInfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsOutput() InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsOutput {
+	return i.ToInfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsOutputWithContext(context.Background())
+}
+
+func (i InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsArgs) ToInfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsOutputWithContext(ctx context.Context) InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsOutput)
+}
+
+// InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsArrayInput is an input type that accepts InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsArray and InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsArrayOutput values.
+// You can construct a concrete instance of `InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsArrayInput` via:
+//
+//          InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsArray{ InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsArgs{...} }
+type InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsArrayInput interface {
+	pulumi.Input
+
+	ToInfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsArrayOutput() InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsArrayOutput
+	ToInfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsArrayOutputWithContext(context.Context) InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsArrayOutput
+}
+
+type InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsArray []InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsInput
+
+func (InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions)(nil)).Elem()
+}
+
+func (i InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsArray) ToInfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsArrayOutput() InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsArrayOutput {
+	return i.ToInfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsArrayOutputWithContext(context.Background())
+}
+
+func (i InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsArray) ToInfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsArrayOutputWithContext(ctx context.Context) InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsArrayOutput)
+}
+
+// A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+type InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsOutput struct{ *pulumi.OutputState }
+
+func (InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions)(nil)).Elem()
+}
+
+func (o InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsOutput) ToInfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsOutput() InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsOutput {
+	return o
+}
+
+func (o InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsOutput) ToInfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsOutputWithContext(ctx context.Context) InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsOutput {
+	return o
+}
+
+// key is the label key that the selector applies to.
+func (o InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsOutput) Key() pulumi.StringOutput {
+	return o.ApplyT(func(v InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions) string {
+		return v.Key
+	}).(pulumi.StringOutput)
+}
+
+// operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+func (o InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsOutput) Operator() pulumi.StringOutput {
+	return o.ApplyT(func(v InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions) string {
+		return v.Operator
+	}).(pulumi.StringOutput)
+}
+
+// values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+func (o InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsOutput) Values() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions) []string {
+		return v.Values
+	}).(pulumi.StringArrayOutput)
+}
+
+type InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsArrayOutput struct{ *pulumi.OutputState }
+
+func (InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions)(nil)).Elem()
+}
+
+func (o InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsArrayOutput) ToInfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsArrayOutput() InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsArrayOutput {
+	return o
+}
+
+func (o InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsArrayOutput) ToInfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsArrayOutputWithContext(ctx context.Context) InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsArrayOutput {
+	return o
+}
+
+func (o InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsArrayOutput) Index(i pulumi.IntInput) InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions {
+		return vs[0].([]InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions)[vs[1].(int)]
+	}).(InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsOutput)
+}
+
+// matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+type InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchLabels struct {
+}
+
+// InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchLabelsInput is an input type that accepts InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchLabelsArgs and InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchLabelsOutput values.
+// You can construct a concrete instance of `InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchLabelsInput` via:
+//
+//          InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchLabelsArgs{...}
+type InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchLabelsInput interface {
+	pulumi.Input
+
+	ToInfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchLabelsOutput() InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchLabelsOutput
+	ToInfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchLabelsOutputWithContext(context.Context) InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchLabelsOutput
+}
+
+// matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+type InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchLabelsArgs struct {
+}
+
+func (InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchLabelsArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchLabels)(nil)).Elem()
+}
+
+func (i InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchLabelsArgs) ToInfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchLabelsOutput() InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchLabelsOutput {
+	return i.ToInfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchLabelsOutputWithContext(context.Background())
+}
+
+func (i InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchLabelsArgs) ToInfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchLabelsOutputWithContext(ctx context.Context) InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchLabelsOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchLabelsOutput)
+}
+
+// matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+type InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchLabelsOutput struct{ *pulumi.OutputState }
+
+func (InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchLabelsOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchLabels)(nil)).Elem()
+}
+
+func (o InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchLabelsOutput) ToInfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchLabelsOutput() InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchLabelsOutput {
+	return o
+}
+
+func (o InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchLabelsOutput) ToInfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchLabelsOutputWithContext(ctx context.Context) InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchLabelsOutput {
+	return o
+}
+
+// Describes pod anti-affinity scheduling rules (e.g. avoid putting this pod in the same node, zone, etc. as some other pod(s)).
+type InfinispanSpecAffinityPodAntiAffinity struct {
+	// The scheduler will prefer to schedule pods to nodes that satisfy the anti-affinity expressions specified by this field, but it may choose a node that violates one or more of the expressions. The node that is most preferred is the one with the greatest sum of weights, i.e. for each node that meets all of the scheduling requirements (resource request, requiredDuringScheduling anti-affinity expressions, etc.), compute a sum by iterating through the elements of this field and adding "weight" to the sum if the node has pods which matches the corresponding podAffinityTerm; the node(s) with the highest sum are the most preferred.
+	PreferredDuringSchedulingIgnoredDuringExecution []InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecution `pulumi:"preferredDuringSchedulingIgnoredDuringExecution"`
+	// If the anti-affinity requirements specified by this field are not met at scheduling time, the pod will not be scheduled onto the node. If the anti-affinity requirements specified by this field cease to be met at some point during pod execution (e.g. due to a pod label update), the system may or may not try to eventually evict the pod from its node. When there are multiple elements, the lists of nodes corresponding to each podAffinityTerm are intersected, i.e. all terms must be satisfied.
+	RequiredDuringSchedulingIgnoredDuringExecution []InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecution `pulumi:"requiredDuringSchedulingIgnoredDuringExecution"`
+}
+
+// InfinispanSpecAffinityPodAntiAffinityInput is an input type that accepts InfinispanSpecAffinityPodAntiAffinityArgs and InfinispanSpecAffinityPodAntiAffinityOutput values.
+// You can construct a concrete instance of `InfinispanSpecAffinityPodAntiAffinityInput` via:
+//
+//          InfinispanSpecAffinityPodAntiAffinityArgs{...}
+type InfinispanSpecAffinityPodAntiAffinityInput interface {
+	pulumi.Input
+
+	ToInfinispanSpecAffinityPodAntiAffinityOutput() InfinispanSpecAffinityPodAntiAffinityOutput
+	ToInfinispanSpecAffinityPodAntiAffinityOutputWithContext(context.Context) InfinispanSpecAffinityPodAntiAffinityOutput
+}
+
+// Describes pod anti-affinity scheduling rules (e.g. avoid putting this pod in the same node, zone, etc. as some other pod(s)).
+type InfinispanSpecAffinityPodAntiAffinityArgs struct {
+	// The scheduler will prefer to schedule pods to nodes that satisfy the anti-affinity expressions specified by this field, but it may choose a node that violates one or more of the expressions. The node that is most preferred is the one with the greatest sum of weights, i.e. for each node that meets all of the scheduling requirements (resource request, requiredDuringScheduling anti-affinity expressions, etc.), compute a sum by iterating through the elements of this field and adding "weight" to the sum if the node has pods which matches the corresponding podAffinityTerm; the node(s) with the highest sum are the most preferred.
+	PreferredDuringSchedulingIgnoredDuringExecution InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionArrayInput `pulumi:"preferredDuringSchedulingIgnoredDuringExecution"`
+	// If the anti-affinity requirements specified by this field are not met at scheduling time, the pod will not be scheduled onto the node. If the anti-affinity requirements specified by this field cease to be met at some point during pod execution (e.g. due to a pod label update), the system may or may not try to eventually evict the pod from its node. When there are multiple elements, the lists of nodes corresponding to each podAffinityTerm are intersected, i.e. all terms must be satisfied.
+	RequiredDuringSchedulingIgnoredDuringExecution InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionArrayInput `pulumi:"requiredDuringSchedulingIgnoredDuringExecution"`
+}
+
+func (InfinispanSpecAffinityPodAntiAffinityArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*InfinispanSpecAffinityPodAntiAffinity)(nil)).Elem()
+}
+
+func (i InfinispanSpecAffinityPodAntiAffinityArgs) ToInfinispanSpecAffinityPodAntiAffinityOutput() InfinispanSpecAffinityPodAntiAffinityOutput {
+	return i.ToInfinispanSpecAffinityPodAntiAffinityOutputWithContext(context.Background())
+}
+
+func (i InfinispanSpecAffinityPodAntiAffinityArgs) ToInfinispanSpecAffinityPodAntiAffinityOutputWithContext(ctx context.Context) InfinispanSpecAffinityPodAntiAffinityOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(InfinispanSpecAffinityPodAntiAffinityOutput)
+}
+
+func (i InfinispanSpecAffinityPodAntiAffinityArgs) ToInfinispanSpecAffinityPodAntiAffinityPtrOutput() InfinispanSpecAffinityPodAntiAffinityPtrOutput {
+	return i.ToInfinispanSpecAffinityPodAntiAffinityPtrOutputWithContext(context.Background())
+}
+
+func (i InfinispanSpecAffinityPodAntiAffinityArgs) ToInfinispanSpecAffinityPodAntiAffinityPtrOutputWithContext(ctx context.Context) InfinispanSpecAffinityPodAntiAffinityPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(InfinispanSpecAffinityPodAntiAffinityOutput).ToInfinispanSpecAffinityPodAntiAffinityPtrOutputWithContext(ctx)
+}
+
+// InfinispanSpecAffinityPodAntiAffinityPtrInput is an input type that accepts InfinispanSpecAffinityPodAntiAffinityArgs, InfinispanSpecAffinityPodAntiAffinityPtr and InfinispanSpecAffinityPodAntiAffinityPtrOutput values.
+// You can construct a concrete instance of `InfinispanSpecAffinityPodAntiAffinityPtrInput` via:
+//
+//          InfinispanSpecAffinityPodAntiAffinityArgs{...}
+//
+//  or:
+//
+//          nil
+type InfinispanSpecAffinityPodAntiAffinityPtrInput interface {
+	pulumi.Input
+
+	ToInfinispanSpecAffinityPodAntiAffinityPtrOutput() InfinispanSpecAffinityPodAntiAffinityPtrOutput
+	ToInfinispanSpecAffinityPodAntiAffinityPtrOutputWithContext(context.Context) InfinispanSpecAffinityPodAntiAffinityPtrOutput
+}
+
+type infinispanSpecAffinityPodAntiAffinityPtrType InfinispanSpecAffinityPodAntiAffinityArgs
+
+func InfinispanSpecAffinityPodAntiAffinityPtr(v *InfinispanSpecAffinityPodAntiAffinityArgs) InfinispanSpecAffinityPodAntiAffinityPtrInput {
+	return (*infinispanSpecAffinityPodAntiAffinityPtrType)(v)
+}
+
+func (*infinispanSpecAffinityPodAntiAffinityPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**InfinispanSpecAffinityPodAntiAffinity)(nil)).Elem()
+}
+
+func (i *infinispanSpecAffinityPodAntiAffinityPtrType) ToInfinispanSpecAffinityPodAntiAffinityPtrOutput() InfinispanSpecAffinityPodAntiAffinityPtrOutput {
+	return i.ToInfinispanSpecAffinityPodAntiAffinityPtrOutputWithContext(context.Background())
+}
+
+func (i *infinispanSpecAffinityPodAntiAffinityPtrType) ToInfinispanSpecAffinityPodAntiAffinityPtrOutputWithContext(ctx context.Context) InfinispanSpecAffinityPodAntiAffinityPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(InfinispanSpecAffinityPodAntiAffinityPtrOutput)
+}
+
+// Describes pod anti-affinity scheduling rules (e.g. avoid putting this pod in the same node, zone, etc. as some other pod(s)).
+type InfinispanSpecAffinityPodAntiAffinityOutput struct{ *pulumi.OutputState }
+
+func (InfinispanSpecAffinityPodAntiAffinityOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*InfinispanSpecAffinityPodAntiAffinity)(nil)).Elem()
+}
+
+func (o InfinispanSpecAffinityPodAntiAffinityOutput) ToInfinispanSpecAffinityPodAntiAffinityOutput() InfinispanSpecAffinityPodAntiAffinityOutput {
+	return o
+}
+
+func (o InfinispanSpecAffinityPodAntiAffinityOutput) ToInfinispanSpecAffinityPodAntiAffinityOutputWithContext(ctx context.Context) InfinispanSpecAffinityPodAntiAffinityOutput {
+	return o
+}
+
+func (o InfinispanSpecAffinityPodAntiAffinityOutput) ToInfinispanSpecAffinityPodAntiAffinityPtrOutput() InfinispanSpecAffinityPodAntiAffinityPtrOutput {
+	return o.ToInfinispanSpecAffinityPodAntiAffinityPtrOutputWithContext(context.Background())
+}
+
+func (o InfinispanSpecAffinityPodAntiAffinityOutput) ToInfinispanSpecAffinityPodAntiAffinityPtrOutputWithContext(ctx context.Context) InfinispanSpecAffinityPodAntiAffinityPtrOutput {
+	return o.ApplyT(func(v InfinispanSpecAffinityPodAntiAffinity) *InfinispanSpecAffinityPodAntiAffinity {
+		return &v
+	}).(InfinispanSpecAffinityPodAntiAffinityPtrOutput)
+}
+
+// The scheduler will prefer to schedule pods to nodes that satisfy the anti-affinity expressions specified by this field, but it may choose a node that violates one or more of the expressions. The node that is most preferred is the one with the greatest sum of weights, i.e. for each node that meets all of the scheduling requirements (resource request, requiredDuringScheduling anti-affinity expressions, etc.), compute a sum by iterating through the elements of this field and adding "weight" to the sum if the node has pods which matches the corresponding podAffinityTerm; the node(s) with the highest sum are the most preferred.
+func (o InfinispanSpecAffinityPodAntiAffinityOutput) PreferredDuringSchedulingIgnoredDuringExecution() InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionArrayOutput {
+	return o.ApplyT(func(v InfinispanSpecAffinityPodAntiAffinity) []InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecution {
+		return v.PreferredDuringSchedulingIgnoredDuringExecution
+	}).(InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionArrayOutput)
+}
+
+// If the anti-affinity requirements specified by this field are not met at scheduling time, the pod will not be scheduled onto the node. If the anti-affinity requirements specified by this field cease to be met at some point during pod execution (e.g. due to a pod label update), the system may or may not try to eventually evict the pod from its node. When there are multiple elements, the lists of nodes corresponding to each podAffinityTerm are intersected, i.e. all terms must be satisfied.
+func (o InfinispanSpecAffinityPodAntiAffinityOutput) RequiredDuringSchedulingIgnoredDuringExecution() InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionArrayOutput {
+	return o.ApplyT(func(v InfinispanSpecAffinityPodAntiAffinity) []InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecution {
+		return v.RequiredDuringSchedulingIgnoredDuringExecution
+	}).(InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionArrayOutput)
+}
+
+type InfinispanSpecAffinityPodAntiAffinityPtrOutput struct{ *pulumi.OutputState }
+
+func (InfinispanSpecAffinityPodAntiAffinityPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**InfinispanSpecAffinityPodAntiAffinity)(nil)).Elem()
+}
+
+func (o InfinispanSpecAffinityPodAntiAffinityPtrOutput) ToInfinispanSpecAffinityPodAntiAffinityPtrOutput() InfinispanSpecAffinityPodAntiAffinityPtrOutput {
+	return o
+}
+
+func (o InfinispanSpecAffinityPodAntiAffinityPtrOutput) ToInfinispanSpecAffinityPodAntiAffinityPtrOutputWithContext(ctx context.Context) InfinispanSpecAffinityPodAntiAffinityPtrOutput {
+	return o
+}
+
+func (o InfinispanSpecAffinityPodAntiAffinityPtrOutput) Elem() InfinispanSpecAffinityPodAntiAffinityOutput {
+	return o.ApplyT(func(v *InfinispanSpecAffinityPodAntiAffinity) InfinispanSpecAffinityPodAntiAffinity { return *v }).(InfinispanSpecAffinityPodAntiAffinityOutput)
+}
+
+// The scheduler will prefer to schedule pods to nodes that satisfy the anti-affinity expressions specified by this field, but it may choose a node that violates one or more of the expressions. The node that is most preferred is the one with the greatest sum of weights, i.e. for each node that meets all of the scheduling requirements (resource request, requiredDuringScheduling anti-affinity expressions, etc.), compute a sum by iterating through the elements of this field and adding "weight" to the sum if the node has pods which matches the corresponding podAffinityTerm; the node(s) with the highest sum are the most preferred.
+func (o InfinispanSpecAffinityPodAntiAffinityPtrOutput) PreferredDuringSchedulingIgnoredDuringExecution() InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionArrayOutput {
+	return o.ApplyT(func(v *InfinispanSpecAffinityPodAntiAffinity) []InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecution {
+		if v == nil {
+			return nil
+		}
+		return v.PreferredDuringSchedulingIgnoredDuringExecution
+	}).(InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionArrayOutput)
+}
+
+// If the anti-affinity requirements specified by this field are not met at scheduling time, the pod will not be scheduled onto the node. If the anti-affinity requirements specified by this field cease to be met at some point during pod execution (e.g. due to a pod label update), the system may or may not try to eventually evict the pod from its node. When there are multiple elements, the lists of nodes corresponding to each podAffinityTerm are intersected, i.e. all terms must be satisfied.
+func (o InfinispanSpecAffinityPodAntiAffinityPtrOutput) RequiredDuringSchedulingIgnoredDuringExecution() InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionArrayOutput {
+	return o.ApplyT(func(v *InfinispanSpecAffinityPodAntiAffinity) []InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecution {
+		if v == nil {
+			return nil
+		}
+		return v.RequiredDuringSchedulingIgnoredDuringExecution
+	}).(InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionArrayOutput)
+}
+
+// The weights of all of the matched WeightedPodAffinityTerm fields are added per-node to find the most preferred node(s)
+type InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecution struct {
+	// Required. A pod affinity term, associated with the corresponding weight.
+	PodAffinityTerm InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTerm `pulumi:"podAffinityTerm"`
+	// weight associated with matching the corresponding podAffinityTerm, in the range 1-100.
+	Weight int `pulumi:"weight"`
+}
+
+// InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionInput is an input type that accepts InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionArgs and InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionOutput values.
+// You can construct a concrete instance of `InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionInput` via:
+//
+//          InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionArgs{...}
+type InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionInput interface {
+	pulumi.Input
+
+	ToInfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionOutput() InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionOutput
+	ToInfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionOutputWithContext(context.Context) InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionOutput
+}
+
+// The weights of all of the matched WeightedPodAffinityTerm fields are added per-node to find the most preferred node(s)
+type InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionArgs struct {
+	// Required. A pod affinity term, associated with the corresponding weight.
+	PodAffinityTerm InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermInput `pulumi:"podAffinityTerm"`
+	// weight associated with matching the corresponding podAffinityTerm, in the range 1-100.
+	Weight pulumi.IntInput `pulumi:"weight"`
+}
+
+func (InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecution)(nil)).Elem()
+}
+
+func (i InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionArgs) ToInfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionOutput() InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionOutput {
+	return i.ToInfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionOutputWithContext(context.Background())
+}
+
+func (i InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionArgs) ToInfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionOutputWithContext(ctx context.Context) InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionOutput)
+}
+
+// InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionArrayInput is an input type that accepts InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionArray and InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionArrayOutput values.
+// You can construct a concrete instance of `InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionArrayInput` via:
+//
+//          InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionArray{ InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionArgs{...} }
+type InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionArrayInput interface {
+	pulumi.Input
+
+	ToInfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionArrayOutput() InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionArrayOutput
+	ToInfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionArrayOutputWithContext(context.Context) InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionArrayOutput
+}
+
+type InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionArray []InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionInput
+
+func (InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecution)(nil)).Elem()
+}
+
+func (i InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionArray) ToInfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionArrayOutput() InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionArrayOutput {
+	return i.ToInfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionArrayOutputWithContext(context.Background())
+}
+
+func (i InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionArray) ToInfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionArrayOutputWithContext(ctx context.Context) InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionArrayOutput)
+}
+
+// The weights of all of the matched WeightedPodAffinityTerm fields are added per-node to find the most preferred node(s)
+type InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionOutput struct{ *pulumi.OutputState }
+
+func (InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecution)(nil)).Elem()
+}
+
+func (o InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionOutput) ToInfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionOutput() InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionOutput {
+	return o
+}
+
+func (o InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionOutput) ToInfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionOutputWithContext(ctx context.Context) InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionOutput {
+	return o
+}
+
+// Required. A pod affinity term, associated with the corresponding weight.
+func (o InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionOutput) PodAffinityTerm() InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermOutput {
+	return o.ApplyT(func(v InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecution) InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTerm {
+		return v.PodAffinityTerm
+	}).(InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermOutput)
+}
+
+// weight associated with matching the corresponding podAffinityTerm, in the range 1-100.
+func (o InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionOutput) Weight() pulumi.IntOutput {
+	return o.ApplyT(func(v InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecution) int {
+		return v.Weight
+	}).(pulumi.IntOutput)
+}
+
+type InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionArrayOutput struct{ *pulumi.OutputState }
+
+func (InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecution)(nil)).Elem()
+}
+
+func (o InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionArrayOutput) ToInfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionArrayOutput() InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionArrayOutput {
+	return o
+}
+
+func (o InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionArrayOutput) ToInfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionArrayOutputWithContext(ctx context.Context) InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionArrayOutput {
+	return o
+}
+
+func (o InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionArrayOutput) Index(i pulumi.IntInput) InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecution {
+		return vs[0].([]InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecution)[vs[1].(int)]
+	}).(InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionOutput)
+}
+
+// Required. A pod affinity term, associated with the corresponding weight.
+type InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTerm struct {
+	// A label query over a set of resources, in this case pods.
+	LabelSelector *InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelector `pulumi:"labelSelector"`
+	// namespaces specifies which namespaces the labelSelector applies to (matches against); null or empty list means "this pod's namespace"
+	Namespaces []string `pulumi:"namespaces"`
+	// This pod should be co-located (affinity) or not co-located (anti-affinity) with the pods matching the labelSelector in the specified namespaces, where co-located is defined as running on a node whose value of the label with key topologyKey matches that of any node on which any of the selected pods is running. Empty topologyKey is not allowed.
+	TopologyKey string `pulumi:"topologyKey"`
+}
+
+// InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermInput is an input type that accepts InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermArgs and InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermOutput values.
+// You can construct a concrete instance of `InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermInput` via:
+//
+//          InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermArgs{...}
+type InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermInput interface {
+	pulumi.Input
+
+	ToInfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermOutput() InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermOutput
+	ToInfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermOutputWithContext(context.Context) InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermOutput
+}
+
+// Required. A pod affinity term, associated with the corresponding weight.
+type InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermArgs struct {
+	// A label query over a set of resources, in this case pods.
+	LabelSelector InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorPtrInput `pulumi:"labelSelector"`
+	// namespaces specifies which namespaces the labelSelector applies to (matches against); null or empty list means "this pod's namespace"
+	Namespaces pulumi.StringArrayInput `pulumi:"namespaces"`
+	// This pod should be co-located (affinity) or not co-located (anti-affinity) with the pods matching the labelSelector in the specified namespaces, where co-located is defined as running on a node whose value of the label with key topologyKey matches that of any node on which any of the selected pods is running. Empty topologyKey is not allowed.
+	TopologyKey pulumi.StringInput `pulumi:"topologyKey"`
+}
+
+func (InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTerm)(nil)).Elem()
+}
+
+func (i InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermArgs) ToInfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermOutput() InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermOutput {
+	return i.ToInfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermOutputWithContext(context.Background())
+}
+
+func (i InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermArgs) ToInfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermOutputWithContext(ctx context.Context) InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermOutput)
+}
+
+// Required. A pod affinity term, associated with the corresponding weight.
+type InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermOutput struct{ *pulumi.OutputState }
+
+func (InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTerm)(nil)).Elem()
+}
+
+func (o InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermOutput) ToInfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermOutput() InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermOutput {
+	return o
+}
+
+func (o InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermOutput) ToInfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermOutputWithContext(ctx context.Context) InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermOutput {
+	return o
+}
+
+// A label query over a set of resources, in this case pods.
+func (o InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermOutput) LabelSelector() InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorPtrOutput {
+	return o.ApplyT(func(v InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTerm) *InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelector {
+		return v.LabelSelector
+	}).(InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorPtrOutput)
+}
+
+// namespaces specifies which namespaces the labelSelector applies to (matches against); null or empty list means "this pod's namespace"
+func (o InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermOutput) Namespaces() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTerm) []string {
+		return v.Namespaces
+	}).(pulumi.StringArrayOutput)
+}
+
+// This pod should be co-located (affinity) or not co-located (anti-affinity) with the pods matching the labelSelector in the specified namespaces, where co-located is defined as running on a node whose value of the label with key topologyKey matches that of any node on which any of the selected pods is running. Empty topologyKey is not allowed.
+func (o InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermOutput) TopologyKey() pulumi.StringOutput {
+	return o.ApplyT(func(v InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTerm) string {
+		return v.TopologyKey
+	}).(pulumi.StringOutput)
+}
+
+// A label query over a set of resources, in this case pods.
+type InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelector struct {
+	// matchExpressions is a list of label selector requirements. The requirements are ANDed.
+	MatchExpressions []InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressions `pulumi:"matchExpressions"`
+	// matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+	MatchLabels map[string]string `pulumi:"matchLabels"`
+}
+
+// InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorInput is an input type that accepts InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorArgs and InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorOutput values.
+// You can construct a concrete instance of `InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorInput` via:
+//
+//          InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorArgs{...}
+type InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorInput interface {
+	pulumi.Input
+
+	ToInfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorOutput() InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorOutput
+	ToInfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorOutputWithContext(context.Context) InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorOutput
+}
+
+// A label query over a set of resources, in this case pods.
+type InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorArgs struct {
+	// matchExpressions is a list of label selector requirements. The requirements are ANDed.
+	MatchExpressions InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsArrayInput `pulumi:"matchExpressions"`
+	// matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+	MatchLabels pulumi.StringMapInput `pulumi:"matchLabels"`
+}
+
+func (InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelector)(nil)).Elem()
+}
+
+func (i InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorArgs) ToInfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorOutput() InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorOutput {
+	return i.ToInfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorOutputWithContext(context.Background())
+}
+
+func (i InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorArgs) ToInfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorOutputWithContext(ctx context.Context) InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorOutput)
+}
+
+func (i InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorArgs) ToInfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorPtrOutput() InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorPtrOutput {
+	return i.ToInfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorPtrOutputWithContext(context.Background())
+}
+
+func (i InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorArgs) ToInfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorPtrOutputWithContext(ctx context.Context) InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorOutput).ToInfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorPtrOutputWithContext(ctx)
+}
+
+// InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorPtrInput is an input type that accepts InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorArgs, InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorPtr and InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorPtrOutput values.
+// You can construct a concrete instance of `InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorPtrInput` via:
+//
+//          InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorArgs{...}
+//
+//  or:
+//
+//          nil
+type InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorPtrInput interface {
+	pulumi.Input
+
+	ToInfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorPtrOutput() InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorPtrOutput
+	ToInfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorPtrOutputWithContext(context.Context) InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorPtrOutput
+}
+
+type infinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorPtrType InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorArgs
+
+func InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorPtr(v *InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorArgs) InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorPtrInput {
+	return (*infinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorPtrType)(v)
+}
+
+func (*infinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelector)(nil)).Elem()
+}
+
+func (i *infinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorPtrType) ToInfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorPtrOutput() InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorPtrOutput {
+	return i.ToInfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorPtrOutputWithContext(context.Background())
+}
+
+func (i *infinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorPtrType) ToInfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorPtrOutputWithContext(ctx context.Context) InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorPtrOutput)
+}
+
+// A label query over a set of resources, in this case pods.
+type InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorOutput struct{ *pulumi.OutputState }
+
+func (InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelector)(nil)).Elem()
+}
+
+func (o InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorOutput) ToInfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorOutput() InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorOutput {
+	return o
+}
+
+func (o InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorOutput) ToInfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorOutputWithContext(ctx context.Context) InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorOutput {
+	return o
+}
+
+func (o InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorOutput) ToInfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorPtrOutput() InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorPtrOutput {
+	return o.ToInfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorPtrOutputWithContext(context.Background())
+}
+
+func (o InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorOutput) ToInfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorPtrOutputWithContext(ctx context.Context) InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorPtrOutput {
+	return o.ApplyT(func(v InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelector) *InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelector {
+		return &v
+	}).(InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorPtrOutput)
+}
+
+// matchExpressions is a list of label selector requirements. The requirements are ANDed.
+func (o InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorOutput) MatchExpressions() InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsArrayOutput {
+	return o.ApplyT(func(v InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelector) []InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressions {
+		return v.MatchExpressions
+	}).(InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsArrayOutput)
+}
+
+// matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+func (o InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorOutput) MatchLabels() pulumi.StringMapOutput {
+	return o.ApplyT(func(v InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelector) map[string]string {
+		return v.MatchLabels
+	}).(pulumi.StringMapOutput)
+}
+
+type InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorPtrOutput struct{ *pulumi.OutputState }
+
+func (InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelector)(nil)).Elem()
+}
+
+func (o InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorPtrOutput) ToInfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorPtrOutput() InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorPtrOutput {
+	return o
+}
+
+func (o InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorPtrOutput) ToInfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorPtrOutputWithContext(ctx context.Context) InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorPtrOutput {
+	return o
+}
+
+func (o InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorPtrOutput) Elem() InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorOutput {
+	return o.ApplyT(func(v *InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelector) InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelector {
+		return *v
+	}).(InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorOutput)
+}
+
+// matchExpressions is a list of label selector requirements. The requirements are ANDed.
+func (o InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorPtrOutput) MatchExpressions() InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsArrayOutput {
+	return o.ApplyT(func(v *InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelector) []InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressions {
+		if v == nil {
+			return nil
+		}
+		return v.MatchExpressions
+	}).(InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsArrayOutput)
+}
+
+// matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+func (o InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorPtrOutput) MatchLabels() pulumi.StringMapOutput {
+	return o.ApplyT(func(v *InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelector) map[string]string {
+		if v == nil {
+			return nil
+		}
+		return v.MatchLabels
+	}).(pulumi.StringMapOutput)
+}
+
+// A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+type InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressions struct {
+	// key is the label key that the selector applies to.
+	Key string `pulumi:"key"`
+	// operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+	Operator string `pulumi:"operator"`
+	// values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+	Values []string `pulumi:"values"`
+}
+
+// InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsInput is an input type that accepts InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsArgs and InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsOutput values.
+// You can construct a concrete instance of `InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsInput` via:
+//
+//          InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsArgs{...}
+type InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsInput interface {
+	pulumi.Input
+
+	ToInfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsOutput() InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsOutput
+	ToInfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsOutputWithContext(context.Context) InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsOutput
+}
+
+// A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+type InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsArgs struct {
+	// key is the label key that the selector applies to.
+	Key pulumi.StringInput `pulumi:"key"`
+	// operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+	Operator pulumi.StringInput `pulumi:"operator"`
+	// values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+	Values pulumi.StringArrayInput `pulumi:"values"`
+}
+
+func (InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressions)(nil)).Elem()
+}
+
+func (i InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsArgs) ToInfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsOutput() InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsOutput {
+	return i.ToInfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsOutputWithContext(context.Background())
+}
+
+func (i InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsArgs) ToInfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsOutputWithContext(ctx context.Context) InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsOutput)
+}
+
+// InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsArrayInput is an input type that accepts InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsArray and InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsArrayOutput values.
+// You can construct a concrete instance of `InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsArrayInput` via:
+//
+//          InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsArray{ InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsArgs{...} }
+type InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsArrayInput interface {
+	pulumi.Input
+
+	ToInfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsArrayOutput() InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsArrayOutput
+	ToInfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsArrayOutputWithContext(context.Context) InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsArrayOutput
+}
+
+type InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsArray []InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsInput
+
+func (InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressions)(nil)).Elem()
+}
+
+func (i InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsArray) ToInfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsArrayOutput() InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsArrayOutput {
+	return i.ToInfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsArrayOutputWithContext(context.Background())
+}
+
+func (i InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsArray) ToInfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsArrayOutputWithContext(ctx context.Context) InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsArrayOutput)
+}
+
+// A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+type InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsOutput struct{ *pulumi.OutputState }
+
+func (InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressions)(nil)).Elem()
+}
+
+func (o InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsOutput) ToInfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsOutput() InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsOutput {
+	return o
+}
+
+func (o InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsOutput) ToInfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsOutputWithContext(ctx context.Context) InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsOutput {
+	return o
+}
+
+// key is the label key that the selector applies to.
+func (o InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsOutput) Key() pulumi.StringOutput {
+	return o.ApplyT(func(v InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressions) string {
+		return v.Key
+	}).(pulumi.StringOutput)
+}
+
+// operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+func (o InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsOutput) Operator() pulumi.StringOutput {
+	return o.ApplyT(func(v InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressions) string {
+		return v.Operator
+	}).(pulumi.StringOutput)
+}
+
+// values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+func (o InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsOutput) Values() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressions) []string {
+		return v.Values
+	}).(pulumi.StringArrayOutput)
+}
+
+type InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsArrayOutput struct{ *pulumi.OutputState }
+
+func (InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressions)(nil)).Elem()
+}
+
+func (o InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsArrayOutput) ToInfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsArrayOutput() InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsArrayOutput {
+	return o
+}
+
+func (o InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsArrayOutput) ToInfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsArrayOutputWithContext(ctx context.Context) InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsArrayOutput {
+	return o
+}
+
+func (o InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsArrayOutput) Index(i pulumi.IntInput) InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressions {
+		return vs[0].([]InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressions)[vs[1].(int)]
+	}).(InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsOutput)
+}
+
+// matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+type InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchLabels struct {
+}
+
+// InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchLabelsInput is an input type that accepts InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchLabelsArgs and InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchLabelsOutput values.
+// You can construct a concrete instance of `InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchLabelsInput` via:
+//
+//          InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchLabelsArgs{...}
+type InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchLabelsInput interface {
+	pulumi.Input
+
+	ToInfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchLabelsOutput() InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchLabelsOutput
+	ToInfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchLabelsOutputWithContext(context.Context) InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchLabelsOutput
+}
+
+// matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+type InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchLabelsArgs struct {
+}
+
+func (InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchLabelsArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchLabels)(nil)).Elem()
+}
+
+func (i InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchLabelsArgs) ToInfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchLabelsOutput() InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchLabelsOutput {
+	return i.ToInfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchLabelsOutputWithContext(context.Background())
+}
+
+func (i InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchLabelsArgs) ToInfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchLabelsOutputWithContext(ctx context.Context) InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchLabelsOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchLabelsOutput)
+}
+
+// matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+type InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchLabelsOutput struct{ *pulumi.OutputState }
+
+func (InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchLabelsOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchLabels)(nil)).Elem()
+}
+
+func (o InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchLabelsOutput) ToInfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchLabelsOutput() InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchLabelsOutput {
+	return o
+}
+
+func (o InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchLabelsOutput) ToInfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchLabelsOutputWithContext(ctx context.Context) InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchLabelsOutput {
+	return o
+}
+
+// Defines a set of pods (namely those matching the labelSelector relative to the given namespace(s)) that this pod should be co-located (affinity) or not co-located (anti-affinity) with, where co-located is defined as running on a node whose value of the label with key <topologyKey> matches that of any node on which a pod of the set of pods is running
+type InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecution struct {
+	// A label query over a set of resources, in this case pods.
+	LabelSelector *InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector `pulumi:"labelSelector"`
+	// namespaces specifies which namespaces the labelSelector applies to (matches against); null or empty list means "this pod's namespace"
+	Namespaces []string `pulumi:"namespaces"`
+	// This pod should be co-located (affinity) or not co-located (anti-affinity) with the pods matching the labelSelector in the specified namespaces, where co-located is defined as running on a node whose value of the label with key topologyKey matches that of any node on which any of the selected pods is running. Empty topologyKey is not allowed.
+	TopologyKey string `pulumi:"topologyKey"`
+}
+
+// InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionInput is an input type that accepts InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionArgs and InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionOutput values.
+// You can construct a concrete instance of `InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionInput` via:
+//
+//          InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionArgs{...}
+type InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionInput interface {
+	pulumi.Input
+
+	ToInfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionOutput() InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionOutput
+	ToInfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionOutputWithContext(context.Context) InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionOutput
+}
+
+// Defines a set of pods (namely those matching the labelSelector relative to the given namespace(s)) that this pod should be co-located (affinity) or not co-located (anti-affinity) with, where co-located is defined as running on a node whose value of the label with key <topologyKey> matches that of any node on which a pod of the set of pods is running
+type InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionArgs struct {
+	// A label query over a set of resources, in this case pods.
+	LabelSelector InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorPtrInput `pulumi:"labelSelector"`
+	// namespaces specifies which namespaces the labelSelector applies to (matches against); null or empty list means "this pod's namespace"
+	Namespaces pulumi.StringArrayInput `pulumi:"namespaces"`
+	// This pod should be co-located (affinity) or not co-located (anti-affinity) with the pods matching the labelSelector in the specified namespaces, where co-located is defined as running on a node whose value of the label with key topologyKey matches that of any node on which any of the selected pods is running. Empty topologyKey is not allowed.
+	TopologyKey pulumi.StringInput `pulumi:"topologyKey"`
+}
+
+func (InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecution)(nil)).Elem()
+}
+
+func (i InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionArgs) ToInfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionOutput() InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionOutput {
+	return i.ToInfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionOutputWithContext(context.Background())
+}
+
+func (i InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionArgs) ToInfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionOutputWithContext(ctx context.Context) InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionOutput)
+}
+
+// InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionArrayInput is an input type that accepts InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionArray and InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionArrayOutput values.
+// You can construct a concrete instance of `InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionArrayInput` via:
+//
+//          InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionArray{ InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionArgs{...} }
+type InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionArrayInput interface {
+	pulumi.Input
+
+	ToInfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionArrayOutput() InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionArrayOutput
+	ToInfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionArrayOutputWithContext(context.Context) InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionArrayOutput
+}
+
+type InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionArray []InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionInput
+
+func (InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecution)(nil)).Elem()
+}
+
+func (i InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionArray) ToInfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionArrayOutput() InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionArrayOutput {
+	return i.ToInfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionArrayOutputWithContext(context.Background())
+}
+
+func (i InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionArray) ToInfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionArrayOutputWithContext(ctx context.Context) InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionArrayOutput)
+}
+
+// Defines a set of pods (namely those matching the labelSelector relative to the given namespace(s)) that this pod should be co-located (affinity) or not co-located (anti-affinity) with, where co-located is defined as running on a node whose value of the label with key <topologyKey> matches that of any node on which a pod of the set of pods is running
+type InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionOutput struct{ *pulumi.OutputState }
+
+func (InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecution)(nil)).Elem()
+}
+
+func (o InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionOutput) ToInfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionOutput() InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionOutput {
+	return o
+}
+
+func (o InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionOutput) ToInfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionOutputWithContext(ctx context.Context) InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionOutput {
+	return o
+}
+
+// A label query over a set of resources, in this case pods.
+func (o InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionOutput) LabelSelector() InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorPtrOutput {
+	return o.ApplyT(func(v InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecution) *InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector {
+		return v.LabelSelector
+	}).(InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorPtrOutput)
+}
+
+// namespaces specifies which namespaces the labelSelector applies to (matches against); null or empty list means "this pod's namespace"
+func (o InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionOutput) Namespaces() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecution) []string {
+		return v.Namespaces
+	}).(pulumi.StringArrayOutput)
+}
+
+// This pod should be co-located (affinity) or not co-located (anti-affinity) with the pods matching the labelSelector in the specified namespaces, where co-located is defined as running on a node whose value of the label with key topologyKey matches that of any node on which any of the selected pods is running. Empty topologyKey is not allowed.
+func (o InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionOutput) TopologyKey() pulumi.StringOutput {
+	return o.ApplyT(func(v InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecution) string {
+		return v.TopologyKey
+	}).(pulumi.StringOutput)
+}
+
+type InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionArrayOutput struct{ *pulumi.OutputState }
+
+func (InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecution)(nil)).Elem()
+}
+
+func (o InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionArrayOutput) ToInfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionArrayOutput() InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionArrayOutput {
+	return o
+}
+
+func (o InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionArrayOutput) ToInfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionArrayOutputWithContext(ctx context.Context) InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionArrayOutput {
+	return o
+}
+
+func (o InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionArrayOutput) Index(i pulumi.IntInput) InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecution {
+		return vs[0].([]InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecution)[vs[1].(int)]
+	}).(InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionOutput)
+}
+
+// A label query over a set of resources, in this case pods.
+type InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector struct {
+	// matchExpressions is a list of label selector requirements. The requirements are ANDed.
+	MatchExpressions []InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions `pulumi:"matchExpressions"`
+	// matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+	MatchLabels map[string]string `pulumi:"matchLabels"`
+}
+
+// InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorInput is an input type that accepts InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorArgs and InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorOutput values.
+// You can construct a concrete instance of `InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorInput` via:
+//
+//          InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorArgs{...}
+type InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorInput interface {
+	pulumi.Input
+
+	ToInfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorOutput() InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorOutput
+	ToInfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorOutputWithContext(context.Context) InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorOutput
+}
+
+// A label query over a set of resources, in this case pods.
+type InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorArgs struct {
+	// matchExpressions is a list of label selector requirements. The requirements are ANDed.
+	MatchExpressions InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsArrayInput `pulumi:"matchExpressions"`
+	// matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+	MatchLabels pulumi.StringMapInput `pulumi:"matchLabels"`
+}
+
+func (InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector)(nil)).Elem()
+}
+
+func (i InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorArgs) ToInfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorOutput() InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorOutput {
+	return i.ToInfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorOutputWithContext(context.Background())
+}
+
+func (i InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorArgs) ToInfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorOutputWithContext(ctx context.Context) InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorOutput)
+}
+
+func (i InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorArgs) ToInfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorPtrOutput() InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorPtrOutput {
+	return i.ToInfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorPtrOutputWithContext(context.Background())
+}
+
+func (i InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorArgs) ToInfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorPtrOutputWithContext(ctx context.Context) InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorOutput).ToInfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorPtrOutputWithContext(ctx)
+}
+
+// InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorPtrInput is an input type that accepts InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorArgs, InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorPtr and InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorPtrOutput values.
+// You can construct a concrete instance of `InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorPtrInput` via:
+//
+//          InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorArgs{...}
+//
+//  or:
+//
+//          nil
+type InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorPtrInput interface {
+	pulumi.Input
+
+	ToInfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorPtrOutput() InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorPtrOutput
+	ToInfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorPtrOutputWithContext(context.Context) InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorPtrOutput
+}
+
+type infinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorPtrType InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorArgs
+
+func InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorPtr(v *InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorArgs) InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorPtrInput {
+	return (*infinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorPtrType)(v)
+}
+
+func (*infinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector)(nil)).Elem()
+}
+
+func (i *infinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorPtrType) ToInfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorPtrOutput() InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorPtrOutput {
+	return i.ToInfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorPtrOutputWithContext(context.Background())
+}
+
+func (i *infinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorPtrType) ToInfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorPtrOutputWithContext(ctx context.Context) InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorPtrOutput)
+}
+
+// A label query over a set of resources, in this case pods.
+type InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorOutput struct{ *pulumi.OutputState }
+
+func (InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector)(nil)).Elem()
+}
+
+func (o InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorOutput) ToInfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorOutput() InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorOutput {
+	return o
+}
+
+func (o InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorOutput) ToInfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorOutputWithContext(ctx context.Context) InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorOutput {
+	return o
+}
+
+func (o InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorOutput) ToInfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorPtrOutput() InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorPtrOutput {
+	return o.ToInfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorPtrOutputWithContext(context.Background())
+}
+
+func (o InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorOutput) ToInfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorPtrOutputWithContext(ctx context.Context) InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorPtrOutput {
+	return o.ApplyT(func(v InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector) *InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector {
+		return &v
+	}).(InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorPtrOutput)
+}
+
+// matchExpressions is a list of label selector requirements. The requirements are ANDed.
+func (o InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorOutput) MatchExpressions() InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsArrayOutput {
+	return o.ApplyT(func(v InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector) []InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions {
+		return v.MatchExpressions
+	}).(InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsArrayOutput)
+}
+
+// matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+func (o InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorOutput) MatchLabels() pulumi.StringMapOutput {
+	return o.ApplyT(func(v InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector) map[string]string {
+		return v.MatchLabels
+	}).(pulumi.StringMapOutput)
+}
+
+type InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorPtrOutput struct{ *pulumi.OutputState }
+
+func (InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector)(nil)).Elem()
+}
+
+func (o InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorPtrOutput) ToInfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorPtrOutput() InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorPtrOutput {
+	return o
+}
+
+func (o InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorPtrOutput) ToInfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorPtrOutputWithContext(ctx context.Context) InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorPtrOutput {
+	return o
+}
+
+func (o InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorPtrOutput) Elem() InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorOutput {
+	return o.ApplyT(func(v *InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector) InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector {
+		return *v
+	}).(InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorOutput)
+}
+
+// matchExpressions is a list of label selector requirements. The requirements are ANDed.
+func (o InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorPtrOutput) MatchExpressions() InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsArrayOutput {
+	return o.ApplyT(func(v *InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector) []InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions {
+		if v == nil {
+			return nil
+		}
+		return v.MatchExpressions
+	}).(InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsArrayOutput)
+}
+
+// matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+func (o InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorPtrOutput) MatchLabels() pulumi.StringMapOutput {
+	return o.ApplyT(func(v *InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector) map[string]string {
+		if v == nil {
+			return nil
+		}
+		return v.MatchLabels
+	}).(pulumi.StringMapOutput)
+}
+
+// A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+type InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions struct {
+	// key is the label key that the selector applies to.
+	Key string `pulumi:"key"`
+	// operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+	Operator string `pulumi:"operator"`
+	// values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+	Values []string `pulumi:"values"`
+}
+
+// InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsInput is an input type that accepts InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsArgs and InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsOutput values.
+// You can construct a concrete instance of `InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsInput` via:
+//
+//          InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsArgs{...}
+type InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsInput interface {
+	pulumi.Input
+
+	ToInfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsOutput() InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsOutput
+	ToInfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsOutputWithContext(context.Context) InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsOutput
+}
+
+// A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+type InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsArgs struct {
+	// key is the label key that the selector applies to.
+	Key pulumi.StringInput `pulumi:"key"`
+	// operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+	Operator pulumi.StringInput `pulumi:"operator"`
+	// values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+	Values pulumi.StringArrayInput `pulumi:"values"`
+}
+
+func (InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions)(nil)).Elem()
+}
+
+func (i InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsArgs) ToInfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsOutput() InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsOutput {
+	return i.ToInfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsOutputWithContext(context.Background())
+}
+
+func (i InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsArgs) ToInfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsOutputWithContext(ctx context.Context) InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsOutput)
+}
+
+// InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsArrayInput is an input type that accepts InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsArray and InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsArrayOutput values.
+// You can construct a concrete instance of `InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsArrayInput` via:
+//
+//          InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsArray{ InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsArgs{...} }
+type InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsArrayInput interface {
+	pulumi.Input
+
+	ToInfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsArrayOutput() InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsArrayOutput
+	ToInfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsArrayOutputWithContext(context.Context) InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsArrayOutput
+}
+
+type InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsArray []InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsInput
+
+func (InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions)(nil)).Elem()
+}
+
+func (i InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsArray) ToInfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsArrayOutput() InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsArrayOutput {
+	return i.ToInfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsArrayOutputWithContext(context.Background())
+}
+
+func (i InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsArray) ToInfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsArrayOutputWithContext(ctx context.Context) InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsArrayOutput)
+}
+
+// A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+type InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsOutput struct{ *pulumi.OutputState }
+
+func (InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions)(nil)).Elem()
+}
+
+func (o InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsOutput) ToInfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsOutput() InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsOutput {
+	return o
+}
+
+func (o InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsOutput) ToInfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsOutputWithContext(ctx context.Context) InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsOutput {
+	return o
+}
+
+// key is the label key that the selector applies to.
+func (o InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsOutput) Key() pulumi.StringOutput {
+	return o.ApplyT(func(v InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions) string {
+		return v.Key
+	}).(pulumi.StringOutput)
+}
+
+// operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+func (o InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsOutput) Operator() pulumi.StringOutput {
+	return o.ApplyT(func(v InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions) string {
+		return v.Operator
+	}).(pulumi.StringOutput)
+}
+
+// values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+func (o InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsOutput) Values() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions) []string {
+		return v.Values
+	}).(pulumi.StringArrayOutput)
+}
+
+type InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsArrayOutput struct{ *pulumi.OutputState }
+
+func (InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions)(nil)).Elem()
+}
+
+func (o InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsArrayOutput) ToInfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsArrayOutput() InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsArrayOutput {
+	return o
+}
+
+func (o InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsArrayOutput) ToInfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsArrayOutputWithContext(ctx context.Context) InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsArrayOutput {
+	return o
+}
+
+func (o InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsArrayOutput) Index(i pulumi.IntInput) InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions {
+		return vs[0].([]InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressions)[vs[1].(int)]
+	}).(InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsOutput)
+}
+
+// matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+type InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchLabels struct {
+}
+
+// InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchLabelsInput is an input type that accepts InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchLabelsArgs and InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchLabelsOutput values.
+// You can construct a concrete instance of `InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchLabelsInput` via:
+//
+//          InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchLabelsArgs{...}
+type InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchLabelsInput interface {
+	pulumi.Input
+
+	ToInfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchLabelsOutput() InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchLabelsOutput
+	ToInfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchLabelsOutputWithContext(context.Context) InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchLabelsOutput
+}
+
+// matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+type InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchLabelsArgs struct {
+}
+
+func (InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchLabelsArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchLabels)(nil)).Elem()
+}
+
+func (i InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchLabelsArgs) ToInfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchLabelsOutput() InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchLabelsOutput {
+	return i.ToInfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchLabelsOutputWithContext(context.Background())
+}
+
+func (i InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchLabelsArgs) ToInfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchLabelsOutputWithContext(ctx context.Context) InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchLabelsOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchLabelsOutput)
+}
+
+// matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
+type InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchLabelsOutput struct{ *pulumi.OutputState }
+
+func (InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchLabelsOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchLabels)(nil)).Elem()
+}
+
+func (o InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchLabelsOutput) ToInfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchLabelsOutput() InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchLabelsOutput {
+	return o
+}
+
+func (o InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchLabelsOutput) ToInfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchLabelsOutputWithContext(ctx context.Context) InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchLabelsOutput {
+	return o
+}
+
 // Autoscale describe autoscaling configuration for the cluster
 type InfinispanSpecAutoscale struct {
-	MaxMemUsagePercent int `pulumi:"maxMemUsagePercent"`
-	MaxReplicas        int `pulumi:"maxReplicas"`
-	MinMemUsagePercent int `pulumi:"minMemUsagePercent"`
-	MinReplicas        int `pulumi:"minReplicas"`
+	Disabled           *bool `pulumi:"disabled"`
+	MaxMemUsagePercent int   `pulumi:"maxMemUsagePercent"`
+	MaxReplicas        int   `pulumi:"maxReplicas"`
+	MinMemUsagePercent int   `pulumi:"minMemUsagePercent"`
+	MinReplicas        int   `pulumi:"minReplicas"`
 }
 
 // InfinispanSpecAutoscaleInput is an input type that accepts InfinispanSpecAutoscaleArgs and InfinispanSpecAutoscaleOutput values.
@@ -412,10 +3951,11 @@ type InfinispanSpecAutoscaleInput interface {
 
 // Autoscale describe autoscaling configuration for the cluster
 type InfinispanSpecAutoscaleArgs struct {
-	MaxMemUsagePercent pulumi.IntInput `pulumi:"maxMemUsagePercent"`
-	MaxReplicas        pulumi.IntInput `pulumi:"maxReplicas"`
-	MinMemUsagePercent pulumi.IntInput `pulumi:"minMemUsagePercent"`
-	MinReplicas        pulumi.IntInput `pulumi:"minReplicas"`
+	Disabled           pulumi.BoolPtrInput `pulumi:"disabled"`
+	MaxMemUsagePercent pulumi.IntInput     `pulumi:"maxMemUsagePercent"`
+	MaxReplicas        pulumi.IntInput     `pulumi:"maxReplicas"`
+	MinMemUsagePercent pulumi.IntInput     `pulumi:"minMemUsagePercent"`
+	MinReplicas        pulumi.IntInput     `pulumi:"minReplicas"`
 }
 
 func (InfinispanSpecAutoscaleArgs) ElementType() reflect.Type {
@@ -495,6 +4035,10 @@ func (o InfinispanSpecAutoscaleOutput) ToInfinispanSpecAutoscalePtrOutputWithCon
 		return &v
 	}).(InfinispanSpecAutoscalePtrOutput)
 }
+func (o InfinispanSpecAutoscaleOutput) Disabled() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v InfinispanSpecAutoscale) *bool { return v.Disabled }).(pulumi.BoolPtrOutput)
+}
+
 func (o InfinispanSpecAutoscaleOutput) MaxMemUsagePercent() pulumi.IntOutput {
 	return o.ApplyT(func(v InfinispanSpecAutoscale) int { return v.MaxMemUsagePercent }).(pulumi.IntOutput)
 }
@@ -527,6 +4071,15 @@ func (o InfinispanSpecAutoscalePtrOutput) ToInfinispanSpecAutoscalePtrOutputWith
 
 func (o InfinispanSpecAutoscalePtrOutput) Elem() InfinispanSpecAutoscaleOutput {
 	return o.ApplyT(func(v *InfinispanSpecAutoscale) InfinispanSpecAutoscale { return *v }).(InfinispanSpecAutoscaleOutput)
+}
+
+func (o InfinispanSpecAutoscalePtrOutput) Disabled() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *InfinispanSpecAutoscale) *bool {
+		if v == nil {
+			return nil
+		}
+		return v.Disabled
+	}).(pulumi.BoolPtrOutput)
 }
 
 func (o InfinispanSpecAutoscalePtrOutput) MaxMemUsagePercent() pulumi.IntPtrOutput {
@@ -726,9 +4279,10 @@ func (o InfinispanSpecContainerPtrOutput) Memory() pulumi.StringPtrOutput {
 
 // ExposeSpec describe how Infinispan will be exposed externally
 type InfinispanSpecExpose struct {
-	Host     *string `pulumi:"host"`
-	NodePort *int    `pulumi:"nodePort"`
-	// Type specifies different exposition methods for datagrid
+	Annotations map[string]string `pulumi:"annotations"`
+	Host        *string           `pulumi:"host"`
+	NodePort    *int              `pulumi:"nodePort"`
+	// Type specifies different exposition methods for data grid
 	Type string `pulumi:"type"`
 }
 
@@ -745,9 +4299,10 @@ type InfinispanSpecExposeInput interface {
 
 // ExposeSpec describe how Infinispan will be exposed externally
 type InfinispanSpecExposeArgs struct {
-	Host     pulumi.StringPtrInput `pulumi:"host"`
-	NodePort pulumi.IntPtrInput    `pulumi:"nodePort"`
-	// Type specifies different exposition methods for datagrid
+	Annotations pulumi.StringMapInput `pulumi:"annotations"`
+	Host        pulumi.StringPtrInput `pulumi:"host"`
+	NodePort    pulumi.IntPtrInput    `pulumi:"nodePort"`
+	// Type specifies different exposition methods for data grid
 	Type pulumi.StringInput `pulumi:"type"`
 }
 
@@ -828,6 +4383,10 @@ func (o InfinispanSpecExposeOutput) ToInfinispanSpecExposePtrOutputWithContext(c
 		return &v
 	}).(InfinispanSpecExposePtrOutput)
 }
+func (o InfinispanSpecExposeOutput) Annotations() pulumi.StringMapOutput {
+	return o.ApplyT(func(v InfinispanSpecExpose) map[string]string { return v.Annotations }).(pulumi.StringMapOutput)
+}
+
 func (o InfinispanSpecExposeOutput) Host() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v InfinispanSpecExpose) *string { return v.Host }).(pulumi.StringPtrOutput)
 }
@@ -836,7 +4395,7 @@ func (o InfinispanSpecExposeOutput) NodePort() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v InfinispanSpecExpose) *int { return v.NodePort }).(pulumi.IntPtrOutput)
 }
 
-// Type specifies different exposition methods for datagrid
+// Type specifies different exposition methods for data grid
 func (o InfinispanSpecExposeOutput) Type() pulumi.StringOutput {
 	return o.ApplyT(func(v InfinispanSpecExpose) string { return v.Type }).(pulumi.StringOutput)
 }
@@ -859,6 +4418,15 @@ func (o InfinispanSpecExposePtrOutput) Elem() InfinispanSpecExposeOutput {
 	return o.ApplyT(func(v *InfinispanSpecExpose) InfinispanSpecExpose { return *v }).(InfinispanSpecExposeOutput)
 }
 
+func (o InfinispanSpecExposePtrOutput) Annotations() pulumi.StringMapOutput {
+	return o.ApplyT(func(v *InfinispanSpecExpose) map[string]string {
+		if v == nil {
+			return nil
+		}
+		return v.Annotations
+	}).(pulumi.StringMapOutput)
+}
+
 func (o InfinispanSpecExposePtrOutput) Host() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *InfinispanSpecExpose) *string {
 		if v == nil {
@@ -877,7 +4445,7 @@ func (o InfinispanSpecExposePtrOutput) NodePort() pulumi.IntPtrOutput {
 	}).(pulumi.IntPtrOutput)
 }
 
-// Type specifies different exposition methods for datagrid
+// Type specifies different exposition methods for data grid
 func (o InfinispanSpecExposePtrOutput) Type() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *InfinispanSpecExpose) *string {
 		if v == nil {
@@ -885,6 +4453,49 @@ func (o InfinispanSpecExposePtrOutput) Type() pulumi.StringPtrOutput {
 		}
 		return &v.Type
 	}).(pulumi.StringPtrOutput)
+}
+
+type InfinispanSpecExposeAnnotations struct {
+}
+
+// InfinispanSpecExposeAnnotationsInput is an input type that accepts InfinispanSpecExposeAnnotationsArgs and InfinispanSpecExposeAnnotationsOutput values.
+// You can construct a concrete instance of `InfinispanSpecExposeAnnotationsInput` via:
+//
+//          InfinispanSpecExposeAnnotationsArgs{...}
+type InfinispanSpecExposeAnnotationsInput interface {
+	pulumi.Input
+
+	ToInfinispanSpecExposeAnnotationsOutput() InfinispanSpecExposeAnnotationsOutput
+	ToInfinispanSpecExposeAnnotationsOutputWithContext(context.Context) InfinispanSpecExposeAnnotationsOutput
+}
+
+type InfinispanSpecExposeAnnotationsArgs struct {
+}
+
+func (InfinispanSpecExposeAnnotationsArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*InfinispanSpecExposeAnnotations)(nil)).Elem()
+}
+
+func (i InfinispanSpecExposeAnnotationsArgs) ToInfinispanSpecExposeAnnotationsOutput() InfinispanSpecExposeAnnotationsOutput {
+	return i.ToInfinispanSpecExposeAnnotationsOutputWithContext(context.Background())
+}
+
+func (i InfinispanSpecExposeAnnotationsArgs) ToInfinispanSpecExposeAnnotationsOutputWithContext(ctx context.Context) InfinispanSpecExposeAnnotationsOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(InfinispanSpecExposeAnnotationsOutput)
+}
+
+type InfinispanSpecExposeAnnotationsOutput struct{ *pulumi.OutputState }
+
+func (InfinispanSpecExposeAnnotationsOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*InfinispanSpecExposeAnnotations)(nil)).Elem()
+}
+
+func (o InfinispanSpecExposeAnnotationsOutput) ToInfinispanSpecExposeAnnotationsOutput() InfinispanSpecExposeAnnotationsOutput {
+	return o
+}
+
+func (o InfinispanSpecExposeAnnotationsOutput) ToInfinispanSpecExposeAnnotationsOutputWithContext(ctx context.Context) InfinispanSpecExposeAnnotationsOutput {
+	return o
 }
 
 type InfinispanSpecLogging struct {
@@ -1209,7 +4820,8 @@ func (o InfinispanSpecSecurityPtrOutput) EndpointSecretName() pulumi.StringPtrOu
 type InfinispanSpecSecurityEndpointEncryption struct {
 	CertSecretName  *string `pulumi:"certSecretName"`
 	CertServiceName *string `pulumi:"certServiceName"`
-	Type            string  `pulumi:"type"`
+	// CertificateSourceType specifies all the possible sources for the encryption certificate
+	Type *string `pulumi:"type"`
 }
 
 // InfinispanSpecSecurityEndpointEncryptionInput is an input type that accepts InfinispanSpecSecurityEndpointEncryptionArgs and InfinispanSpecSecurityEndpointEncryptionOutput values.
@@ -1227,7 +4839,8 @@ type InfinispanSpecSecurityEndpointEncryptionInput interface {
 type InfinispanSpecSecurityEndpointEncryptionArgs struct {
 	CertSecretName  pulumi.StringPtrInput `pulumi:"certSecretName"`
 	CertServiceName pulumi.StringPtrInput `pulumi:"certServiceName"`
-	Type            pulumi.StringInput    `pulumi:"type"`
+	// CertificateSourceType specifies all the possible sources for the encryption certificate
+	Type pulumi.StringPtrInput `pulumi:"type"`
 }
 
 func (InfinispanSpecSecurityEndpointEncryptionArgs) ElementType() reflect.Type {
@@ -1315,8 +4928,9 @@ func (o InfinispanSpecSecurityEndpointEncryptionOutput) CertServiceName() pulumi
 	return o.ApplyT(func(v InfinispanSpecSecurityEndpointEncryption) *string { return v.CertServiceName }).(pulumi.StringPtrOutput)
 }
 
-func (o InfinispanSpecSecurityEndpointEncryptionOutput) Type() pulumi.StringOutput {
-	return o.ApplyT(func(v InfinispanSpecSecurityEndpointEncryption) string { return v.Type }).(pulumi.StringOutput)
+// CertificateSourceType specifies all the possible sources for the encryption certificate
+func (o InfinispanSpecSecurityEndpointEncryptionOutput) Type() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v InfinispanSpecSecurityEndpointEncryption) *string { return v.Type }).(pulumi.StringPtrOutput)
 }
 
 type InfinispanSpecSecurityEndpointEncryptionPtrOutput struct{ *pulumi.OutputState }
@@ -1355,12 +4969,13 @@ func (o InfinispanSpecSecurityEndpointEncryptionPtrOutput) CertServiceName() pul
 	}).(pulumi.StringPtrOutput)
 }
 
+// CertificateSourceType specifies all the possible sources for the encryption certificate
 func (o InfinispanSpecSecurityEndpointEncryptionPtrOutput) Type() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *InfinispanSpecSecurityEndpointEncryption) *string {
 		if v == nil {
 			return nil
 		}
-		return &v.Type
+		return v.Type
 	}).(pulumi.StringPtrOutput)
 }
 
@@ -1545,7 +5160,9 @@ func (o InfinispanSpecServicePtrOutput) Type() pulumi.StringPtrOutput {
 
 // InfinispanServiceContainerSpec resource requirements specific for service
 type InfinispanSpecServiceContainer struct {
-	Storage string `pulumi:"storage"`
+	EphemeralStorage *bool   `pulumi:"ephemeralStorage"`
+	Storage          *string `pulumi:"storage"`
+	StorageClassName *string `pulumi:"storageClassName"`
 }
 
 // InfinispanSpecServiceContainerInput is an input type that accepts InfinispanSpecServiceContainerArgs and InfinispanSpecServiceContainerOutput values.
@@ -1561,7 +5178,9 @@ type InfinispanSpecServiceContainerInput interface {
 
 // InfinispanServiceContainerSpec resource requirements specific for service
 type InfinispanSpecServiceContainerArgs struct {
-	Storage pulumi.StringInput `pulumi:"storage"`
+	EphemeralStorage pulumi.BoolPtrInput   `pulumi:"ephemeralStorage"`
+	Storage          pulumi.StringPtrInput `pulumi:"storage"`
+	StorageClassName pulumi.StringPtrInput `pulumi:"storageClassName"`
 }
 
 func (InfinispanSpecServiceContainerArgs) ElementType() reflect.Type {
@@ -1641,8 +5260,16 @@ func (o InfinispanSpecServiceContainerOutput) ToInfinispanSpecServiceContainerPt
 		return &v
 	}).(InfinispanSpecServiceContainerPtrOutput)
 }
-func (o InfinispanSpecServiceContainerOutput) Storage() pulumi.StringOutput {
-	return o.ApplyT(func(v InfinispanSpecServiceContainer) string { return v.Storage }).(pulumi.StringOutput)
+func (o InfinispanSpecServiceContainerOutput) EphemeralStorage() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v InfinispanSpecServiceContainer) *bool { return v.EphemeralStorage }).(pulumi.BoolPtrOutput)
+}
+
+func (o InfinispanSpecServiceContainerOutput) Storage() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v InfinispanSpecServiceContainer) *string { return v.Storage }).(pulumi.StringPtrOutput)
+}
+
+func (o InfinispanSpecServiceContainerOutput) StorageClassName() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v InfinispanSpecServiceContainer) *string { return v.StorageClassName }).(pulumi.StringPtrOutput)
 }
 
 type InfinispanSpecServiceContainerPtrOutput struct{ *pulumi.OutputState }
@@ -1663,12 +5290,30 @@ func (o InfinispanSpecServiceContainerPtrOutput) Elem() InfinispanSpecServiceCon
 	return o.ApplyT(func(v *InfinispanSpecServiceContainer) InfinispanSpecServiceContainer { return *v }).(InfinispanSpecServiceContainerOutput)
 }
 
+func (o InfinispanSpecServiceContainerPtrOutput) EphemeralStorage() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *InfinispanSpecServiceContainer) *bool {
+		if v == nil {
+			return nil
+		}
+		return v.EphemeralStorage
+	}).(pulumi.BoolPtrOutput)
+}
+
 func (o InfinispanSpecServiceContainerPtrOutput) Storage() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *InfinispanSpecServiceContainer) *string {
 		if v == nil {
 			return nil
 		}
-		return &v.Storage
+		return v.Storage
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o InfinispanSpecServiceContainerPtrOutput) StorageClassName() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *InfinispanSpecServiceContainer) *string {
+		if v == nil {
+			return nil
+		}
+		return v.StorageClassName
 	}).(pulumi.StringPtrOutput)
 }
 
@@ -1961,9 +5606,10 @@ func (o InfinispanSpecServiceSitesLocalPtrOutput) Name() pulumi.StringPtrOutput 
 
 // ExposeSpec describe how Infinispan will be exposed externally
 type InfinispanSpecServiceSitesLocalExpose struct {
-	Host     *string `pulumi:"host"`
-	NodePort *int    `pulumi:"nodePort"`
-	// Type specifies different exposition methods for datagrid
+	Annotations map[string]string `pulumi:"annotations"`
+	Host        *string           `pulumi:"host"`
+	NodePort    *int              `pulumi:"nodePort"`
+	// Type specifies different exposition methods for data grid
 	Type string `pulumi:"type"`
 }
 
@@ -1980,9 +5626,10 @@ type InfinispanSpecServiceSitesLocalExposeInput interface {
 
 // ExposeSpec describe how Infinispan will be exposed externally
 type InfinispanSpecServiceSitesLocalExposeArgs struct {
-	Host     pulumi.StringPtrInput `pulumi:"host"`
-	NodePort pulumi.IntPtrInput    `pulumi:"nodePort"`
-	// Type specifies different exposition methods for datagrid
+	Annotations pulumi.StringMapInput `pulumi:"annotations"`
+	Host        pulumi.StringPtrInput `pulumi:"host"`
+	NodePort    pulumi.IntPtrInput    `pulumi:"nodePort"`
+	// Type specifies different exposition methods for data grid
 	Type pulumi.StringInput `pulumi:"type"`
 }
 
@@ -2063,6 +5710,10 @@ func (o InfinispanSpecServiceSitesLocalExposeOutput) ToInfinispanSpecServiceSite
 		return &v
 	}).(InfinispanSpecServiceSitesLocalExposePtrOutput)
 }
+func (o InfinispanSpecServiceSitesLocalExposeOutput) Annotations() pulumi.StringMapOutput {
+	return o.ApplyT(func(v InfinispanSpecServiceSitesLocalExpose) map[string]string { return v.Annotations }).(pulumi.StringMapOutput)
+}
+
 func (o InfinispanSpecServiceSitesLocalExposeOutput) Host() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v InfinispanSpecServiceSitesLocalExpose) *string { return v.Host }).(pulumi.StringPtrOutput)
 }
@@ -2071,7 +5722,7 @@ func (o InfinispanSpecServiceSitesLocalExposeOutput) NodePort() pulumi.IntPtrOut
 	return o.ApplyT(func(v InfinispanSpecServiceSitesLocalExpose) *int { return v.NodePort }).(pulumi.IntPtrOutput)
 }
 
-// Type specifies different exposition methods for datagrid
+// Type specifies different exposition methods for data grid
 func (o InfinispanSpecServiceSitesLocalExposeOutput) Type() pulumi.StringOutput {
 	return o.ApplyT(func(v InfinispanSpecServiceSitesLocalExpose) string { return v.Type }).(pulumi.StringOutput)
 }
@@ -2094,6 +5745,15 @@ func (o InfinispanSpecServiceSitesLocalExposePtrOutput) Elem() InfinispanSpecSer
 	return o.ApplyT(func(v *InfinispanSpecServiceSitesLocalExpose) InfinispanSpecServiceSitesLocalExpose { return *v }).(InfinispanSpecServiceSitesLocalExposeOutput)
 }
 
+func (o InfinispanSpecServiceSitesLocalExposePtrOutput) Annotations() pulumi.StringMapOutput {
+	return o.ApplyT(func(v *InfinispanSpecServiceSitesLocalExpose) map[string]string {
+		if v == nil {
+			return nil
+		}
+		return v.Annotations
+	}).(pulumi.StringMapOutput)
+}
+
 func (o InfinispanSpecServiceSitesLocalExposePtrOutput) Host() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *InfinispanSpecServiceSitesLocalExpose) *string {
 		if v == nil {
@@ -2112,7 +5772,7 @@ func (o InfinispanSpecServiceSitesLocalExposePtrOutput) NodePort() pulumi.IntPtr
 	}).(pulumi.IntPtrOutput)
 }
 
-// Type specifies different exposition methods for datagrid
+// Type specifies different exposition methods for data grid
 func (o InfinispanSpecServiceSitesLocalExposePtrOutput) Type() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *InfinispanSpecServiceSitesLocalExpose) *string {
 		if v == nil {
@@ -2122,10 +5782,55 @@ func (o InfinispanSpecServiceSitesLocalExposePtrOutput) Type() pulumi.StringPtrO
 	}).(pulumi.StringPtrOutput)
 }
 
+type InfinispanSpecServiceSitesLocalExposeAnnotations struct {
+}
+
+// InfinispanSpecServiceSitesLocalExposeAnnotationsInput is an input type that accepts InfinispanSpecServiceSitesLocalExposeAnnotationsArgs and InfinispanSpecServiceSitesLocalExposeAnnotationsOutput values.
+// You can construct a concrete instance of `InfinispanSpecServiceSitesLocalExposeAnnotationsInput` via:
+//
+//          InfinispanSpecServiceSitesLocalExposeAnnotationsArgs{...}
+type InfinispanSpecServiceSitesLocalExposeAnnotationsInput interface {
+	pulumi.Input
+
+	ToInfinispanSpecServiceSitesLocalExposeAnnotationsOutput() InfinispanSpecServiceSitesLocalExposeAnnotationsOutput
+	ToInfinispanSpecServiceSitesLocalExposeAnnotationsOutputWithContext(context.Context) InfinispanSpecServiceSitesLocalExposeAnnotationsOutput
+}
+
+type InfinispanSpecServiceSitesLocalExposeAnnotationsArgs struct {
+}
+
+func (InfinispanSpecServiceSitesLocalExposeAnnotationsArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*InfinispanSpecServiceSitesLocalExposeAnnotations)(nil)).Elem()
+}
+
+func (i InfinispanSpecServiceSitesLocalExposeAnnotationsArgs) ToInfinispanSpecServiceSitesLocalExposeAnnotationsOutput() InfinispanSpecServiceSitesLocalExposeAnnotationsOutput {
+	return i.ToInfinispanSpecServiceSitesLocalExposeAnnotationsOutputWithContext(context.Background())
+}
+
+func (i InfinispanSpecServiceSitesLocalExposeAnnotationsArgs) ToInfinispanSpecServiceSitesLocalExposeAnnotationsOutputWithContext(ctx context.Context) InfinispanSpecServiceSitesLocalExposeAnnotationsOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(InfinispanSpecServiceSitesLocalExposeAnnotationsOutput)
+}
+
+type InfinispanSpecServiceSitesLocalExposeAnnotationsOutput struct{ *pulumi.OutputState }
+
+func (InfinispanSpecServiceSitesLocalExposeAnnotationsOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*InfinispanSpecServiceSitesLocalExposeAnnotations)(nil)).Elem()
+}
+
+func (o InfinispanSpecServiceSitesLocalExposeAnnotationsOutput) ToInfinispanSpecServiceSitesLocalExposeAnnotationsOutput() InfinispanSpecServiceSitesLocalExposeAnnotationsOutput {
+	return o
+}
+
+func (o InfinispanSpecServiceSitesLocalExposeAnnotationsOutput) ToInfinispanSpecServiceSitesLocalExposeAnnotationsOutputWithContext(ctx context.Context) InfinispanSpecServiceSitesLocalExposeAnnotationsOutput {
+	return o
+}
+
 type InfinispanSpecServiceSitesLocations struct {
-	Name       string `pulumi:"name"`
-	SecretName string `pulumi:"secretName"`
-	Url        string `pulumi:"url"`
+	Host       *string `pulumi:"host"`
+	Name       string  `pulumi:"name"`
+	Port       *int    `pulumi:"port"`
+	SecretName *string `pulumi:"secretName"`
+	Url        *string `pulumi:"url"`
 }
 
 // InfinispanSpecServiceSitesLocationsInput is an input type that accepts InfinispanSpecServiceSitesLocationsArgs and InfinispanSpecServiceSitesLocationsOutput values.
@@ -2140,9 +5845,11 @@ type InfinispanSpecServiceSitesLocationsInput interface {
 }
 
 type InfinispanSpecServiceSitesLocationsArgs struct {
-	Name       pulumi.StringInput `pulumi:"name"`
-	SecretName pulumi.StringInput `pulumi:"secretName"`
-	Url        pulumi.StringInput `pulumi:"url"`
+	Host       pulumi.StringPtrInput `pulumi:"host"`
+	Name       pulumi.StringInput    `pulumi:"name"`
+	Port       pulumi.IntPtrInput    `pulumi:"port"`
+	SecretName pulumi.StringPtrInput `pulumi:"secretName"`
+	Url        pulumi.StringPtrInput `pulumi:"url"`
 }
 
 func (InfinispanSpecServiceSitesLocationsArgs) ElementType() reflect.Type {
@@ -2196,16 +5903,24 @@ func (o InfinispanSpecServiceSitesLocationsOutput) ToInfinispanSpecServiceSitesL
 	return o
 }
 
+func (o InfinispanSpecServiceSitesLocationsOutput) Host() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v InfinispanSpecServiceSitesLocations) *string { return v.Host }).(pulumi.StringPtrOutput)
+}
+
 func (o InfinispanSpecServiceSitesLocationsOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v InfinispanSpecServiceSitesLocations) string { return v.Name }).(pulumi.StringOutput)
 }
 
-func (o InfinispanSpecServiceSitesLocationsOutput) SecretName() pulumi.StringOutput {
-	return o.ApplyT(func(v InfinispanSpecServiceSitesLocations) string { return v.SecretName }).(pulumi.StringOutput)
+func (o InfinispanSpecServiceSitesLocationsOutput) Port() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v InfinispanSpecServiceSitesLocations) *int { return v.Port }).(pulumi.IntPtrOutput)
 }
 
-func (o InfinispanSpecServiceSitesLocationsOutput) Url() pulumi.StringOutput {
-	return o.ApplyT(func(v InfinispanSpecServiceSitesLocations) string { return v.Url }).(pulumi.StringOutput)
+func (o InfinispanSpecServiceSitesLocationsOutput) SecretName() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v InfinispanSpecServiceSitesLocations) *string { return v.SecretName }).(pulumi.StringPtrOutput)
+}
+
+func (o InfinispanSpecServiceSitesLocationsOutput) Url() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v InfinispanSpecServiceSitesLocations) *string { return v.Url }).(pulumi.StringPtrOutput)
 }
 
 type InfinispanSpecServiceSitesLocationsArrayOutput struct{ *pulumi.OutputState }
@@ -2230,12 +5945,11 @@ func (o InfinispanSpecServiceSitesLocationsArrayOutput) Index(i pulumi.IntInput)
 
 // InfinispanStatus defines the observed state of Infinispan
 type InfinispanStatus struct {
-	// Important: Run "operator-sdk generate k8s" to regenerate code after modifying this file
 	Conditions              []InfinispanStatusConditions `pulumi:"conditions"`
 	ReplicasWantedAtRestart *int                         `pulumi:"replicasWantedAtRestart"`
 	// InfinispanSecurity info for the user application connection
 	Security        InfinispanStatusSecurity `pulumi:"security"`
-	StatefulSetName string                   `pulumi:"statefulSetName"`
+	StatefulSetName *string                  `pulumi:"statefulSetName"`
 }
 
 // InfinispanStatusInput is an input type that accepts InfinispanStatusArgs and InfinispanStatusOutput values.
@@ -2251,12 +5965,11 @@ type InfinispanStatusInput interface {
 
 // InfinispanStatus defines the observed state of Infinispan
 type InfinispanStatusArgs struct {
-	// Important: Run "operator-sdk generate k8s" to regenerate code after modifying this file
 	Conditions              InfinispanStatusConditionsArrayInput `pulumi:"conditions"`
 	ReplicasWantedAtRestart pulumi.IntPtrInput                   `pulumi:"replicasWantedAtRestart"`
 	// InfinispanSecurity info for the user application connection
 	Security        InfinispanStatusSecurityInput `pulumi:"security"`
-	StatefulSetName pulumi.StringInput            `pulumi:"statefulSetName"`
+	StatefulSetName pulumi.StringPtrInput         `pulumi:"statefulSetName"`
 }
 
 func (InfinispanStatusArgs) ElementType() reflect.Type {
@@ -2336,8 +6049,6 @@ func (o InfinispanStatusOutput) ToInfinispanStatusPtrOutputWithContext(ctx conte
 		return &v
 	}).(InfinispanStatusPtrOutput)
 }
-
-// Important: Run "operator-sdk generate k8s" to regenerate code after modifying this file
 func (o InfinispanStatusOutput) Conditions() InfinispanStatusConditionsArrayOutput {
 	return o.ApplyT(func(v InfinispanStatus) []InfinispanStatusConditions { return v.Conditions }).(InfinispanStatusConditionsArrayOutput)
 }
@@ -2351,8 +6062,8 @@ func (o InfinispanStatusOutput) Security() InfinispanStatusSecurityOutput {
 	return o.ApplyT(func(v InfinispanStatus) InfinispanStatusSecurity { return v.Security }).(InfinispanStatusSecurityOutput)
 }
 
-func (o InfinispanStatusOutput) StatefulSetName() pulumi.StringOutput {
-	return o.ApplyT(func(v InfinispanStatus) string { return v.StatefulSetName }).(pulumi.StringOutput)
+func (o InfinispanStatusOutput) StatefulSetName() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v InfinispanStatus) *string { return v.StatefulSetName }).(pulumi.StringPtrOutput)
 }
 
 type InfinispanStatusPtrOutput struct{ *pulumi.OutputState }
@@ -2373,7 +6084,6 @@ func (o InfinispanStatusPtrOutput) Elem() InfinispanStatusOutput {
 	return o.ApplyT(func(v *InfinispanStatus) InfinispanStatus { return *v }).(InfinispanStatusOutput)
 }
 
-// Important: Run "operator-sdk generate k8s" to regenerate code after modifying this file
 func (o InfinispanStatusPtrOutput) Conditions() InfinispanStatusConditionsArrayOutput {
 	return o.ApplyT(func(v *InfinispanStatus) []InfinispanStatusConditions {
 		if v == nil {
@@ -2407,14 +6117,14 @@ func (o InfinispanStatusPtrOutput) StatefulSetName() pulumi.StringPtrOutput {
 		if v == nil {
 			return nil
 		}
-		return &v.StatefulSetName
+		return v.StatefulSetName
 	}).(pulumi.StringPtrOutput)
 }
 
 // InfinispanCondition define a condition of the cluster
 type InfinispanStatusConditions struct {
 	// Human-readable message indicating details about last transition.
-	Message string `pulumi:"message"`
+	Message *string `pulumi:"message"`
 	// Status is the status of the condition.
 	Status string `pulumi:"status"`
 	// Type is the type of the condition.
@@ -2435,7 +6145,7 @@ type InfinispanStatusConditionsInput interface {
 // InfinispanCondition define a condition of the cluster
 type InfinispanStatusConditionsArgs struct {
 	// Human-readable message indicating details about last transition.
-	Message pulumi.StringInput `pulumi:"message"`
+	Message pulumi.StringPtrInput `pulumi:"message"`
 	// Status is the status of the condition.
 	Status pulumi.StringInput `pulumi:"status"`
 	// Type is the type of the condition.
@@ -2495,8 +6205,8 @@ func (o InfinispanStatusConditionsOutput) ToInfinispanStatusConditionsOutputWith
 }
 
 // Human-readable message indicating details about last transition.
-func (o InfinispanStatusConditionsOutput) Message() pulumi.StringOutput {
-	return o.ApplyT(func(v InfinispanStatusConditions) string { return v.Message }).(pulumi.StringOutput)
+func (o InfinispanStatusConditionsOutput) Message() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v InfinispanStatusConditions) *string { return v.Message }).(pulumi.StringPtrOutput)
 }
 
 // Status is the status of the condition.
@@ -2684,7 +6394,8 @@ func (o InfinispanStatusSecurityPtrOutput) EndpointSecretName() pulumi.StringPtr
 type InfinispanStatusSecurityEndpointEncryption struct {
 	CertSecretName  *string `pulumi:"certSecretName"`
 	CertServiceName *string `pulumi:"certServiceName"`
-	Type            string  `pulumi:"type"`
+	// CertificateSourceType specifies all the possible sources for the encryption certificate
+	Type *string `pulumi:"type"`
 }
 
 // InfinispanStatusSecurityEndpointEncryptionInput is an input type that accepts InfinispanStatusSecurityEndpointEncryptionArgs and InfinispanStatusSecurityEndpointEncryptionOutput values.
@@ -2702,7 +6413,8 @@ type InfinispanStatusSecurityEndpointEncryptionInput interface {
 type InfinispanStatusSecurityEndpointEncryptionArgs struct {
 	CertSecretName  pulumi.StringPtrInput `pulumi:"certSecretName"`
 	CertServiceName pulumi.StringPtrInput `pulumi:"certServiceName"`
-	Type            pulumi.StringInput    `pulumi:"type"`
+	// CertificateSourceType specifies all the possible sources for the encryption certificate
+	Type pulumi.StringPtrInput `pulumi:"type"`
 }
 
 func (InfinispanStatusSecurityEndpointEncryptionArgs) ElementType() reflect.Type {
@@ -2790,8 +6502,9 @@ func (o InfinispanStatusSecurityEndpointEncryptionOutput) CertServiceName() pulu
 	return o.ApplyT(func(v InfinispanStatusSecurityEndpointEncryption) *string { return v.CertServiceName }).(pulumi.StringPtrOutput)
 }
 
-func (o InfinispanStatusSecurityEndpointEncryptionOutput) Type() pulumi.StringOutput {
-	return o.ApplyT(func(v InfinispanStatusSecurityEndpointEncryption) string { return v.Type }).(pulumi.StringOutput)
+// CertificateSourceType specifies all the possible sources for the encryption certificate
+func (o InfinispanStatusSecurityEndpointEncryptionOutput) Type() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v InfinispanStatusSecurityEndpointEncryption) *string { return v.Type }).(pulumi.StringPtrOutput)
 }
 
 type InfinispanStatusSecurityEndpointEncryptionPtrOutput struct{ *pulumi.OutputState }
@@ -2832,12 +6545,13 @@ func (o InfinispanStatusSecurityEndpointEncryptionPtrOutput) CertServiceName() p
 	}).(pulumi.StringPtrOutput)
 }
 
+// CertificateSourceType specifies all the possible sources for the encryption certificate
 func (o InfinispanStatusSecurityEndpointEncryptionPtrOutput) Type() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *InfinispanStatusSecurityEndpointEncryption) *string {
 		if v == nil {
 			return nil
 		}
-		return &v.Type
+		return v.Type
 	}).(pulumi.StringPtrOutput)
 }
 
@@ -2846,12 +6560,66 @@ func init() {
 	pulumi.RegisterOutputType(InfinispanMetadataOutput{})
 	pulumi.RegisterOutputType(InfinispanSpecOutput{})
 	pulumi.RegisterOutputType(InfinispanSpecPtrOutput{})
+	pulumi.RegisterOutputType(InfinispanSpecAffinityOutput{})
+	pulumi.RegisterOutputType(InfinispanSpecAffinityPtrOutput{})
+	pulumi.RegisterOutputType(InfinispanSpecAffinityNodeAffinityOutput{})
+	pulumi.RegisterOutputType(InfinispanSpecAffinityNodeAffinityPtrOutput{})
+	pulumi.RegisterOutputType(InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionOutput{})
+	pulumi.RegisterOutputType(InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionArrayOutput{})
+	pulumi.RegisterOutputType(InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceOutput{})
+	pulumi.RegisterOutputType(InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressionsOutput{})
+	pulumi.RegisterOutputType(InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressionsArrayOutput{})
+	pulumi.RegisterOutputType(InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFieldsOutput{})
+	pulumi.RegisterOutputType(InfinispanSpecAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFieldsArrayOutput{})
+	pulumi.RegisterOutputType(InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionOutput{})
+	pulumi.RegisterOutputType(InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionPtrOutput{})
+	pulumi.RegisterOutputType(InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsOutput{})
+	pulumi.RegisterOutputType(InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsArrayOutput{})
+	pulumi.RegisterOutputType(InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressionsOutput{})
+	pulumi.RegisterOutputType(InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressionsArrayOutput{})
+	pulumi.RegisterOutputType(InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFieldsOutput{})
+	pulumi.RegisterOutputType(InfinispanSpecAffinityNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFieldsArrayOutput{})
+	pulumi.RegisterOutputType(InfinispanSpecAffinityPodAffinityOutput{})
+	pulumi.RegisterOutputType(InfinispanSpecAffinityPodAffinityPtrOutput{})
+	pulumi.RegisterOutputType(InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionOutput{})
+	pulumi.RegisterOutputType(InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionArrayOutput{})
+	pulumi.RegisterOutputType(InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermOutput{})
+	pulumi.RegisterOutputType(InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorOutput{})
+	pulumi.RegisterOutputType(InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorPtrOutput{})
+	pulumi.RegisterOutputType(InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsOutput{})
+	pulumi.RegisterOutputType(InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsArrayOutput{})
+	pulumi.RegisterOutputType(InfinispanSpecAffinityPodAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchLabelsOutput{})
+	pulumi.RegisterOutputType(InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionOutput{})
+	pulumi.RegisterOutputType(InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionArrayOutput{})
+	pulumi.RegisterOutputType(InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorOutput{})
+	pulumi.RegisterOutputType(InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorPtrOutput{})
+	pulumi.RegisterOutputType(InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsOutput{})
+	pulumi.RegisterOutputType(InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsArrayOutput{})
+	pulumi.RegisterOutputType(InfinispanSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchLabelsOutput{})
+	pulumi.RegisterOutputType(InfinispanSpecAffinityPodAntiAffinityOutput{})
+	pulumi.RegisterOutputType(InfinispanSpecAffinityPodAntiAffinityPtrOutput{})
+	pulumi.RegisterOutputType(InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionOutput{})
+	pulumi.RegisterOutputType(InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionArrayOutput{})
+	pulumi.RegisterOutputType(InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermOutput{})
+	pulumi.RegisterOutputType(InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorOutput{})
+	pulumi.RegisterOutputType(InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorPtrOutput{})
+	pulumi.RegisterOutputType(InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsOutput{})
+	pulumi.RegisterOutputType(InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchExpressionsArrayOutput{})
+	pulumi.RegisterOutputType(InfinispanSpecAffinityPodAntiAffinityPreferredDuringSchedulingIgnoredDuringExecutionPodAffinityTermLabelSelectorMatchLabelsOutput{})
+	pulumi.RegisterOutputType(InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionOutput{})
+	pulumi.RegisterOutputType(InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionArrayOutput{})
+	pulumi.RegisterOutputType(InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorOutput{})
+	pulumi.RegisterOutputType(InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorPtrOutput{})
+	pulumi.RegisterOutputType(InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsOutput{})
+	pulumi.RegisterOutputType(InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchExpressionsArrayOutput{})
+	pulumi.RegisterOutputType(InfinispanSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelectorMatchLabelsOutput{})
 	pulumi.RegisterOutputType(InfinispanSpecAutoscaleOutput{})
 	pulumi.RegisterOutputType(InfinispanSpecAutoscalePtrOutput{})
 	pulumi.RegisterOutputType(InfinispanSpecContainerOutput{})
 	pulumi.RegisterOutputType(InfinispanSpecContainerPtrOutput{})
 	pulumi.RegisterOutputType(InfinispanSpecExposeOutput{})
 	pulumi.RegisterOutputType(InfinispanSpecExposePtrOutput{})
+	pulumi.RegisterOutputType(InfinispanSpecExposeAnnotationsOutput{})
 	pulumi.RegisterOutputType(InfinispanSpecLoggingOutput{})
 	pulumi.RegisterOutputType(InfinispanSpecLoggingPtrOutput{})
 	pulumi.RegisterOutputType(InfinispanSpecLoggingCategoriesOutput{})
@@ -2869,6 +6637,7 @@ func init() {
 	pulumi.RegisterOutputType(InfinispanSpecServiceSitesLocalPtrOutput{})
 	pulumi.RegisterOutputType(InfinispanSpecServiceSitesLocalExposeOutput{})
 	pulumi.RegisterOutputType(InfinispanSpecServiceSitesLocalExposePtrOutput{})
+	pulumi.RegisterOutputType(InfinispanSpecServiceSitesLocalExposeAnnotationsOutput{})
 	pulumi.RegisterOutputType(InfinispanSpecServiceSitesLocationsOutput{})
 	pulumi.RegisterOutputType(InfinispanSpecServiceSitesLocationsArrayOutput{})
 	pulumi.RegisterOutputType(InfinispanStatusOutput{})

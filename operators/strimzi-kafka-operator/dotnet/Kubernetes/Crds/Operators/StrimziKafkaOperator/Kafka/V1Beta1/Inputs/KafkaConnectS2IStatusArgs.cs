@@ -46,16 +46,16 @@ namespace Pulumi.Kubernetes.Types.Inputs.Kafka.V1Beta1
         }
 
         /// <summary>
+        /// Label selector for pods providing this resource.
+        /// </summary>
+        [Input("labelSelector")]
+        public Input<string>? LabelSelector { get; set; }
+
+        /// <summary>
         /// The generation of the CRD that was last reconciled by the operator.
         /// </summary>
         [Input("observedGeneration")]
         public Input<int>? ObservedGeneration { get; set; }
-
-        /// <summary>
-        /// Label selector for pods providing this resource.
-        /// </summary>
-        [Input("podSelector")]
-        public Input<Pulumi.Kubernetes.Types.Inputs.Kafka.V1Beta1.KafkaConnectS2IStatusPodSelectorArgs>? PodSelector { get; set; }
 
         /// <summary>
         /// The current number of pods being used to provide this resource.

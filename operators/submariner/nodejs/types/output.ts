@@ -10,22 +10,6 @@ import {ObjectMeta} from "../meta/v1";
 export namespace submariner {
     export namespace v1alpha1 {
         /**
-         * ServiceDiscoverySpec defines the desired state of ServiceDiscovery
-         */
-        export interface ServiceDiscoverySpec {
-            brokerK8sApiServer: string;
-            brokerK8sApiServerToken: string;
-            brokerK8sCA: string;
-            brokerK8sRemoteNamespace: string;
-            clusterID: string;
-            debug: boolean;
-            globalnetEnabled?: boolean;
-            namespace: string;
-            repository?: string;
-            version?: string;
-        }
-
-        /**
          * SubmarinerSpec defines the desired state of Submariner
          */
         export interface SubmarinerSpec {
@@ -42,8 +26,11 @@ export namespace submariner {
             clusterCIDR: string;
             clusterID: string;
             colorCodes?: string;
+            connectionHealthCheck?: outputs.submariner.v1alpha1.SubmarinerSpecConnectionHealthCheck;
+            customDomains?: string[];
             debug: boolean;
             globalCIDR?: string;
+            imageOverrides?: {[key: string]: string};
             namespace: string;
             natEnabled: boolean;
             repository?: string;
@@ -52,35 +39,125 @@ export namespace submariner {
             version?: string;
         }
 
+        export interface SubmarinerSpecConnectionHealthCheck {
+            enabled?: boolean;
+            /**
+             * The interval at which health check pings are sent.
+             */
+            intervalSeconds?: number;
+            /**
+             * The maximum number of packets lost at which the health checker will mark the connection as down.
+             */
+            maxPacketLossCount?: number;
+        }
+
         /**
          * SubmarinerStatus defines the observed state of Submariner
          */
         export interface SubmarinerStatus {
-            clusterCIDR: string;
+            clusterCIDR?: string;
             clusterID: string;
             colorCodes?: string;
-            /**
-             * DaemonSetStatus represents the current status of a daemon set.
-             */
             engineDaemonSetStatus?: outputs.submariner.v1alpha1.SubmarinerStatusEngineDaemonSetStatus;
             gateways?: outputs.submariner.v1alpha1.SubmarinerStatusGateways[];
             globalCIDR?: string;
-            /**
-             * DaemonSetStatus represents the current status of a daemon set.
-             */
             globalnetDaemonSetStatus?: outputs.submariner.v1alpha1.SubmarinerStatusGlobalnetDaemonSetStatus;
             natEnabled: boolean;
+            networkPlugin?: string;
+            routeAgentDaemonSetStatus?: outputs.submariner.v1alpha1.SubmarinerStatusRouteAgentDaemonSetStatus;
+            serviceCIDR?: string;
+        }
+
+        export interface SubmarinerStatusEngineDaemonSetStatus {
+            lastResourceVersion?: string;
+            mismatchedContainerImages: boolean;
+            nonReadyContainerStates?: outputs.submariner.v1alpha1.SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStates[];
             /**
              * DaemonSetStatus represents the current status of a daemon set.
              */
-            routeAgentDaemonSetStatus?: outputs.submariner.v1alpha1.SubmarinerStatusRouteAgentDaemonSetStatus;
-            serviceCIDR: string;
+            status?: outputs.submariner.v1alpha1.SubmarinerStatusEngineDaemonSetStatusStatus;
+        }
+
+        /**
+         * ContainerState holds a possible state of container. Only one of its members may be specified. If none of them is specified, the default one is ContainerStateWaiting.
+         */
+        export interface SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStates {
+            /**
+             * Details about a running container
+             */
+            running?: outputs.submariner.v1alpha1.SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunning;
+            /**
+             * Details about a terminated container
+             */
+            terminated?: outputs.submariner.v1alpha1.SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminated;
+            /**
+             * Details about a waiting container
+             */
+            waiting?: outputs.submariner.v1alpha1.SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaiting;
+        }
+
+        /**
+         * Details about a running container
+         */
+        export interface SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesRunning {
+            /**
+             * Time at which the container was last (re-)started
+             */
+            startedAt?: string;
+        }
+
+        /**
+         * Details about a terminated container
+         */
+        export interface SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesTerminated {
+            /**
+             * Container's ID in the format 'docker://<container_id>'
+             */
+            containerID?: string;
+            /**
+             * Exit status from the last termination of the container
+             */
+            exitCode: number;
+            /**
+             * Time at which the container last terminated
+             */
+            finishedAt?: string;
+            /**
+             * Message regarding the last termination of the container
+             */
+            message?: string;
+            /**
+             * (brief) reason from the last termination of the container
+             */
+            reason?: string;
+            /**
+             * Signal from the last termination of the container
+             */
+            signal?: number;
+            /**
+             * Time at which previous execution of the container started
+             */
+            startedAt?: string;
+        }
+
+        /**
+         * Details about a waiting container
+         */
+        export interface SubmarinerStatusEngineDaemonSetStatusNonReadyContainerStatesWaiting {
+            /**
+             * Message regarding why the container is not yet running.
+             */
+            message?: string;
+            /**
+             * (brief) reason the container is not yet running.
+             */
+            reason?: string;
         }
 
         /**
          * DaemonSetStatus represents the current status of a daemon set.
          */
-        export interface SubmarinerStatusEngineDaemonSetStatus {
+        export interface SubmarinerStatusEngineDaemonSetStatusStatus {
             /**
              * Count of hash collisions for the DaemonSet. The DaemonSet controller uses this field as a collision avoidance mechanism when it needs to create the name for the newest ControllerRevision.
              */
@@ -88,7 +165,7 @@ export namespace submariner {
             /**
              * Represents the latest available observations of a DaemonSet's current state.
              */
-            conditions?: outputs.submariner.v1alpha1.SubmarinerStatusEngineDaemonSetStatusConditions[];
+            conditions?: outputs.submariner.v1alpha1.SubmarinerStatusEngineDaemonSetStatusStatusConditions[];
             /**
              * The number of nodes that are running at least 1 daemon pod and are supposed to run the daemon pod. More info: https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/
              */
@@ -126,7 +203,7 @@ export namespace submariner {
         /**
          * DaemonSetCondition describes the state of a DaemonSet at a certain point.
          */
-        export interface SubmarinerStatusEngineDaemonSetStatusConditions {
+        export interface SubmarinerStatusEngineDaemonSetStatusStatusConditions {
             /**
              * Last time the condition transitioned from one status to another.
              */
@@ -150,49 +227,29 @@ export namespace submariner {
         }
 
         export interface SubmarinerStatusGateways {
-            /**
-             * APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#resources
-             */
-            apiVersion?: string;
-            /**
-             * Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds
-             */
-            kind?: string;
-            metadata?: {[key: string]: any};
-            status: outputs.submariner.v1alpha1.SubmarinerStatusGatewaysStatus;
-        }
-
-        export interface SubmarinerStatusGatewaysStatus {
-            connections: outputs.submariner.v1alpha1.SubmarinerStatusGatewaysStatusConnections[];
+            connections: outputs.submariner.v1alpha1.SubmarinerStatusGatewaysConnections[];
             haStatus: string;
-            localEndpoint: outputs.submariner.v1alpha1.SubmarinerStatusGatewaysStatusLocalEndpoint;
+            localEndpoint: outputs.submariner.v1alpha1.SubmarinerStatusGatewaysLocalEndpoint;
             statusFailure: string;
             version: string;
         }
 
-        export interface SubmarinerStatusGatewaysStatusConnections {
-            endpoint: outputs.submariner.v1alpha1.SubmarinerStatusGatewaysStatusConnectionsEndpoint;
+        export interface SubmarinerStatusGatewaysConnections {
+            endpoint: outputs.submariner.v1alpha1.SubmarinerStatusGatewaysConnectionsEndpoint;
+            /**
+             * LatencySpec describes the round trip time information for a packet between the gateway pods of two clusters.
+             */
+            latencyRTT?: outputs.submariner.v1alpha1.SubmarinerStatusGatewaysConnectionsLatencyRTT;
             status: string;
             statusMessage: string;
         }
 
-        export interface SubmarinerStatusGatewaysStatusConnectionsEndpoint {
+        export interface SubmarinerStatusGatewaysConnectionsEndpoint {
             backend: string;
             backend_config?: {[key: string]: string};
             cable_name: string;
             cluster_id: string;
-            hostname: string;
-            nat_enabled: boolean;
-            private_ip: string;
-            public_ip: string;
-            subnets: string[];
-        }
-
-        export interface SubmarinerStatusGatewaysStatusLocalEndpoint {
-            backend: string;
-            backend_config?: {[key: string]: string};
-            cable_name: string;
-            cluster_id: string;
+            healthCheckIP?: string;
             hostname: string;
             nat_enabled: boolean;
             private_ip: string;
@@ -201,9 +258,119 @@ export namespace submariner {
         }
 
         /**
+         * LatencySpec describes the round trip time information for a packet between the gateway pods of two clusters.
+         */
+        export interface SubmarinerStatusGatewaysConnectionsLatencyRTT {
+            average?: string;
+            last?: string;
+            max?: string;
+            min?: string;
+            stdDev?: string;
+        }
+
+        export interface SubmarinerStatusGatewaysLocalEndpoint {
+            backend: string;
+            backend_config?: {[key: string]: string};
+            cable_name: string;
+            cluster_id: string;
+            healthCheckIP?: string;
+            hostname: string;
+            nat_enabled: boolean;
+            private_ip: string;
+            public_ip: string;
+            subnets: string[];
+        }
+
+        export interface SubmarinerStatusGlobalnetDaemonSetStatus {
+            lastResourceVersion?: string;
+            mismatchedContainerImages: boolean;
+            nonReadyContainerStates?: outputs.submariner.v1alpha1.SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStates[];
+            /**
+             * DaemonSetStatus represents the current status of a daemon set.
+             */
+            status?: outputs.submariner.v1alpha1.SubmarinerStatusGlobalnetDaemonSetStatusStatus;
+        }
+
+        /**
+         * ContainerState holds a possible state of container. Only one of its members may be specified. If none of them is specified, the default one is ContainerStateWaiting.
+         */
+        export interface SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStates {
+            /**
+             * Details about a running container
+             */
+            running?: outputs.submariner.v1alpha1.SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunning;
+            /**
+             * Details about a terminated container
+             */
+            terminated?: outputs.submariner.v1alpha1.SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminated;
+            /**
+             * Details about a waiting container
+             */
+            waiting?: outputs.submariner.v1alpha1.SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaiting;
+        }
+
+        /**
+         * Details about a running container
+         */
+        export interface SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesRunning {
+            /**
+             * Time at which the container was last (re-)started
+             */
+            startedAt?: string;
+        }
+
+        /**
+         * Details about a terminated container
+         */
+        export interface SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesTerminated {
+            /**
+             * Container's ID in the format 'docker://<container_id>'
+             */
+            containerID?: string;
+            /**
+             * Exit status from the last termination of the container
+             */
+            exitCode: number;
+            /**
+             * Time at which the container last terminated
+             */
+            finishedAt?: string;
+            /**
+             * Message regarding the last termination of the container
+             */
+            message?: string;
+            /**
+             * (brief) reason from the last termination of the container
+             */
+            reason?: string;
+            /**
+             * Signal from the last termination of the container
+             */
+            signal?: number;
+            /**
+             * Time at which previous execution of the container started
+             */
+            startedAt?: string;
+        }
+
+        /**
+         * Details about a waiting container
+         */
+        export interface SubmarinerStatusGlobalnetDaemonSetStatusNonReadyContainerStatesWaiting {
+            /**
+             * Message regarding why the container is not yet running.
+             */
+            message?: string;
+            /**
+             * (brief) reason the container is not yet running.
+             */
+            reason?: string;
+        }
+
+        /**
          * DaemonSetStatus represents the current status of a daemon set.
          */
-        export interface SubmarinerStatusGlobalnetDaemonSetStatus {
+        export interface SubmarinerStatusGlobalnetDaemonSetStatusStatus {
             /**
              * Count of hash collisions for the DaemonSet. The DaemonSet controller uses this field as a collision avoidance mechanism when it needs to create the name for the newest ControllerRevision.
              */
@@ -211,7 +378,7 @@ export namespace submariner {
             /**
              * Represents the latest available observations of a DaemonSet's current state.
              */
-            conditions?: outputs.submariner.v1alpha1.SubmarinerStatusGlobalnetDaemonSetStatusConditions[];
+            conditions?: outputs.submariner.v1alpha1.SubmarinerStatusGlobalnetDaemonSetStatusStatusConditions[];
             /**
              * The number of nodes that are running at least 1 daemon pod and are supposed to run the daemon pod. More info: https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/
              */
@@ -249,7 +416,7 @@ export namespace submariner {
         /**
          * DaemonSetCondition describes the state of a DaemonSet at a certain point.
          */
-        export interface SubmarinerStatusGlobalnetDaemonSetStatusConditions {
+        export interface SubmarinerStatusGlobalnetDaemonSetStatusStatusConditions {
             /**
              * Last time the condition transitioned from one status to another.
              */
@@ -272,10 +439,96 @@ export namespace submariner {
             type: string;
         }
 
+        export interface SubmarinerStatusRouteAgentDaemonSetStatus {
+            lastResourceVersion?: string;
+            mismatchedContainerImages: boolean;
+            nonReadyContainerStates?: outputs.submariner.v1alpha1.SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStates[];
+            /**
+             * DaemonSetStatus represents the current status of a daemon set.
+             */
+            status?: outputs.submariner.v1alpha1.SubmarinerStatusRouteAgentDaemonSetStatusStatus;
+        }
+
+        /**
+         * ContainerState holds a possible state of container. Only one of its members may be specified. If none of them is specified, the default one is ContainerStateWaiting.
+         */
+        export interface SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStates {
+            /**
+             * Details about a running container
+             */
+            running?: outputs.submariner.v1alpha1.SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunning;
+            /**
+             * Details about a terminated container
+             */
+            terminated?: outputs.submariner.v1alpha1.SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminated;
+            /**
+             * Details about a waiting container
+             */
+            waiting?: outputs.submariner.v1alpha1.SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaiting;
+        }
+
+        /**
+         * Details about a running container
+         */
+        export interface SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesRunning {
+            /**
+             * Time at which the container was last (re-)started
+             */
+            startedAt?: string;
+        }
+
+        /**
+         * Details about a terminated container
+         */
+        export interface SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesTerminated {
+            /**
+             * Container's ID in the format 'docker://<container_id>'
+             */
+            containerID?: string;
+            /**
+             * Exit status from the last termination of the container
+             */
+            exitCode: number;
+            /**
+             * Time at which the container last terminated
+             */
+            finishedAt?: string;
+            /**
+             * Message regarding the last termination of the container
+             */
+            message?: string;
+            /**
+             * (brief) reason from the last termination of the container
+             */
+            reason?: string;
+            /**
+             * Signal from the last termination of the container
+             */
+            signal?: number;
+            /**
+             * Time at which previous execution of the container started
+             */
+            startedAt?: string;
+        }
+
+        /**
+         * Details about a waiting container
+         */
+        export interface SubmarinerStatusRouteAgentDaemonSetStatusNonReadyContainerStatesWaiting {
+            /**
+             * Message regarding why the container is not yet running.
+             */
+            message?: string;
+            /**
+             * (brief) reason the container is not yet running.
+             */
+            reason?: string;
+        }
+
         /**
          * DaemonSetStatus represents the current status of a daemon set.
          */
-        export interface SubmarinerStatusRouteAgentDaemonSetStatus {
+        export interface SubmarinerStatusRouteAgentDaemonSetStatusStatus {
             /**
              * Count of hash collisions for the DaemonSet. The DaemonSet controller uses this field as a collision avoidance mechanism when it needs to create the name for the newest ControllerRevision.
              */
@@ -283,7 +536,7 @@ export namespace submariner {
             /**
              * Represents the latest available observations of a DaemonSet's current state.
              */
-            conditions?: outputs.submariner.v1alpha1.SubmarinerStatusRouteAgentDaemonSetStatusConditions[];
+            conditions?: outputs.submariner.v1alpha1.SubmarinerStatusRouteAgentDaemonSetStatusStatusConditions[];
             /**
              * The number of nodes that are running at least 1 daemon pod and are supposed to run the daemon pod. More info: https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/
              */
@@ -321,7 +574,7 @@ export namespace submariner {
         /**
          * DaemonSetCondition describes the state of a DaemonSet at a certain point.
          */
-        export interface SubmarinerStatusRouteAgentDaemonSetStatusConditions {
+        export interface SubmarinerStatusRouteAgentDaemonSetStatusStatusConditions {
             /**
              * Last time the condition transitioned from one status to another.
              */

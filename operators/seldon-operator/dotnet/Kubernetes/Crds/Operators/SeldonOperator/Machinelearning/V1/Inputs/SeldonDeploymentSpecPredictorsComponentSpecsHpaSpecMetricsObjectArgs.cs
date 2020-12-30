@@ -19,7 +19,7 @@ namespace Pulumi.Kubernetes.Types.Inputs.Machinelearning.V1
         /// averageValue is the target value of the average of the metric across all relevant pods (as a quantity)
         /// </summary>
         [Input("averageValue")]
-        public Input<string>? AverageValue { get; set; }
+        public Input<Pulumi.Kubernetes.Types.Inputs.Machinelearning.V1.SeldonDeploymentSpecPredictorsComponentSpecsHpaSpecMetricsObjectAverageValueArgs>? AverageValue { get; set; }
 
         /// <summary>
         /// metricName is the name of the metric in question.
@@ -43,7 +43,7 @@ namespace Pulumi.Kubernetes.Types.Inputs.Machinelearning.V1
         /// targetValue is the target value of the metric (as a quantity).
         /// </summary>
         [Input("targetValue", required: true)]
-        public Input<string> TargetValue { get; set; } = null!;
+        public Input<Pulumi.Kubernetes.Types.Inputs.Machinelearning.V1.SeldonDeploymentSpecPredictorsComponentSpecsHpaSpecMetricsObjectTargetValueArgs> TargetValue { get; set; } = null!;
 
         public SeldonDeploymentSpecPredictorsComponentSpecsHpaSpecMetricsObjectArgs()
         {

@@ -16,7 +16,7 @@ namespace Pulumi.Kubernetes.Types.Inputs.Apps.V1Alpha1
     public class NexusSpecNetworkingTlsArgs : Pulumi.ResourceArgs
     {
         /// <summary>
-        /// When exposing via Route, set to `true` to only allow encrypted traffic using TLS (disables HTTP in favor of HTTPS). Defaults to false.
+        /// When exposing via Route, set to `true` to only allow encrypted traffic using TLS (disables HTTP in favor of HTTPS). Defaults to `false`.
         /// </summary>
         [Input("mandatory")]
         public Input<bool>? Mandatory { get; set; }

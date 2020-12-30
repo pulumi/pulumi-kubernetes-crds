@@ -21,8 +21,11 @@ namespace Pulumi.Kubernetes.Types.Inputs.Infinispan.V1
         [Input("certServiceName")]
         public Input<string>? CertServiceName { get; set; }
 
-        [Input("type", required: true)]
-        public Input<string> Type { get; set; } = null!;
+        /// <summary>
+        /// CertificateSourceType specifies all the possible sources for the encryption certificate
+        /// </summary>
+        [Input("type")]
+        public Input<string>? Type { get; set; }
 
         public InfinispanStatusSecurityEndpointEncryptionArgs()
         {

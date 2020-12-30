@@ -46,7 +46,7 @@ namespace Pulumi.Kubernetes.Types.Inputs.Pingcap.V1Alpha1
         public Input<bool>? BinlogEnabled { get; set; }
 
         [Input("config")]
-        public Input<Pulumi.Kubernetes.Types.Inputs.Pingcap.V1Alpha1.TidbClusterSpecTidbConfigArgs>? Config { get; set; }
+        public Input<object>? Config { get; set; }
 
         [Input("configUpdateStrategy")]
         public Input<string>? ConfigUpdateStrategy { get; set; }
@@ -109,6 +109,9 @@ namespace Pulumi.Kubernetes.Types.Inputs.Pingcap.V1Alpha1
         [Input("priorityClassName")]
         public Input<string>? PriorityClassName { get; set; }
 
+        [Input("readinessProbe")]
+        public Input<Pulumi.Kubernetes.Types.Inputs.Pingcap.V1Alpha1.TidbClusterSpecTidbReadinessProbeArgs>? ReadinessProbe { get; set; }
+
         [Input("replicas", required: true)]
         public Input<int> Replicas { get; set; } = null!;
 
@@ -129,8 +132,25 @@ namespace Pulumi.Kubernetes.Types.Inputs.Pingcap.V1Alpha1
         [Input("service")]
         public Input<Pulumi.Kubernetes.Types.Inputs.Pingcap.V1Alpha1.TidbClusterSpecTidbServiceArgs>? Service { get; set; }
 
+        [Input("serviceAccount")]
+        public Input<string>? ServiceAccount { get; set; }
+
         [Input("slowLogTailer")]
         public Input<Pulumi.Kubernetes.Types.Inputs.Pingcap.V1Alpha1.TidbClusterSpecTidbSlowLogTailerArgs>? SlowLogTailer { get; set; }
+
+        [Input("statefulSetUpdateStrategy")]
+        public Input<string>? StatefulSetUpdateStrategy { get; set; }
+
+        [Input("storageClassName")]
+        public Input<string>? StorageClassName { get; set; }
+
+        [Input("storageVolumes")]
+        private InputList<object>? _storageVolumes;
+        public InputList<object> StorageVolumes
+        {
+            get => _storageVolumes ?? (_storageVolumes = new InputList<object>());
+            set => _storageVolumes = value;
+        }
 
         [Input("terminationGracePeriodSeconds")]
         public Input<int>? TerminationGracePeriodSeconds { get; set; }

@@ -18,7 +18,7 @@ namespace Pulumi.Kubernetes.Types.Outputs.Machinelearning.V1
         /// </summary>
         public readonly string ApiVersion;
         /// <summary>
-        /// Kind of the referent; More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds"
+        /// Kind of the referent; More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds"
         /// </summary>
         public readonly string Kind;
         /// <summary>

@@ -16,7 +16,7 @@ namespace Pulumi.Kubernetes.Types.Outputs.Pingcap.V1Alpha1
         public readonly Pulumi.Kubernetes.Types.Outputs.Pingcap.V1Alpha1.BackupSpecAffinity Affinity;
         public readonly string BackupType;
         public readonly Pulumi.Kubernetes.Types.Outputs.Pingcap.V1Alpha1.BackupSpecBr Br;
-        public readonly bool CleanData;
+        public readonly string CleanPolicy;
         public readonly Pulumi.Kubernetes.Types.Outputs.Pingcap.V1Alpha1.BackupSpecDumpling Dumpling;
         public readonly Pulumi.Kubernetes.Types.Outputs.Pingcap.V1Alpha1.BackupSpecFrom From;
         public readonly Pulumi.Kubernetes.Types.Outputs.Pingcap.V1Alpha1.BackupSpecGcs Gcs;
@@ -26,8 +26,10 @@ namespace Pulumi.Kubernetes.Types.Outputs.Pingcap.V1Alpha1
         public readonly string ServiceAccount;
         public readonly string StorageClassName;
         public readonly string StorageSize;
+        public readonly ImmutableArray<string> TableFilter;
         public readonly string TikvGCLifeTime;
         public readonly ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Pingcap.V1Alpha1.BackupSpecTolerations> Tolerations;
+        public readonly string ToolImage;
         public readonly bool UseKMS;
 
         [OutputConstructor]
@@ -38,7 +40,7 @@ namespace Pulumi.Kubernetes.Types.Outputs.Pingcap.V1Alpha1
 
             Pulumi.Kubernetes.Types.Outputs.Pingcap.V1Alpha1.BackupSpecBr br,
 
-            bool cleanData,
+            string cleanPolicy,
 
             Pulumi.Kubernetes.Types.Outputs.Pingcap.V1Alpha1.BackupSpecDumpling dumpling,
 
@@ -58,16 +60,20 @@ namespace Pulumi.Kubernetes.Types.Outputs.Pingcap.V1Alpha1
 
             string storageSize,
 
+            ImmutableArray<string> tableFilter,
+
             string tikvGCLifeTime,
 
             ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Pingcap.V1Alpha1.BackupSpecTolerations> tolerations,
+
+            string toolImage,
 
             bool useKMS)
         {
             Affinity = affinity;
             BackupType = backupType;
             Br = br;
-            CleanData = cleanData;
+            CleanPolicy = cleanPolicy;
             Dumpling = dumpling;
             From = from;
             Gcs = gcs;
@@ -77,8 +83,10 @@ namespace Pulumi.Kubernetes.Types.Outputs.Pingcap.V1Alpha1
             ServiceAccount = serviceAccount;
             StorageClassName = storageClassName;
             StorageSize = storageSize;
+            TableFilter = tableFilter;
             TikvGCLifeTime = tikvGCLifeTime;
             Tolerations = tolerations;
+            ToolImage = toolImage;
             UseKMS = useKMS;
         }
     }

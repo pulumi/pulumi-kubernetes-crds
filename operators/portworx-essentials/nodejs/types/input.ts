@@ -8,19 +8,23 @@ import * as outputs from "../types/output";
 import {ObjectMeta} from "../meta/v1";
 
 export namespace core {
-    export namespace v1alpha1 {
+    export namespace v1 {
         /**
          * The desired behavior of the storage cluster.
          */
         export interface StorageClusterSpec {
             /**
+             * A strategy to determine how component versions are to be updated automatically.
+             */
+            autoUpdateComponents?: pulumi.Input<string>;
+            /**
              * Contains spec of autopilot component for storage driver.
              */
-            autopilot?: pulumi.Input<inputs.core.v1alpha1.StorageClusterSpecAutopilot>;
+            autopilot?: pulumi.Input<inputs.core.v1.StorageClusterSpecAutopilot>;
             /**
              * Details of storage used in cloud environment.
              */
-            cloudStorage?: pulumi.Input<inputs.core.v1alpha1.StorageClusterSpecCloudStorage>;
+            cloudStorage?: pulumi.Input<inputs.core.v1.StorageClusterSpecCloudStorage>;
             /**
              * Custom container image registry server that will be used instead of index.docker.io to download Docker images. This may include the repository as well. (Example: myregistry.net:5443 or myregistry.com/myrepository)
              */
@@ -28,11 +32,11 @@ export namespace core {
             /**
              * Delete strategy to uninstall and wipe the storage cluster.
              */
-            deleteStrategy?: pulumi.Input<inputs.core.v1alpha1.StorageClusterSpecDeleteStrategy>;
+            deleteStrategy?: pulumi.Input<inputs.core.v1.StorageClusterSpecDeleteStrategy>;
             /**
              * List of environment variables used by the driver. This is an array of Kubernetes EnvVar where the value can be given directly or from a source like field, config map or secret.
              */
-            env?: pulumi.Input<pulumi.Input<inputs.core.v1alpha1.StorageClusterSpecEnv>[]>;
+            env?: pulumi.Input<pulumi.Input<inputs.core.v1.StorageClusterSpecEnv>[]>;
             /**
              * This is a map of feature names to string values.
              */
@@ -52,23 +56,23 @@ export namespace core {
             /**
              * Details of KVDB that the storage driver will use.
              */
-            kvdb?: pulumi.Input<inputs.core.v1alpha1.StorageClusterSpecKvdb>;
+            kvdb?: pulumi.Input<inputs.core.v1.StorageClusterSpecKvdb>;
             /**
              * Contains monitoring configuration for the storage cluster.
              */
-            monitoring?: pulumi.Input<inputs.core.v1alpha1.StorageClusterSpecMonitoring>;
+            monitoring?: pulumi.Input<inputs.core.v1.StorageClusterSpecMonitoring>;
             /**
              * Contains network information that is needed by the storage driver.
              */
-            network?: pulumi.Input<inputs.core.v1alpha1.StorageClusterSpecNetwork>;
+            network?: pulumi.Input<inputs.core.v1.StorageClusterSpecNetwork>;
             /**
              * Node level configurations that will override the configuration at cluster level. These configurations can be for individual nodes or can be grouped to override configuration of multiple nodes based on label selectors.
              */
-            nodes?: pulumi.Input<pulumi.Input<inputs.core.v1alpha1.StorageClusterSpecNodes>[]>;
+            nodes?: pulumi.Input<pulumi.Input<inputs.core.v1.StorageClusterSpecNodes>[]>;
             /**
              * Describes placement configuration for the storage cluster pods.
              */
-            placement?: pulumi.Input<inputs.core.v1alpha1.StorageClusterSpecPlacement>;
+            placement?: pulumi.Input<inputs.core.v1.StorageClusterSpecPlacement>;
             /**
              * The number of old history to retain to allow rollback. This is a pointer to distinguish between an explicit zero and not specified. Defaults to 10.
              */
@@ -82,25 +86,29 @@ export namespace core {
              */
             secretsProvider?: pulumi.Input<string>;
             /**
+             * Contains security configuration for the storage cluster.
+             */
+            security?: pulumi.Input<inputs.core.v1.StorageClusterSpecSecurity>;
+            /**
              * Start port is the starting port in the range of ports used by the cluster.
              */
             startPort?: pulumi.Input<number>;
             /**
              * Details of the storage used by the storage driver.
              */
-            storage?: pulumi.Input<inputs.core.v1alpha1.StorageClusterSpecStorage>;
+            storage?: pulumi.Input<inputs.core.v1.StorageClusterSpecStorage>;
             /**
              * Contains STORK related spec.
              */
-            stork?: pulumi.Input<inputs.core.v1alpha1.StorageClusterSpecStork>;
+            stork?: pulumi.Input<inputs.core.v1.StorageClusterSpecStork>;
             /**
              * An update strategy to replace existing StorageCluster pods with new pods.
              */
-            updateStrategy?: pulumi.Input<inputs.core.v1alpha1.StorageClusterSpecUpdateStrategy>;
+            updateStrategy?: pulumi.Input<inputs.core.v1.StorageClusterSpecUpdateStrategy>;
             /**
              * Contains spec of a user interface for the storage driver.
              */
-            userInterface?: pulumi.Input<inputs.core.v1alpha1.StorageClusterSpecUserInterface>;
+            userInterface?: pulumi.Input<inputs.core.v1.StorageClusterSpecUserInterface>;
             /**
              * Version of the storage driver. This field is read-only.
              */
@@ -122,7 +130,7 @@ export namespace core {
             /**
              * List of environment variables used by autopilot. This is an array of Kubernetes EnvVar where the value can be given directly or from a source like field, config map or secret.
              */
-            env?: pulumi.Input<pulumi.Input<inputs.core.v1alpha1.StorageClusterSpecAutopilotEnv>[]>;
+            env?: pulumi.Input<pulumi.Input<inputs.core.v1.StorageClusterSpecAutopilotEnv>[]>;
             /**
              * Docker image of the autopilot container.
              */
@@ -134,20 +142,20 @@ export namespace core {
             /**
              * List of input data providers to autopilot.
              */
-            providers?: pulumi.Input<pulumi.Input<inputs.core.v1alpha1.StorageClusterSpecAutopilotProviders>[]>;
+            providers?: pulumi.Input<pulumi.Input<inputs.core.v1.StorageClusterSpecAutopilotProviders>[]>;
         }
 
         export interface StorageClusterSpecAutopilotEnv {
             name?: pulumi.Input<string>;
             value?: pulumi.Input<string>;
-            valueFrom?: pulumi.Input<inputs.core.v1alpha1.StorageClusterSpecAutopilotEnvValueFrom>;
+            valueFrom?: pulumi.Input<inputs.core.v1.StorageClusterSpecAutopilotEnvValueFrom>;
         }
 
         export interface StorageClusterSpecAutopilotEnvValueFrom {
-            configMapKeyRef?: pulumi.Input<inputs.core.v1alpha1.StorageClusterSpecAutopilotEnvValueFromConfigMapKeyRef>;
-            fieldRef?: pulumi.Input<inputs.core.v1alpha1.StorageClusterSpecAutopilotEnvValueFromFieldRef>;
-            resourceFieldRef?: pulumi.Input<inputs.core.v1alpha1.StorageClusterSpecAutopilotEnvValueFromResourceFieldRef>;
-            secretKeyRef?: pulumi.Input<inputs.core.v1alpha1.StorageClusterSpecAutopilotEnvValueFromSecretKeyRef>;
+            configMapKeyRef?: pulumi.Input<inputs.core.v1.StorageClusterSpecAutopilotEnvValueFromConfigMapKeyRef>;
+            fieldRef?: pulumi.Input<inputs.core.v1.StorageClusterSpecAutopilotEnvValueFromFieldRef>;
+            resourceFieldRef?: pulumi.Input<inputs.core.v1.StorageClusterSpecAutopilotEnvValueFromResourceFieldRef>;
+            secretKeyRef?: pulumi.Input<inputs.core.v1.StorageClusterSpecAutopilotEnvValueFromSecretKeyRef>;
         }
 
         export interface StorageClusterSpecAutopilotEnvValueFromConfigMapKeyRef {
@@ -195,7 +203,7 @@ export namespace core {
             /**
              * List of cluster wide storage types and their capacities. A single capacity spec identifies a storage pool with a set of minimum requested IOPS and size. Based on the cloud provider, the total storage capacity will get divided amongst the nodes. The nodes bearing storage themselves will get uniformly distributed across all the zones.
              */
-            capacitySpecs?: pulumi.Input<pulumi.Input<inputs.core.v1alpha1.StorageClusterSpecCloudStorageCapacitySpecs>[]>;
+            capacitySpecs?: pulumi.Input<pulumi.Input<inputs.core.v1.StorageClusterSpecCloudStorageCapacitySpecs>[]>;
             /**
              * List of storage device specs. A cloud storage device will be created for every spec in the list. The specs will be applied to all nodes in the cluster up to spec.cloudStorage.maxStorageNodes or spec.cloudStorage.maxStorageNodesPerZone. This will be ignored if spec.cloudStorage.capacitySpecs is present.
              */
@@ -254,14 +262,14 @@ export namespace core {
         export interface StorageClusterSpecEnv {
             name?: pulumi.Input<string>;
             value?: pulumi.Input<string>;
-            valueFrom?: pulumi.Input<inputs.core.v1alpha1.StorageClusterSpecEnvValueFrom>;
+            valueFrom?: pulumi.Input<inputs.core.v1.StorageClusterSpecEnvValueFrom>;
         }
 
         export interface StorageClusterSpecEnvValueFrom {
-            configMapKeyRef?: pulumi.Input<inputs.core.v1alpha1.StorageClusterSpecEnvValueFromConfigMapKeyRef>;
-            fieldRef?: pulumi.Input<inputs.core.v1alpha1.StorageClusterSpecEnvValueFromFieldRef>;
-            resourceFieldRef?: pulumi.Input<inputs.core.v1alpha1.StorageClusterSpecEnvValueFromResourceFieldRef>;
-            secretKeyRef?: pulumi.Input<inputs.core.v1alpha1.StorageClusterSpecEnvValueFromSecretKeyRef>;
+            configMapKeyRef?: pulumi.Input<inputs.core.v1.StorageClusterSpecEnvValueFromConfigMapKeyRef>;
+            fieldRef?: pulumi.Input<inputs.core.v1.StorageClusterSpecEnvValueFromFieldRef>;
+            resourceFieldRef?: pulumi.Input<inputs.core.v1.StorageClusterSpecEnvValueFromResourceFieldRef>;
+            secretKeyRef?: pulumi.Input<inputs.core.v1.StorageClusterSpecEnvValueFromSecretKeyRef>;
         }
 
         export interface StorageClusterSpecEnvValueFromConfigMapKeyRef {
@@ -316,7 +324,7 @@ export namespace core {
             /**
              * Contains configuration of Prometheus to monitor the storage cluster.
              */
-            prometheus?: pulumi.Input<inputs.core.v1alpha1.StorageClusterSpecMonitoringPrometheus>;
+            prometheus?: pulumi.Input<inputs.core.v1.StorageClusterSpecMonitoringPrometheus>;
         }
 
         /**
@@ -355,11 +363,11 @@ export namespace core {
             /**
              * List of environment variables used by the driver. This is an array of Kubernetes EnvVar where the value can be given directly or from a source like field, config map or secret. Environment variables specified here at the node level will be merged with the ones present in cluster configuration and sent to the nodes. If there is duplicate, the node level value will take precedence.
              */
-            env?: pulumi.Input<pulumi.Input<inputs.core.v1alpha1.StorageClusterSpecNodesEnv>[]>;
+            env?: pulumi.Input<pulumi.Input<inputs.core.v1.StorageClusterSpecNodesEnv>[]>;
             /**
              * Contains network information that is needed by the storage driver.
              */
-            network?: pulumi.Input<inputs.core.v1alpha1.StorageClusterSpecNodesNetwork>;
+            network?: pulumi.Input<inputs.core.v1.StorageClusterSpecNodesNetwork>;
             /**
              * This is map of any runtime options that need to be sent to the storage driver. The value is a string. If runtime options are present here at node level, they will override the ones from cluster configuration.
              */
@@ -367,24 +375,24 @@ export namespace core {
             /**
              * Configuration in this node block is applied to nodes based on this selector. Use either nodeName of labelSelector, not both. If nodeName is used, labelSelector will be ignored.
              */
-            selector?: pulumi.Input<inputs.core.v1alpha1.StorageClusterSpecNodesSelector>;
+            selector?: pulumi.Input<inputs.core.v1.StorageClusterSpecNodesSelector>;
             /**
              * Details of the storage used by the storage driver.
              */
-            storage?: pulumi.Input<inputs.core.v1alpha1.StorageClusterSpecNodesStorage>;
+            storage?: pulumi.Input<inputs.core.v1.StorageClusterSpecNodesStorage>;
         }
 
         export interface StorageClusterSpecNodesEnv {
             name?: pulumi.Input<string>;
             value?: pulumi.Input<string>;
-            valueFrom?: pulumi.Input<inputs.core.v1alpha1.StorageClusterSpecNodesEnvValueFrom>;
+            valueFrom?: pulumi.Input<inputs.core.v1.StorageClusterSpecNodesEnvValueFrom>;
         }
 
         export interface StorageClusterSpecNodesEnvValueFrom {
-            configMapKeyRef?: pulumi.Input<inputs.core.v1alpha1.StorageClusterSpecNodesEnvValueFromConfigMapKeyRef>;
-            fieldRef?: pulumi.Input<inputs.core.v1alpha1.StorageClusterSpecNodesEnvValueFromFieldRef>;
-            resourceFieldRef?: pulumi.Input<inputs.core.v1alpha1.StorageClusterSpecNodesEnvValueFromResourceFieldRef>;
-            secretKeyRef?: pulumi.Input<inputs.core.v1alpha1.StorageClusterSpecNodesEnvValueFromSecretKeyRef>;
+            configMapKeyRef?: pulumi.Input<inputs.core.v1.StorageClusterSpecNodesEnvValueFromConfigMapKeyRef>;
+            fieldRef?: pulumi.Input<inputs.core.v1.StorageClusterSpecNodesEnvValueFromFieldRef>;
+            resourceFieldRef?: pulumi.Input<inputs.core.v1.StorageClusterSpecNodesEnvValueFromResourceFieldRef>;
+            secretKeyRef?: pulumi.Input<inputs.core.v1.StorageClusterSpecNodesEnvValueFromSecretKeyRef>;
         }
 
         export interface StorageClusterSpecNodesEnvValueFromConfigMapKeyRef {
@@ -431,7 +439,7 @@ export namespace core {
             /**
              * It is a label query over all the nodes. The result of matchLabels and matchExpressions is ANDed. An empty label selector matches all nodes. A null label selector matches no objects.
              */
-            labelSelector?: pulumi.Input<inputs.core.v1alpha1.StorageClusterSpecNodesSelectorLabelSelector>;
+            labelSelector?: pulumi.Input<inputs.core.v1.StorageClusterSpecNodesSelectorLabelSelector>;
             /**
              * Name of the Kubernetes node that is to be selected. If present then the labelSelector is ignored even if the node with the given name is absent and the labelSelector matches another node.
              */
@@ -445,7 +453,7 @@ export namespace core {
             /**
              * It is a list of label selector requirements. The requirements are ANDed.
              */
-            matchExpressions?: pulumi.Input<pulumi.Input<inputs.core.v1alpha1.StorageClusterSpecNodesSelectorLabelSelectorMatchExpressions>[]>;
+            matchExpressions?: pulumi.Input<pulumi.Input<inputs.core.v1.StorageClusterSpecNodesSelectorLabelSelectorMatchExpressions>[]>;
             /**
              * It is a map of key-value pairs. A single key-value in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
              */
@@ -508,29 +516,29 @@ export namespace core {
             /**
              * Describes node affinity scheduling rules for the storage cluster pods. This is exactly the same object as Kubernetes node affinity for pods.
              */
-            nodeAffinity?: pulumi.Input<inputs.core.v1alpha1.StorageClusterSpecPlacementNodeAffinity>;
+            nodeAffinity?: pulumi.Input<inputs.core.v1.StorageClusterSpecPlacementNodeAffinity>;
             /**
              * Tolerations for all the pods deployed by the StorageCluster controller. The pod with this toleration attached will tolerate any taint that matches the triple <key,value,effect> using the matching operator <operator>.
              */
-            tolerations?: pulumi.Input<pulumi.Input<inputs.core.v1alpha1.StorageClusterSpecPlacementTolerations>[]>;
+            tolerations?: pulumi.Input<pulumi.Input<inputs.core.v1.StorageClusterSpecPlacementTolerations>[]>;
         }
 
         /**
          * Describes node affinity scheduling rules for the storage cluster pods. This is exactly the same object as Kubernetes node affinity for pods.
          */
         export interface StorageClusterSpecPlacementNodeAffinity {
-            preferredDuringSchedulingIgnoredDuringExecution?: pulumi.Input<pulumi.Input<inputs.core.v1alpha1.StorageClusterSpecPlacementNodeAffinityPreferredDuringSchedulingIgnoredDuringExecution>[]>;
-            requiredDuringSchedulingIgnoredDuringExecution?: pulumi.Input<inputs.core.v1alpha1.StorageClusterSpecPlacementNodeAffinityRequiredDuringSchedulingIgnoredDuringExecution>;
+            preferredDuringSchedulingIgnoredDuringExecution?: pulumi.Input<pulumi.Input<inputs.core.v1.StorageClusterSpecPlacementNodeAffinityPreferredDuringSchedulingIgnoredDuringExecution>[]>;
+            requiredDuringSchedulingIgnoredDuringExecution?: pulumi.Input<inputs.core.v1.StorageClusterSpecPlacementNodeAffinityRequiredDuringSchedulingIgnoredDuringExecution>;
         }
 
         export interface StorageClusterSpecPlacementNodeAffinityPreferredDuringSchedulingIgnoredDuringExecution {
-            preference: pulumi.Input<inputs.core.v1alpha1.StorageClusterSpecPlacementNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreference>;
+            preference: pulumi.Input<inputs.core.v1.StorageClusterSpecPlacementNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreference>;
             weight: pulumi.Input<number>;
         }
 
         export interface StorageClusterSpecPlacementNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreference {
-            matchExpressions?: pulumi.Input<pulumi.Input<inputs.core.v1alpha1.StorageClusterSpecPlacementNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressions>[]>;
-            matchFields?: pulumi.Input<pulumi.Input<inputs.core.v1alpha1.StorageClusterSpecPlacementNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFields>[]>;
+            matchExpressions?: pulumi.Input<pulumi.Input<inputs.core.v1.StorageClusterSpecPlacementNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressions>[]>;
+            matchFields?: pulumi.Input<pulumi.Input<inputs.core.v1.StorageClusterSpecPlacementNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchFields>[]>;
         }
 
         export interface StorageClusterSpecPlacementNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionPreferenceMatchExpressions {
@@ -546,12 +554,12 @@ export namespace core {
         }
 
         export interface StorageClusterSpecPlacementNodeAffinityRequiredDuringSchedulingIgnoredDuringExecution {
-            nodeSelectorTerms: pulumi.Input<pulumi.Input<inputs.core.v1alpha1.StorageClusterSpecPlacementNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTerms>[]>;
+            nodeSelectorTerms: pulumi.Input<pulumi.Input<inputs.core.v1.StorageClusterSpecPlacementNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTerms>[]>;
         }
 
         export interface StorageClusterSpecPlacementNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTerms {
-            matchExpressions?: pulumi.Input<pulumi.Input<inputs.core.v1alpha1.StorageClusterSpecPlacementNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressions>[]>;
-            matchFields?: pulumi.Input<pulumi.Input<inputs.core.v1alpha1.StorageClusterSpecPlacementNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFields>[]>;
+            matchExpressions?: pulumi.Input<pulumi.Input<inputs.core.v1.StorageClusterSpecPlacementNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressions>[]>;
+            matchFields?: pulumi.Input<pulumi.Input<inputs.core.v1.StorageClusterSpecPlacementNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchFields>[]>;
         }
 
         export interface StorageClusterSpecPlacementNodeAffinityRequiredDuringSchedulingIgnoredDuringExecutionNodeSelectorTermsMatchExpressions {
@@ -587,6 +595,52 @@ export namespace core {
              * Value is the taint value the toleration matches to. If the operator is Exists, the value should be empty, otherwise just a regular string.
              */
             value?: pulumi.Input<string>;
+        }
+
+        /**
+         * Contains security configuration for the storage cluster.
+         */
+        export interface StorageClusterSpecSecurity {
+            /**
+             * Authorization configurations for a RBAC enabled storage cluster
+             */
+            auth?: pulumi.Input<inputs.core.v1.StorageClusterSpecSecurityAuth>;
+            /**
+             * Flag indicating whether security features need to be enabled for the storage cluster.
+             */
+            enabled?: pulumi.Input<boolean>;
+        }
+
+        /**
+         * Authorization configurations for a RBAC enabled storage cluster
+         */
+        export interface StorageClusterSpecSecurityAuth {
+            /**
+             * Defines the access mode of a guest user
+             */
+            guestAccess?: pulumi.Input<string>;
+            /**
+             * Configuration for self signed authentication
+             */
+            selfSigned?: pulumi.Input<inputs.core.v1.StorageClusterSpecSecurityAuthSelfSigned>;
+        }
+
+        /**
+         * Configuration for self signed authentication
+         */
+        export interface StorageClusterSpecSecurityAuthSelfSigned {
+            /**
+             * Token issuer for the tokens used to connect with storage cluster.
+             */
+            issuer?: pulumi.Input<string>;
+            /**
+             * Shared secret is the name of the Kubernetes secret containing the shared key used for signing RBAC tokens. The secret has to be present in the StorageCluster namespace.
+             */
+            sharedSecret?: pulumi.Input<string>;
+            /**
+             * Lifetime of auto-generated RBAC tokens to access the storage cluster.
+             */
+            tokenLifetime?: pulumi.Input<string>;
         }
 
         /**
@@ -638,7 +692,11 @@ export namespace core {
             /**
              * List of environment variables used by STORK. This is an array of Kubernetes EnvVar where the value can be given directly or from a source like field, config map or secret.
              */
-            env?: pulumi.Input<pulumi.Input<inputs.core.v1alpha1.StorageClusterSpecStorkEnv>[]>;
+            env?: pulumi.Input<pulumi.Input<inputs.core.v1.StorageClusterSpecStorkEnv>[]>;
+            /**
+             * Flag indicating if Stork pods should run in host network.
+             */
+            hostNetwork?: pulumi.Input<boolean>;
             /**
              * Docker image of the STORK container.
              */
@@ -652,14 +710,14 @@ export namespace core {
         export interface StorageClusterSpecStorkEnv {
             name?: pulumi.Input<string>;
             value?: pulumi.Input<string>;
-            valueFrom?: pulumi.Input<inputs.core.v1alpha1.StorageClusterSpecStorkEnvValueFrom>;
+            valueFrom?: pulumi.Input<inputs.core.v1.StorageClusterSpecStorkEnvValueFrom>;
         }
 
         export interface StorageClusterSpecStorkEnvValueFrom {
-            configMapKeyRef?: pulumi.Input<inputs.core.v1alpha1.StorageClusterSpecStorkEnvValueFromConfigMapKeyRef>;
-            fieldRef?: pulumi.Input<inputs.core.v1alpha1.StorageClusterSpecStorkEnvValueFromFieldRef>;
-            resourceFieldRef?: pulumi.Input<inputs.core.v1alpha1.StorageClusterSpecStorkEnvValueFromResourceFieldRef>;
-            secretKeyRef?: pulumi.Input<inputs.core.v1alpha1.StorageClusterSpecStorkEnvValueFromSecretKeyRef>;
+            configMapKeyRef?: pulumi.Input<inputs.core.v1.StorageClusterSpecStorkEnvValueFromConfigMapKeyRef>;
+            fieldRef?: pulumi.Input<inputs.core.v1.StorageClusterSpecStorkEnvValueFromFieldRef>;
+            resourceFieldRef?: pulumi.Input<inputs.core.v1.StorageClusterSpecStorkEnvValueFromResourceFieldRef>;
+            secretKeyRef?: pulumi.Input<inputs.core.v1.StorageClusterSpecStorkEnvValueFromSecretKeyRef>;
         }
 
         export interface StorageClusterSpecStorkEnvValueFromConfigMapKeyRef {
@@ -692,7 +750,7 @@ export namespace core {
             /**
              * Spec to control the desired behavior of storage cluster rolling update.
              */
-            rollingUpdate?: pulumi.Input<inputs.core.v1alpha1.StorageClusterSpecUpdateStrategyRollingUpdate>;
+            rollingUpdate?: pulumi.Input<inputs.core.v1.StorageClusterSpecUpdateStrategyRollingUpdate>;
             /**
              * Type of storage cluster update. Can be RollingUpdate or OnDelete. Default is RollingUpdate.
              */
@@ -720,7 +778,7 @@ export namespace core {
             /**
              * List of environment variables used by the UI components. This is an array of Kubernetes EnvVar where the value can be given directly or from a source like field, config map or secret.
              */
-            env?: pulumi.Input<pulumi.Input<inputs.core.v1alpha1.StorageClusterSpecUserInterfaceEnv>[]>;
+            env?: pulumi.Input<pulumi.Input<inputs.core.v1.StorageClusterSpecUserInterfaceEnv>[]>;
             /**
              * Docker image of the user interface container.
              */
@@ -734,14 +792,14 @@ export namespace core {
         export interface StorageClusterSpecUserInterfaceEnv {
             name?: pulumi.Input<string>;
             value?: pulumi.Input<string>;
-            valueFrom?: pulumi.Input<inputs.core.v1alpha1.StorageClusterSpecUserInterfaceEnvValueFrom>;
+            valueFrom?: pulumi.Input<inputs.core.v1.StorageClusterSpecUserInterfaceEnvValueFrom>;
         }
 
         export interface StorageClusterSpecUserInterfaceEnvValueFrom {
-            configMapKeyRef?: pulumi.Input<inputs.core.v1alpha1.StorageClusterSpecUserInterfaceEnvValueFromConfigMapKeyRef>;
-            fieldRef?: pulumi.Input<inputs.core.v1alpha1.StorageClusterSpecUserInterfaceEnvValueFromFieldRef>;
-            resourceFieldRef?: pulumi.Input<inputs.core.v1alpha1.StorageClusterSpecUserInterfaceEnvValueFromResourceFieldRef>;
-            secretKeyRef?: pulumi.Input<inputs.core.v1alpha1.StorageClusterSpecUserInterfaceEnvValueFromSecretKeyRef>;
+            configMapKeyRef?: pulumi.Input<inputs.core.v1.StorageClusterSpecUserInterfaceEnvValueFromConfigMapKeyRef>;
+            fieldRef?: pulumi.Input<inputs.core.v1.StorageClusterSpecUserInterfaceEnvValueFromFieldRef>;
+            resourceFieldRef?: pulumi.Input<inputs.core.v1.StorageClusterSpecUserInterfaceEnvValueFromResourceFieldRef>;
+            secretKeyRef?: pulumi.Input<inputs.core.v1.StorageClusterSpecUserInterfaceEnvValueFromSecretKeyRef>;
         }
 
         export interface StorageClusterSpecUserInterfaceEnvValueFromConfigMapKeyRef {
@@ -786,7 +844,7 @@ export namespace core {
             /**
              * Contains details for the current condition of this cluster.
              */
-            conditions?: pulumi.Input<pulumi.Input<inputs.core.v1alpha1.StorageClusterStatusConditions>[]>;
+            conditions?: pulumi.Input<pulumi.Input<inputs.core.v1.StorageClusterStatusConditions>[]>;
             /**
              * Phase of the StorageCluster is a simple, high-level summary of where the StorageCluster is in its lifecycle. The condition array contains more detailed information about the state of the cluster.
              */
@@ -794,7 +852,7 @@ export namespace core {
             /**
              * Contains details of storage in the cluster.
              */
-            storage?: pulumi.Input<inputs.core.v1alpha1.StorageClusterStatusStorage>;
+            storage?: pulumi.Input<inputs.core.v1.StorageClusterStatusStorage>;
         }
 
         export interface StorageClusterStatusConditions {
@@ -829,7 +887,7 @@ export namespace core {
             /**
              * Details of storage on the node for cloud environments.
              */
-            cloudStorage?: pulumi.Input<inputs.core.v1alpha1.StorageNodeSpecCloudStorage>;
+            cloudStorage?: pulumi.Input<inputs.core.v1.StorageNodeSpecCloudStorage>;
             /**
              * Version of the storage driver on the node.
              */
@@ -843,7 +901,7 @@ export namespace core {
             /**
              * List of cloud drive configs for the storage node.
              */
-            driveConfigs?: pulumi.Input<pulumi.Input<inputs.core.v1alpha1.StorageNodeSpecCloudStorageDriveConfigs>[]>;
+            driveConfigs?: pulumi.Input<pulumi.Input<inputs.core.v1.StorageNodeSpecCloudStorageDriveConfigs>[]>;
         }
 
         export interface StorageNodeSpecCloudStorageDriveConfigs {
@@ -872,12 +930,15 @@ export namespace core {
             /**
              * Contains details for the current condition of this storage node.
              */
-            conditions?: pulumi.Input<pulumi.Input<inputs.core.v1alpha1.StorageNodeStatusConditions>[]>;
+            conditions?: pulumi.Input<pulumi.Input<inputs.core.v1.StorageNodeStatusConditions>[]>;
             /**
              * Contains topology information for the storage node.
              */
-            geography?: pulumi.Input<inputs.core.v1alpha1.StorageNodeStatusGeography>;
-            network?: pulumi.Input<inputs.core.v1alpha1.StorageNodeStatusNetwork>;
+            geography?: pulumi.Input<inputs.core.v1.StorageNodeStatusGeography>;
+            /**
+             * Contains network information used by the storage node
+             */
+            network?: pulumi.Input<inputs.core.v1.StorageNodeStatusNetwork>;
             /**
              * Unique ID of the storage node.
              */
@@ -886,6 +947,10 @@ export namespace core {
              * Phase of the StorageNode is a simple, high-level summary of where the StorageNode is in its lifecycle. The condition array contains more detailed information about the state of the node.
              */
             phase?: pulumi.Input<string>;
+            /**
+             * Contains details of the status of storage for the node
+             */
+            storage?: pulumi.Input<inputs.core.v1.StorageNodeStatusStorage>;
         }
 
         export interface StorageNodeStatusConditions {
@@ -921,6 +986,9 @@ export namespace core {
             zone?: pulumi.Input<string>;
         }
 
+        /**
+         * Contains network information used by the storage node
+         */
         export interface StorageNodeStatusNetwork {
             /**
              * IP address used by the storage driver for data traffic.
@@ -930,6 +998,20 @@ export namespace core {
              * IP address used by the storage driver for management traffic.
              */
             mgmtIP?: pulumi.Input<string>;
+        }
+
+        /**
+         * Contains details of the status of storage for the node
+         */
+        export interface StorageNodeStatusStorage {
+            /**
+             * Cumulative total size of all storage pools on the node
+             */
+            totalSize?: pulumi.Input<string>;
+            /**
+             * Cumulative used size of all storage pools on the node
+             */
+            usedSize?: pulumi.Input<string>;
         }
     }
 }

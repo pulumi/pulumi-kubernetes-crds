@@ -14,6 +14,10 @@ namespace Pulumi.Kubernetes.Types.Outputs.Build.V1Alpha1
     public sealed class BuildRunStatus
     {
         /// <summary>
+        /// BuildSpec is the Build Spec of this BuildRun.
+        /// </summary>
+        public readonly Pulumi.Kubernetes.Types.Outputs.Build.V1Alpha1.BuildRunStatusBuildSpec BuildSpec;
+        /// <summary>
         /// CompletionTime is the time the build completed.
         /// </summary>
         public readonly string CompletionTime;
@@ -36,6 +40,8 @@ namespace Pulumi.Kubernetes.Types.Outputs.Build.V1Alpha1
 
         [OutputConstructor]
         private BuildRunStatus(
+            Pulumi.Kubernetes.Types.Outputs.Build.V1Alpha1.BuildRunStatusBuildSpec buildSpec,
+
             string completionTime,
 
             string latestTaskRunRef,
@@ -46,6 +52,7 @@ namespace Pulumi.Kubernetes.Types.Outputs.Build.V1Alpha1
 
             string succeeded)
         {
+            BuildSpec = buildSpec;
             CompletionTime = completionTime;
             LatestTaskRunRef = latestTaskRunRef;
             Reason = reason;

@@ -22,6 +22,7 @@ namespace Pulumi.Kubernetes.Types.Outputs.Jaegertracing.V1
         public readonly Pulumi.Kubernetes.Types.Outputs.Jaegertracing.V1.JaegerSpecQueryResources Resources;
         public readonly Pulumi.Kubernetes.Types.Outputs.Jaegertracing.V1.JaegerSpecQuerySecurityContext SecurityContext;
         public readonly string ServiceAccount;
+        public readonly string ServiceType;
         public readonly ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Jaegertracing.V1.JaegerSpecQueryTolerations> Tolerations;
         public readonly ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Jaegertracing.V1.JaegerSpecQueryVolumeMounts> VolumeMounts;
         public readonly ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Jaegertracing.V1.JaegerSpecQueryVolumes> Volumes;
@@ -46,6 +47,8 @@ namespace Pulumi.Kubernetes.Types.Outputs.Jaegertracing.V1
 
             string serviceAccount,
 
+            string serviceType,
+
             ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Jaegertracing.V1.JaegerSpecQueryTolerations> tolerations,
 
             ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Jaegertracing.V1.JaegerSpecQueryVolumeMounts> volumeMounts,
@@ -61,6 +64,7 @@ namespace Pulumi.Kubernetes.Types.Outputs.Jaegertracing.V1
             Resources = resources;
             SecurityContext = securityContext;
             ServiceAccount = serviceAccount;
+            ServiceType = serviceType;
             Tolerations = tolerations;
             VolumeMounts = volumeMounts;
             Volumes = volumes;

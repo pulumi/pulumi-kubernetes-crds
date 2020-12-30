@@ -7,4 +7,6 @@ from .provider import *
 
 # Make subpackages available:
 from . import (
+    iot,
+    meta_v1,
 )

@@ -57,6 +57,12 @@ namespace Pulumi.Kubernetes.Types.Inputs.Hive.V1
         [Input("controlPlaneConfig")]
         public Input<Pulumi.Kubernetes.Types.Inputs.Hive.V1.ClusterDeploymentSpecControlPlaneConfigArgs>? ControlPlaneConfig { get; set; }
 
+        /// <summary>
+        /// HibernateAfter will transition a cluster to hibernating power state after it has been running for the given duration. The time that a cluster has been running is the time since the cluster was installed or the time since the cluster last came out of hibernation.
+        /// </summary>
+        [Input("hibernateAfter")]
+        public Input<string>? HibernateAfter { get; set; }
+
         [Input("ingress")]
         private InputList<Pulumi.Kubernetes.Types.Inputs.Hive.V1.ClusterDeploymentSpecIngressArgs>? _ingress;
 
@@ -68,6 +74,12 @@ namespace Pulumi.Kubernetes.Types.Inputs.Hive.V1
             get => _ingress ?? (_ingress = new InputList<Pulumi.Kubernetes.Types.Inputs.Hive.V1.ClusterDeploymentSpecIngressArgs>());
             set => _ingress = value;
         }
+
+        /// <summary>
+        /// InstallAttemptsLimit is the maximum number of times Hive will attempt to install the cluster.
+        /// </summary>
+        [Input("installAttemptsLimit")]
+        public Input<int>? InstallAttemptsLimit { get; set; }
 
         /// <summary>
         /// Installed is true if the cluster has been installed

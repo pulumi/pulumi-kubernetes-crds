@@ -18,6 +18,9 @@ namespace Pulumi.Kubernetes.Types.Inputs.Kafka.V1Beta1
         [Input("gmsaCredentialSpecName")]
         public Input<string>? GmsaCredentialSpecName { get; set; }
 
+        [Input("runAsUserName")]
+        public Input<string>? RunAsUserName { get; set; }
+
         public KafkaSpecCruiseControlTemplatePodSecurityContextWindowsOptionsArgs()
         {
         }

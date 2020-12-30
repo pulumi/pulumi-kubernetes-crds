@@ -22,13 +22,13 @@ namespace Pulumi.Kubernetes.Types.Outputs.Kafka.V1Beta1
         /// </summary>
         public readonly ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Kafka.V1Beta1.KafkaConnectStatusConnectorPlugins> ConnectorPlugins;
         /// <summary>
+        /// Label selector for pods providing this resource.
+        /// </summary>
+        public readonly string LabelSelector;
+        /// <summary>
         /// The generation of the CRD that was last reconciled by the operator.
         /// </summary>
         public readonly int ObservedGeneration;
-        /// <summary>
-        /// Label selector for pods providing this resource.
-        /// </summary>
-        public readonly Pulumi.Kubernetes.Types.Outputs.Kafka.V1Beta1.KafkaConnectStatusPodSelector PodSelector;
         /// <summary>
         /// The current number of pods being used to provide this resource.
         /// </summary>
@@ -44,9 +44,9 @@ namespace Pulumi.Kubernetes.Types.Outputs.Kafka.V1Beta1
 
             ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Kafka.V1Beta1.KafkaConnectStatusConnectorPlugins> connectorPlugins,
 
-            int observedGeneration,
+            string labelSelector,
 
-            Pulumi.Kubernetes.Types.Outputs.Kafka.V1Beta1.KafkaConnectStatusPodSelector podSelector,
+            int observedGeneration,
 
             int replicas,
 
@@ -54,8 +54,8 @@ namespace Pulumi.Kubernetes.Types.Outputs.Kafka.V1Beta1
         {
             Conditions = conditions;
             ConnectorPlugins = connectorPlugins;
+            LabelSelector = labelSelector;
             ObservedGeneration = observedGeneration;
-            PodSelector = podSelector;
             Replicas = replicas;
             Url = url;
         }

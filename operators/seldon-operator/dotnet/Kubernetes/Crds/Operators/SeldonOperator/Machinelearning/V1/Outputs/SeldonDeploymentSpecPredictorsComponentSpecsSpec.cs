@@ -42,6 +42,10 @@ namespace Pulumi.Kubernetes.Types.Outputs.Machinelearning.V1
         /// </summary>
         public readonly bool EnableServiceLinks;
         /// <summary>
+        /// List of ephemeral containers run in this pod. Ephemeral containers may be run in an existing pod to perform user-initiated actions such as debugging. This list cannot be specified when creating a pod, and it cannot be modified by updating the pod spec. In order to add an ephemeral container to an existing pod, use the pod's ephemeralcontainers subresource. This field is alpha-level and is only honored by servers that enable the EphemeralContainers feature.
+        /// </summary>
+        public readonly ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Machinelearning.V1.SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainers> EphemeralContainers;
+        /// <summary>
         /// HostAliases is an optional list of hosts and IPs that will be injected into the pod's hosts file if specified. This is only valid for non-hostNetwork pods.
         /// </summary>
         public readonly ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Machinelearning.V1.SeldonDeploymentSpecPredictorsComponentSpecsSpecHostAliases> HostAliases;
@@ -66,7 +70,7 @@ namespace Pulumi.Kubernetes.Types.Outputs.Machinelearning.V1
         /// </summary>
         public readonly ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Machinelearning.V1.SeldonDeploymentSpecPredictorsComponentSpecsSpecImagePullSecrets> ImagePullSecrets;
         /// <summary>
-        /// List of initialization containers belonging to the pod. Init containers are executed in order prior to containers being started. If any init container fails, the pod is considered to have failed and is handled according to its restartPolicy. The name for an init container or normal container must be unique among all containers. Init containers may not have Lifecycle actions, Readiness probes, or Liveness probes. The resourceRequirements of an init container are taken into account during scheduling by finding the highest request/limit for each resource type, and then using the max of of that value or the sum of the normal containers. Limits are applied to init containers in a similar fashion. Init containers cannot currently be added or removed. Cannot be updated. More info: https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
+        /// List of initialization containers belonging to the pod. Init containers are executed in order prior to containers being started. If any init container fails, the pod is considered to have failed and is handled according to its restartPolicy. The name for an init container or normal container must be unique among all containers. Init containers may not have Lifecycle actions, Readiness probes, Liveness probes, or Startup probes. The resourceRequirements of an init container are taken into account during scheduling by finding the highest request/limit for each resource type, and then using the max of of that value or the sum of the normal containers. Limits are applied to init containers in a similar fashion. Init containers cannot currently be added or removed. Cannot be updated. More info: https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
         /// </summary>
         public readonly ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Machinelearning.V1.SeldonDeploymentSpecPredictorsComponentSpecsSpecInitContainers> InitContainers;
         /// <summary>
@@ -77,6 +81,14 @@ namespace Pulumi.Kubernetes.Types.Outputs.Machinelearning.V1
         /// NodeSelector is a selector which must be true for the pod to fit on a node. Selector which must match a node's labels for the pod to be scheduled on that node. More info: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
         /// </summary>
         public readonly ImmutableDictionary<string, string> NodeSelector;
+        /// <summary>
+        /// Overhead represents the resource overhead associated with running a pod for a given RuntimeClass. This field will be autopopulated at admission time by the RuntimeClass admission controller. If the RuntimeClass admission controller is enabled, overhead must not be set in Pod create requests. The RuntimeClass admission controller will reject Pod create requests which have the overhead already set. If RuntimeClass is configured and selected in the PodSpec, Overhead will be set to the value defined in the corresponding RuntimeClass, otherwise it will remain unset and treated as zero. More info: https://git.k8s.io/enhancements/keps/sig-node/20190226-pod-overhead.md This field is alpha-level as of Kubernetes v1.16, and is only honored by servers that enable the PodOverhead feature.
+        /// </summary>
+        public readonly ImmutableDictionary<string, Pulumi.Kubernetes.Types.Outputs.Machinelearning.V1.SeldonDeploymentSpecPredictorsComponentSpecsSpecOverhead> Overhead;
+        /// <summary>
+        /// PreemptionPolicy is the Policy for preempting pods with lower priority. One of Never, PreemptLowerPriority. Defaults to PreemptLowerPriority if unset. This field is alpha-level and is only honored by servers that enable the NonPreemptingPriority feature.
+        /// </summary>
+        public readonly string PreemptionPolicy;
         /// <summary>
         /// The priority value. Various system components use this field to find the priority of the pod. When Priority Admission Controller is enabled, it prevents users from setting this field. The admission controller populates this field from PriorityClassName. The higher the value, the higher the priority.
         /// </summary>
@@ -94,7 +106,7 @@ namespace Pulumi.Kubernetes.Types.Outputs.Machinelearning.V1
         /// </summary>
         public readonly string RestartPolicy;
         /// <summary>
-        /// RuntimeClassName refers to a RuntimeClass object in the node.k8s.io group, which should be used to run this pod.  If no RuntimeClass resource matches the named class, the pod will not be run. If unset or empty, the "legacy" RuntimeClass will be used, which is an implicit class with an empty definition that uses the default runtime handler. More info: https://git.k8s.io/enhancements/keps/sig-node/runtime-class.md This is an alpha feature and may change in the future.
+        /// RuntimeClassName refers to a RuntimeClass object in the node.k8s.io group, which should be used to run this pod.  If no RuntimeClass resource matches the named class, the pod will not be run. If unset or empty, the "legacy" RuntimeClass will be used, which is an implicit class with an empty definition that uses the default runtime handler. More info: https://git.k8s.io/enhancements/keps/sig-node/runtime-class.md This is a beta feature as of Kubernetes v1.14.
         /// </summary>
         public readonly string RuntimeClassName;
         /// <summary>
@@ -114,7 +126,7 @@ namespace Pulumi.Kubernetes.Types.Outputs.Machinelearning.V1
         /// </summary>
         public readonly string ServiceAccountName;
         /// <summary>
-        /// Share a single process namespace between all of the containers in a pod. When this is set containers will be able to view and signal processes from other containers in the same pod, and the first process in each container will not be assigned PID 1. HostPID and ShareProcessNamespace cannot both be set. Optional: Default to false. This field is beta-level and may be disabled with the PodShareProcessNamespace feature.
+        /// Share a single process namespace between all of the containers in a pod. When this is set containers will be able to view and signal processes from other containers in the same pod, and the first process in each container will not be assigned PID 1. HostPID and ShareProcessNamespace cannot both be set. Optional: Default to false.
         /// </summary>
         public readonly bool ShareProcessNamespace;
         /// <summary>
@@ -129,6 +141,10 @@ namespace Pulumi.Kubernetes.Types.Outputs.Machinelearning.V1
         /// If specified, the pod's tolerations.
         /// </summary>
         public readonly ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Machinelearning.V1.SeldonDeploymentSpecPredictorsComponentSpecsSpecTolerations> Tolerations;
+        /// <summary>
+        /// TopologySpreadConstraints describes how a group of pods ought to spread across topology domains. Scheduler will schedule pods in a way which abides by the constraints. This field is only honored by clusters that enable the EvenPodsSpread feature. All topologySpreadConstraints are ANDed.
+        /// </summary>
+        public readonly ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Machinelearning.V1.SeldonDeploymentSpecPredictorsComponentSpecsSpecTopologySpreadConstraints> TopologySpreadConstraints;
         /// <summary>
         /// List of volumes that can be mounted by containers belonging to the pod. More info: https://kubernetes.io/docs/concepts/storage/volumes
         /// </summary>
@@ -150,6 +166,8 @@ namespace Pulumi.Kubernetes.Types.Outputs.Machinelearning.V1
 
             bool enableServiceLinks,
 
+            ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Machinelearning.V1.SeldonDeploymentSpecPredictorsComponentSpecsSpecEphemeralContainers> ephemeralContainers,
+
             ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Machinelearning.V1.SeldonDeploymentSpecPredictorsComponentSpecsSpecHostAliases> hostAliases,
 
             bool hostIPC,
@@ -167,6 +185,10 @@ namespace Pulumi.Kubernetes.Types.Outputs.Machinelearning.V1
             string nodeName,
 
             ImmutableDictionary<string, string> nodeSelector,
+
+            ImmutableDictionary<string, Pulumi.Kubernetes.Types.Outputs.Machinelearning.V1.SeldonDeploymentSpecPredictorsComponentSpecsSpecOverhead> overhead,
+
+            string preemptionPolicy,
 
             int priority,
 
@@ -194,6 +216,8 @@ namespace Pulumi.Kubernetes.Types.Outputs.Machinelearning.V1
 
             ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Machinelearning.V1.SeldonDeploymentSpecPredictorsComponentSpecsSpecTolerations> tolerations,
 
+            ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Machinelearning.V1.SeldonDeploymentSpecPredictorsComponentSpecsSpecTopologySpreadConstraints> topologySpreadConstraints,
+
             ImmutableArray<ImmutableDictionary<string, object>> volumes)
         {
             ActiveDeadlineSeconds = activeDeadlineSeconds;
@@ -203,6 +227,7 @@ namespace Pulumi.Kubernetes.Types.Outputs.Machinelearning.V1
             DnsConfig = dnsConfig;
             DnsPolicy = dnsPolicy;
             EnableServiceLinks = enableServiceLinks;
+            EphemeralContainers = ephemeralContainers;
             HostAliases = hostAliases;
             HostIPC = hostIPC;
             HostNetwork = hostNetwork;
@@ -212,6 +237,8 @@ namespace Pulumi.Kubernetes.Types.Outputs.Machinelearning.V1
             InitContainers = initContainers;
             NodeName = nodeName;
             NodeSelector = nodeSelector;
+            Overhead = overhead;
+            PreemptionPolicy = preemptionPolicy;
             Priority = priority;
             PriorityClassName = priorityClassName;
             ReadinessGates = readinessGates;
@@ -225,6 +252,7 @@ namespace Pulumi.Kubernetes.Types.Outputs.Machinelearning.V1
             Subdomain = subdomain;
             TerminationGracePeriodSeconds = terminationGracePeriodSeconds;
             Tolerations = tolerations;
+            TopologySpreadConstraints = topologySpreadConstraints;
             Volumes = volumes;
         }
     }

@@ -11,7 +11,7 @@ namespace Pulumi.Kubernetes.Types.Inputs.Datadoghq.V1Alpha1
 {
 
     /// <summary>
-    /// The SELinux context to be applied to the container. If unspecified, the container runtime will allocate a random SELinux context for each container.  May also be set in PodSecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
+    /// The SELinux context to be applied to all containers. If unspecified, the container runtime will allocate a random SELinux context for each container.  May also be set in SecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence for that container.
     /// </summary>
     public class DatadogAgentSpecAgentConfigSecurityContextSeLinuxOptionsArgs : Pulumi.ResourceArgs
     {

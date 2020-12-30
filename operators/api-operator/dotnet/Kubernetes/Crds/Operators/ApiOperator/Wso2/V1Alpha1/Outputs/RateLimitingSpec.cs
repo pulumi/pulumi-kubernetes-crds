@@ -13,9 +13,18 @@ namespace Pulumi.Kubernetes.Types.Outputs.Wso2.V1Alpha1
     [OutputType]
     public sealed class RateLimitingSpec
     {
+        /// <summary>
+        /// Bandwidth is exported type in Ratelimiting Spec
+        /// </summary>
         public readonly Pulumi.Kubernetes.Types.Outputs.Wso2.V1Alpha1.RateLimitingSpecBandwidth Bandwidth;
+        /// <summary>
+        /// Conditions is exported type in Ratelimiting Spec
+        /// </summary>
         public readonly Pulumi.Kubernetes.Types.Outputs.Wso2.V1Alpha1.RateLimitingSpecConditions Conditions;
         public readonly string Description;
+        /// <summary>
+        /// RequestCount is exported type in Ratelimiting Spec
+        /// </summary>
         public readonly Pulumi.Kubernetes.Types.Outputs.Wso2.V1Alpha1.RateLimitingSpecRequestCount RequestCount;
         public readonly bool StopOnQuotaReach;
         public readonly string TimeUnit;

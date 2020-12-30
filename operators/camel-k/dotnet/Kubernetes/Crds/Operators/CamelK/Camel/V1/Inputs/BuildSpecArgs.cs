@@ -17,10 +17,6 @@ namespace Pulumi.Kubernetes.Types.Inputs.Camel.V1
     {
         [Input("tasks")]
         private InputList<Pulumi.Kubernetes.Types.Inputs.Camel.V1.BuildSpecTasksArgs>? _tasks;
-
-        /// <summary>
-        /// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster Important: Run "operator-sdk generate k8s" to regenerate code after modifying this file
-        /// </summary>
         public InputList<Pulumi.Kubernetes.Types.Inputs.Camel.V1.BuildSpecTasksArgs> Tasks
         {
             get => _tasks ?? (_tasks = new InputList<Pulumi.Kubernetes.Types.Inputs.Camel.V1.BuildSpecTasksArgs>());

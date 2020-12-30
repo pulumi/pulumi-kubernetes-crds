@@ -12,6 +12,9 @@ namespace Pulumi.Kubernetes.Types.Inputs.Apps.V1Alpha1
 
     public class APIManagerSpecSystemFileStorageSimpleStorageServiceArgs : Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// LocalObjectReference contains enough information to let you locate the referenced object inside the same namespace.
+        /// </summary>
         [Input("configurationSecretRef", required: true)]
         public Input<Pulumi.Kubernetes.Types.Inputs.Apps.V1Alpha1.APIManagerSpecSystemFileStorageSimpleStorageServiceConfigurationSecretRefArgs> ConfigurationSecretRef { get; set; } = null!;
 

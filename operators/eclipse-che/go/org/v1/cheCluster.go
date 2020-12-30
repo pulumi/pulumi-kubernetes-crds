@@ -10,6 +10,7 @@ import (
 	"github.com/pulumi/pulumi/sdk/v2/go/pulumi"
 )
 
+// The `CheCluster` custom resource allows defining and managing a Che server installation
 type CheCluster struct {
 	pulumi.CustomResourceState
 

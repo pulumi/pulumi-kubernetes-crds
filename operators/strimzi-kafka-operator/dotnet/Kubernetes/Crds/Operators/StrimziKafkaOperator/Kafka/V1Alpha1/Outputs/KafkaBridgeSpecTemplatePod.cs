@@ -18,6 +18,10 @@ namespace Pulumi.Kubernetes.Types.Outputs.Kafka.V1Alpha1
         /// </summary>
         public readonly Pulumi.Kubernetes.Types.Outputs.Kafka.V1Alpha1.KafkaBridgeSpecTemplatePodAffinity Affinity;
         /// <summary>
+        /// The pod's HostAliases. HostAliases is an optional list of hosts and IPs that will be injected into the pod's hosts file if specified.
+        /// </summary>
+        public readonly ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Kafka.V1Alpha1.KafkaBridgeSpecTemplatePodHostAliases> HostAliases;
+        /// <summary>
         /// List of references to secrets in the same namespace to use for pulling any of the images used by this Pod. When the `STRIMZI_IMAGE_PULL_SECRETS` environment variable in Cluster Operator and the `imagePullSecrets` option are specified, only the `imagePullSecrets` variable is used and the `STRIMZI_IMAGE_PULL_SECRETS` variable is ignored.
         /// </summary>
         public readonly ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Kafka.V1Alpha1.KafkaBridgeSpecTemplatePodImagePullSecrets> ImagePullSecrets;
@@ -50,6 +54,8 @@ namespace Pulumi.Kubernetes.Types.Outputs.Kafka.V1Alpha1
         private KafkaBridgeSpecTemplatePod(
             Pulumi.Kubernetes.Types.Outputs.Kafka.V1Alpha1.KafkaBridgeSpecTemplatePodAffinity affinity,
 
+            ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Kafka.V1Alpha1.KafkaBridgeSpecTemplatePodHostAliases> hostAliases,
+
             ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Kafka.V1Alpha1.KafkaBridgeSpecTemplatePodImagePullSecrets> imagePullSecrets,
 
             Pulumi.Kubernetes.Types.Outputs.Kafka.V1Alpha1.KafkaBridgeSpecTemplatePodMetadata metadata,
@@ -65,6 +71,7 @@ namespace Pulumi.Kubernetes.Types.Outputs.Kafka.V1Alpha1
             ImmutableArray<Pulumi.Kubernetes.Types.Outputs.Kafka.V1Alpha1.KafkaBridgeSpecTemplatePodTolerations> tolerations)
         {
             Affinity = affinity;
+            HostAliases = hostAliases;
             ImagePullSecrets = imagePullSecrets;
             Metadata = metadata;
             PriorityClassName = priorityClassName;

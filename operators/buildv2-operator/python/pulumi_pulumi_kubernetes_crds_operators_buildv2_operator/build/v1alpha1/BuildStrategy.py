@@ -27,7 +27,7 @@ class BuildStrategy(pulumi.CustomResource):
                  __name__=None,
                  __opts__=None):
         """
-        BuildStrategy is the Schema for the buildstrategies API
+        BuildStrategy is the Schema representing a strategy in the namespace scope to build images from source code.
 
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
