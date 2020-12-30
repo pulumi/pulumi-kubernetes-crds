@@ -7,4 +7,4 @@ build::
 	cd tools/gen-kubernetes-crds && go build .
 
 generate::
-	cd tools/gen-kubernetes-crds && go run . community-operators/ ../../
+	cd tools/gen-kubernetes-crds && go run . $(CommunityOperatorsPath) ../../
