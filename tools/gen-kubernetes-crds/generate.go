@@ -2,10 +2,11 @@ package main
 
 import (
 	"fmt"
-	"github.com/pkg/errors"
-	"github.com/pulumi/crd2pulumi/gen"
 	"path/filepath"
 	"strings"
+
+	"github.com/pkg/errors"
+	"github.com/pulumi/crd2pulumi/gen"
 )
 
 // List of community-operators for which to not generate the code due to issues with the crd generation

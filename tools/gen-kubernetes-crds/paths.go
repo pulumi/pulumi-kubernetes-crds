@@ -1,13 +1,14 @@
 package main
 
 import (
-	"github.com/pkg/errors"
-	"github.com/pulumi/pulumi/pkg/v2/codegen"
-	"github.com/pulumi/pulumi/sdk/v2/go/common/util/contract"
-	"gopkg.in/yaml.v2"
 	"io/ioutil"
 	"path/filepath"
 	"strings"
+
+	"github.com/pkg/errors"
+	"github.com/pulumi/pulumi/pkg/v3/codegen"
+	"github.com/pulumi/pulumi/sdk/v3/go/common/util/contract"
+	"gopkg.in/yaml.v2"
 )
 
 // Contains a set of the names of packages that follow a 'v#.#.#' structure of version path names, instead of the

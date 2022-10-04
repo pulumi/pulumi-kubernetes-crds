@@ -14,10 +14,10 @@ jobs:
           repository: operator-framework/community-operators
           path: community-operators
           ref: master
-      - name: Install Go 1.15
+      - name: Install Go 1.19
         uses: actions/setup-go@v2
         with:
-          go-version: '1.15.x'
+          go-version: '1.19.x'
       - name: generate
         run: make generate CommunityOperatorsPath=${{ github.workspace }}/community-operators
       - name: git status
